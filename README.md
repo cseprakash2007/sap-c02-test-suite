@@ -60,3 +60,10 @@ Progress is stored only in the current browser using `localStorage` keys `sap-c0
 - Source-answer correctness has not been fully audited. A matching answer is scored against the **supplied source key**, not AWS's official exam key.
 - Existing technical reviews are preliminary; add vetted explanations and documentation links to `questions.json` over time.
 - Browser-local progress does not sync automatically across devices.
+
+
+## Domain-wise study mode (new)
+
+From Dashboard select **Study by domain**, choose the domain, then press **Study all N questions one by one**. Alternatively, open Practice questions, filter domain / select 1, 2, or 3 answers, choose **Single → 2 → 3 answers** ordering, and start Study. Each question supports optional answer selection, **Show answer** (without requiring a selection), highlighted source key, available explanations/warnings, bookmarks, and Previous/Next navigation. Study is untimed and retains your current position in browser storage. Exit study mode to start another session.
+
+Note: Only explanations actually available in the source material are shown. Source keys are not independently verified.
