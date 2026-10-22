@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "20-question validation pass completed (IDs 553 through 611, excluding previously reviewed 603). 18 answers reviewed, 2 flagged unresolved (567,597). Prior preliminary batch remains for further review.",
+  "notes": "Second 20-question validation pass: 17 reviewed and 3 needs-source-repair (629,663,6); 57 preliminary records remain, plus 5 source-repair flags from last two batches.",
   "items": [
     {
       "id": 12,
@@ -1983,96 +1983,96 @@
       "id": 612,
       "domain": 1,
       "sequence": 92,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "CloudFront Functions viewer-request normalization improves cache-key consistency before lookup.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudFront Function at viewer-request normalizes case/order before cache lookup; origin-request normalization is too late.",
       "wrongOptions": {
-        "A": "Alternative: Create a new Lambda function to sort incoming request query parameters alphabetically and convert the parameters to lowercase. Configure the CloudFront distribution to use the Lambda@Edge function type. Configure the Lambda function to invoke on origin request.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create a CloudFront function to sort incoming request query parameters alphabetically and convert the parameters to lowercase. Configure the CloudFront distribution to use the CloudFront Functions function type. Configure the CloudFront function to invoke on viewer request.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Configure the API Gateway API to use mapping templates to sort incoming request query parameters alphabetically and convert the parameters to lowercase before Lambda processes the request.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Configure the API Gateway API to use a Lambda authorizer to sort incoming request query parameters alphabetically and convert the parameters to lowercase before Lambda processes the request.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "origin-request executes after cache miss",
+        "C": "API Gateway normalization is after CloudFront cache lookup",
+        "D": "authorizers validate access, not cache keys."
       },
-      "memoryTip": "CloudFront Functions viewer-request normalization improves cache-key consistency before lookup.",
+      "memoryTip": "CloudFront Function at viewer-request normalizes case/order before cache lookup",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html"
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/example_cloudfront_functions_normalize_query_string_parameters_section.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 629,
       "domain": 1,
       "sequence": 93,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "verifiedAnswer": null,
       "validity": "ambiguous",
-      "reasoning": "No offered choice cleanly configures cross-account QuickSight S3 bucket policy plus KMS decrypt; D's role chaining may not be supported by QuickSight role configuration as described.",
+      "reasoning": "None of the offered options explicitly combines correct sales-account bucket policy, marketing-account QuickSight role permission and cross-account KMS decrypt grant. D role trust description is backwards; requires source repair.",
       "wrongOptions": {
-        "A": "Alternative: Create a new S3 bucket in the marketing account. Create an S3 replication rule in the sales account to copy the objects to the new S3 bucket in the marketing account. Update the QuickSight permissions in the marketing account to grant access to the new S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create an SCP to grant access to the S3 bucket to the marketing account. Use AWS Resource Access Manager (AWS RAM) to share the KMS key from the sates account with the marketing account. Update the QuickSight permissions in the marketing account to grant access to the S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Update the S3 bucket policy in the marketing account to grant access to the QuickSight role. Create a KMS grant for the encryption key that is used in the S3 bucket. Grant decrypt access to the QuickSight role. Update the QuickSight permissions in the marketing account to grant access to the S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create an IAM role in the sales account and grant access to the S3 bucket. From the marketing account, assume the IAM role in the sales account to access the S3 bucket. Update the QuickSight rote, to create a trust relationship with the new IAM role in the sales account.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "replicates petabytes and omits KMS permissions",
+        "B": "SCP cannot grant access and KMS keys are not shared through RAM",
+        "C": "says bucket policy in wrong account",
+        "D": "reverses trust relationship and omits KMS decrypt."
       },
-      "memoryTip": "No offered choice cleanly configures cross-account QuickSight S3 bucket policy plus KMS decrypt",
+      "memoryTip": "None of the offered options explicitly combines correct sales-account bucket policy, marketing-account QuickSight role permission and cross-account KMS decrypt grant. D role trust description is backwards",
       "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+        "https://docs.aws.amazon.com/quicksight/latest/user/cross-account-access.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "D"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Malformed or underspecified question; exclude from auto-scored confirmed answers."
     },
     {
       "id": 637,
       "domain": 1,
       "sequence": 94,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Duplicate Q389/Q125: EC2 Instance Connect logs API key push, not complete SSH sessions.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "EC2 Instance Connect injects ephemeral SSH public keys; SendSSHPublicKey is logged by CloudTrail. SSH session contents are not recorded in CloudTrail, so literal 'all SSH connections logged' is overstated.",
       "wrongOptions": {
-        "A": "Alternative: Launch new EC2 instances. Generate an individual SSH key for each new EC2 instance. Store the SSH key in AWS Secrets Manager. Create a new IAM policy. Attach the IAM policy to the engineers' IAM role with an Allow statement for the GetSecretValue action. Instruct the engineers to retrieve the SSH key from Secrets Manager when the engineers connect through any SSH client.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create an AWS Systems Manager document to run commands on EC2 instances to set a new unique SSH key. Create a new IAM policy. Attach the IAM policy to the engineers' IAM role with an Allow statement to run Systems Manager documents. Instruct the engineers to run the document to set an SSH key and to connect through any SSH client.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Launch new EC2 instances without setting up any SSH key for the new EC2 instances. Set up EC2 Instance Connect on each new EC2 instance. Create a new IAM policy. Attach the IAM policy to the engineers' IAM role with an Allow statement for the SendSSHPublicKey action. Instruct the engineers to connect to the EC2 instances by using Instance Connect from the AWS CLI.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Set up AWS Secrets Manager to store the EC2 SSH key. Create an AWS Lambda function to create a new SSH key and to call AWS Systems Manager Session Manager to set the SSH key on the EC2 instance. Configure Secrets Manager to use the Lambda function to automatically rotate the SSH key once daily. Instruct the engineers to retrieve the SSH key from Secrets Manager when the engineers connect through any SSH client.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "static key retrieval is not SSH session logging",
+        "B": "Systems Manager Run Command isn't SSH connection audit",
+        "D": "daily rotating key isn't unique per session and SSH isn't CloudTrail-logged."
       },
-      "memoryTip": "Duplicate Q389/Q125: EC2 Instance Connect logs API key push, not complete SSH sessions.",
+      "memoryTip": "EC2 Instance Connect injects ephemeral SSH public keys",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-connect-methods.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 644,
       "domain": 1,
       "sequence": 95,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Organizations onboarding, Inspector scans and central Systems Manager Patch Manager; EC2 resources cannot be moved directly into an OU, so migration into a dev account is necessary.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "F"
+      ],
+      "validity": "verified",
+      "reasoning": "OU contains accounts rather than EC2 instances, so move/recreate tagged development instances into a dev account; Inspector and Patch Manager handle scans and baselines.",
       "wrongOptions": {
-        "A": "Provisional selection: Invite AnyCompany’s account into the organization. Use SCPs to enforce tag requirements for all new instances. Create a new account under an OU for development work. Recreate EC2 instances that have the development environment tag into the account.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Invite AnyCompany’s account into the organization. Use IAM policies for each account to enforce tag usage. Use AWS Resource Groups to recreate EC2 instances that have the development environment tag into a new OU for development work.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Configure AWS Security Hub across the organization. Configure AWS Trusted Advisor to perform daily security checks on all EC2 instances in the organization.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Configure AWS Security Hub across the organization. Configure Amazon Inspector to perform daily security checks on all EC2 instances in the organization.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Alternative: Configure AWS Systems Manager Patch Manager in each individual account. Define patch baselines and reports separately for each account.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "F": "Provisional selection: Configure AWS Systems Manager Patch Manager across the organization by using a delegated administrator account. Create organization-wide patch baselines and configure compliance reporting.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "Resource Groups cannot place instances into OUs",
+        "C": "Trusted Advisor does not replace Inspector vulnerability assessment",
+        "E": "per-account patch configuration adds overhead."
       },
-      "memoryTip": "Organizations onboarding, Inspector scans and central Systems Manager Patch Manager",
+      "memoryTip": "OU contains accounts rather than EC2 instances, so move/recreate tagged development instances into a dev account",
       "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/inspector/latest/user/what-is-inspector.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
@@ -2080,78 +2080,81 @@
         "D",
         "F"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 645,
       "domain": 1,
       "sequence": 96,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Organization-level daily AWS Budgets threshold and SNS/email alert.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Management-account AWS Budgets daily cost budget with 80% actual threshold and SNS email subscriptions.",
       "wrongOptions": {
-        "A": "Provisional selection: In the organization's management account, use AWS Budgets to create a budget that has a daily period. Add an alert threshold and set the value to 80%. Use Amazon Simple Notification Service (Amazon SNS) to notify the finance team.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: In the organization’s management account, set up the organizational view feature for AWS Trusted Advisor. Create an organizational view report for cost optimization.Set an alert threshold of 80%. Configure notification preferences. Add the email addresses of the finance team.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Register the organization with AWS Control Tower. Activate the optional cost control (guardrail). Set a control (guardrail) parameter of 80%. Configure control (guardrail) notification preferences. Use Amazon Simple Notification Service (Amazon SNS) to notify the finance team.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Configure the member accounts to save a daily AWS Cost and Usage Report to an Amazon S3 bucket in the organization's management account. Use Amazon EventBridge to schedule a daily Amazon Athena query to calculate the organization’s costs. Configure Athena to send an Amazon CloudWatch alert if the total costs are more than 80% of the allocated budget. Use Amazon Simple Notification Service (Amazon SNS) to notify the f…. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "Trusted Advisor has no 80% organization daily budget alert",
+        "C": "Control Tower lacks such guardrail",
+        "D": "Athena custom pipeline adds overhead and doesn't natively emit alarms."
       },
-      "memoryTip": "Organization-level daily AWS Budgets threshold and SNS/email alert.",
+      "memoryTip": "Management-account AWS Budgets daily cost budget with 80% actual threshold and SNS email subscriptions.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "A"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 653,
       "domain": 1,
       "sequence": 97,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "ASG termination lifecycle hook, Systems Manager SendCommand to upload logs, then CONTINUE termination.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Auto Scaling termination hook pauses termination; Lambda starts Systems Manager SendCommand to upload logs, then completes lifecycle action CONTINUE after command succeeds.",
       "wrongOptions": {
-        "A": "Alternative: Create a script to copy log files to Amazon S3, and store the script in a file on the EC2 instance. Create an Auto Scaling lifecycle hook and an Amazon EventBridge (Amazon CloudWatch Events) rule to detect lifecycle events from the Auto Scaling group. Invoke an AWS Lambda function on the autoscaling:EC2_INSTANCE_TERMINATING transition to send ABANDON to the Auto Scaling group to prevent termination, run the script to…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create an AWS Systems Manager document with a script to copy log files to Amazon S3. Create an Auto Scaling lifecycle hook and an Amazon EventBridge (Amazon CloudWatch Events) rule to detect lifecycle events from the Auto Scaling group. Invoke an AWS Lambda function on the autoscaling:EC2_INSTANCE_TERMINATING transition to call the AWS Systems Manager API SendCommand operation to run the document to copy the log file…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Change the log delivery rate to every 5 minutes. Create a script to copy log files to Amazon S3, and add the script to EC2 instance user data. Create an Amazon EventBridge (Amazon CloudWatch Events) rule to detect EC2 instance termination. Invoke an AWS Lambda function from the EventBridge (CloudWatch Events) rule that uses the AWS CLI to run the user-data script to copy the log files and terminate the instance.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create an AWS Systems Manager document with a script to copy log files to Amazon S3. Create an Auto Scaling lifecycle hook that publishes a message to an Amazon Simple Notification Service (Amazon SNS) topic. From the SNS notification, call the AWS Systems Manager API SendCommand operation to run the document to copy the log files and send ABANDON to the Auto Scaling group to terminate the instance.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "ABANDON doesn't preserve instance and invokes script without mechanism",
+        "C": "user data runs at launch not on termination",
+        "D": "SNS cannot directly call SendCommand and ABANDON is wrong completion action."
       },
-      "memoryTip": "ASG termination lifecycle hook, Systems Manager SendCommand to upload logs, then CONTINUE termination.",
+      "memoryTip": "Auto Scaling termination hook pauses termination",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/lifecycle-hooks.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 663,
       "domain": 1,
       "sequence": 98,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "DynamoDB global tables enable local writes and Lambda@Edge can validate and update, but concurrency/idempotency for single-use tickets is not guaranteed by eventual global replication.",
+      "validity": "ambiguous",
+      "reasoning": "D is closest to low-latency distributed writes, but Lambda@Edge and DynamoDB global tables don't ensure single-use ticket consistency across Regions; question omits conflict prevention. Do not present as fully valid.",
       "wrongOptions": {
-        "A": "Alternative: Host the database on Amazon Aurora global database clusters. Host the backend on three Amazon ECS clusters that are in the same Regions as the database. Create an accelerator in AWS Global Accelerator to route requests to the nearest ECS cluster. Create an Amazon Route 53 record that maps api.example.com to the accelerator endpoint.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Host the database on Amazon Aurora global database clusters. Host the backend on three Amazon EKS clusters that are in the same Regions as the database. Create an Amazon CloudFront distribution with the three clusters as origins. Route requests to the nearest EKS cluster. Create an Amazon Route 53 record that maps api.example.com to the CloudFront distribution.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Host the database on Amazon DynamoDB global tables. Create an Amazon CloudFront distribution. Associate the CloudFront distribution with a CloudFront function that contains the backend logic to validate the barcodes. Create an Amazon Route 53 record that maps api.example.com to the CloudFront distribution.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Host the database on Amazon DynamoDB global tables. Create an Amazon CloudFront distribution. Associate the CloudFront distribution with a Lambda@Edge function that contains the backend logic to validate the barcodes. Create an Amazon Route 53 record that maps api.example.com to the CloudFront distribution.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "Aurora global database normally has one primary writer Region",
+        "B": "CloudFront origins aren't automatically proximity routed",
+        "C": "CloudFront Functions cannot perform arbitrary DynamoDB SDK writes",
+        "D": "has multi-Region write-conflict risk."
       },
-      "memoryTip": "DynamoDB global tables enable local writes and Lambda@Edge can validate and update, but concurrency/idempotency for single-use tickets is not guaranteed by eventual global replication.",
-      "awsReferences": [],
+      "memoryTip": "D is closest to low-latency distributed writes, but Lambda@Edge and DynamoDB global tables don't ensure single-use ticket consistency across Regions",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html"
+      ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "D"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Malformed or underspecified question; exclude from auto-scored confirmed answers."
     },
     {
       "id": 666,
@@ -2189,91 +2192,96 @@
       "id": 668,
       "domain": 1,
       "sequence": 100,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Organizations management account can disable RI discount sharing for the HR production account.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "RI discount sharing controls are set in payer/management account for linked accounts.",
       "wrongOptions": {
-        "A": "Alternative: In the AWS Billing and Cost Management console for the HR department's production account, turn off R1 sharing.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Remove the HR department's production AWS account from the organization. Add the account to the consolidating billing configuration only.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: In the AWS Billing and Cost Management console, use the organization's management account to turn off R1 sharing for the HR department's production AWS account.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create an SCP in the organization to restrict access to the RIs. Apply the SCP to the OUs of the other departments.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "member account cannot centrally configure organization discount sharing",
+        "B": "breaks organization structure",
+        "D": "SCPs govern API permissions, not billing discount sharing."
       },
-      "memoryTip": "Organizations management account can disable RI discount sharing for the HR production account.",
+      "memoryTip": "RI discount sharing controls are set in payer/management account for linked accounts.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+        "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ri-turn-off.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 6,
       "domain": 2,
       "sequence": 101,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "SageMaker multi-model endpoints pool model hosting resources; verify specific inference-components compatibility.",
+      "validity": "ambiguous",
+      "reasoning": "Multi-model endpoints reduce model-hosting cost, but 'multi-model endpoints with inference components' conflates distinct SageMaker endpoint approaches; 5000 models and strict sub-200ms also risk cold starts. Flag as malformed.",
       "wrongOptions": {
-        "A": "Alternative: Deploy each model to a dedicated Amazon SageMaker AI real-time endpoint. Provision ml.g5.xlarge instances to handle peak traffic. Use cross-account IAM roles to grant AWS accounts access to model artifacts.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Deploy models by using Amazon SageMaker AI multi-model endpoints with inference components. Enable auto scaling in a centralized production account.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Deploy models to individual Amazon SageMaker AI serverless inference endpoints. Configure auto scaling. Deploy the endpoints in separate AWS accounts for each environment. Use cross-account Amazon S3 bucket policies to share models.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Deploy models to Amazon SageMaker AI asynchronous inference endpoints. Use Amazon S3 to queue requests from multiple accounts. Use batch transform jobs to perform offline processing.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "5000 dedicated GPU endpoints expensive",
+        "B": "mixes distinct hosting concepts and cold-start latency",
+        "C": "5000 serverless endpoints costly and variable latency",
+        "D": "asynchronous inference incompatible with sub-200ms."
       },
-      "memoryTip": "SageMaker multi-model endpoints pool model hosting resources",
-      "awsReferences": [],
+      "memoryTip": "Multi-model endpoints reduce model-hosting cost, but 'multi-model endpoints with inference components' conflates distinct SageMaker endpoint approaches",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/multi-model-endpoints.html"
+      ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Malformed or underspecified question; exclude from auto-scored confirmed answers."
     },
     {
       "id": 8,
       "domain": 2,
       "sequence": 102,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Elastic Disaster Recovery replicates Windows servers; FSx for Windows shared files address common share and recovery objectives.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Elastic Disaster Recovery supports replication, failover and failback of Windows servers; FSx for Windows supports SMB shared storage.",
       "wrongOptions": {
-        "A": "Alternative: Create an AWS Storage Gateway File Gateway. Schedule daily Windows server backups. Save the data lo Amazon S3. During a disaster, recover the on-premises servers from the backup. During failback. run the on-premises servers on Amazon EC2 instances.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create a set of AWS CloudFormation templates to create infrastructure. Replicate all data to Amazon Elastic File System (Amazon EFS) by using AWS DataSync. During a disaster, use AWS CodePipeline to deploy the templates to restore the on-premises servers. Fail back the data by using DataSync.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create an AWS Cloud Development Kit (AWS CDK) pipeline to stand up a multi-site active-active environment on AWS. Replicate data into Amazon S3 by using the s3 sync command. During a disaster, swap DNS endpoints to point to AWS. Fail back the data by using the s3 sync command.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Use AWS Elastic Disaster Recovery to replicate the on-premises servers. Replicate data to an Amazon FSx for Windows File Server file system by using AWS DataSync. Mount the file system to AWS servers. During a disaster, fail over the on-premises servers to AWS. Fail back to new or existing servers by using Elastic Disaster Recovery.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "daily backups miss 5-minute RPO",
+        "B": "EFS is NFS rather than native Windows SMB share and lacks native failback",
+        "C": "active-active overbuilt and S3 sync not 5-minute RPO."
       },
-      "memoryTip": "Elastic Disaster Recovery replicates Windows servers",
+      "memoryTip": "Elastic Disaster Recovery supports replication, failover and failback of Windows servers",
       "awsReferences": [
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "D"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 9,
       "domain": 2,
       "sequence": 103,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Direct Connect private replication and throttling; option A NAT gateways may be needed for replication server outbound connectivity depending on architecture.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "Private Direct Connect plus DRS private replication IPs and bandwidth throttling; VPC private subnets and gateway routing accommodate staging.",
       "wrongOptions": {
-        "A": "Provisional selection: Create a VPC that has at least two private subnets, two NAT gateways, and a virtual private gateway.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create a VPC that has at least two public subnets, a virtual private gateway, and an internet gateway.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create an AWS Site-to-Site VPN connection between the on-premises network and the target AWS network. Configure Quality of Service (QoS) to ensure that the backup does not exceed 75% of the available bandwidth.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Create an AWS Direct Connect connection and a Direct Connect gateway between the on-premises network and the target AWS network.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Provisional selection: Configure the replication servers to use private IP addresses for data replication. Configure throttling on the replication instances so that the Elastic Disaster Recovery server bandwidth does not exceed 75% of the available bandwidth.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "F": "Alternative: Configure the recovery instance’s private IP address to match the source server's private IP address. Configure throttling on the recovery instances so that the total bandwidth the recovery instances consume does not exceed 75% of the available bandwidth.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "public subnets aren't needed for protected app",
+        "C": "VPN is not dedicated private connection",
+        "F": "recovery-instance IP matching does not control replication bandwidth."
       },
-      "memoryTip": "Direct Connect private replication and throttling",
+      "memoryTip": "Private Direct Connect plus DRS private replication IPs and bandwidth throttling",
       "awsReferences": [
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
@@ -2281,102 +2289,103 @@
         "D",
         "E"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 11,
       "domain": 2,
       "sequence": 104,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Bidirectional S3 CRR supports two-region bucket replication but needs loop prevention and conflict design.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Two S3 buckets with bidirectional CRR and Multi-Region Access Point support multi-Region read/write access with managed routing.",
       "wrongOptions": {
-        "A": "Alternative: Set up an Amazon CloudFront distribution with the S3 bucket as an origin. Deploy the application to a second Region Modify the application to use the CloudFront distribution. Use AWS Global Accelerator to access the data in the S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create a new S3 bucket in a second Region. Set up bidirectional S3 Cross-Region Replication (CRR) between the original S3 bucket and the new S3 bucket. Configure an S3 Multi-Region Access Point that uses both S3 buckets. Deploy a modified application to both Regions.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create a new S3 bucket in a second Region Deploy the application in the second Region. Configure the application to use the new S3 bucket. Set up S3 Cross-Region Replication (CRR) from the original S3 bucket to the new S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Set up an S3 gateway endpoint with the S3 bucket as an origin. Deploy the application to a second Region. Modify the application to use the new S3 gateway endpoint. Use S3 Intelligent-Tiering on the S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "CloudFront does not provide S3 writes and Global Accelerator isn't S3 access method",
+        "C": "one-way CRR cannot replicate writes back",
+        "D": "gateway endpoints are Regional and not S3 origins."
       },
-      "memoryTip": "Bidirectional S3 CRR supports two-region bucket replication but needs loop prevention and conflict design.",
+      "memoryTip": "Two S3 buckets with bidirectional CRR and Multi-Region Access Point support multi-Region read/write access with managed routing.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPoints.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 14,
       "domain": 2,
       "sequence": 105,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "AWS Backup scheduled EC2 backup and cross-Region vault copy.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS Backup daily EC2 recovery points and cross-Region copy support one-day RPO/RTO with little management.",
       "wrongOptions": {
-        "A": "Alternative: Create a second CloudFormation template that can recreate the EC2 instances in the secondary Region. Run daily multivolume snapshots by using AWS Systems Manager Automation runbooks. Copy the snapshots to the secondary Region. In the event of a failure, launch the CloudFormation templates, restore the EBS volumes from snapshots, and transfer usage to the secondary Region.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Use Amazon Data Lifecycle Manager (Amazon DLM) to create daily multivolume snapshots of the EBS volumes. In the event of a failure, launch theCloudFormation template and use Amazon DLM to restore the EBS volumes and transfer usage to the secondary Region.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Use AWS Backup to create a scheduled daily backup plan for the EC2 instances. Configure the backup task to copy the backups to a vault in the secondary Region. In the event of a failure, launch the CloudFormation template, restore the instance volumes and configurations from the backup vault, and transfer usage to the secondary Region.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Deploy EC2 instances of the same size and configuration to the secondary Region. Configure AWS DataSync daily to copy data from the primary Region to the secondary Region. In the event of a failure, launch the CloudFormation template and transfer usage to the secondaryRegion.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "Systems Manager runbooks and separate templates add overhead",
+        "B": "DLM restore and cross-Region recovery not as described",
+        "D": "standing EC2 and DataSync cost more and don't preserve instance configuration."
       },
-      "memoryTip": "AWS Backup scheduled EC2 backup and cross-Region vault copy.",
+      "memoryTip": "AWS Backup daily EC2 recovery points and cross-Region copy support one-day RPO/RTO with little management.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/whatisbackup.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 15,
       "domain": 2,
       "sequence": 106,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "CloudFront origin group supports S3 origin failover for eligible HTTP status codes.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudFront origin group is attached to default cache behavior; one-second origin connection timeout and single attempt accelerate connection-failure failover.",
       "wrongOptions": {
-        "A": "Alternative: Create a second CloudFront distribution that uses the second S3 bucket as a single origin. Create an origin group. Add both distributions to the origin group. Set the original distribution as the primary distribution. Set the new distribution as the secondary distribution. Create an Amazon Route 53 health check to monitor the health of the primary distribution and secondary distribution every second.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create a new origin in the existing CloudFront distribution. Specify the second S3 bucket as the new origin. Create an origin group. Add the original origin as the primary origin. Add the new origin as the secondary origin. Set the origin response timeout value to 1. Set the origin connection attempts value to 1.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create a new origin in the existing CloudFront distribution. Specify the second S3 bucket as the new origin. Create an origin group. Add the original origin as the primary origin. Add the new origin as the secondary origin. Update the default cache behavior to use the origin group. Set the origin connection timeout value to 1. Set the origin connection attempts value to 1.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create a new origin in the existing CloudFront distribution. Specify the second S3 bucket as the new origin. Create an AWS Lambda function to monitor the health of the original origin. Program the Lambda function to update the CloudFront distribution and promote the secondary origin to primary if a health check fails. Create an Amazon EventBridge scheduled rule to invoke the Lambda function every second.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "origin groups contain origins not distributions",
+        "B": "does not attach group to behavior and response timeout alone isn't connection timeout",
+        "D": "EventBridge cannot schedule every second."
       },
-      "memoryTip": "CloudFront origin group supports S3 origin failover for eligible HTTP status codes.",
+      "memoryTip": "CloudFront origin group is attached to default cache behavior",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 19,
       "domain": 2,
       "sequence": 107,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Multi-Region API endpoints plus KMS multi-Region key and Secrets Manager replicated secrets.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "B",
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Regional API deployments, multi-Region customer-managed KMS keys, and replicated Secrets Manager secret with Regional KMS keys enable active-active.",
       "wrongOptions": {
-        "A": "Provisional selection: Deploy the API to multiple Regions. Configure Amazon Route 53 with custom domain names that route traffic to each Regional API endpoint. Implement a Route 53 multivalue answer routing policy.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create a new KMS multi-Region customer managed key. Create a new KMS customer managed replica key in each in-scope Region.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Replicate the existing Secrets Manager secret to other Regions. For each in-scope Region's replicated secret, select the appropriate KMS key.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create a new AWS managed KMS key in each in-scope Region. Convert an existing key to a multi-Region key. Use the multi-Region key in other Regions.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Alternative: Create a new Secrets Manager secret in each in-scope Region. Copy the secret value from the existing Region to the new secret in each in-scope Region.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "F": "Alternative: Modify the deployment process for the Lambda function to repeat the deployment across in-scope Regions. Turn on the multi-Region option for the existing API. Select the Lambda function that is deployed in each Region as the backend for the multi-Region API.. Technical assessment still pending; not a verified right/wrong judgement."
+        "D": "cannot convert existing single-Region key into multi-Region and AWS managed keys aren't cross-account customizable",
+        "E": "manual secret copies increase drift",
+        "F": "API Gateway has no generic multi-Region switch."
       },
-      "memoryTip": "Multi-Region API endpoints plus KMS multi-Region key and Secrets Manager replicated secrets.",
+      "memoryTip": "Regional API deployments, multi-Region customer-managed KMS keys, and replicated Secrets Manager secret with Regional KMS keys enable active-active.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
-        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+        "https://docs.aws.amazon.com/secretsmanager/latest/userguide/replicate-secrets.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
@@ -2384,125 +2393,132 @@
         "B",
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 23,
       "domain": 2,
       "sequence": 108,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "SQS with Lambda provides asynchronous decoupled order processing.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "SQS durably buffers burst orders and Lambda scales consumers to write DynamoDB.",
       "wrongOptions": {
-        "A": "Alternative: Receive the orders in an Amazon EC2-hosted database and use EC2 instances to process them.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Receive the orders in an Amazon SQS queue and invoke an AWS Lambda function to processthem.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Receive the orders using the AWS Step Functions program and launch an Amazon ECS container to process them.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Receive the orders in Amazon Kinesis Data Streams and use Amazon EC2 instances to process them.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "EC2 database couples ingestion to processing",
+        "C": "Step Functions plus ECS more complex for simple queue workload",
+        "D": "Kinesis plus EC2 requires shard/instance management."
       },
-      "memoryTip": "SQS with Lambda provides asynchronous decoupled order processing.",
+      "memoryTip": "SQS durably buffers burst orders and Lambda scales consumers to write DynamoDB.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 26,
       "domain": 2,
       "sequence": 109,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "NLB static per-AZ IP and Route 53 alias provide TCP availability.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "NLB supports static per-AZ Elastic IPs, TCP, and Route 53 alias DNS.",
       "wrongOptions": {
-        "A": "Alternative: Create Amazon EC2 instances with an Elastic IP address for each instance Create a Network Load Balancer (NLB) and expose the static TCP port Register EC2instances with the NLB Create a new name server record set named my service com, and assign the Elastic IP addresses of the EC2 instances to the record set Provide the Elastic IP addresses of the EC2 instances to the other companies to add to their allow lists. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create an Amazon ECS cluster and a service definition for the application Create and assign public IP addresses for the ECS cluster Create a Network Load Balancer (NLB) and expose the TCP port Create a target group and assign the ECS cluster name to the NLB Create a new A record set named my service com and assign the public IP addresses of the ECS cluster to the record set Provide the public IP addresses of the ECS …. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create Amazon EC2 instances for the service Create one Elastic IP address for each Availability Zone Create a Network Load Balancer (NLB) and expose the assigned TCP port Assign the Elastic IP addresses to the NLB for each Availability Zone Create a target group and register the EC2 instances with the NLB Create a new A (alias) record set named my service com, and assign the NLB DNS name to the record set.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create an Amazon ECS cluster and a service definition for the application Create and assign public IP address for each host in the cluster Create an Application Load Balancer (ALB) and expose the static TCP port Create a target group and assign the ECS service definition name to the ALB Create a new CNAME record set and associate the public IP addresses to the record set Provide the Elastic IP addresses of the Amazon…. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "instance EIPs bypass load balancer for allowlists",
+        "B": "ECS cluster has no public IP as load balancer target",
+        "D": "ALB isn't generic TCP and CNAME cannot point to IPs."
       },
-      "memoryTip": "NLB static per-AZ IP and Route 53 alias provide TCP availability.",
-      "awsReferences": [],
+      "memoryTip": "NLB supports static per-AZ Elastic IPs, TCP, and Route 53 alias DNS.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html"
+      ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 30,
       "domain": 2,
       "sequence": 110,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "IoT Core custom domain per Region, health-check DNS failover and replicated DynamoDB data.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS IoT Core domain configurations with Route 53 failover and DynamoDB global tables support two-Region ingestion/storage.",
       "wrongOptions": {
-        "A": "Alternative: Create an Amazon Route 53 alias failover routing policy with values for AWS loT Core data endpoints in both Regions Migrate data to Amazon Aurora global tables. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create a domain configuration for AWS loT Core in each Region Create an Amazon Route 53 latency-based routing policy Use AWS loT Core data endpoints in both Regions as values Migrate the data to Amazon MemoryDB for Radis and configure Cross-Region replication. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create a domain configuration for AWS loT Core in each. Region Create an AmazonRoute 53 health check that evaluates domain configuration health Create a failover routing policy with values for the domain name from the AWS loT Core domain configurations Update the DynamoDB table to a global table. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create an Amazon Route 53 latency-based routing policy. Use AWS loT Core data endpoints in both Regions as values. Configure DynamoDB streams and Cross-Region data replication. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "Aurora global tables isn't a service",
+        "B": "MemoryDB is not DynamoDB replacement and latency policy lacks failover health",
+        "D": "default IoT endpoints and manual Streams replication add work."
       },
-      "memoryTip": "IoT Core custom domain per Region, health-check DNS failover and replicated DynamoDB data.",
+      "memoryTip": "AWS IoT Core domain configurations with Route 53 failover and DynamoDB global tables support two-Region ingestion/storage.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+        "https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-endpoints-configurable.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 36,
       "domain": 2,
       "sequence": 111,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Bedrock Guardrails denied topics and sensitive-information filters meet prompt controls.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Bedrock Guardrails ApplyGuardrail evaluates inputs before inference; Converse guardrail evaluates model output with denied topics and PII masking.",
       "wrongOptions": {
-        "A": "Alternative: Store approved health support guidelines in an Amazon Bedrock knowledge base. Configure system prompts that instruct the model not to provide diagnosis advice. Use an AWS Lambda function after inference to remove PII from the model response before the response is returned to users.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Fine-tune an FM on approved support conversations. Add prompt templates that prohibit diagnosis advice. Run a separate review process that scans transcripts for prohibited topics and sensitive information after the conversations end.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Build a custom moderation layer in the application to inspect prompts for prohibited topics and to redact sensitive information from user inputs. Invoke the model through the Converse API. Use separate post-processing logic to redact sensitive information from responses before displaying responses to users.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Create an Amazon Bedrock guardrail. Configure denied topics for medical diagnosis advice. Configure sensitive information filters to mask PII. Configure content filters. Call the ApplyGuardrail API on user prompts before inference. Include the same guardrail in the Converse API to evaluate model responses.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "prompts and response-only redaction miss pre-inference enforcement",
+        "B": "after-the-fact reviews are not preventive",
+        "C": "custom moderation adds maintenance versus managed Guardrails."
       },
-      "memoryTip": "Bedrock Guardrails denied topics and sensitive-information filters meet prompt controls.",
+      "memoryTip": "Bedrock Guardrails ApplyGuardrail evaluates inputs before inference",
       "awsReferences": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html"
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-use-independent-api.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "D"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 39,
       "domain": 2,
       "sequence": 112,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "WAF geo match with ALB and WAF logging; country restriction is based on IP geolocation.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "WAF geographic match rule blocks nonallowed countries at ALB; enable WAF logging for blocked requests.",
       "wrongOptions": {
-        "A": "Alternative: Create an IPSet containing a list of IP ranges that belong to the specified country. Create an AWS WAF web ACL. Configure a rule to block any requests that do not originate from an IP range in theIPSet. Associate the rule with the web ACL. Associate the web ACL with the ALB.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create an AWS WAF web ACL. Configure a rule to block any requests that do not originate from the specified country. Associate the rule with the web ACL. Associate the web ACL with the ALB.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Configure AWS Shield to block any requests that do not originate from the specified country. Associate AWS Shield with the ALB.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create a security group rule that allows ports 80 and 443 from IP ranges that belong to the specified country. Associate the security group with the ALB.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "manually maintained IP ranges costly",
+        "C": "Shield doesn't geo-filter requests",
+        "D": "security groups cannot enforce country matching or WAF-style logs."
       },
-      "memoryTip": "WAF geo match with ALB and WAF logging",
+      "memoryTip": "WAF geographic match rule blocks nonallowed countries at ALB",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-geo-match.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed with AWS service reference and option-level reasoning."
     },
     {
       "id": 40,
