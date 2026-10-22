@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "70 continuation entries; 120 overall. Q518 corrected A to C; Q476 and Q551 flawed. This batch has reasoning but option-level annotations still pending.",
+  "notes": "120 entries in continuation file (170 total including first 50). Latest 50 (30 Domain 1 +20 Domain 2) are PRELIMINARY, not fully verified: option analysis and official AWS reference checks pending. Do not display them as fully reviewed.",
   "items": [
     {
       "id": 12,
@@ -1449,6 +1449,1031 @@
       "awsReferences": [
         "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-peering.html"
       ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 553,
+      "domain": 1,
+      "sequence": 71,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "XKS keeps key material in customer-operated in-country HSMs; Control Tower Region deny is preventive.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "XKS keeps key material in customer-operated in-country HSMs",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 554,
+      "domain": 1,
+      "sequence": 72,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "HTTP API Lambda authorizer can validate external OAuth bearer tokens; native JWT authorizer may be simpler when issuer supports it.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "HTTP API Lambda authorizer can validate external OAuth bearer tokens",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 557,
+      "domain": 1,
+      "sequence": 73,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Organizations SCP can prevent S3 access point creation without VPC network origin.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Organizations SCP can prevent S3 access point creation without VPC network origin.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 558,
+      "domain": 1,
+      "sequence": 74,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Control Tower detective RDS encryption control applies at production OU scope.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Control Tower detective RDS encryption control applies at production OU scope.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 559,
+      "domain": 1,
+      "sequence": 75,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Secret resource policy explicit deny applies to both organization and external principals; SCP alone cannot deny outside organization.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Secret resource policy explicit deny applies to both organization and external principals",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 561,
+      "domain": 1,
+      "sequence": 76,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Separate EU stack plus Region SCP best among options; geolocation DNS alone does not guarantee residency for traveling users or proxies.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Separate EU stack plus Region SCP best among options",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 565,
+      "domain": 1,
+      "sequence": 77,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "API Gateway HTTP API direct SQS integration buffers bursts and Lambda processes messages; ALB cannot target SQS. Source A is incorrect.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "API Gateway HTTP API direct SQS integration buffers bursts and Lambda processes messages",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 567,
+      "domain": 1,
+      "sequence": 78,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Patched AMI, launch template update and instance refresh solve unpatched replacements; second choice C adds ALB but is not intrinsically required for patch freshness.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Selected in preliminary assessment; see reasoning.",
+        "E": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Patched AMI, launch template update and instance refresh solve unpatched replacements",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 568,
+      "domain": 1,
+      "sequence": 79,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C",
+        "D"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "NLB cross-zone off and zonal interface endpoint DNS minimize cross-AZ data transfers.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Selected in preliminary assessment; see reasoning.",
+        "E": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "NLB cross-zone off and zonal interface endpoint DNS minimize cross-AZ data transfers.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 569,
+      "domain": 1,
+      "sequence": 80,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "ECR scan-on-push results can trigger EventBridge remediation and SNS notification; tag deletion behavior must be checked against ECR image manifest retention.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "ECR scan-on-push results can trigger EventBridge remediation and SNS notification",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 577,
+      "domain": 1,
+      "sequence": 81,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "CloudFormation Hooks enforce pre-provision checks; Lambda hook per rule and StackSets may be more operational overhead than Guard-based hooks.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "CloudFormation Hooks enforce pre-provision checks",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 580,
+      "domain": 1,
+      "sequence": 82,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Empty S3 bucket via custom resource before CloudFormation deletion; caller role must have delete-object permissions.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Selected in preliminary assessment; see reasoning.",
+        "E": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Empty S3 bucket via custom resource before CloudFormation deletion",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 582,
+      "domain": 1,
+      "sequence": 83,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "E"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Cross-account assume-role into production account with S3 permissions and dev group AssumeRole.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "E": "Selected in preliminary assessment; see reasoning.",
+        "F": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Cross-account assume-role into production account with S3 permissions and dev group AssumeRole.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 585,
+      "domain": 1,
+      "sequence": 84,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "ALB authenticate-cognito action can use Cognito user pool with MFA for restricted web access.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "ALB authenticate-cognito action can use Cognito user pool with MFA for restricted web access.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 589,
+      "domain": 1,
+      "sequence": 85,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Read-only cross-account role in each member account trusted by central security account.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Read-only cross-account role in each member account trusted by central security account.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 593,
+      "domain": 1,
+      "sequence": 86,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "SAML STS session tag with IAM ABAC resource-tag conditions isolates shared production account by development unit.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "SAML STS session tag with IAM ABAC resource-tag conditions isolates shared production account by development unit.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 597,
+      "domain": 1,
+      "sequence": 87,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Glue classifier and ETL can process sensitive PAN data; exact output compliance needs confirmation from full stem.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Glue classifier and ETL can process sensitive PAN data",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 599,
+      "domain": 1,
+      "sequence": 88,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "PrivateLink NLB-to-target networking needs NACL paths and instance security group ingress; NLB client IP preservation behavior matters.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "E": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "PrivateLink NLB-to-target networking needs NACL paths and instance security group ingress",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 603,
+      "domain": 1,
+      "sequence": 89,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "S3 Access Grants integrated with IAM Identity Center map corporate identities to S3 data access.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "S3 Access Grants integrated with IAM Identity Center map corporate identities to S3 data access.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 606,
+      "domain": 1,
+      "sequence": 90,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "AWS Backup organization policy can centrally schedule six-hour RDS backups with 30-day retention.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "AWS Backup organization policy can centrally schedule six-hour RDS backups with 30-day retention.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 611,
+      "domain": 1,
+      "sequence": 91,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Duplicate Q404: service-managed StackSets from management account with automatic deployment.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Duplicate Q404: service-managed StackSets from management account with automatic deployment.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 612,
+      "domain": 1,
+      "sequence": 92,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "CloudFront Functions viewer-request normalization improves cache-key consistency before lookup.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "CloudFront Functions viewer-request normalization improves cache-key consistency before lookup.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 629,
+      "domain": 1,
+      "sequence": 93,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "No offered choice cleanly configures cross-account QuickSight S3 bucket policy plus KMS decrypt; D's role chaining may not be supported by QuickSight role configuration as described.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "No offered choice cleanly configures cross-account QuickSight S3 bucket policy plus KMS decrypt",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 637,
+      "domain": 1,
+      "sequence": 94,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Duplicate Q389/Q125: EC2 Instance Connect logs API key push, not complete SSH sessions.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Duplicate Q389/Q125: EC2 Instance Connect logs API key push, not complete SSH sessions.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 644,
+      "domain": 1,
+      "sequence": 95,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "F"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Organizations onboarding, Inspector scans and central Systems Manager Patch Manager; EC2 resources cannot be moved directly into an OU, so migration into a dev account is necessary.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Selected in preliminary assessment; see reasoning.",
+        "E": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "F": "Selected in preliminary assessment; see reasoning."
+      },
+      "memoryTip": "Organizations onboarding, Inspector scans and central Systems Manager Patch Manager",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 645,
+      "domain": 1,
+      "sequence": 96,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Organization-level daily AWS Budgets threshold and SNS/email alert.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Organization-level daily AWS Budgets threshold and SNS/email alert.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 653,
+      "domain": 1,
+      "sequence": 97,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "ASG termination lifecycle hook, Systems Manager SendCommand to upload logs, then CONTINUE termination.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "ASG termination lifecycle hook, Systems Manager SendCommand to upload logs, then CONTINUE termination.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 663,
+      "domain": 1,
+      "sequence": 98,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "DynamoDB global tables enable local writes and Lambda@Edge can validate and update, but concurrency/idempotency for single-use tickets is not guaranteed by eventual global replication.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Selected in preliminary assessment; see reasoning."
+      },
+      "memoryTip": "DynamoDB global tables enable local writes and Lambda@Edge can validate and update, but concurrency/idempotency for single-use tickets is not guaranteed by eventual global replication.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 666,
+      "domain": 1,
+      "sequence": 99,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Organizations consolidated billing plus SCP explicit Deny non-US Regions and central billing role; source C Allow is insufficient.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Selected in preliminary assessment; see reasoning.",
+        "E": "Selected in preliminary assessment; see reasoning.",
+        "F": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Organizations consolidated billing plus SCP explicit Deny non-US Regions and central billing role",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 668,
+      "domain": 1,
+      "sequence": 100,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Organizations management account can disable RI discount sharing for the HR production account.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Organizations management account can disable RI discount sharing for the HR production account.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 6,
+      "domain": 2,
+      "sequence": 101,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "SageMaker multi-model endpoints pool model hosting resources; verify specific inference-components compatibility.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "SageMaker multi-model endpoints pool model hosting resources",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 8,
+      "domain": 2,
+      "sequence": 102,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Elastic Disaster Recovery replicates Windows servers; FSx for Windows shared files address common share and recovery objectives.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Selected in preliminary assessment; see reasoning."
+      },
+      "memoryTip": "Elastic Disaster Recovery replicates Windows servers",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 9,
+      "domain": 2,
+      "sequence": 103,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Direct Connect private replication and throttling; option A NAT gateways may be needed for replication server outbound connectivity depending on architecture.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Selected in preliminary assessment; see reasoning.",
+        "E": "Selected in preliminary assessment; see reasoning.",
+        "F": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Direct Connect private replication and throttling",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 11,
+      "domain": 2,
+      "sequence": 104,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Bidirectional S3 CRR supports two-region bucket replication but needs loop prevention and conflict design.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Bidirectional S3 CRR supports two-region bucket replication but needs loop prevention and conflict design.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 14,
+      "domain": 2,
+      "sequence": 105,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "AWS Backup scheduled EC2 backup and cross-Region vault copy.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "AWS Backup scheduled EC2 backup and cross-Region vault copy.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 15,
+      "domain": 2,
+      "sequence": 106,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "CloudFront origin group supports S3 origin failover for eligible HTTP status codes.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "CloudFront origin group supports S3 origin failover for eligible HTTP status codes.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 19,
+      "domain": 2,
+      "sequence": 107,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A",
+        "B",
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Multi-Region API endpoints plus KMS multi-Region key and Secrets Manager replicated secrets.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "E": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "F": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Multi-Region API endpoints plus KMS multi-Region key and Secrets Manager replicated secrets.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 23,
+      "domain": 2,
+      "sequence": 108,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "SQS with Lambda provides asynchronous decoupled order processing.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "SQS with Lambda provides asynchronous decoupled order processing.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 26,
+      "domain": 2,
+      "sequence": 109,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "NLB static per-AZ IP and Route 53 alias provide TCP availability.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "NLB static per-AZ IP and Route 53 alias provide TCP availability.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 30,
+      "domain": 2,
+      "sequence": 110,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "IoT Core custom domain per Region, health-check DNS failover and replicated DynamoDB data.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "IoT Core custom domain per Region, health-check DNS failover and replicated DynamoDB data.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 36,
+      "domain": 2,
+      "sequence": 111,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Bedrock Guardrails denied topics and sensitive-information filters meet prompt controls.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Selected in preliminary assessment; see reasoning."
+      },
+      "memoryTip": "Bedrock Guardrails denied topics and sensitive-information filters meet prompt controls.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 39,
+      "domain": 2,
+      "sequence": 112,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "WAF geo match with ALB and WAF logging; country restriction is based on IP geolocation.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "WAF geo match with ALB and WAF logging",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 40,
+      "domain": 2,
+      "sequence": 113,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Attribute-based EC2 instance type selection improves Spot capacity flexibility.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Attribute-based EC2 instance type selection improves Spot capacity flexibility.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 42,
+      "domain": 2,
+      "sequence": 114,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Kinesis Data Streams ingest and consumer analysis support real-time genomic telemetry.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Kinesis Data Streams ingest and consumer analysis support real-time genomic telemetry.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 48,
+      "domain": 2,
+      "sequence": 115,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Global Accelerator routes to healthy regional ALBs over AWS network.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Global Accelerator routes to healthy regional ALBs over AWS network.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 54,
+      "domain": 2,
+      "sequence": 116,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "Aurora migration/replica strategy may enable multi-Region reads; check original write and RTO requirements.",
+      "wrongOptions": {
+        "A": "Selected in preliminary assessment; see reasoning.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "Aurora migration/replica strategy may enable multi-Region reads",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 58,
+      "domain": 2,
+      "sequence": 117,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "IaC and cross-Region read replica form warm-standby recovery pattern; validate exact RTO/RPO.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "IaC and cross-Region read replica form warm-standby recovery pattern",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 61,
+      "domain": 2,
+      "sequence": 118,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "AWS Backup does not support CodeCommit repositories; EventBridge plus CodeBuild clone and S3 cross-Region copy is workable. Source B incorrect.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "AWS Backup does not support CodeCommit repositories",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 64,
+      "domain": 2,
+      "sequence": 119,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "ALB weighted target group forwarding supports gradual traffic shifting.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Selected in preliminary assessment; see reasoning.",
+        "C": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "ALB weighted target group forwarding supports gradual traffic shifting.",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 70,
+      "domain": 2,
+      "sequence": 120,
+      "verificationStatus": "preliminary-review",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "pending-documentation-check",
+      "reasoning": "API Gateway private REST API with VPC interface endpoint and resource policy removes public exposure; HTTP APIs do not support private endpoint type.",
+      "wrongOptions": {
+        "A": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "B": "Not selected in preliminary assessment. Full option-level technical validation pending.",
+        "C": "Selected in preliminary assessment; see reasoning.",
+        "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
+      },
+      "memoryTip": "API Gateway private REST API with VPC interface endpoint and resource policy removes public exposure",
+      "awsReferences": [],
       "reviewedAt": "2026-10-22"
     }
   ]
