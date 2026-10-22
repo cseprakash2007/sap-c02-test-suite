@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Fifth new 20-question batch: 18 reviewed, 2 flagged (Q166 Q185); corrected keys Q163 C->B, Q172 ADF->ADE, Q186 B->A. Source questions unchanged.",
+  "notes": "Sixth new 20-question batch: 17 answers confirmed with caveats; 3 flagged (Q196, Q205, Q210). Original questions unchanged.",
   "items": [
     {
       "id": 12,
@@ -5998,6 +5998,324 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 187,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Route 53 failover routing with health checks switches from a multi-AZ primary ALB/Auto Scaling deployment to a separately deployed standby Region.",
+      "wrongOptions": null,
+      "memoryTip": "Route 53 failover routing with health checks switches from a multi-AZ primary ALB/Auto Scaling deployment to a separately deployed standby Region.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-configuring.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 189,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "E",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Accounts must leave the old organization, receive invitations from the new organization's management account, and accept; MoveAccount moves only between OUs within an organization.",
+      "wrongOptions": null,
+      "memoryTip": "Accounts must leave the old organization, receive invitations from the new organization's management account, and accept; MoveAccount moves only between OUs within an organization.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_remove.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 190,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Application Discovery collects estate details and dependencies, CART assesses readiness, and Migration Hub consolidates discovery and planning. These tools do not alone provide a fully itemized postmigration quote; Pricing Calculator or Migration Evaluator would improve cost estimates.",
+      "wrongOptions": null,
+      "memoryTip": "Application Discovery collects estate details and dependencies, CART assesses readiness, and Migration Hub consolidates discovery and planning. These tools do not alone provide a fully itemized postmigration quote; Pricing Calculator or Migration Evaluator would improve cost estimates.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 193,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS Client VPN supports per-user secure remote access into private VPC resources; Site-to-Site VPN is for network locations rather than independent employees.",
+      "wrongOptions": null,
+      "memoryTip": "AWS Client VPN supports per-user secure remote access into private VPC resources; Site-to-Site VPN is for network locations rather than independent employees.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/what-is.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 194,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Fargate containers can run 25-minute custom workloads and can be started in response to S3 events delivered through EventBridge; Lambda max execution is 15 minutes.",
+      "wrongOptions": null,
+      "memoryTip": "Fargate containers can run 25-minute custom workloads and can be started in response to S3 events delivered through EventBridge; Lambda max execution is 15 minutes.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 195,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "VPC S3 gateway endpoints work for VPC routes; interface endpoints give on-premises clients private S3 access through VPN. Ensure private DNS and routing are correctly configured; removing NAT is safe only if no other internet-dependent workloads require it.",
+      "wrongOptions": null,
+      "memoryTip": "VPC S3 gateway endpoints work for VPC routes; interface endpoints give on-premises clients private S3 access through VPN. Ensure private DNS and routing are correctly configured; removing NAT is safe only if no other internet-dependent workloads require it.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 196,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "The Step Functions callback-token pattern is the intended choice B, but a token generated in one AWS account cannot simply be returned using SendTaskSuccess from a principal in a different account. The question requires a same-account authorized broker/role or redesigned approval flow; flag cross-account caveat.",
+      "wrongOptions": null,
+      "memoryTip": "The Step Functions callback-token pattern is the intended choice B, but a token generated in one AWS account cannot simply be returned using SendTaskSuccess from a principal in a different account. The question requires a same-account authorized broker/role or redesigned approval flow; flag cross-account caveat.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 197,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DAX reduces repeated reads and provisioned capacity with auto scaling can optimize predictable workloads. Caveat: daily bulk-write spikes may require scheduled scaling or on-demand capacity comparison.",
+      "wrongOptions": null,
+      "memoryTip": "DAX reduces repeated reads and provisioned capacity with auto scaling can optimize predictable workloads. Caveat: daily bulk-write spikes may require scheduled scaling or on-demand capacity comparison.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 198,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "API Gateway account-level Regional throttling can produce 429 before a Lambda integration is invoked; API-key usage-plan throttles may also apply and must be checked.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway account-level Regional throttling can produce 429 before a Lambda integration is invoked; API-key usage-plan throttles may also apply and must be checked.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/limits.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 199,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ECS on EC2 allows consolidating long-running Java and Node workloads on autoscaled shared container capacity; Lambda's 15-minute limit excludes several-hour reports.",
+      "wrongOptions": null,
+      "memoryTip": "ECS on EC2 allows consolidating long-running Java and Node workloads on autoscaled shared container capacity; Lambda's 15-minute limit excludes several-hour reports.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 200,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora global database, regional ECR replication, immutable AWS Backup compliance-mode vault and failover Route 53 records address DR and tamper resistance. Actual RPO/RTO depend on operational failover and replication setup.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora global database, regional ECR replication, immutable AWS Backup compliance-mode vault and failover Route 53 records address DR and tamper resistance. Actual RPO/RTO depend on operational failover and replication setup.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 202,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EKS managed node groups can run a node-level proprietary security agent with suitable custom AMI; D is impossible because Fargate cannot use a custom host AMI.",
+      "wrongOptions": null,
+      "memoryTip": "EKS managed node groups can run a node-level proprietary security agent with suitable custom AMI; D is impossible because Fargate cannot use a custom host AMI.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 203,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EC2 Instance Savings Plans cover stable instance usage; Compute Savings Plans also cover steady Lambda minimum, and MemoryDB reserved nodes cover predictable cache capacity. Savings plans do not cover MemoryDB.",
+      "wrongOptions": null,
+      "memoryTip": "EC2 Instance Savings Plans cover stable instance usage; Compute Savings Plans also cover steady Lambda minimum, and MemoryDB reserved nodes cover predictable cache capacity. Savings plans do not cover MemoryDB.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 205,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "The intended C uses an EC2-hosted FTP server on a Snowcone and offline physical shipment; Snowcone availability and 6 TB usable capacity must be checked, and Snowcone service has been discontinued for new customers, making the question historically framed.",
+      "wrongOptions": null,
+      "memoryTip": "The intended C uses an EC2-hosted FTP server on a Snowcone and offline physical shipment; Snowcone availability and 6 TB usable capacity must be checked, and Snowcone service has been discontinued for new customers, making the question historically framed.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/snowball/latest/snowcone-guide/snowcone-what-is-snowcone.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 206,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFront field-level encryption uses a public RSA key at the edge while the data-handling microservice retains the private key for decryption.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFront field-level encryption uses a public RSA key at the edge while the data-handling microservice retains the private key for decryption.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/field-level-encryption.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 207,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AgentCore Evaluations can support on-demand regression gating and online production evaluation, alongside sampled human audit; other options omit one of those stages.",
+      "wrongOptions": null,
+      "memoryTip": "AgentCore Evaluations can support on-demand regression gating and online production evaluation, alongside sampled human audit; other options omit one of those stages.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/evaluations.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 208,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Heterogeneous SQL Server to MySQL migration needs schema conversion with AWS SCT and data migration with DMS, not native backup restore.",
+      "wrongOptions": null,
+      "memoryTip": "Heterogeneous SQL Server to MySQL migration needs schema conversion with AWS SCT and data migration with DMS, not native backup restore.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 210,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "A+B+C is the intended pattern: SNS email subscription and SNS publish task plus States.ALL Catch. However States.ALL does not catch States.Runtime or States.DataLimitExceeded, so the claimed all-failure coverage is impossible using these choices alone.",
+      "wrongOptions": null,
+      "memoryTip": "A+B+C is the intended pattern: SNS email subscription and SNS publish task plus States.ALL Catch. However States.ALL does not catch States.Runtime or States.DataLimitExceeded, so the claimed all-failure coverage is impossible using these choices alone.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 211,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DataSync scheduled transfers from on-premises SMB to Amazon FSx for Windows File Server preserve Windows-compatible file system semantics over Direct Connect.",
+      "wrongOptions": null,
+      "memoryTip": "DataSync scheduled transfers from on-premises SMB to Amazon FSx for Windows File Server preserve Windows-compatible file system semantics over Direct Connect.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/using-fsx-windows.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 212,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Application Discovery Agent collects host performance, running processes and dependencies, while Migration Hub supports migration planning and EC2 recommendations. The cost planning feature names may have changed, so source wording should be checked.",
+      "wrongOptions": null,
+      "memoryTip": "Application Discovery Agent collects host performance, running processes and dependencies, while Migration Hub supports migration planning and EC2 recommendations. The cost planning feature names may have changed, so source wording should be checked.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed against source options; source question unchanged."
     }
   ]
 }
