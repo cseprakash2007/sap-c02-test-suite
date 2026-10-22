@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Domain 1 first 50 single-answer questions (heuristic domain mapping)",
   "lastUpdated": "2026-10-22",
-  "notes": "20 of 50 reviewed; 30 pending. Q80 invalid/no correct option; Q118 corrected B→A; Q89 flawed wording. Reviewed null answer means no valid choice and must not be scored as verified.",
+  "notes": "30 of 50 reviewed, 20 pending. Q80 invalid; Q89 wording flawed; Q204 may be ambiguous with exportable ACM certificates. Original keys preserved.",
   "items": [
     {
       "id": 13,
@@ -446,62 +446,109 @@
     {
       "id": 120,
       "sequence": 22,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS Backup supports cross-account and cross-Region backup copies using destination backup vaults and KMS permissions. B is closest, but a backup plan copy rule must target the eu-west-1 recovery-account vault; a multi-Region KMS key is not inherently required.",
+      "wrongOptions": {
+        "A": "RAM sharing a standard backup vault and AWS managed key do not implement the required cross-account copy.",
+        "B": "Best choice: separate encrypted vaults and cross-account copy permissions; specify eu-west-1 destination vault and copy rule.",
+        "C": "AWS Backup does not export recovery points to S3 for this custom copy workflow.",
+        "D": "DataSync replicates file data rather than EFS recovery points and does not implement the specified backup DR plan."
+      },
+      "memoryTip": "Backup cross-account = destination vault + vault access policy + supported KMS key + copy rule.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/create-cross-account-backup.html",
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/encryption.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 125,
       "sequence": 23,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-audit-caveat",
+      "reasoning": "EC2 Instance Connect pushes a short-lived SSH public key via SendSSHPublicKey, logged as an API event in CloudTrail. Unique ephemeral keys avoid sharing persistent instance SSH keys. CloudTrail logs key-push API activity, not full SSH command/session transcripts.",
+      "wrongOptions": {
+        "A": "Unique stored private keys create credential lifecycle overhead; CloudTrail does not record SSH sessions simply because Secrets Manager retrieval is logged.",
+        "B": "SSM document calls can be logged, but arbitrary SSH clients do not give a CloudTrail SSH-session audit trail.",
+        "C": "Best: EC2 Instance Connect with ephemeral public keys and CloudTrail SendSSHPublicKey records.",
+        "D": "Secrets Manager rotation and arbitrary SSH clients do not meet the claimed per-connection CloudTrail audit requirement."
+      },
+      "memoryTip": "EC2 Instance Connect = ephemeral SSH key + CloudTrail API audit, not command recording.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connect-linux-inst-eic.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 126,
       "sequence": 24,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "AWS Budgets can aggregate selected linked accounts into one cost budget and notify through SNS when forecasted monthly spend crosses a threshold.",
+      "wrongOptions": {
+        "A": "CloudWatch billing EstimatedCharges is not a forecast budget across a selected account set.",
+        "B": "CUR + Glue + Athena + Step Functions is custom and excessive.",
+        "C": "Correct: AWS Budgets with linked-account filters, forecasted alert threshold and SNS.",
+        "D": "Cost Explorer alone is not the simplest SNS-backed forecasted budget notification."
+      },
+      "memoryTip": "Forecasted spend + multiple linked accounts + SNS = AWS Budgets.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-create.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 150,
       "sequence": 25,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-architecture-caveat",
+      "reasoning": "The default RDS AWS-managed KMS key cannot be shared for cross-account encrypted backups. Re-encrypting database resources with a customer-managed KMS key enables cross-account AWS Backup copy to a central vault. A is closest, but a central delegated administrator does not itself move backup recovery points: an explicit cross-account copy rule and appropriate vault/KMS policies are needed.",
+      "wrongOptions": {
+        "A": "Best choice because it replaces unshareable AWS-managed encryption with customer-managed key; must configure explicit backup copy into destination vault.",
+        "B": "AWS-managed RDS default KMS keys cannot be shared across accounts.",
+        "C": "Encrypted RDS snapshots cannot simply be decrypted into unencrypted snapshots for export as described.",
+        "D": "Same impossible default KMS key sharing and decrypt-to-plaintext assumption."
+      },
+      "memoryTip": "Cross-account encrypted RDS backups = customer-managed KMS key, not aws/rds default.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/encryption.html",
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/create-cross-account-backup.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 152,
       "sequence": 26,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-duplicate-of-81",
+      "reasoning": "A quota request template in AWS Organizations requests SageMaker training and inference endpoint quota increases for new member accounts in ap-southeast-2. This question is a condensed duplicate of Q81; approval and instance availability remain separate considerations.",
+      "wrongOptions": {
+        "A": "Correct: request separate training and endpoint quotas for ap-southeast-2.",
+        "B": "Warm pool quota is not training and endpoint capacity.",
+        "C": "Wrong quota Region.",
+        "D": "Wrong quota type and Region."
+      },
+      "memoryTip": "New accounts + repeated quota requests = Service Quotas organization template.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicequotas/latest/userguide/organization-templates.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 154,
@@ -518,62 +565,109 @@
     {
       "id": 173,
       "sequence": 28,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Private ECR repository resource policies can limit image access to principals with matching aws:PrincipalOrgID. An ECR lifecycle policy with imageTagStatus untagged and imageCountMoreThan=5 expires excess untagged images while preserving tagged images.",
+      "wrongOptions": {
+        "A": "Correct: private ECR + organization condition + native lifecycle retention.",
+        "B": "Public ECR repository is not restricted to organization principals by a role alone.",
+        "C": "Enumerating account IDs and running Lambda cleanup adds maintenance as organization grows.",
+        "D": "Public repository and endpoint policy cannot enforce the desired private organization-wide access."
+      },
+      "memoryTip": "ECR org-only = private repository + PrincipalOrgID; cleanup = lifecycle policy.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/LifecyclePolicies.html",
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policy-examples.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 180,
       "sequence": 29,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-audit-caveat",
+      "reasoning": "AgentCore Identity workload identities provide a distinct agent identity, and OAuth client-credentials flow supports autonomous machine-to-machine downstream authentication. External services must log the supplied identity/token claims for a per-action audit trail; identity setup alone cannot guarantee every external action is recorded.",
+      "wrongOptions": {
+        "A": "Best: agent workload identity and OAuth client credentials for unattended actions.",
+        "B": "Long-lived IAM user keys are inappropriate and do not authenticate arbitrary external OAuth services.",
+        "C": "Authorization code grant is user-delegated and requires an interactive user context.",
+        "D": "SigV4 is AWS-specific and cannot be assumed for all external downstream services."
+      },
+      "memoryTip": "Autonomous agent = workload identity + OAuth client credentials; user-delegated = authorization code.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity.html",
+        "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/key-features-and-benefits.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 191,
       "sequence": 30,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "AWS RAM can share a transit gateway from a shared-services account to the development account, permitting the development team to create VPC attachments. Automatic acceptance of attachment requests can streamline repeated development environment creation.",
+      "wrongOptions": {
+        "A": "A second transit gateway and TGW peering are unnecessary and do not provide the desired simple shared attachment.",
+        "B": "Correct: RAM-share existing transit gateway, accept share if required, and create VPC attachments.",
+        "C": "PrivateLink endpoints are service-specific and do not share the transit gateway as requested.",
+        "D": "EventBridge and Lambda acceptance add maintenance and Network Manager is not the TGW resource-sharing mechanism."
+      },
+      "memoryTip": "Share central Transit Gateway = AWS RAM; consumers create VPC attachments.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-sharing.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 201,
       "sequence": 31,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "AWS Security Hub provides an organization-wide aggregated security posture with findings and compliance views through delegated administrator configuration; Control Tower preventive and detective controls complement it.",
+      "wrongOptions": {
+        "A": "Config conformance packs are useful but not the unified Security Hub findings and posture view.",
+        "B": "Amazon Detective focuses on investigation rather than organization-wide security posture aggregation.",
+        "C": "A Detective StackSet does not replace centralized Security Hub administration.",
+        "D": "Correct: Security Hub organization integration with delegated administrator."
+      },
+      "memoryTip": "Central security posture across accounts = Security Hub delegated administrator.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/designate-orgs-admin-account.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 204,
       "sequence": 32,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-nuance",
+      "reasoning": "HTTPS from client to ALB and HTTPS from ALB to EC2 targets provides encryption on both legs. A third-party server certificate on instances and ACM certificate on ALB works. ACM-issued public certificates are generally not exportable in older assumptions, although AWS now supports exportable public certificates for eligible issuance; thus A's absolute impossibility depends on certificate type and date.",
+      "wrongOptions": {
+        "A": "Potentially possible for an exportable ACM public certificate; source question may predate that feature, so A can also meet the requirement under current capabilities.",
+        "B": "CloudFront cannot use an EC2 target group directly as its origin and this does not establish backend TLS.",
+        "C": "Intended correct: ACM cert on ALB and independent certificate on HTTPS EC2 targets.",
+        "D": "NLB TLS termination with TCP/TLS backend could work with proper configuration, but the stated listener/forwarding details are underspecified."
+      },
+      "memoryTip": "End-to-end encryption through ALB = HTTPS listener + HTTPS target group.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 209,
