@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Eighteenth 20-question batch: 19 reviewed with caveats, 1 flagged Q533 missing policy JSON; corrections Q515 A→B and Q531 B→A.",
+  "notes": "Nineteenth 20-question batch: 15 reviewed with caveats, 5 flagged Q538 Q539 Q560 Q566 Q571; Q556 A→B with MongoDB migration caveat.",
   "items": [
     {
       "id": 12,
@@ -10118,6 +10118,322 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 538,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "A claims MACsec on existing 1Gbps Direct Connect, unsupported (MACsec requires supported 10Gbps+ dedicated connections). B also cannot apply MACsec to existing 1Gbps link and adds expensive DX. D static VPN secondary path can be fallback but does not encrypt primary DX traffic. No fully valid answer.",
+      "wrongOptions": null,
+      "memoryTip": "A claims MACsec on existing 1Gbps Direct Connect, unsupported (MACsec requires supported 10Gbps+ dedicated connections). B also cannot apply MACsec to existing 1Gbps link and adds expensive DX. D static VPN secondary path can be fallback but does not encrypt primary DX traffic. No fully valid answer.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/MACsec.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 539,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "C batches objects via Firehose and TTL, but replacing existing S3 upload interface with Firehose is an architecture change, Deep Archive after one day incurs minimum storage duration and retrieval limits, and compute savings plan only helps eligible compute. Processing duration ~15 min means Lambda A/B risk timeout. Cost cannot be determined from options.",
+      "wrongOptions": null,
+      "memoryTip": "C batches objects via Firehose and TTL, but replacing existing S3 upload interface with Firehose is an architecture change, Deep Archive after one day incurs minimum storage duration and retrieval limits, and compute savings plan only helps eligible compute. Processing duration ~15 min means Lambda A/B risk timeout. Cost cannot be determined from options.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 543,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Topology spread constraints across AZs prevent a sudden surge of stateless pods from concentrating in one failure domain; node autoscaler capacity must still support distribution.",
+      "wrongOptions": null,
+      "memoryTip": "Topology spread constraints across AZs prevent a sudden surge of stateless pods from concentrating in one failure domain; node autoscaler capacity must still support distribution.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eks/latest/best-practices/reliability.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 544,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EC2 Instance Savings Plans cover predictable 24/7 production instances, while Spot is appropriate for restartable analytics.",
+      "wrongOptions": null,
+      "memoryTip": "EC2 Instance Savings Plans cover predictable 24/7 production instances, while Spot is appropriate for restartable analytics.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 545,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Migration Evaluator agentless collector inventories VMware VMs and utilization without per-VM agents, supports TCO and inactive-server review.",
+      "wrongOptions": null,
+      "memoryTip": "Migration Evaluator agentless collector inventories VMware VMs and utilization without per-VM agents, supports TCO and inactive-server review.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/migration-evaluator/latest/userguide/what-is-migration-evaluator.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 546,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Associate private hosted zone with VPC, enable both DNS support and hostnames, and use AmazonProvidedDNS in DHCP options to resolve PHZ and public instance hostnames.",
+      "wrongOptions": null,
+      "memoryTip": "Associate private hosted zone with VPC, enable both DNS support and hostnames, and use AmazonProvidedDNS in DHCP options to resolve PHZ and public instance hostnames.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zone-private-considerations.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 547,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Consolidated billing and department cost allocation tags enable departmental chargeback; Compute Savings Plans retain instance-family/region flexibility. SCPs cannot directly apply resource tags.",
+      "wrongOptions": null,
+      "memoryTip": "Consolidated billing and department cost allocation tags enable departmental chargeback; Compute Savings Plans retain instance-family/region flexibility. SCPs cannot directly apply resource tags.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 548,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "C",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Resolver outbound endpoint, forwarding rule for on-prem internal.company.com and rule association with every VPC enable private hybrid DNS. Inbound endpoints are for queries originating on premises toward AWS.",
+      "wrongOptions": null,
+      "memoryTip": "Resolver outbound endpoint, forwarding rule for on-prem internal.company.com and rule association with every VPC enable private hybrid DNS. Inbound endpoints are for queries originating on premises toward AWS.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-outbound-queries.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 552,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "API Gateway REST usage plans throttle noisy API-key client, returning 429 for client retry; clients should implement exponential backoff with jitter. Throttling is best-effort, not a hard quota.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway REST usage plans throttle noisy API-key client, returning 429 for client retry; clients should implement exponential backoff with jitter. Throttling is best-effort, not a hard quota.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 555,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora global database with regional read capacity supports read-heavy cross-region deployment; Route 53 latency routing selects lower-latency regional ALB. Write region and failover need design.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora global database with regional read capacity supports read-heavy cross-region deployment; Route 53 latency routing selects lower-latency regional ALB. Write region and failover need design.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 556,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DynamoDB on-demand with gateway endpoint gives automatic capacity scaling and private network path with TLS. However migrating MongoDB document semantics to DynamoDB may require refactoring; if MongoDB compatibility is mandatory none meets all requirements.",
+      "wrongOptions": null,
+      "memoryTip": "DynamoDB on-demand with gateway endpoint gives automatic capacity scaling and private network path with TLS. However migrating MongoDB document semantics to DynamoDB may require refactoring; if MongoDB compatibility is mandatory none meets all requirements.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-ddb.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 560,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "B migrates SQL Server into S3 via DMS CDC and bulk loads into RDS after synchronization, but CDC changes arriving during load/cutover are not automatically applied to RDS. C native replication to RDS for SQL Server may be constrained; source fails to specify version/edition/HA. No assured near-zero-downtime modernization path.",
+      "wrongOptions": null,
+      "memoryTip": "B migrates SQL Server into S3 via DMS CDC and bulk loads into RDS after synchronization, but CDC changes arriving during load/cutover are not automatically applied to RDS. C native replication to RDS for SQL Server may be constrained; source fails to specify version/edition/HA. No assured near-zero-downtime modernization path.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 562,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EC2 forwarding appliances must disable source/destination checks to route packets not addressed to themselves; routing and NAT/IGW must also be configured.",
+      "wrongOptions": null,
+      "memoryTip": "EC2 forwarding appliances must disable source/destination checks to route packets not addressed to themselves; routing and NAT/IGW must also be configured.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 563,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Raise DynamoDB provisioned WCU for throttled writes and buffer traffic with Kinesis to smooth bursts and manage Lambda concurrency. Verify API Gateway integration and consumer batching.",
+      "wrongOptions": null,
+      "memoryTip": "Raise DynamoDB provisioned WCU for throttled writes and buffer traffic with Kinesis to smooth bursts and manage Lambda concurrency. Verify API Gateway integration and consumer batching.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 564,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora global database enables cross-region read replication and S3 CRR distributes assets; CloudFront and Route 53 latency routing improve global response times. Avoid redundant global architecture if CDN alone suffices.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora global database enables cross-region read replication and S3 CRR distributes assets; CloudFront and Route 53 latency routing improve global response times. Avoid redundant global architecture if CDN alone suffices.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 566,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "DynamoDB errors correlate with high latency but no evidence of provisioned capacity versus hot partitions. B auto scaling might help sustained table throttling but cannot resolve a hot partition; D might help skew. Need DynamoDB throttling metrics/reasons.",
+      "wrongOptions": null,
+      "memoryTip": "DynamoDB errors correlate with high latency but no evidence of provisioned capacity versus hot partitions. B auto scaling might help sustained table throttling but cannot resolve a hot partition; D might help skew. Need DynamoDB throttling metrics/reasons.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/throttling-diagnosing-workflow.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 570,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "RDS Proxy pools connections and targets reader endpoint for read-only queries; initialize reusable DB connection outside Lambda handler to reduce connection churn. Ensure RDS Proxy reader endpoint support in Aurora.",
+      "wrongOptions": null,
+      "memoryTip": "RDS Proxy pools connections and targets reader endpoint for read-only queries; initialize reusable DB connection outside Lambda handler to reduce connection churn. Ensure RDS Proxy reader endpoint support in Aurora.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 571,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "D says Lambda@Edge at viewer-request event modifies response headers, impossible because response does not exist yet. A CloudFront Functions viewer-response is a valid response modification hook but User-Agent not included in response event by default; need propagation or request-context strategy. No fully correct choice as phrased.",
+      "wrongOptions": null,
+      "memoryTip": "D says Lambda@Edge at viewer-request event modifies response headers, impossible because response does not exist yet. A CloudFront Functions viewer-response is a valid response modification hook but User-Agent not included in response event by default; need propagation or request-context strategy. No fully correct choice as phrased.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/edge-function-restrictions-all.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 572,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DynamoDB provisioned auto scaling lowers capacity during predictable off-peak hours and scales up on demand, unlike fixed peak reserved capacity. Scheduled scaling may be even more precise but not offered.",
+      "wrongOptions": null,
+      "memoryTip": "DynamoDB provisioned auto scaling lowers capacity during predictable off-peak hours and scales up on demand, unlike fixed peak reserved capacity. Scheduled scaling may be even more precise but not offered.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 573,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ECS Fargate task-level metering scales with number of containers without node management; run-task tags identify section, enableECSManagedTags adds ECS-managed tags.",
+      "wrongOptions": null,
+      "memoryTip": "ECS Fargate task-level metering scales with number of containers without node management; run-task tags identify section, enableECSManagedTags adds ECS-managed tags.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-using-tags.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
     }
   ]
 }
