@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Second 20-question validation pass: 17 reviewed and 3 needs-source-repair (629,663,6); 57 preliminary records remain, plus 5 source-repair flags from last two batches.",
+  "notes": "Third 20-question validation pass: 15 reviewed, 5 source-repair flags (54,94,95,122,164); 37 preliminary records remain. Corrections: Q103 source B -> D.",
   "items": [
     {
       "id": 12,
@@ -2524,121 +2524,125 @@
       "id": 40,
       "domain": 2,
       "sequence": 113,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Attribute-based EC2 instance type selection improves Spot capacity flexibility.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Attribute-based instance selection broadens Spot capacity pools and reduces launch failures.",
       "wrongOptions": {
-        "A": "Alternative: Replace the launch template with a launch configuration to use an Auto Scaling group thatuses attribute-based instance type selection.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create a new launch template version that uses attribute-based instance type selection. Configure the Auto Scaling group to use the new launch template version.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Update the launch template Auto Scaling group to increase the number of placement groups.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Update the launch template to use a larger instance type.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "launch configurations do not support attribute-based selection",
+        "C": "extra placement groups do not broaden instance types",
+        "D": "one larger type worsens capacity dependence."
       },
-      "memoryTip": "Attribute-based EC2 instance type selection improves Spot capacity flexibility.",
+      "memoryTip": "Attribute-based instance selection broadens Spot capacity pools and reduces launch failures.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/create-mixed-instances-group-attribute-based-instance-type-selection.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 42,
       "domain": 2,
       "sequence": 114,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Kinesis Data Streams ingest and consumer analysis support real-time genomic telemetry.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Kinesis Data Streams supports durable parallel near-real-time consumers and Redshift is a data warehouse.",
       "wrongOptions": {
-        "A": "Alternative: Use Amazon Kinesis Data Firehose to collect the inbound sensor data, analyze the data with Kinesis clients, and save the results to an Amazon RDS instance.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Use Amazon Kinesis Data Streams to collect the inbound sensor data, analyze the data with Kinesis clients, and save the results to an Amazon Redshift cluster using Amazon EMR.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Use Amazon S3 to collect the inbound device data, analyze the data from Amazon SOS with Kinesis, and save the results to an Amazon Redshift cluster.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Use an Amazon API Gateway to put requests into an Amazon SQS queue, analyze the data with an AWS Lambda function, and save the results to an Amazon Redshift cluster using Amazon EMR.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "Firehose is delivery-focused and RDS is not warehouse",
+        "C": "S3 is not the streaming ingestion path described",
+        "D": "SQS lacks native ordered stream-shard replay and adds complexity."
       },
-      "memoryTip": "Kinesis Data Streams ingest and consumer analysis support real-time genomic telemetry.",
-      "awsReferences": [],
+      "memoryTip": "Kinesis Data Streams supports durable parallel near-real-time consumers and Redshift is a data warehouse.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/streams/latest/dev/introduction.html"
+      ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 48,
       "domain": 2,
       "sequence": 115,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Global Accelerator routes to healthy regional ALBs over AWS network.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Global Accelerator uses edge entry points, static anycast addresses, health checks, and regional ALB endpoints.",
       "wrongOptions": {
-        "A": "Alternative: Configure Route 53 to use a geolocation routing policy to resolve DNS to an Amazon CloudFront distribution. Configure the distribution with an origin group that includes the ALBs from each Region as origins.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create an accelerator in AWS Global Accelerator. Create an endpoint group and add each ALB as an endpoint in the group. Update the Route 53 alias records to point to the accelerator.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Configure Route 53 to use a latency-based routing policy and health checks for each Regional endpoint.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Set up cross-Region connectivity by using AWS Cloud WAN to connect VPCs across Regions. Use network policies to route traffic from each Region to the Region that is closest to the origin Region.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "CloudFront origin failover is not optimized for dynamic payment API routing",
+        "C": "Route 53 DNS caching can delay failover",
+        "D": "Cloud WAN does not provide global client ingress health routing."
       },
-      "memoryTip": "Global Accelerator routes to healthy regional ALBs over AWS network.",
+      "memoryTip": "Global Accelerator uses edge entry points, static anycast addresses, health checks, and regional ALB endpoints.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html",
-        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html"
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-what-is-global-accelerator.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 54,
       "domain": 2,
       "sequence": 116,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Aurora migration/replica strategy may enable multi-Region reads; check original write and RTO requirements.",
+      "validity": "ambiguous",
+      "reasoning": "A is a plausible Aurora MySQL migration route but global write forwarding is to one primary Region; strict real-time cross-Region visibility and no high write latency cannot both be guaranteed. GLOBAL consistency may wait. Mark ambiguous.",
       "wrongOptions": {
-        "A": "Provisional selection: Create an Amazon Aurora MySQL replica of the RDS for MySQL DB instance. Pause application writes to the RDS DB instance. Promote the Aurora Replica to a standalone DB cluster. Reconfigure the application to use the Aurora database and resume writes. Add eu-west-1 as a secondary Region to the 06 cluster. Enable write forwarding on the DB cluster. Deploy the application in eu-west-1. Configure the application to use th…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Add a cross-Region replica in eu-west-1 for the RDS for MySQL DB instance. Configure the replica to replicate write queries back to the primary DB instance. Deploy the application in eu-west-1. Configure the application to use the RDS for MySQL endpoint in eu-west-1.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Copy the most recent snapshot from the RDS for MySQL DB instance to eu-west-1. Create a new RDS for MySQL DB instance in eu-west-1 from the snapshot. Configure MySQL logical replication from us-east-1 to eu-west-1. Enable write forwarding on the DB cluster. Deploy the application in eu-west-1. Configure the application to use the RDS for MySQL endpoint in eu-west-1.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Convert the RDS for MySQL DB instance to an Amazon Aurora MySQL DB cluster. Add eu-west-1 as a secondary Region to the DB cluster. Enable write forwarding on the DB cluster. Deploy the application in eu-west-1. Configure the application to use the Aurora MySQL endpoint in eu-west-1.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "best-fit but not guaranteed latency and freshness",
+        "B": "RDS read replica cannot forward writes as described",
+        "C": "snapshot/logical replication does not enable Aurora write forwarding",
+        "D": "direct conversion of RDS MySQL to Aurora cluster is not a simple operation."
       },
-      "memoryTip": "Aurora migration/replica strategy may enable multi-Region reads",
+      "memoryTip": "A is a plausible Aurora MySQL migration route but global write forwarding is to one primary Region",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-write-forwarding-ams.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "A"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Question has an unsupported or internally inconsistent requirement; exclude from confirmed scoring."
     },
     {
       "id": 58,
       "domain": 2,
       "sequence": 117,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "IaC and cross-Region read replica form warm-standby recovery pattern; validate exact RTO/RPO.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "DRS replicates EC2 continuously, RDS cross-Region read replica supports low RPO, and Route 53 failover handles traffic.",
       "wrongOptions": {
-        "A": "Alternative: Use infrastructure as code (IaC) to provision the new infrastructure in the DR Region. Create a cross-Region read replica for the DB instance. Set up a backup plan in AWS Backup to create cross-Region backups for the EC2 instances and the DB instance. Create a cron expression to back up the EC2 instances and the DB instance every 30 seconds to the DR Region. Recover the EC2 instances from the latest EC2 backup. Use a…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Use infrastructure as code (laC) to provision the new infrastructure in the DR Region. Create a cross-Region read replica for the DB instance. Set up AWS Elastic Disaster Recovery tocontinuously replicate the EC2 instances to the DR Region. Run the EC2 instances at the minimum capacity in the DR Region Use an Amazon Route 53 failover routing policy to automatically fail over to the DR Region in the event of a disaste…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Set up a backup plan in AWS Backup to create cross-Region backups for the EC2 instances and the DB instance. Create a cron expression to back up the EC2 instances and the DB instance every 30 seconds to the DR Region. Use infrastructure as code (IaC) to provision the new infrastructure in the DR Region. Manually restore the backed-up data on new instances. Use an Amazon Route 53 simple routing policy to automatically…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Use infrastructure as code (IaC) to provision the new infrastructure in the DR Region. Create an Amazon Aurora global database. Set up AWS Elastic Disaster Recovery to continuously replicate the EC2 instances to the DR Region. Run the Auto Scaling group of EC2 instances at full capacity in the DR Region. Use an Amazon Route 53 failover routing policy to automatically fail over to the DR Region in the event of a disas…. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "AWS Backup cannot create 30-second backups and geolocation is not failover",
+        "C": "same backup cadence flaw plus simple routing",
+        "D": "full-capacity warm standby is more expensive."
       },
-      "memoryTip": "IaC and cross-Region read replica form warm-standby recovery pattern",
+      "memoryTip": "DRS replicates EC2 continuously, RDS cross-Region read replica supports low RPO, and Route 53 failover handles traffic.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 61,
@@ -2670,376 +2674,370 @@
       "id": 64,
       "domain": 2,
       "sequence": 119,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "ALB weighted target group forwarding supports gradual traffic shifting.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "ALB weighted forward action with target group stickiness keeps clients on selected application version.",
       "wrongOptions": {
-        "A": "Alternative: Create a second ALB, and deploy the new logic to a set of EC2 instances in a new Auto Scaling group. Configure the ALB to distribute traffic to the EC2 instances. Update the Route 53 record to use weighted routing, and point the record to both of the ALBs.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create a second target group that is referenced by the ALB. Deploy the new logic to EC2 instances in this new target group. Update the ALB listener rule to use weighted target groups. Configure ALB target group stickiness.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create a new launch configuration for the Auto Scaling group. Specify the launch configuration to use the AutoScaIingRoIIingUpdate policy, and set the MaxBatchSize option to 10. Replace the launch configuration on the Auto Scaling group. Deploy the changes.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create a second Auto Scaling group that is referenced by the ALB. Deploy the new logic on a set of EC2 instances in this new Auto Scaling group. Change the ALB routing algorithm to least outstanding requests (LOR). Configure ALB session stickiness.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "DNS weighted routing cannot guarantee per-customer version affinity",
+        "C": "rolling update is instance-based not 10% users",
+        "D": "least-outstanding requests does not partition users into versions."
       },
-      "memoryTip": "ALB weighted target group forwarding supports gradual traffic shifting.",
+      "memoryTip": "ALB weighted forward action with target group stickiness keeps clients on selected application version.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html",
-        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html"
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/rule-action-types.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 70,
       "domain": 2,
       "sequence": 120,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "API Gateway private REST API with VPC interface endpoint and resource policy removes public exposure; HTTP APIs do not support private endpoint type.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "API Gateway private REST API via interface VPC endpoint and resource policy restricts invocation to VPC while preserving authorizers.",
       "wrongOptions": {
-        "A": "Alternative: Create an internal Application Load Balancer (ALB). Create a target group. Select the Lambda function to call. Use the ALB DNS name to call the API from the VPC.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Remove the DNS entry that is associated with the API in API Gateway. Create a hosted zone in Amazon Route 53. Create a CNAME record in the hosted zone. Update the API in API Gateway with the CNAME record. Use the CNAME record to call the API from the VPC.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Update the API endpoint from Regional to private in API Gateway. Create an interface VPC endpoint in the VPC. Create a resource policy, and attach it to the API. Use the VPC endpoint to call the API from the VPC.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Deploy the Lambda functions inside the VPC. Provision an EC2 instance, and install an Apache server. From the Apache server, call the Lambda functions. Use the internal CNAME record of the EC2 instance to call the API from the VPC.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "replaces API Gateway auth and routing",
+        "B": "private DNS does not make public Regional API private",
+        "D": "direct Lambda proxy bypasses API Gateway auth."
       },
-      "memoryTip": "API Gateway private REST API with VPC interface endpoint and resource policy removes public exposure",
+      "memoryTip": "API Gateway private REST API via interface VPC endpoint and resource policy restricts invocation to VPC while preserving authorizers.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
-        "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 73,
       "domain": 2,
       "sequence": 121,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "A"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS Client VPN provides remote laptop access into VPC with client authentication.",
       "wrongOptions": {
-        "A": "Provisional selection: Configure and set up an AWS Client VPN endpoint. Associate the Client VPN endpoint with a subnet in the VPC. Configure a Client VPN self-service portal. Instruct the developers to connect by using the client for Client VPN.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create a transit gateway, and connect it to the VPC. Create an AWS Site-to-Site VPN. Create an attachment to the transit gateway. Instruct the developers to connect by using an OpenVPN client.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create a transit gateway, and connect it to the VPC. Order an AWS Direct Connect connection. Set up a public VIF on the Direct Connect connection. Associate the public VIF with the transit gateway. Instruct the developers to connect to the Direct Connect connection. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create and configure a bastion host in a public subnet of the VPC. Configure the bastion host security group to allow SSH access from the company CIDR ranges. Instruct the developers to connect by using SSH.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "Site-to-Site VPN terminates network gateways not individual OpenVPN clients",
+        "C": "Direct Connect public VIF is not private developer remote access",
+        "D": "bastion SSH is not direct local visualization access and excludes home networks."
       },
-      "memoryTip": "Key topic: is building an application on AWS. The application sends logs to an Amazon Elasticsearch Service (Amazon ES) c…",
+      "memoryTip": "AWS Client VPN provides remote laptop access into VPC with client authentication.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/what-is.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 76,
       "domain": 2,
       "sequence": 122,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Reuse one VPC/transit gateway attachment and deploy ephemeral EC2 test stacks with CloudFormation.",
       "wrongOptions": {
-        "A": "Alternative: Create an AWS CloudFormation template that contains a transit gateway attachment and related routing configurations. Create a CloudFormation stack set that includes this template. Use CloudFormation StackSets to deploy a new stack for each VPC in the account. Deploy a new VPC for each test environment.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create a single VPC for the test environments. Include a transit gateway attachment and related routing configurations. Use AWS CloudFormation to deploy all test environments into the VPC.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create a new OU in AWS Organizations for testing. Create an AWS CloudFormation template that contains a VPC, necessary networking resources, a transit gateway attachment, and related routing configurations. Create a CloudFormation stack set that includes this template. Use CloudFormation StackSets for deployments into each account under the testing 01.1. Create a new account for each test environment.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Convert the test environment EC2 instances into Docker images. Use AWS CloudFormation to configure an Amazon Elastic Kubernetes Service (Amazon EKS) cluster in a new VPC, create a transit gateway attachment, and create related routing configurations. Use Kubernetes to manage the deployment and lifecycle of the test environments.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "one VPC per test requires network overhead and StackSets are unnecessary",
+        "C": "per-test account overhead",
+        "D": "container migration is unnecessary redesign."
       },
-      "memoryTip": "Key topic: A software company needs to create short-lived test environments to test pull requests as part of its developm…",
+      "memoryTip": "Reuse one VPC/transit gateway attachment and deploy ephemeral EC2 test stacks with CloudFormation.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 79,
       "domain": 2,
       "sequence": 123,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Independent Regional ALB and Auto Scaling stacks with Route 53 health-checked failover routing support active-passive DR.",
       "wrongOptions": {
-        "A": "Alternative: Create a VPC in us-east-1 and a VPC in us-west-1 Configure VPC peering In the us- east-1VPC. create an Application Load Balancer (ALB) that extends across multiple Availability Zones in both VPCs Create an Auto Scaling group that deploys the EC2 instances across the multiple Availability Zones in both VPCs Place the Auto Scaling group behind the ALB.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create a VPC in us-east-1 and a VPC in us-west-1. In the us-east-1 VPC. create an Application Load Balancer (ALB) that extends across multiple Availability Zones in that VPC. Create an Auto Scaling group that deploys the EC2 instances across the multiple Availability Zones in the us-east-1 VPC Place the Auto Scaling group behind the ALB Set up the same configuration in the us-west-1 VPC. Create an Amazon Route 53 hos…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create a VPC in us-east-1 and a VPC in us-west-1 In the us-east-1 VPC. create an Application Load Balancer (ALB) that extends across multiple Availability Zones in that VPC Create an Auto Scaling group that deploys the EC2 instances across the multiple Availability Zones in the us-east-1 VPC Place the Auto Scaling group behind the ALB Set up the same configuration in the us-west-1 VPC Create an Amazon Route 53 hosted…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create a VPC in us-east-1 and a VPC in us-west-1 Configure VPC peering In the us- east-1 VPC. create an Application Load Balancer (ALB) that extends across multiple Availability Zones in Create an Auto Scaling group that deploys the EC2 instances across the multiple Availability Zones in both VPCs Place the Auto Scaling group behind the ALB Create an Amazon Route 53 host.. Create a record for the ALB.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "health checks without failover policy don't ensure active-passive routing."
       },
-      "memoryTip": "Key topic: A financial services company in North America plans to release a new online web application to its customers o…",
+      "memoryTip": "Independent Regional ALB and Auto Scaling stacks with Route 53 health-checked failover routing support active-passive DR.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-configuring.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 86,
       "domain": 2,
       "sequence": 124,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
-      "wrongOptions": {
-        "A": "Alternative: Enable Aurora Auto Scaling for Aurora Replicas. Use a Network Load Balancer with the least outstanding requests routing algorithm and sticky sessions enabled.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Enable Aurora Auto Scaling for Aurora writers. Use an Application Load Balancer with the round robin routing algorithm and sticky sessions enabled.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Enable Aurora Auto Scaling for Aurora Replicas. Use an Application Load Balancer with the round robin routing and sticky sessions enabled.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Enable Aurora Scaling for Aurora writers. Use a Network Load Balancer with the least outstanding requests routing algorithm and sticky sessions enabled.. Technical assessment still pending; not a verified right/wrong judgement."
-      },
-      "memoryTip": "Key topic: is running a two-tier web-based application in an on-premises data center. The application layer consists of a…",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Aurora Auto Scaling adds read replicas; ALB sticky sessions preserve stateful user sessions.",
+      "wrongOptions": {},
+      "memoryTip": "Aurora Auto Scaling adds read replicas",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 93,
       "domain": 2,
       "sequence": 125,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Step Functions task-token callback pauses for human decision without long-running Lambda polling.",
       "wrongOptions": {
-        "A": "Alternative: Configure the agent to write high-risk action requests to an Amazon SQS queue. Create a separate polling application that reads the queue and sends approval email messages by using Amazon SES. Configure the application to invoke the agent by providing the approval result.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Configure an AWS Step Functions workflow that invokes the agent. Use a task token callback pattern to pause the workflow when the agent identifies a high-risk action. Send the task token to an approver by using Amazon SNS. Resume or cancel the workflow when the approver responds with the task token.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Configure the agent to invoke an AWS Lambda function for high-risk actions. Configure the Lambda function to send an approval email message by using Amazon SNS. Configure the Lambda function to poll an Amazon DynamoDB table until the approver updates the approval status.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Configure an Amazon EventBridge rule that intercepts all agent actions. Route high-risk actions to a separate approval queue. Create a second agent that monitors the queue and automatically approves or rejects actions without human input based on predefined rules.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "polling app adds operational burden",
+        "C": "Lambda cannot wait 60 minutes and polling is inefficient",
+        "D": "automated approval fails human requirement."
       },
-      "memoryTip": "Key topic: deploys an AI agent on Amazon Bedrock AgentCore Runtime. The agent processes customer requests. Some agent act…",
+      "memoryTip": "Step Functions task-token callback pauses for human decision without long-running Lambda polling.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html"
+        "https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 94,
       "domain": 2,
       "sequence": 126,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "A",
         "C"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "validity": "ambiguous",
+      "reasoning": "A is required, but C subscribes each SQS queue to SNS topics in each Region rather than the single existing publishing topic. E creates regional topics but no subscription from original topic. No clearly correct second choice.",
       "wrongOptions": {
-        "A": "Provisional selection: Deploy the SOS queue with the Lambda function to other Regions.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Subscribe the SNS topic in each Region to the SQS queue.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Subscribe the SQS queue in each Region to the SNS topics in each Region.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Configure the SQS queue to publish URLs to SNS topics in each Region.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Alternative: Deploy the SNS topic and the Lambda function to other Regions.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "deploys consumers correctly",
+        "B": "wrong subscription direction",
+        "C": "targets regional SNS topics rather than original publishing topic",
+        "D": "SQS cannot publish directly to SNS",
+        "E": "deploys unnecessary SNS topics without original-topic fan-out."
       },
-      "memoryTip": "Key topic: runs a serverless application in a single AWS Region. The application accesses external URLs and extracts meta…",
+      "memoryTip": "A is required, but C subscribes each SQS queue to SNS topics in each Region rather than the single existing publishing topic. E creates regional topics but no subscription from original topic. No clearly correct second choice.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+        "https://docs.aws.amazon.com/sns/latest/dg/sns-send-message-to-sqs-cross-region.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Question has an unsupported or internally inconsistent requirement; exclude from confirmed scoring."
     },
     {
       "id": 95,
       "domain": 2,
       "sequence": 127,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "D"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Check original encryption requirement and distinguish SSE-S3, SSE-KMS, and SSE-C.",
+      "validity": "ambiguous",
+      "reasoning": "No option correctly specifies SSE-KMS with a customer-managed KMS key and re-encryption of existing objects. SSE-S3/AES256 has S3-managed keys; AWS-managed KMS key is not customer-managed.",
       "wrongOptions": {
-        "A": "Alternative: In the S3 bucket properties, change the default encryption to SSE-S3 with a customer managed key. Use the AWS CLI to re-upload all objects in the S3 bucket. Set an S3 bucket policy to deny unencrypted PutObject requests.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: In the S3 bucket properties, change the default encryption to server-side encryption with AWS KMS managed encryption keys (SSE-KMS). Set an S3 bucket policy to deny unencrypted PutObject requests. Use the AWS CLI to re-upload all objects in the S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: In the S3 bucket properties, change the default encryption to server-side encryption with AWS KMS managed encryption keys (SSE-KMS). Set an S3 bucket policy to automatically encrypt objects on GetObject and PutObject requests.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: In the S3 bucket properties, change the default encryption to AES-256 with a customer managed key. Attach a policy to deny unencrypted PutObject requests to any entities that access the S3 bucket. Use the AWS CLI to re-upload all objects in the S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "SSE-S3 has no customer-managed key",
+        "B": "AWS-managed KMS key is not customer-managed",
+        "C": "bucket policy cannot encrypt on GetObject and does not re-encrypt existing data",
+        "D": "AES256 is SSE-S3 not customer-managed key."
       },
-      "memoryTip": "Key topic: A health insurance company stores personally identifiable information (PII) in an Amazon S3 bucket. The compan…",
+      "memoryTip": "No option correctly specifies SSE-KMS with a customer-managed KMS key and re-encryption of existing objects. SSE-S3/AES256 has S3-managed keys",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Question has an unsupported or internally inconsistent requirement; exclude from confirmed scoring."
     },
     {
       "id": 100,
       "domain": 2,
       "sequence": 128,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "A"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "EFS supports concurrent multi-AZ shared POSIX file access; AWS Backup supports annual retention.",
       "wrongOptions": {
-        "A": "Provisional selection: Create an Amazon Elastic File System (Amazon EFS) file system and a mount target for each subnet that contains nodes in the EKS cluster. Configure the ReplicaSet to mount the file system. Direct the application to store files in the file system. Configure AWS Backup to back up and retain copies of the data for 1 year.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create an Amazon Elastic Block Store (Amazon EBS) volume. Enable the EBS Multi- Attach feature. Configure the ReplicaSet to mount the EBS volume. Direct the application to store files inthe EBS volume. Configure AWS Backup to back up and retain copies of the data for 1 year.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create an Amazon S3 bucket. Configure the ReplicaSet to mount the S3 bucket. Direct the application to store files in the S3 bucket. Configure S3 Versioning to retain copies of the data. Configure an S3 Lifecycle policy to delete objects after 1 year.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Configure the ReplicaSet to use the storage available on each of the running application pods to store the files locally. Use a third-party tool to back up the EKS cluster for 1 year.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "EBS Multi-Attach constrained to same AZ and supported instance types",
+        "C": "S3 is object store, versioning is not backup retention",
+        "D": "local pod data not shared or durable."
       },
-      "memoryTip": "Key topic: has an application that runs as a ReplicaSet of multiple pods in an Amazon Elastic Kubernetes Service (Amazon …",
+      "memoryTip": "EFS supports concurrent multi-AZ shared POSIX file access",
       "awsReferences": [
-        "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
+        "https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 103,
       "domain": 2,
       "sequence": 129,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Check baseline versus burst Savings Plan coverage and Spot availability.",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Compute Savings Plans cover both EC2 and Fargate baseline; Spot serves infrequent peaks; RDS RI covers stable DB usage.",
       "wrongOptions": {
-        "A": "Alternative: Purchase Standard Reserved Instances for the EC2 instances that the EKS cluster uses in its baseline load. Scale the cluster with Spot Instances to handle peaks. Purchase 1-year All Upfront Reserved Instances for the database to meet predicted peak load for the year.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Purchase Compute Savings Plans for the predicted medium load of the EKS cluster. Scale the cluster with On-Demand Capacity Reservations based on event dates for peaks. Purchase 1-year No Upfront Reserved Instances for the database to meet the predicted base load. Temporarily scale out database read replicas during peaks.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Purchase EC2 Instance Savings Plans for the predicted base load of the EKS cluster. Scale the cluster with Spot Instances to handle peaks. Purchase 1-year All Upfront Reserved Instances for the database to meet the predicted base load. Temporarily scale up the DB instance manually during peaks.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Purchase Compute Savings Plans for the predicted base load of the EKS cluster. Scale the cluster with Spot Instances to handle peaks. Purchase 1-year All Upfront Reserved Instances for the database to meet the predicted base load. Temporarily scale up the DB instance manually during peaks.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "EC2 RI does not cover Fargate",
+        "B": "medium commitment and capacity reservations raise cost for infrequent peaks",
+        "C": "EC2 Instance Savings Plans do not cover Fargate."
       },
-      "memoryTip": "Key topic: is running an event ticketing platform on AWS and wants to optimize the platform's cost-effectiveness. The pla…",
+      "memoryTip": "Compute Savings Plans cover both EC2 and Fargate baseline",
       "awsReferences": [
-        "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html",
-        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html"
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 122,
       "domain": 2,
       "sequence": 130,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "A",
         "B",
         "D"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "AWS Backup notifications use EventBridge/SNS integration; verify whether SNS can be added directly to plan.",
+      "validity": "ambiguous",
+      "reasoning": "A and B are correct. D's 'add SNS topic to backup plan' is not an AWS Backup plan field; use EventBridge backup-job state events or backup vault SNS notifications. No fully valid third choice.",
       "wrongOptions": {
-        "A": "Provisional selection: Create an AWS Backup plan with a backup rule for each of the retention requirements.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Configure an AWS backup plan to copy backups to another Region.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create an AWS Lambda function to replicate backups to another Region and send notification if a failure occurs.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Add an Amazon Simple Notification Service (Amazon SNS) topic to the backup plan to send a notification for finished jobs that have any status except BACKUP- JOB- COMPLETED.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Alternative: Create an Amazon Data Lifecycle Manager (Amazon DLM) snapshot lifecycle policy for each of the retention requirements.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "F": "Alternative: Set up RDS snapshots on each database.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "correct backup rules",
+        "B": "correct copy actions",
+        "C": "custom Lambda adds overhead",
+        "D": "backup plan cannot directly contain SNS topic as described",
+        "E": "DLM not all resource types",
+        "F": "RDS-only snapshots omit EC2/EFS."
       },
-      "memoryTip": "Key topic: recently started hosting new application workloads in the AWS Cloud. The company is using Amazon EC2 instances…",
+      "memoryTip": "A and B are correct. D's 'add SNS topic to backup plan' is not an AWS Backup plan field",
       "awsReferences": [
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html",
-        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/eventbridge.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Question has an unsupported or internally inconsistent requirement; exclude from confirmed scoring."
     },
     {
       "id": 132,
       "domain": 2,
       "sequence": 131,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Verify whether source devices support FTP versus direct S3 upload.",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS Transfer Family FTP-to-S3 removes fragile EC2 FTP bottleneck; S3 events trigger metadata processing.",
       "wrongOptions": {
-        "A": "Alternative: Create an AMI of the existing EC2 instance. Create an Auto Scaling group of EC2 instances behind an Application Load Balancer. Configure the Auto Scaling group to have a minimum of three instances.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Use AWS Transfer Family to create an FTP server that places the files in Amazon Elastic File System (Amazon EFS). Mount the EFS volume to the existing EC2 instance. Point the EC2 instance to the new path for file processing.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Use AWS Transfer Family to create an FTP server that places the files in Amazon S3. Use an S3 event notification through Amazon Simple Notification Service (Amazon SNS) to invoke an AWS Lambda function. Configure the Lambda function to add the metadata and update the delivery system.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Update the handheld devices to place the files directly in Amazon S3. Use an S3 eventnotification through Amazon Simple Queue Service (Amazon SQS) to invoke an AWS Lambda function. Configure the Lambda function to add the metadata and update the delivery system.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "ALB does not support FTP and EC2 remains fragile",
+        "B": "keeps single EC2 processing point",
+        "D": "requires modifying devices, expressly prohibited."
       },
-      "memoryTip": "Key topic: An international delivery company hosts a delivery management system on AWS. Drivers use the system to upload …",
+      "memoryTip": "AWS Transfer Family FTP-to-S3 removes fragile EC2 FTP bottleneck",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/transfer/latest/userguide/what-is-aws-transfer-family.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 164,
       "domain": 2,
       "sequence": 132,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "D"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "validity": "ambiguous",
+      "reasoning": "D is best for managed secret storage and rotation, but strict restriction that only security team may access KMS key conflicts with Lambda runtime decryption; application role needs decrypt authorization. Wording requires repair.",
       "wrongOptions": {
-        "A": "Alternative: Store the database credentials in AWS Systems Manager Parameter Store by using a SecureString parameter that is encrypted by an AWS Key Management Service (AWS KMS) customer managed key. Attach a role to each Lambda function to provide access to the SecureString parameter. Restrict access to the Securestring parameter and the customer managed key so that only the IT security team can access the parameter and the key.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Encrypt the database credentials by using the AWS Key Management Service (AWS KMS) default Lambda key. Store the credentials in the environment variables of each Lambda function. Load the credentials from the environment variables in the Lambda code. Restrict access to the KMS key o that only the IT security team can access the key.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Store the database credentials in the environment variables of each Lambda function.Encrypt the environment variables by using an AWS Key Management Service (AWS KMS) customer managed key. Restrict access to the customer managed key so that only the IT security team can access the key.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Store the database credentials in AWS Secrets Manager as a secret that is associated with an AWS Key Management Service (AWS KMS) customermanaged key. Attach a role to each Lambda function to provide access to the secret. Restrict access to the secret and the customer managed key so that only the IT security team can access the secret and the key.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "Parameter Store lacks managed SQL Server rotation",
+        "B": "AWS-managed Lambda key not security-team controlled",
+        "C": "env vars are not centrally rotated",
+        "D": "best architecture but security-only KMS decrypt prevents Lambda secret retrieval."
       },
-      "memoryTip": "Key topic: is implementing a serverless architecture by using AWS Lambda functions that need to access a Microsoft SQL Se…",
+      "memoryTip": "D is best for managed secret storage and rotation, but strict restriction that only security team may access KMS key conflicts with Lambda runtime decryption",
       "awsReferences": [
-        "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
-        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+        "https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Question has an unsupported or internally inconsistent requirement; exclude from confirmed scoring."
     },
     {
       "id": 184,
       "domain": 2,
       "sequence": 133,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Attach existing EC2 instances to ASG and retain existing ALB to minimize cutover downtime.",
       "wrongOptions": {
-        "A": "Alternative: Delete the existing ALB. Create an Auto Scaling group that is configured to handle the web application traffic. Attach a new launch template to the Auto Scaling group. Create a new ALB. Attach the Auto Scaling group to the new ALB. Attach the existing EC2 instances to the Auto Scaling group.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create an Auto Scaling group that is configured to handle the web application traffic. Attach a new launch template to the Auto Scaling group. Attach the Auto Scaling group to the existing ALB. Attach the existing EC2 instances to the Auto Scaling group.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Delete the existing ALB and the EC2 instances. Create an Auto Scaling group that is configuredto handle the web application traffic. Attach a new launch template to the Auto Scaling group. Create a new ALB. Attach the Auto Scaling group to the new ALB. Wait for the Auto Scaling group to launch the minimum number of EC2 instances.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create an Auto Scaling group that is configured to handle the web application traffic. Attach a new launch template to the Auto Scaling group. Attach the Auto Scaling group to the existing ALB. Wait for the existing ALB to register the existing EC2 instances with the Auto Scaling group.. Technical assessment still pending; not a verified right/wrong judgement."
+        "D": "ALB does not register instances with ASG automatically."
       },
-      "memoryTip": "Key topic: has a website that runs on four Amazon EC2 instances that are behind an Application Load Balancer (ALB). When …",
+      "memoryTip": "Attach existing EC2 instances to ASG and retain existing ALB to minimize cutover downtime.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-instance-asg.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment; AWS link provides relevant service behavior."
     },
     {
       "id": 246,
