@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Q12 ambiguous select-three; no verified key. Source answers unchanged.",
+  "notes": "20 continuation questions reviewed; Q192 invalid hard cap, Q299 corrected to B/D, Q243 duplicates Q139.",
   "items": [
     {
       "id": 12,
@@ -237,6 +237,230 @@
       "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
       "awsReferences": [
         "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 192,
+      "sequence": 11,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "invalid-hard-budget",
+      "reasoning": "Budgets and SCPs cannot enforce an absolute monthly dollar cap; Lambda cleanup cannot universally terminate all chargeable resources.",
+      "wrongOptions": {
+        "A": "SCP has no dollar cap.",
+        "B": "Budget monitors not hard-stops.",
+        "C": "Can deny selected services.",
+        "D": "IAM policy cannot attach to account.",
+        "E": "Budgets cannot terminate all services.",
+        "F": "Lambda cleanup incomplete."
+      },
+      "memoryTip": "Budgets and SCPs cannot enforce an absolute monthly dollar cap; Lambda cleanup cannot universally terminate all chargeable resources.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-controls.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 232,
+      "sequence": 12,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AppFabric normalizes SaaS audit logs; Security Lake centralizes AWS and custom sources; OpenSearch Ingestion and dashboards visualize events.",
+      "wrongOptions": {
+        "A": "Correct normalized SaaS logs.",
+        "B": "Incorrect SaaS log description.",
+        "C": "CloudWatch cannot directly query S3 JSON.",
+        "D": "Correct Security Lake sources.",
+        "E": "Direct Redshift integration unstated.",
+        "F": "Correct OpenSearch analytics pipeline."
+      },
+      "memoryTip": "AppFabric normalizes SaaS audit logs; Security Lake centralizes AWS and custom sources; OpenSearch Ingestion and dashboards visualize events.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/security-lake/latest/userguide/custom-sources.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 243,
+      "sequence": 13,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "E"
+      ],
+      "validity": "valid-duplicate-of-139",
+      "reasoning": "Exact duplicate Q139: regional Kinesis destination, CloudWatch Logs subscription and central Lambda.",
+      "wrongOptions": {
+        "A": "Correct Kinesis.",
+        "B": "SQS unsupported direct.",
+        "C": "Correct role and filter.",
+        "D": "SQS unsupported.",
+        "E": "Correct central Lambda.",
+        "F": "Not central."
+      },
+      "memoryTip": "Exact duplicate Q139: regional Kinesis destination, CloudWatch Logs subscription and central Lambda.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CrossAccountSubscriptions-Kinesis.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 299,
+      "sequence": 14,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "AWS RAM shares subnets from central VPC to member accounts. Enable RAM sharing with Organizations; source A/E wrongly uses TGW and prefix lists.",
+      "wrongOptions": {
+        "A": "TGW connects not shares subnets.",
+        "B": "Correct RAM organization sharing.",
+        "C": "Overlapping CIDRs cannot peer.",
+        "D": "Correct subnet resource share.",
+        "E": "Prefix lists do not share subnets."
+      },
+      "memoryTip": "AWS RAM shares subnets from central VPC to member accounts.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 304,
+      "sequence": 15,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "Organization conformance pack can contain custom and managed rules and be deployed with PutOrganizationConformancePack.",
+      "wrongOptions": {
+        "A": "Correct org deployment.",
+        "B": "Missing managed rules.",
+        "C": "Correct all nine rules.",
+        "D": "Extra separate rules.",
+        "E": "StackSets extra overhead."
+      },
+      "memoryTip": "Organization conformance pack can contain custom and managed rules and be deployed with PutOrganizationConformancePack.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/config/latest/developerguide/conformance-pack-organization-apis.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 310,
+      "sequence": 16,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Control Tower establishes multi-account baseline; encrypt existing EBS by snapshot and replacement. Future detection needs an AWS Config rule or suitable control.",
+      "wrongOptions": {
+        "A": "Best governance.",
+        "B": "Cannot encrypt EBS in place.",
+        "C": "Correct replacement.",
+        "D": "Mandatory controls may be insufficient.",
+        "E": "CloudTrail does not encrypt existing volumes."
+      },
+      "memoryTip": "Control Tower establishes multi-account baseline; encrypt existing EBS by snapshot and replacement.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 339,
+      "sequence": 17,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Control Tower OU SCPs restrict disallowed Regions; exempt global services appropriately.",
+      "wrongOptions": {
+        "A": "Per-account roles overhead.",
+        "B": "Per-account IAM users overhead.",
+        "C": "Correct OU SCP.",
+        "D": "Security Hub detective."
+      },
+      "memoryTip": "Control Tower OU SCPs restrict disallowed Regions; exempt global services appropriately.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples_general.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 358,
+      "sequence": 18,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "Transfer Family PGP decrypt workflow uses private key in Secrets Manager and nominal decrypt step on server.",
+      "wrongOptions": {
+        "A": "Public key cannot decrypt.",
+        "B": "Exception handler incorrect.",
+        "C": "Correct private key and step.",
+        "D": "Wrong key and association."
+      },
+      "memoryTip": "Transfer Family PGP decrypt workflow uses private key in Secrets Manager and nominal decrypt step on server.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/transfer/latest/userguide/nominal-steps-workflow.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 359,
+      "sequence": 19,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Organization multi-Region CloudTrail trail with centralized versioned S3 captures member accounts; data events and tamper protection require explicit design.",
+      "wrongOptions": {
+        "A": "Not organization-wide.",
+        "B": "Per-account overhead.",
+        "C": "Correct org trail.",
+        "D": "SNS external tracking not sufficient."
+      },
+      "memoryTip": "Organization multi-Region CloudTrail trail with centralized versioned S3 captures member accounts; data events and tamper protection require explicit design.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 360,
+      "sequence": 20,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-wording-caveat",
+      "reasoning": "Central inspection VPC with GWLB and TGW appliance mode enables symmetric inspection; appliance mode is configured on TGW VPC attachment, not TGW itself.",
+      "wrongOptions": {
+        "A": "Not central.",
+        "B": "Wrong appliance mode target.",
+        "C": "Flow logs do not route.",
+        "D": "Best inspection design, wording imprecise."
+      },
+      "memoryTip": "Central inspection VPC with GWLB and TGW appliance mode enables symmetric inspection; appliance mode is configured on TGW VPC attachment, not TGW itself.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpc-attachments.html"
       ],
       "reviewedAt": "2026-10-22"
     }
