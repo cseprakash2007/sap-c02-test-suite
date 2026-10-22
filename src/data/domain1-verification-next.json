@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Third 20-question validation pass: 15 reviewed, 5 source-repair flags (54,94,95,122,164); 37 preliminary records remain. Corrections: Q103 source B -> D.",
+  "notes": "Fourth 20-question validation pass: 18 reviewed, 2 source-repair flags (368,640); 17 preliminary remain, 12 source-repair total. Q333 source D corrected to A; Q651 duplicates Q440.",
   "items": [
     {
       "id": 12,
@@ -3043,483 +3043,493 @@
       "id": 246,
       "domain": 2,
       "sequence": 134,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "SAM/CodeDeploy Lambda deployments shift alias traffic gradually and can roll back on CloudWatch alarms.",
       "wrongOptions": {
-        "A": "Alternative: Create and deploy nested AWS CloudFormation stacks with the parent stack consisting of the AWS CloudFront distribution and API Gateway, and the child stack containing the Lambda function. For changes to Lambda, create an AWS CloudFormation change set and deploy; if errors are triggered, revert the AWS CloudFormation change set to the previous version.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Use AWS SAM and built-in AWS CodeDeploy to deploy the new Lambda version, gradually shift traffic to the new version, and use pre-traffic and post-traffic test functions to verify code. Rollback if Amazon CloudWatch alarms are triggered.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Refactor the AWS CLI scripts into a single script that deploys the new Lambda version. When deployment is completed, the script tests execute. If errors are detected, revert to the previous Lambda version.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create and deploy an AWS CloudFormation stack that consists of a new API Gateway endpoint that references the new Lambda version. Change the CloudFront origin to the new API Gateway endpoint, monitor errors and if detected, change the AWS CloudFront origin to the previous API Gateway endpoint.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "CloudFormation change sets are not an automated rollback mechanism for runtime failures",
+        "C": "custom scripts require more maintenance",
+        "D": "changing CloudFront origins is slower and less targeted."
       },
-      "memoryTip": "Key topic: has a serverless application comprised of Amazon CloudFront, Amazon API Gateway, and AWS Lambda functions. The…",
+      "memoryTip": "SAM/CodeDeploy Lambda deployments shift alias traffic gradually and can roll back on CloudWatch alarms.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html"
+        "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-property-function-deploymentpreference.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 269,
       "domain": 2,
       "sequence": 135,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "D"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Verify Direct Connect gateway association and multi-Region private routing requirements.",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Two Direct Connect connections provide redundancy; Direct Connect gateway supports private VIF reachability across Regions.",
       "wrongOptions": {
-        "A": "Alternative: Establish AWS Direct Connect connections from the company headquarters to all AWS Regions in use the company WAN to send traffic over to the headquarters and then to the respective DX connection to access the data. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Establish two AWS Direct Connect connections from the company headquarters to an AWS Region Use the company WAN to send traffic over a DX connection Use inter-region VPC peering to access the data in other AWS Regions. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Establish two AWS Direct Connect connections from the company headquarters to an AWS Region Use the company WAN to send traffic over a DX connection Use an AWS transit VPC solution to access data in other AWS Regions. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Establish two AWS Direct Connect connections from the company headquarters to an AWS Region Use the company WAN to send traffic over a DX connection Use Direct Connect Gateway to access data in other AWS Regions.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "many DX connections increase cost",
+        "B": "VPC peering adds operational overhead and is not transitive",
+        "C": "transit VPC is more complex than DX gateway."
       },
-      "memoryTip": "Key topic: To abide by industry regulations, a solutions architect must design a solution that will store a company's cri…",
-      "awsReferences": [],
+      "memoryTip": "Two Direct Connect connections provide redundancy",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways-intro.html"
+      ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 270,
       "domain": 2,
       "sequence": 136,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Step Functions coordinates human warehouse actions and Lambda updates with DynamoDB state.",
       "wrongOptions": {
-        "A": "Alternative: Use AWS Batch to configure the different tasks required to ship a package. Have AWS Batch trigger an AWS Lambda function that creates and prints a shipping label. Once that label is scanned, as it leaves the warehouse, have another Lambda function move the process to the next step in the AWS Batch job.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: When a new order is created, store the order information in Amazon SQS. Have AWS Lambda check the queue every 5 minutes and process any needed work. When an order needs to be shipped, have Lambda print the label in the warehouse. Once the label has been scanned, as it leaves the warehouse, have an Amazon EC2 instance update Amazon SQS.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Update the application to store new order information in Amazon DynamoDB. When a new order is created, trigger an AWS Step Functions workflow, mark the orders as \"in progress,\" and print a package label to the warehouse. Once the label has been scanned and fulfilled, the application will trigger an AWS Lambda function that will mark the order as shipped and complete the workflow.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Store new order information in Amazon EFS. Have instances pull the new information from the NFS and send that information to printers in the warehouse. Once the label has been scanned, as it leaves the warehouse, have Amazon API Gateway call the instances to remove the order information from Amazon EFS.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "AWS Batch is not human approval orchestration",
+        "B": "scheduled queue polling and EC2 are not fully serverless",
+        "D": "EFS and EC2 polling tightly couple the process."
       },
-      "memoryTip": "Key topic: has an internal application running on AWS that is used to track and process shipments in the company’s wareho…",
-      "awsReferences": [],
+      "memoryTip": "Step Functions coordinates human warehouse actions and Lambda updates with DynamoDB state.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html"
+      ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 294,
       "domain": 2,
       "sequence": 137,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "S3 ingestion with SQS buffering and scalable EC2 workers plus CloudFront/S3 processed output meets burst workload.",
       "wrongOptions": {
-        "A": "Alternative: Store the uploaded images in Amazon Elastic File System (Amazon EFS). Send application log information about each image to Amazon CloudWatch Logs Create a fleet of Amazon EC2 instances that use CloudWatch Logs to determine which images need to be processed Place processed images in another directory in Amazon EFS. Enable Amazon CloudFront and configure the origin to be the one of the EC2 instances in the fleet. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Store the uploaded images in an Amazon S3 bucket and configure an S3 bucket event notification to send a message to Amazon Simple Notification Service (Amazon SNS) Create a fleet of Amazon EC2 instances behind an Application Load Balancer (ALB) to pull messages from Amazon SNS to process the images and place them in Amazon Elastic File System (Amazon EFS) Use Amazon CloudWatch metrics for the SNS message volume to sc…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Store the uploaded images in an Amazon S3 bucket and configure an S3 bucket event notification to send a message to the Amazon Simple Queue Service (Amazon SQS) queue Create a fleet of Amazon EC2 instances to pull messages from the SQS queue to process the images and place them in another S3 bucket. Use Amazon CloudWatch metncs for queue depth to scale out EC2 instances Enable Amazon CloudFront and configure the orig…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Store the uploaded images on a shared Amazon Elastic Block Store (Amazon EBS) volume amounted to a fleet of Amazon EC2 Spot instances. Create an AmazonDynamoDB table that contains information about each uploaded image and whether it has been processed Use an Amazon EventBndge rule to scale out EC2 instances. Enable Amazon CloudFront and configure the origin to reference an Elastic Load Balancer in front of the fleet …. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "CloudWatch Logs is not work queue",
+        "B": "SNS is not polled like SQS",
+        "D": "shared EBS across AZs is unsuitable and scaling trigger unspecified."
       },
-      "memoryTip": "Key topic: is building an image service on the web that will allow users to upload and search random photos. At peak usag…",
-      "awsReferences": [],
+      "memoryTip": "S3 ingestion with SQS buffering and scalable EC2 workers plus CloudFront/S3 processed output meets burst workload.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html"
+      ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 297,
       "domain": 2,
       "sequence": 138,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "A",
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "A",
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Containerize Node.js workload in ECR and run ECS Fargate tasks beyond Lambda maximum execution duration.",
       "wrongOptions": {
-        "A": "Provisional selection: Modify the application deployment by building a Docker image that contains the application code. Publish the image to Amazon Elastic Container Registry (Amazon ECR).. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create a new Amazon Elastic Container Service (Amazon ECS) task definition with a compatibility type of AWS Fargate. Configure the task definition to use the new image in Amazon Elastic Container Registry (Amazon ECR). Adjust the Lambda function to invoke an ECS task by using the ECS task definition when a new file arrives in Amazon S3.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create an AWS Step Functions state machine with a Parallel state to invoke the Lambda function. Increase the provisioned concurrency of the Lambda function.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create a new Amazon Elastic Container Service (Amazon ECS) task definition with a compatibility type of Amazon EC2. Configure the task definition to use the new image in Amazon Elastic Container Registry (Amazon ECR). Adjust the Lambda function to invoke an ECS task by using the ECS task definition when a new file arrives in Amazon S3.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Alternative: Modify the application to store images on Amazon Elastic File System (Amazon EFS) and to store metadata on an Amazon RDS DB instance. Adjust the Lambda function to mount the EFS file share.. Technical assessment still pending; not a verified right/wrong judgement."
+        "C": "provisioned concurrency does not extend Lambda timeout",
+        "D": "EC2 launch type requires host management",
+        "E": "storage changes don't address execution timeout."
       },
-      "memoryTip": "Key topic: A video processing company has an application that downloads images from an Amazon S3 bucket, processes the im…",
+      "memoryTip": "Containerize Node.js workload in ECR and run ECS Fargate tasks beyond Lambda maximum execution duration.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
-        "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 313,
       "domain": 2,
       "sequence": 139,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Amazon Inspector scans EC2-backed EKS nodes and ECR container images with managed vulnerability assessment.",
       "wrongOptions": {
-        "A": "Alternative: Activate AWS Security Hub. Configure Security Hub to scan the EKS nodes and the ECR repository.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Activate Amazon Inspector to scan the EKS nodes and the ECR repository.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Launch a new Amazon EC2 instance and install a vulnerability scanning tool from AWS Marketplace. Configure the EC2 instance to scan the EKS nodes. Configure Amazon ECR to perform a basic scan on push.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Install the Amazon CloudWatch agent on the EKS nodes. Configure the CloudWatch agent to scan continuously. Configure Amazon ECR to perform a basic scan on push.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "Security Hub aggregates findings rather than scanning directly",
+        "C": "custom EC2 scanner increases overhead",
+        "D": "CloudWatch agent is not vulnerability scanner."
       },
-      "memoryTip": "Key topic: is deploying a new application on AWS. The application consists of an Amazon EKS cluster and an Amazon ECR rep…",
+      "memoryTip": "Amazon Inspector scans EC2-backed EKS nodes and ECR container images with managed vulnerability assessment.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
+        "https://docs.aws.amazon.com/inspector/latest/user/what-is-inspector.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 333,
       "domain": 2,
       "sequence": 140,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "D"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "CloudFormation DeletionPolicy alone cannot delete a nonempty S3 bucket; validate custom emptying mechanism.",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "S3 bucket must be emptied before CloudFormation deletes it; custom Lambda-backed resource can remove objects during deletion.",
       "wrongOptions": {
-        "A": "Alternative: Implement a Lambda function that deletes all files from a given S3 bucket. Integrate this Lambda function as a custom resource into the CloudFormation stack. Ensure that the custom resource has a DependsOn attribute that points to the S3 bucket's resource.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Modify the CloudFormation template to provision an Amazon Elastic File System (Amazon EFS) file system to store the temporary files there instead of in Amazon S3. Configure the Lambda functions to run in the same VPC as the file system. Mount the file system to the EC2 instances and Lambda functions.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Modify the CloudFormation stack to create an S3 Lifecycle rule that expires all objects 45 minutes after creation. Add a DependsOn attribute that points to the S3 bucket's resource.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Modify the CloudFormation stack to attach a DeletionPolicy attribute with a value of Delete to the S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "replacing S3 with EFS is major redesign",
+        "C": "lifecycle cannot expire after 45 minutes",
+        "D": "DeletionPolicy Delete does not empty bucket."
       },
-      "memoryTip": "Key topic: A financial services company runs a complex, multi-tier application on Amazon EC2 instances and AWS Lambda fun…",
+      "memoryTip": "S3 bucket must be emptied before CloudFormation deletes it",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html",
-        "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 352,
       "domain": 2,
       "sequence": 141,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Likely Amazon Macie OCR typo; verify S3 sensitivity discovery and automatic remediation.",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Amazon Macie identifies sensitive S3 data; customer-managed KMS key and workflow re-encrypt existing sensitive objects.",
       "wrongOptions": {
-        "A": "Alternative: Use Amazon Inspector to determine which S3 buckets contain sensitive data. Create a new AWS KMS customer managed key and a key policy that provides access to administrators only. Set default S3 bucket encryption to use the new KMS key (SSE-KMS). Update the S3 bucket policy to add a Deny effect and a Condition element of \"StringNotEquals\": { \"s3:x-amz-server-side-encryption\": \"aws:kms\" }.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Use Amazon Inspector to determine which S3 buckets contain sensitive data. Update the key policy on the AWS managed key to provide access to administrators only. Use AWS Batch to encrypt all existing objects that include sensitive data in the S3 buckets with the updated AWS managed key.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Use Amazon Made to determine which S3 buckets contain sensitive data. Create a new AWS KMS customer managed key and a key policy that provides access to administrators only. Set default S3 bucket encryption to use the new KMS key (SSE-KMS). Create an AWS Step Functionsworkflow to encrypt all existing S3 objects that include sensitive data by using the new KMS key.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Use Amazon Made to determine which S3 buckets contain sensitive data. Update the key policy on the AWS managed key to provide access to administrators only. Update the S3 bucket policy to add a Deny effect and a Condition element of \"StringNotEquals\": { \"s3:x-amz-server-side-encryption\": \"aws:kms\" }.. Technical assessment still pending; not a verified right/wrong judgement."
+        "D": "AWS-managed KMS key policy cannot be modified like customer-managed key and lacks re-encryption."
       },
-      "memoryTip": "Key topic: stores application data in many Amazon S3 buckets in one AWS account. Some of the S3 buckets contain sensitive…",
+      "memoryTip": "Amazon Macie identifies sensitive S3 data",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+        "https://docs.aws.amazon.com/macie/latest/user/discovery-supported-encryption-types.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 368,
       "domain": 2,
       "sequence": 142,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "D"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Aurora Serverless v1 is deprecated; validate migration to supported Aurora global database.",
+      "validity": "ambiguous",
+      "reasoning": "D is the historical intended warm-standby architecture, but source uses retired Aurora Serverless v1; current Aurora global database/serverless v2 migration details and 5-minute RTO require explicit validation.",
       "wrongOptions": {
-        "A": "Alternative: Create a read replica of the Aurora Serverless VI database in the target Region. Use AWS SAM to create a runbook to deploy the solution to the target Region. Promote the read replica to primary in case of disaster.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Change the Aurora Serverless VI database to a standard Aurora MySQL global database that extends across the source Region and the target Region. Use AWS SAM to create a runbook to deploy the solution to the target Region.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create an Aurora Serverless VI DB cluster that has multiple writer instances in the target Region. Launch the solution in the target Region. Configure the two Regional solutions to work in an active-passive configuration.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Change the Aurora Serverless VI database to a standard Aurora MySQL global database that extends across the source Region and the target Region. Launch the solution in the target Region. Configure the two Regional solutions to work in an active- passive configuration.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "Aurora Serverless v1 cross-Region replica is not valid",
+        "B": "deploy-on-disaster risks 5-minute RTO",
+        "C": "Serverless v1 multiple writers invalid",
+        "D": "best historical answer but outdated v1 migration wording."
       },
-      "memoryTip": "Key topic: hosts a software as a service (SaaS) solution on AWS. The solution has an Amazon API Gateway API that serves a…",
+      "memoryTip": "D is the historical intended warm-standby architecture, but source uses retired Aurora Serverless v1",
       "awsReferences": [
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
-        "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Source outdated, incomplete or internally inconsistent; exclude from confirmed scoring."
     },
     {
       "id": 417,
       "domain": 2,
       "sequence": 143,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Per-Region Auto Scaling and NLB, Route 53 latency routing, and DynamoDB global tables provide regional scale and multi-Region game data.",
       "wrongOptions": {
-        "A": "Alternative: Create an EC2 Spot Fleet. Attach the Spot Fleet to a Network Load Balancer (NLB) in each Region. Create an AWS Global Accelerator IP address that points to the NLB. Create an Amazon Route 53 latency-based routing entry for the Global Accelerator IP address. Save the game metadata to an Amazon RDS for MySQL DB instance in each Region. Set up a read replica in the other Regions.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create an Auto Scaling group for the EC2 instances. Attach the Auto Scaling group to a Network Load Balancer (NLB) in each Region. For each Region, create an Amazon Route 53 entry that uses geoproximity routing and points to the NLB in that Region. Save the game metadata to MySQL databases on EC2 instances in each Region. Save the game metadata to MySQL databases on EC2 instances in each Region. Set up replication be…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create an Auto Scaling group for the EC2 instances. Attach the Auto Scaling group to a Network Load Balancer (NLB) in each Region. For each Region, create an Amazon Route 53 entry that uses latency-based routing and points to the NLB in that Region. Save the game metadata to an Amazon DynamoDB global table.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Use EC2 Global View. Deploy the EC2 instances to each Region. Attach the instances to a Network Load Balancer (NLB). Deploy a DNS server on an EC2 instance in each Region. Set up custom logic on each DNS server to redirect the user to the Region that provides the lowest latency. Save the game metadata to an Amazon Aurora global database.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "RDS read replicas don't provide active-active writes",
+        "B": "self-managed MySQL replication adds overhead",
+        "D": "EC2 Global View isn't a deployment/routing service."
       },
-      "memoryTip": "Key topic: is launching a new online game on Amazon EC2 instances. The game must be available globally. The company plans…",
+      "memoryTip": "Per-Region Auto Scaling and NLB, Route 53 latency routing, and DynamoDB global tables provide regional scale and multi-Region game data.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 440,
       "domain": 2,
       "sequence": 144,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "D"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Scheduled scaling anticipates one-off sale peaks; Aurora PostgreSQL larger replica can be promoted for greater writer capacity.",
       "wrongOptions": {
-        "A": "Alternative: Use a predictive scaling policy for the EC2 instances. Host the database on an Amazon Aurora PostgreSOL Serverless v2 Multi-AZ DB instance with automatically scaling read replicas. Create an AWS Step Functions state machine to run parallel AWS Lambda functions to pre-warm the database before a sale event. Create an Amazon EventBridge rule to invoke the state machine.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Use a scheduled scaling policy for the EC2 instances. Host the database on an Amazcyl ROS for PostgreSQL Multi-AZ DB instance with automatically scaling read replicas. Create an Amazon EventBridge rule that invokes an AWS Lambda function to create a larger read replica before a sale event. Fail over to the larger read replica. Create another EventBridge rule that invokes another Lambda function to scale down the read…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Use a predictive scaling policy for the EC2 instances. Host the database on an Amazon RDS for PostgreSOL Multi-AZ DB instance with automatically scaling read replica. Create an AWS Step Functions state machine to run parallel AWS Lambda functions to pre-warm the database before a saleevent. Create an Amazon EventBridge rule to invoke the state machine.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Use a scheduled scaling policy for the EC2 instances. Host the database on an Amazon Aurora PostgreSQL Multi-AZ DB duster. Create an Amazon EventBridge rule that invokes an AWS Lambda function to create a larger Aurora Replica before a sale event. Fail over to the larger Aurora Replica. Create another EventBridge rule that invokes another Lambda function to scale down the Aurora Replica after the sale event.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "RDS PostgreSQL replica failover path is less suitable and read replica scaling isn't automatic as described."
       },
-      "memoryTip": "Key topic: A live-events company is designing a scaling solution for its ticket application on AWS. The application has h…",
+      "memoryTip": "Scheduled scaling anticipates one-off sale peaks",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-failover.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 461,
       "domain": 2,
       "sequence": 145,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "AWS Compute Optimizer Lambda recommendations export/API naming should be verified.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Compute Optimizer ExportLambdaFunctionRecommendations API exports recommendations to S3; scheduled Lambda runs biweekly.",
       "wrongOptions": {
-        "A": "Alternative: Create a Lambda function that extracts metrics data for each API Lambda function from Amazon CloudWatch Logs for the 2-week penod_ Collate the data into tabular format. Store the data as a _csvfile in an S3 bucket. Create an Amazon Eventaridge rule to schedulethe Lambda function to run every 2 weeks.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Opt in to AWS Compute Optimizer. Create a Lambda function that calls the ExportLambdaFunctionRecommendatlons operation. Export the _csv file to an S3 bucket. Create an Amazon Eventaridge rule to schedule the Lambda function to run every 2 weeks.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Opt in to AWS Compute Optimizer. Set up enhanced infrastructure metrics. Within the Compute Optimizer console, schedule a job to export the Lambda recommendations to a _csvfile_ Store the file in an S3 bucket every 2 weeks.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Purchase the AWS Business Support plan for the production account. Opt in to AWS Compute Optimizer for AWS Trusted Advisor checks. In the Trusted Advisor console, schedule a job to export the cost optimization checks to a _csvfile_ Store the file in an S3 bucket every 2 weeks.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "manually deriving memory/cost recommendations from logs adds development",
+        "C": "console does not natively schedule this biweekly export",
+        "D": "Trusted Advisor support plan is not this Lambda memory recommendation export."
       },
-      "memoryTip": "Key topic: runs a new application as a static website in Amazon S3. The company has deployed the application to a product…",
+      "memoryTip": "Compute Optimizer ExportLambdaFunctionRecommendations API exports recommendations to S3",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html"
+        "https://docs.aws.amazon.com/compute-optimizer/latest/APIReference/API_ExportLambdaFunctionRecommendations.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 484,
       "domain": 2,
       "sequence": 146,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "A"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS Service Catalog portfolios/products constrain EMR cluster configurations and user launch permissions with tags.",
       "wrongOptions": {
-        "A": "Provisional selection: Configure AWS Service Catalog to control the Amazon EMR versions available for deployment, the cluster configurations, and the permissions for each user group.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Configure Kerberos-based authentication for EMR clusters when the EMR clusters launch. Specify a Kerberos security configuration and cluster-specific Kerberos options.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create IAM roles for each user group. Attach policies to the roles to define allowed actions for users. Create an AWS Config rule to check for noncompliant resources. Configure the rule to notify the company to address noncompliant resources.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Use AWS CloudFormation to launch EMR clusters with attached resource policies. Create an AWS Config rule to check for noncompliant resources. Configure the rule to notify the company to address noncompliant resources.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "Kerberos addresses authentication within cluster",
+        "C": "Config only detects after deployment",
+        "D": "CloudFormation resource policies and Config do not provide curated launch entitlement."
       },
-      "memoryTip": "Key topic: is building an application on Amazon EMR to analyze data. The following user groups need to perform different …",
-      "awsReferences": [],
+      "memoryTip": "AWS Service Catalog portfolios/products constrain EMR cluster configurations and user launch permissions with tags.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html"
+      ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 494,
       "domain": 2,
       "sequence": 147,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudFront origin group failover between two regional ALBs adds availability without duplicate distributions.",
       "wrongOptions": {
-        "A": "Alternative: Provision a full, secondary application deployment in a different AWS Region. Update the Route 53 A record to be a failover record. Add both of the CloudFront distributions as values. Create Route 53 health checks.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Provision an ALB, an Auto Scaling group, and EC2 instances in a different AWS Region. Update the CloudFront distribution, and create a second origin for the new ALB. Create an origin group for the two origins. Configure one origin as primary and one origin as secondary.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Provision an Auto Scaling group and EC2 instances in a different AWS Region. Create a second target for the new Auto Scaling group in the ALB. Set up the failover routing algorithm on the ALB.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Provision a full, secondary application deployment in a different AWS Region. Create a second CloudFront distribution, and add the new application setup as an origin. Create an AWS Global Accelerator accelerator. Add both of the CloudFront distributions as endpoints.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "two CloudFront distributions with Route 53 failover adds overhead",
+        "C": "one ALB cannot span Regions",
+        "D": "Global Accelerator doesn't support CloudFront distributions as endpoints."
       },
-      "memoryTip": "Key topic: is running a web application in the AWS Cloud. The application consists of dynamic content that is created on …",
+      "memoryTip": "CloudFront origin group failover between two regional ALBs adds availability without duplicate distributions.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 550,
       "domain": 2,
       "sequence": 148,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "A"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Cluster placement group maximizes low-latency network performance between enhanced-networking EC2 instances in same AZ.",
       "wrongOptions": {
-        "A": "Provisional selection: Launch five new EC2 instances into a cluster placement group. Ensure that the EC2instance type supports enhanced networking.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Launch five new EC2 instances into an Auto Scaling group in the same Availability Zone. Attach an extra elastic network interface to each EC2 instance.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Launch five new EC2 instances into a partition placement group. Ensure that the EC2 instance type supports enhanced networking.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Launch five new EC2 instances into a spread placement group Attach an extra elastic network interface to each EC2 instance.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "ASG in same AZ does not ensure close placement",
+        "C": "partition spreads partitions for fault isolation",
+        "D": "spread placement deliberately separates instances."
       },
-      "memoryTip": "Key topic: has a new application that needs to run on five Amazon EC2 instances in a single AWS Region. The application r…",
+      "memoryTip": "Cluster placement group maximizes low-latency network performance between enhanced-networking EC2 instances in same AZ.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 579,
       "domain": 2,
       "sequence": 149,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "UltraWarm needs compatible hot tier and sizing; validate query access and cost.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Keep small hot tier and move read-only indexes to UltraWarm; retain original input in S3 Deep Archive after analysis.",
       "wrongOptions": {
-        "A": "Alternative: Replace all the data nodes with UltraWarm nodes to handle the expected capacity. Transition the input data from S3 Standard to S3 Glacier Deep Archive when the company loads the data into the cluster.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Reduce the number of data nodes in the cluster to 2 Add UltraWarm nodes to handle the expected capacity. Configure the indexes to transition to UltraWarm when OpenSearch Service ingests the data. Transition the input data to S3 Glacier Deep Archive after 1 month by using an S3 Lifecycle policy.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Reduce the number of data nodes in the cluster to 2. Add UltraWarm nodes to handle the expected capacity. Configure the indexes to transition to UltraWarm when OpenSearch Service ingests the data. Add cold storage nodes to the cluster Transition the indexes from UltraWarm to cold storage. Delete the input data from the S3 bucket after 1 month by using an S3 Lifecycle policy.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Reduce the number of data nodes in the cluster to 2. Add instance-backed data nodes to handle the expected capacity. Transition the input data from S3 Standard to S3 Glacier Deep Archive when the company loads the data into the cluster.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "UltraWarm cannot fully replace hot data nodes",
+        "C": "deletes compliance source input",
+        "D": "instance-backed data nodes add cost and early archive complicates reprocessing."
       },
-      "memoryTip": "Key topic: is using Amazon OpenSearch Service to analyze data. The company loads data into an OpenSearch Service cluster …",
+      "memoryTip": "Keep small hot tier and move read-only indexes to UltraWarm",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+        "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ultrawarm.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 635,
       "domain": 2,
       "sequence": 150,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "FSx for Windows File Server supports SMB, Windows ACLs, AD, and multi-AZ shared storage.",
       "wrongOptions": {
-        "A": "Alternative: Create an Amazon Elastic File System (Amazon EFS) file share. Create an Auto Scaling group that extends across three Availability Zones and maintains a minimum size of three instances. Implement a user data script to install the application, join the instance to the AD domain, and mount the EFS file share.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create a new AMI from the current EC2 instance that is running. Create an Amazon FSx for Lustre file system. Create an Auto Scaling group that extends across three Availability Zones and maintains a minimum size of three instances. Implement a user data script to join the instance to the AD domain and mount the FSx for Lustre file system.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create an Amazon FSx for Windows File Server file system. Create an Auto Scaling group that extends across three Availability Zones and maintains a minimum size of three instances. Implement a user data script to install the application and mount the FSx for Windows File Server file system. Perform a seamless domain join to join the instance to the AD domain.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create a new AMI from the current EC2 instance that is running. Create an Amazon Elastic File System (Amazon EFS) file system. Create an Auto Scaling group that extends across three Availability Zones and maintains a minimum size of three instances. Perform a seamless domain join to join the instance to the AD domain.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "FSx for Lustre lacks Windows SMB ACL integration."
       },
-      "memoryTip": "Key topic: runs a content management application on a single Windows Amazon EC2 instance in a development environment. Th…",
+      "memoryTip": "FSx for Windows File Server supports SMB, Windows ACLs, AD, and multi-AZ shared storage.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/what-is.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 640,
       "domain": 2,
       "sequence": 151,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "C"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "validity": "ambiguous",
+      "reasoning": "C best matches EventBridge fan-out but all options tell microservices to delete data from central DynamoDB table, not their own copied stores. EventBridge asynchronous delivery cannot guarantee 'immediately'. Requires repaired wording.",
       "wrongOptions": {
-        "A": "Alternative: Activate DynamoDB Streams on the DynamoDB table Create an AWS Lambda trigger for the DynamoDB stream that will post events about user deletion in an Amazon Simple Queue Service (Amazon SQS) queue Configure each microservice to poll the queue and delete the user from the DynamoDB table. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Set up DynamoDB event notifications on the DynamoDB table Create an Amazon Simple Notification Service (Amazon SNS) topic as a target for the DynamoDB event notification Configure each microservice to subscribe to the SNS topic and to delete the user from the DynamoDB table. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Configure the central user service to post an event on a custom Amazon EventBridge event bus when the company deletes a user Create an EventBndge rule for each microservice to match the user deletion event pattern and invoke logic in the microservice to delete the user from the DynamoDB table. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Configure the central user service to post a message on an Amazon Simple Queue Service (Amazon SQS) queue when the company deletes a user Configure each microservice to create an event filter on the SQS queue and to delete the user from the DynamoDB table. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "SQS competing consumers don't broadcast to every service",
+        "B": "DynamoDB event notifications aren't a direct SNS per-item change feed",
+        "C": "EventBridge fan-out fits but target deletion scope and immediacy are wrong",
+        "D": "one SQS queue distributes messages to competing consumers, not all."
       },
-      "memoryTip": "Key topic: A delivery company is running a serverless solution in tneAWS Cloud The solution manages user data, delivery i…",
+      "memoryTip": "C best matches EventBridge fan-out but all options tell microservices to delete data from central DynamoDB table, not their own copied stores. EventBridge asynchronous delivery cannot guarantee 'immediately'. Requires repaired wording.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Source outdated, incomplete or internally inconsistent; exclude from confirmed scoring."
     },
     {
       "id": 650,
       "domain": 2,
       "sequence": 152,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Review RTO/RPO and data replication before selecting warm standby.",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Pre-provisioned Fargate DR service and RDS cross-Region read replica minimize recovery time; promote replica and update DNS on failure.",
       "wrongOptions": {
-        "A": "Alternative: Set up a second ECS cluster and ECS service on Fargate in the separate Region. Create an AWS Lambda function to perform the following actions: take asnapshot of the ROS DB instance. copy the snapshot to the separate Region. create a new RDS DB instance frorn the snapshot, and update Route 53 toroute traffic to the second ECS cluster. Update the EventBridge rule to add a target that will invoke the Lambda function.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create an AWS Lambda function that creates a second ECS cluster and ECS service in the separate Region. Configure the Lambda function to perform thefollowing actions: take a snapshot of thQRDS DB instance, copy the snapshot to the separate Region. create a new RDS DB instance from the snapshot.and update Route 53 to route traffic to the second ECS cluster. Update the EventBridge rule to add a target that will invoke …. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Set up a second ECS cluster and ECS service on Fargate in the separate Region. Create a cross-Region read replica of the RDS DB instance in theseparate Region. Create an AWS Lambda function to prornote the read replica to the primary database. Configure the Lambda function to update Route 53to route traffic to the second ECS cluster. Update the EventBridge rule to add a target that will invoke the Lambda function.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Set up a second ECS cluster and ECS service on Fargate in the separate Region. Take a snapshot of the ROS DB instance. Convert the snapshot to anAmazon DynamoDB global table. Create an AWS Lambda function to update Route 53 to route traffic to the second ECS cluster Update the EventBridgerule to add a target that will invoke the Lambda function.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "snapshot transfer/recovery slower",
+        "B": "also creates compute during outage",
+        "D": "RDS snapshot cannot convert into DynamoDB global table."
       },
-      "memoryTip": "Key topic: needs to implement a disaster recovery (DR) plan for a web application. The application runs in a single AWS R…",
+      "memoryTip": "Pre-provisioned Fargate DR service and RDS cross-Region read replica minimize recovery time",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html",
-        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 651,
       "domain": 2,
       "sequence": 153,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "D"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Possible duplicate of Q440.",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Same architecture as Q440: scheduled EC2 scaling and Aurora replica capacity adjustment for one-time events.",
       "wrongOptions": {
-        "A": "Alternative: Use a predictive scaling policy for the EC2 instances. Host the database on an Amazon Aurora PostgreSQL Serverless v2 Multi-AZ DB instance with automatically scaling read replicas. Create an AWS Step Functions state machine to run parallel AWS Lambda functions to pre-warm the database before a sale event. Create an Amazon EventBridge rule to invoke the state machine.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Use a scheduled scaling policy for the EC2 instances. Host the database on an Amazon RDS for PostgreSQL Multi-AZ DB instance with automatically scaling read replicas. Create an Amazon EventBridge rule that invokes an AWS Lambda function to create a larger read replica before a sale event. Fail over to the larger read replica. Create another EventBridge rule that invokes another Lambda function to scale down the read …. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Use a predictive scaling policy for the EC2 instances. Host the database on an Amazon RDS for PostgreSQL Multi-AZ DB instance with automatically scaling read replicas. Create an AWS Step Functions state machine to run parallel AWS Lambda functions to pre-warm the database before a sale event. Create an Amazon EventBridge rule to invoke the state machine.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Use a scheduled scaling policy for the EC2 instances. Host the database on an Amazon Aurora PostgreSQL Multi-AZ DB cluster. Create an Amazon EventBridge rule that invokes an AWS Lambda function to create a larger Aurora Replica before a sale event. Fail over to the larger Aurora Replica. Create another EventBridge rule that invokes another Lambda function to scale down the Aurora Replica after the sale event.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "RDS PostgreSQL scaling/replica approach less suitable. Duplicate of Q440."
       },
-      "memoryTip": "Key topic: A live-events company is designing a scaling solution for its ticket application on AWS. The application has h…",
+      "memoryTip": "Same architecture as Q440: scheduled EC2 scaling and Aurora replica capacity adjustment for one-time events.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-scheduled-scaling.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-by-option technical assessment with AWS service reference."
     },
     {
       "id": 657,
