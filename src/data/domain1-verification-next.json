@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Twentieth 20-question batch: 19 reviewed with caveats, 1 flagged Q583; corrections Q574 C→B, Q575 BD→CD, Q587 A→D, Q588 A→D.",
+  "notes": "Twenty-first 20-question batch: 18 reviewed with caveats, 2 flagged Q604 Q621; corrections Q605 A→B Q626 D→C.",
   "items": [
     {
       "id": 12,
@@ -10757,6 +10757,330 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 604,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Separating waiting room and ticketing ECS services helps isolation, but CloudFront Functions cannot safely decrypt arbitrary encrypted JWT claims or directly select arbitrary ECS services without separate CloudFront origins/routing; C incomplete. A may be workable with app-level routing but waiting-room traffic still traverses ticketing service.",
+      "wrongOptions": null,
+      "memoryTip": "Separating waiting room and ticketing ECS services helps isolation, but CloudFront Functions cannot safely decrypt arbitrary encrypted JWT claims or directly select arbitrary ECS services without separate CloudFront origins/routing; C incomplete. A may be workable with app-level routing but waiting-room traffic still traverses ticketing service.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cloudfront-functions.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 605,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ALB authenticate-cognito with Cognito user pool federated to directory-backed SAML IdP enables AD user authentication; Managed Microsoft AD itself is not a native OIDC issuer for A. Configure federation IdP explicitly.",
+      "wrongOptions": null,
+      "memoryTip": "ALB authenticate-cognito with Cognito user pool federated to directory-backed SAML IdP enables AD user authentication; Managed Microsoft AD itself is not a native OIDC issuer for A. Configure federation IdP explicitly.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 607,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SageMaker managed endpoint hosts TensorFlow personalization model, Elastic Beanstalk hosts Java app, RDS SQL Server removes database server operations.",
+      "wrongOptions": null,
+      "memoryTip": "SageMaker managed endpoint hosts TensorFlow personalization model, Elastic Beanstalk hosts Java app, RDS SQL Server removes database server operations.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/realtime-endpoints.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 608,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS Managed Microsoft AD supports Windows domain join, Group Policy and security administration; WorkSpaces offers managed desktop for AD tools, although MFA implementation needs additional RADIUS or IdP integration.",
+      "wrongOptions": null,
+      "memoryTip": "AWS Managed Microsoft AD supports Windows domain join, Group Policy and security administration; WorkSpaces offers managed desktop for AD tools, although MFA implementation needs additional RADIUS or IdP integration.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 609,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "RDS Proxy pools Aurora MySQL database connections and AWS Secrets Manager stores and rotates credentials; ensure rotation enabled.",
+      "wrongOptions": null,
+      "memoryTip": "RDS Proxy pools Aurora MySQL database connections and AWS Secrets Manager stores and rotates credentials; ensure rotation enabled.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 610,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Direct Connect gateway to transit gateway via transit VIF, share TGW across accounts, attach VPCs and route default traffic via on-prem NAT for centralized egress. Configure routes and DX capacity.",
+      "wrongOptions": null,
+      "memoryTip": "Direct Connect gateway to transit gateway via transit VIF, share TGW across accounts, attach VPCs and route default traffic via on-prem NAT for centralized egress. Configure routes and DX capacity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 613,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "FSx for Windows File Server provides managed SMB home directories, AWS Client VPN shifts remote access to AWS reducing on-prem VPN saturation.",
+      "wrongOptions": null,
+      "memoryTip": "FSx for Windows File Server provides managed SMB home directories, AWS Client VPN shifts remote access to AWS reducing on-prem VPN saturation.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/what-is.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 614,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudWatch consumed capacity identifies unused tables; on-demand avoids provisioned idle throughput while Standard-IA reduces storage charges for large infrequently accessed tables. Standard-IA read/write pricing may be higher; confirm total cost.",
+      "wrongOptions": null,
+      "memoryTip": "CloudWatch consumed capacity identifies unused tables; on-demand avoids provisioned idle throughput while Standard-IA reduces storage charges for large infrequently accessed tables. Standard-IA read/write pricing may be higher; confirm total cost.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.TableClasses.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 615,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 File Gateway exposes NFS-backed S3 files; Lifecycle to Glacier Deep Archive after five days fits multi-day retrieval tolerance. Deep Archive objects not directly accessible via file share until restored.",
+      "wrongOptions": null,
+      "memoryTip": "S3 File Gateway exposes NFS-backed S3 files; Lifecycle to Glacier Deep Archive after five days fits multi-day retrieval tolerance. Deep Archive objects not directly accessible via file share until restored.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/storagegateway/latest/files3/what-is-file-s3.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 616,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SCT and DMS migrate Oracle to RDS PostgreSQL with PostGIS for spatial data; postgres_fdw accesses PostgreSQL remote data but on-prem Oracle foreign tables require oracle_fdw or suitable supported connector, which RDS PostgreSQL may not offer. Treat as best-intent answer requiring compatibility check.",
+      "wrongOptions": null,
+      "memoryTip": "SCT and DMS migrate Oracle to RDS PostgreSQL with PostGIS for spatial data; postgres_fdw accesses PostgreSQL remote data but on-prem Oracle foreign tables require oracle_fdw or suitable supported connector, which RDS PostgreSQL may not offer. Treat as best-intent answer requiring compatibility check.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.Extensions.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 617,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Engineer role only permitted CloudFormation, CloudFormation service role has tightly scoped resource provisioning permissions; restrict iam:PassRole and CloudFormation template/resource use to prevent bypass.",
+      "wrongOptions": null,
+      "memoryTip": "Engineer role only permitted CloudFormation, CloudFormation service role has tightly scoped resource provisioning permissions; restrict iam:PassRole and CloudFormation template/resource use to prevent bypass.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-servicerole.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 618,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Systems Manager hybrid activations onboard on-prem servers and Patch Manager manages EC2 plus on-prem patch compliance centrally.",
+      "wrongOptions": null,
+      "memoryTip": "Systems Manager hybrid activations onboard on-prem servers and Patch Manager manages EC2 plus on-prem patch compliance centrally.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-patch.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 619,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Container image in ECR and EventBridge ECS Fargate task targets support image processing beyond Lambda 15-minute timeout without EC2 management.",
+      "wrongOptions": null,
+      "memoryTip": "Container image in ECR and EventBridge ECS Fargate task targets support image processing beyond Lambda 15-minute timeout without EC2 management.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 620,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Route 53 Resolver outbound endpoint with forwarding rule sends private on-prem DNS queries across VPN; inbound endpoint serves reverse direction.",
+      "wrongOptions": null,
+      "memoryTip": "Route 53 Resolver outbound endpoint with forwarding rule sends private on-prem DNS queries across VPN; inbound endpoint serves reverse direction.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-outbound-queries.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 621,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "CloudFront native custom error responses for HTTP 503 using an S3-hosted error page are least overhead, but no answer explicitly configures custom error response. C origin group failover to S3 website can serve alternative content but not necessarily requested custom 503 page without routing and error configuration; B DNS failover is slow and unnecessary.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFront native custom error responses for HTTP 503 using an S3-hosted error page are least overhead, but no answer explicitly configures custom error response. C origin group failover to S3 website can serve alternative content but not necessarily requested custom 503 page without routing and error configuration; B DNS failover is slow and unnecessary.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/creating-custom-error-pages.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 622,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ALB+multi-AZ EC2 ASG, RDS MariaDB Multi-AZ, and ElastiCache Redis replication group Multi-AZ failover eliminate single points of failure.",
+      "wrongOptions": null,
+      "memoryTip": "ALB+multi-AZ EC2 ASG, RDS MariaDB Multi-AZ, and ElastiCache Redis replication group Multi-AZ failover eliminate single points of failure.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 623,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SageMaker real-time endpoint production variants with equal weights route A/B traffic 50:50 without client-side routing; serverless inference lacks multi-production-variant support.",
+      "wrongOptions": null,
+      "memoryTip": "SageMaker real-time endpoint production variants with equal weights route A/B traffic 50:50 without client-side routing; serverless inference lacks multi-production-variant support.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/model-ab-testing.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 624,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "API Gateway canary deployment directs 10% to new backend integration while keeping 90% stable; SageMaker Serverless endpoint must be deployed separately per model version and API stages/integrations must point correctly.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway canary deployment directs 10% to new backend integration while keeping 90% stable; SageMaker Serverless endpoint must be deployed separately per model version and API stages/integrations must point correctly.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 625,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "NLB provides static IPs per AZ and ALB-type target group preserves ALB TLS termination and path-based routing, satisfying on-prem firewall allowlist.",
+      "wrongOptions": null,
+      "memoryTip": "NLB provides static IPs per AZ and ALB-type target group preserves ALB TLS termination and path-based routing, satisfying on-prem firewall allowlist.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/network/application-load-balancer-target.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 626,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Site-to-Site VPN plus on-prem AD domain join and RDP over VPN avoids managed AD and RD Gateway recurring costs; users must connect via corporate network/VPN, not directly from arbitrary internet clients.",
+      "wrongOptions": null,
+      "memoryTip": "Site-to-Site VPN plus on-prem AD domain join and RDP over VPN avoids managed AD and RD Gateway recurring costs; users must connect via corporate network/VPN, not directly from arbitrary internet clients.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
     }
   ]
 }
