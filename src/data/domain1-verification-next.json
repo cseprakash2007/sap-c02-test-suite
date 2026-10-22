@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Eighth 20-question batch: 14 verified with caveats, 6 flagged (Q237 Q242 Q248 Q249 Q259 Q262). Corrected Q247 source key A+B to B+C.",
+  "notes": "Ninth 20-question batch: 16 confirmed with caveats, four flagged Q265 Q266 Q268 Q283. Corrected Q279 B to C and Q280 B to C. Q283 intended A+C+D instead of C+D+E, flagged for source repair.",
   "items": [
     {
       "id": 12,
@@ -6935,6 +6935,320 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 264,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Application Discovery Agent collects server utilization, processes and network dependencies; agentless discovery alone may miss process-level details.",
+      "wrongOptions": null,
+      "memoryTip": "Application Discovery Agent collects server utilization, processes and network dependencies; agentless discovery alone may miss process-level details.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 265,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Duplicate of Q216 with malformed answer choices. Cost Anomaly Detection is spend anomaly detection, not an exact 30-day average EC2 running-hours threshold; no listed fully automated solution.",
+      "wrongOptions": null,
+      "memoryTip": "Duplicate of Q216 with malformed answer choices. Cost Anomaly Detection is spend anomaly detection, not an exact 30-day average EC2 running-hours threshold; no listed fully automated solution.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/manage-ad.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 266,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Migration Hub import and EC2 recommendations historically support sizing, but cost estimation and export behavior require validation; Migration Evaluator Quick Insights option D is also questionable for direct CSV import from S3. Flag.",
+      "wrongOptions": null,
+      "memoryTip": "Migration Hub import and EC2 recommendations historically support sizing, but cost estimation and export behavior require validation; Migration Evaluator Quick Insights option D is also questionable for direct CSV import from S3. Flag.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/migrationhub/latest/ug/ec2-recommendations.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 268,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Options are malformed: A is truncated and B continues A; A+E cannot be interpreted as two standalone steps. Correct design uses Direct Connect gateway with private/transit VIF for private VPC access plus public VIF for public AWS services.",
+      "wrongOptions": null,
+      "memoryTip": "Options are malformed: A is truncated and B continues A; A+E cannot be interpreted as two standalone steps. Correct design uses Direct Connect gateway with private/transit VIF for private VPC access plus public VIF for public AWS services.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/virtualinterfaces.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 271,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CodeArtifact external connection to public PyPI with private VPC endpoints gives private package retrieval, subject to CodeArtifact upstream service fetching packages.",
+      "wrongOptions": null,
+      "memoryTip": "CodeArtifact external connection to public PyPI with private VPC endpoints gives private package retrieval, subject to CodeArtifact upstream service fetching packages.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/codeartifact/latest/ug/external-connection.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 272,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora PostgreSQL HA, autoscaled EC2/ALB and AppStream streaming desktop app reduce client-side latency and operations. Verify desktop app compatibility and SLA.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora PostgreSQL HA, autoscaled EC2/ALB and AppStream streaming desktop app reduce client-side latency and operations. Verify desktop app compatibility and SLA.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/appstream2/latest/developerguide/what-is-appstream.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 273,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AppSync subscriptions over managed WebSockets push new comments in real time instead of repeated polling.",
+      "wrongOptions": null,
+      "memoryTip": "AppSync subscriptions over managed WebSockets push new comments in real time instead of repeated polling.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/appsync/latest/devguide/aws-appsync-real-time-data.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 274,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Three-node DAX cluster offers HA and low-latency cached reads; writes directly to DynamoDB avoid unnecessary DAX write path, but cached eventual consistency may be inappropriate for trading use cases.",
+      "wrongOptions": null,
+      "memoryTip": "Three-node DAX cluster offers HA and low-latency cached reads; writes directly to DynamoDB avoid unnecessary DAX write path, but cached eventual consistency may be inappropriate for trading use cases.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 275,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFormation resource import brings existing VPC under stack management using template matching its configuration.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFormation resource import brings existing VPC under stack management using template matching its configuration.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-existing-stack.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 276,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "B",
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Share transit gateway via RAM, attach VPCs and VPN, and segment with TGW route tables for centralized routing control.",
+      "wrongOptions": null,
+      "memoryTip": "Share transit gateway via RAM, attach VPCs and VPN, and segment with TGW route tables for centralized routing control.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 277,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFormation DeletionPolicy Retain or Snapshot preserves data when stack resources are deleted; stack policy alone does not prevent stack deletion.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFormation DeletionPolicy Retain or Snapshot preserves data when stack resources are deleted; stack policy alone does not prevent stack deletion.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 278,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFront origin failover and S3 cross-Region replication plus DynamoDB global tables improve regional resiliency; DynamoDB global tables do not always require manually enabling Streams with current versions.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFront origin failover and S3 cross-Region replication plus DynamoDB global tables improve regional resiliency; DynamoDB global tables do not always require manually enabling Streams with current versions.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 279,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Scale-in protection prevents Auto Scaling from terminating workers processing SQS messages; extending visibility timeout alone does not prevent termination.",
+      "wrongOptions": null,
+      "memoryTip": "Scale-in protection prevents Auto Scaling from terminating workers processing SQS messages; extending visibility timeout alone does not prevent termination.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-instance-protection.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 280,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 ObjectCreated notifications trigger Lambda validation at ingestion before corrupt content reaches CloudFront; Lambda@Edge origin-response happens only after serving request.",
+      "wrongOptions": null,
+      "memoryTip": "S3 ObjectCreated notifications trigger Lambda validation at ingestion before corrupt content reaches CloudFront; Lambda@Edge origin-response happens only after serving request.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 281,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "FSx for Lustre linked to S3 supports POSIX mount plus import/export policies; confirm update propagation behavior and unsupported overwrite patterns.",
+      "wrongOptions": null,
+      "memoryTip": "FSx for Lustre linked to S3 supports POSIX mount plus import/export policies; confirm update propagation behavior and unsupported overwrite patterns.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-dra-linked-data-repo.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 283,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Expected prerequisites are Organizations all features, AWS Config in accounts and Firewall Manager policy (A,C,D), not C,D,E; Shield Advanced does not deploy AWS WAF rules as described. Correct source answer key and verify policy prerequisites.",
+      "wrongOptions": null,
+      "memoryTip": "Expected prerequisites are Organizations all features, AWS Config in accounts and Firewall Manager policy (A,C,D), not C,D,E; Shield Advanced does not deploy AWS WAF rules as described. Correct source answer key and verify policy prerequisites.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/fms-chapter.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 284,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ALB authenticate-oidc action enforces identity before forwarding; API Gateway retains JWT authorization. Restrict direct origin bypass appropriately.",
+      "wrongOptions": null,
+      "memoryTip": "ALB authenticate-oidc action enforces identity before forwarding; API Gateway retains JWT authorization. Restrict direct origin bypass appropriately.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 285,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Second regional API/Lambda plus Route 53 failover health checks and DynamoDB global tables provide active-passive regional recovery.",
+      "wrongOptions": null,
+      "memoryTip": "Second regional API/Lambda plus Route 53 failover health checks and DynamoDB global tables provide active-passive regional recovery.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-configuring.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 286,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ECS Fargate removes host management and EFS gives shared low-latency POSIX storage with elastic throughput, subject to performance mode/throughput selection.",
+      "wrongOptions": null,
+      "memoryTip": "ECS Fargate removes host management and EFS gives shared low-latency POSIX storage with elastic throughput, subject to performance mode/throughput selection.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-volumes.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 287,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora replicas scale reads while RDS Proxy pools Lambda connections to reduce connection storms; configure application endpoints appropriately.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora replicas scale reads while RDS Proxy pools Lambda connections to reduce connection storms; configure application endpoints appropriately.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question unchanged."
     }
   ]
 }
