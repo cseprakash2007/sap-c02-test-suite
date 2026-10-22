@@ -2,79 +2,133 @@
   "schemaVersion": 1,
   "scope": "Domain 1 first 50 single-answer questions (heuristic domain mapping)",
   "lastUpdated": "2026-10-22",
-  "notes": "Three questions reviewed (84, 87, 89); remaining entries pending. Verified answers are separate from source keys. Q89 has flawed wording.",
+  "notes": "11 of 50 reviewed; 39 pending. Source answer keys preserved. Q89 has flawed option wording.",
   "items": [
     {
       "id": 13,
       "sequence": 1,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "PrivateLink consumer interface endpoint connects privately to the SaaS provider endpoint service, with security groups limiting clients. No inbound access to company resources is exposed.",
+      "wrongOptions": {
+        "A": "Correct; consumer-side interface endpoint and endpoint security group.",
+        "B": "VPN requires tunnel management and does not provide the narrowly scoped SaaS endpoint pattern.",
+        "C": "Peering creates broad routed network connectivity and requires coordination.",
+        "D": "Reverses provider and consumer roles and exposes a company-provided service."
+      },
+      "memoryTip": "SaaS private API + no inbound exposure = consumer PrivateLink endpoint.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-access-resources.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 20,
       "sequence": 2,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "A shared transit gateway connects spoke VPCs to the central egress VPC; spoke default routes and transit gateway routing forward outbound traffic through the egress VPC NAT gateway.",
+      "wrongOptions": {
+        "A": "VPC peering does not support transitive routing to another VPC's internet gateway/NAT egress.",
+        "B": "Correct hub-and-spoke centralized egress using a shared transit gateway.",
+        "C": "A transit gateway per account is unnecessary; NAT gateways are not direct TGW attachments.",
+        "D": "PrivateLink publishes individual services, not general-purpose internet egress."
+      },
+      "memoryTip": "Hundreds of VPCs + centralized NAT = Transit Gateway hub.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-centralized-router.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 28,
       "sequence": 3,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "PrivateLink endpoint services expose a particular application privately to interface endpoints, without requiring nonoverlapping VPC CIDRs or broad VPC routing.",
+      "wrongOptions": {
+        "A": "Overlapping VPC CIDRs complicate or prevent peering; secondary CIDR and NAT increase overhead.",
+        "B": "VPN appliances and NAT per business unit require ongoing management.",
+        "C": "Correct; provider endpoint service and consumer interface endpoints work with overlapping CIDRs.",
+        "D": "API Gateway private integration alone does not establish consumer network access or a private API."
+      },
+      "memoryTip": "Overlapping CIDRs + share one application = PrivateLink.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-share-your-services.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 29,
       "sequence": 4,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "MFA context for AWS CLI requests requires MFA-authenticated temporary credentials from STS GetSessionToken; deny S3 operations when aws:MultiFactorAuthPresent is not true.",
+      "wrongOptions": {
+        "A": "S3 bucket policies cannot interactively prompt a CLI user for an MFA code.",
+        "B": "IAM groups do not have assume-role trust policies.",
+        "C": "Long-term access keys lack MFA session context and would be denied.",
+        "D": "Correct; STS temporary credentials with MFA supply MFA context for S3 calls."
+      },
+      "memoryTip": "CLI + enforce MFA = STS GetSessionToken then use session credentials.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/STS/latest/APIReference/API_GetSessionToken.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 33,
       "sequence": 5,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "Cross-account access is granted by IAM roles in the target member accounts, with trust allowing the management-account IAM user to assume them and permissions limiting resource actions.",
+      "wrongOptions": {
+        "A": "A role created only in the management account cannot directly confer target member-account resource permissions.",
+        "B": "Reverses the role placement and does not create the requested management-account user pattern.",
+        "C": "IAM groups cannot contain users from other AWS accounts.",
+        "D": "Correct; IAM user in management, least-privilege assumable roles in both members."
+      },
+      "memoryTip": "Cross-account action = role in target account, trusted caller in source.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 38,
       "sequence": 6,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Site-to-Site VPN on a transit gateway supports encrypted IPv6 traffic; VPNs terminating on virtual private gateways do not support IPv6 traffic.",
+      "wrongOptions": {
+        "A": "Correct; attach VPC to transit gateway and connect the existing customer gateway using Site-to-Site VPN.",
+        "B": "Client VPN is intended for remote clients, not customer gateway site-to-site connections.",
+        "C": "Virtual private gateway Site-to-Site VPN does not support IPv6 traffic.",
+        "D": "Client VPN is not the site-to-site customer gateway solution."
+      },
+      "memoryTip": "IPv6 over encrypted Site-to-Site VPN = Transit Gateway, not VGW.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpn/latest/s2svpn/ipv4-ipv6.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 49,
@@ -91,26 +145,44 @@
     {
       "id": 50,
       "sequence": 8,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "An IAM role in the company account trusted by the auditors' AWS account grants scoped read-only permissions. A unique external ID helps mitigate the confused deputy problem for third-party access.",
+      "wrongOptions": {
+        "A": "External IDs are part of role assumption trust conditions, not generic resource policy configuration.",
+        "B": "Correct cross-account read-only role with external ID.",
+        "C": "Sharing long-term access keys violates recommended security practice.",
+        "D": "Creating local IAM users for external auditors increases credential management and is less secure."
+      },
+      "memoryTip": "External auditors + one AWS account = cross-account role + external ID.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 59,
       "sequence": 9,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "An API Gateway private REST API is accessed from a VPC through an execute-api interface endpoint. Endpoint policy and API resource policy restrict invocation to authorized endpoint and API.",
+      "wrongOptions": {
+        "A": "Site-to-Site VPN cannot be established to API Gateway as described, and API keys alone are not network isolation.",
+        "B": "Correct; private REST API with interface VPC endpoint and restrictive resource policy.",
+        "C": "API Gateway is not moved into a customer VPC, and transit gateway is unnecessary.",
+        "D": "Global Accelerator does not make the API private; API keys are not a private networking control."
+      },
+      "memoryTip": "Private API Gateway REST API = execute-api interface endpoint + resource policy.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 65,
