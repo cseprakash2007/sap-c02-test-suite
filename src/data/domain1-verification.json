@@ -1,0 +1,1066 @@
+{
+  "schemaVersion": 1,
+  "scope": "Domain 1 first 50 single-answer questions (heuristic domain mapping)",
+  "lastUpdated": "2026-10-22",
+  "notes": "All 50 entries reviewed with explanations and documentation links. Null verifiedAnswer means no independently defensible option; preserve source key only as historical data. Several entries require caution or further source restoration. React build remains untested.",
+  "items": [
+    {
+      "id": 13,
+      "sequence": 1,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "PrivateLink consumer interface endpoint connects privately to the SaaS provider endpoint service, with security groups limiting clients. No inbound access to company resources is exposed.",
+      "wrongOptions": {
+        "A": "Correct; consumer-side interface endpoint and endpoint security group.",
+        "B": "VPN requires tunnel management and does not provide the narrowly scoped SaaS endpoint pattern.",
+        "C": "Peering creates broad routed network connectivity and requires coordination.",
+        "D": "Reverses provider and consumer roles and exposes a company-provided service."
+      },
+      "memoryTip": "SaaS private API + no inbound exposure = consumer PrivateLink endpoint.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-access-resources.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 20,
+      "sequence": 2,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "A shared transit gateway connects spoke VPCs to the central egress VPC; spoke default routes and transit gateway routing forward outbound traffic through the egress VPC NAT gateway.",
+      "wrongOptions": {
+        "A": "VPC peering does not support transitive routing to another VPC's internet gateway/NAT egress.",
+        "B": "Correct hub-and-spoke centralized egress using a shared transit gateway.",
+        "C": "A transit gateway per account is unnecessary; NAT gateways are not direct TGW attachments.",
+        "D": "PrivateLink publishes individual services, not general-purpose internet egress."
+      },
+      "memoryTip": "Hundreds of VPCs + centralized NAT = Transit Gateway hub.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-centralized-router.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 28,
+      "sequence": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "PrivateLink endpoint services expose a particular application privately to interface endpoints, without requiring nonoverlapping VPC CIDRs or broad VPC routing.",
+      "wrongOptions": {
+        "A": "Overlapping VPC CIDRs complicate or prevent peering; secondary CIDR and NAT increase overhead.",
+        "B": "VPN appliances and NAT per business unit require ongoing management.",
+        "C": "Correct; provider endpoint service and consumer interface endpoints work with overlapping CIDRs.",
+        "D": "API Gateway private integration alone does not establish consumer network access or a private API."
+      },
+      "memoryTip": "Overlapping CIDRs + share one application = PrivateLink.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-share-your-services.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 29,
+      "sequence": 4,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "MFA context for AWS CLI requests requires MFA-authenticated temporary credentials from STS GetSessionToken; deny S3 operations when aws:MultiFactorAuthPresent is not true.",
+      "wrongOptions": {
+        "A": "S3 bucket policies cannot interactively prompt a CLI user for an MFA code.",
+        "B": "IAM groups do not have assume-role trust policies.",
+        "C": "Long-term access keys lack MFA session context and would be denied.",
+        "D": "Correct; STS temporary credentials with MFA supply MFA context for S3 calls."
+      },
+      "memoryTip": "CLI + enforce MFA = STS GetSessionToken then use session credentials.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/STS/latest/APIReference/API_GetSessionToken.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 33,
+      "sequence": 5,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "Cross-account access is granted by IAM roles in the target member accounts, with trust allowing the management-account IAM user to assume them and permissions limiting resource actions.",
+      "wrongOptions": {
+        "A": "A role created only in the management account cannot directly confer target member-account resource permissions.",
+        "B": "Reverses the role placement and does not create the requested management-account user pattern.",
+        "C": "IAM groups cannot contain users from other AWS accounts.",
+        "D": "Correct; IAM user in management, least-privilege assumable roles in both members."
+      },
+      "memoryTip": "Cross-account action = role in target account, trusted caller in source.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 38,
+      "sequence": 6,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Site-to-Site VPN on a transit gateway supports encrypted IPv6 traffic; VPNs terminating on virtual private gateways do not support IPv6 traffic.",
+      "wrongOptions": {
+        "A": "Correct; attach VPC to transit gateway and connect the existing customer gateway using Site-to-Site VPN.",
+        "B": "Client VPN is intended for remote clients, not customer gateway site-to-site connections.",
+        "C": "Virtual private gateway Site-to-Site VPN does not support IPv6 traffic.",
+        "D": "Client VPN is not the site-to-site customer gateway solution."
+      },
+      "memoryTip": "IPv6 over encrypted Site-to-Site VPN = Transit Gateway, not VGW.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpn/latest/s2svpn/ipv4-ipv6.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 49,
+      "sequence": 7,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-alternatives",
+      "reasoning": "AWS publishes an architecture combining RDS Proxy for connection pooling with an NLB-backed PrivateLink endpoint service for cross-account private database access. B matches exactly. A separate documented alternative uses RDS Proxy cross-VPC endpoints and AWS RAM without an NLB.",
+      "wrongOptions": {
+        "A": "Transit Gateway plus NAT Gateway does not manage database connection pooling and NAT is not needed for private VPC-to-VPC access.",
+        "B": "Correct: RDS Proxy pools connections, and NLB-backed PrivateLink exposes private cross-account connectivity.",
+        "C": "ALB is HTTP(S)-oriented, not a PostgreSQL wire-protocol proxy; VPC peering alone does not pool connections.",
+        "D": "NAT gateway adds no database connection management and is unnecessary with VPC peering."
+      },
+      "memoryTip": "Database connection pooling = RDS Proxy; private service sharing = PrivateLink via NLB.",
+      "awsReferences": [
+        "https://aws.amazon.com/blogs/database/access-amazon-rds-across-aws-accounts-using-aws-privatelink-network-load-balancer-and-amazon-rds-proxy/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 50,
+      "sequence": 8,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "An IAM role in the company account trusted by the auditors' AWS account grants scoped read-only permissions. A unique external ID helps mitigate the confused deputy problem for third-party access.",
+      "wrongOptions": {
+        "A": "External IDs are part of role assumption trust conditions, not generic resource policy configuration.",
+        "B": "Correct cross-account read-only role with external ID.",
+        "C": "Sharing long-term access keys violates recommended security practice.",
+        "D": "Creating local IAM users for external auditors increases credential management and is less secure."
+      },
+      "memoryTip": "External auditors + one AWS account = cross-account role + external ID.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 59,
+      "sequence": 9,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "An API Gateway private REST API is accessed from a VPC through an execute-api interface endpoint. Endpoint policy and API resource policy restrict invocation to authorized endpoint and API.",
+      "wrongOptions": {
+        "A": "Site-to-Site VPN cannot be established to API Gateway as described, and API keys alone are not network isolation.",
+        "B": "Correct; private REST API with interface VPC endpoint and restrictive resource policy.",
+        "C": "API Gateway is not moved into a customer VPC, and transit gateway is unnecessary.",
+        "D": "Global Accelerator does not make the API private; API keys are not a private networking control."
+      },
+      "memoryTip": "Private API Gateway REST API = execute-api interface endpoint + resource policy.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 65,
+      "sequence": 10,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-implementation-caveat",
+      "reasoning": "Service Catalog portfolios, approved EMR products, launch constraints and TagOptions provide governed deployment, least-privilege launch permissions and consistent tags. Actual EMR job/query permissions also need appropriately scoped IAM or EMR access controls.",
+      "wrongOptions": {
+        "A": "IAM roles and Config detection do not restrict users to an approved product catalog or enforce tags at provisioning.",
+        "B": "Kerberos provides authentication but not approved provisioning or consistent resource tagging.",
+        "C": "Best choice: Service Catalog controls approved products, launch permissions and tags; additional EMR runtime permissions are required.",
+        "D": "CloudFormation plus post-deployment Config checks is not a centralized approved self-service product catalog; EMR resource policies as described are questionable."
+      },
+      "memoryTip": "Approved product catalog + personas + tagging = Service Catalog portfolios, launch constraints, TagOptions.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/constraints-launch.html",
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/tagoptions-launching.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 80,
+      "sequence": 11,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "invalid-no-correct-option",
+      "reasoning": "The source selects D, but aws:SourceIp means the IP address making the EC2 API request, not the CIDR source inside the security-group ingress rule. Therefore its SCP condition cannot reliably block rules containing 0.0.0.0/0. A Lambda remediation approach (A) removes rules after creation, rather than preventing creation. No option fully meets the preventive requirement.",
+      "wrongOptions": {
+        "A": "EventBridge/Lambda can remediate a rule after it is created, but does not prevent the creation operation.",
+        "B": "Config's authorized-ports rule evaluates configuration, not a preventive deny of any 0.0.0.0/0 rule.",
+        "C": "Allow-based SCP using aws:SourceIp does not inspect security group ingress CIDR; also SCP Allow is not a targeted guardrail.",
+        "D": "Deny-based SCP using aws:SourceIp tests API caller source address, not requested ingress CIDR."
+      },
+      "memoryTip": "aws:SourceIp = API caller IP, NOT security-group ingress CIDR.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AuthorizeSecurityGroupIngress.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 81,
+      "sequence": 12,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Service Quotas organization templates automatically request increases for new accounts. Option A requests separate SageMaker training-job and endpoint quotas in ap-southeast-2, matching the two resource types. Requests may need approval and P2 availability should be checked for the target Region.",
+      "wrongOptions": {
+        "A": "Correct: template in management account with training and endpoint quota requests targeted to ap-southeast-2.",
+        "B": "Warm pool quota alone does not increase training-job and inference-endpoint quotas.",
+        "C": "Requests quotas in us-east-1 rather than required ap-southeast-2.",
+        "D": "Wrong Region and wrong quota category (warm pool only)."
+      },
+      "memoryTip": "SageMaker training and inference endpoints have separate quotas; template targets resource Region.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicequotas/latest/userguide/organization-templates.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/regions-quotas.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 84,
+      "sequence": 13,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "AWS Service Quotas quota request templates in the Organizations management account automatically request configured increases for newly created member accounts. This is less operational work than custom event-driven automation. Approval is not guaranteed.",
+      "wrongOptions": {
+        "A": "EventBridge/SNS/Lambda can request increases, but adds code and maintenance.",
+        "B": "Correct. Native Service Quotas organization quota request template.",
+        "C": "AWS Config evaluates configurations; it cannot directly set EC2 quotas.",
+        "D": "A custom Lambda creating Support cases is unnecessary and adds operational overhead."
+      },
+      "memoryTip": "New AWS account + repeat quota increases + least overhead = Service Quotas request template.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicequotas/latest/userguide/organization-templates.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 87,
+      "sequence": 14,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "An account created through AWS Organizations receives OrganizationAccountAccessRole by default. An authorized management-account principal assumes that role to administer the new member account, including creating IAM users.",
+      "wrongOptions": {
+        "A": "AWS Organizations does not email a 64-character root password.",
+        "B": "Correct. Assume OrganizationAccountAccessRole in the new account.",
+        "C": "The management account root password cannot authenticate the member account root user.",
+        "D": "An IAM user from the management account cannot directly sign into the new account using its own credentials; it must assume an authorized role."
+      },
+      "memoryTip": "Organizations-created account → OrganizationAccountAccessRole → assume role → create users.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 89,
+      "sequence": 15,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "flawed-option-wording",
+      "reasoning": "B captures the intended organization-wide resource perimeter using an RCP and aws:PrincipalOrgID, but it incorrectly says the RCP 'allows' access. Customer-managed RCPs use Deny statements; a valid implementation denies access for principals outside the organization, with service-principal exceptions as required. Treat B as the intended exam option, not a valid literal policy instruction.",
+      "wrongOptions": {
+        "A": "aws:PrincipalType=Service does not establish organization membership and the SCP approach does not protect against external resource principals.",
+        "B": "Intended answer, but wording must say deny outsiders, not allow insiders.",
+        "C": "aws:PrincipalAccount is a 12-digit account ID, not an organization ID; manual updates are high overhead.",
+        "D": "RAM account allowlists do not provide this organization-wide ECR resource perimeter."
+      },
+      "memoryTip": "RCP = resource perimeter; aws:PrincipalOrgID = organization identity; enforce with explicit Deny.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps.html",
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps_syntax.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 91,
+      "sequence": 16,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "Route 53 Resolver outbound endpoints and forwarding rules send selected DNS queries from the VPC to on-premises AD DNS servers over the existing network connectivity. This avoids running DNS forwarders on EC2.",
+      "wrongOptions": {
+        "A": "EC2 DNS forwarders require patching, availability management and maintenance.",
+        "B": "Private hosted-zone NS records alone do not implement forwarding to on-premises resolvers.",
+        "C": "Correct: Resolver outbound endpoint plus conditional forwarding rule for the on-premises domain.",
+        "D": "Additional AD domain controller and trust is unnecessary for DNS resolution."
+      },
+      "memoryTip": "VPC needs on-prem AD DNS = Route 53 Resolver outbound endpoint + forwarding rule.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-outbound-queries.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 96,
+      "sequence": 17,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Direct Connect with transit VIF and Direct Connect gateway associates with transit gateways in supported Regions, giving private on-premises connectivity and VPC transitive routing. For inter-Region VPC-to-VPC traffic, transit gateway peering and route configuration may also be necessary; option B does not explicitly state this.",
+      "wrongOptions": {
+        "A": "VPN plus VPC peering cannot provide transitive peering routing and lacks dedicated DX bandwidth.",
+        "B": "Best: DX transit VIF to DX gateway, associated with regional transit gateways; add inter-Region TGW peering if needed.",
+        "C": "VPN and one TGW do not automatically cover VPCs in multiple Regions or the dedicated-connectivity benefits.",
+        "D": "VPC peering remains nontransitive and per-VPC VPNs increase overhead."
+      },
+      "memoryTip": "DX + many VPCs = transit VIF → DX gateway → TGWs; cross-Region transit needs TGW peering.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways-intro.html",
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-peering.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 99,
+      "sequence": 18,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-policy-syntax-caveat",
+      "reasoning": "An organization-root SCP can deny creation of S3 access points unless the access point's network origin is VPC. The key is s3:AccessPointNetworkOrigin, and the condition comparison should use the documented value and suitable condition operator. SCPs apply to principals in member accounts, not the management account.",
+      "wrongOptions": {
+        "A": "An access point resource policy cannot control CreateAccessPoint before the resource exists.",
+        "B": "Correct organizational guardrail: deny creation unless network origin is VPC.",
+        "C": "Deploying individual identity policies with StackSets is more work and permits other identities to bypass absent explicit deny.",
+        "D": "Bucket policies are not the appropriate organization-wide authorization point for CreateAccessPoint."
+      },
+      "memoryTip": "All accounts + restrict new S3 access point network origin = root SCP with s3:AccessPointNetworkOrigin.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-access-points.html",
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 108,
+      "sequence": 19,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-architecture-caveat",
+      "reasoning": "Centralize egress through a Transit Gateway-connected egress VPC, with AWS Network Firewall inspection endpoints and NAT gateway. Route both directions symmetrically through inspection; existing direct IGW/NAT routes in spokes must be changed or restricted so traffic cannot bypass filtering. Modern TGW-attached Network Firewall is an additional supported design not in the options.",
+      "wrongOptions": {
+        "A": "Self-managed EC2 proxy fleet increases operational work and is not a valid route-table target as an Auto Scaling group.",
+        "B": "Correct among options: centralized managed Network Firewall with NAT and correct routing.",
+        "C": "A firewall per account duplicates administration and configuration.",
+        "D": "A self-managed proxy fleet in each account is even higher overhead."
+      },
+      "memoryTip": "Organization-wide rule-based egress filtering = centralized AWS Network Firewall + TGW + NAT.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/prescriptive-guidance/latest/robust-network-design-control-tower/firewall.html",
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-nf-fw.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 117,
+      "sequence": 20,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-remediation-caveat",
+      "reasoning": "AWS Config detects noncompliant unencrypted EBS volumes, SSM Automation remediates by snapshot/copy/replacement workflow, and EBS encryption by default encrypts new EBS volumes and snapshots in the Region. Existing volumes cannot simply be encrypted in place; automation must handle detach/attach and downtime as needed.",
+      "wrongOptions": {
+        "A": "KMS key policies cannot prevent the creation of unencrypted EBS volumes.",
+        "B": "Fleet Manager is not the most direct compliance discovery; the proposed SCP prevention is less straightforward than the account default.",
+        "C": "Fleet Manager plus automation can remediate but is less directly continuous than AWS Config monitoring.",
+        "D": "Correct: AWS Config managed rule + SSM automation remediation + EBS encryption by default."
+      },
+      "memoryTip": "Existing unencrypted EBS = Config + SSM replacement; future EBS = encryption by default.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/ebs/latest/userguide/encryption-by-default.html",
+        "https://docs.aws.amazon.com/config/latest/developerguide/encrypted-volumes.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 118,
+      "sequence": 21,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "IAM Identity Center permission sets can reference customer managed IAM policies, but the policy name and path must match in each target AWS account. Identity Center provisions its own roles for account assignments; it does not attach existing arbitrary IAM roles to permission sets. Thus A is the correct choice; B in the source JSON is wrong.",
+      "wrongOptions": {
+        "A": "Correct: create matching named customer-managed policies in each account, reference them in permission sets, and assign groups to accounts.",
+        "B": "Incorrect: IAM Identity Center cannot attach pre-existing IAM roles directly to a permission set.",
+        "C": "Unique policy names in every account violate matching-name requirement; matching path alone is insufficient.",
+        "D": "IAM Identity Center assignments target AWS accounts, not OUs as described; policies aren't attached per account through that configuration."
+      },
+      "memoryTip": "Identity Center permission set + customer managed policy = SAME name and path in EVERY target account.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/singlesignon/latest/userguide/permissionsetcustom.html",
+        "https://docs.aws.amazon.com/singlesignon/latest/userguide/howtocmp.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 120,
+      "sequence": 22,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS Backup supports cross-account and cross-Region backup copies using destination backup vaults and KMS permissions. B is closest, but a backup plan copy rule must target the eu-west-1 recovery-account vault; a multi-Region KMS key is not inherently required.",
+      "wrongOptions": {
+        "A": "RAM sharing a standard backup vault and AWS managed key do not implement the required cross-account copy.",
+        "B": "Best choice: separate encrypted vaults and cross-account copy permissions; specify eu-west-1 destination vault and copy rule.",
+        "C": "AWS Backup does not export recovery points to S3 for this custom copy workflow.",
+        "D": "DataSync replicates file data rather than EFS recovery points and does not implement the specified backup DR plan."
+      },
+      "memoryTip": "Backup cross-account = destination vault + vault access policy + supported KMS key + copy rule.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/create-cross-account-backup.html",
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/encryption.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 125,
+      "sequence": 23,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-audit-caveat",
+      "reasoning": "EC2 Instance Connect pushes a short-lived SSH public key via SendSSHPublicKey, logged as an API event in CloudTrail. Unique ephemeral keys avoid sharing persistent instance SSH keys. CloudTrail logs key-push API activity, not full SSH command/session transcripts.",
+      "wrongOptions": {
+        "A": "Unique stored private keys create credential lifecycle overhead; CloudTrail does not record SSH sessions simply because Secrets Manager retrieval is logged.",
+        "B": "SSM document calls can be logged, but arbitrary SSH clients do not give a CloudTrail SSH-session audit trail.",
+        "C": "Best: EC2 Instance Connect with ephemeral public keys and CloudTrail SendSSHPublicKey records.",
+        "D": "Secrets Manager rotation and arbitrary SSH clients do not meet the claimed per-connection CloudTrail audit requirement."
+      },
+      "memoryTip": "EC2 Instance Connect = ephemeral SSH key + CloudTrail API audit, not command recording.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connect-linux-inst-eic.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 126,
+      "sequence": 24,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "AWS Budgets can aggregate selected linked accounts into one cost budget and notify through SNS when forecasted monthly spend crosses a threshold.",
+      "wrongOptions": {
+        "A": "CloudWatch billing EstimatedCharges is not a forecast budget across a selected account set.",
+        "B": "CUR + Glue + Athena + Step Functions is custom and excessive.",
+        "C": "Correct: AWS Budgets with linked-account filters, forecasted alert threshold and SNS.",
+        "D": "Cost Explorer alone is not the simplest SNS-backed forecasted budget notification."
+      },
+      "memoryTip": "Forecasted spend + multiple linked accounts + SNS = AWS Budgets.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-create.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 150,
+      "sequence": 25,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-architecture-caveat",
+      "reasoning": "The default RDS AWS-managed KMS key cannot be shared for cross-account encrypted backups. Re-encrypting database resources with a customer-managed KMS key enables cross-account AWS Backup copy to a central vault. A is closest, but a central delegated administrator does not itself move backup recovery points: an explicit cross-account copy rule and appropriate vault/KMS policies are needed.",
+      "wrongOptions": {
+        "A": "Best choice because it replaces unshareable AWS-managed encryption with customer-managed key; must configure explicit backup copy into destination vault.",
+        "B": "AWS-managed RDS default KMS keys cannot be shared across accounts.",
+        "C": "Encrypted RDS snapshots cannot simply be decrypted into unencrypted snapshots for export as described.",
+        "D": "Same impossible default KMS key sharing and decrypt-to-plaintext assumption."
+      },
+      "memoryTip": "Cross-account encrypted RDS backups = customer-managed KMS key, not aws/rds default.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/encryption.html",
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/create-cross-account-backup.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 152,
+      "sequence": 26,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-duplicate-of-81",
+      "reasoning": "A quota request template in AWS Organizations requests SageMaker training and inference endpoint quota increases for new member accounts in ap-southeast-2. This question is a condensed duplicate of Q81; approval and instance availability remain separate considerations.",
+      "wrongOptions": {
+        "A": "Correct: request separate training and endpoint quotas for ap-southeast-2.",
+        "B": "Warm pool quota is not training and endpoint capacity.",
+        "C": "Wrong quota Region.",
+        "D": "Wrong quota type and Region."
+      },
+      "memoryTip": "New accounts + repeated quota requests = Service Quotas organization template.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicequotas/latest/userguide/organization-templates.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 154,
+      "sequence": 27,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "invalid-missing-scp",
+      "reasoning": "The question says 'the following SCP' but the SCP JSON is missing from the question bank. The correct remediation depends on whether the missing policy is an Allow list using NotAction, a Deny list, or something else. Source B may be correct for an allow-list SCP only if FullAWSAccess also permits excluded services, but removing FullAWSAccess can also accidentally block allowed actions if the policy hierarchy is not understood.",
+      "wrongOptions": {
+        "A": "Explicit denies for every unwanted service are difficult and unnecessary if a correct SCP allow-list exists.",
+        "B": "Potentially correct if the missing SCP is an allow-list and FullAWSAccess undermines it, but cannot be confirmed without the missing policy.",
+        "C": "An explicit Deny * in FullAWSAccess would also block allowed EC2/S3/DynamoDB actions.",
+        "D": "Adding Deny * at the end of the SCP would deny all services, including intended allowed services."
+      },
+      "memoryTip": "SCP allow-list only works when every applicable policy level allows the intended action; explicit Deny always wins.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 173,
+      "sequence": 28,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Private ECR repository resource policies can limit image access to principals with matching aws:PrincipalOrgID. An ECR lifecycle policy with imageTagStatus untagged and imageCountMoreThan=5 expires excess untagged images while preserving tagged images.",
+      "wrongOptions": {
+        "A": "Correct: private ECR + organization condition + native lifecycle retention.",
+        "B": "Public ECR repository is not restricted to organization principals by a role alone.",
+        "C": "Enumerating account IDs and running Lambda cleanup adds maintenance as organization grows.",
+        "D": "Public repository and endpoint policy cannot enforce the desired private organization-wide access."
+      },
+      "memoryTip": "ECR org-only = private repository + PrincipalOrgID; cleanup = lifecycle policy.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/LifecyclePolicies.html",
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policy-examples.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 180,
+      "sequence": 29,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-audit-caveat",
+      "reasoning": "AgentCore Identity workload identities provide a distinct agent identity, and OAuth client-credentials flow supports autonomous machine-to-machine downstream authentication. External services must log the supplied identity/token claims for a per-action audit trail; identity setup alone cannot guarantee every external action is recorded.",
+      "wrongOptions": {
+        "A": "Best: agent workload identity and OAuth client credentials for unattended actions.",
+        "B": "Long-lived IAM user keys are inappropriate and do not authenticate arbitrary external OAuth services.",
+        "C": "Authorization code grant is user-delegated and requires an interactive user context.",
+        "D": "SigV4 is AWS-specific and cannot be assumed for all external downstream services."
+      },
+      "memoryTip": "Autonomous agent = workload identity + OAuth client credentials; user-delegated = authorization code.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity.html",
+        "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/key-features-and-benefits.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 191,
+      "sequence": 30,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "AWS RAM can share a transit gateway from a shared-services account to the development account, permitting the development team to create VPC attachments. Automatic acceptance of attachment requests can streamline repeated development environment creation.",
+      "wrongOptions": {
+        "A": "A second transit gateway and TGW peering are unnecessary and do not provide the desired simple shared attachment.",
+        "B": "Correct: RAM-share existing transit gateway, accept share if required, and create VPC attachments.",
+        "C": "PrivateLink endpoints are service-specific and do not share the transit gateway as requested.",
+        "D": "EventBridge and Lambda acceptance add maintenance and Network Manager is not the TGW resource-sharing mechanism."
+      },
+      "memoryTip": "Share central Transit Gateway = AWS RAM; consumers create VPC attachments.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-sharing.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 201,
+      "sequence": 31,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "AWS Security Hub provides an organization-wide aggregated security posture with findings and compliance views through delegated administrator configuration; Control Tower preventive and detective controls complement it.",
+      "wrongOptions": {
+        "A": "Config conformance packs are useful but not the unified Security Hub findings and posture view.",
+        "B": "Amazon Detective focuses on investigation rather than organization-wide security posture aggregation.",
+        "C": "A Detective StackSet does not replace centralized Security Hub administration.",
+        "D": "Correct: Security Hub organization integration with delegated administrator."
+      },
+      "memoryTip": "Central security posture across accounts = Security Hub delegated administrator.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/designate-orgs-admin-account.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 204,
+      "sequence": 32,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-nuance",
+      "reasoning": "HTTPS from client to ALB and HTTPS from ALB to EC2 targets provides encryption on both legs. A third-party server certificate on instances and ACM certificate on ALB works. ACM-issued public certificates are generally not exportable in older assumptions, although AWS now supports exportable public certificates for eligible issuance; thus A's absolute impossibility depends on certificate type and date.",
+      "wrongOptions": {
+        "A": "Potentially possible for an exportable ACM public certificate; source question may predate that feature, so A can also meet the requirement under current capabilities.",
+        "B": "CloudFront cannot use an EC2 target group directly as its origin and this does not establish backend TLS.",
+        "C": "Intended correct: ACM cert on ALB and independent certificate on HTTPS EC2 targets.",
+        "D": "NLB TLS termination with TCP/TLS backend could work with proper configuration, but the stated listener/forwarding details are underspecified."
+      },
+      "memoryTip": "End-to-end encryption through ALB = HTTPS listener + HTTPS target group.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 209,
+      "sequence": 33,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "PrivateLink endpoint services require an NLB or GWLB, not a direct ALB. An internal ALB can be a target of an NLB, which backs the endpoint service. The original D is wrong.",
+      "wrongOptions": {
+        "A": "HTTP API Gateway route is ordinarily publicly reachable; VPC link only privatizes integration, not consumer access.",
+        "B": "API Gateway private REST APIs use interface execute-api endpoints, not gateway endpoints; associating with a VPC as written is incorrect.",
+        "C": "Correct: internal ALB behind NLB, PrivateLink endpoint service and consumer interface endpoints.",
+        "D": "An ALB cannot directly back a PrivateLink endpoint service."
+      },
+      "memoryTip": "PrivateLink provider service → NLB; ALB can sit behind NLB.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 213,
+      "sequence": 34,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "Management-account CUR includes organization-wide linked account usage. QuickSight can visualize costs by account/OU after data preparation and appropriate access controls.",
+      "wrongOptions": {
+        "A": "CUR is not natively created per OU through RAM.",
+        "B": "Correct: centralized CUR with BI dashboards and account grouping.",
+        "C": "Member CURs fragment organization-wide reporting and add administration.",
+        "D": "Systems Manager OpsCenter is not a CUR authoring/reporting service."
+      },
+      "memoryTip": "Org-wide spend → management-account CUR → analytics dashboard.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 229,
+      "sequence": 35,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Control Tower establishes multi-account guardrails and Customizations for AWS Control Tower supports repeatable CloudFormation deployments of custom baselines. Lifecycle-triggered customization can work but is not always necessary; AWS Control Tower also offers Account Factory Customization.",
+      "wrongOptions": {
+        "A": "Config + Lambda + StackSets is possible but involves custom remediation and deployment.",
+        "B": "SSM associations address managed-node configuration, not comprehensive account governance.",
+        "C": "Best among choices: Control Tower plus IaC customizations and account lifecycle integration.",
+        "D": "Security Hub + custom EventBridge/Lambda per account adds operational work and does not deploy broad preventive controls."
+      },
+      "memoryTip": "Landing zone + custom account baseline = Control Tower customization.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/controltower/latest/userguide/lifecycle-events.html",
+        "https://docs.aws.amazon.com/controltower/latest/userguide/af-customization-page.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 251,
+      "sequence": 36,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "AWS Control Tower Account Factory Customization natively provisions new accounts with a blueprint based on Service Catalog/CloudFormation. D is more managed and less overhead than custom Lambda lifecycle handling in C.",
+      "wrongOptions": {
+        "A": "Manual account creation and post-provision blueprint deployment is not the automated Account Factory workflow.",
+        "B": "Manual enrollment and trust setup adds steps.",
+        "C": "Event-driven Lambda customization can work but requires custom code and ongoing management.",
+        "D": "Correct: Account Factory with a blueprint applied during account provisioning."
+      },
+      "memoryTip": "Control Tower + new-account custom resources + least overhead = Account Factory blueprint.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/controltower/latest/userguide/af-customization-page.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 252,
+      "sequence": 37,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "invalid-missing-policy",
+      "reasoning": "The question references 'the following SCP' but the actual SCP statement is missing from the JSON. Without its Effect, Action/NotAction and Resource, the reason for denied CreateBucket cannot be determined. Do not score any option as verified.",
+      "wrongOptions": {
+        "A": "Adding an Allow only helps if the SCP allow-list omitted CreateBucket; an explicit Deny would still prevail.",
+        "B": "Moving the account within the same policy scope cannot reliably fix unknown SCP logic.",
+        "C": "IAM permissions are needed but cannot override SCP restrictions; may or may not be the issue.",
+        "D": "Removing the SCP might remove a restrictive boundary but cannot be assessed without the missing statement."
+      },
+      "memoryTip": "An SCP is a maximum permission boundary; inspect actual SCP before diagnosing.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 253,
+      "sequence": 38,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "An SQS standard DLQ with a redrive policy and maxReceiveCount isolates repeatedly failing standard-queue messages for analysis; healthy messages can continue. A FIFO queue is not the right DLQ type for a standard source queue.",
+      "wrongOptions": {
+        "A": "Backend timeout matching visibility timeout does not quarantine poison messages.",
+        "B": "Visibility timeout controls retry visibility, not automatic deletion of poison messages.",
+        "C": "A standard source queue must use a standard dead-letter queue.",
+        "D": "Correct: standard DLQ plus redrive policy to move repeated failures."
+      },
+      "memoryTip": "Poison SQS standard message → standard DLQ + maxReceiveCount.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 254,
+      "sequence": 39,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Activate the user-defined CostCenter cost allocation tag in the organization management account, then use organization CUR's resource tags to allocate spend to teams. Untagged or non-taggable costs require separate allocation rules.",
+      "wrongOptions": {
+        "A": "Correct: organization-level cost allocation tag activation and CUR.",
+        "B": "Per-member activation and Lambda are unnecessary for payer-level CUR.",
+        "C": "Per-member tag activation is not the centralized required step.",
+        "D": "Trusted Advisor does not generate tagged organizational cost chargeback reports."
+      },
+      "memoryTip": "Chargeback by team tag = activate cost allocation tag in management + CUR.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/activating-tags.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 256,
+      "sequence": 40,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "CloudFormation StackSets deploys IaC stacks across multiple AWS accounts and Regions; Organizations integration supports service-managed permissions and OU-based deployments.",
+      "wrongOptions": {
+        "A": "Individual template deployments and IAM policies are less scalable.",
+        "B": "Control Tower is not itself the multi-account stack deployment mechanism described.",
+        "C": "Correct: StackSets across accounts and Regions.",
+        "D": "Nested stacks compose templates within a deployment, not automatically across accounts/Regions."
+      },
+      "memoryTip": "Same stack in many accounts and Regions = CloudFormation StackSets.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/what-is-cfnstacksets.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 263,
+      "sequence": 41,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "Customer-managed prefix lists centralize CIDR ranges, can be shared through AWS RAM, and are referenced in security group rules across participating accounts.",
+      "wrongOptions": {
+        "A": "S3 JSON, SNS and Lambda updates require custom maintenance.",
+        "B": "AWS Config managed rules do not maintain reusable shared CIDR lists in security groups.",
+        "C": "Correct: managed prefix list shared by RAM and referenced in security groups.",
+        "D": "Cross-account security group references are constrained by network topology and are not a reusable shared CIDR catalog."
+      },
+      "memoryTip": "Shared office IP ranges → RAM-shared managed prefix list.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/sharing-managed-prefix-lists.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 267,
+      "sequence": 42,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora IAM database authentication removes static passwords from Lambda configuration and uses short-lived signed tokens. S3 gateway endpoint keeps S3 network traffic private. The Lambda must still have appropriate S3/KMS permissions and use TLS for database/S3 communications.",
+      "wrongOptions": {
+        "A": "Correct: IAM DB authentication and S3 gateway endpoint.",
+        "B": "HTTPS encrypts data but by itself does not prevent routing via public internet.",
+        "C": "Parameter Store does not natively rotate arbitrary DB passwords as stated and static passwords persist.",
+        "D": "Secrets Manager rotation helps credentials but HTTPS alone does not guarantee private S3 network path."
+      },
+      "memoryTip": "Lambda to Aurora no passwords + private S3 = IAM DB auth + gateway endpoint.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html",
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 282,
+      "sequence": 43,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "ambiguous-identity-center-workspaces",
+      "reasoning": "The source selects D, but the proposed use of an IAM Identity Center account instance as the authentication source for WorkSpaces is not sufficiently supported by the described integration. WorkSpaces SAML 2.0 authentication can federate directly with an external IdP, and Identity Center typically supports a single identity source per instance. The alternatives conflate Identity Center applications, IAM role federation and WorkSpaces desktop authentication. Do not mark D independently verified without validating the exact WorkSpaces edition and supported federation configuration.",
+      "wrongOptions": {
+        "A": "A may confuse an IAM Identity Center application-catalog entry with WorkSpaces SAML desktop authentication; needs exact product integration confirmation.",
+        "B": "IAM Identity Center does not support adding a second identity source to one instance.",
+        "C": "IAM SAML role federation is not, by itself, WorkSpaces desktop login configuration; root-level SCP is overbroad.",
+        "D": "Source answer D proposes an account instance as WorkSpaces authentication source; compatibility and setup are not established by the question."
+      },
+      "memoryTip": "WorkSpaces SAML desktop authentication is distinct from IAM Identity Center AWS-account permission sets.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/workspaces/latest/adminguide/setting-up-saml.html",
+        "https://docs.aws.amazon.com/singlesignon/latest/userguide/identity-center-instances.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 289,
+      "sequence": 44,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Activate BusinessUnit as an organization cost allocation tag, export cost/usage to S3, query through Athena and visualize in QuickSight.",
+      "wrongOptions": {
+        "A": "Correct central CUR/Athena/QuickSight reporting.",
+        "B": "CloudWatch dashboards are not the appropriate tagged billing analytics.",
+        "C": "Per-account CURs add fragmentation and do not address centralized visualization.",
+        "D": "Per-account exports are unnecessarily fragmented."
+      },
+      "memoryTip": "Cost allocation visualization = tags + CUR + Athena + QuickSight.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 296,
+      "sequence": 45,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "invalid-unsupported-hook-in-jitp",
+      "reasoning": "The intended answer C resembles IoT Core just-in-time provisioning (JITP): register the manufacturing CA, enable auto-registration and associate a provisioning template. However AWS JITP documentation does not establish that a Lambda pre-provisioning hook in this configuration validates installation before device activation; hooks are associated with fleet provisioning workflows. Automatic registration on first connection does not prove physical installation. None of the options clearly enforces 'cannot send data until installed' without a trusted installation/activation signal.",
+      "wrongOptions": {
+        "A": "Calling RegisterThing during manufacturing would activate/provision too early; pre-provision hook does not fix timing.",
+        "B": "Step Functions is not a supported direct provisioning-template validation hook as stated.",
+        "C": "Closest to JITP, but automatic registration and the asserted pre-provision hook do not reliably prove installation before access.",
+        "D": "Claim certificates and template parameter validation alone cannot attest physical installation."
+      },
+      "memoryTip": "IoT JITP = CA + auto-registration + template; physical installation needs separate trusted activation proof.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/jit-provisioning.html",
+        "https://docs.aws.amazon.com/iot/latest/developerguide/auto-register-device-cert.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 309,
+      "sequence": 46,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Interface endpoints for SSM, ssmmessages and potentially ec2messages, plus S3 gateway endpoint, allow Systems Manager connectivity without NAT. VPC peering privately reaches patch repository instances across accounts; route tables, DNS and security groups must be configured. Patch content and agent dependencies must be reachable privately.",
+      "wrongOptions": {
+        "A": "Blocking port 80 alone does not prevent all internet access and custom VPN servers add operations.",
+        "B": "Direct Connect private VIFs are not created for SSM/S3 services in this way.",
+        "C": "Correct: VPC endpoints + remove NAT + peering for repository, with requisite endpoint coverage.",
+        "D": "Inbound port 80 blocking is irrelevant to outbound internet restrictions and misses SSM endpoints."
+      },
+      "memoryTip": "No internet + SSM patching = SSM interface endpoints + S3 gateway + private repo connectivity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-create-vpc.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 315,
+      "sequence": 47,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "Control Tower establishes a governed landing zone with centralized logging, account baselines and controls; OUs accommodate differing compliance. IAM Identity Center can federate workforce authentication through an external SAML identity provider such as AD FS.",
+      "wrongOptions": {
+        "A": "Manual Organizations/SCP/Config/logging setup is higher overhead and one OU limits compliance flexibility.",
+        "B": "Correct: Control Tower landing zone plus OUs and IAM Identity Center federation.",
+        "C": "Manual multi-account governance is more operational work than Control Tower.",
+        "D": "IAM IdP federation alone does not provide the same centralized Identity Center account-access experience."
+      },
+      "memoryTip": "Landing zone + compliance OUs + AD FS = Control Tower + Identity Center.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 319,
+      "sequence": 48,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-duplicate-of-150",
+      "reasoning": "Default AWS-managed RDS KMS keys cannot be shared for cross-account backup. Use customer-managed KMS keys and a supported AWS Backup cross-account copy to a central vault, with Vault Lock for WORM. 'Vault sharing' in option A is imprecise; copy rules and policies are needed.",
+      "wrongOptions": {
+        "A": "Best: restore/re-encrypt with customer-managed KMS key, then configure cross-account copy; add Vault Lock.",
+        "B": "AWS-managed default KMS keys cannot be shared.",
+        "C": "Decrypting encrypted snapshots to plaintext as described is not supported.",
+        "D": "Default AWS-managed key cannot be shared and used for cross-account re-encryption."
+      },
+      "memoryTip": "Cross-account encrypted RDS = customer-managed KMS + AWS Backup copy + Vault Lock.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/create-cross-account-backup.html",
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 325,
+      "sequence": 49,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Organization CUR plus cost allocation tags and AWS Cost Categories supports custom groupings. Athena exposes SQL analytics and QuickSight provides a self-managed reporting dashboard.",
+      "wrongOptions": {
+        "A": "Correct: CUR + cost categories/tags + Athena + QuickSight.",
+        "B": "Cost Explorer reports are not the requested custom application dataset/reporting pipeline.",
+        "C": "Price List Query API provides published prices, not actual organization usage and spending.",
+        "D": "Price List Query API cannot replace actual billed usage data."
+      },
+      "memoryTip": "Custom chargeback reports = CUR + Cost Categories + Athena + QuickSight.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/manage-cost-categories.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 335,
+      "sequence": 50,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "outdated-service-availability",
+      "reasoning": "CloudTrail Lake organization event data stores support SQL and delegated administrator access, so B is the historical intended answer. However AWS documentation states CloudTrail Lake will no longer be open to new customers starting May 31, 2026; for a new customer in October 2026, B may not be available. Flag as outdated unless the organization already enrolled.",
+      "wrongOptions": {
+        "A": "CloudWatch Logs Insights is not standard SQL and per-account trails add setup.",
+        "B": "Historical correct option: organization CloudTrail Lake event data store with SQL; service availability now limited for new customers.",
+        "C": "CloudTrail event history is not the required centralized SQL query interface.",
+        "D": "Per-account event data stores fragment central query capability and increase overhead."
+      },
+      "memoryTip": "CloudTrail Lake = organization SQL event store (check 2026 new-customer availability).",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-organizations.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    }
+  ]
+}
