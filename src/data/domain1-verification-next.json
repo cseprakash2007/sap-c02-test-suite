@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Tenth 20-question batch: 17 reviewed with caveats, 3 flagged (Q291 Q293 Q302); corrected Q314 C to D.",
+  "notes": "Eleventh 20-question batch: 16 answers reviewed with caveats; Q329 Q331 Q340 Q341 flagged for source repair.",
   "items": [
     {
       "id": 12,
@@ -7564,6 +7564,327 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 318,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Lambda in private VPC subnets egresses through public NAT gateways; allowlist all NAT Elastic IP addresses.",
+      "wrongOptions": null,
+      "memoryTip": "Lambda in private VPC subnets egresses through public NAT gateways; allowlist all NAT Elastic IP addresses.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc-internet.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 320,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "FSx for NetApp ONTAP supports multiprotocol access and EKS mounting; DataSync handles incremental transfers to and from S3.",
+      "wrongOptions": null,
+      "memoryTip": "FSx for NetApp ONTAP supports multiprotocol access and EKS mounting; DataSync handles incremental transfers to and from S3.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/what-is-fsx-ontap.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 321,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EC2 Auto Scaling/ALB with EFS preserves PHP Apache frontend, Elastic Beanstalk Java avoids major refactoring, Aurora PostgreSQL with reader scaling handles read load.",
+      "wrongOptions": null,
+      "memoryTip": "EC2 Auto Scaling/ALB with EFS preserves PHP Apache frontend, Elastic Beanstalk Java avoids major refactoring, Aurora PostgreSQL with reader scaling handles read load.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 322,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "KMS multi-Region keys share key material and key ID across Regions for client-side encryption/decryption, but each Region has separate regional ARN and key policy.",
+      "wrongOptions": null,
+      "memoryTip": "KMS multi-Region keys share key material and key ID across Regions for client-side encryption/decryption, but each Region has separate regional ARN and key policy.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 323,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Increase DynamoDB write capacity for bursts and buffer S3 notifications via SQS with reprocessing to absorb Lambda concurrency limits.",
+      "wrongOptions": null,
+      "memoryTip": "Increase DynamoDB write capacity for bursts and buffer S3 notifications via SQS with reprocessing to absorb Lambda concurrency limits.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 324,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Application Migration Service continuously replicates VMware/physical workloads while DataSync migrates NFS to EFS over available Direct Connect connectivity.",
+      "wrongOptions": null,
+      "memoryTip": "Application Migration Service continuously replicates VMware/physical workloads while DataSync migrates NFS to EFS over available Direct Connect connectivity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 326,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "D",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "RDS Proxy reduces connection interruption, Aurora MySQL improves failover characteristics, and Aurora Replica supports quick promotion; under-20-second recovery is a target, not guaranteed.",
+      "wrongOptions": null,
+      "memoryTip": "RDS Proxy reduces connection interruption, Aurora MySQL improves failover characteristics, and Aurora Replica supports quick promotion; under-20-second recovery is a target, not guaranteed.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 327,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "App2Container packages legacy Java workloads with minimal changes and ECS Fargate removes EC2 server patching; ECR task execution permissions required.",
+      "wrongOptions": null,
+      "memoryTip": "App2Container packages legacy Java workloads with minimal changes and ECS Fargate removes EC2 server patching; ECR task execution permissions required.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/app2container/latest/UserGuide/what-is-a2c.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 328,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "B",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora slow-query/error logs, X-Ray application and SQL tracing, and centralized Apache logs provide visibility across ephemeral web instances.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora slow-query/error logs, X-Ray application and SQL tracing, and centralized Apache logs provide visibility across ephemeral web instances.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.Concepts.AuroraMySQL.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 329,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "B uses cross-Region RDS read replica, but async replication and replica promotion have no guaranteed RPO under 5 minutes and RTO under 10 minutes. No option provides an SLA guarantee; B closest.",
+      "wrongOptions": null,
+      "memoryTip": "B uses cross-Region RDS read replica, but async replication and replica promotion have no guaranteed RPO under 5 minutes and RTO under 10 minutes. No option provides an SLA guarantee; B closest.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 330,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Mountpoint for S3 provides read access to current S3 objects across autoscaled EC2 instances, removing launch-time stale copies; application must reopen file and account for object updates.",
+      "wrongOptions": null,
+      "memoryTip": "Mountpoint for S3 provides read access to current S3 objects across autoscaled EC2 instances, removing launch-time stale copies; application must reopen file and account for object updates.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mountpoint.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 331,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "A+D+F logs actual S3 object delete events and retains CloudTrail logs, but S3 deletion events signal successful deletions rather than every attempted deletion including AccessDenied. CloudTrail data events with EventBridge matching is needed for failed attempts too.",
+      "wrongOptions": null,
+      "memoryTip": "A+D+F logs actual S3 object delete events and retains CloudTrail logs, but S3 deletion events signal successful deletions rather than every attempted deletion including AccessDenied. CloudTrail data events with EventBridge matching is needed for failed attempts too.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 332,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Service Catalog launch constraints let QA provision an approved CloudFormation product using delegated launch role without broad IAM permissions.",
+      "wrongOptions": null,
+      "memoryTip": "Service Catalog launch constraints let QA provision an approved CloudFormation product using delegated launch role without broad IAM permissions.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/constraints-launch.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 334,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EKS Fargate minimizes Kubernetes host operations, MSK manages Kafka, RDS read replicas scale reads and CloudFront/S3 offloads static assets; ensure EKS/Fargate compatibility.",
+      "wrongOptions": null,
+      "memoryTip": "EKS Fargate minimizes Kubernetes host operations, MSK manages Kafka, RDS read replicas scale reads and CloudFront/S3 offloads static assets; ensure EKS/Fargate compatibility.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/fargate.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 336,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SSM Session Manager allows managed access without SSH key, and instance role grants S3 write for live file-level backup; requires SSM agent and endpoints.",
+      "wrongOptions": null,
+      "memoryTip": "SSM Session Manager allows managed access without SSH key, and instance role grants S3 write for live file-level backup; requires SSM agent and endpoints.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 337,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Rebuild ARM64 images, shift EKS workers to Graviton, and commit suitable EC2 Instance Savings Plan for predictable usage.",
+      "wrongOptions": null,
+      "memoryTip": "Rebuild ARM64 images, shift EKS workers to Graviton, and commit suitable EC2 Instance Savings Plan for predictable usage.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 338,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Lambda provisioned concurrency keeps execution environments initialized; Application Auto Scaling can adjust capacity for expected demand.",
+      "wrongOptions": null,
+      "memoryTip": "Lambda provisioned concurrency keeps execution environments initialized; Application Auto Scaling can adjust capacity for expected demand.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/provisioned-concurrency.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 340,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "B is intended, but verify that current Bedrock Responses API supports AgentCore Gateway ARN as a native tool connector without application orchestration; tool API and regional availability may vary.",
+      "wrongOptions": null,
+      "memoryTip": "B is intended, but verify that current Bedrock Responses API supports AgentCore Gateway ARN as a native tool connector without application orchestration; tool API and regional availability may vary.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 341,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "B is intended failover workflow, but Route 53 health checks do not natively send SNS notifications directly to Lambda; CloudWatch health-check alarms plus SNS/Lambda can implement it. RTO under 15 minutes is not guaranteed with cold standby ASG min/max zero.",
+      "wrongOptions": null,
+      "memoryTip": "B is intended failover workflow, but Route 53 health checks do not natively send SNS notifications directly to Lambda; CloudWatch health-check alarms plus SNS/Lambda can implement it. RTO under 15 minutes is not guaranteed with cold standby ASG min/max zero.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/monitoring-health-checks.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 342,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora Serverless v2 scales database compute for variable write-heavy traffic; Compute Savings Plans cover Fargate and Lambda, not Aurora capacity.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora Serverless v2 scales database compute for variable write-heavy traffic; Compute Savings Plans cover Fargate and Lambda, not Aurora capacity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source question/options; original question bank unchanged."
     }
   ]
 }
