@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Source-repair review started: Q597 resolved and reviewed; Q31, Q95, Q5, Q567 have precise proposed source edits without changing original questions. 16 source-repair flags remain.",
+  "notes": "Source-repair proposals documented for all 16 outstanding flags. One source-repair record (Q597) previously resolved. Original questions and answer keys unchanged; all 16 remain unverified until explicit content corrections.",
   "items": [
     {
       "id": 12,
@@ -2028,13 +2028,14 @@
       },
       "memoryTip": "None of the offered options explicitly combines correct sales-account bucket policy, marketing-account QuickSight role permission and cross-account KMS decrypt grant. D role trust description is backwards",
       "awsReferences": [
-        "https://docs.aws.amazon.com/quicksight/latest/user/cross-account-access.html"
+        "https://docs.aws.amazon.com/quicksight/latest/user/troubleshoot-athena-insufficient-permissions.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "D"
       ],
-      "reviewNotes": "Malformed or underspecified question; exclude from auto-scored confirmed answers."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Replace C with: 'In the sales account, update the S3 bucket policy to grant the marketing account QuickSight service role read/list permissions. Grant that role kms:Decrypt on the sales account customer-managed KMS key using a key policy or grant. In the marketing account, authorize QuickSight to access the S3 bucket.'"
     },
     {
       "id": 637,
@@ -2162,7 +2163,8 @@
       "sourceAnswer": [
         "D"
       ],
-      "reviewNotes": "Malformed or underspecified question; exclude from auto-scored confirmed answers."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Revise the requirement to permit eventual-consistency ticket status across Regions, making D the intended lowest-latency answer; alternatively require globally single-use tickets and provide an architecture with a single authoritative conditional-write location per ticket, accepting additional latency."
     },
     {
       "id": 666,
@@ -2243,7 +2245,8 @@
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "Malformed or underspecified question; exclude from auto-scored confirmed answers."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Replace B with 'Deploy 5,000 models on SageMaker AI multi-model endpoints, enable auto scaling, and use provisioned/warm capacity for frequently requested models; document that cold model loading may exceed 200 ms.' Or relax strict sub-200 ms latency requirement to a measured percentile."
     },
     {
       "id": 8,
@@ -2625,7 +2628,8 @@
       "sourceAnswer": [
         "A"
       ],
-      "reviewNotes": "Question has an unsupported or internally inconsistent requirement; exclude from confirmed scoring."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Change 'will not tolerate ... stale data' and 'in real time' to 'can tolerate cross-Region replication lag and forwarded-write latency'. Keep Aurora global database with write forwarding in A as intended, but state that writes forward to primary Region."
     },
     {
       "id": 58,
@@ -2871,7 +2875,8 @@
         "https://docs.aws.amazon.com/sns/latest/dg/sns-send-message-to-sqs-cross-region.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Question has an unsupported or internally inconsistent requirement; exclude from confirmed scoring."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Replace C with 'Subscribe the SQS queues in each destination Region directly to the existing SNS topic in the source Region, with appropriate cross-Region SQS queue policies; configure each destination Lambda to write to the original S3 bucket.' Then select A and C."
     },
     {
       "id": 95,
@@ -2971,10 +2976,11 @@
       },
       "memoryTip": "A and B are correct. D's 'add SNS topic to backup plan' is not an AWS Backup plan field",
       "awsReferences": [
-        "https://docs.aws.amazon.com/aws-backup/latest/devguide/eventbridge.html"
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Question has an unsupported or internally inconsistent requirement; exclude from confirmed scoring."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Replace D with 'Configure SNS notifications for BACKUP_JOB_FAILED and BACKUP_JOB_EXPIRED on the AWS Backup vault using PutBackupVaultNotifications, or an EventBridge rule matching failed backup jobs, targeting SNS.' Then select A, B, D."
     },
     {
       "id": 132,
@@ -3023,7 +3029,8 @@
         "https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Question has an unsupported or internally inconsistent requirement; exclude from confirmed scoring."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Revise D to grant IT security administrators KMS key-management permissions and the Lambda execution role the minimum kms:Decrypt and secretsmanager:GetSecretValue permissions; configure Secrets Manager rotation for the SQL Server secret. Remove the absolute security-team-only key-access restriction."
     },
     {
       "id": 184,
@@ -3270,7 +3277,8 @@
         "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Source outdated, incomplete or internally inconsistent; exclude from confirmed scoring."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Replace Aurora Serverless v1 with a supported Aurora deployment (Aurora Serverless v2 where supported) and define cross-Region Aurora global database with a predeployed passive API/Lambda stack, health-based traffic failover and tested RTO/RPO. Retain D as intended."
     },
     {
       "id": 417,
@@ -3490,7 +3498,8 @@
         "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Source outdated, incomplete or internally inconsistent; exclude from confirmed scoring."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Replace 'immediately' with 'asynchronously within the application's event-processing SLA'. In C, change 'delete the user from the DynamoDB table' to 'delete the microservice's locally stored copy of the user data', with retry and DLQ handling."
     },
     {
       "id": 650,
@@ -3637,7 +3646,8 @@
         "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Source question underspecified/outdated; not confirmed."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Specify that connection exhaustion and connection establishment overhead are the dominant bottleneck (not repeated expensive reads); then C RDS Proxy is the best answer. If CPU-heavy repeated read queries dominate, B caching may be preferable."
     },
     {
       "id": 4,
@@ -3731,10 +3741,11 @@
       },
       "memoryTip": "Source D recommends Aurora Serverless v1, which reached end of life March 31 2025",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/WhatsNew.html"
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Source question underspecified/outdated; not confirmed."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Replace option D's 'Aurora Serverless v1' with 'Aurora Serverless v2' and retain Compute Savings Plans for Lambda/Fargate. Validate that the chosen minimum and maximum ACUs support workload peak and desired idle-cost behavior."
     },
     {
       "id": 17,
@@ -3831,7 +3842,8 @@
         "https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Source question underspecified/outdated; not confirmed."
+      "reviewNotes": "Original stem/options unchanged. Proposed correction only; retain unverified until edited question is independently reviewed.",
+      "proposedSourceRepair": "Replace A's CloudWatch alarm metric with a CloudWatch metric math expression using Lambda ConcurrentExecutions divided by account concurrency quota (or a suitable account utilization metric), notifying SNS. Keep reserved concurrency and Route 53 health-check failover; then A is valid."
     },
     {
       "id": 31,
