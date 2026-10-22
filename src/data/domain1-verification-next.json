@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "120 entries in continuation file (170 total including first 50). Latest 50 (30 Domain 1 +20 Domain 2) are PRELIMINARY, not fully verified: option analysis and official AWS reference checks pending. Do not display them as fully reviewed.",
+  "notes": "170 continuation entries; 220 total assessed. Latest 100 are preliminary only. Do not count preliminary items as verified. Q61 AWS Backup unsupported CodeCommit; source answer C correction preliminary.",
   "items": [
     {
       "id": 12,
@@ -2473,6 +2473,812 @@
         "D": "Not selected in preliminary assessment. Full option-level technical validation pending."
       },
       "memoryTip": "API Gateway private REST API with VPC interface endpoint and resource policy removes public exposure",
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 73,
+      "domain": 2,
+      "sequence": 121,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 76,
+      "domain": 2,
+      "sequence": 122,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 79,
+      "domain": 2,
+      "sequence": 123,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 86,
+      "domain": 2,
+      "sequence": 124,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 93,
+      "domain": 2,
+      "sequence": 125,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 94,
+      "domain": 2,
+      "sequence": 126,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A",
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 95,
+      "domain": 2,
+      "sequence": 127,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Check original encryption requirement and distinguish SSE-S3, SSE-KMS, and SSE-C.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 100,
+      "domain": 2,
+      "sequence": 128,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 103,
+      "domain": 2,
+      "sequence": 129,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Check baseline versus burst Savings Plan coverage and Spot availability.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 122,
+      "domain": 2,
+      "sequence": 130,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A",
+        "B",
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "AWS Backup notifications use EventBridge/SNS integration; verify whether SNS can be added directly to plan.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 132,
+      "domain": 2,
+      "sequence": 131,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Verify whether source devices support FTP versus direct S3 upload.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 164,
+      "domain": 2,
+      "sequence": 132,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 184,
+      "domain": 2,
+      "sequence": 133,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 246,
+      "domain": 2,
+      "sequence": 134,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 269,
+      "domain": 2,
+      "sequence": 135,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Verify Direct Connect gateway association and multi-Region private routing requirements.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 270,
+      "domain": 2,
+      "sequence": 136,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 294,
+      "domain": 2,
+      "sequence": 137,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 297,
+      "domain": 2,
+      "sequence": 138,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A",
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 313,
+      "domain": 2,
+      "sequence": 139,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 333,
+      "domain": 2,
+      "sequence": 140,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "CloudFormation DeletionPolicy alone cannot delete a nonempty S3 bucket; validate custom emptying mechanism.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 352,
+      "domain": 2,
+      "sequence": 141,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Likely Amazon Macie OCR typo; verify S3 sensitivity discovery and automatic remediation.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 368,
+      "domain": 2,
+      "sequence": 142,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Aurora Serverless v1 is deprecated; validate migration to supported Aurora global database.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 417,
+      "domain": 2,
+      "sequence": 143,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 440,
+      "domain": 2,
+      "sequence": 144,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 461,
+      "domain": 2,
+      "sequence": 145,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "AWS Compute Optimizer Lambda recommendations export/API naming should be verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 484,
+      "domain": 2,
+      "sequence": 146,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 494,
+      "domain": 2,
+      "sequence": 147,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 550,
+      "domain": 2,
+      "sequence": 148,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 579,
+      "domain": 2,
+      "sequence": 149,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "UltraWarm needs compatible hot tier and sizing; validate query access and cost.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 635,
+      "domain": 2,
+      "sequence": 150,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 640,
+      "domain": 2,
+      "sequence": 151,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 650,
+      "domain": 2,
+      "sequence": 152,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Review RTO/RPO and data replication before selecting warm standby.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 651,
+      "domain": 2,
+      "sequence": 153,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Possible duplicate of Q440.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 657,
+      "domain": 2,
+      "sequence": 154,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 667,
+      "domain": 2,
+      "sequence": 155,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 1,
+      "domain": 3,
+      "sequence": 156,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Verify SSE-S3 versus SSE-KMS requirement and whether source option satisfies it.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 2,
+      "domain": 3,
+      "sequence": 157,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 4,
+      "domain": 3,
+      "sequence": 158,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 5,
+      "domain": 3,
+      "sequence": 159,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "One NAT gateway per AZ is resilience recommendation, not strict minimum for internet connectivity.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 10,
+      "domain": 3,
+      "sequence": 160,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 16,
+      "domain": 3,
+      "sequence": 161,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Aurora Serverless v1 is no longer generally available for new clusters; outdated option.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 17,
+      "domain": 3,
+      "sequence": 162,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 18,
+      "domain": 3,
+      "sequence": 163,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A",
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 24,
+      "domain": 3,
+      "sequence": 164,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "A"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 27,
+      "domain": 3,
+      "sequence": 165,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 31,
+      "domain": 3,
+      "sequence": 166,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 32,
+      "domain": 3,
+      "sequence": 167,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C",
+        "E"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 34,
+      "domain": 3,
+      "sequence": 168,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "requires-technical-validation",
+      "reasoning": "Verify rate-based WAF rule and CloudWatch alarm action implementation.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 35,
+      "domain": 3,
+      "sequence": 169,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
+      "awsReferences": [],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 37,
+      "domain": 3,
+      "sequence": 170,
+      "verificationStatus": "preliminary-review",
+      "sourceAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": null,
+      "validity": "not-yet-verified",
+      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "wrongOptions": {},
+      "memoryTip": null,
       "awsReferences": [],
       "reviewedAt": "2026-10-22"
     }
