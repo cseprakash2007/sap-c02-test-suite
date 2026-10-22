@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "20 continuation questions reviewed; Q192 invalid hard cap, Q299 corrected to B/D, Q243 duplicates Q139.",
+  "notes": "30 continuation entries reviewed; Q362 and Q384 source keys corrected; Q389 duplicates Q125.",
   "items": [
     {
       "id": 12,
@@ -461,6 +461,232 @@
       "memoryTip": "Central inspection VPC with GWLB and TGW appliance mode enables symmetric inspection; appliance mode is configured on TGW VPC attachment, not TGW itself.",
       "awsReferences": [
         "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpc-attachments.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 362,
+      "sequence": 21,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "corrected",
+      "reasoning": "Third-party access should use a least-privilege role with external ID to prevent confused deputy.",
+      "wrongOptions": {
+        "A": "Customer access keys unsafe",
+        "B": "IAM user long-lived credentials",
+        "C": "Role ARN lacks external ID",
+        "D": "Correct cross-account role plus external ID"
+      },
+      "memoryTip": "Third-party access should use a least-privilege role with external ID to prevent confused deputy.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_common-scenarios_third-party.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 369,
+      "sequence": 22,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "DBA role assumes application-account role which accesses same-account secret and AWS-managed key.",
+      "wrongOptions": {
+        "A": "RAM not secret sharing",
+        "B": "Correct role assumption",
+        "C": "AWS-managed KMS key cannot be cross-account shared",
+        "D": "SCP does not grant"
+      },
+      "memoryTip": "DBA role assumes application-account role which accesses same-account secret and AWS-managed key.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_examples_cross.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 370,
+      "sequence": 23,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "D"
+      ],
+      "validity": "caveat",
+      "reasoning": "Control Tower plus Identity Center MFA and TGW route tables; central shared TGW is preferable to one per account.",
+      "wrongOptions": {
+        "A": "Correct landing zone",
+        "B": "Security Hub no MFA",
+        "C": "Intended TGW but per-account TGWs excessive",
+        "D": "Correct Identity Center",
+        "E": "Control Tower not routing",
+        "F": "Cognito not workforce account access"
+      },
+      "memoryTip": "Control Tower plus Identity Center MFA and TGW route tables; central shared TGW is preferable to one per account.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 373,
+      "sequence": 24,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "caveat",
+      "reasoning": "SCP request-tag deny enforces supported actions; OU tag policies standardize values but cannot mandate tags alone.",
+      "wrongOptions": {
+        "A": "Best SCP plus OU tag policies",
+        "B": "Wrong account attachment",
+        "C": "Allow SCP not enforcement",
+        "D": "Missing tag policy values"
+      },
+      "memoryTip": "SCP request-tag deny enforces supported actions; OU tag policies standardize values but cannot mandate tags alone.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 375,
+      "sequence": 25,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "F"
+      ],
+      "validity": "valid",
+      "reasoning": "Multi-AZ firewall instances with GWLB and GWLB endpoints provide appliance insertion and health-based failover.",
+      "wrongOptions": {
+        "A": "Correct AZ spread",
+        "B": "NLB not transparent appliance",
+        "C": "Correct GWLB",
+        "D": "Interface endpoint wrong",
+        "E": "Single AZ risk",
+        "F": "Correct GWLB endpoint"
+      },
+      "memoryTip": "Multi-AZ firewall instances with GWLB and GWLB endpoints provide appliance insertion and health-based failover.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 378,
+      "sequence": 26,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "Service Catalog approved VPC with S3 gateway endpoint and EC2 products avoids NAT S3 charges.",
+      "wrongOptions": {
+        "A": "Interface endpoint charged",
+        "B": "Budgets no universal termination",
+        "C": "Correct Catalog",
+        "D": "Reactive remediation"
+      },
+      "memoryTip": "Service Catalog approved VPC with S3 gateway endpoint and EC2 products avoids NAT S3 charges.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 379,
+      "sequence": 27,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "B",
+        "C"
+      ],
+      "validity": "caveat",
+      "reasoning": "Cross-account vault copies, restrictive SCP and compliance-mode Vault Lock protect backups even after privileged account compromise.",
+      "wrongOptions": {
+        "A": "Correct isolated account",
+        "B": "Correct SCP defense",
+        "C": "Correct immutable vault",
+        "D": "Cold tier irrelevant",
+        "E": "Not native S3 copy",
+        "F": "Least privilege alone insufficient"
+      },
+      "memoryTip": "Cross-account vault copies, restrictive SCP and compliance-mode Vault Lock protect backups even after privileged account compromise.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 382,
+      "sequence": 28,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "E"
+      ],
+      "validity": "valid",
+      "reasoning": "Organizations billing plus Identity Center federation to Entra ID and permission sets provide temporary access.",
+      "wrongOptions": {
+        "A": "Correct Organizations",
+        "B": "Email aliases irrelevant",
+        "C": "Correct Entra ID federation",
+        "D": "Managed AD unnecessary",
+        "E": "Correct permission sets",
+        "F": "Per-account AD unnecessary"
+      },
+      "memoryTip": "Organizations billing plus Identity Center federation to Entra ID and permission sets provide temporary access.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/singlesignon/latest/userguide/azure-ad-idp.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 384,
+      "sequence": 29,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "corrected",
+      "reasoning": "Invited existing accounts need OrganizationAccountAccessRole manually created in each member account.",
+      "wrongOptions": {
+        "A": "Group nonexistent",
+        "B": "Policy nonexistent",
+        "C": "Correct member role",
+        "D": "Role in management account wrong"
+      },
+      "memoryTip": "Invited existing accounts need OrganizationAccountAccessRole manually created in each member account.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_create-cross-account-role.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 389,
+      "sequence": 30,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "duplicate-125",
+      "reasoning": "EC2 Instance Connect ephemeral key pushes logged as CloudTrail API calls, not full SSH session transcripts.",
+      "wrongOptions": {
+        "A": "Persistent keys",
+        "B": "SSM not SSH audit",
+        "C": "Correct Instance Connect",
+        "D": "Daily rotation not per-session"
+      },
+      "memoryTip": "EC2 Instance Connect ephemeral key pushes logged as CloudTrail API calls, not full SSH session transcripts.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connect-linux-inst-eic.html"
       ],
       "reviewedAt": "2026-10-22"
     }
