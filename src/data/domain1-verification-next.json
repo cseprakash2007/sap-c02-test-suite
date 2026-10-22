@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Second new 20-question batch: 17 reviewed; Q77, Q85, Q90 flagged. Source key corrections Q88 A->B and Q92 C->CD. Q74 source claims zero downtime, though heterogeneous cutover needs coordination.",
+  "notes": "Third new 20-question batch: 15 reviewed, 5 flagged Q110 Q119 Q124 Q127 Q131. Original source bank unchanged.",
   "items": [
     {
       "id": 12,
@@ -4959,6 +4959,407 @@
         "B"
       ],
       "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 110,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "Existing ElastiCache Redis TLS/Auth modification depends on engine/version and cluster configuration; B assumes in-place support without specifying prerequisites. A creates TLS-enabled replacement and AUTH token, generally viable, but needs migration/cutover detail.",
+      "wrongOptions": {
+        "A": "creates compatible new cluster but requires data migration",
+        "B": "in-place change may be supported for eligible engine versions only",
+        "C": "certificate isn't Redis AUTH",
+        "D": "certificate isn't Redis AUTH."
+      },
+      "memoryTip": "Existing ElastiCache Redis TLS/Auth modification depends on engine/version and cluster configuration",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/in-transit-encryption-enable.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Needs corrected options or explicit prerequisites; source unchanged."
+    },
+    {
+      "id": 111,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "CodeCommit push triggers Lambda scan of new commits; IAM access keys discovered in code should be disabled immediately and owner alerted. Existing exposed keys need separate historic scan.",
+      "wrongOptions": {
+        "A": "scans development hosts not repository",
+        "B": "KMS isn't a secret storage service for rotated credentials",
+        "C": "Macie scans S3 data not CodeCommit",
+        "D": "correct proactive trigger."
+      },
+      "memoryTip": "CodeCommit push triggers Lambda scan of new commits",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-notify-lambda.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 112,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "S3 gateway endpoint sends private subnet S3 traffic over AWS network without NAT data processing costs; endpoint policy limits access.",
+      "wrongOptions": {
+        "A": "NAT instances add administration",
+        "B": "public EC2 harms security",
+        "D": "EFS changes storage architecture."
+      },
+      "memoryTip": "S3 gateway endpoint sends private subnet S3 traffic over AWS network without NAT data processing costs",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 114,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Kinesis Data Streams invokes Lambda consumers for near-real-time sensor thresholds and SNS alerts.",
+      "wrongOptions": {
+        "A": "Firehose isn't Step Functions streaming consumer",
+        "B": "MSK lacks native trigger to invoke Fargate task as stated",
+        "D": "unnecessary ECS and malformed ingestion."
+      },
+      "memoryTip": "Kinesis Data Streams invokes Lambda consumers for near-real-time sensor thresholds and SNS alerts.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 115,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Aurora PostgreSQL encryption/TLS with Database Activity Streams and Firehose to S3 Object Lock compliance mode provides tamper-resistant 10-year audit records.",
+      "wrongOptions": {
+        "B": "RDS PostgreSQL activity-stream availability differs",
+        "D": "pgAudit CloudWatch route less tamper-resistant at source",
+        "E": "governance retention can be bypassed with privilege."
+      },
+      "memoryTip": "Aurora PostgreSQL encryption/TLS with Database Activity Streams and Firehose to S3 Object Lock compliance mode provides tamper-resistant 10-year audit records.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 116,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "IoT Core MQTT ingestion with Lambda rules, DocumentDB compatible document store, Step Functions/Lambda jobs and S3/CloudFront reports minimize server operations.",
+      "wrongOptions": {
+        "B": "Lambda layers aren't durable message buffers",
+        "C": "EKS requires cluster operation",
+        "F": "self-managed MongoDB on EC2 higher overhead."
+      },
+      "memoryTip": "IoT Core MQTT ingestion with Lambda rules, DocumentDB compatible document store, Step Functions/Lambda jobs and S3/CloudFront reports minimize server operations.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 119,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "B/C support failover and data replication, but E specifies zonal Reserved Instances for a cross-AZ hot standby; zonal RIs reserve capacity only in specified AZs and cannot by themselves guarantee one-minute cross-Region failover. Route53 TTL is not hard failover guarantee.",
+      "wrongOptions": {
+        "A": "TTL 1h unsuitable",
+        "B": "low TTL helps but not guarantee",
+        "C": "global tables suitable",
+        "D": "hourly backups fail RTO",
+        "E": "hot standby plausible but no hard one-minute failover guarantee",
+        "F": "Spot-only capacity risky."
+      },
+      "memoryTip": "B/C support failover and data replication, but E specifies zonal Reserved Instances for a cross-AZ hot standby",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Needs corrected options or explicit prerequisites; source unchanged."
+    },
+    {
+      "id": 121,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Secrets Manager stores unique encrypted SSH private keys; rotation Lambda replaces authorized_keys/public keys and updates private key secret.",
+      "wrongOptions": {
+        "B": "plaintext Parameter Store string not encrypted",
+        "C": "KMS automatic rotation doesn't rotate EC2 SSH keys",
+        "D": "Fleet Manager doesn't securely persist private keys."
+      },
+      "memoryTip": "Secrets Manager stores unique encrypted SSH private keys",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotating-secrets.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 123,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudFormation deploys equivalent regional stack, DynamoDB global tables replicate, and Route 53 latency routing steers global users.",
+      "wrongOptions": {
+        "B": "manual stack error-prone",
+        "C": "omits regional compute",
+        "D": "DynamoDB Streams custom replication higher effort."
+      },
+      "memoryTip": "CloudFormation deploys equivalent regional stack, DynamoDB global tables replicate, and Route 53 latency routing steers global users.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 124,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "SageMaker notebook in VPC without internet cannot access an arbitrary remote private Git repository solely by referencing URL and storing credentials in Secrets Manager. Need private connectivity to repository (VPN/Direct Connect/PrivateLink or reachable internal host).",
+      "wrongOptions": {
+        "A": "credentials don't create network path",
+        "B": "username in URL insecure and no path"
+      },
+      "memoryTip": "SageMaker notebook in VPC without internet cannot access an arbitrary remote private Git repository solely by referencing URL and storing credentials in Secrets Manager. Need private connectivity to repository (VPN/Direct Connect/PrivateLink or reachable internal host).",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-git-repo.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Needs corrected options or explicit prerequisites; source unchanged."
+    },
+    {
+      "id": 127,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "D patched AMI and instance refresh solves replacement issue, but source asks TWO and C ALB health checks do not ensure patched images; same structural issue as Q567.",
+      "wrongOptions": {
+        "A": "launch configuration age policy not valid",
+        "B": "parallel ASGs not necessary",
+        "C": "health check not patch compliance",
+        "D": "patched AMI and refresh correct",
+        "E": "termination protection not applicable."
+      },
+      "memoryTip": "D patched AMI and instance refresh solves replacement issue, but source asks TWO and C ALB health checks do not ensure patched images",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/instance-refresh-overview.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Needs corrected options or explicit prerequisites; source unchanged."
+    },
+    {
+      "id": 128,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "DataSync transfers on-prem SAN files to S3 over Direct Connect; S3 events invoke Lambda/Step Functions and AWS Batch executes multi-hour Docker genomics jobs.",
+      "wrongOptions": {
+        "A": "Snowball slow repeated transfer and Lambda too short",
+        "B": "Data Pipeline/ASG custom orchestration overhead",
+        "D": "gateway less suitable and lacks orchestrated workflow."
+      },
+      "memoryTip": "DataSync transfers on-prem SAN files to S3 over Direct Connect",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 129,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "DynamoDB global tables plus cross-Region RDS MySQL read replica enable independent secondary read path after disaster, assuming read-only MySQL workload.",
+      "wrongOptions": {
+        "B": "DAX not replication",
+        "C": "Multi-AZ standby cannot be in another Region",
+        "D": "custom Streams copy higher development effort."
+      },
+      "memoryTip": "DynamoDB global tables plus cross-Region RDS MySQL read replica enable independent secondary read path after disaster, assuming read-only MySQL workload.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 130,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Unified CloudWatch agent streams EC2 application logs to persistent CloudWatch Logs before ASG scale-in.",
+      "wrongOptions": {
+        "A": "ALB access logs not application logs",
+        "C": "scaling policy doesn't preserve logs",
+        "D": "X-Ray traces not full app logs."
+      },
+      "memoryTip": "Unified CloudWatch agent streams EC2 application logs to persistent CloudWatch Logs before ASG scale-in.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/QuickStartEC2Instance.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 131,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "C DataSync to a new SSD FSx system is viable, but A backup/restore is simpler if AWS Backup supports restore with changed FSx storage type and throughput. B cannot change HDD to SSD in place for all configurations. Need verify supported restore options.",
+      "wrongOptions": {
+        "A": "potentially lower admin than C",
+        "B": "HDD-to-SSD in-place conversion unsupported",
+        "C": "viable but extra DataSync management",
+        "D": "shadow-copy route unnecessary."
+      },
+      "memoryTip": "C DataSync to a new SSD FSx system is viable, but A backup/restore is simpler if AWS Backup supports restore with changed FSx storage type and throughput. B cannot change HDD to SSD in place for all configurations. Need verify supported restore options.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/migrate-to-new-file-system.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Needs corrected options or explicit prerequisites; source unchanged."
+    },
+    {
+      "id": 133,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Lambda alias weighted routing-config splits invocations across function versions for canary rollout.",
+      "wrongOptions": {
+        "B": "Route53 not function version rollout",
+        "C": "update-function-configuration has no routing-config",
+        "D": "OneAtATime isn't Lambda canary config."
+      },
+      "memoryTip": "Lambda alias weighted routing-config splits invocations across function versions for canary rollout.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuring-alias-routing.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 134,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "DMS full load + CDC minimizes downtime and TLS protects data in transit; replication instance in private subnet with Direct Connect private connectivity.",
+      "wrongOptions": {
+        "A": "Snowball offline and no CDC",
+        "C": "backup+DataSync no CDC",
+        "D": "file gateway backup no CDC."
+      },
+      "memoryTip": "DMS full load + CDC minimizes downtime and TLS protects data in transit",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CDC.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 135,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "ALB access logs in S3 queried through Athena include client IP and timestamps; Lambda identifies 90-day inactive allowlist entries.",
+      "wrongOptions": {
+        "A": "VPC flow logs less application-level detail and CloudWatch charges",
+        "C": "unnecessary flow log query",
+        "E": "CloudTrail API audit isn't user web requests."
+      },
+      "memoryTip": "ALB access logs in S3 queried through Athena include client IP and timestamps",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 137,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Global tables replicate DynamoDB across Regions and RDS cross-Region read replica supports secondary read-only MySQL; replica can be promoted for independence.",
+      "wrongOptions": {
+        "B": "DAX not replication",
+        "C": "Multi-AZ cannot span Regions",
+        "D": "custom Streams higher effort."
+      },
+      "memoryTip": "Global tables replicate DynamoDB across Regions and RDS cross-Region read replica supports secondary read-only MySQL",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 138,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS Elastic Disaster Recovery replication agents support continuous replication of on-prem physical servers and MySQL workload, with tested recovery/failback.",
+      "wrongOptions": {
+        "A": "cut over to test instances is incorrect recovery process",
+        "C": "SCT isn't CDC engine and custom rehost overhead",
+        "D": "gateway snapshots/manual recovery high overhead."
+      },
+      "memoryTip": "AWS Elastic Disaster Recovery replication agents support continuous replication of on-prem physical servers and MySQL workload, with tested recovery/failback.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Verified architecture against stated scenario; source unchanged."
     }
   ]
 }
