@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "30 continuation entries reviewed; Q362 and Q384 source keys corrected; Q389 duplicates Q125.",
+  "notes": "50 continuation questions reviewed (100 overall). Q439 and Q457 invalid/flawed; Q465 overengineered; Q466 fails existing-instance requirement.",
   "items": [
     {
       "id": 12,
@@ -687,6 +687,447 @@
       "memoryTip": "EC2 Instance Connect ephemeral key pushes logged as CloudTrail API calls, not full SSH session transcripts.",
       "awsReferences": [
         "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connect-linux-inst-eic.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 404,
+      "sequence": 31,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "Organization service-managed StackSets deploy from management account to organization with auto-deployment.",
+      "wrongOptions": {
+        "A": "Member stack set is not central.",
+        "B": "Self-managed stacks not org auto-deployment.",
+        "C": "Correct service-managed stack set.",
+        "D": "Drift detection does not deploy."
+      },
+      "memoryTip": "Organization service-managed StackSets deploy from management account to organization with auto-deployment.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-associate-stackset-with-org.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 406,
+      "sequence": 32,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-tag-enforcement-caveat",
+      "reasoning": "OU-specific SCP Region guardrails and tag policies centralize restrictions; tag policies do not by themselves require tags on creation.",
+      "wrongOptions": {
+        "A": "Config is detective.",
+        "B": "Billing console not Region enforcement.",
+        "C": "Root does not isolate specific accounts.",
+        "D": "Correct dedicated OU plus SCP/tag policy."
+      },
+      "memoryTip": "OU-specific SCP Region guardrails and tag policies centralize restrictions; tag policies do not by themselves require tags on creation.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 407,
+      "sequence": 33,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "B",
+        "E"
+      ],
+      "validity": "valid",
+      "reasoning": "Config required-tags detects missing tags, SCP denies untagged EC2 RunInstances where supported, organization aggregator centralizes findings.",
+      "wrongOptions": {
+        "A": "Correct detection.",
+        "B": "Correct prevention.",
+        "C": "Inspector not tagging.",
+        "D": "Per-account IAM is less central.",
+        "E": "Correct aggregator.",
+        "F": "Security Hub is not necessary for tagging inventory."
+      },
+      "memoryTip": "Config required-tags detects missing tags, SCP denies untagged EC2 RunInstances where supported, organization aggregator centralizes findings.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/config/latest/developerguide/required-tags.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 423,
+      "sequence": 34,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "Organizations all-features SCP can deny EC2 reserved instance purchase/modify actions across OUs.",
+      "wrongOptions": {
+        "A": "Correct prerequisite.",
+        "B": "Config detective only.",
+        "C": "Per-account IAM maintenance.",
+        "D": "Correct preventive SCP.",
+        "E": "Consolidated billing alone does not enable SCPs."
+      },
+      "memoryTip": "Organizations all-features SCP can deny EC2 reserved instance purchase/modify actions across OUs.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 430,
+      "sequence": 35,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Associate private hosted zone with every VPC and use Route 53 Resolver inbound endpoint for on-prem DNS forwarding over Direct Connect.",
+      "wrongOptions": {
+        "A": "Correct PHZ associations and inbound endpoint.",
+        "B": "EC2 forwarder adds maintenance.",
+        "C": "Outbound endpoint wrong direction.",
+        "D": "Other VPCs not associated with zone."
+      },
+      "memoryTip": "Associate private hosted zone with every VPC and use Route 53 Resolver inbound endpoint for on-prem DNS forwarding over Direct Connect.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-inbound-queries.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 432,
+      "sequence": 36,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "E"
+      ],
+      "validity": "valid",
+      "reasoning": "Overlapping CIDRs prohibit VPC peering; cross-account CloudFormation peering can require peer-account role permission. Cross-Region peering is supported.",
+      "wrongOptions": {
+        "A": "Correct overlapping 10.10.10.0/24 within /16.",
+        "B": "Cross-Region peering supported.",
+        "C": "Internet gateway irrelevant.",
+        "D": "RAM sharing not needed.",
+        "E": "Correct peer accepter permissions."
+      },
+      "memoryTip": "Overlapping CIDRs prohibit VPC peering; cross-account CloudFormation peering can require peer-account role permission.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/peering/invalid-peering-configurations.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 439,
+      "sequence": 37,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "invalid-identity-source-options",
+      "reasoning": "Source D incorrectly suggests OIDC federation from on-prem AD with IAM users/roles; A combines SAML and SCIM, which requires an external SAML IdP with SCIM provisioning and is not automatically provided by on-prem AD. Correct solution depends on AD Connector/AWS Managed Microsoft AD or an external federation provider.",
+      "wrongOptions": {
+        "A": "Closest if AD is exposed through supported SAML IdP with SCIM, but on-prem AD alone does not supply this.",
+        "B": "Identity Center as identity source cannot automatically SCIM sync AD this way.",
+        "C": "IAM user provisioning defeats federation.",
+        "D": "OIDC not natively supplied by on-prem AD."
+      },
+      "memoryTip": "Source D incorrectly suggests OIDC federation from on-prem AD with IAM users/roles; A combines SAML and SCIM, which requires an external SAML IdP with SCIM provisioning and is not automatically provided by on-prem AD.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-identity-source.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 444,
+      "sequence": 38,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "valid-with-syntax-caveat",
+      "reasoning": "Identity Center ABAC principal tag can scope S3 prefixes, while CloudTrail S3 data events and Athena audit object-level access. A's variable is malformed; use ${aws:PrincipalTag/userName} with appropriate S3 ARN and ListBucket conditions.",
+      "wrongOptions": {
+        "A": "Intended ABAC, but policy variable typo.",
+        "B": "Shared role doesn't isolate individual folders.",
+        "C": "Correct data event logging and Athena.",
+        "D": "Management events do not log S3 object access.",
+        "E": "EMRFS is not an S3 access-log sink."
+      },
+      "memoryTip": "Identity Center ABAC principal tag can scope S3 prefixes, while CloudTrail S3 data events and Athena audit object-level access.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 449,
+      "sequence": 39,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-destination-caveat",
+      "reasoning": "Multi-AZ Auto Scaling and ALB provide availability; WAF managed rules block common exploits; WAF logs through Firehose to supported destination and onward to third-party audit system.",
+      "wrongOptions": {
+        "A": "Inspector not WAF traffic audit.",
+        "B": "Single-AZ targets not HA.",
+        "C": "Single-AZ targets not HA.",
+        "D": "Best multi-AZ plus WAF and logging."
+      },
+      "memoryTip": "Multi-AZ Auto Scaling and ALB provide availability; WAF managed rules block common exploits; WAF logs through Firehose to supported destination and onward to third-party audit system.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/logging.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 451,
+      "sequence": 40,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "F"
+      ],
+      "validity": "valid-with-principal-scope-caveat",
+      "reasoning": "Cross-account SSE-KMS S3 read requires bucket read policy, KMS key policy Decrypt, and IAM role permissions for S3 and KMS. A grants entire strategy account rather than narrowly named role, so least privilege is imperfect.",
+      "wrongOptions": {
+        "A": "Works but broader principal than role.",
+        "B": "Full bucket access excessive.",
+        "C": "Correct KMS key policy.",
+        "D": "Anonymous access insecure.",
+        "E": "Encrypt not required for read.",
+        "F": "Correct IAM read and decrypt."
+      },
+      "memoryTip": "Cross-account SSE-KMS S3 read requires bucket read policy, KMS key policy Decrypt, and IAM role permissions for S3 and KMS.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-config-for-kms-objects.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 452,
+      "sequence": 41,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-scp-caveat",
+      "reasoning": "Private Marketplace admin role in shared services and SCP deny except named role restricts management; prevent role-name impersonation. SCP must be scoped carefully and does not restrict management-account principals.",
+      "wrongOptions": {
+        "A": "PowerUser insufficient and per-account rollout.",
+        "B": "AdministratorAccess excessive.",
+        "C": "Best shared-services role and SCP restrictions.",
+        "D": "SCP only shared-services misses other accounts."
+      },
+      "memoryTip": "Private Marketplace admin role in shared services and SCP deny except named role restricts management; prevent role-name impersonation.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/marketplace/latest/buyerguide/private-marketplace.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 454,
+      "sequence": 42,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "PrivateLink endpoint service behind NLB supports overlapping CIDRs and per-consumer endpoint acceptance.",
+      "wrongOptions": {
+        "A": "TGW cannot route overlapping CIDRs.",
+        "B": "Correct PrivateLink service.",
+        "C": "Peering disallows overlaps.",
+        "D": "VPN unnecessary and complex."
+      },
+      "memoryTip": "PrivateLink endpoint service behind NLB supports overlapping CIDRs and per-consumer endpoint acceptance.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 455,
+      "sequence": 43,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-duplicate-of-289",
+      "reasoning": "Central activation of BusinessUnit cost allocation tag plus organization CUR, Athena and QuickSight supports chargeback. Same concept as Q289.",
+      "wrongOptions": {
+        "A": "Correct central CUR and analytics.",
+        "B": "Member activation and CloudWatch inadequate.",
+        "C": "Fragmented member CUR.",
+        "D": "Fragmented reports."
+      },
+      "memoryTip": "Central activation of BusinessUnit cost allocation tag plus organization CUR, Athena and QuickSight supports chargeback.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 456,
+      "sequence": 44,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D",
+        "F"
+      ],
+      "validity": "valid-with-acl-caveat",
+      "reasoning": "Destination-account principal needs source bucket list/read resource policy, destination identity permissions and aws s3 sync. Object ACL grants are unnecessary under bucket-owner-enforced ownership and may be rejected.",
+      "wrongOptions": {
+        "A": "Policy on destination cannot grant source read.",
+        "B": "Correct source bucket resource policy.",
+        "C": "Source-user alternative not this path.",
+        "D": "Correct destination identity permissions.",
+        "E": "Wrong principal for selected policies.",
+        "F": "Correct destination sync."
+      },
+      "memoryTip": "Destination-account principal needs source bucket list/read resource policy, destination identity permissions and aws s3 sync.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/copy-object.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 457,
+      "sequence": 45,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "E"
+      ],
+      "validity": "flawed-select-three",
+      "reasoning": "Inspector Lambda standard+code scanning plus InspectorCodeExclusion tag on nonselected functions meets requirements; option D incorrectly claims Lambda Monitor setting enables code scans, and no third option is defensible.",
+      "wrongOptions": {
+        "A": "Inspector activation alone not selective code scanning.",
+        "B": "Correct Inspector scan types.",
+        "C": "GuardDuty monitors runtime threats.",
+        "D": "No Lambda Monitor toggle for Inspector code scans.",
+        "E": "Correct code exclusion tag.",
+        "F": "Inspector doesn't scan S3 ZIP archives this way."
+      },
+      "memoryTip": "Inspector Lambda standard+code scanning plus InspectorCodeExclusion tag on nonselected functions meets requirements; option D incorrectly claims Lambda Monitor setting enables code scans, and no third option is defensible.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/inspector/latest/user/scanning_resources_lambda_code_exclude_functions.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 459,
+      "sequence": 46,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-root-policy-caveat",
+      "reasoning": "Move restrictive SCP from root to Production OU, onboard new account temporarily under unrestricted Onboarding OU, then move to Production. Explicit root Deny cannot be overridden by OU Allow.",
+      "wrongOptions": {
+        "A": "Removing guardrails not necessary.",
+        "B": "OU Allow cannot override root Deny.",
+        "C": "Root Allow cannot override root Deny.",
+        "D": "Correct reposition deny SCP to Production OU."
+      },
+      "memoryTip": "Move restrictive SCP from root to Production OU, onboard new account temporarily under unrestricted Onboarding OU, then move to Production.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 463,
+      "sequence": 47,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "valid-with-vpc-access-caveat",
+      "reasoning": "Per-app VPC-restricted S3 access points in bucket account and S3 gateway endpoints in application VPCs provide private connectivity and granular policies.",
+      "wrongOptions": {
+        "A": "Correct per-app access point.",
+        "B": "Interface endpoint plus gateway attachment invalid.",
+        "C": "Correct gateway endpoint routing.",
+        "D": "Cross-account access points possible but wording less direct.",
+        "E": "Gateway endpoint in data-lake VPC not app VPC."
+      },
+      "memoryTip": "Per-app VPC-restricted S3 access points in bucket account and S3 gateway endpoints in application VPCs provide private connectivity and granular policies.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-vpc.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 465,
+      "sequence": 48,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-but-overengineered",
+      "reasoning": "Firewall Manager centrally scopes WAF policy to accounts/OUs and auto-remediates. A's Parameter Store/EventBridge/Lambda automation is unnecessary because Firewall Manager natively supports OU scope edits.",
+      "wrongOptions": {
+        "A": "Best service choice, but custom automation unnecessary.",
+        "B": "Config/StackSets add maintenance.",
+        "C": "Custom cross-account Lambda higher effort.",
+        "D": "Control Tower/KMS/IAM users incorrect."
+      },
+      "memoryTip": "Firewall Manager centrally scopes WAF policy to accounts/OUs and auto-remediates.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/policy-scope.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 466,
+      "sequence": 49,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-existing-resource-caveat",
+      "reasoning": "SCP can deny launch with public IP and associate Elastic IP actions, but cannot remove already attached public IPs. No choice fully meets requirement for existing instances already public.",
+      "wrongOptions": {
+        "A": "Runbook not native universal prevention.",
+        "B": "Proactive control doesn't remediate existing instances.",
+        "C": "Best prevention but not existing-IP removal.",
+        "D": "Config/Lambda reactive, not prevent."
+      },
+      "memoryTip": "SCP can deny launch with public IP and associate Elastic IP actions, but cannot remove already attached public IPs.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 468,
+      "sequence": 50,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-acceptance-caveat",
+      "reasoning": "Share Transit Gateway with development accounts using RAM, attach nonoverlapping VPCs and configure routes. Organization RAM sharing may auto-accept, contrary to wording instructing manual acceptance.",
+      "wrongOptions": {
+        "A": "Aurora cluster not RAM-shared in this fashion.",
+        "B": "Correct shared TGW connectivity.",
+        "C": "ALB does not proxy Aurora database wire protocol.",
+        "D": "VPN per account more overhead."
+      },
+      "memoryTip": "Share Transit Gateway with development accounts using RAM, attach nonoverlapping VPCs and configure routes.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-sharing.html"
       ],
       "reviewedAt": "2026-10-22"
     }
