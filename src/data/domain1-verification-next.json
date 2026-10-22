@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Fourteenth 20-question batch: 17 reviewed with caveats, 3 flagged Q402 Q405 Q421; corrected Q400 A→D; duplicates Q398/Q330 and Q421/Q386.",
+  "notes": "Fifteenth 20-question batch: 18 reviewed with caveats, 2 flagged Q428 Q447. Corrections Q427 B→A and Q435 B+E→C+E. Duplicate Q445/Q306.",
   "items": [
     {
       "id": 12,
@@ -8835,6 +8835,330 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 422,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "More shards increase shared read throughput; enhanced fan-out gives dedicated consumer throughput; exponential backoff handles transient ReadProvisionedThroughputExceeded. Producer library does not fix consumer polling.",
+      "wrongOptions": null,
+      "memoryTip": "More shards increase shared read throughput; enhanced fan-out gives dedicated consumer throughput; exponential backoff handles transient ReadProvisionedThroughputExceeded. Producer library does not fix consumer polling.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/streams/latest/dev/building-consumers.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 424,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Global Accelerator gives fixed anycast IPs usable in apex A records at external DNS and routes to regional ALBs. CNAME cannot be used at zone apex.",
+      "wrongOptions": null,
+      "memoryTip": "Global Accelerator gives fixed anycast IPs usable in apex A records at external DNS and routes to regional ALBs. CNAME cannot be used at zone apex.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 425,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Cross-account private hosted zone resolution requires account A association authorization and account B association of its VPC, then authorization cleanup.",
+      "wrongOptions": null,
+      "memoryTip": "Cross-account private hosted zone resolution requires account A association authorization and account B association of its VPC, then authorization cleanup.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zone-private-associate-vpcs-different-accounts.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 426,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 Storage Lens default account dashboard aggregates across Regions and exposes object encryption metrics, avoiding custom processing and QuickSight.",
+      "wrongOptions": null,
+      "memoryTip": "S3 Storage Lens default account dashboard aggregates across Regions and exposes object encryption metrics, avoiding custom processing and QuickSight.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage_lens.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 427,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "PrivateLink endpoint service is backed by an NLB or GWLB, not directly by ALB; DX private connectivity can connect on-prem backend via IP targets.",
+      "wrongOptions": null,
+      "memoryTip": "PrivateLink endpoint service is backed by an NLB or GWLB, not directly by ALB; DX private connectivity can connect on-prem backend via IP targets.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 428,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "E is not lowest-cost CloudFront price class for Europe-only users: Price Class 100 includes US, Canada and Europe; Price Class 200 adds more regions. B Deep Archive would break prompt access to user content without restore; question lacks retrieval requirements and no valid pair.",
+      "wrongOptions": null,
+      "memoryTip": "E is not lowest-cost CloudFront price class for Europe-only users: Price Class 100 includes US, Canada and Europe; Price Class 200 adds more regions. B Deep Archive would break prompt access to user content without restore; question lacks retrieval requirements and no valid pair.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/PriceClass.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 429,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "RDS Proxy pools PostgreSQL connections; PrivateLink via NLB provides private cross-account access. Implementation must target reachable proxy IPs, maintain health/IP updates and avoid implying direct NLB RDS endpoint target.",
+      "wrongOptions": null,
+      "memoryTip": "RDS Proxy pools PostgreSQL connections; PrivateLink via NLB provides private cross-account access. Implementation must target reachable proxy IPs, maintain health/IP updates and avoid implying direct NLB RDS endpoint target.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 431,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "RDS Proxy holds stable client endpoint and handles RDS failover DNS/connection churn, though applications still need retry logic.",
+      "wrongOptions": null,
+      "memoryTip": "RDS Proxy holds stable client endpoint and handles RDS failover DNS/connection churn, though applications still need retry logic.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 433,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ECS split cost allocation in CUR apportions shared EC2 costs by task resource use; Cost Explorer may not directly show split cost allocation line-item data, so use CUR.",
+      "wrongOptions": null,
+      "memoryTip": "ECS split cost allocation in CUR apportions shared EC2 costs by task resource use; Cost Explorer may not directly show split cost allocation line-item data, so use CUR.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cur/latest/userguide/split-cost-allocation-data.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 434,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Five-minute S3 processing fits Lambda's 15-minute maximum; event-triggered Lambda eliminates idle EC2 and scales. Design idempotency for duplicate S3 notifications.",
+      "wrongOptions": null,
+      "memoryTip": "Five-minute S3 processing fits Lambda's 15-minute maximum; event-triggered Lambda eliminates idle EC2 and scales. Design idempotency for duplicate S3 notifications.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 435,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Kinesis and Lambda decouple/scalably ingest bursts, DynamoDB handles high write throughput; original B+E includes two mutually alternative database migrations and does not solve overloaded API tier.",
+      "wrongOptions": null,
+      "memoryTip": "Kinesis and Lambda decouple/scalably ingest bursts, DynamoDB handles high write throughput; original B+E includes two mutually alternative database migrations and does not solve overloaded API tier.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/streams/latest/dev/introduction.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 436,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EventBridge schedules invoke Lambda to stop/start nonproduction EC2 and RDS on business days, preserving state; avoid production, observe RDS auto restart after 7 days.",
+      "wrongOptions": null,
+      "memoryTip": "EventBridge schedules invoke Lambda to stop/start nonproduction EC2 and RDS on business days, preserving state; avoid production, observe RDS auto restart after 7 days.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_StopInstance.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 437,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Fargate EKS microservices, Aurora Serverless for OLTP, Redshift Serverless analytics, EventBridge event routing support near-real-time pipeline; configure analytics ingestion target via integration.",
+      "wrongOptions": null,
+      "memoryTip": "Fargate EKS microservices, Aurora Serverless for OLTP, Redshift Serverless analytics, EventBridge event routing support near-real-time pipeline; configure analytics ingestion target via integration.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-whatis.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 438,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IoT Core MQTT ingestion, managed DocumentDB MongoDB compatibility and Step Functions/Lambda to generate reports in S3/CloudFront remove on-prem servers. Lambda tasks 120–600 seconds fit 15-minute limit.",
+      "wrongOptions": null,
+      "memoryTip": "IoT Core MQTT ingestion, managed DocumentDB MongoDB compatibility and Step Functions/Lambda to generate reports in S3/CloudFront remove on-prem servers. Lambda tasks 120–600 seconds fit 15-minute limit.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 441,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 object storage and CloudFront global edge delivery scale 5GB downloads; Route 53 domain and HTTPS provide user-facing access.",
+      "wrongOptions": null,
+      "memoryTip": "S3 object storage and CloudFront global edge delivery scale 5GB downloads; Route 53 domain and HTTPS provide user-facing access.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/GettingStarted.SimpleDistribution.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 442,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Activate user-defined application/team allocation tags, define cost categories, and use Cost Explorer for historic reports and 12-month forecast.",
+      "wrongOptions": null,
+      "memoryTip": "Activate user-defined application/team allocation tags, define cost categories, and use Cost Explorer for historic reports and 12-month forecast.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-forecast.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 443,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EBS encryption by default is a per-Region setting that automatically encrypts newly created EBS volumes and snapshots.",
+      "wrongOptions": null,
+      "memoryTip": "EBS encryption by default is a per-Region setting that automatically encrypts newly created EBS volumes and snapshots.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/ebs/latest/userguide/encryption-by-default.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 445,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Transfer Family to S3, event-driven Glue transform and SQS completion messages replace managed SFTP/cron/queue servers. Duplicate of Q306.",
+      "wrongOptions": null,
+      "memoryTip": "Transfer Family to S3, event-driven Glue transform and SQS completion messages replace managed SFTP/cron/queue servers. Duplicate of Q306.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/glue/latest/dg/starting-workflow-eventbridge.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 446,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "API Gateway HTTP API AWS service integration to SQS durably buffers bursts; Lambda polls SQS with retries and DLQ for failure handling.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway HTTP API AWS service integration to SQS durably buffers bursts; Lambda polls SQS with retries and DLQ for failure handling.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 447,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "C can automate replacement of single NAT gateway using one EIP, but the stem says an EIP created for an internal/on-prem address, which may not be AWS-owned BYOIP; NAT gateway EIP cannot be attached simultaneously to three gateways. A impossible; C closest with single AZ exposure and failover gap.",
+      "wrongOptions": null,
+      "memoryTip": "C can automate replacement of single NAT gateway using one EIP, but the stem says an EIP created for an internal/on-prem address, which may not be AWS-owned BYOIP; NAT gateway EIP cannot be attached simultaneously to three gateways. A impossible; C closest with single AZ exposure and failover gap.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
     }
   ]
 }
