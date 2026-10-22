@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Twenty-second 20-question batch: 15 reviewed with caveats, 5 flagged Q630 Q633 Q636 Q646 Q649; correction Q654 C→B.",
+  "notes": "Final 14-question batch: 13 reviewed with caveats, 1 flagged Q665; corrections Q659 B→D and Q673 D→B. All 674 unique question IDs now have preliminary audit records across both files.",
   "items": [
     {
       "id": 12,
@@ -11394,6 +11394,233 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 656,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS Global Accelerator supports arbitrary TCP methods over HTTPS and optimizes global path to existing ALB without CloudFront method restrictions or multi-Region deployment.",
+      "wrongOptions": null,
+      "memoryTip": "AWS Global Accelerator supports arbitrary TCP methods over HTTPS and optimizes global path to existing ALB without CloudFront method restrictions or multi-Region deployment.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-how-it-works.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 658,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Date/hour partition Firehose S3 objects and Athena table/query prune old partitions, preventing 24-hour queries from scanning all historical WAF logs.",
+      "wrongOptions": null,
+      "memoryTip": "Date/hour partition Firehose S3 objects and Athena table/query prune old partitions, preventing 24-hour queries from scanning all historical WAF logs.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/athena/latest/ug/partitions.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 659,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Deploy API Gateway and Lambda in a second Region and use Route 53 failover health checks. SQS in only one Region does not provide regional failover.",
+      "wrongOptions": null,
+      "memoryTip": "Deploy API Gateway and Lambda in a second Region and use Route 53 failover health checks. SQS in only one Region does not provide regional failover.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-configuring.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 660,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Firehose to S3 eliminates always-on ingest EC2/EBS, while AWS Batch Spot processes noncritical interruptible nightly jobs. Spot max-price cap at 50% risks capacity and is generally discouraged, but among options B has lowest expected compute cost.",
+      "wrongOptions": null,
+      "memoryTip": "Firehose to S3 eliminates always-on ingest EC2/EBS, while AWS Batch Spot processes noncritical interruptible nightly jobs. Spot max-price cap at 50% risks capacity and is generally discouraged, but among options B has lowest expected compute cost.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/batch/latest/userguide/spot_fleet_IAM_role.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 661,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EventBridge-scheduled ECS Fargate task executes unmodified containerized Linux binary for 20 minutes without EC2 servers. Lambda cannot exceed 15 minutes.",
+      "wrongOptions": null,
+      "memoryTip": "EventBridge-scheduled ECS Fargate task executes unmodified containerized Linux binary for 20 minutes without EC2 servers. Lambda cannot exceed 15 minutes.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 662,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "API Gateway REST API usage plan with API key throttling and quotas limits sole client's usage without Lambda modifications; quotas are best effort rather than hard spend caps.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway REST API usage plan with API key throttling and quotas limits sole client's usage without Lambda modifications; quotas are best effort rather than hard spend caps.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 664,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Direct Connect private VIF provides private transport to VPC, while S3 interface VPC endpoint via PrivateLink permits on-premises S3 access through VPC; private VIF requires virtual private gateway or appropriate transit setup and endpoint DNS/route configuration.",
+      "wrongOptions": null,
+      "memoryTip": "Direct Connect private VIF provides private transport to VPC, while S3 interface VPC endpoint via PrivateLink permits on-premises S3 access through VPC; private VIF requires virtual private gateway or appropriate transit setup and endpoint DNS/route configuration.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 665,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Current Amazon Connect global resiliency uses replicated linked instances and traffic distribution groups with phone number association/failover. D depends on Route 53 URL health checks and CloudFormation creating claimed numbers only after outage; no option fully captures supported low-RTO phone-number failover.",
+      "wrongOptions": null,
+      "memoryTip": "Current Amazon Connect global resiliency uses replicated linked instances and traffic distribution groups with phone number association/failover. D depends on Route 53 URL health checks and CloudFormation creating claimed numbers only after outage; no option fully captures supported low-RTO phone-number failover.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/connect/latest/adminguide/get-started-connect-global-resiliency.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 669,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ALB with EC2 ASG and second public subnet across AZs improves web availability, Aurora MySQL with replica increases database resilience/read capacity; ensure Multi-AZ writer failover.",
+      "wrongOptions": null,
+      "memoryTip": "ALB with EC2 ASG and second public subnet across AZs improves web availability, Aurora MySQL with replica increases database resilience/read capacity; ensure Multi-AZ writer failover.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 670,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Increased S3 content lengthens user-data bootstrap; ASG health-check grace period prevents terminating instances before they finish setup and pass ALB health checks.",
+      "wrongOptions": null,
+      "memoryTip": "Increased S3 content lengthens user-data bootstrap; ASG health-check grace period prevents terminating instances before they finish setup and pass ALB health checks.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-check-grace-period.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 671,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Two EC2 ASGs behind ALBs preserve legacy .NET tiers while Aurora PostgreSQL Babelfish reduces SQL Server licensing; validate T-SQL compatibility before migrating.",
+      "wrongOptions": null,
+      "memoryTip": "Two EC2 ASGs behind ALBs preserve legacy .NET tiers while Aurora PostgreSQL Babelfish reduces SQL Server licensing; validate T-SQL compatibility before migrating.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/babelfish.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 672,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Private hosted zone in VPC, Route 53 Resolver inbound endpoint, and on-prem conditional forwarding to inbound endpoint IPs resolve AWS-private records over VPN.",
+      "wrongOptions": null,
+      "memoryTip": "Private hosted zone in VPC, Route 53 Resolver inbound endpoint, and on-prem conditional forwarding to inbound endpoint IPs resolve AWS-private records over VPN.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-inbound-queries.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 673,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EFS General Purpose provides cross-AZ POSIX shared read/write and AWS now recommends it over previous-generation Max I/O due to lower per-operation latency and high supported throughput; select Elastic throughput as appropriate.",
+      "wrongOptions": null,
+      "memoryTip": "EFS General Purpose provides cross-AZ POSIX shared read/write and AWS now recommends it over previous-generation Max I/O due to lower per-operation latency and high supported throughput; select Elastic throughput as appropriate.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/efs/latest/ug/performance.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
+    },
+    {
+      "id": 674,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "API Gateway HTTP API to Lambda functions is managed, serverless webhook ingestion with route-specific logic and lower operational overhead than EC2/Fargate.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway HTTP API to Lambda functions is managed, serverless webhook ingestion with route-specific logic and lower operational overhead than EC2/Fargate.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original bank unchanged. AWS documentation links not all individually checked."
     }
   ]
 }
