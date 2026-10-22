@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Third new 20-question batch: 15 reviewed, 5 flagged Q110 Q119 Q124 Q127 Q131. Original source bank unchanged.",
+  "notes": "Fourth new 20-question batch: 14 reviewed, 6 flagged Q141 Q144 Q146 Q149 Q155 Q159. Q145 original D corrected to A in verification layer. Original questions unchanged.",
   "items": [
     {
       "id": 12,
@@ -5360,6 +5360,320 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Verified architecture against stated scenario; source unchanged."
+    },
+    {
+      "id": 140,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "SSM Agent must run and EC2 instance profile must permit Systems Manager managed-instance APIs.",
+      "wrongOptions": null,
+      "memoryTip": "SSM Agent must run and EC2 instance profile must permit Systems Manager managed-instance APIs.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/managed-instances.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 141,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "D uses EKS managed nodes, DynamoDB session store and EFS shared data; technically plausible but Fargate ECS could reduce operations if A used a valid session store. Wording of least overhead remains debatable.",
+      "wrongOptions": null,
+      "memoryTip": "D uses EKS managed nodes, DynamoDB session store and EFS shared data",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source ambiguity requires repair; do not use original answer as verified."
+    },
+    {
+      "id": 142,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Discovery Agent collects process and performance data; Migration Hub Data Exploration enables Athena analysis.",
+      "wrongOptions": null,
+      "memoryTip": "Discovery Agent collects process and performance data",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 143,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Cached Volume Gateway exposes iSCSI volumes with local hot-data cache and point-in-time backups.",
+      "wrongOptions": null,
+      "memoryTip": "Cached Volume Gateway exposes iSCSI volumes with local hot-data cache and point-in-time backups.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 144,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "B relies on Systems Manager tracking utilization and an EventBridge rule that does not itself detect 4-of-14-day utilization. Trusted Advisor C offers low-utilization checks but rule event semantics and thresholds need verification.",
+      "wrongOptions": null,
+      "memoryTip": "B relies on Systems Manager tracking utilization and an EventBridge rule that does not itself detect 4-of-14-day utilization. Trusted Advisor C offers low-utilization checks but rule event semantics and thresholds need verification.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor-check-reference.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source ambiguity requires repair; do not use original answer as verified."
+    },
+    {
+      "id": 145,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Predictable 4-hour weekly peak and write-heavy load favor provisioned capacity autoscaling with reserved baseline; DAX optimizes reads, not writes.",
+      "wrongOptions": null,
+      "memoryTip": "Predictable 4-hour weekly peak and write-heavy load favor provisioned capacity autoscaling with reserved baseline",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 146,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "Question is abbreviated; EKS retains Kubernetes manifests, but B unnecessarily prescribes Aurora without database requirements. Clarify intended app/database architecture.",
+      "wrongOptions": null,
+      "memoryTip": "Question is abbreviated",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source ambiguity requires repair; do not use original answer as verified."
+    },
+    {
+      "id": 147,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "F"
+      ],
+      "validity": "verified",
+      "reasoning": "Single-AZ placement, EFA-enabled EC2 and FSx for Lustre suit tightly coupled HPC shared-file workloads.",
+      "wrongOptions": null,
+      "memoryTip": "Single-AZ placement, EFA-enabled EC2 and FSx for Lustre suit tightly coupled HPC shared-file workloads.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 148,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Cross-Region RDS MySQL read replica serves mostly read-only regional reporting; Route 53 latency-based routing chooses nearest responsive API.",
+      "wrongOptions": null,
+      "memoryTip": "Cross-Region RDS MySQL read replica serves mostly read-only regional reporting",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 149,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "C regional S3 buckets plus CRR reduce regional upload latency but replication may increase central arrival delay; B S3 Transfer Acceleration may better improve direct long-distance uploads. No size, timing or network profile to prove MOST.",
+      "wrongOptions": null,
+      "memoryTip": "C regional S3 buckets plus CRR reduce regional upload latency but replication may increase central arrival delay",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source ambiguity requires repair; do not use original answer as verified."
+    },
+    {
+      "id": 151,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "SNS invokes Lambda asynchronously and on-failure destination can send failed event records to SQS; automatic Lambda scaling handles bursts.",
+      "wrongOptions": null,
+      "memoryTip": "SNS invokes Lambda asynchronously and on-failure destination can send failed event records to SQS",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-retain-records.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 153,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "ECS Fargate plus EFS provides managed NFSv4-compatible shared container storage with IAM authorization.",
+      "wrongOptions": null,
+      "memoryTip": "ECS Fargate plus EFS provides managed NFSv4-compatible shared container storage with IAM authorization.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-volumes.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 155,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "A is correct and E may serve forwarded writes with asynchronous replication, but D says ECR existing images must be re-pushed with new tags; enabling replication only affects future pushes, so correction needed to clarify backfill. Also Aurora global DB secondary is not independently multi-writer.",
+      "wrongOptions": null,
+      "memoryTip": "A is correct and E may serve forwarded writes with asynchronous replication, but D says ECR existing images must be re-pushed with new tags",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/replication.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source ambiguity requires repair; do not use original answer as verified."
+    },
+    {
+      "id": 156,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "SSE-S3 default encryption plus S3 Batch Operations self-copy reencrypts millions of existing objects without per-object CLI loops.",
+      "wrongOptions": null,
+      "memoryTip": "SSE-S3 default encryption plus S3 Batch Operations self-copy reencrypts millions of existing objects without per-object CLI loops.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-copy-object.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 157,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "EventBridge CreateUser CloudTrail event starts Step Functions workflow to deny/remove access and SNS alerts security team.",
+      "wrongOptions": null,
+      "memoryTip": "EventBridge CreateUser CloudTrail event starts Step Functions workflow to deny/remove access and SNS alerts security team.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event-cloudtrail.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 158,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "S3 Transfer Acceleration optimizes distant uploads; edge-optimized API Gateway reduces global API client connection latency.",
+      "wrongOptions": null,
+      "memoryTip": "S3 Transfer Acceleration optimizes distant uploads",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-endpoint-types.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 159,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "A and E are valid; C says deny any 'unencrypted operations' without defining TLS condition or S3 SSE headers; bucket policy should deny aws:SecureTransport=false, while default encryption handles at-rest. Three answers need precise policy wording.",
+      "wrongOptions": null,
+      "memoryTip": "A and E are valid",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source ambiguity requires repair; do not use original answer as verified."
+    },
+    {
+      "id": 160,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "ECS Fargate service across AZs removes single EC2 failure and Aurora reader in second AZ supports failover with less infrastructure management.",
+      "wrongOptions": null,
+      "memoryTip": "ECS Fargate service across AZs removes single EC2 failure and Aurora reader in second AZ supports failover with less infrastructure management.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 161,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Transfer Family internet-facing VPC endpoint supports static EIPs and EFS-backed SFTP with NFS clients in multiple AZs.",
+      "wrongOptions": null,
+      "memoryTip": "Transfer Family internet-facing VPC endpoint supports static EIPs and EFS-backed SFTP with NFS clients in multiple AZs.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 162,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS WAF protects API Gateway, Inspector scans EC2 vulnerabilities, GuardDuty detects suspicious activity but does not block traffic directly.",
+      "wrongOptions": null,
+      "memoryTip": "AWS WAF protects API Gateway, Inspector scans EC2 vulnerabilities, GuardDuty detects suspicious activity but does not block traffic directly.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
     }
   ]
 }
