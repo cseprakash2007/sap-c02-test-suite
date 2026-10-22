@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Sixth new 20-question batch: 17 answers confirmed with caveats; 3 flagged (Q196, Q205, Q210). Original questions unchanged.",
+  "notes": "Seventh 20-question batch: 14 answers confirmed with caveats, 6 flagged (Q215, Q216, Q217, Q218, Q223, Q234). Original questions unchanged.",
   "items": [
     {
       "id": 12,
@@ -6316,6 +6316,315 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Reviewed against source options; source question unchanged."
+    },
+    {
+      "id": 214,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Compute Savings Plans cover Fargate; EC2 Instance Savings Plans do not. One-year production Aurora reserved DB capacity and organization-level shared commitments suit predictable use.",
+      "wrongOptions": null,
+      "memoryTip": "Compute Savings Plans cover Fargate; EC2 Instance Savings Plans do not. One-year production Aurora reserved DB capacity and organization-level shared commitments suit predictable use.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 215,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "D only adds an ALB without autoscaling, so it does not ensure capacity for large traffic spikes. A could scale serverlessly but requires refactoring the monolith. Flag ambiguous least-overhead versus scaling requirement.",
+      "wrongOptions": null,
+      "memoryTip": "D only adds an ALB without autoscaling, so it does not ensure capacity for large traffic spikes. A could scale serverlessly but requires refactoring the monolith. Flag ambiguous least-overhead versus scaling requirement.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 216,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Cost Anomaly Detection detects anomalous spend, not a configurable threshold of EC2 running hours versus a trailing 30-day usage average. A requires manual/dynamic updating of the baseline; none fully automates stated rule.",
+      "wrongOptions": null,
+      "memoryTip": "Cost Anomaly Detection detects anomalous spend, not a configurable threshold of EC2 running hours versus a trailing 30-day usage average. A requires manual/dynamic updating of the baseline; none fully automates stated rule.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/manage-ad.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 217,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "C is historically intended, but Snowball export to S3 followed by DMS S3-to-Aurora MySQL migration needs specific supported S3 source format and DMS mapping, not an arbitrary MySQL database backup. Direct Connect provisioning lead time makes A timing uncertain.",
+      "wrongOptions": null,
+      "memoryTip": "C is historically intended, but Snowball export to S3 followed by DMS S3-to-Aurora MySQL migration needs specific supported S3 source format and DMS mapping, not an arbitrary MySQL database backup. Direct Connect provisioning lead time makes A timing uncertain.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.S3.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 218,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "D is closest for PostGIS plus PostgreSQL foreign data wrappers, but RDS for PostgreSQL does not support arbitrary OS cron jobs on DB host; pg_cron extension can schedule SQL jobs. Cross-engine Oracle FDW support on RDS must be confirmed; question underspecified.",
+      "wrongOptions": null,
+      "memoryTip": "D is closest for PostGIS plus PostgreSQL foreign data wrappers, but RDS for PostgreSQL does not support arbitrary OS cron jobs on DB host; pg_cron extension can schedule SQL jobs. Cross-engine Oracle FDW support on RDS must be confirmed; question underspecified.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_pg_cron.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 219,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Deploy WAF rules in Count mode and inspect logs/sampled requests for false positives before progressively switching tuned rules to Block.",
+      "wrongOptions": null,
+      "memoryTip": "Deploy WAF rules in Count mode and inspect logs/sampled requests for false positives before progressively switching tuned rules to Block.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-testing.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 220,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "One virtual private gateway attached to VPC supports two separate VPN connections to the two customer gateways; each VPN provides two tunnels. With static routing, configure static routes rather than relying solely on route propagation.",
+      "wrongOptions": null,
+      "memoryTip": "One virtual private gateway attached to VPC supports two separate VPN connections to the two customer gateways; each VPN provides two tunnels. With static routing, configure static routes rather than relying solely on route propagation.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 221,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DMS full load plus ongoing CDC can keep target Aurora nearly synchronized until cutover, unlike snapshot restore with longer interruption.",
+      "wrongOptions": null,
+      "memoryTip": "DMS full load plus ongoing CDC can keep target Aurora nearly synchronized until cutover, unlike snapshot restore with longer interruption.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 222,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 events via EventBridge can start ECS Fargate tasks on demand, handling 25-minute processing without polling or Lambda's 15-minute limit.",
+      "wrongOptions": null,
+      "memoryTip": "S3 events via EventBridge can start ECS Fargate tasks on demand, handling 25-minute processing without polling or Lambda's 15-minute limit.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-cwe-events.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 223,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "CloudFormation Git sync supports repository-triggered stack updates, but claims that it automatically creates and comments PR change sets and gates execution on PR approval are not established. Flag invented workflow behavior.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFormation Git sync supports repository-triggered stack updates, but claims that it automatically creates and comments PR change sets and gates execution on PR approval are not established. Flag invented workflow behavior.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/git-sync.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 224,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "An organization trail in the management account covers current and newly added member accounts centrally, with multi-Region and event selectors as required.",
+      "wrongOptions": null,
+      "memoryTip": "An organization trail in the management account covers current and newly added member accounts centrally, with multi-Region and event selectors as required.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 225,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SSM Agent must be running and the EC2 instance needs an IAM instance profile granting Systems Manager permissions; also verify network access to Systems Manager endpoints.",
+      "wrongOptions": null,
+      "memoryTip": "SSM Agent must be running and the EC2 instance needs an IAM instance profile granting Systems Manager permissions; also verify network access to Systems Manager endpoints.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/managed-instances.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 226,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "GitHub Actions OIDC federation with AssumeRoleWithWebIdentity issues short-lived AWS credentials without storing IAM user secrets. Scope role trust to repo and branch/environment.",
+      "wrongOptions": null,
+      "memoryTip": "GitHub Actions OIDC federation with AssumeRoleWithWebIdentity issues short-lived AWS credentials without storing IAM user secrets. Scope role trust to repo and branch/environment.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 227,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IAM policy with ec2:InstanceType conditions attached to developer group can restrict RunInstances requests; AWS Config is detective rather than preventative.",
+      "wrongOptions": null,
+      "memoryTip": "IAM policy with ec2:InstanceType conditions attached to developer group can restrict RunInstances requests; AWS Config is detective rather than preventative.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 228,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IoT Core ingests MQTT devices at scale; Firehose buffers and delivers to S3 with Lambda transformations, eliminating single-host Kafka dependency. Verify IoT routing integration to Firehose.",
+      "wrongOptions": null,
+      "memoryTip": "IoT Core ingests MQTT devices at scale; Firehose buffers and delivers to S3 with Lambda transformations, eliminating single-host Kafka dependency. Verify IoT routing integration to Firehose.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/kinesis-firehose-rule-action.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 230,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "RDS Proxy read-only endpoint pools Lambda read connections to Aurora replicas, reducing connection churn. Ensure the engine/version supports read-only proxy endpoints.",
+      "wrongOptions": null,
+      "memoryTip": "RDS Proxy read-only endpoint pools Lambda read connections to Aurora replicas, reducing connection churn. Ensure the engine/version supports read-only proxy endpoints.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy-endpoints.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 231,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "RDS MySQL with additional read replicas can offload month-end reporting reads from the primary; confirm queries are read-only and account for migration impact.",
+      "wrongOptions": null,
+      "memoryTip": "RDS MySQL with additional read replicas can offload month-end reporting reads from the primary; confirm queries are read-only and account for migration impact.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 233,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "WAF on CloudFront blocks SQL injection patterns; provisioned concurrency reduces Lambda cold starts; RDS reserved instances reduce predictable DB compute cost.",
+      "wrongOptions": null,
+      "memoryTip": "WAF on CloudFront blocks SQL injection patterns; provisioned concurrency reduces Lambda cold starts; RDS reserved instances reduce predictable DB compute cost.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 234,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "A is closest for CodeBuild tests, EventBridge/SNS alerts and manual approval, but CDK manifest is not a standard feature-flag toggle and CodeCommit availability for new customers may affect suitability.",
+      "wrongOptions": null,
+      "memoryTip": "A is closest for CodeBuild tests, EventBridge/SNS alerts and manual approval, but CDK manifest is not a standard feature-flag toggle and CodeCommit availability for new customers may affect suitability.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/codepipeline/latest/userguide/approvals.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 235,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Cannot resize existing subnet CIDRs. Carefully drain and replace one subnet at a time while ASG runs in the other AZ; subdivide each /24 into /25s to free a third subnet without changing VPC /23. Operational steps require maintaining on-prem routing and enough capacity.",
+      "wrongOptions": null,
+      "memoryTip": "Cannot resize existing subnet CIDRs. Carefully drain and replace one subnet at a time while ASG runs in the other AZ; subdivide each /24 into /25s to free a third subnet without changing VPC /23. Operational steps require maintaining on-prem routing and enough capacity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/subnet-sizing.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture audit; source question unchanged."
     }
   ]
 }
