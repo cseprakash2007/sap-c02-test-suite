@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "scope": "Next ten Domain 1 questions",
+  "lastUpdated": "2026-10-22",
+  "notes": "Q12 ambiguous select-three; no verified key. Source answers unchanged.",
+  "items": [
+    {
+      "id": 12,
+      "sequence": 1,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "ambiguous-select-three",
+      "reasoning": "Source C/E required; B duplicates E (trust policy is resource-based). SCP allow depends on existing policies.",
+      "wrongOptions": {
+        "A": "SCP allow depends on policy.",
+        "B": "Duplicates E.",
+        "C": "Required source identity permission.",
+        "D": "Irrelevant target user.",
+        "E": "Required target role trust.",
+        "F": "GetSessionToken not relevant."
+      },
+      "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 25,
+      "sequence": 2,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "Organizations consolidates billing and SCPs centrally limit permissions.",
+      "wrongOptions": {
+        "A": "Too much per-account maintenance.",
+        "B": "Correct Organizations.",
+        "C": "Doesn't consolidate payer.",
+        "D": "Correct SCP.",
+        "E": "Single account unsuitable."
+      },
+      "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 51,
+      "sequence": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "User tags, Cost Categories and Cost Explorer enable chargeback and forecasting; categories may be optional.",
+      "wrongOptions": {
+        "A": "Correct user tags.",
+        "B": "Wrong tag type.",
+        "C": "Useful grouping.",
+        "D": "Access only.",
+        "E": "Alerts not reports.",
+        "F": "Correct reports."
+      },
+      "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 69,
+      "sequence": 4,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SCPs and permissions boundaries limit identity grants; also check s3:ListAllMyBuckets.",
+      "wrongOptions": {
+        "A": "Not usually bucket enumeration.",
+        "B": "ACL not enumeration.",
+        "C": "Correct SCP.",
+        "D": "Correct boundary.",
+        "E": "Role not attached to user."
+      },
+      "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 71,
+      "sequence": 5,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "E"
+      ],
+      "validity": "valid",
+      "reasoning": "Root SCP restricts Region; DataOps SCP restricts instance types.",
+      "wrongOptions": {
+        "A": "One role insufficient.",
+        "B": "Too many user policies.",
+        "C": "Correct Region SCP.",
+        "D": "EC2 key not all services.",
+        "E": "Correct type SCP."
+      },
+      "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples_general.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 104,
+      "sequence": 6,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Shared Service Catalog portfolios, launch constraints and TagOptions enable governed self-service. D's script is optional.",
+      "wrongOptions": {
+        "A": "S3 templates not catalog.",
+        "B": "Correct products.",
+        "C": "Overprivileged.",
+        "D": "Best catalog access; script optional.",
+        "E": "Correct tags.",
+        "F": "Not a universal enforcement property."
+      },
+      "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/catalogs_portfolios_sharing.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 113,
+      "sequence": 7,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "D"
+      ],
+      "validity": "valid-duplicate-of-69",
+      "reasoning": "Duplicate Q69: check SCP and permissions boundary.",
+      "wrongOptions": {
+        "A": "Bucket-specific.",
+        "B": "ACL not bucket listing.",
+        "C": "Correct SCP.",
+        "D": "Correct boundary.",
+        "E": "Cannot attach role to user."
+      },
+      "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 136,
+      "sequence": 8,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "RAM shares TGW; StackSets creates VPCs and attachments in new accounts; routes still needed.",
+      "wrongOptions": {
+        "A": "Correct RAM.",
+        "B": "SCP not sharing.",
+        "C": "Correct StackSets.",
+        "D": "Peering is TGW to TGW.",
+        "E": "Not native sharing."
+      },
+      "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-sharing.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 139,
+      "sequence": 9,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Regional Kinesis streams receive cross-account CloudWatch Logs; central Lambda processes them.",
+      "wrongOptions": {
+        "A": "Correct Kinesis.",
+        "B": "SQS unsupported direct.",
+        "C": "Correct subscription role.",
+        "D": "SQS unsupported.",
+        "E": "Correct Lambda.",
+        "F": "Not central."
+      },
+      "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CrossAccountSubscriptions-Kinesis.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 188,
+      "sequence": 10,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "D"
+      ],
+      "validity": "valid-with-legacy-caveat",
+      "reasoning": "S3 static content plus second CloudFront origin and temporary default behavior change; OAI is legacy, OAC preferred.",
+      "wrongOptions": {
+        "A": "Correct static content.",
+        "B": "New distribution unnecessary.",
+        "C": "Correct origin; legacy OAI.",
+        "D": "Correct behavior switch.",
+        "E": "New distribution not useful.",
+        "F": "Beanstalk not S3 origin switch."
+      },
+      "memoryTip": "Review the named AWS service and distinguish permission boundaries from grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    }
+  ]
+}
