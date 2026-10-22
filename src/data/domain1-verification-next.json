@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "50 continuation questions reviewed (100 overall). Q439 and Q457 invalid/flawed; Q465 overengineered; Q466 fails existing-instance requirement.",
+  "notes": "70 continuation entries; 120 overall. Q518 corrected A to C; Q476 and Q551 flawed. This batch has reasoning but option-level annotations still pending.",
   "items": [
     {
       "id": 12,
@@ -1128,6 +1128,326 @@
       "memoryTip": "Share Transit Gateway with development accounts using RAM, attach nonoverlapping VPCs and configure routes.",
       "awsReferences": [
         "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-sharing.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 471,
+      "sequence": 51,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "caveat",
+      "reasoning": "Tag existing RDS/DynamoDB resources and use SCP request-tag conditions for future supported creation actions.",
+      "wrongOptions": {},
+      "memoryTip": "Tag existing RDS/DynamoDB resources and use SCP request-tag conditions for future supported creation actions.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 472,
+      "sequence": 52,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "API Gateway AWS_IAM with SigV4 and execute-api:Invoke plus X-Ray tracing.",
+      "wrongOptions": {},
+      "memoryTip": "API Gateway AWS_IAM with SigV4 and execute-api:Invoke plus X-Ray tracing.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 476,
+      "sequence": 53,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flawed",
+      "reasoning": "Single organization consolidates billing, but unrestricted administrator privileges conflict with SCP governance. B and D are closest if administrators remain subject to SCPs.",
+      "wrongOptions": {},
+      "memoryTip": "Single organization consolidates billing, but unrestricted administrator privileges conflict with SCP governance. B and D are closest if administrators remain subject to SCPs.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 480,
+      "sequence": 54,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Management account activates cost allocation tag and uses organization CUR for chargeback.",
+      "wrongOptions": {},
+      "memoryTip": "Management account activates cost allocation tag and uses organization CUR for chargeback.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 483,
+      "sequence": 55,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "caveat",
+      "reasoning": "OU tag policy and CreateStack SCP request-tag deny; stack tags do not ensure all resources inherit project tags. Source A lacks clear tag policy attachment.",
+      "wrongOptions": {},
+      "memoryTip": "OU tag policy and CreateStack SCP request-tag deny; stack tags do not ensure all resources inherit project tags. Source A lacks clear tag policy attachment.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 489,
+      "sequence": 56,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "caveat",
+      "reasoning": "DAX for DynamoDB reads plus ALB and ASG scheduled scaling; depends on read-heavy cache use.",
+      "wrongOptions": {},
+      "memoryTip": "DAX for DynamoDB reads plus ALB and ASG scheduled scaling; depends on read-heavy cache use.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 500,
+      "sequence": 57,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "Config conformance packs and Audit Manager collect framework-aligned evidence without custom pipelines.",
+      "wrongOptions": {},
+      "memoryTip": "Config conformance packs and Audit Manager collect framework-aligned evidence without custom pipelines.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 503,
+      "sequence": 58,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "caveat",
+      "reasoning": "TGW per OU and RAM sharing with route-table isolation; organization-wide share must not allow cross-OU attachment.",
+      "wrongOptions": {},
+      "memoryTip": "TGW per OU and RAM sharing with route-table isolation; organization-wide share must not allow cross-OU attachment.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 507,
+      "sequence": 59,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "Secrets Manager secrets per environment with automatic rotation and Lambda retrieval.",
+      "wrongOptions": {},
+      "memoryTip": "Secrets Manager secrets per environment with automatic rotation and Lambda retrieval.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 508,
+      "sequence": 60,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "caveat",
+      "reasoning": "S3 access points and cross-account KMS policies; CloudTrail must explicitly enable S3 data events.",
+      "wrongOptions": {},
+      "memoryTip": "S3 access points and cross-account KMS policies; CloudTrail must explicitly enable S3 data events.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 512,
+      "sequence": 61,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "Outside Organizations, use developer IAM policy to restrict EC2 instance type and Region.",
+      "wrongOptions": {},
+      "memoryTip": "Outside Organizations, use developer IAM policy to restrict EC2 instance type and Region.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 518,
+      "sequence": 62,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "corrected",
+      "reasoning": "Deny IAM actions by SCP except administrator roles; an SCP Allow does not restrict non-admins.",
+      "wrongOptions": {},
+      "memoryTip": "Deny IAM actions by SCP except administrator roles; an SCP Allow does not restrict non-admins.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 521,
+      "sequence": 63,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "ALB target-group sticky sessions plus EC2 Auto Scaling meet session affinity.",
+      "wrongOptions": {},
+      "memoryTip": "ALB target-group sticky sessions plus EC2 Auto Scaling meet session affinity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 522,
+      "sequence": 64,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "caveat",
+      "reasoning": "SCP RunInstances request tag condition covers instance-launched EBS; independently created volumes also need CreateVolume denial.",
+      "wrongOptions": {},
+      "memoryTip": "SCP RunInstances request tag condition covers instance-launched EBS; independently created volumes also need CreateVolume denial.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 535,
+      "sequence": 65,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "caveat",
+      "reasoning": "Enable interface endpoint private DNS and VPC DNS support; private DNS is an endpoint setting, not VPC attribute.",
+      "wrongOptions": {},
+      "memoryTip": "Enable interface endpoint private DNS and VPC DNS support; private DNS is an endpoint setting, not VPC attribute.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/interface-endpoints.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 540,
+      "sequence": 66,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "Dedicated TGW route tables allow only authorized VPC attachments.",
+      "wrongOptions": {},
+      "memoryTip": "Dedicated TGW route tables allow only authorized VPC attachments.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 541,
+      "sequence": 67,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "D",
+        "F"
+      ],
+      "validity": "caveat",
+      "reasoning": "Control Tower management landing zone and production OU EBS encryption control; account enrollment needed.",
+      "wrongOptions": {},
+      "memoryTip": "Control Tower management landing zone and production OU EBS encryption control; account enrollment needed.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 542,
+      "sequence": 68,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "C",
+        "E"
+      ],
+      "validity": "valid",
+      "reasoning": "S3 notifications to SQS, Lambda processing and SNS mobile push.",
+      "wrongOptions": {},
+      "memoryTip": "S3 notifications to SQS, Lambda processing and SNS mobile push.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 549,
+      "sequence": 69,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "caveat",
+      "reasoning": "DynamoDB resource-based cross-account policy with dynamodb:Attributes and caller IAM permissions; restrict broader grants.",
+      "wrongOptions": {},
+      "memoryTip": "DynamoDB resource-based cross-account policy with dynamodb:Attributes and caller IAM permissions; restrict broader grants.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/rbac-cross-account-access.html"
+      ],
+      "reviewedAt": "2026-10-22"
+    },
+    {
+      "id": 551,
+      "sequence": 70,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flawed",
+      "reasoning": "Transit Gateway is regional; multiple regional TGWs and inter-Region peering are missing from option A, although PrivateLink C suits license access.",
+      "wrongOptions": {},
+      "memoryTip": "Transit Gateway is regional; multiple regional TGWs and inter-Region peering are missing from option A, although PrivateLink C suits license access.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-peering.html"
       ],
       "reviewedAt": "2026-10-22"
     }
