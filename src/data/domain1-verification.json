@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Domain 1 first 50 single-answer questions (heuristic domain mapping)",
   "lastUpdated": "2026-10-22",
-  "notes": "30 of 50 reviewed, 20 pending. Q80 invalid; Q89 wording flawed; Q204 may be ambiguous with exportable ACM certificates. Original keys preserved.",
+  "notes": "46/50 reviewed; four remain (49,154,282,296). Q252 missing referenced SCP, Q335 new-customer CloudTrail Lake availability restriction, Q209 and Q251 corrected source keys.",
   "items": [
     {
       "id": 13,
@@ -672,122 +672,212 @@
     {
       "id": 209,
       "sequence": 33,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "PrivateLink endpoint services require an NLB or GWLB, not a direct ALB. An internal ALB can be a target of an NLB, which backs the endpoint service. The original D is wrong.",
+      "wrongOptions": {
+        "A": "HTTP API Gateway route is ordinarily publicly reachable; VPC link only privatizes integration, not consumer access.",
+        "B": "API Gateway private REST APIs use interface execute-api endpoints, not gateway endpoints; associating with a VPC as written is incorrect.",
+        "C": "Correct: internal ALB behind NLB, PrivateLink endpoint service and consumer interface endpoints.",
+        "D": "An ALB cannot directly back a PrivateLink endpoint service."
+      },
+      "memoryTip": "PrivateLink provider service → NLB; ALB can sit behind NLB.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 213,
       "sequence": 34,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "Management-account CUR includes organization-wide linked account usage. QuickSight can visualize costs by account/OU after data preparation and appropriate access controls.",
+      "wrongOptions": {
+        "A": "CUR is not natively created per OU through RAM.",
+        "B": "Correct: centralized CUR with BI dashboards and account grouping.",
+        "C": "Member CURs fragment organization-wide reporting and add administration.",
+        "D": "Systems Manager OpsCenter is not a CUR authoring/reporting service."
+      },
+      "memoryTip": "Org-wide spend → management-account CUR → analytics dashboard.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 229,
       "sequence": 35,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Control Tower establishes multi-account guardrails and Customizations for AWS Control Tower supports repeatable CloudFormation deployments of custom baselines. Lifecycle-triggered customization can work but is not always necessary; AWS Control Tower also offers Account Factory Customization.",
+      "wrongOptions": {
+        "A": "Config + Lambda + StackSets is possible but involves custom remediation and deployment.",
+        "B": "SSM associations address managed-node configuration, not comprehensive account governance.",
+        "C": "Best among choices: Control Tower plus IaC customizations and account lifecycle integration.",
+        "D": "Security Hub + custom EventBridge/Lambda per account adds operational work and does not deploy broad preventive controls."
+      },
+      "memoryTip": "Landing zone + custom account baseline = Control Tower customization.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/controltower/latest/userguide/lifecycle-events.html",
+        "https://docs.aws.amazon.com/controltower/latest/userguide/af-customization-page.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 251,
       "sequence": 36,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "AWS Control Tower Account Factory Customization natively provisions new accounts with a blueprint based on Service Catalog/CloudFormation. D is more managed and less overhead than custom Lambda lifecycle handling in C.",
+      "wrongOptions": {
+        "A": "Manual account creation and post-provision blueprint deployment is not the automated Account Factory workflow.",
+        "B": "Manual enrollment and trust setup adds steps.",
+        "C": "Event-driven Lambda customization can work but requires custom code and ongoing management.",
+        "D": "Correct: Account Factory with a blueprint applied during account provisioning."
+      },
+      "memoryTip": "Control Tower + new-account custom resources + least overhead = Account Factory blueprint.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/controltower/latest/userguide/af-customization-page.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 252,
       "sequence": 37,
-      "verificationStatus": "pending",
+      "verificationStatus": "reviewed",
       "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "validity": "invalid-missing-policy",
+      "reasoning": "The question references 'the following SCP' but the actual SCP statement is missing from the JSON. Without its Effect, Action/NotAction and Resource, the reason for denied CreateBucket cannot be determined. Do not score any option as verified.",
+      "wrongOptions": {
+        "A": "Adding an Allow only helps if the SCP allow-list omitted CreateBucket; an explicit Deny would still prevail.",
+        "B": "Moving the account within the same policy scope cannot reliably fix unknown SCP logic.",
+        "C": "IAM permissions are needed but cannot override SCP restrictions; may or may not be the issue.",
+        "D": "Removing the SCP might remove a restrictive boundary but cannot be assessed without the missing statement."
+      },
+      "memoryTip": "An SCP is a maximum permission boundary; inspect actual SCP before diagnosing.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 253,
       "sequence": 38,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid",
+      "reasoning": "An SQS standard DLQ with a redrive policy and maxReceiveCount isolates repeatedly failing standard-queue messages for analysis; healthy messages can continue. A FIFO queue is not the right DLQ type for a standard source queue.",
+      "wrongOptions": {
+        "A": "Backend timeout matching visibility timeout does not quarantine poison messages.",
+        "B": "Visibility timeout controls retry visibility, not automatic deletion of poison messages.",
+        "C": "A standard source queue must use a standard dead-letter queue.",
+        "D": "Correct: standard DLQ plus redrive policy to move repeated failures."
+      },
+      "memoryTip": "Poison SQS standard message → standard DLQ + maxReceiveCount.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 254,
       "sequence": 39,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Activate the user-defined CostCenter cost allocation tag in the organization management account, then use organization CUR's resource tags to allocate spend to teams. Untagged or non-taggable costs require separate allocation rules.",
+      "wrongOptions": {
+        "A": "Correct: organization-level cost allocation tag activation and CUR.",
+        "B": "Per-member activation and Lambda are unnecessary for payer-level CUR.",
+        "C": "Per-member tag activation is not the centralized required step.",
+        "D": "Trusted Advisor does not generate tagged organizational cost chargeback reports."
+      },
+      "memoryTip": "Chargeback by team tag = activate cost allocation tag in management + CUR.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/activating-tags.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 256,
       "sequence": 40,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "CloudFormation StackSets deploys IaC stacks across multiple AWS accounts and Regions; Organizations integration supports service-managed permissions and OU-based deployments.",
+      "wrongOptions": {
+        "A": "Individual template deployments and IAM policies are less scalable.",
+        "B": "Control Tower is not itself the multi-account stack deployment mechanism described.",
+        "C": "Correct: StackSets across accounts and Regions.",
+        "D": "Nested stacks compose templates within a deployment, not automatically across accounts/Regions."
+      },
+      "memoryTip": "Same stack in many accounts and Regions = CloudFormation StackSets.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/what-is-cfnstacksets.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 263,
       "sequence": 41,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "Customer-managed prefix lists centralize CIDR ranges, can be shared through AWS RAM, and are referenced in security group rules across participating accounts.",
+      "wrongOptions": {
+        "A": "S3 JSON, SNS and Lambda updates require custom maintenance.",
+        "B": "AWS Config managed rules do not maintain reusable shared CIDR lists in security groups.",
+        "C": "Correct: managed prefix list shared by RAM and referenced in security groups.",
+        "D": "Cross-account security group references are constrained by network topology and are not a reusable shared CIDR catalog."
+      },
+      "memoryTip": "Shared office IP ranges → RAM-shared managed prefix list.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/sharing-managed-prefix-lists.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 267,
       "sequence": 42,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora IAM database authentication removes static passwords from Lambda configuration and uses short-lived signed tokens. S3 gateway endpoint keeps S3 network traffic private. The Lambda must still have appropriate S3/KMS permissions and use TLS for database/S3 communications.",
+      "wrongOptions": {
+        "A": "Correct: IAM DB authentication and S3 gateway endpoint.",
+        "B": "HTTPS encrypts data but by itself does not prevent routing via public internet.",
+        "C": "Parameter Store does not natively rotate arbitrary DB passwords as stated and static passwords persist.",
+        "D": "Secrets Manager rotation helps credentials but HTTPS alone does not guarantee private S3 network path."
+      },
+      "memoryTip": "Lambda to Aurora no passwords + private S3 = IAM DB auth + gateway endpoint.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html",
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 282,
@@ -804,14 +894,23 @@
     {
       "id": 289,
       "sequence": 44,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Activate BusinessUnit as an organization cost allocation tag, export cost/usage to S3, query through Athena and visualize in QuickSight.",
+      "wrongOptions": {
+        "A": "Correct central CUR/Athena/QuickSight reporting.",
+        "B": "CloudWatch dashboards are not the appropriate tagged billing analytics.",
+        "C": "Per-account CURs add fragmentation and do not address centralized visualization.",
+        "D": "Per-account exports are unnecessarily fragmented."
+      },
+      "memoryTip": "Cost allocation visualization = tags + CUR + Athena + QuickSight.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 296,
@@ -828,62 +927,108 @@
     {
       "id": 309,
       "sequence": 46,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Interface endpoints for SSM, ssmmessages and potentially ec2messages, plus S3 gateway endpoint, allow Systems Manager connectivity without NAT. VPC peering privately reaches patch repository instances across accounts; route tables, DNS and security groups must be configured. Patch content and agent dependencies must be reachable privately.",
+      "wrongOptions": {
+        "A": "Blocking port 80 alone does not prevent all internet access and custom VPN servers add operations.",
+        "B": "Direct Connect private VIFs are not created for SSM/S3 services in this way.",
+        "C": "Correct: VPC endpoints + remove NAT + peering for repository, with requisite endpoint coverage.",
+        "D": "Inbound port 80 blocking is irrelevant to outbound internet restrictions and misses SSM endpoints."
+      },
+      "memoryTip": "No internet + SSM patching = SSM interface endpoints + S3 gateway + private repo connectivity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-create-vpc.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 315,
       "sequence": 47,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid",
+      "reasoning": "Control Tower establishes a governed landing zone with centralized logging, account baselines and controls; OUs accommodate differing compliance. IAM Identity Center can federate workforce authentication through an external SAML identity provider such as AD FS.",
+      "wrongOptions": {
+        "A": "Manual Organizations/SCP/Config/logging setup is higher overhead and one OU limits compliance flexibility.",
+        "B": "Correct: Control Tower landing zone plus OUs and IAM Identity Center federation.",
+        "C": "Manual multi-account governance is more operational work than Control Tower.",
+        "D": "IAM IdP federation alone does not provide the same centralized Identity Center account-access experience."
+      },
+      "memoryTip": "Landing zone + compliance OUs + AD FS = Control Tower + Identity Center.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 319,
       "sequence": 48,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-duplicate-of-150",
+      "reasoning": "Default AWS-managed RDS KMS keys cannot be shared for cross-account backup. Use customer-managed KMS keys and a supported AWS Backup cross-account copy to a central vault, with Vault Lock for WORM. 'Vault sharing' in option A is imprecise; copy rules and policies are needed.",
+      "wrongOptions": {
+        "A": "Best: restore/re-encrypt with customer-managed KMS key, then configure cross-account copy; add Vault Lock.",
+        "B": "AWS-managed default KMS keys cannot be shared.",
+        "C": "Decrypting encrypted snapshots to plaintext as described is not supported.",
+        "D": "Default AWS-managed key cannot be shared and used for cross-account re-encryption."
+      },
+      "memoryTip": "Cross-account encrypted RDS = customer-managed KMS + AWS Backup copy + Vault Lock.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/create-cross-account-backup.html",
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 325,
       "sequence": 49,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid",
+      "reasoning": "Organization CUR plus cost allocation tags and AWS Cost Categories supports custom groupings. Athena exposes SQL analytics and QuickSight provides a self-managed reporting dashboard.",
+      "wrongOptions": {
+        "A": "Correct: CUR + cost categories/tags + Athena + QuickSight.",
+        "B": "Cost Explorer reports are not the requested custom application dataset/reporting pipeline.",
+        "C": "Price List Query API provides published prices, not actual organization usage and spending.",
+        "D": "Price List Query API cannot replace actual billed usage data."
+      },
+      "memoryTip": "Custom chargeback reports = CUR + Cost Categories + Athena + QuickSight.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/manage-cost-categories.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 335,
       "sequence": 50,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "outdated-service-availability",
+      "reasoning": "CloudTrail Lake organization event data stores support SQL and delegated administrator access, so B is the historical intended answer. However AWS documentation states CloudTrail Lake will no longer be open to new customers starting May 31, 2026; for a new customer in October 2026, B may not be available. Flag as outdated unless the organization already enrolled.",
+      "wrongOptions": {
+        "A": "CloudWatch Logs Insights is not standard SQL and per-account trails add setup.",
+        "B": "Historical correct option: organization CloudTrail Lake event data store with SQL; service availability now limited for new customers.",
+        "C": "CloudTrail event history is not the required centralized SQL query interface.",
+        "D": "Per-account event data stores fragment central query capability and increase overhead."
+      },
+      "memoryTip": "CloudTrail Lake = organization SQL event store (check 2026 new-customer availability).",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-organizations.html"
+      ],
+      "reviewedAt": "2026-10-22"
     }
   ]
 }
