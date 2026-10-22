@@ -21,7 +21,7 @@ const KEY='sap-c02-practice-v1';const SESSION_KEY='sap-c02-active-session-v1';
 const empty:Progress={bookmarks:[],attempts:[],sessions:[]};
 function load<T>(key:string,fallback:T):T{try{const v=localStorage.getItem(key);return v?JSON.parse(v) as T:fallback}catch{return fallback}}
 function shuffled<T>(xs:T[]):T[]{const a=[...xs];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function same(a:string[],b:string[]){return a.length===b.length&&[...a].sort().join('|')===[...b].sort().join('|')}
+function same(a:string[],b:string[]){return b.length>0&&a.length===b.length&&[...a].sort().join('|')===[...b].sort().join('|')}
 function fmt(seconds:number){const s=Math.max(0,seconds);return `${Math.floor(s/3600).toString().padStart(2,'0')}:${Math.floor(s%3600/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`}
 function getReference(q:Question){return q.review?.reference||''}
 function Button({children,onClick,variant='primary',disabled=false,className=''}:{children:React.ReactNode;onClick:()=>void;variant?:'primary'|'outline'|'ghost'|'danger';disabled?:boolean;className?:string}){return <button type="button" onClick={onClick} disabled={disabled} className={`btn btn-${variant} ${className}`}>{children}</button>}
