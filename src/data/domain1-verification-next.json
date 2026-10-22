@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Twelfth 20-question batch: 15 reviewed with caveats, 5 flagged Q343 Q345 Q346 Q347 Q354. Q343 B invalid container-image Lambda layer; Q347 Memcached Global Datastore invalid.",
+  "notes": "Thirteenth 20-question batch: 17 reviewed with caveats, 3 flagged Q386 Q394 Q397; corrections Q371 B→A, Q380 B→C, Q391 C→B.",
   "items": [
     {
       "id": 12,
@@ -8198,6 +8198,327 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 371,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Secrets Manager secret with generated password, rotation Lambda and RotationSchedule every 90 days. Parameter Store has no RotationSchedule resource; original B wrong.",
+      "wrongOptions": null,
+      "memoryTip": "Secrets Manager secret with generated password, rotation Lambda and RotationSchedule every 90 days. Parameter Store has no RotationSchedule resource; original B wrong.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotating-secrets.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 372,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Kinesis Data Streams ingests continuous JSON, consumer writes schema-flexible DynamoDB. Requires Lambda/Kinesis consumer rather than direct native stream-to-table integration.",
+      "wrongOptions": null,
+      "memoryTip": "Kinesis Data Streams ingests continuous JSON, consumer writes schema-flexible DynamoDB. Requires Lambda/Kinesis consumer rather than direct native stream-to-table integration.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/streams/latest/dev/introduction.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 374,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Keep original PII in regional Aurora clusters; anonymize with DataBrew before sending only anonymized data to cross-Region Redshift analysis. Enforce controls preventing raw exports.",
+      "wrongOptions": null,
+      "memoryTip": "Keep original PII in regional Aurora clusters; anonymize with DataBrew before sending only anonymized data to cross-Region Redshift analysis. Enforce controls preventing raw exports.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/databrew/latest/dg/recipe-actions.PII.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 376,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Outposts supports low-latency/data residency at connected sites and Snowball Edge compute can support disconnected factory edge workloads; check current device availability.",
+      "wrongOptions": null,
+      "memoryTip": "Outposts supports low-latency/data residency at connected sites and Snowball Edge compute can support disconnected factory edge workloads; check current device availability.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/outposts/latest/userguide/what-is-outposts.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 377,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Migration Evaluator collector and scenario-based Quick Insights estimate migration TCO; validate coverage of EKS and managed database pricing in detailed estimate.",
+      "wrongOptions": null,
+      "memoryTip": "Migration Evaluator collector and scenario-based Quick Insights estimate migration TCO; validate coverage of EKS and managed database pricing in detailed estimate.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/migration-evaluator/latest/userguide/what-is-migration-evaluator.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 380,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Only customer-managed KMS keys support configurable 180-day automatic rotation; Aurora encrypted storage requires snapshot restore to change KMS key. Original B incorrectly uses AWS-managed key.",
+      "wrongOptions": null,
+      "memoryTip": "Only customer-managed KMS keys support configurable 180-day automatic rotation; Aurora encrypted storage requires snapshot restore to change KMS key. Original B incorrectly uses AWS-managed key.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 381,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SAML role trust must reference provider, assertion must map roles, and STS AssumeRoleWithSAML parameters must be correct. No IAM users needed.",
+      "wrongOptions": null,
+      "memoryTip": "SAML role trust must reference provider, assertion must map roles, and STS AssumeRoleWithSAML parameters must be correct. No IAM users needed.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_saml.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 383,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Client VPN allows home and office developers private access to VPC-only OpenSearch domains without public exposure.",
+      "wrongOptions": null,
+      "memoryTip": "Client VPN allows home and office developers private access to VPC-only OpenSearch domains without public exposure.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/vpc.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 385,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "API Gateway REST usage plans and API keys support client throttling; Lambda scales logic and DynamoDB on-demand stores low-latency sessions.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway REST usage plans and API keys support client throttling; Lambda scales logic and DynamoDB on-demand stores low-latency sessions.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 386,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "DHCP options set domain-name-servers supports DNS, but EC2 does not automatically configure NTP servers from a DHCP options set as option A asserts. Must configure chrony/ntpd on instances to use on-premises source; none meets requirement as written.",
+      "wrongOptions": null,
+      "memoryTip": "DHCP options set domain-name-servers supports DNS, but EC2 does not automatically configure NTP servers from a DHCP options set as option A asserts. Must configure chrony/ntpd on instances to use on-premises source; none meets requirement as written.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-ec2-ntp.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 387,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DynamoDB global tables and regional EKS deployments reduce read latency; geolocation DNS routes by location but latency-based routing may be more precise.",
+      "wrongOptions": null,
+      "memoryTip": "DynamoDB global tables and regional EKS deployments reduce read latency; geolocation DNS routes by location but latency-based routing may be more precise.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 388,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Route 53 health check evaluation must propagate through latency aliases and weighted records; otherwise stopped endpoints may continue receiving answers.",
+      "wrongOptions": null,
+      "memoryTip": "Route 53 health check evaluation must propagate through latency aliases and weighted records; otherwise stopped endpoints may continue receiving answers.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-complex-configs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 390,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "B",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Multi-Region Access Point routes S3 requests, bidirectional CRR synchronizes new object writes, and versioning is required in both buckets. Existing objects need batch replication.",
+      "wrongOptions": null,
+      "memoryTip": "Multi-Region Access Point routes S3 requests, bidirectional CRR synchronizes new object writes, and versioning is required in both buckets. Existing objects need batch replication.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 391,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Data Exchange Redshift datashare provides live subscribed access to current Redshift data with subscription verification; source C copies stale exports and adds overhead.",
+      "wrongOptions": null,
+      "memoryTip": "Data Exchange Redshift datashare provides live subscribed access to current Redshift data with subscription verification; source C copies stale exports and adds overhead.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/data-exchange/latest/userguide/data-sets-revision.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 392,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "REST API Gateway usage plans and API keys support per-customer quotas/throttling; HTTP APIs do not support usage plans.",
+      "wrongOptions": null,
+      "memoryTip": "REST API Gateway usage plans and API keys support per-customer quotas/throttling; HTTP APIs do not support usage plans.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 393,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Log per-request DynamoDB consumed capacity and tenant ID, then allocate overall DynamoDB spend by relative consumption. Shared table tags cannot attribute tenant costs.",
+      "wrongOptions": null,
+      "memoryTip": "Log per-request DynamoDB consumed capacity and tenant ID, then allocate overall DynamoDB spend by relative consumption. Shared table tags cannot attribute tenant costs.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 394,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "B offers automated read-replica promotion with CloudWatch/Lambda but cannot guarantee RPO 5 min and RTO 20 min for a 10 TB asynchronous cross-Region RDS replica. D falsely implies native automatic cross-Region promotion.",
+      "wrongOptions": null,
+      "memoryTip": "B offers automated read-replica promotion with CloudWatch/Lambda but cannot guarantee RPO 5 min and RTO 20 min for a 10 TB asynchronous cross-Region RDS replica. D falsely implies native automatic cross-Region promotion.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 395,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Application Discovery Agent captures process and network connections, supporting Migration Hub network visualization. Agentless collector lacks same connection details.",
+      "wrongOptions": null,
+      "memoryTip": "Application Discovery Agent captures process and network connections, supporting Migration Hub network visualization. Agentless collector lacks same connection details.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 396,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "E",
+        "F"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFront plus Lambda@Edge can perform hostname-based redirects from JSON and ACM SAN certificate covers HTTPS hostnames; ensure DNS records map domains to CloudFront.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFront plus Lambda@Edge can perform hostname-based redirects from JSON and ACM SAN certificate covers HTTPS hostnames; ensure DNS records map domains to CloudFront.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-at-edge-function-restrictions.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 397,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Secrets Manager can securely store Git credentials but does not provide network path from internet-isolated notebook to an externally hosted private Git repository. A only works if repo is reachable privately via existing endpoint/network. Source omits Git hosting/location.",
+      "wrongOptions": null,
+      "memoryTip": "Secrets Manager can securely store Git credentials but does not provide network path from internet-isolated notebook to an externally hosted private Git repository. A only works if repo is reachable privately via existing endpoint/network. Source omits Git hosting/location.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-git-repo.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source options assessed; original question unchanged."
     }
   ]
 }
