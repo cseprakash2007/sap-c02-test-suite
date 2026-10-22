@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Ninth 20-question batch: 16 confirmed with caveats, four flagged Q265 Q266 Q268 Q283. Corrected Q279 B to C and Q280 B to C. Q283 intended A+C+D instead of C+D+E, flagged for source repair.",
+  "notes": "Tenth 20-question batch: 17 reviewed with caveats, 3 flagged (Q291 Q293 Q302); corrected Q314 C to D.",
   "items": [
     {
       "id": 12,
@@ -7249,6 +7249,321 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Source question and options reviewed; original question unchanged."
+    },
+    {
+      "id": 288,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IoT Core ingestion to Firehose, Lambda transform to Parquet in S3 and Athena SQL removes servers and minimizes storage/compute overhead.",
+      "wrongOptions": null,
+      "memoryTip": "IoT Core ingestion to Firehose, Lambda transform to Parquet in S3 and Athena SQL removes servers and minimizes storage/compute overhead.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/firehose/latest/dev/data-transformation.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 290,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Offload video assets from EFS to S3 and distribute through CloudFront to reduce origin pressure and global buffering.",
+      "wrongOptions": null,
+      "memoryTip": "Offload video assets from EFS to S3 and distribute through CloudFront to reduce origin pressure and global buffering.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/GettingStarted.SimpleDistribution.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 291,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "SES SMTP requires TLS; an SMTP-only application whose legacy SMTP stack does not support TLS cannot simply use STARTTLS (B). A TLS wrapper or SMTP relay may work, but option A wrongly relies on EC2 IAM role rather than SES SMTP credentials. No complete option.",
+      "wrongOptions": null,
+      "memoryTip": "SES SMTP requires TLS; an SMTP-only application whose legacy SMTP stack does not support TLS cannot simply use STARTTLS (B). A TLS wrapper or SMTP relay may work, but option A wrongly relies on EC2 IAM role rather than SES SMTP credentials. No complete option.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/ses/latest/dg/send-email-smtp.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 292,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EC2 Auto Scaling/ALB preserves web VM pattern, Amazon MQ RabbitMQ avoids broker refactor, EKS manages Kubernetes control plane.",
+      "wrongOptions": null,
+      "memoryTip": "EC2 Auto Scaling/ALB preserves web VM pattern, Amazon MQ RabbitMQ avoids broker refactor, EKS manages Kubernetes control plane.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/rabbitmq-basic-elements.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 293,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Aurora cross-Region replicas are asynchronous and cannot guarantee zero data loss (RPO=0). DMS is also asynchronous, DataSync unsuitable, DLM snapshots nonzero RPO. No correct option.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora cross-Region replicas are asynchronous and cannot guarantee zero data loss (RPO=0). DMS is also asynchronous, DataSync unsuitable, DLM snapshots nonzero RPO. No correct option.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 295,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Compute Optimizer ECS on Fargate rightsizing recommendations can guide CPU/memory task definition changes, deployed through CloudFormation.",
+      "wrongOptions": null,
+      "memoryTip": "Compute Optimizer ECS on Fargate rightsizing recommendations can guide CPU/memory task definition changes, deployed through CloudFormation.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/view-ecs-recommendations.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 298,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Store large videos in S3 and only object keys in DynamoDB; DynamoDB 400 KB item limit makes inline videos impossible.",
+      "wrongOptions": null,
+      "memoryTip": "Store large videos in S3 and only object keys in DynamoDB; DynamoDB 400 KB item limit makes inline videos impossible.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Constraints.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 300,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DataSync agent transfers from NFS to S3/EFS/FSx with incremental scans, encryption and integrity verification; separate tasks for destinations.",
+      "wrongOptions": null,
+      "memoryTip": "DataSync agent transfers from NFS to S3/EFS/FSx with incremental scans, encryption and integrity verification; separate tasks for destinations.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 301,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Two transit VIFs to a common Direct Connect gateway attach both regional transit gateways; TGW inter-Region peering handles cross-region VPC traffic.",
+      "wrongOptions": null,
+      "memoryTip": "Two transit VIFs to a common Direct Connect gateway attach both regional transit gateways; TGW inter-Region peering handles cross-region VPC traffic.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 302,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "A gateway S3 VPC endpoint plus access-point/bucket policy restriction is intended A+E, but E permits any valid access point ARN rather than specifically authorized VPC endpoint or VPC, so policy does not enforce only authorized networks. Source repair needed.",
+      "wrongOptions": null,
+      "memoryTip": "A gateway S3 VPC endpoint plus access-point/bucket policy restriction is intended A+E, but E permits any valid access point ARN rather than specifically authorized VPC endpoint or VPC, so policy does not enforce only authorized networks. Source repair needed.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-vpc.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 303,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Attribute-based instance type selection in a launch template diversifies Spot capacity pools and reduces placement/instance type constraints.",
+      "wrongOptions": null,
+      "memoryTip": "Attribute-based instance type selection in a launch template diversifies Spot capacity pools and reduces placement/instance type constraints.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/create-mixed-instances-group-attribute-based-instance-type-selection.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 305,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Transfer Acceleration shortens long-haul uploads through edge network; multipart upload improves resilience and throughput for 1–10 GB objects.",
+      "wrongOptions": null,
+      "memoryTip": "Transfer Acceleration shortens long-haul uploads through edge network; multipart upload improves resilience and throughput for 1–10 GB objects.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 306,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Transfer Family to S3, event-triggered Glue transform, and SQS notifications remove dedicated cron and messaging servers; Glue must be triggered by supported EventBridge/workflow integration.",
+      "wrongOptions": null,
+      "memoryTip": "Transfer Family to S3, event-triggered Glue transform, and SQS notifications remove dedicated cron and messaging servers; Glue must be triggered by supported EventBridge/workflow integration.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/glue/latest/dg/starting-workflow-eventbridge.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 307,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IoT fleet provisioning pre-provisioning Lambda hook can validate physical installation/serial number before activating a device certificate.",
+      "wrongOptions": null,
+      "memoryTip": "IoT fleet provisioning pre-provisioning Lambda hook can validate physical installation/serial number before activating a device certificate.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/pre-provisioning-hook.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 308,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Direct Connect gateway plus redundant private VIFs connects VPC virtual private gateways across Regions, unlike regional transit gateway direct private VIFs.",
+      "wrongOptions": null,
+      "memoryTip": "Direct Connect gateway plus redundant private VIFs connects VPC virtual private gateways across Regions, unlike regional transit gateway direct private VIFs.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways-intro.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 311,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "App2Container supports migration to ECS EC2 with ALB, retains SQL Server via RDS and provides EC2 host patch/storage control.",
+      "wrongOptions": null,
+      "memoryTip": "App2Container supports migration to ECS EC2 with ALB, retains SQL Server via RDS and provides EC2 host patch/storage control.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/app2container/latest/UserGuide/what-is-a2c.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 312,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Provisioned Lambda concurrency mitigates cold starts, RDS reservations lower stable DB cost, WAF protects CloudFront against SQL injection.",
+      "wrongOptions": null,
+      "memoryTip": "Provisioned Lambda concurrency mitigates cold starts, RDS reservations lower stable DB cost, WAF protects CloudFront against SQL injection.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-baseline.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 314,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 File Gateway offers SMB interface and S3 Standard-IA allows rapid retrieval. Glacier Deep Archive cannot return images within five minutes; C is incorrect.",
+      "wrongOptions": null,
+      "memoryTip": "S3 File Gateway offers SMB interface and S3 Standard-IA allows rapid retrieval. Glacier Deep Archive cannot return images within five minutes; C is incorrect.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/storagegateway/latest/filegateway/what-is-file-s3.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 316,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Session Manager replaces inbound SSH, grants IAM-based access and supports session logging; configure CloudWatch Logs/S3 session logging to actually audit commands.",
+      "wrongOptions": null,
+      "memoryTip": "Session Manager replaces inbound SSH, grants IAM-based access and supports session logging; configure CloudWatch Logs/S3 session logging to actually audit commands.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-logging.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
+    },
+    {
+      "id": 317,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 Intelligent-Tiering automatically optimizes for unpredictable access while frequent and infrequent access tiers retain millisecond retrieval.",
+      "wrongOptions": null,
+      "memoryTip": "S3 Intelligent-Tiering automatically optimizes for unpredictable access while frequent and infrequent access tiers retain millisecond retrieval.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/intelligent-tiering-overview.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Architecture review against source options; original question bank unchanged."
     }
   ]
 }
