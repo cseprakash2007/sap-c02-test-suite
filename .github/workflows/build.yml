@@ -1,0 +1,35 @@
+name: React build and audit checks
+on:
+  push:
+    branches: [domain1-answer-audit]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Validate unique audit coverage
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const questions=JSON.parse(fs.readFileSync('src/data/questions.json','utf8'));
+          const one=JSON.parse(fs.readFileSync('src/data/domain1-verification.json','utf8')).items;
+          const two=JSON.parse(fs.readFileSync('src/data/domain1-verification-next.json','utf8')).items;
+          const ids=[...one,...two].map(x=>x.id);
+          const questionIds=new Set(questions.map(q=>q.id));
+          const missing=[...questionIds].filter(id=>!ids.includes(id));
+          const extra=ids.filter(id=>!questionIds.has(id));
+          if(new Set(ids).size!==ids.length||missing.length||extra.length||ids.length!==questions.length){
+            console.error({total:questions.length,audited:ids.length,missing,extra,duplicateCount:ids.length-new Set(ids).size});
+            process.exit(1);
+          }
+          console.log('Unique audit coverage:',ids.length,'/',questions.length);
+          NODE
+      - name: Typecheck and build
+        run: npm run build
