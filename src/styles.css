@@ -90,3 +90,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 }
 @media(max-width:380px){.content{padding-inline:10px}.stat-card strong{font-size:25px}.option{padding:13px 10px}.question-card,.review-panel,.surface{padding:15px}.breadcrumb{font-size:11px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+.mobile-nav-backdrop{display:none}
+@media(max-width:760px){.mobile-nav-backdrop{display:block;position:fixed;inset:0;z-index:45;border:0;background:rgba(10,20,40,.57);cursor:pointer}.sidebar{z-index:50}}
