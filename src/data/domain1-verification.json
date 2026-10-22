@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Domain 1 first 50 single-answer questions (heuristic domain mapping)",
   "lastUpdated": "2026-10-22",
-  "notes": "46/50 reviewed; four remain (49,154,282,296). Q252 missing referenced SCP, Q335 new-customer CloudTrail Lake availability restriction, Q209 and Q251 corrected source keys.",
+  "notes": "All 50 entries reviewed with explanations and documentation links. Null verifiedAnswer means no independently defensible option; preserve source key only as historical data. Several entries require caution or further source restoration. React build remains untested.",
   "items": [
     {
       "id": 13,
@@ -133,14 +133,23 @@
     {
       "id": 49,
       "sequence": 7,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-alternatives",
+      "reasoning": "AWS publishes an architecture combining RDS Proxy for connection pooling with an NLB-backed PrivateLink endpoint service for cross-account private database access. B matches exactly. A separate documented alternative uses RDS Proxy cross-VPC endpoints and AWS RAM without an NLB.",
+      "wrongOptions": {
+        "A": "Transit Gateway plus NAT Gateway does not manage database connection pooling and NAT is not needed for private VPC-to-VPC access.",
+        "B": "Correct: RDS Proxy pools connections, and NLB-backed PrivateLink exposes private cross-account connectivity.",
+        "C": "ALB is HTTP(S)-oriented, not a PostgreSQL wire-protocol proxy; VPC peering alone does not pool connections.",
+        "D": "NAT gateway adds no database connection management and is unnecessary with VPC peering."
+      },
+      "memoryTip": "Database connection pooling = RDS Proxy; private service sharing = PrivateLink via NLB.",
+      "awsReferences": [
+        "https://aws.amazon.com/blogs/database/access-amazon-rds-across-aws-accounts-using-aws-privatelink-network-load-balancer-and-amazon-rds-proxy/"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 50,
@@ -553,14 +562,21 @@
     {
       "id": 154,
       "sequence": 27,
-      "verificationStatus": "pending",
+      "verificationStatus": "reviewed",
       "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "validity": "invalid-missing-scp",
+      "reasoning": "The question says 'the following SCP' but the SCP JSON is missing from the question bank. The correct remediation depends on whether the missing policy is an Allow list using NotAction, a Deny list, or something else. Source B may be correct for an allow-list SCP only if FullAWSAccess also permits excluded services, but removing FullAWSAccess can also accidentally block allowed actions if the policy hierarchy is not understood.",
+      "wrongOptions": {
+        "A": "Explicit denies for every unwanted service are difficult and unnecessary if a correct SCP allow-list exists.",
+        "B": "Potentially correct if the missing SCP is an allow-list and FullAWSAccess undermines it, but cannot be confirmed without the missing policy.",
+        "C": "An explicit Deny * in FullAWSAccess would also block allowed EC2/S3/DynamoDB actions.",
+        "D": "Adding Deny * at the end of the SCP would deny all services, including intended allowed services."
+      },
+      "memoryTip": "SCP allow-list only works when every applicable policy level allows the intended action; explicit Deny always wins.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 173,
@@ -882,14 +898,22 @@
     {
       "id": 282,
       "sequence": 43,
-      "verificationStatus": "pending",
+      "verificationStatus": "reviewed",
       "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "validity": "ambiguous-identity-center-workspaces",
+      "reasoning": "The source selects D, but the proposed use of an IAM Identity Center account instance as the authentication source for WorkSpaces is not sufficiently supported by the described integration. WorkSpaces SAML 2.0 authentication can federate directly with an external IdP, and Identity Center typically supports a single identity source per instance. The alternatives conflate Identity Center applications, IAM role federation and WorkSpaces desktop authentication. Do not mark D independently verified without validating the exact WorkSpaces edition and supported federation configuration.",
+      "wrongOptions": {
+        "A": "A may confuse an IAM Identity Center application-catalog entry with WorkSpaces SAML desktop authentication; needs exact product integration confirmation.",
+        "B": "IAM Identity Center does not support adding a second identity source to one instance.",
+        "C": "IAM SAML role federation is not, by itself, WorkSpaces desktop login configuration; root-level SCP is overbroad.",
+        "D": "Source answer D proposes an account instance as WorkSpaces authentication source; compatibility and setup are not established by the question."
+      },
+      "memoryTip": "WorkSpaces SAML desktop authentication is distinct from IAM Identity Center AWS-account permission sets.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/workspaces/latest/adminguide/setting-up-saml.html",
+        "https://docs.aws.amazon.com/singlesignon/latest/userguide/identity-center-instances.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 289,
@@ -915,14 +939,22 @@
     {
       "id": 296,
       "sequence": 45,
-      "verificationStatus": "pending",
+      "verificationStatus": "reviewed",
       "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "validity": "invalid-unsupported-hook-in-jitp",
+      "reasoning": "The intended answer C resembles IoT Core just-in-time provisioning (JITP): register the manufacturing CA, enable auto-registration and associate a provisioning template. However AWS JITP documentation does not establish that a Lambda pre-provisioning hook in this configuration validates installation before device activation; hooks are associated with fleet provisioning workflows. Automatic registration on first connection does not prove physical installation. None of the options clearly enforces 'cannot send data until installed' without a trusted installation/activation signal.",
+      "wrongOptions": {
+        "A": "Calling RegisterThing during manufacturing would activate/provision too early; pre-provision hook does not fix timing.",
+        "B": "Step Functions is not a supported direct provisioning-template validation hook as stated.",
+        "C": "Closest to JITP, but automatic registration and the asserted pre-provision hook do not reliably prove installation before access.",
+        "D": "Claim certificates and template parameter validation alone cannot attest physical installation."
+      },
+      "memoryTip": "IoT JITP = CA + auto-registration + template; physical installation needs separate trusted activation proof.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/jit-provisioning.html",
+        "https://docs.aws.amazon.com/iot/latest/developerguide/auto-register-device-cert.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 309,
