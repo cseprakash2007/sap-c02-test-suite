@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Thirteenth 20-question batch: 17 reviewed with caveats, 3 flagged Q386 Q394 Q397; corrections Q371 B→A, Q380 B→C, Q391 C→B.",
+  "notes": "Fourteenth 20-question batch: 17 reviewed with caveats, 3 flagged Q402 Q405 Q421; corrected Q400 A→D; duplicates Q398/Q330 and Q421/Q386.",
   "items": [
     {
       "id": 12,
@@ -8519,6 +8519,322 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Source options assessed; original question unchanged."
+    },
+    {
+      "id": 398,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Mountpoint for S3 gives instances access to current S3 pricing objects; re-open files to see updates. Duplicate of Q330.",
+      "wrongOptions": null,
+      "memoryTip": "Mountpoint for S3 gives instances access to current S3 pricing objects; re-open files to see updates. Duplicate of Q330.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mountpoint.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 399,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Firehose to S3 removes always-on ingestion EC2 and AWS Batch Spot processes retryable nightly analytics cheaply; max Spot price limit can reduce capacity.",
+      "wrongOptions": null,
+      "memoryTip": "Firehose to S3 removes always-on ingestion EC2 and AWS Batch Spot processes retryable nightly analytics cheaply; max Spot price limit can reduce capacity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/batch/latest/userguide/spot_fleet_IAM_role.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 400,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Five inter-Region VPC peering links connect only designated US VPCs to European VPC; one transit gateway cannot attach VPCs across Regions. Original A incorrect.",
+      "wrongOptions": null,
+      "memoryTip": "Five inter-Region VPC peering links connect only designated US VPCs to European VPC; one transit gateway cannot attach VPCs across Regions. Original A incorrect.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 401,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DataSync manifest filters transfers, S3 event Lambda starts task, EventBridge task state triggers SNS notification; ensure manifest format/location supported.",
+      "wrongOptions": null,
+      "memoryTip": "DataSync manifest filters transfers, S3 event Lambda starts task, EventBridge task state triggers SNS notification; ensure manifest format/location supported.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 402,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "WorkSpaces connection aliases support regional redirection, but Route 53 Evaluate Target Health on aliases to WorkSpaces directories is not a supported automatic health mechanism as written. Requires careful failover architecture.",
+      "wrongOptions": null,
+      "memoryTip": "WorkSpaces connection aliases support regional redirection, but Route 53 Evaluate Target Health on aliases to WorkSpaces directories is not a supported automatic health mechanism as written. Requires careful failover architecture.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/workspaces/latest/adminguide/cross-region-redirection.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 403,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Athena and Glue Catalog query S3 directly; lifecycle transition data older than year to Glacier Deep Archive for low retention cost.",
+      "wrongOptions": null,
+      "memoryTip": "Athena and Glue Catalog query S3 directly; lifecycle transition data older than year to Glacier Deep Archive for low retention cost.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/athena/latest/ug/what-is.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 405,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "EFS Max I/O has been deprecated/availability restricted for new EFS file systems; Elastic throughput with General Purpose is recommended. High-throughput requirement lacks numeric sizing; D historically expected.",
+      "wrongOptions": null,
+      "memoryTip": "EFS Max I/O has been deprecated/availability restricted for new EFS file systems; Elastic throughput with General Purpose is recommended. High-throughput requirement lacks numeric sizing; D historically expected.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/efs/latest/ug/performance.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 408,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "KMS GenerateDataKey is required for client-side envelope encryption before S3 upload; stem omits displayed IAM policy so answer is inferred from symptoms.",
+      "wrongOptions": null,
+      "memoryTip": "KMS GenerateDataKey is required for client-side envelope encryption before S3 upload; stem omits displayed IAM policy so answer is inferred from symptoms.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 409,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DataSync on-prem agent supports scheduled incremental transfers, directory include/exclude filters and Direct Connect connectivity.",
+      "wrongOptions": null,
+      "memoryTip": "DataSync on-prem agent supports scheduled incremental transfers, directory include/exclude filters and Direct Connect connectivity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 410,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Assign Amazon-provided IPv6 CIDRs and use egress-only IGW for private subnet ::/0, preserving outbound-only IPv6 connectivity.",
+      "wrongOptions": null,
+      "memoryTip": "Assign Amazon-provided IPv6 CIDRs and use egress-only IGW for private subnet ::/0, preserving outbound-only IPv6 connectivity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/egress-only-internet-gateway.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 411,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Global Accelerator standard accelerator gives stable anycast addresses and routes to healthy regional NLB endpoints near clients.",
+      "wrongOptions": null,
+      "memoryTip": "Global Accelerator standard accelerator gives stable anycast addresses and routes to healthy regional NLB endpoints near clients.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 412,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 buckets must be empty for CloudFormation deletion; Lambda custom resource can empty bucket on Delete, using dependency and careful cleanup.",
+      "wrongOptions": null,
+      "memoryTip": "S3 buckets must be empty for CloudFormation deletion; Lambda custom resource can empty bucket on Delete, using dependency and careful cleanup.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 413,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 events through EventBridge trigger Step Functions orchestration of long-running ECS Fargate tasks, avoiding 15-minute Lambda limit and idle EC2.",
+      "wrongOptions": null,
+      "memoryTip": "S3 events through EventBridge trigger Step Functions orchestration of long-running ECS Fargate tasks, avoiding 15-minute Lambda limit and idle EC2.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/step-functions/latest/dg/connect-ecs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 414,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Amplify Hosting/CloudFront, Cognito authentication and S3 object uploads reduce infrastructure management; use direct signed uploads and proper authorization.",
+      "wrongOptions": null,
+      "memoryTip": "Amplify Hosting/CloudFront, Cognito authentication and S3 object uploads reduce infrastructure management; use direct signed uploads and proper authorization.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 415,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS RAM VPC subnet sharing allows another account to deploy resources into centrally managed VPC and use shared connectivity without new VPN.",
+      "wrongOptions": null,
+      "memoryTip": "AWS RAM VPC subnet sharing allows another account to deploy resources into centrally managed VPC and use shared connectivity without new VPN.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 416,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ECS Fargate autoscaling, EFS shared static assets, and Aurora Serverless v2 readers address bursty frontend and read-heavy DB.",
+      "wrongOptions": null,
+      "memoryTip": "ECS Fargate autoscaling, EFS shared static assets, and Aurora Serverless v2 readers address bursty frontend and read-heavy DB.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 418,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DynamoDB scales millions of small writes with indexed low-latency reads and TTL deletion after 120 days; TTL is asynchronous, so not precise immediate purge.",
+      "wrongOptions": null,
+      "memoryTip": "DynamoDB scales millions of small writes with indexed low-latency reads and TTL deletion after 120 days; TTL is asynchronous, so not precise immediate purge.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 419,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IoT Core rules to Lambda parse vendor payloads, S3 lake and Glue/Athena/QuickSight replace costly daily RDBMS ingestion.",
+      "wrongOptions": null,
+      "memoryTip": "IoT Core rules to Lambda parse vendor payloads, S3 lake and Glue/Athena/QuickSight replace costly daily RDBMS ingestion.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 420,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DMS CDC reduces migration interruption, Aurora Replica offloads aggregation reads, Lambda/ALB and RDS Proxy scale collector writes; cutover requires coordination.",
+      "wrongOptions": null,
+      "memoryTip": "DMS CDC reduces migration interruption, Aurora Replica offloads aggregation reads, Lambda/ALB and RDS Proxy scale collector writes; cutover requires coordination.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
+    },
+    {
+      "id": 421,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Duplicate of Q386. DHCP options sets do not configure NTP server on EC2 automatically; requires instance chrony configuration, so A invalid. Amazon Time Sync B violates requirement to sync to on-prem atomic clock.",
+      "wrongOptions": null,
+      "memoryTip": "Duplicate of Q386. DHCP options sets do not configure NTP server on EC2 automatically; requires instance chrony configuration, so A invalid. Amazon Time Sync B violates requirement to sync to on-prem atomic clock.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-ec2-ntp.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Reviewed source options; original question unchanged."
     }
   ]
 }
