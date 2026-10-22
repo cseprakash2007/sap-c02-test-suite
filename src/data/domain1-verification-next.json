@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Additional 20-question batch reviewed: 16 confirmed, 4 flagged (Q3 Q43 Q45 Q60); corrected keys Q44 D->B, Q46 C->D, Q63 AE->BE, Q66 C->B. All source questions unchanged.",
+  "notes": "Second new 20-question batch: 17 reviewed; Q77, Q85, Q90 flagged. Source key corrections Q88 A->B and Q92 C->CD. Q74 source claims zero downtime, though heterogeneous cutover needs coordination.",
   "items": [
     {
       "id": 12,
@@ -4475,6 +4475,490 @@
         "D"
       ],
       "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 68,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudFormation DeletionPolicy Retain preserves RDS and EBS resources after stack deletion.",
+      "wrongOptions": {
+        "B": "stack policies restrict updates not stack deletion",
+        "C": "IAM resource delete denial doesn't reliably preserve stack-owned resources",
+        "D": "Config detects not prevents."
+      },
+      "memoryTip": "CloudFormation DeletionPolicy Retain preserves RDS and EBS resources after stack deletion.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 72,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Automated CodeBuild tests, CloudFormation change sets, and CodeDeploy blue/green reduce deployment risk and permit rollback.",
+      "wrongOptions": {
+        "A": "manual testing adds effort",
+        "C": "validation only syntax not runtime impact",
+        "D": "manual SSH testing is not automated safety."
+      },
+      "memoryTip": "Automated CodeBuild tests, CloudFormation change sets, and CodeDeploy blue/green reduce deployment risk and permit rollback.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-steps-ec2.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 74,
+      "domain": 4,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "SCT converts schema; private peering connects cross-account databases; DMS full load and CDC replicate existing and new rows; CNAME cutover requires brief write freeze to avoid lost writes.",
+      "wrongOptions": {
+        "B": "SCT doesn't create full RDS instance with data",
+        "D": "public source exposure unnecessary",
+        "F": "CDC alone omits existing records."
+      },
+      "memoryTip": "SCT converts schema",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CDC.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A",
+        "C",
+        "E"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 75,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "IAM Access Analyzer external-access findings identify public S3 exposure and can route matching findings via EventBridge to SNS; filter must match actual finding schema.",
+      "wrongOptions": {
+        "A": "S3 has no isPublic event",
+        "C": "PutBucketPolicy does not prove public access",
+        "D": "CloudTrail data-events rule isn't public bucket detection."
+      },
+      "memoryTip": "IAM Access Analyzer external-access findings identify public S3 exposure and can route matching findings via EventBridge to SNS",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-eventbridge.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 77,
+      "domain": 4,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "Option D uses Lambda to decouple a .NET Framework monolith but .NET Framework runtime cannot run natively in Lambda; Aurora Serverless v2 PostgreSQL requires stored-procedure conversion and business logic refactoring. Other options also have fundamental flaws.",
+      "wrongOptions": {
+        "A": "Spot for critical API and cluster placement unsuitable",
+        "B": "MGN doesn't automatically make Beanstalk microservices and MySQL procedure compatibility absent",
+        "C": "DAX is a cache and cannot store/run stored procedures",
+        "D": "extensive framework port and schema conversion unaddressed."
+      },
+      "memoryTip": "Option D uses Lambda to decouple a .NET Framework monolith but .NET Framework runtime cannot run natively in Lambda",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "D"
+      ],
+      "reviewNotes": "Question outdated or unsupported; source repair required."
+    },
+    {
+      "id": 78,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Viewer-request Lambda@Edge canonicalizes case and query parameter ordering before CloudFront cache key calculation; ensure normalization respects application semantics.",
+      "wrongOptions": {
+        "B": "disabling query keys risks wrong responses",
+        "C": "origin-side rewriting occurs after cache lookup",
+        "D": "no case-insensitive query setting."
+      },
+      "memoryTip": "Viewer-request Lambda@Edge canonicalizes case and query parameter ordering before CloudFront cache key calculation",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-at-edge-function-restrictions.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 82,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Lambda-backed CloudFormation custom resource empties S3 bucket before stack deletion; ensure Delete event cleans bucket, not only creation.",
+      "wrongOptions": {
+        "B": "Delete policy can't remove nonempty bucket",
+        "C": "S3 Snapshot deletion policy unsupported",
+        "D": "major redesign."
+      },
+      "memoryTip": "Lambda-backed CloudFormation custom resource empties S3 bucket before stack deletion",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 83,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "Abort incomplete multipart uploads after 7 days; transition infrequently accessed large videos to Standard-IA after 180 days.",
+      "wrongOptions": {
+        "A": "requester pays shifts costs and may harm access",
+        "B": "acceleration adds transfer cost",
+        "D": "Glacier Instant Retrieval after one day conflicts with frequent access."
+      },
+      "memoryTip": "Abort incomplete multipart uploads after 7 days",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "C",
+        "E"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 85,
+      "domain": 3,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "AWS AppFabric was discontinued on December 3 2024, so historical C is no longer deployable; no current answer as written offers an equivalent managed ingestion.",
+      "wrongOptions": {
+        "A": "License Manager doesn't discover SaaS audit logs this way",
+        "B": "custom Lambda/EMR possible but not least operational overhead",
+        "C": "discontinued AppFabric",
+        "D": "App Runner isn't SaaS audit log collector."
+      },
+      "memoryTip": "AWS AppFabric was discontinued on December 3 2024, so historical C is no longer deployable",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/appfabric/latest/adminguide/what-is-appfabric.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "C"
+      ],
+      "reviewNotes": "Question outdated or unsupported; source repair required."
+    },
+    {
+      "id": 88,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "EMR primary/core nodes should be On-Demand for stability; task nodes can use Spot; terminate entire cluster after jobs, Savings Plans cover baseline eligible usage.",
+      "wrongOptions": {
+        "A": "all-Spot primary/core interruption risks cluster failure",
+        "C": "all On-Demand costs more",
+        "D": "leaving primary/core running wastes spend."
+      },
+      "memoryTip": "EMR primary/core nodes should be On-Demand for stability",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-instances-guidelines.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 90,
+      "domain": 3,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "NAT gateways do not allow unsolicited inbound internet connections, and VPC flow log ACCEPT alone cannot establish connection initiation; D reverse direction is useful but none conclusively determines unsolicited inbound.",
+      "wrongOptions": {
+        "A": "CloudTrail isn't VPC flow log query console",
+        "B": "source/destination selection alone not conclusive",
+        "C": "CloudTrail wrong service",
+        "D": "return-flow analysis requires flow direction, ports, TCP flags and NAT context."
+      },
+      "memoryTip": "NAT gateways do not allow unsolicited inbound internet connections, and VPC flow log ACCEPT alone cannot establish connection initiation",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "D"
+      ],
+      "reviewNotes": "Question outdated or unsupported; source repair required."
+    },
+    {
+      "id": 92,
+      "domain": 4,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS SCT assesses/converts schema and stored procedures; AWS DMS migrates database rows to RDS. Original source incorrectly lists only C for select-two.",
+      "wrongOptions": {
+        "A": "Migration Evaluator doesn't inspect stored procedures",
+        "B": "MGN migrates servers not DB schema analysis",
+        "E": "DataSync isn't relational DB migration."
+      },
+      "memoryTip": "AWS SCT assesses/converts schema and stored procedures",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_GettingStarted.SCT.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "C"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 97,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "FSx for Windows capacity can be increased through update-file-system; CloudWatch FreeStorageCapacity and automated action prevent recurrence.",
+      "wrongOptions": {
+        "A": "Lustre isn't Windows SMB profile share replacement",
+        "C": "Step Functions lacks trigger as stated",
+        "D": "manual split adds complexity."
+      },
+      "memoryTip": "FSx for Windows capacity can be increased through update-file-system",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-capacity.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 98,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudFront caches pre-resized images in S3 near users, eliminating repeated Fargate image transformations with minimal operational effort.",
+      "wrongOptions": {
+        "B": "app modifications and Memcached operation",
+        "C": "unnecessary database and application rewrite",
+        "D": "HTTP API doesn't offer REST API response cache as claimed."
+      },
+      "memoryTip": "CloudFront caches pre-resized images in S3 near users, eliminating repeated Fargate image transformations with minimal operational effort.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 101,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Compute Savings Plans apply across EC2, Fargate, Lambda and linked accounts when sharing enabled; management account recommendation reflects organization use.",
+      "wrongOptions": {
+        "D": "EC2 Instance Savings Plans don't cover all compute."
+      },
+      "memoryTip": "Compute Savings Plans apply across EC2, Fargate, Lambda and linked accounts when sharing enabled",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 102,
+      "domain": 4,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Cross-Region FSx Windows replication via DataSync with PrivateLink service endpoints and VPC peering can keep transfers off public internet; validate endpoint topology.",
+      "wrongOptions": {
+        "A": "FSx File Gateway isn't S3 continuous backup",
+        "B": "VPN uses internet transport",
+        "D": "Transfer Family not FSx-to-FSx sync service."
+      },
+      "memoryTip": "Cross-Region FSx Windows replication via DataSync with PrivateLink service endpoints and VPC peering can keep transfers off public internet",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/using-aws-datasync-locations.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "C"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 105,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "RDS MySQL cross-Region read replicas can be promoted during regional disaster; asynchronous replication implies possible data loss and manual failover.",
+      "wrongOptions": {
+        "A": "backup restore slower and backup isn't promoted"
+      },
+      "memoryTip": "RDS MySQL cross-Region read replicas can be promoted during regional disaster",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "D"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 106,
+      "domain": 4,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "Application Discovery Agent inventories physical/VM systems and dependencies; Migration Hub groups servers and supports right-sizing recommendations.",
+      "wrongOptions": {
+        "B": "SSM Agent isn't full discovery agent",
+        "C": "Systems Manager Application Manager not migration grouping",
+        "F": "Trusted Advisor doesn't import on-prem inventory."
+      },
+      "memoryTip": "Application Discovery Agent inventories physical/VM systems and dependencies",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 107,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "VPC-attached Lambda routes outbound IPv4 through public NAT gateway with single EIP that partner can allowlist.",
+      "wrongOptions": {
+        "B": "egress-only IGW IPv6 and no EIP",
+        "C": "IGW doesn't take EIP or give VPC Lambda public IP",
+        "D": "public route table doesn't grant private Lambda public egress."
+      },
+      "memoryTip": "VPC-attached Lambda routes outbound IPv4 through public NAT gateway with single EIP that partner can allowlist.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc-internet.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
+    },
+    {
+      "id": 109,
+      "domain": 3,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudWatch AWS/Usage quota metrics and SERVICE_QUOTA metric math alarm alert when Fargate usage approaches 80%.",
+      "wrongOptions": {
+        "A": "SampleCount of ECS service isn't account task quota usage",
+        "C": "80 tasks not 80 percent",
+        "D": "Config isn't utilization alarm."
+      },
+      "memoryTip": "CloudWatch AWS/Usage quota metrics and SERVICE_QUOTA metric math alarm alert when Fargate usage approaches 80%.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/monitor-service-quotas.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "AWS service-design assessment; original question unchanged."
     }
   ]
 }
