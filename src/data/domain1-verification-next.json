@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Fourth 20-question validation pass: 18 reviewed, 2 source-repair flags (368,640); 17 preliminary remain, 12 source-repair total. Q333 source D corrected to A; Q651 duplicates Q440.",
+  "notes": "Final 17 preliminary records processed: 12 reviewed, 5 source-repair (2,5,16,27,31). Corrections: Q667 C->B; Q18 AB->AE; Q34 C->B. All 97 preliminary from original batch now processed; 17 source-repair flags total.",
   "items": [
     {
       "id": 12,
@@ -3535,421 +3535,419 @@
       "id": 657,
       "domain": 2,
       "sequence": 154,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "IAM Access Analyzer generates least-privilege policy templates from CloudTrail activity; S3 data events may need manual refinement.",
       "wrongOptions": {
-        "A": "Alternative: Set up Amazon CodeGuru to profile the Lambda functions and search for AWS API calls. Create an inventory of the required API calls and resources for each Lambda function. Create new IAM access policies for each Lambda function. Review the new policies to ensure that they meet the company's business requirements.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Turn on AWS CloudTrail logging for the AWS account. Use AWS Identity and Access Management Access Analyzer to generate IAM access policies based on the activity recorded in the CloudTrail log. Review the generated policies to ensure that they meet the company's business requirements.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Turn on AWS CloudTrail logging for the AWS account. Create a script to parse the CloudTrail log, search for AWS API calls by Lambda execution role, and create a summary report. Review the report. Create IAM access policies that provide more restrictive permissions for each Lambda function.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Turn on AWS CloudTrail logging for the AWS account. Export the CloudTrail logs to Amazon S3. Use Amazon EMR to process the CloudTrail logs in Amazon S3 and produce a report of API calls and resources used by each execution role. Create a new IAM access policy for each role. Export the generated roles to an S3 bucket. Review the generated policies to ensure that they meet the company's business requirements.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "CodeGuru profiling is not IAM policy generation",
+        "C": "custom parser increases work",
+        "D": "EMR adds unnecessary pipeline."
       },
-      "memoryTip": "Key topic: An external audit of a company's serverless application reveals IAM policies that grant too many permissions. …",
+      "memoryTip": "IAM Access Analyzer generates least-privilege policy templates from CloudTrail activity",
       "awsReferences": [
-        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
-        "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-policy-generation.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 667,
       "domain": 2,
       "sequence": 155,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Regional multi-AZ ALB, Auto Scaling and Aurora MySQL Multi-AZ offer HA for .NET/MySQL workloads.",
       "wrongOptions": {
-        "A": "Alternative: Use AWS Elastic Beanstalk to create a new application with a web server environment and an Amazon RDS MySQL Multi-AZ DB instance The environment should launch a Network Load Balancer (NLB) in front of an Amazon EC2 Auto Scaling group in multiple Availability Zones Use an Amazon Route 53 alias record to route traffic from the company's domain to the NLB.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Use AWS CloudFormation to launch a stack containing an Application Load Balancer (ALB) in front of an Amazon EC2 Auto Scaling group spanning three Availability Zones. The stack should launch a Multi-AZ deployment of an Amazon Aurora MySQL DB cluster with a Retain deletion policy. Use an Amazon Route 53 alias record to route traffic from the company's domain to the ALB. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Use AWS Elastic Beanstalk to create an automatically scaling web server environment that spans two separate Regions with an Application Load Balancer (ALB) in each Region. Create a Multi-AZ deployment of an Amazon Aurora MySQL DB cluster with a cross- Region read replica Use Amazon Route 53 with a geoproximity routing policy to route traffic between the two Regions.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Use AWS CloudFormation to launch a stack containing an Application Load Balancer (ALB) in front of an Amazon ECS cluster of Spot Instances spanning three Availability Zones The stack should launch an Amazon RDS MySQL DB instance with a Snapshot deletion policy Use an Amazon Route 53 alias record to route traffic from the company's domain to the ALB. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "NLB lacks HTTP-aware routing advantage",
+        "C": "Elastic Beanstalk environment does not span Regions and read replicas are not multiwriter",
+        "D": "Spot-only web fleet increases interruption risk."
       },
-      "memoryTip": "Key topic: is hosting a three-tier web application in an on-premises environment. Due to a recentsurge in traffic that re…",
-      "awsReferences": [],
+      "memoryTip": "Regional multi-AZ ALB, Auto Scaling and Aurora MySQL Multi-AZ offer HA for .NET/MySQL workloads.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html"
+      ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 1,
       "domain": 3,
       "sequence": 156,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Verify SSE-S3 versus SSE-KMS requirement and whether source option satisfies it.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Re-encrypting objects with SSE-S3 removes ongoing SSE-KMS request charges but sacrifices KMS-specific audit/control requirements.",
       "wrongOptions": {
-        "A": "Alternative: Create a new S3 bucket that has server-side encryption with customer-provided keys (SSE-C) as the encryption type. Copy the existing objects to the new S3 bucket. Specify SSE-C.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create a new S3 bucket that has server-side encryption with Amazon S3 managed keys (SSE-S3) as the encryption type. Use S3 Batch Operations to copy the existing objects to the new S3 bucket. Specify SSE-S3.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Use AWS CloudHSM to store the encryption keys. Create a new S3 bucket. Use S3 Batch Operations to copy the existing objects to the new S3 bucket. Encrypt the objects by using the keys from CloudHSM.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Use the S3 Intelligent-Tiering storage class for the S3 bucket. Create an S3 Intelligent- Tiering archive configuration to transition objects that are not accessed for 90 days to S3 Glacier Deep Archive.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "SSE-C requires clients to manage/provide keys",
+        "C": "CloudHSM isn't native S3 SSE mode",
+        "D": "tiering doesn't reduce KMS requests for frequently read data."
       },
-      "memoryTip": "Key topic: has millions of objects in an Amazon S3 bucket. The objects are in the S3 Standard storage class. All the S3 o…",
+      "memoryTip": "Re-encrypting objects with SSE-S3 removes ongoing SSE-KMS request charges but sacrifices KMS-specific audit/control requirements.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingServerSideEncryption.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 2,
       "domain": 3,
       "sequence": 157,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "C"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "validity": "ambiguous",
+      "reasoning": "C RDS Proxy pools database connections, but high database CPU from flash-sale reads may require ElastiCache B; question lacks workload read/write breakdown to establish single best optimization.",
       "wrongOptions": {
-        "A": "Alternative: Increase the memory of the Lambda function. Modify the Lambda function to close the database connections when the data is retrieved.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Add an Amazon ElastiCache for Redis cluster to store the frequently accessed data from the RDS database.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create an RDS proxy by using the Lambda console. Modify the Lambda function to use the proxy endpoint.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Modify the Lambda function to connect to the database outside of the function's handler. Check for an existing database connection before creating a new connection.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "larger Lambda memory can increase concurrency pressure",
+        "B": "caching reduces repeated reads/CPU if read-heavy",
+        "C": "connection pooling reduces connection churn but not necessarily query CPU",
+        "D": "connection reuse helps per execution environment only."
       },
-      "memoryTip": "Key topic: An ecommerce company runs an application on AWS. The application has an Amazon API Gateway API that invokes an…",
+      "memoryTip": "C RDS Proxy pools database connections, but high database CPU from flash-sale reads may require ElastiCache B",
       "awsReferences": [
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
-        "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Source question underspecified/outdated; not confirmed."
     },
     {
       "id": 4,
       "domain": 3,
       "sequence": 158,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "For cluster placement group capacity errors, stop and start existing instances to free/repack placement then retry.",
       "wrongOptions": {
-        "A": "Alternative: Use a spread placement group. Set a minimum of eight instances for each Availability Zone.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Stop and start all the instances in the placement group. Try the launch again.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create a new placement group. Merge the new placement group with the original placement group.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Launch the additional instances as Dedicated Hosts in the placement groups.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "spread group doesn't offer eight instances per AZ",
+        "C": "placement groups cannot merge",
+        "D": "Dedicated Hosts don't resolve placement group capacity."
       },
-      "memoryTip": "Key topic: has launched multiple Amazon EC2 instances in a placement group within a single Availability Zone. Because of …",
+      "memoryTip": "For cluster placement group capacity errors, stop and start existing instances to free/repack placement then retry.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 5,
       "domain": 3,
       "sequence": 159,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "A"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "One NAT gateway per AZ is resilience recommendation, not strict minimum for internet connectivity.",
+      "validity": "ambiguous",
+      "reasoning": "A adds per-AZ NAT gateways for resilience but one NAT gateway already permits private subnets in all AZs to reach internet. Stem omits high availability requirement; none is necessary.",
       "wrongOptions": {
-        "A": "Provisional selection: Add two more NAT gateways (one per AZ). Configure each private subnet to use its AZ’s NAT gateway.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Add two more NAT gateways and configure public subnets.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Add internet gateways per AZ and route private subnets.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Add internet gateways per AZ and configure public subnets.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "good HA architecture but not required for basic connectivity",
+        "B": "extra gateways without private route changes insufficient"
       },
-      "memoryTip": "Key topic: A VPC spans three Availability Zones, each with public and private subnets. One NAT gateway and one internet g…",
+      "memoryTip": "A adds per-AZ NAT gateways for resilience but one NAT gateway already permits private subnets in all AZs to reach internet. Stem omits high availability requirement",
       "awsReferences": [
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Source question underspecified/outdated; not confirmed."
     },
     {
       "id": 10,
       "domain": 3,
       "sequence": 160,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "D"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Bake CodeDeploy agent into AMI and attach deployment group to ASG so scaling launches are included automatically.",
       "wrongOptions": {
-        "A": "Alternative: Configure Amazon EventBridge to invoke an AWS Lambda function when a new EC2 instance is launched into the Auto Scaling group. Code the Lambda function to associate the EC2 instances with the CodeDeploy deployment group.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Write a script to suspend Amazon EC2 Auto Scaling operations before the deployment of new code When the deployment is complete, create a new AMI and configure the Auto Scaling group's launch template to use the new AMI for new launches. Resume Amazon EC2 Auto Scaling operations.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create a new AWS CodeBuild project that creates a new AMI that contains the new code Configure CodeBuild to update the Auto Scaling group's launch template to the new AMI. Run an Amazon EC2 Auto Scaling instance refresh operation.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Create a new AMI that has the CodeDeploy agent installed. Configure the Auto Scaling group's launch template to use the new AMI. Associate the CodeDeploy deployment group with the Auto Scaling group instead of the EC2 instances.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "manual per-instance registration automation unnecessary",
+        "B": "deployment suspension adds toil",
+        "C": "AMI refresh is larger redesign on short timeline."
       },
-      "memoryTip": "Key topic: has an application that runs on Amazon EC2 instances in an Amazon EC2 Auto Scaling group. The company uses AWS…",
+      "memoryTip": "Bake CodeDeploy agent into AMI and attach deployment group to ASG so scaling launches are included automatically.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/codedeploy/latest/userguide/integrations-aws-auto-scaling.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 16,
       "domain": 3,
       "sequence": 161,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "D"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Aurora Serverless v1 is no longer generally available for new clusters; outdated option.",
+      "validity": "ambiguous",
+      "reasoning": "Source D recommends Aurora Serverless v1, which reached end of life March 31 2025; modern solution should evaluate Aurora Serverless v2. No current answer is valid as written.",
       "wrongOptions": {
-        "A": "Alternative: Add additional read replicas to the database. Purchase Instance Savings Plans and RDS Reserved Instances.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Migrate the database to an Aurora multi-master DB cluster. Purchase Instance Savings Plans.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Migrate the database to an Aurora global database. Purchase Compute Savings Plans and RDS Reserved Instances.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Migrate the database to Aurora Serverless v1. Purchase Compute Savings Plans.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "read replicas don't scale write capacity",
+        "B": "legacy multi-master option isn't broadly supported",
+        "C": "global database isn't cost-effective for intermittent single-region write peaks",
+        "D": "retired Aurora Serverless v1."
       },
-      "memoryTip": "Key topic: is running an application in the AWS Cloud. The application uses AWS Lambda functions and Amazon Elastic Conta…",
+      "memoryTip": "Source D recommends Aurora Serverless v1, which reached end of life March 31 2025",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html",
-        "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/WhatsNew.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Source question underspecified/outdated; not confirmed."
     },
     {
       "id": 17,
       "domain": 3,
       "sequence": 162,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "A"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "S3 Intelligent-Tiering stores long-lived dataset; on-demand FSx for Lustre lazy-loads subset and deletes file system after monthly run.",
       "wrongOptions": {
-        "A": "Provisional selection: Migrate the data from the existing shared file system to an Amazon S3 bucket that uses the S3 Intelligent-Tiering storage class. Before the job runs each month, use Amazon FSx for Lustre to create a new file system with the data from Amazon S3 by using lazy loading. Use the new file system as the shared storage for the duration of the job. Delete the file system when the job is complete.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Migrate the data from the existing shared file system to a large Amazon Elastic Block Store (Amazon EBS) volume with Multi-Attach enabled. Attach the EBS volume to each of the instances by using a user data script in the Auto Scaling group launch template. Use the EBS volume as the shared storage for the duration of the job. Detach the EBS volume when the job is complete.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Migrate the data from the existing shared file system to an Amazon S3 bucket that uses the S3 Standard storage class. Before the job runs each month, use Amazon FSx for Lustre to create a new file system with the data from Amazon S3 by using batch loading. Use the new file system as the shared storage for the duration of the job. Delete the file system when the job is complete.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Migrate the data from the existing shared file system to an Amazon S3 bucket. Before the job runs each month, use AWS Storage Gateway to create a file gateway with the data from Amazon S3. Use the file gateway as the shared storage for the job. Delete the file gateway when the job is complete.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "EBS Multi-Attach cannot span hundreds of arbitrary instances/AZs",
+        "C": "eager loading full 200 TB raises cost",
+        "D": "File Gateway lacks parallel HPC Lustre performance."
       },
-      "memoryTip": "Key topic: is running a data-intensive application on AWS. The application runs on a cluster of hundreds of Amazon EC2 in…",
+      "memoryTip": "S3 Intelligent-Tiering stores long-lived dataset",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-dra-linked-data-repo.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 18,
       "domain": 3,
       "sequence": 163,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "A",
         "B"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "A",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "S3 gateway VPC endpoint eliminates NAT gateway data processing charges; scheduled scaling fits known one-off events without risking availability.",
       "wrongOptions": {
-        "A": "Provisional selection: Create a gateway VPC endpoint for the S3 bucket. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Add another ECS capacity provider that uses an Auto Scaling group of Spot Instances Configure the new capacity provider strategy to have the same weight as the existing capacity provider strategy. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create On-Demand Capacity Reservations for the applicable instance type for the time period of the scheduled scaling policies. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Enable S3 Transfer Acceleration on the S3 bucket. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Alternative: Replace the predictive scaling policy with scheduled scaling policies for the scheduled events. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "equal-weight Spot capacity can reduce availability during sales",
+        "C": "On-Demand reservations do not inherently reduce spend",
+        "D": "S3 Transfer Acceleration adds cost and is unnecessary in-region."
       },
-      "memoryTip": "Key topic: An events company runs a ticketing platform on AWS. The company's customers configure and schedule their event…",
+      "memoryTip": "S3 gateway VPC endpoint eliminates NAT gateway data processing charges",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html",
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 24,
       "domain": 3,
       "sequence": 164,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "A"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
-      "wrongOptions": {
-        "A": "Provisional selection: Use Amazon CloudWatch Logs Insights to query the logs and determine the internet destinations that the EC2 instances communicate with. Use AWS Network Firewall to blockthe websites.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Use Amazon CloudWatch Logs Insights to query the logs and determine the internet destinations that the EC2 instances communicate with. Use AWS WAF to block the websites.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Use the BytesInFromSource and BytesInFromDestination Amazon CloudWatch metrics to determine the internet destinations that the EC2 instances communicate with. Use AWS Network Firewall to block the websites.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Use the BytesInFromSource and BytesInFromDestination Amazon CloudWatch metrics to determine the internet destinations that the EC2 instances communicate with. Use AWS WAF to block the websites.. Technical assessment still pending; not a verified right/wrong judgement."
-      },
-      "memoryTip": "Key topic: has multiple applications that run on Amazon EC2 instances in private subnets in a VPC. The company has deploy…",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "VPC flow logs queried via CloudWatch Logs Insights identify destination IPs; Network Firewall supports domain filtering for outbound traffic.",
+      "wrongOptions": {},
+      "memoryTip": "VPC flow logs queried via CloudWatch Logs Insights identify destination IPs",
       "awsReferences": [
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/network-firewall/latest/developerguide/stateful-rule-groups-domain-names.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 27,
       "domain": 3,
       "sequence": 165,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "C"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "validity": "ambiguous",
+      "reasoning": "A provides reserved concurrency and failover but Trusted Advisor ServiceLimitUsage is not necessarily the correct direct Lambda concurrency utilization alarm; C monitors ConcurrentExecutions but provisioned concurrency doesn't protect against account-wide exhaustion. Options combine partial fixes.",
       "wrongOptions": {
-        "A": "Alternative: Set reserved concurrency on the web application Lambda functions. Implement Route 53 health checks and failover records to route traffic to the secondary Region. Configure the CloudWatch alarm to use the AWS Trusted Advisor ServiceLimitUsage metric and to send the SNS notification.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Set reserved concurrency on the web application Lambda functions. Implement Route 53 health checks and latency records to route traffic to the secondary Region. Configure the CloudWatch alarm to use the AWS Trusted Advisor ServiceLimitUsage metric and to send an SNS notification.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Set provisioned concurrency on the web application Lambda functions. Implement Route 53 health checks and failover records to route traffic to the secondary Region. Configure the CloudWatch alarm to use the Lambda ConcurrentExecutions metric and to send an SNS notification.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Set provisioned concurrency on the web application Lambda functions. Implement Route 53 health checks and geolocation records to route traffic to the secondary Region. Configure the CloudWatch alarm to use the Lambda ProvisionedConcurrencyInvocations metric and to send an SNS notification.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "good reserved concurrency and failover but metric caveat",
+        "B": "latency policy isn't active-passive failover",
+        "C": "provisioned concurrency does not guarantee isolation against account concurrency",
+        "D": "geolocation isn't failover and metric is wrong."
       },
-      "memoryTip": "Key topic: A company’s web application uses an Amazon API Gateway API, AWS Lambda functions, and Amazon DynamoDB global t…",
+      "memoryTip": "A provides reserved concurrency and failover but Trusted Advisor ServiceLimitUsage is not necessarily the correct direct Lambda concurrency utilization alarm",
       "awsReferences": [
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
-        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Source question underspecified/outdated; not confirmed."
     },
     {
       "id": 31,
       "domain": 3,
       "sequence": 166,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "sourceAnswer": [
         "C"
       ],
       "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "validity": "ambiguous",
+      "reasoning": "C AWS Compute Optimizer is intended but 'at least 12 hours' is insufficient for normal EC2 recommendations; generally needs 30 hours metrics and uses 14-day historical analysis. Needs correction.",
       "wrongOptions": {
-        "A": "Alternative: Create a dashboard by using AWS Systems Manager OpsConter Configure visualizations tor Amazon CloudWatch metrics that are associated with the EC2 instances and their EBS volumes Review the dashboard periodically and identify usage patterns Right size the EC2 instances based on the peaks in the metrics. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Turn on Amazon CloudWatch detailed monitoring for the EC2 instances and their EBS volumes Create and review a dashboard that is based on the metrics Identify usage patterns Right size the FC? instances based on the peaks In the metrics. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Install the Amazon CloudWatch agent on each of the EC2 Instances Turn on AWS Compute Optimizer, and let it run for at least 12 hours Review the recommendations from Compute Optimizer, and right size the EC2 instances as directed. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Sign up for the AWS Enterprise Support plan Turn on AWS Trusted Advisor Wait 12 hours Review the recommendations from Trusted Advisor, and rightsize the EC2 instances as directed. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "manual dashboards may miss efficiency patterns",
+        "B": "detailed monitoring costs extra and manual",
+        "C": "best product but 12-hour timeline unsupported",
+        "D": "Enterprise Support unnecessary and 12-hour Trusted Advisor claim unsupported."
       },
-      "memoryTip": "Key topic: must analyze a company's Amazon EC2 Instances and Amazon Elastic Block Store (Amazon EBS) volumes to determine…",
+      "memoryTip": "C AWS Compute Optimizer is intended but 'at least 12 hours' is insufficient for normal EC2 recommendations",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/requirements.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Source question underspecified/outdated; not confirmed."
     },
     {
       "id": 32,
       "domain": 3,
       "sequence": 167,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C",
         "E"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "C",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "Abort incomplete multipart uploads after 7 days and transition infrequently accessed videos to Standard-IA after 180 days.",
       "wrongOptions": {
-        "A": "Alternative: Configure the S3 bucket to be a Requester Pays bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Use S3 Transfer Acceleration to upload the videos to the S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create an S3 Lifecycle configuration to expire incomplete multipart uploads 7 days after initiation.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create an S3 Lifecycle configuration to transition objects to S3 Glacier Instant Retrieval after 1 day.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Provisional selection: Create an S3 Lifecycle configuration to transition objects to S3 Standard-Infrequent Access (S3 Standard-IA) after 180 days.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "Requester Pays cannot serve anonymous users and shifts cost",
+        "B": "Transfer Acceleration adds fees and doesn't primarily optimize storage",
+        "D": "early archive conflicts with frequent access."
       },
-      "memoryTip": "Key topic: has an application that stores user-uploaded videos in an Amazon S3 bucket that uses S3 Standard storage. User…",
+      "memoryTip": "Abort incomplete multipart uploads after 7 days and transition infrequently accessed videos to Standard-IA after 180 days.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 34,
       "domain": 3,
       "sequence": 168,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-technical-validation",
-      "reasoning": "Verify rate-based WAF rule and CloudWatch alarm action implementation.",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Shield Advanced can add managed application-layer DDoS protections for ALB and WAF; source C route-table per-IP deny is not supported.",
       "wrongOptions": {
-        "A": "Alternative: Create an Amazon CloudWatch alarm that monitors server access. Set a threshold based on access by IP address. Configure an alarm action that adds the IP address to the web ACL’s deny list.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Deploy AWS Shield Advanced in addition to AWS WAF. Add the ALB as a protected resource.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create an Amazon CloudWatch alarm that monitors user IP addresses. Set a threshold based on access by IP address. Configure the alarm to invoke an AWS Lambda function to add a deny rule in the application server’s subnet route table for any IP addresses that activate the alarm.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Inspect access logs to find a pattern of IP addresses that launched the attacks. Use an Amazon Route 53 geolocation routing policy to deny traffic from the countries that host those IP addresses.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "CloudWatch alarms don't directly mutate WAF rules",
+        "C": "route tables do not provide source-IP deny entries",
+        "D": "Route 53 geolocation is not an IP blocking firewall."
       },
-      "memoryTip": "Key topic: has a website that runs on Amazon EC2 instances behind an Application Load Balancer (ALB). The instances are i…",
+      "memoryTip": "Shield Advanced can add managed application-layer DDoS protections for ALB and WAF",
       "awsReferences": [
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/waf/latest/developerguide/ddos-advanced-automatic-app-layer-response.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 35,
       "domain": 3,
       "sequence": 169,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Systems Manager State Manager associations enforce periodic installation and configuration at fleet scale.",
       "wrongOptions": {
-        "A": "Alternative: Create an AWS Lambda function that is invoked on a schedule. Store a machine list in Amazon S3. Configure the Lambda function to log in to every machine, download and install the most recent version of the agent, and configure the agent.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Implement an AWS Config rule with auto remediation that uses AWS Lambda for noncompliant events. Develop a Lambda function to access machines and download and install the most recent agent version. Schedule the Lambda function to invoke daily.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create an AWS Systems Manager document that defines the agent installation and configuration process. Configure AWS Systems Manager State Manager to associate the document with EC2 instances. Apply the desired state on a daily schedule.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Log in to EC2 instances by using AWS Systems Manager Session Manager. Update the EC2 user data script to download and install the most recent agent and configure the agent. Reboot all EC2 instances to ensure that the script applies successfully.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "custom login Lambda cannot reliably manage 10000 instances",
+        "B": "Config custom remediation adds code",
+        "D": "user data generally runs on first boot, not every reboot."
       },
-      "memoryTip": "Key topic: migrated its antivirus solution for 10,000 Amazon EC2 instances to a new software as a service SaaS solution. …",
+      "memoryTip": "Systems Manager State Manager associations enforce periodic installation and configuration at fleet scale.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-state.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     },
     {
       "id": 37,
       "domain": 3,
       "sequence": 170,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "reviewed",
       "sourceAnswer": [
         "D"
       ],
-      "verifiedAnswer": null,
-      "validity": "requires-option-validation",
-      "reasoning": "Source answer captured for comparison. Technical correctness, wrong options, and AWS documentation have not yet been verified.",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS WAF IP allowlist plus API Gateway usage plan/API keys constrains six known partners and rate quotas.",
       "wrongOptions": {
-        "A": "Alternative: Create an Amazon CloudFront distribution with the API as the origin. Create an AWS WAF web ACL with a rule lo block clients thai submit more than fiverequests per day. Associate the web ACL with the CloudFront distnbution. Configure CloudFront with an origin access identity (OAI) and associate it with the distribution. Configure API Gateway to ensure only the OAI can run the POST method.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create an Amazon CloudFront distribution with the API as the origin. Create an AWS WAF web ACL with a rule to block clients that submit more than five requests per day. Associate the web ACL with the CloudFront distnbution. Add a custom header to the CloudFront distribution populated with an API key. Configure the API to require an API key on the POST method.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create an AWS WAF web ACL with a rule to allow access to the IP addresses used by the six partners. Associate the web ACL with the API. Create a resource policy with a request limit and associate it with the API. Configure the API to require an API key on the POST method.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Create an AWS WAF web ACL with a rule to allow access to the IP addresses used by the six partners. Associate the web ACL with the API. Create a usage plan with a request limit and associate it with the API. Create an API key and add it to the usage plan.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "origin access identity only works for S3 origins",
+        "B": "CloudFront shared API key does not authenticate six partners individually",
+        "C": "API Gateway resource policies don't define request-rate limits."
       },
-      "memoryTip": "Key topic: is creating a REST API to share information with six of its partners based in the United States. The company h…",
+      "memoryTip": "AWS WAF IP allowlist plus API Gateway usage plan/API keys constrains six known partners and rate quotas.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Reviewed against service behavior; reference linked."
     }
   ]
 }
