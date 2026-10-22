@@ -19,7 +19,7 @@ const auditedCount = AUDITS.size;
 const flaggedCount = [...AUDITS.values()].filter(a=>!a.verifiedAnswer?.length).length;
 // Curated from explicit retired/discontinued/deprecated-service concerns in preliminary audit notes.
 // This is a review queue, not a complete or independently verified list of outdated questions.
-const OUTDATED_CANDIDATE_IDS = new Set(outdatedReview.items.map(item=>item.id));
+const OUTDATED_CANDIDATE_IDS = new Set(outdatedReview.items.filter(item=>item.category!=='discontinuation-claim-unsubstantiated').map(item=>item.id));
 const OUTDATED_REVIEWS = new Map(outdatedReview.items.map(item=>[item.id,item]));
 const QUESTIONS = raw as Question[];
 function effectiveAnswers(q:Question){const a=AUDITS.get(q.id);return a?.verifiedAnswer?.length?a.verifiedAnswer:[];}
