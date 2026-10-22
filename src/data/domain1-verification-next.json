@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "100 preliminary records revisited: all 100 have option text annotations and topic reference links; 3 upgraded to reviewed (Q61,Q603,Q666), 97 remain preliminary. Reference links for preliminary records are navigation aids, not validation. Prior preliminary guesses cleared from verifiedAnswer.",
+  "notes": "20-question validation pass completed (IDs 553 through 611, excluding previously reviewed 603). 18 answers reviewed, 2 flagged unresolved (567,597). Prior preliminary batch remains for further review.",
   "items": [
     {
       "id": 12,
@@ -1455,17 +1455,143 @@
       "id": 553,
       "domain": 1,
       "sequence": 71,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "XKS keeps key material in customer-operated in-country HSMs; Control Tower Region deny is preventive.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "XKS uses external customer HSMs; Region deny is preventive.",
       "wrongOptions": {
-        "A": "Provisional selection: Use an AWS KMS external key store (XKS) backed by the company’s in-country HSMs for encryption. Apply an AWS Control Tower Region deny control to the relevant OUs to deny actions outside the approved Regions.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Use AWS KMS multi-Region keys for all encryption. Use AWS Config rules to detect resources that are created outside the approved Regions.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Use an AWS KMS custom key store backed by an AWS CloudHSM cluster deployed in one approved Region. Apply separate IAM policies in each account. Configure the policies to deny actions outside the approved Regions by using the aws:RequestedRegion condition key.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Use standard AWS KMS customer managed keys for encryption. Apply an AWS Control Tower Region deny control to the relevant OUs to deny actions outside the approved Regions.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "detects after deployment and uses AWS keys",
+        "C": "CloudHSM is AWS-hosted and IAM per account",
+        "D": "lacks customer-operated HSM root of trust."
       },
-      "memoryTip": "XKS keeps key material in customer-operated in-country HSMs",
+      "memoryTip": "XKS uses external customer HSMs",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/kms/latest/developerguide/keystore-external.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
+    },
+    {
+      "id": 554,
+      "domain": 1,
+      "sequence": 72,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Lambda authorizer supports third-party OAuth token validation on HTTP API routes.",
+      "wrongOptions": {
+        "B": "Directory Service is not an HTTP API authorizer",
+        "C": "IAM Identity Center is not a zero-config HTTP API authorizer",
+        "D": "IAM users/request parameters do not validate OAuth tokens."
+      },
+      "memoryTip": "Lambda authorizer supports third-party OAuth token validation on HTTP API routes.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-lambda-authorizer.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
+    },
+    {
+      "id": 557,
+      "domain": 1,
+      "sequence": 73,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "SCP with s3:AccessPointNetworkOrigin condition governs access point creation organization-wide.",
+      "wrongOptions": {
+        "A": "access point policy cannot govern its own creation",
+        "C": "account IAM deployments are more work and don't override existing allows",
+        "D": "bucket policy is not organization-wide CreateAccessPoint enforcement."
+      },
+      "memoryTip": "SCP with s3:AccessPointNetworkOrigin condition governs access point creation organization-wide.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
+    },
+    {
+      "id": 558,
+      "domain": 1,
+      "sequence": 74,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Control Tower detective RDS encryption control is applied to production OU.",
+      "wrongOptions": {
+        "A": "mandatory controls are not a selectable RDS encryption check",
+        "C": "cannot create mandatory controls ad hoc",
+        "D": "SCP does not detect existing unencrypted RDS instances."
+      },
+      "memoryTip": "Control Tower detective RDS encryption control is applied to production OU.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/controltower/latest/controlreference/rds-rules.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
+    },
+    {
+      "id": 559,
+      "domain": 1,
+      "sequence": 75,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Explicit deny on secret resource policies blocks external and internal readers.",
+      "wrongOptions": {
+        "A": "SCP on Account A does not restrict external principals in Account B",
+        "C": "endpoint policy covers only traffic via that endpoint",
+        "D": "does not revoke all other access."
+      },
+      "memoryTip": "Explicit deny on secret resource policies blocks external and internal readers.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_resource-policies.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
+    },
+    {
+      "id": 561,
+      "domain": 1,
+      "sequence": 76,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Dedicated EU processing and storage plus SCP Region restrictions is best available preventive design; geographic routing alone is not a residency guarantee.",
+      "wrongOptions": {
+        "B": "global processing and IAM-only controls lack sovereignty enforcement",
+        "C": "Config is detective",
+        "D": "latency routing can route EU traffic outside EU and monitoring is not preventive."
+      },
+      "memoryTip": "Dedicated EU processing and storage plus SCP Region restrictions is best available preventive design",
       "awsReferences": [
         "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
       ],
@@ -1473,306 +1599,180 @@
       "sourceAnswer": [
         "A"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
-    },
-    {
-      "id": 554,
-      "domain": 1,
-      "sequence": 72,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "HTTP API Lambda authorizer can validate external OAuth bearer tokens; native JWT authorizer may be simpler when issuer supports it.",
-      "wrongOptions": {
-        "A": "Provisional selection: Integrate the company's third-party identity provider with API Gateway. Configure an API Gateway Lambda authorizer to validate tokens from the identity provider. Require the Lambda authorizer on all API routes. Update the web application to get tokens from the identity provider and include the tokens in the Authorization header when calling the API Gateway HTTP API.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Integrate the company's third-party identity provider with AWS Directory Service. Configure Directory Service as an API Gateway authorizer to validate tokens from the identity provider. Require the Directory Service authorizer on all API routes. Configure AWS IAM Identity Center as a SAML 2.0 identity provider. Configure the web application as a custom SAML 2.0 application.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Integrate the company's third-party identity provider with AWS IAM Identity Center. Configure API Gateway to use IAM Identity Center for zero-configuration authentication and authorization. Update the web application to retrieve AWS STS tokens from IAM Identity Center and include the tokens in the Authorization header when calling the API Gateway HTTP API.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Integrate the company's third-party identity provider with AWS IAM Identity Center. Configure IAM users with permissions to call the API Gateway HTTP API. Update the web application to extract request parameters from the IAM users and include the parameters in the Authorization header when calling the API Gateway HTTP API.. Technical assessment still pending; not a verified right/wrong judgement."
-      },
-      "memoryTip": "HTTP API Lambda authorizer can validate external OAuth bearer tokens",
-      "awsReferences": [
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
-        "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
-      ],
-      "reviewedAt": "2026-10-22",
-      "sourceAnswer": [
-        "A"
-      ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
-    },
-    {
-      "id": 557,
-      "domain": 1,
-      "sequence": 73,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Organizations SCP can prevent S3 access point creation without VPC network origin.",
-      "wrongOptions": {
-        "A": "Alternative: Set the S3 access point resource policy to deny the s3 CreateAccessPoint action unless the s3: AccessPointNetworkOngm condition key evaluates to VPC.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create an SCP at the root level in the organization to deny the s3 CreateAccessPoint action unless the s3 AccessPomtNetworkOngin condition key evaluates to VPC.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Use AWS CloudFormation StackSets to create a new 1AM policy in each AVVS account that allows the s3: CreateAccessPoint action only if the s3 AccessPointNetworkOrigin condition key evaluates to VPC.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Set the S3 bucket policy to deny the s3: CreateAccessPoint action unless the s3AccessPointNetworkOrigin condition key evaluates to VPC.. Technical assessment still pending; not a verified right/wrong judgement."
-      },
-      "memoryTip": "Organizations SCP can prevent S3 access point creation without VPC network origin.",
-      "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
-      ],
-      "reviewedAt": "2026-10-22",
-      "sourceAnswer": [
-        "B"
-      ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
-    },
-    {
-      "id": 558,
-      "domain": 1,
-      "sequence": 74,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Control Tower detective RDS encryption control applies at production OU scope.",
-      "wrongOptions": {
-        "A": "Alternative: Turn on mandatory guardrails in AWS Control Tower. Apply the mandatory guardrails to the production OU.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Enable the appropriate guardrail from the list of strongly recommended guardrails in AWS Control Tower. Apply the guardrail to the production OU.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Use AWS Config to create a new mandatory guardrail. Apply the rule to all accounts in the production OU.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create a custom SCP in AWS Control Tower. Apply the SCP to the production OU.. Technical assessment still pending; not a verified right/wrong judgement."
-      },
-      "memoryTip": "Control Tower detective RDS encryption control applies at production OU scope.",
-      "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
-      ],
-      "reviewedAt": "2026-10-22",
-      "sourceAnswer": [
-        "B"
-      ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
-    },
-    {
-      "id": 559,
-      "domain": 1,
-      "sequence": 75,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Secret resource policy explicit deny applies to both organization and external principals; SCP alone cannot deny outside organization.",
-      "wrongOptions": {
-        "A": "Alternative: Create an SCP to explicitly deny the secretsmanager:GetSecretValue action for all resources. Attach the SCP to Account A.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Modify the resource policies of the secrets in Account A to explicitly deny the secretsmanagenGetSecretValue action to all principals.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Deploy a VPC endpoint for Secrets Manager in Account A. Update the VPC endpoint policy to explicitly deny the secretsmanagenGetSecretValue action to all principals.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Modify the 1AM role inline policies in Account B to explicitly deny the secretsmanager:GetSecretValue action for all secrets in Account A.. Technical assessment still pending; not a verified right/wrong judgement."
-      },
-      "memoryTip": "Secret resource policy explicit deny applies to both organization and external principals",
-      "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html"
-      ],
-      "reviewedAt": "2026-10-22",
-      "sourceAnswer": [
-        "B"
-      ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
-    },
-    {
-      "id": 561,
-      "domain": 1,
-      "sequence": 76,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Separate EU stack plus Region SCP best among options; geolocation DNS alone does not guarantee residency for traveling users or proxies.",
-      "wrongOptions": {
-        "A": "Provisional selection: Deploy separate EU and non-EU processing stacks by using API Gateway and Lambda. Use Amazon Route 53 geolocation routing to send EU uploads to EU endpoints. Store EU media in Amazon S3 in EU Regions. Store EU metadata in DynamoDB in EU Regions. Enforce Region restrictions by using Organizations SCPs.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Deploy a single global API Gateway endpoint that invokes Lambda functions in multiple Regions. Use Amazon Route 53 geolocation routing for EU uploads. Store EU media in an S3 bucket in the eu-west-1 Region. Store EU metadata in a DynamoDB table in the same Region. Restrict access by using IAM policies.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Deploy API Gateway and Lambda workloads only in EU Regions for all customer uploads. Use Amazon Route 53 geolocation routing for EU uploads. Store EU media in Amazon S3 in EU Regions. Store EU metadata in DynamoDB in EU Regions. Use AWS Config rules to detect resources that are deployed outside EU Regions.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Deploy separate EU and non-EU processing stacks by using API Gateway and Lambda. Use Amazon Route 53 latency-based routing to send requests to the nearest endpoint. Store EU media in Amazon S3 in EU Regions. Store EU metadata in DynamoDB in EU Regions. Use AWS Control Tower controls to monitor deployments outside EU Regions.. Technical assessment still pending; not a verified right/wrong judgement."
-      },
-      "memoryTip": "Separate EU stack plus Region SCP best among options",
-      "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html"
-      ],
-      "reviewedAt": "2026-10-22",
-      "sourceAnswer": [
-        "A"
-      ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 565,
       "domain": 1,
       "sequence": 77,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "API Gateway HTTP API direct SQS integration buffers bursts and Lambda processes messages; ALB cannot target SQS. Source A is incorrect.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "corrected-source-key",
+      "reasoning": "API Gateway HTTP API integrates with SQS SendMessage; queue buffers bursts for Lambda consumers.",
       "wrongOptions": {
-        "A": "Alternative: Create an Application Load Balancer (ALB) for the RESTful API Create an Amazon Simple Queue Service (Amazon SQS) queue Create a listener and a target group for the ALB Add the SQS queue as the target Use a container that runs in Amazon Elastic Container Service (Amazon ECS) with the Fargate launch type to process messages in the queue. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Create an Amazon API Gateway HTTP API that implements the RESTful API Create an Amazon Simple Queue Service (Amazon SQS) queue Create an API Gateway service integration with the SQS queue Create an AWS Lambda function toprocess messages in the SQS queue. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Create an Amazon API Gateway REST API that implements the RESTful API Create a fleet of Amazon EC2 instances in an Auto Scaling group Create an API Gateway Auto Scaling group proxy integration Use the EC2 instances to process incoming data. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create an Amazon CloudFront distribution for the RESTful API Create a data stream in Amazon Kinesis Data Streams Set the data stream as the origin for the distribution Create an AWS Lambda function to consume and process data in the data stream. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "ALB cannot directly target SQS",
+        "C": "synchronous EC2 integration lacks durable buffering and claimed ASG proxy integration",
+        "D": "CloudFront cannot use Kinesis stream as origin."
       },
-      "memoryTip": "API Gateway HTTP API direct SQS integration buffers bursts and Lambda processes messages",
-      "awsReferences": [],
+      "memoryTip": "API Gateway HTTP API integrates with SQS SendMessage",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html"
+      ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "A"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 567,
       "domain": 1,
       "sequence": 78,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Patched AMI, launch template update and instance refresh solve unpatched replacements; second choice C adds ALB but is not intrinsically required for patch freshness.",
+      "validity": "ambiguous",
+      "reasoning": "D is essential (patched AMIs and instance refresh); C is an optional ALB health-check measure but does not directly guarantee patched launches. The stem demands TWO; no defensible second option is unambiguously necessary.",
       "wrongOptions": {
-        "A": "Alternative: Configure the Auto Scaling group termination policy to use the OldestLaunchTemplate setting.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create a new Auto Scaling group before the next patch maintenance window. Patch and reboot instances in both Auto Scaling groups during the next maintenance window.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Deploy an Application Load Balancer (ALB) in front of the Auto Scaling group. Monitor target group health after instance replacement.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Use AWS Systems Manager to automatically produce patched AMIs. Update the Auto Scaling group launch template. Initiate an instance refresh for the Auto Scaling group.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Alternative: Deploy a Network Load Balancer (NLB) in front of the Auto Scaling group. Configure termination protection for the instances.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "termination policy doesn't patch AMIs",
+        "B": "patches ephemeral instances rather than launch image",
+        "C": "supports health monitoring but is not patch assurance",
+        "E": "NLB and termination protection don't update launch image."
       },
-      "memoryTip": "Patched AMI, launch template update and instance refresh solve unpatched replacements",
+      "memoryTip": "D is essential (patched AMIs and instance refresh)",
       "awsReferences": [
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/instance-refresh-overview.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C",
         "D"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Question requires further source validation; do not score as confirmed."
     },
     {
       "id": 568,
       "domain": 1,
       "sequence": 79,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "NLB cross-zone off and zonal interface endpoint DNS minimize cross-AZ data transfers.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Disable NLB cross-zone routing and use local AZ endpoint DNS to reduce inter-AZ PrivateLink data transfer.",
       "wrongOptions": {
-        "A": "Alternative: Use AWS Resource Access Manager to share the subnets that host the service provider applications with other accounts in the organization.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Place the service provider applications and the service consumer applications in AWS accounts in the same organization.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Turn off cross-zone load balancing for the Network Load Balancer in all service provider application deployments.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Ensure that service consumer compute resources use the Availability Zone-specific endpoint service by using the endpoint's local DNS name.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Alternative: Create a Savings Plan that provides adequate coverage for the organization's planned inter-Availability Zone data transfer usage.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "subnet sharing is not relevant across separate Organizations and not needed for PrivateLink",
+        "B": "same organization does not eliminate data transfer",
+        "E": "Savings Plans do not cover cross-AZ data transfer."
       },
-      "memoryTip": "NLB cross-zone off and zonal interface endpoint DNS minimize cross-AZ data transfers.",
+      "memoryTip": "Disable NLB cross-zone routing and use local AZ endpoint DNS to reduce inter-AZ PrivateLink data transfer.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/interface-endpoints.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C",
         "D"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 569,
       "domain": 1,
       "sequence": 80,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "ECR scan-on-push results can trigger EventBridge remediation and SNS notification; tag deletion behavior must be checked against ECR image manifest retention.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "ECR scan-on-push finding events can drive EventBridge remediation workflow and SNS notification.",
       "wrongOptions": {
-        "A": "Provisional selection: Configure scan on push on the repository Use Amazon EventBridge to invoke an AWS Step Functions state machine when a scan is complete for images that have Critical or High severity findings. Use the Step Functions state machine to delete the image tag for those images and to notify the development team through Amazon Simple Notification Service (Amazon SNS).. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Configure scan on push on the repository Configure scan results to be pushed to an Amazon Simple Queue Service (Amazon SQS) queue. Invoke an AWS Lambda function when a new message is added to the SQS queue. Use the Lambda function to delete the image tag for images that have Critical or High seventy findings. Notify the development team by using Amazon Simple Email Service (Amazon SES).. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Schedule an AWS Lambda function to start a manual image scan every hour. Configure Amazon EventBridge to invoke another Lambda function when a scan is complete. Use the second Lambda function to delete the image tag for images that have Critical or High severity findings. Notify the development team by using Amazon Simple Notification Service (Amazon SNS).. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Configure periodic image scan on the repository. Configure scan results to be added lo an Amazon Simple Queue Service (Amazon SQS) queue. Invoke an AWS Step Functions state machine when a new message is added to the SQS queue. Use the Step Functions state machine to delete the image tag for imagesthat have Critical or High severity findings. Notify the development team by using Amazon Simple Email Service (Amazon SES…. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "and D assume native SQS scan-result delivery",
+        "C": "hourly manual scans add delay and overhead."
       },
-      "memoryTip": "ECR scan-on-push results can trigger EventBridge remediation and SNS notification",
+      "memoryTip": "ECR scan-on-push finding events can drive EventBridge remediation workflow and SNS notification.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "A"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 577,
       "domain": 1,
       "sequence": 81,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "CloudFormation Hooks enforce pre-provision checks; Lambda hook per rule and StackSets may be more operational overhead than Guard-based hooks.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudFormation Hooks block noncompliant provisioning before stack operations; choose FAIL mode.",
       "wrongOptions": {
-        "A": "Alternative: Implement each configuration rule as a separate AWS Config custom AWS Lambda rule. Deploy the Lambda functions to the company's production account. Implement SCPs to prevent changes to the Lambda functions and to deny any operation that could disable AWS Config or its rules or triggers in the production account.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Use CloudFormation Hooks to implement the configuration rules. Use a separate AWS Lambda function to enforce each rule. Use CloudFormation StackSets to deploy and register Hooks across all member accounts in the organization. Use SCPs and IAM policies to prevent Hook modifications and Lambda function changes in member accounts.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Implement the configuration rules as an AWS Lambda function. Configure a CloudFormation macro definition to make the Lambda function available to CloudFormation. Configure the function to check the CloudFormation template against the configuration rules. Use the macro in all CloudFormation deployment templates.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Implement the configuration rules by using AWS CloudFormation Guard rules. Use the cfn-guard-lambda command to install Guard as an AWS Lambda function. Build and run Guard by invoking the Lambda function. Provide the CloudFormation template and the rule set as inputs to the function.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "Config detects after provisioning",
+        "C": "macro must be included in each template and can be omitted",
+        "D": "Guard Lambda invocation outside enforced Hooks does not inherently block stack creation."
       },
-      "memoryTip": "CloudFormation Hooks enforce pre-provision checks",
+      "memoryTip": "CloudFormation Hooks block noncompliant provisioning before stack operations",
       "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html"
+        "https://docs.aws.amazon.com/cloudformation-cli/latest/hooks-userguide/creating-and-managing-hooks.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 580,
       "domain": 1,
       "sequence": 82,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Empty S3 bucket via custom resource before CloudFormation deletion; caller role must have delete-object permissions.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Custom resource empties S3 bucket on stack deletion; deletion role must be authorized to remove objects.",
       "wrongOptions": {
-        "A": "Provisional selection: Associate an AWS Lambda function with a CloudFormation custom resource to delete all keys that are present in a given S3 bucket. Implement this custom resource as part of the application's CloudFormation template.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Modify the S3 bucket resource in the CloudFormation template by specifying Delete for the DeletionPolicy attribute. Specify the CAPABILITY_DELETE_NONEMPTY capability to process CloudFormation delete operations.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Modify the S3 bucket resource in the CloudFormation template by specifying Retain for the DeletionPolicy attribute. Configure an AWS Config custom rule to run every 24 hours to identify, empty, and delete buckets that are no longer owned by a CloudFormation stack.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Provisional selection: Ensure that CloudFormation operations are being invoked by a role that has s3:DeleteObject permissions on all objects in the bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Alternative: Modify the S3 bucket resource in the CloudFormation template to configure a bucket policy that grants s3:DeleteObject permissions on all objects in the bucket.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "CAPABILITY_DELETE_NONEMPTY does not exist",
+        "C": "retain plus delayed cleanup obstructs same-name reuse",
+        "E": "bucket policy alone cannot empty the bucket."
       },
-      "memoryTip": "Empty S3 bucket via custom resource before CloudFormation deletion",
+      "memoryTip": "Custom resource empties S3 bucket on stack deletion",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html",
-        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html"
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "A",
         "D"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 582,
       "domain": 1,
       "sequence": 83,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Cross-account assume-role into production account with S3 permissions and dev group AssumeRole.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "Create production-side S3-access role trusted by development account; development group may assume it.",
       "wrongOptions": {
-        "A": "Provisional selection: In the production account, create a new IAM policy that allows read and write access to the S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: In the development account, create a new IAM policy that allows read and write access to the S3 bucket.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: In the production account, create a role. Attach the new policy to the role. Define the development account as a trusted entity.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: In the development account, create a role. Attach the new policy to the role. Define the production account as a trusted entity.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Provisional selection: In the development account, create a group that contains all the IAM users of the design team. Attach a different IAM policy to the group to allow the sts:AssumeRole action on the role in the production account.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "F": "Alternative: In the development account, create a group that contains all tfje IAM users of the design team. Attach a different IAM policy to the group to allow the sts;AssumeRole action on the role in the development account.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "dev-side policy alone does not confer production S3 access",
+        "D": "role is created in wrong account"
       },
-      "memoryTip": "Cross-account assume-role into production account with S3 permissions and dev group AssumeRole.",
+      "memoryTip": "Create production-side S3-access role trusted by development account",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
@@ -1780,132 +1780,128 @@
         "C",
         "E"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 585,
       "domain": 1,
       "sequence": 84,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "ALB authenticate-cognito action can use Cognito user pool with MFA for restricted web access.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "ALB listener authenticate-cognito with Cognito user pool MFA protects web app.",
       "wrongOptions": {
-        "A": "Provisional selection: Create a user pool in Amazon Cognito. Configure the pool for the application. Populate the pool with the required users. Configure the pool to require MFA.Configure a listener rule on the ALB to require authentication through the Amazon Cognito hosted UI.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Configure the users in AWS Identity and Access Management (IAM). Attach a resource policy to the Fargate service to require users to use MFA. Configure alistener rule on the ALB to require authentication through IAM.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Configure the users in AWS Identity and Access Management (IAM). Enable AWS IAM Identity Center (AWS Single Sign-On). Configure resource protection forthe ALB. Create a resource protection rule to require users to use MFA.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create a user pool in AWS Amplify. Configure the pool for the application. Populate the pool with the required users. Configure the pool to require MFA.Configure a listener rule on the ALB to require authentication through the Amplify hosted UI.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "IAM role policy cannot enforce browser login on Fargate resource",
+        "C": "IAM Identity Center is not native ALB auth action",
+        "D": "Amplify does not create user pools."
       },
-      "memoryTip": "ALB authenticate-cognito action can use Cognito user pool with MFA for restricted web access.",
+      "memoryTip": "ALB listener authenticate-cognito with Cognito user pool MFA protects web app.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html"
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "A"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 589,
       "domain": 1,
       "sequence": 85,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Read-only cross-account role in each member account trusted by central security account.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Security account assumes dedicated read-only roles in member accounts.",
       "wrongOptions": {
-        "A": "Alternative: Use the OrganizationAccountAccessRole IAM role to create a new IAM policy with read- only access in each member account. Establish a trust relationship between the IAM policy in each member account and the security account. Ask the security team to use the IAM policy to gain access.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Use the Organization AccountAccessRole IAM role to create a new IAM role with read- only access in each member account. Establish a trust relationship between the IAM role in each member account and the security account. Ask the security team to use the IAM role to gain access.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Ask the security team to use AWS Security Token Service (AWS STS) lo call the AssumeRole API tor the Organization AccountAccessRole IAM role in the management account from the security account. Use the generated temporary credentials to gain access.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Ask the security team to use AWS Security Token Service (AWS STS) to call the AssumeRole API for the Organization AccountAccessRole IAM role in the member account from the security account. Use the generated temporary credentials to gain access.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "IAM policy is not assumable role",
+        "C": "OrganizationAccountAccessRole grants excessive admin permissions.",
+        "D": "OrganizationAccountAccessRole grants excessive admin permissions."
       },
-      "memoryTip": "Read-only cross-account role in each member account trusted by central security account.",
+      "memoryTip": "Security account assumes dedicated read-only roles in member accounts.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 593,
       "domain": 1,
       "sequence": 86,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "SAML STS session tag with IAM ABAC resource-tag conditions isolates shared production account by development unit.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "SAML session tags and IAM principal/resource-tag ABAC enforce team separation inside shared account.",
       "wrongOptions": {
-        "A": "Alternative: Create separate OUs in AWS Organizations for each development unit. Assign the created OUs to the company AWS accounts. Create separate SCPs with a deny action and a StringNotEquals condition for the DevelopmentUnit resource tag that matches the development unit name. Assign the SCP to the corresponding OU.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Provisional selection: Pass an attribute for DevelopmentUnit as an AWS Security Token Service (AWS STS) session tag during SAML federation. Update the IAM policy for the developers' assumed IAM role with a deny action and a StringNotEquals condition for the DevelopmentUnit resource tag and aws:PrincipalTag/ DevelopmentUnit.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Pass an attribute for DevelopmentUnit as an AWS Security Token Service (AWS STS) session tag during SAML federation. Create an SCP with an allow action and a StringEquals condition for the DevelopmentUnit resource tag and aws:PrincipalTag/DevelopmentUnit. Assign the SCP to the root OU.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create separate IAM policies for each development unit. For every IAM policy, add an allow action and a StringEquals condition for the DevelopmentUnit resource tag and the development unit name. During SAML federation, use AWS Security Token Service (AWS STS) to assign the IAM policy and match the development unit name to the assumed IAM role.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "OUs organize accounts, not teams sharing same production account",
+        "C": "SCP cannot grant access",
+        "D": "fixed policies are less scalable and omit principal-tag binding."
       },
-      "memoryTip": "SAML STS session tag with IAM ABAC resource-tag conditions isolates shared production account by development unit.",
+      "memoryTip": "SAML session tags and IAM principal/resource-tag ABAC enforce team separation inside shared account.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_session-tags.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "B"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 597,
       "domain": 1,
       "sequence": 87,
-      "verificationStatus": "preliminary-review",
+      "verificationStatus": "needs-source-repair",
       "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Glue classifier and ETL can process sensitive PAN data; exact output compliance needs confirmation from full stem.",
-      "wrongOptions": {
-        "A": "Alternative: Trigger an AWS Lambda function on file delivery that extracts each record and writes it to an Amazon SQS queue. Trigger another Lambda function when new messages arrive in the SQS queue to process the records, writing the results to a temporary location in Amazon S3. Trigger a final Lambda function once the SQS queue is empty to transform the records into JSON format and send the results to another S3 bucket for inte…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Trigger an AWS Lambda function on file delivery that extracts each record and writes it to an Amazon SQS queue. Configure an AWS Fargate container application to automatically scale to a single instance when the SQS queue contains messages. Have the application process each record, and transform the record into JSON format. When the queue is empty, send the results to another S3bucket for internal processing and scal…. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create an AWS Glue crawler and custom classifier based on the data feed formats and build a table definition to match. Trigger an AWS Lambda function on file delivery to start an AWS Glue ETL job to transform the entire record according to the processing and transformation requirements. Define the output format as JSON. Once complete, have the ETL job send the results to another S3 bucket for internal processing.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create an AWS Glue crawler and custom classifier based upon the data feed formats and build a table definition to match. Perform an Amazon Athena query on file delivery to start an Amazon EMR ETL job to transform the entire record according to the processing and transformation requirements. Define the output format as JSON. Once complete, send the results to another S3 bucket for internal processing and scale down th…. Technical assessment still pending; not a verified right/wrong judgement."
-      },
-      "memoryTip": "Glue classifier and ETL can process sensitive PAN data",
+      "validity": "ambiguous",
+      "reasoning": "Full source question not inspected enough to confirm whether Glue crawler/classifier and Glue ETL meet the exact sensitive PAN handling requirements. Keep unresolved.",
+      "wrongOptions": {},
+      "memoryTip": "Full source question not inspected enough to confirm whether Glue crawler/classifier and Glue ETL meet the exact sensitive PAN handling requirements. Keep unresolved.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
-        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+        "https://docs.aws.amazon.com/glue/latest/dg/add-classifier.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Question requires further source validation; do not score as confirmed."
     },
     {
       "id": 599,
       "domain": 1,
       "sequence": 88,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "PrivateLink NLB-to-target networking needs NACL paths and instance security group ingress; NLB client IP preservation behavior matters.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "NLB to logging EC2 requires subnet NACL connectivity and target EC2 security-group allowance; exact source IP behavior depends on target type and preservation.",
       "wrongOptions": {
-        "A": "Provisional selection: Check that the NACL is attached to the logging service subnet to allow communications to and from the NLB subnets. Check that the NACL is attached to the NLB subnet to allow communications to and from the logging service subnets running on EC2 instances.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Check that the NACL is attached to the logging service subnets to allow communications to and from the interface endpoint subnets. Check that the NACL is attached to the interface endpoint subnet to allow communications to and from the logging service subnets running on EC2 instances.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Check the security group for the logging service running on the EC2 instances to ensure it allows Ingress from the NLB subnets.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Check the security group for the loggia service running on EC2 instances to ensure it allows ingress from the clients.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "E": "Alternative: Check the security group for the NLB to ensure it allows ingress from the interlace endpoint subnets.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "endpoint-subnet NACL route to target generally not direct through NLB",
+        "D": "client-IP ingress can be required if preservation is enabled, so verify configuration",
+        "E": "NLB SG only applies when one was associated."
       },
-      "memoryTip": "PrivateLink NLB-to-target networking needs NACL paths and instance security group ingress",
+      "memoryTip": "NLB to logging EC2 requires subnet NACL connectivity and target EC2 security-group allowance",
       "awsReferences": [
-        "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html",
-        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-security-groups.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "A",
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 603,
@@ -1937,51 +1933,51 @@
       "id": 606,
       "domain": 1,
       "sequence": 90,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "AWS Backup organization policy can centrally schedule six-hour RDS backups with 30-day retention.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS Backup organization-wide policies centrally manage RDS backup cadence and retention.",
       "wrongOptions": {
-        "A": "Provisional selection: Turn on the cross-account management feature in AWS Backup. Create a backup plan that specifies the frequency and retention requirements. Add a tag to the DB instances. Apply the backup plan by using tags. Use AWS Backup to monitor the status of the backups.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Turn on the cross-account management feature in Amazon RDS. Create a snapshot global policy that specifies the frequency and retention requirements. Use the RDS console in the management account to monitor the status of the backups.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Alternative: Turn on the cross-account management feature in AWS CloudFormation. From the management account, deploy a CloudFormation stack set that contains a backup plan from AWS Backup that specifies the frequency and retention requirements. Create an AWS Lambda function in the management account tomonitor the status of the backups. Create an Amazon EventBridge rule in each account to run the Lambda function on a schedule.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Configure AWS Backup in each account. Create an Amazon Data Lifecycle Manager lifecycle policy that specifies the frequency and retention requirements. Specify the DB instances as the target resource. Use the Amazon Data Lifecycle Manager console in each member account to monitor the status of the backups.. Technical assessment still pending; not a verified right/wrong judgement."
+        "B": "RDS has no organization-wide snapshot global policy",
+        "C": "StackSets are not central backup policy",
+        "D": "DLM does not manage RDS snapshots."
       },
-      "memoryTip": "AWS Backup organization policy can centrally schedule six-hour RDS backups with 30-day retention.",
+      "memoryTip": "AWS Backup organization-wide policies centrally manage RDS backup cadence and retention.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/manage-cross-account.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "A"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 611,
       "domain": 1,
       "sequence": 91,
-      "verificationStatus": "preliminary-review",
-      "verifiedAnswer": null,
-      "validity": "pending-documentation-check",
-      "reasoning": "Duplicate Q404: service-managed StackSets from management account with automatic deployment.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Service-managed StackSets created in management account can deploy to organization and auto-deploy new accounts.",
       "wrongOptions": {
-        "A": "Alternative: Create a stack set in the Organizations member accounts. Use service-managed permissions. Set deployment options to deploy to an organization. Use CloudFormation StackSets drift detection.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "B": "Alternative: Create stacks in the Organizations member accounts. Use self-service permissions. Set deployment options to deploy to an organization. Enable the CloudFormation StackSets automatic deployment.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "C": "Provisional selection: Create a stack set in the Organizations management account Use service-managed permissions. Set deployment options to deploy to the organization. Enable CloudFormation StackSets automatic deployment.. Technical assessment still pending; not a verified right/wrong judgement.",
-        "D": "Alternative: Create stacks in the Organizations management account. Use service-managed permissions. Set deployment options to deploy to the organization. Enable CloudFormation StackSets drift detection.. Technical assessment still pending; not a verified right/wrong judgement."
+        "A": "member account is not standard central StackSet administration",
+        "B": "self-managed permissions do not enable organization auto deployment",
+        "D": "stacks are not StackSets."
       },
-      "memoryTip": "Duplicate Q404: service-managed StackSets from management account with automatic deployment.",
+      "memoryTip": "Service-managed StackSets created in management account can deploy to organization and auto-deploy new accounts.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
-        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html"
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-associate-stackset-with-org.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C"
       ],
-      "reviewNotes": "All answer options transcribed for comparison. Reference links are relevant AWS service documentation, not proof of each option. Requires option-by-option validation unless verificationStatus is reviewed."
+      "reviewNotes": "Option-level assessment completed; see reasoning and references."
     },
     {
       "id": 612,
