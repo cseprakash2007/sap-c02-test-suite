@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Fourth new 20-question batch: 14 reviewed, 6 flagged Q141 Q144 Q146 Q149 Q155 Q159. Q145 original D corrected to A in verification layer. Original questions unchanged.",
+  "notes": "Fifth new 20-question batch: 18 reviewed, 2 flagged (Q166 Q185); corrected keys Q163 C->B, Q172 ADF->ADE, Q186 B->A. Source questions unchanged.",
   "items": [
     {
       "id": 12,
@@ -5674,6 +5674,330 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Reviewed service fit and recorded rationale; source question unchanged."
+    },
+    {
+      "id": 163,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "API Gateway to SQS buffers all incoming records; Lambda consumes with retries and SQS dead-letter queue for poison messages. Original C has invalid failure-destination bus.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway to SQS buffers all incoming records",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 165,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Browser CORS preflight and actual API Gateway responses need Access-Control-Allow-Origin for website origin; S3 origin CORS doesn't fix API response.",
+      "wrongOptions": null,
+      "memoryTip": "Browser CORS preflight and actual API Gateway responses need Access-Control-Allow-Origin for website origin",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 166,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "DynamoDB plus QuickSight direct query cannot guarantee interactive 500 ms response and 30-second RTO; remaining options similarly lack hard RTO/latency guarantees. Add performance and failover assumptions.",
+      "wrongOptions": null,
+      "memoryTip": "DynamoDB plus QuickSight direct query cannot guarantee interactive 500 ms response and 30-second RTO",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/quicksight/latest/user/working-with-spice.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Insufficiently specified or inaccurate answer; source repair required."
+    },
+    {
+      "id": 167,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Compute Optimizer rightsizing and Trusted Advisor checks plus flexible Compute Savings Plans can reduce EC2 costs without forcing Spot interruptions; RDS requires separate DB-specific cost assessment.",
+      "wrongOptions": null,
+      "memoryTip": "Compute Optimizer rightsizing and Trusted Advisor checks plus flexible Compute Savings Plans can reduce EC2 costs without forcing Spot interruptions",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 168,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Application Discovery Agent discovers physical and VM process/dependency data, Migration Hub groups workloads and Strategy Recommendations assists migration planning.",
+      "wrongOptions": null,
+      "memoryTip": "Application Discovery Agent discovers physical and VM process/dependency data, Migration Hub groups workloads and Strategy Recommendations assists migration planning.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 169,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "Managed multi-node EKS with managed Prometheus/Grafana and ECR enhanced scanning; FSx for NetApp ONTAP offers SMB and NFS protocols for shared volumes.",
+      "wrongOptions": null,
+      "memoryTip": "Managed multi-node EKS with managed Prometheus/Grafana and ECR enhanced scanning",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/what-is-fsx-ontap.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 170,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Presigned multipart S3 uploads through Transfer Acceleration reduce large-object upload latency while retaining authenticated issuance.",
+      "wrongOptions": null,
+      "memoryTip": "Presigned multipart S3 uploads through Transfer Acceleration reduce large-object upload latency while retaining authenticated issuance.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 171,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "On-premises Hyper-V DataSync agent supports scheduled bandwidth-limited NFS transfers and S3 Glacier Deep Archive as low-cost archival destination, with retrieval in days.",
+      "wrongOptions": null,
+      "memoryTip": "On-premises Hyper-V DataSync agent supports scheduled bandwidth-limited NFS transfers and S3 Glacier Deep Archive as low-cost archival destination, with retrieval in days.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 172,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "Compute Optimizer organization opt-in, CloudWatch agent memory metrics, and enhanced infrastructure metrics enable 90-day recommendation lookback. F is not a Compute Optimizer input.",
+      "wrongOptions": null,
+      "memoryTip": "Compute Optimizer organization opt-in, CloudWatch agent memory metrics, and enhanced infrastructure metrics enable 90-day recommendation lookback. F is not a Compute Optimizer input.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/enhanced-infrastructure-metrics.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 174,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "IAM Identity Center ABAC permission sets can restrict S3 user prefixes; CloudTrail S3 data events queried in Athena provide user-specific monthly access reporting.",
+      "wrongOptions": null,
+      "memoryTip": "IAM Identity Center ABAC permission sets can restrict S3 user prefixes",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_attribute-based-access-control.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 175,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "Lambda in Neptune VPC private subnets uses NAT for DynamoDB/public service access, or isolated subnets with DynamoDB gateway endpoint; both maintain Neptune network reachability.",
+      "wrongOptions": null,
+      "memoryTip": "Lambda in Neptune VPC private subnets uses NAT for DynamoDB/public service access, or isolated subnets with DynamoDB gateway endpoint",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 176,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Elastic Beanstalk Tomcat environment with autoscaling and RDS PostgreSQL rehosts packaged Java app without requiring source rewrite.",
+      "wrongOptions": null,
+      "memoryTip": "Elastic Beanstalk Tomcat environment with autoscaling and RDS PostgreSQL rehosts packaged Java app without requiring source rewrite.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Java.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 177,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "Lambda SQS polling scales with sporadic short crawls; S3 replaces always-mounted EFS with durable object storage for CSV results.",
+      "wrongOptions": null,
+      "memoryTip": "Lambda SQS polling scales with sporadic short crawls",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 178,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "GitHub webhook starts CodePipeline; Jenkins integration tests and SNS failure alerts; CodeDeploy blue/green enables rollback with low downtime.",
+      "wrongOptions": null,
+      "memoryTip": "GitHub webhook starts CodePipeline",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-steps.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 179,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "execute-api interface VPC endpoint with private DNS and endpoint/resource policies provides private API Gateway invocation from VPC.",
+      "wrongOptions": null,
+      "memoryTip": "execute-api interface VPC endpoint with private DNS and endpoint/resource policies provides private API Gateway invocation from VPC.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 181,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Step Functions orchestrates chained Lambdas asynchronously so initial Lambda no longer waits for full workflow.",
+      "wrongOptions": null,
+      "memoryTip": "Step Functions orchestrates chained Lambdas asynchronously so initial Lambda no longer waits for full workflow.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 182,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudFormation reproduces regional stack, Route 53 latency routing improves access and DynamoDB global tables replicate data across Regions.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFormation reproduces regional stack, Route 53 latency routing improves access and DynamoDB global tables replicate data across Regions.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 183,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "API Gateway HTTP API queues messages, Lambda processes asynchronously and publishes to AppSync Events WebSocket channels subscribed by clients.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway HTTP API queues messages, Lambda processes asynchronously and publishes to AppSync Events WebSocket channels subscribed by clients.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/appsync/latest/eventapi/event-api-welcome.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
+    },
+    {
+      "id": 185,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "D Cloud WAN plus Direct Connect is plausible, but Cloud WAN uses Direct Connect gateway associations via transit gateway or core network edge integration rather than generic 'Direct Connect attachments' as written. Dedicated private connectivity and central management need precise architecture.",
+      "wrongOptions": null,
+      "memoryTip": "D Cloud WAN plus Direct Connect is plausible, but Cloud WAN uses Direct Connect gateway associations via transit gateway or core network edge integration rather than generic 'Direct Connect attachments' as written. Dedicated private connectivity and central management need precise architecture.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-dx.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Insufficiently specified or inaccurate answer; source repair required."
+    },
+    {
+      "id": 186,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Cross-account SNS topic fan-out to each microservice's SQS queue reliably delivers copies to all subscribers. B could route cross-account events but doesn't specify destination buses and target permissions.",
+      "wrongOptions": null,
+      "memoryTip": "Cross-account SNS topic fan-out to each microservice's SQS queue reliably delivers copies to all subscribers. B could route cross-account events but doesn't specify destination buses and target permissions.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/sns/latest/dg/sns-send-message-to-sqs-cross-account.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "AWS architecture review; original question unchanged."
     }
   ]
 }
