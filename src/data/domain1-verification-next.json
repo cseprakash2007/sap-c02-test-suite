@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Seventh 20-question batch: 14 answers confirmed with caveats, 6 flagged (Q215, Q216, Q217, Q218, Q223, Q234). Original questions unchanged.",
+  "notes": "Eighth 20-question batch: 14 verified with caveats, 6 flagged (Q237 Q242 Q248 Q249 Q259 Q262). Corrected Q247 source key A+B to B+C.",
   "items": [
     {
       "id": 12,
@@ -6625,6 +6625,316 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Preliminary architecture audit; source question unchanged."
+    },
+    {
+      "id": 236,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 static front end, AppSync, Lambda, SQS and dead-letter queue decouple ingestion and retain repeatedly failed orders.",
+      "wrongOptions": null,
+      "memoryTip": "S3 static front end, AppSync, Lambda, SQS and dead-letter queue decouple ingestion and retain repeatedly failed orders.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 237,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "The original source role recreated with same name has a new role principal ID. A trust policy referencing the old role ARN may require replacing the principal reference in the parent account; option A describes target role ARN in the trust policy, which is technically confused. B trusting child account root plus matching identity permission is plausible but broader. Flag ambiguous.",
+      "wrongOptions": null,
+      "memoryTip": "The original source role recreated with same name has a new role principal ID. A trust policy referencing the old role ARN may require replacing the principal reference in the parent account; option A describes target role ARN in the trust policy, which is technically confused. B trusting child account root plus matching identity permission is plausible but broader. Flag ambiguous.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 238,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ECS on EC2 gives host/network configuration control, Aurora relational SQL and SQS async messaging; check .NET Framework versus modern .NET compatibility.",
+      "wrongOptions": null,
+      "memoryTip": "ECS on EC2 gives host/network configuration control, Aurora relational SQL and SQS async messaging; check .NET Framework versus modern .NET compatibility.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 239,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora MySQL, multi-AZ Auto Scaling behind ALB, and Redis replication group provide high availability and externalize sessions.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora MySQL, multi-AZ Auto Scaling behind ALB, and Redis replication group provide high availability and externalize sessions.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Replication.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 240,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IoT Greengrass runs local image inference and calls local feedback API during internet outages.",
+      "wrongOptions": null,
+      "memoryTip": "IoT Greengrass runs local image inference and calls local feedback API during internet outages.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/greengrass/v2/developerguide/machine-learning-inference.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 241,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Transit VIF BGP exchanges on-premises and permitted VPC prefixes via Direct Connect gateway and transit gateway; 1 Gbps is supported without MACsec requirements.",
+      "wrongOptions": null,
+      "memoryTip": "Transit VIF BGP exchanges on-premises and permitted VPC prefixes via Direct Connect gateway and transit gateway; 1 Gbps is supported without MACsec requirements.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/WorkingWithVirtualInterfaces.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 242,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "C's cross-Region AWS Backup restore is economical but an unspecified backup schedule cannot guarantee RPO 2 hours or RTO 4 hours. Backup copies and ECS/API deployment must be ready. Flag insufficient guarantees.",
+      "wrongOptions": null,
+      "memoryTip": "C's cross-Region AWS Backup restore is economical but an unspecified backup schedule cannot guarantee RPO 2 hours or RTO 4 hours. Backup copies and ECS/API deployment must be ready. Flag insufficient guarantees.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/cross-region-backup.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 244,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Site-to-Site VPN can be established faster than provisioning Direct Connect; DMS full load plus ongoing CDC reduces cutover downtime and preserves changes.",
+      "wrongOptions": null,
+      "memoryTip": "Site-to-Site VPN can be established faster than provisioning Direct Connect; DMS full load plus ongoing CDC reduces cutover downtime and preserves changes.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 245,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Elastic Beanstalk blue/green environments with CNAME swap support frequent releases and fast rollback by swapping back.",
+      "wrongOptions": null,
+      "memoryTip": "Elastic Beanstalk blue/green environments with CNAME swap support frequent releases and fast rollback by swapping back.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 247,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Security groups are stateful: EC2 outbound to DB security group on DB port and DB inbound from EC2 group suffice. Source answer A+B is incorrect.",
+      "wrongOptions": null,
+      "memoryTip": "Security groups are stateful: EC2 outbound to DB security group on DB port and DB inbound from EC2 group suffice. Source answer A+B is incorrect.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 248,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "A+D is intended, but Gateway Load Balancer is a regional service with endpoints per AZ, not one GWLB provisioned per AZ; GWLB inspection deployment requires GWLB endpoints and routing. Flag option wording.",
+      "wrongOptions": null,
+      "memoryTip": "A+D is intended, but Gateway Load Balancer is a regional service with endpoints per AZ, not one GWLB provisioned per AZ; GWLB inspection deployment requires GWLB endpoints and routing. Flag option wording.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 249,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "AWS Server Migration Service is retired and 500 TB per VM exceeds common replication service assumptions; intended A+D historically, but no longer a defensible current recommendation.",
+      "wrongOptions": null,
+      "memoryTip": "AWS Server Migration Service is retired and 500 TB per VM exceeds common replication service assumptions; intended A+D historically, but no longer a defensible current recommendation.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 250,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Suspending ASG Terminate process temporarily prevents termination while Session Manager troubleshoots unhealthy instances; restore process afterward.",
+      "wrongOptions": null,
+      "memoryTip": "Suspending ASG Terminate process temporarily prevents termination while Session Manager troubleshoots unhealthy instances; restore process afterward.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-suspend-resume-processes.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 255,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IoT Core natively supports MQTT and per-device X.509 certificates and things, with managed scalability.",
+      "wrongOptions": null,
+      "memoryTip": "IoT Core natively supports MQTT and per-device X.509 certificates and things, with managed scalability.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 257,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora global database with headless secondary avoids running secondary DB instances while maintaining storage replication; confirm failover procedure and recovery objectives.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora global database with headless secondary avoids running secondary DB instances while maintaining storage replication; confirm failover procedure and recovery objectives.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 258,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Multi-AZ DocumentDB with MongoDB compatibility and multi-AZ EC2 Auto Scaling minimizes application changes; verify MongoDB feature compatibility.",
+      "wrongOptions": null,
+      "memoryTip": "Multi-AZ DocumentDB with MongoDB compatibility and multi-AZ EC2 Auto Scaling minimizes application changes; verify MongoDB feature compatibility.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/documentdb/latest/developerguide/what-is.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 259,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "A is historically correct for offline bulk transfer of 600 TB with Snowball Edge, but device availability/ordering policies changed; physical encryption is not literally network encryption-in-transit, so check security wording.",
+      "wrongOptions": null,
+      "memoryTip": "A is historically correct for offline bulk transfer of 600 TB with Snowball Edge, but device availability/ordering policies changed; physical encryption is not literally network encryption-in-transit, so check security wording.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/snowball/latest/developer-guide/whatissnowball.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 260,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Stable Lambda alias ARN decouples client configuration from immutable published versions; update alias after testing.",
+      "wrongOptions": null,
+      "memoryTip": "Stable Lambda alias ARN decouples client configuration from immutable published versions; update alias after testing.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 261,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Transfer Family VPC-hosted internet-facing endpoint supports Elastic IP reuse and security groups while S3 handles storage; migrate SSH keys and users too.",
+      "wrongOptions": null,
+      "memoryTip": "Transfer Family VPC-hosted internet-facing endpoint supports Elastic IP reuse and security groups while S3 handles storage; migrate SSH keys and users too.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
+    },
+    {
+      "id": 262,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "S3 Storage Class Analysis focuses access patterns and has historical limits; S3 Storage Lens advanced metrics provides 15 months of historical trends but doesn't directly prescribe optimal class. Source B versus C is ambiguous for full past 12 months.",
+      "wrongOptions": null,
+      "memoryTip": "S3 Storage Class Analysis focuses access patterns and has historical limits; S3 Storage Lens advanced metrics provides 15 months of historical trends but doesn't directly prescribe optimal class. Source B versus C is ambiguous for full past 12 months.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage_lens.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Question and options examined; original question preserved."
     }
   ]
 }
