@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Final 17 preliminary records processed: 12 reviewed, 5 source-repair (2,5,16,27,31). Corrections: Q667 C->B; Q18 AB->AE; Q34 C->B. All 97 preliminary from original batch now processed; 17 source-repair flags total.",
+  "notes": "Source-repair review started: Q597 resolved and reviewed; Q31, Q95, Q5, Q567 have precise proposed source edits without changing original questions. 16 source-repair flags remain.",
   "items": [
     {
       "id": 12,
@@ -1633,7 +1633,7 @@
       "verificationStatus": "needs-source-repair",
       "verifiedAnswer": null,
       "validity": "ambiguous",
-      "reasoning": "D is essential (patched AMIs and instance refresh); C is an optional ALB health-check measure but does not directly guarantee patched launches. The stem demands TWO; no defensible second option is unambiguously necessary.",
+      "reasoning": "D builds patched AMIs, updates launch template and refreshes ASG; none of A/B/C/E is independently needed to ensure replacement instances use patched images. The requested two answers are not supported.",
       "wrongOptions": {
         "A": "termination policy doesn't patch AMIs",
         "B": "patches ephemeral instances rather than launch image",
@@ -1649,7 +1649,8 @@
         "C",
         "D"
       ],
-      "reviewNotes": "Question requires further source validation; do not score as confirmed."
+      "reviewNotes": "Proposed source repair only; original source question not modified.",
+      "proposedSourceRepair": "Change 'Select TWO' to 'Select ONE' and make D the answer; alternatively replace C with 'Configure the Auto Scaling group to launch from the updated launch template version for all future scale-outs.'"
     },
     {
       "id": 568,
@@ -1861,20 +1862,27 @@
       "id": 597,
       "domain": 1,
       "sequence": 87,
-      "verificationStatus": "needs-source-repair",
-      "verifiedAnswer": null,
-      "validity": "ambiguous",
-      "reasoning": "Full source question not inspected enough to confirm whether Glue crawler/classifier and Glue ETL meet the exact sensitive PAN handling requirements. Keep unresolved.",
-      "wrongOptions": {},
-      "memoryTip": "Full source question not inspected enough to confirm whether Glue crawler/classifier and Glue ETL meet the exact sensitive PAN handling requirements. Keep unresolved.",
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS Glue crawler with custom classifier catalogs incoming feed schema; event-triggered Glue ETL masks PAN, removes/merges fields, writes JSON to S3. Most extensible option.",
+      "wrongOptions": {
+        "A": "SQS queue-empty condition does not reliably signal all records processed and adds three-stage Lambda orchestration.",
+        "B": "Single Fargate worker and queue-empty batch logic add operational complexity and do not reliably mark job completion.",
+        "D": "Athena query does not directly start EMR ETL jobs; extra cluster lifecycle adds complexity."
+      },
+      "memoryTip": "Glue classifier discovers schema; Glue ETL masks, reshapes and writes JSON.",
       "awsReferences": [
-        "https://docs.aws.amazon.com/glue/latest/dg/add-classifier.html"
+        "https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html",
+        "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-json-home.html"
       ],
       "reviewedAt": "2026-10-22",
       "sourceAnswer": [
         "C"
       ],
-      "reviewNotes": "Question requires further source validation; do not score as confirmed."
+      "reviewNotes": "Verified against AWS Glue crawler/classifier and JSON ETL docs."
     },
     {
       "id": 599,
@@ -2875,7 +2883,7 @@
       ],
       "verifiedAnswer": null,
       "validity": "ambiguous",
-      "reasoning": "No option correctly specifies SSE-KMS with a customer-managed KMS key and re-encryption of existing objects. SSE-S3/AES256 has S3-managed keys; AWS-managed KMS key is not customer-managed.",
+      "reasoning": "SSE-S3 AES256 is not a customer-managed KMS key; SSE-KMS with a customer-managed KMS key plus copying/re-encrypting existing objects is required. No current choice says this correctly.",
       "wrongOptions": {
         "A": "SSE-S3 has no customer-managed key",
         "B": "AWS-managed KMS key is not customer-managed",
@@ -2887,7 +2895,8 @@
         "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Question has an unsupported or internally inconsistent requirement; exclude from confirmed scoring."
+      "reviewNotes": "Proposed source repair only; original source question not modified.",
+      "proposedSourceRepair": "Replace B with: 'Create an AWS KMS customer managed key and grant the security team key administration. Configure bucket default SSE-KMS encryption with that key. Re-encrypt existing objects using S3 Batch Operations Copy or AWS CLI copy, specifying that key. Add bucket policy enforcement as needed.'"
     },
     {
       "id": 100,
@@ -3665,7 +3674,7 @@
       ],
       "verifiedAnswer": null,
       "validity": "ambiguous",
-      "reasoning": "A adds per-AZ NAT gateways for resilience but one NAT gateway already permits private subnets in all AZs to reach internet. Stem omits high availability requirement; none is necessary.",
+      "reasoning": "A single NAT gateway in a public subnet can provide outbound internet access to private subnets in multiple AZs if their route tables point to it. Additional NAT gateways improve AZ resilience but are not required by current stem.",
       "wrongOptions": {
         "A": "good HA architecture but not required for basic connectivity",
         "B": "extra gateways without private route changes insufficient"
@@ -3675,7 +3684,8 @@
         "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Source question underspecified/outdated; not confirmed."
+      "reviewNotes": "Proposed source repair only; original source question not modified.",
+      "proposedSourceRepair": "Add to stem: 'The solution must remain available if any one Availability Zone fails.' Then answer A is appropriate."
     },
     {
       "id": 10,
@@ -3833,7 +3843,7 @@
       ],
       "verifiedAnswer": null,
       "validity": "ambiguous",
-      "reasoning": "C AWS Compute Optimizer is intended but 'at least 12 hours' is insufficient for normal EC2 recommendations; generally needs 30 hours metrics and uses 14-day historical analysis. Needs correction.",
+      "reasoning": "AWS Compute Optimizer is appropriate for EC2/EBS right-sizing, but 12 hours of observation in option C is insufficient; EC2 requires at least 30 hours of CloudWatch metrics within 14 days.",
       "wrongOptions": {
         "A": "manual dashboards may miss efficiency patterns",
         "B": "detailed monitoring costs extra and manual",
@@ -3845,7 +3855,8 @@
         "https://docs.aws.amazon.com/compute-optimizer/latest/ug/requirements.html"
       ],
       "reviewedAt": "2026-10-22",
-      "reviewNotes": "Source question underspecified/outdated; not confirmed."
+      "reviewNotes": "Proposed source repair only; original source question not modified.",
+      "proposedSourceRepair": "Replace 'let it run for at least 12 hours' in C with 'collect at least 30 hours of CloudWatch metrics in the last 14 days, and wait for recommendations to become available'. Retain answer C."
     },
     {
       "id": 32,
