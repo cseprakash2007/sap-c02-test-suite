@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Seventeenth 20-question batch: 19 reviewed with caveats, 1 flagged Q510; corrections Q487 A→B Q497 BD→BE Q499 B→A.",
+  "notes": "Eighteenth 20-question batch: 19 reviewed with caveats, 1 flagged Q533 missing policy JSON; corrections Q515 A→B and Q531 B→A.",
   "items": [
     {
       "id": 12,
@@ -9796,6 +9796,328 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 514,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Stateless tier can scale horizontally behind ALB using ASG and SSM patch management; Aurora MySQL reduces single-instance DB failure without changing relational model.",
+      "wrongOptions": null,
+      "memoryTip": "Stateless tier can scale horizontally behind ALB using ASG and SSM patch management; Aurora MySQL reduces single-instance DB failure without changing relational model.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonEC2/latest/UserGuide/systems-manager.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 515,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Every CSV column is read, so Parquet column pruning brings little benefit. Hourly Glue compression/compaction mitigates millions of small S3 objects and query request overhead; existing files under 128KB cannot auto-tier. Compression job must avoid file accumulation and retain originals per policy.",
+      "wrongOptions": null,
+      "memoryTip": "Every CSV column is read, so Parquet column pruning brings little benefit. Hourly Glue compression/compaction mitigates millions of small S3 objects and query request overhead; existing files under 128KB cannot auto-tier. Compression job must avoid file accumulation and retain originals per policy.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 516,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "API Gateway REST stage caching eliminates repeated identical GET calls and shields Aurora; edge-optimized endpoint optional and can add migration work, but A only option enabling managed API response caching.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway REST stage caching eliminates repeated identical GET calls and shields Aurora; edge-optimized endpoint optional and can add migration work, but A only option enabling managed API response caching.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 517,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Elastic Disaster Recovery continuously replicates VMware Windows servers at block level and supports recovery launch and failback; DataSync cannot replicate VM OS disks into attachable EBS volumes.",
+      "wrongOptions": null,
+      "memoryTip": "Elastic Disaster Recovery continuously replicates VMware Windows servers at block level and supports recovery launch and failback; DataSync cannot replicate VM OS disks into attachable EBS volumes.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 519,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "API Gateway REST AWS service integration supports DynamoDB direct integration; HTTP API with Lambda backend also works. HTTP API does not support generic DynamoDB direct AWS service integration.",
+      "wrongOptions": null,
+      "memoryTip": "API Gateway REST AWS service integration supports DynamoDB direct integration; HTTP API with Lambda backend also works. HTTP API does not support generic DynamoDB direct AWS service integration.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 520,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EKS accepts existing Kubernetes manifests, ECR hosts images and Aurora PostgreSQL migrates existing DB; App Runner does not accept Kubernetes manifests.",
+      "wrongOptions": null,
+      "memoryTip": "EKS accepts existing Kubernetes manifests, ECR hosts images and Aurora PostgreSQL migrates existing DB; App Runner does not accept Kubernetes manifests.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 523,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ASG min 4 max 28 right-sizes idle capacity and scales during spikes; four Reserved Instances cover 24/7 baseline. Configure target tracking and verify 4-instance baseline performance.",
+      "wrongOptions": null,
+      "memoryTip": "ASG min 4 max 28 right-sizes idle capacity and scales during spikes; four Reserved Instances cover 24/7 baseline. Configure target tracking and verify 4-instance baseline performance.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-target-tracking.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 524,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Athena directly queries ORC data on S3 with Glue catalog and pay-per-query model, avoiding 24/7 EMR cluster.",
+      "wrongOptions": null,
+      "memoryTip": "Athena directly queries ORC data on S3 with Glue catalog and pay-per-query model, avoiding 24/7 EMR cluster.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/athena/latest/ug/what-is.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 525,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SQS durably buffers unpredictable signups; Lambda consumers write to existing PostgreSQL schema with retries and dead-letter handling.",
+      "wrongOptions": null,
+      "memoryTip": "SQS durably buffers unpredictable signups; Lambda consumers write to existing PostgreSQL schema with retries and dead-letter handling.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 526,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IAM group policy restricts S3 prefixes using aws:username with correct object and list permissions; CloudTrail S3 data events plus Athena provide attributable audit reports.",
+      "wrongOptions": null,
+      "memoryTip": "IAM group policy restricts S3 prefixes using aws:username with correct object and list permissions; CloudTrail S3 data events plus Athena provide attributable audit reports.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 527,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SES templates plus SendTemplatedEmail with replacement parameters avoids custom SMTP and manual template rendering; check current SES API options.",
+      "wrongOptions": null,
+      "memoryTip": "SES templates plus SendTemplatedEmail with replacement parameters avoids custom SMTP and manual template rendering; check current SES API options.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/ses/latest/APIReference/API_SendTemplatedEmail.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 528,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "New DocumentDB cluster plus DMS full load and CDC keeps changes flowing during testing; cutover requires pause writes, ensure CDC caught up, and change DNS.",
+      "wrongOptions": null,
+      "memoryTip": "New DocumentDB cluster plus DMS full load and CDC keeps changes flowing during testing; cutover requires pause writes, ensure CDC caught up, and change DNS.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 529,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ElastiCache Redis stores ephemeral session data with low-latency access and avoids heavy RDS reads/writes.",
+      "wrongOptions": null,
+      "memoryTip": "ElastiCache Redis stores ephemeral session data with low-latency access and avoids heavy RDS reads/writes.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 530,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Firehose is managed buffering/ingest and Lambda transforms; OpenSearch Service with Dashboards supports semi-structured JSON and near-real-time search. Legacy 'Elasticsearch Service/Kibana' nomenclature.",
+      "wrongOptions": null,
+      "memoryTip": "Firehose is managed buffering/ingest and Lambda transforms; OpenSearch Service with Dashboards supports semi-structured JSON and near-real-time search. Legacy 'Elasticsearch Service/Kibana' nomenclature.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 531,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IAM Access Analyzer policy generation from CloudTrail role activity provides action-level permissions; Access Advisor service-last-accessed findings alone are insufficient. Generated policy still requires review and refinement.",
+      "wrongOptions": null,
+      "memoryTip": "IAM Access Analyzer policy generation from CloudTrail role activity provides action-level permissions; Access Advisor service-last-accessed findings alone are insufficient. Generated policy still requires review and refinement.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-policy-generation.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 532,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "WorkSpaces IP access control groups allow only corporate office public CIDRs and are updated when new branch opens; WAF cannot attach to WorkSpaces directory.",
+      "wrongOptions": null,
+      "memoryTip": "WorkSpaces IP access control groups allow only corporate office public CIDRs and are updated when new branch opens; WAF cannot attach to WorkSpaces directory.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/workspaces/latest/adminguide/amazon-workspaces-ip-access-control-groups.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 533,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Options B-E omit the actual IAM/bucket policy JSON, so C+D cannot be validated. Cross-account S3 access normally requires bucket policy grant to external principal plus identity-based permission in Account B.",
+      "wrongOptions": null,
+      "memoryTip": "Options B-E omit the actual IAM/bucket policy JSON, so C+D cannot be validated. Cross-account S3 access normally requires bucket policy grant to external principal plus identity-based permission in Account B.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-walkthroughs-managing-access-example2.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 534,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Elastic Beanstalk blue/green deployment completes via Swap Environment URLs, redirecting CNAME with controlled rollback.",
+      "wrongOptions": null,
+      "memoryTip": "Elastic Beanstalk blue/green deployment completes via Swap Environment URLs, redirecting CNAME with controlled rollback.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 536,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EFS offers shared content mount across AZs and on premises over VPN (routing/security and bandwidth permitting); Snowball Edge bulk offline transfer accelerates 200TB archive migration.",
+      "wrongOptions": null,
+      "memoryTip": "EFS offers shared content mount across AZs and on premises over VPN (routing/security and bandwidth permitting); Snowball Edge bulk offline transfer accelerates 200TB archive migration.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/snowball/latest/developer-guide/whatissnowball.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
+    },
+    {
+      "id": 537,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Migration Evaluator supports business case/TCO; Application Discovery Service captures inventory and dependencies, surfaced through Migration Hub for migration planning.",
+      "wrongOptions": null,
+      "memoryTip": "Migration Evaluator supports business case/TCO; Application Discovery Service captures inventory and dependencies, surfaced through Migration Hub for migration planning.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. References not all individually opened."
     }
   ]
 }
