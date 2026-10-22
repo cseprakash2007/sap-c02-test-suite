@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Sixteenth 20-question batch: 18 reviewed with caveats, 2 flagged Q458 Q469; corrections Q448 D→C Q467 A→B Q474 C→D Q482 C→B.",
+  "notes": "Seventeenth 20-question batch: 19 reviewed with caveats, 1 flagged Q510; corrections Q487 A→B Q497 BD→BE Q499 B→A.",
   "items": [
     {
       "id": 12,
@@ -9476,6 +9476,326 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 487,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Server-side JavaScript UI cannot be hosted unchanged as static S3 website; containerize both UI and Python API on ECS Fargate, use RDS MySQL Multi-AZ. Source A invalid for server-side rendering.",
+      "wrongOptions": null,
+      "memoryTip": "Server-side JavaScript UI cannot be hosted unchanged as static S3 website; containerize both UI and Python API on ECS Fargate, use RDS MySQL Multi-AZ. Source A invalid for server-side rendering.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 488,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "MSK Express brokers provide faster scaling and higher throughput; rack-aware Kafka clients can prefer brokers in their AZ. Validate client rack configuration syntax for Kafka version.",
+      "wrongOptions": null,
+      "memoryTip": "MSK Express brokers provide faster scaling and higher throughput; rack-aware Kafka clients can prefer brokers in their AZ. Validate client rack configuration syntax for Kafka version.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/msk-broker-types.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 490,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 cross-Region replication and CloudFront origin group failover remove custom copying and app code. CloudFront failover works for GET/HEAD/OPTIONS, not writes.",
+      "wrongOptions": null,
+      "memoryTip": "S3 cross-Region replication and CloudFront origin group failover remove custom copying and app code. CloudFront failover works for GET/HEAD/OPTIONS, not writes.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 491,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "WorkSpaces provides persistent desktops, AD Connector authenticates against on-prem AD through VPN, and RADIUS integrates MFA.",
+      "wrongOptions": null,
+      "memoryTip": "WorkSpaces provides persistent desktops, AD Connector authenticates against on-prem AD through VPN, and RADIUS integrates MFA.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/workspaces/latest/adminguide/workspaces-mfa.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 492,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "VPC Flow Logs via CloudWatch Logs subscription to Firehose with Splunk destination streams connection metadata near real time; Lambda preprocesses compressed CloudWatch records.",
+      "wrongOptions": null,
+      "memoryTip": "VPC Flow Logs via CloudWatch Logs subscription to Firehose with Splunk destination streams connection metadata near real time; Lambda preprocesses compressed CloudWatch records.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/firehose/latest/dev/create-destination.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 493,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Memory-optimized EC2 meets in-memory workload and cluster placement group minimizes inter-node network latency.",
+      "wrongOptions": null,
+      "memoryTip": "Memory-optimized EC2 meets in-memory workload and cluster placement group minimizes inter-node network latency.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 495,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Prefix-specific S3 replication rule with Replication Time Control tracks replication latency and missed threshold events. Existing broad rule overlap/priorities must be resolved.",
+      "wrongOptions": null,
+      "memoryTip": "Prefix-specific S3 replication rule with Replication Time Control tracks replication latency and missed threshold events. Existing broad rule overlap/priorities must be resolved.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-time-control.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 496,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Native Parquet VPC Flow Logs plus hourly partitions reduce scanned bytes and Athena query overhead vs gzip text.",
+      "wrongOptions": null,
+      "memoryTip": "Native Parquet VPC Flow Logs plus hourly partitions reduce scanned bytes and Athena query overhead vs gzip text.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-s3-path.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 497,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 hosts static frontend without EC2; burstable backend EC2 handles low baseline with periodic lunchtime bursts. Source D Spot-only backend can interrupt production availability.",
+      "wrongOptions": null,
+      "memoryTip": "S3 hosts static frontend without EC2; burstable backend EC2 handles low baseline with periodic lunchtime bursts. Source D Spot-only backend can interrupt production availability.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 498,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora MySQL scales storage and reads, S3 hosts React SPA, Lambda plus API Gateway removes API servers. Consider CloudFront and SPA routing.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora MySQL scales storage and reads, S3 hosts React SPA, Lambda plus API Gateway removes API servers. Consider CloudFront and SPA routing.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.StorageReliability.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 499,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Elastic Disaster Recovery continuous block replication best meets 2-minute app RPO; cross-Region RDS replica provides database DR; Global Accelerator regional endpoints optimize failover. RPO/RTO objectives require testing and are not absolute guarantees.",
+      "wrongOptions": null,
+      "memoryTip": "Elastic Disaster Recovery continuous block replication best meets 2-minute app RPO; cross-Region RDS replica provides database DR; Global Accelerator regional endpoints optimize failover. RPO/RTO objectives require testing and are not absolute guarantees.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 501,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CodeDeploy EC2 blue/green behind ALB enables traffic shift, health validation and fast rollback without in-place interruption.",
+      "wrongOptions": null,
+      "memoryTip": "CodeDeploy EC2 blue/green behind ALB enables traffic shift, health validation and fast rollback without in-place interruption.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 502,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 HTTPS-only bucket policy and SSE-KMS with customer-managed rotating KMS key meet document durability and encryption requirements; require explicit KMS key management.",
+      "wrongOptions": null,
+      "memoryTip": "S3 HTTPS-only bucket policy and SSE-KMS with customer-managed rotating KMS key meet document durability and encryption requirements; require explicit KMS key management.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 504,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Storage Gateway cached volume mode exposes iSCSI volumes on premises, caches hot blocks locally, and supports AWS Backup point-in-time snapshots.",
+      "wrongOptions": null,
+      "memoryTip": "Storage Gateway cached volume mode exposes iSCSI volumes on premises, caches hot blocks locally, and supports AWS Backup point-in-time snapshots.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 505,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFormation named IAM role requires CAPABILITY_NAMED_IAM, and opt-in Regions must be enabled in participating accounts.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFormation named IAM role requires CAPABILITY_NAMED_IAM, and opt-in Regions must be enabled in participating accounts.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 506,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 File Gateway exposes SMB share to on-prem SQL Server export and stores files in S3 with local cache; FSx adds recurring filesystem expense. Verify VPC appliance connectivity.",
+      "wrongOptions": null,
+      "memoryTip": "S3 File Gateway exposes SMB share to on-prem SQL Server export and stores files in S3 with local cache; FSx adds recurring filesystem expense. Verify VPC appliance connectivity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/storagegateway/latest/files3/what-is-file-s3.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 509,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IoT rule to Kinesis stream buffers bursts; long-running ECS Fargate consumer processes records and persists to Aurora. Step Functions cannot be directly invoked by Kinesis as option A asserts.",
+      "wrongOptions": null,
+      "memoryTip": "IoT rule to Kinesis stream buffers bursts; long-running ECS Fargate consumer processes records and persists to Aurora. Step Functions cannot be directly invoked by Kinesis as option A asserts.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/kinesis-rule-action.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 510,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "B+D+E closest to private Direct Connect replication but B introduces public subnets/IGW while application must remain private; critically none of listed choices configures required replication bandwidth throttling. AWS DRS supports throttling as a separate setting omitted from options.",
+      "wrongOptions": null,
+      "memoryTip": "B+D+E closest to private Direct Connect replication but B introduces public subnets/IGW while application must remain private; critically none of listed choices configures required replication bandwidth throttling. AWS DRS supports throttling as a separate setting omitted from options.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/drs/latest/userguide/replication-settings.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 511,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "RDS for Oracle reduces DB administration; Secrets Manager automatic rotation with annual schedule meets password policy, using supported rotation strategy.",
+      "wrongOptions": null,
+      "memoryTip": "RDS for Oracle reduces DB administration; Secrets Manager automatic rotation with annual schedule meets password policy, using supported rotation strategy.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotating-secrets.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
+    },
+    {
+      "id": 513,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Public IPv6 subnet routes ::/0 to IGW; private IPv6 subnet uses egress-only IGW. NAT gateway is not the standard IPv6 internet egress choice.",
+      "wrongOptions": null,
+      "memoryTip": "Public IPv6 subnet routes ::/0 to IGW; private IPv6 subnet uses egress-only IGW. NAT gateway is not the standard IPv6 internet egress choice.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/egress-only-internet-gateway.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; source question unchanged. Documentation pointers are not all individually verified."
     }
   ]
 }
