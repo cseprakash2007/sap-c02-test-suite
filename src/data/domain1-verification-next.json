@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Nineteenth 20-question batch: 15 reviewed with caveats, 5 flagged Q538 Q539 Q560 Q566 Q571; Q556 A→B with MongoDB migration caveat.",
+  "notes": "Twentieth 20-question batch: 19 reviewed with caveats, 1 flagged Q583; corrections Q574 C→B, Q575 BD→CD, Q587 A→D, Q588 A→D.",
   "items": [
     {
       "id": 12,
@@ -10434,6 +10434,329 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Preliminary architecture review; source bank unchanged. Some references not individually verified."
+    },
+    {
+      "id": 574,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EBS Multi-Attach needs cluster-aware filesystem and is AZ scoped; Mountpoint for S3 supports parallel read access to immutable reference objects across instances/AZs with S3 gateway endpoint. It is not POSIX and workload must tolerate object semantics.",
+      "wrongOptions": null,
+      "memoryTip": "EBS Multi-Attach needs cluster-aware filesystem and is AZ scoped; Mountpoint for S3 supports parallel read access to immutable reference objects across instances/AZs with S3 gateway endpoint. It is not POSIX and workload must tolerate object semantics.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mountpoint.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 575,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudWatch agent adds memory metrics and Compute Optimizer provides CPU/network/memory-informed EC2 recommendations; Trusted Advisor low-utilization checks do not replace memory-aware right-sizing.",
+      "wrongOptions": null,
+      "memoryTip": "CloudWatch agent adds memory metrics and Compute Optimizer provides CPU/network/memory-informed EC2 recommendations; Trusted Advisor low-utilization checks do not replace memory-aware right-sizing.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/ec2-instance-recommendations.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 576,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 Multi-Region Access Points route to low-latency regional buckets; Direct Connect plus PrivateLink interface endpoint provides on-prem private connectivity. Ensure regional buckets contain content, using replication as needed.",
+      "wrongOptions": null,
+      "memoryTip": "S3 Multi-Region Access Points route to low-latency regional buckets; Direct Connect plus PrivateLink interface endpoint provides on-prem private connectivity. Ensure regional buckets contain content, using replication as needed.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointsPrivateLink.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 578,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SQS plus EC2 ASG scaled by queue backlog handles hour-long processing, and S3 stores output cheaply; Lambda exceeds 15-minute maximum.",
+      "wrongOptions": null,
+      "memoryTip": "SQS plus EC2 ASG scaled by queue backlog handles hour-long processing, and S3 stores output cheaply; Lambda exceeds 15-minute maximum.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 581,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Pre-license persistent ENIs to preserve MAC-tied software licenses during replacement; retrieve current DB IP from Parameter Store at boot so static-IP-only app can follow DB changes.",
+      "wrongOptions": null,
+      "memoryTip": "Pre-license persistent ENIs to preserve MAC-tied software licenses during replacement; retrieve current DB IP from Parameter Store at boot so static-IP-only app can follow DB changes.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 583,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "B routes IoT Core to Firehose/S3 but Kinesis Data Analytics does not directly read a Firehose delivery stream as a streaming source; use Kinesis Data Streams or MSK as supported source. C Glue built-in ML transforms do not directly provide anomaly detection. No complete choice.",
+      "wrongOptions": null,
+      "memoryTip": "B routes IoT Core to Firehose/S3 but Kinesis Data Analytics does not directly read a Firehose delivery stream as a streaming source; use Kinesis Data Streams or MSK as supported source. C Glue built-in ML transforms do not directly provide anomaly detection. No complete choice.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/kinesisanalytics/latest/java/how-it-works.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 584,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS Client VPN with AD Connector to on-prem AD and RADIUS MFA meets remote engineer VPN access requirements.",
+      "wrongOptions": null,
+      "memoryTip": "AWS Client VPN with AD Connector to on-prem AD and RADIUS MFA meets remote engineer VPN access requirements.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/client-authentication.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 586,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS Batch with EC2 Spot optimized allocation suits interruptible, nonurgent 15–20GB simulations, with S3 inputs/outputs and job retries.",
+      "wrongOptions": null,
+      "memoryTip": "AWS Batch with EC2 Spot optimized allocation suits interruptible, nonurgent 15–20GB simulations, with S3 inputs/outputs and job retries.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/batch/latest/userguide/spot_fleet_IAM_role.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 587,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Route 53 latency-based alias records to regional ALBs with target health evaluation route users to nearest healthy Region. CloudFront origin group uses fixed primary, not closest regional origin.",
+      "wrongOptions": null,
+      "memoryTip": "Route 53 latency-based alias records to regional ALBs with target health evaluation route users to nearest healthy Region. CloudFront origin group uses fixed primary, not closest regional origin.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 588,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS Backup cold-tier backups must be retained 90 days AFTER transition; transition after 8 days, delete after 98 days meets rule and avoids too-early warm full-backup regeneration. Original A violates minimum retention.",
+      "wrongOptions": null,
+      "memoryTip": "AWS Backup cold-tier backups must be retained 90 days AFTER transition; transition after 8 days, delete after 98 days meets rule and avoids too-early warm full-backup regeneration. Original A violates minimum retention.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/plan-options-and-configuration.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 590,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS RAM resource share of Private CA to OUs delegates certificate issuance with cross-account boundaries; IAM policies govern caller actions.",
+      "wrongOptions": null,
+      "memoryTip": "AWS RAM resource share of Private CA to OUs delegates certificate issuance with cross-account boundaries; IAM policies govern caller actions.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/privateca/latest/userguide/pca-ram.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 591,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Kinesis Data Streams interface VPC endpoint plus restrictive endpoint policy keeps private-subnet traffic off NAT gateways, lowering NatGateway-Bytes. IAM permissions also required, implicit.",
+      "wrongOptions": null,
+      "memoryTip": "Kinesis Data Streams interface VPC endpoint plus restrictive endpoint policy keeps private-subnet traffic off NAT gateways, lowering NatGateway-Bytes. IAM permissions also required, implicit.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/streams/latest/dev/vpc.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 592,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 CRR to us-east-1 and Lambda@Edge origin-request routing by viewer geography can reduce origin latency for US viewers; must manage cache keys and replication delay.",
+      "wrongOptions": null,
+      "memoryTip": "S3 CRR to us-east-1 and Lambda@Edge origin-request routing by viewer geography can reduce origin latency for US viewers; must manage cache keys and replication delay.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-at-edge-function-restrictions.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 594,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Static SPA can run on S3, uploads stored in S3, S3 event to SQS and Lambda calling Rekognition removes EC2 workers and custom image recognition; video recognition may require asynchronous Rekognition Video APIs and workflow handling.",
+      "wrongOptions": null,
+      "memoryTip": "Static SPA can run on S3, uploads stored in S3, S3 event to SQS and Lambda calling Rekognition removes EC2 workers and custom image recognition; video recognition may require asynchronous Rekognition Video APIs and workflow handling.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/rekognition/latest/dg/video.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 595,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "IAM Identity Center supports on-prem AD through AD Connector; AWS Organizations all-features setup and permission sets allow AD workforce login without duplicate IAM users.",
+      "wrongOptions": null,
+      "memoryTip": "IAM Identity Center supports on-prem AD through AD Connector; AWS Organizations all-features setup and permission sets allow AD workforce login without duplicate IAM users.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-identity-source-ad.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 596,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFront with Regional API Gateway as custom origin and same app hostname can improve global transport and remove CORS overhead; avoid caching personalized API calls.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFront with Regional API Gateway as custom origin and same app hostname can improve global transport and remove CORS overhead; avoid caching personalized API calls.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 598,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Central payer account AWS Budgets and Cost Explorer report per department/account, with SNS notifications for thresholds; tagging dimensions require activated cost allocation tags.",
+      "wrongOptions": null,
+      "memoryTip": "Central payer account AWS Budgets and Cost Explorer report per department/account, with SNS notifications for thresholds; tagging dimensions require activated cost allocation tags.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 600,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Share VPC subnets from central account with RAM; single Site-to-Site VPN handles low-bandwidth on-prem access at lower fixed cost than Direct Connect or Transit Gateway.",
+      "wrongOptions": null,
+      "memoryTip": "Share VPC subnets from central account with RAM; single Site-to-Site VPN handles low-bandwidth on-prem access at lower fixed cost than Direct Connect or Transit Gateway.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 601,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "MemoryDB for Redis-compatible in-memory durable database delivers microsecond reads, Multi-AZ automatic failover and persistence for downstream analytics.",
+      "wrongOptions": null,
+      "memoryTip": "MemoryDB for Redis-compatible in-memory durable database delivers microsecond reads, Multi-AZ automatic failover and persistence for downstream analytics.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/memorydb/latest/devguide/what-is-memorydb-for-redis.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
+    },
+    {
+      "id": 602,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Redshift Serverless RPUs scale/pay for active analytics rather than keeping eight RA3 nodes for limited ingestion window; verify snapshot restore support and compare cost before fixed 64 RPU commitment.",
+      "wrongOptions": null,
+      "memoryTip": "Redshift Serverless RPUs scale/pay for active analytics rather than keeping eight RA3 nodes for limited ingestion window; verify snapshot restore support and compare cost before fixed 64 RPU commitment.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-whatis.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged. References not all individually verified."
     }
   ]
 }
