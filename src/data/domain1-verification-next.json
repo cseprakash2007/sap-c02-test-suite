@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Source-repair proposals documented for all 16 outstanding flags. One source-repair record (Q597) previously resolved. Original questions and answer keys unchanged; all 16 remain unverified until explicit content corrections.",
+  "notes": "Additional 20-question batch reviewed: 16 confirmed, 4 flagged (Q3 Q43 Q45 Q60); corrected keys Q44 D->B, Q46 C->D, Q63 AE->BE, Q66 C->B. All source questions unchanged.",
   "items": [
     {
       "id": 12,
@@ -3971,6 +3971,510 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Reviewed against service behavior; reference linked."
+    },
+    {
+      "id": 3,
+      "domain": 4,
+      "sequence": 171,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "Truncated option D prevents checking the DataSync PrivateLink-to-EFS configuration.",
+      "wrongOptions": {
+        "A": "custom S3-Lambda relay",
+        "B": "file gateway writes to S3 not EFS",
+        "C": "unnecessary S3 staging",
+        "D": "truncated, cannot confirm."
+      },
+      "memoryTip": "Truncated option D prevents checking the DataSync PrivateLink-to-EFS configuration.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/working-with-locations.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "D"
+      ],
+      "reviewNotes": "Source needs correction or additional assumptions; do not mark confirmed."
+    },
+    {
+      "id": 7,
+      "domain": 4,
+      "sequence": 172,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "BYOIP Elastic IPs can be assigned to internet-facing Transfer Family VPC endpoints to preserve SFTP allowlisted IPs.",
+      "wrongOptions": {
+        "B": "ALB doesn't support EIP and FTP requires management",
+        "C": "Route 53 doesn't register BYOIP",
+        "D": "S3 VPC endpoint does not implement SFTP."
+      },
+      "memoryTip": "BYOIP Elastic IPs can be assigned to internet-facing Transfer Family VPC endpoints to preserve SFTP allowlisted IPs.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 21,
+      "domain": 4,
+      "sequence": 173,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Private EC2 outbound connections use NAT gateway EIPs; BYOIP keeps approved CIDR source addresses.",
+      "wrongOptions": {
+        "A": "public subnet IPs not NAT egress",
+        "C": "ALB does not accept EIPs",
+        "D": "accelerator static IPs are for inbound paths."
+      },
+      "memoryTip": "Private EC2 outbound connections use NAT gateway EIPs",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 22,
+      "domain": 4,
+      "sequence": 174,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Compute-optimized On-Demand EC2 plus ElastiCache Redis matches HPC and existing low-latency leaderboard.",
+      "wrongOptions": {
+        "A": "memory-optimized Spot interruption risk",
+        "B": "OpenSearch not drop-in Redis",
+        "D": "DynamoDB migration requires redesign and memory shape mismatched."
+      },
+      "memoryTip": "Compute-optimized On-Demand EC2 plus ElastiCache Redis matches HPC and existing low-latency leaderboard.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "C"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 41,
+      "domain": 3,
+      "sequence": 175,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "RDS Proxy pools database connections and Secrets Manager holds credentials; provisioned concurrency reduces Java cold-start latency.",
+      "wrongOptions": {
+        "A": "connection reuse alone doesn't pool across Lambda instances",
+        "C": "raising max connections doesn't solve burst",
+        "D": "reserved concurrency doesn't prewarm Java."
+      },
+      "memoryTip": "RDS Proxy pools database connections and Secrets Manager holds credentials",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 43,
+      "domain": 3,
+      "sequence": 176,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "CloudFront managed prefix list B restricts ALB to CloudFront origin-facing IPs but does not ensure access only through the company's own CloudFront distribution. Another distribution can use same prefix. Need custom header/WAF or CloudFront VPC origins.",
+      "wrongOptions": {
+        "A": "CloudFront has no security group",
+        "B": "allows all CloudFront origin-facing addresses",
+        "C": "ELB PrivateLink endpoint isn't CloudFront VPC origin",
+        "D": "manual IP list and same bypass weakness."
+      },
+      "memoryTip": "CloudFront managed prefix list B restricts ALB to CloudFront origin-facing IPs but does not ensure access only through the company's own CloudFront distribution. Another distribution can use same prefix. Need custom header/WAF or CloudFront VPC origins.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "Source needs correction or additional assumptions; do not mark confirmed."
+    },
+    {
+      "id": 44,
+      "domain": 4,
+      "sequence": 177,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "VM Import/Export supports importing supported VMware-exported VM images to EC2 AMIs, retaining OS/software configuration.",
+      "wrongOptions": {
+        "A": "unnecessary DataSync/FSx layer",
+        "C": "file backup isn't bootable AMI",
+        "D": "SSM hybrid activation plus AWS Backup doesn't create EC2 AMI from on-prem VM."
+      },
+      "memoryTip": "VM Import/Export supports importing supported VMware-exported VM images to EC2 AMIs, retaining OS/software configuration.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vm-import/latest/userguide/vmimport-image-import.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "D"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 45,
+      "domain": 3,
+      "sequence": 178,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "ARM64 container rebuild and Graviton migration reduce compute costs, but purchase of a Savings Plan is not necessarily required; source is abbreviated and cannot establish three mandatory choices.",
+      "wrongOptions": {
+        "A": "needed only if images lack ARM64 builds",
+        "B": "unclear",
+        "C": "Graviton migration plausible",
+        "D": "x86 may be viable",
+        "E": "Savings Plan optional and commitment choice",
+        "F": "x86 commitment optional."
+      },
+      "memoryTip": "ARM64 container rebuild and Graviton migration reduce compute costs, but purchase of a Savings Plan is not necessarily required",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A",
+        "C",
+        "E"
+      ],
+      "reviewNotes": "Source needs correction or additional assumptions; do not mark confirmed."
+    },
+    {
+      "id": 46,
+      "domain": 3,
+      "sequence": 179,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "Redshift Concurrency Scaling adds transient query capacity without cluster resize and maintains availability for ongoing writes; eligible usage receives free credits.",
+      "wrongOptions": {
+        "A": "EMR requires rewriting query execution",
+        "B": "classic resize disrupts queries",
+        "C": "elastic resize is not seamless per-query burst scaling."
+      },
+      "memoryTip": "Redshift Concurrency Scaling adds transient query capacity without cluster resize and maintains availability for ongoing writes",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/redshift/latest/dg/concurrency-scaling.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "C"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 47,
+      "domain": 3,
+      "sequence": 180,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudFront custom origin header validated at ALB via listener rule or WAF blocks direct requests lacking the secret; CloudFront OAC isn't supported for ALB.",
+      "wrongOptions": {
+        "A": "ALB SG cannot reference distribution as security group",
+        "B": "WAF on CloudFront cannot block direct ALB access",
+        "D": "OAC not applicable to ALB."
+      },
+      "memoryTip": "CloudFront custom origin header validated at ALB via listener rule or WAF blocks direct requests lacking the secret",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "C"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 52,
+      "domain": 3,
+      "sequence": 181,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "CloudWatch AWS/Usage service quota metrics and SNS alarm can warn when Fargate resource use approaches quota; ensure correct quota dimension and metric math.",
+      "wrongOptions": {
+        "A": "sample count isn't quota utilization",
+        "C": "custom Lambda polling adds overhead",
+        "D": "Config not service quota usage monitor."
+      },
+      "memoryTip": "CloudWatch AWS/Usage service quota metrics and SNS alarm can warn when Fargate resource use approaches quota",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/monitor-service-quotas.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 53,
+      "domain": 3,
+      "sequence": 182,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "NAT gateway in each AZ and same-AZ private route tables remove single-AZ NAT failure dependence.",
+      "wrongOptions": {
+        "B": "public subnet route tables don't route private traffic"
+      },
+      "memoryTip": "NAT gateway in each AZ and same-AZ private route tables remove single-AZ NAT failure dependence.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 55,
+      "domain": 3,
+      "sequence": 183,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "verified",
+      "reasoning": "Change existing Elastic Beanstalk environment to load-balanced scalable environment with average CPU target/trigger; no new app needed.",
+      "wrongOptions": {
+        "A": "creates unnecessary new app and maximum CPU noisy",
+        "B": "traffic splitting deployment isn't scaling",
+        "D": "rebuild and sum CPU inappropriate."
+      },
+      "memoryTip": "Change existing Elastic Beanstalk environment to load-balanced scalable environment with average CPU target/trigger",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.as.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "C"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 56,
+      "domain": 3,
+      "sequence": 184,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "Application Discovery Agent captures on-prem physical/virtual dependencies; Migration Hub Strategy Recommendations collector supports migration planning.",
+      "wrongOptions": {
+        "A": "agentless misses physical/dependency details",
+        "C": "MGN not server grouping/report tool",
+        "D": "manual import doesn't discover relationships."
+      },
+      "memoryTip": "Application Discovery Agent captures on-prem physical/virtual dependencies",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 57,
+      "domain": 3,
+      "sequence": 185,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "verified",
+      "reasoning": "Secret origin header from CloudFront with AWS WAF validation on ALB limits direct-origin bypass; Secrets Manager/Lambda can rotate secret.",
+      "wrongOptions": {
+        "B": "moving ALB private breaks ordinary public origin connectivity",
+        "C": "Parameter Store lacks native secret rotation",
+        "D": "Shield Advanced does not attach SG policy as described."
+      },
+      "memoryTip": "Secret origin header from CloudFront with AWS WAF validation on ALB limits direct-origin bypass",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 60,
+      "domain": 3,
+      "sequence": 186,
+      "verificationStatus": "needs-source-repair",
+      "verifiedAnswer": null,
+      "validity": "ambiguous",
+      "reasoning": "B,D,E are intended but option E's single alarm/Lambda update may point to a replacement before it exists; lifecycle hooks and route updates need proper orchestration. Existing stem already says ASG replaces stopped-app instances, so B/D health alarm isn't clearly needed.",
+      "wrongOptions": {
+        "A": "EC2 status checks don't detect process failure",
+        "B": "process monitoring useful but not route replacement",
+        "C": "SSM agent doesn't emit app process metrics",
+        "D": "alarm can trigger SNS",
+        "E": "requires replacement readiness/lifecycle orchestration",
+        "F": "CloudFormation conditions don't react to scaling."
+      },
+      "memoryTip": "B,D,E are intended but option E's single alarm/Lambda update may point to a replacement before it exists",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/lifecycle-hooks.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "reviewNotes": "Source needs correction or additional assumptions; do not mark confirmed."
+    },
+    {
+      "id": 62,
+      "domain": 4,
+      "sequence": 187,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS SCT converts Oracle schema/stored procedures and AWS DMS migrates data with CDC to Aurora PostgreSQL, subject to conversion compatibility.",
+      "wrongOptions": {
+        "A": "RDS can't use S3 as live DB storage",
+        "B": "self-managed EC2 and downtime",
+        "C": "DynamoDB/DAX cannot execute Oracle stored procedures."
+      },
+      "memoryTip": "AWS SCT converts Oracle schema/stored procedures and AWS DMS migrates data with CDC to Aurora PostgreSQL, subject to conversion compatibility.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_GettingStarted.SCT.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "D"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 63,
+      "domain": 3,
+      "sequence": 188,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "E"
+      ],
+      "validity": "verified",
+      "reasoning": "Static ALB target health check prevents database overload from causing EC2 replacement; Route 53 end-to-end monitoring plus ElastiCache reduces read pressure.",
+      "wrongOptions": {
+        "A": "RDS MySQL replicas lack Aurora-style single reader endpoint and don't fix health check",
+        "C": "ALB TCP health check isn't supported",
+        "D": "CloudWatch RDS recovery action as described unsupported."
+      },
+      "memoryTip": "Static ALB target health check prevents database overload from causing EC2 replacement",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "A",
+        "E"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 66,
+      "domain": 4,
+      "sequence": 189,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "verified",
+      "reasoning": "S3 File Gateway exposes NFS with local caching and asynchronously uploads files to S3 without application rewrite. RefreshCache relates to external S3 updates, not initial uploads.",
+      "wrongOptions": {
+        "A": "requires rewriting",
+        "C": "Lustre uses Lustre protocol, not NFS as stated",
+        "D": "DataSync adds scheduling rather than transparent filesystem."
+      },
+      "memoryTip": "S3 File Gateway exposes NFS with local caching and asynchronously uploads files to S3 without application rewrite. RefreshCache relates to external S3 updates, not initial uploads.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/filegateway/latest/files3/what-is-file-s3.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "C"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
+    },
+    {
+      "id": 67,
+      "domain": 3,
+      "sequence": 190,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "verified",
+      "reasoning": "AWS Config managed rules evaluate EC2 security group compliance and can notify via SNS/EventBridge.",
+      "wrongOptions": {
+        "A": "SCPs don't record configuration changes",
+        "B": "CloudTrail logs API calls but no native compliance evaluation",
+        "C": "SCPs don't alert on noncompliance."
+      },
+      "memoryTip": "AWS Config managed rules evaluate EC2 security group compliance and can notify via SNS/EventBridge.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/config/latest/developerguide/managed-rules-by-aws-config.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "sourceAnswer": [
+        "D"
+      ],
+      "reviewNotes": "Option-by-option review against AWS service design."
     }
   ]
 }
