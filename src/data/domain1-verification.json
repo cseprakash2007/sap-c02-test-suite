@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Domain 1 first 50 single-answer questions (heuristic domain mapping)",
   "lastUpdated": "2026-10-22",
-  "notes": "11 of 50 reviewed; 39 pending. Source answer keys preserved. Q89 has flawed option wording.",
+  "notes": "20 of 50 reviewed; 30 pending. Q80 invalid/no correct option; Q118 corrected B→A; Q89 flawed wording. Reviewed null answer means no valid choice and must not be scored as verified.",
   "items": [
     {
       "id": 13,
@@ -187,38 +187,66 @@
     {
       "id": 65,
       "sequence": 10,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-implementation-caveat",
+      "reasoning": "Service Catalog portfolios, approved EMR products, launch constraints and TagOptions provide governed deployment, least-privilege launch permissions and consistent tags. Actual EMR job/query permissions also need appropriately scoped IAM or EMR access controls.",
+      "wrongOptions": {
+        "A": "IAM roles and Config detection do not restrict users to an approved product catalog or enforce tags at provisioning.",
+        "B": "Kerberos provides authentication but not approved provisioning or consistent resource tagging.",
+        "C": "Best choice: Service Catalog controls approved products, launch permissions and tags; additional EMR runtime permissions are required.",
+        "D": "CloudFormation plus post-deployment Config checks is not a centralized approved self-service product catalog; EMR resource policies as described are questionable."
+      },
+      "memoryTip": "Approved product catalog + personas + tagging = Service Catalog portfolios, launch constraints, TagOptions.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/constraints-launch.html",
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/tagoptions-launching.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 80,
       "sequence": 11,
-      "verificationStatus": "pending",
+      "verificationStatus": "reviewed",
       "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "validity": "invalid-no-correct-option",
+      "reasoning": "The source selects D, but aws:SourceIp means the IP address making the EC2 API request, not the CIDR source inside the security-group ingress rule. Therefore its SCP condition cannot reliably block rules containing 0.0.0.0/0. A Lambda remediation approach (A) removes rules after creation, rather than preventing creation. No option fully meets the preventive requirement.",
+      "wrongOptions": {
+        "A": "EventBridge/Lambda can remediate a rule after it is created, but does not prevent the creation operation.",
+        "B": "Config's authorized-ports rule evaluates configuration, not a preventive deny of any 0.0.0.0/0 rule.",
+        "C": "Allow-based SCP using aws:SourceIp does not inspect security group ingress CIDR; also SCP Allow is not a targeted guardrail.",
+        "D": "Deny-based SCP using aws:SourceIp tests API caller source address, not requested ingress CIDR."
+      },
+      "memoryTip": "aws:SourceIp = API caller IP, NOT security-group ingress CIDR.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AuthorizeSecurityGroupIngress.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 81,
       "sequence": 12,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Service Quotas organization templates automatically request increases for new accounts. Option A requests separate SageMaker training-job and endpoint quotas in ap-southeast-2, matching the two resource types. Requests may need approval and P2 availability should be checked for the target Region.",
+      "wrongOptions": {
+        "A": "Correct: template in management account with training and endpoint quota requests targeted to ap-southeast-2.",
+        "B": "Warm pool quota alone does not increase training-job and inference-endpoint quotas.",
+        "C": "Requests quotas in us-east-1 rather than required ap-southeast-2.",
+        "D": "Wrong Region and wrong quota category (warm pool only)."
+      },
+      "memoryTip": "SageMaker training and inference endpoints have separate quotas; template targets resource Region.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicequotas/latest/userguide/organization-templates.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/regions-quotas.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 84,
@@ -287,74 +315,133 @@
     {
       "id": 91,
       "sequence": 16,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid",
+      "reasoning": "Route 53 Resolver outbound endpoints and forwarding rules send selected DNS queries from the VPC to on-premises AD DNS servers over the existing network connectivity. This avoids running DNS forwarders on EC2.",
+      "wrongOptions": {
+        "A": "EC2 DNS forwarders require patching, availability management and maintenance.",
+        "B": "Private hosted-zone NS records alone do not implement forwarding to on-premises resolvers.",
+        "C": "Correct: Resolver outbound endpoint plus conditional forwarding rule for the on-premises domain.",
+        "D": "Additional AD domain controller and trust is unnecessary for DNS resolution."
+      },
+      "memoryTip": "VPC needs on-prem AD DNS = Route 53 Resolver outbound endpoint + forwarding rule.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-outbound-queries.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 96,
       "sequence": 17,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Direct Connect with transit VIF and Direct Connect gateway associates with transit gateways in supported Regions, giving private on-premises connectivity and VPC transitive routing. For inter-Region VPC-to-VPC traffic, transit gateway peering and route configuration may also be necessary; option B does not explicitly state this.",
+      "wrongOptions": {
+        "A": "VPN plus VPC peering cannot provide transitive peering routing and lacks dedicated DX bandwidth.",
+        "B": "Best: DX transit VIF to DX gateway, associated with regional transit gateways; add inter-Region TGW peering if needed.",
+        "C": "VPN and one TGW do not automatically cover VPCs in multiple Regions or the dedicated-connectivity benefits.",
+        "D": "VPC peering remains nontransitive and per-VPC VPNs increase overhead."
+      },
+      "memoryTip": "DX + many VPCs = transit VIF → DX gateway → TGWs; cross-Region transit needs TGW peering.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways-intro.html",
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-peering.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 99,
       "sequence": 18,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-policy-syntax-caveat",
+      "reasoning": "An organization-root SCP can deny creation of S3 access points unless the access point's network origin is VPC. The key is s3:AccessPointNetworkOrigin, and the condition comparison should use the documented value and suitable condition operator. SCPs apply to principals in member accounts, not the management account.",
+      "wrongOptions": {
+        "A": "An access point resource policy cannot control CreateAccessPoint before the resource exists.",
+        "B": "Correct organizational guardrail: deny creation unless network origin is VPC.",
+        "C": "Deploying individual identity policies with StackSets is more work and permits other identities to bypass absent explicit deny.",
+        "D": "Bucket policies are not the appropriate organization-wide authorization point for CreateAccessPoint."
+      },
+      "memoryTip": "All accounts + restrict new S3 access point network origin = root SCP with s3:AccessPointNetworkOrigin.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-access-points.html",
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 108,
       "sequence": 19,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-architecture-caveat",
+      "reasoning": "Centralize egress through a Transit Gateway-connected egress VPC, with AWS Network Firewall inspection endpoints and NAT gateway. Route both directions symmetrically through inspection; existing direct IGW/NAT routes in spokes must be changed or restricted so traffic cannot bypass filtering. Modern TGW-attached Network Firewall is an additional supported design not in the options.",
+      "wrongOptions": {
+        "A": "Self-managed EC2 proxy fleet increases operational work and is not a valid route-table target as an Auto Scaling group.",
+        "B": "Correct among options: centralized managed Network Firewall with NAT and correct routing.",
+        "C": "A firewall per account duplicates administration and configuration.",
+        "D": "A self-managed proxy fleet in each account is even higher overhead."
+      },
+      "memoryTip": "Organization-wide rule-based egress filtering = centralized AWS Network Firewall + TGW + NAT.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/prescriptive-guidance/latest/robust-network-design-control-tower/firewall.html",
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-nf-fw.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 117,
       "sequence": 20,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-remediation-caveat",
+      "reasoning": "AWS Config detects noncompliant unencrypted EBS volumes, SSM Automation remediates by snapshot/copy/replacement workflow, and EBS encryption by default encrypts new EBS volumes and snapshots in the Region. Existing volumes cannot simply be encrypted in place; automation must handle detach/attach and downtime as needed.",
+      "wrongOptions": {
+        "A": "KMS key policies cannot prevent the creation of unencrypted EBS volumes.",
+        "B": "Fleet Manager is not the most direct compliance discovery; the proposed SCP prevention is less straightforward than the account default.",
+        "C": "Fleet Manager plus automation can remediate but is less directly continuous than AWS Config monitoring.",
+        "D": "Correct: AWS Config managed rule + SSM automation remediation + EBS encryption by default."
+      },
+      "memoryTip": "Existing unencrypted EBS = Config + SSM replacement; future EBS = encryption by default.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/ebs/latest/userguide/encryption-by-default.html",
+        "https://docs.aws.amazon.com/config/latest/developerguide/encrypted-volumes.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 118,
       "sequence": 21,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "IAM Identity Center permission sets can reference customer managed IAM policies, but the policy name and path must match in each target AWS account. Identity Center provisions its own roles for account assignments; it does not attach existing arbitrary IAM roles to permission sets. Thus A is the correct choice; B in the source JSON is wrong.",
+      "wrongOptions": {
+        "A": "Correct: create matching named customer-managed policies in each account, reference them in permission sets, and assign groups to accounts.",
+        "B": "Incorrect: IAM Identity Center cannot attach pre-existing IAM roles directly to a permission set.",
+        "C": "Unique policy names in every account violate matching-name requirement; matching path alone is insufficient.",
+        "D": "IAM Identity Center assignments target AWS accounts, not OUs as described; policies aren't attached per account through that configuration."
+      },
+      "memoryTip": "Identity Center permission set + customer managed policy = SAME name and path in EVERY target account.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/singlesignon/latest/userguide/permissionsetcustom.html",
+        "https://docs.aws.amazon.com/singlesignon/latest/userguide/howtocmp.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 120,
