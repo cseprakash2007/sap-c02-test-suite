@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Twenty-first 20-question batch: 18 reviewed with caveats, 2 flagged Q604 Q621; corrections Q605 A→B Q626 D→C.",
+  "notes": "Twenty-second 20-question batch: 15 reviewed with caveats, 5 flagged Q630 Q633 Q636 Q646 Q649; correction Q654 C→B.",
   "items": [
     {
       "id": 12,
@@ -11081,6 +11081,319 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Preliminary architecture review; original question bank unchanged. AWS references are reading leads; not all independently checked."
+    },
+    {
+      "id": 627,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "3-year All Upfront Standard RIs for stable EC2 baseline plus Compute Savings Plan for incremental eligible compute including Lambda can maximize discount; avoid double-covering same usage, commitments must be sized.",
+      "wrongOptions": null,
+      "memoryTip": "3-year All Upfront Standard RIs for stable EC2 baseline plus Compute Savings Plan for incremental eligible compute including Lambda can maximize discount; avoid double-covering same usage, commitments must be sized.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 628,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFront/S3 plus API Gateway/Lambda auto-scale weekly ingestion without servers; S3 with Athena and QuickSight supports monthly reports. Format and partition files for efficient queries.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFront/S3 plus API Gateway/Lambda auto-scale weekly ingestion without servers; S3 with Athena and QuickSight supports monthly reports. Format and partition files for efficient queries.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/athena/latest/ug/what-is.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 630,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "DLM supports cross-Region snapshot copies but its lifecycle policy cross-Region copy target configuration has limited destination Region count; requirement is at least TWO additional Regions. Need AWS Backup multi-destination copy strategy or orchestration; original A not sufficiently established.",
+      "wrongOptions": null,
+      "memoryTip": "DLM supports cross-Region snapshot copies but its lifecycle policy cross-Region copy target configuration has limited destination Region count; requirement is at least TWO additional Regions. Need AWS Backup multi-destination copy strategy or orchestration; original A not sufficiently established.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 631,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Global Accelerator gives two static anycast public IPs while preserving existing ALB and AWS WAF, unlike NLB replacing layer-7 filtering.",
+      "wrongOptions": null,
+      "memoryTip": "Global Accelerator gives two static anycast public IPs while preserving existing ALB and AWS WAF, unlike NLB replacing layer-7 filtering.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-how-it-works.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 632,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Lambda alias weighted routing with update-alias --routing-config supports gradual canary shift between published function versions; monitor errors and rollback.",
+      "wrongOptions": null,
+      "memoryTip": "Lambda alias weighted routing with update-alias --routing-config supports gradual canary shift between published function versions; monitor errors and rollback.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuring-alias-routing.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 633,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "C retains files indefinitely rather than expiring after six months, and event-triggered Lambda writing back to the same bucket risks recursive processing. A/B lifecycle expire but also same-bucket overwrite loops and lack explicit durable retries. D moves to archive after six months instead of deleting. Requires revised options.",
+      "wrongOptions": null,
+      "memoryTip": "C retains files indefinitely rather than expiring after six months, and event-triggered Lambda writing back to the same bucket risks recursive processing. A/B lifecycle expire but also same-bucket overwrite loops and lack explicit durable retries. D moves to archive after six months instead of deleting. Requires revised options.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-s3.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 634,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Existing organization management account invites external account; external account accepts and explicitly creates OrganizationAccountAccessRole because invited accounts do not receive it automatically.",
+      "wrongOptions": null,
+      "memoryTip": "Existing organization management account invites external account; external account accepts and explicitly creates OrganizationAccountAccessRole because invited accounts do not receive it automatically.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_invites.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 636,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "A uses MGN agentless and Strategy Recommendations for TCO but lacks assurance automatic Migration Hub import. Migration Evaluator collector on EC2 (B) can produce TCO without guest agents but its collected data isn't automatically ingested to Migration Hub by default; C attributes TCO to wrong service. No complete answer.",
+      "wrongOptions": null,
+      "memoryTip": "A uses MGN agentless and Strategy Recommendations for TCO but lacks assurance automatic Migration Hub import. Migration Evaluator collector on EC2 (B) can produce TCO without guest agents but its collected data isn't automatically ingested to Migration Hub by default; C attributes TCO to wrong service. No complete answer.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/migration-evaluator/latest/userguide/what-is-migration-evaluator.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 638,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Pre-bake huge shared base image into EC2 AMI for ECS EC2 launch type, reducing image-pull startup; custom component layers remain in ECR. Fargate cannot use customer AMI.",
+      "wrongOptions": null,
+      "memoryTip": "Pre-bake huge shared base image into EC2 AMI for ECS EC2 launch type, reducing image-pull startup; custom component layers remain in ECR. Fargate cannot use customer AMI.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 639,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora global database secondary Region and DynamoDB global table replica satisfy cross-region data resilience with low replication lag; test failover and RPO/RTO.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora global database secondary Region and DynamoDB global table replica satisfy cross-region data resilience with low replication lag; test failover and RPO/RTO.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 641,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFront secret origin header restricts direct ALB access and WAF at edge blocks malicious requests; ensure ALB default rule denies unmatched requests and rotate header.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFront secret origin header restricts direct ALB access and WAF at edge blocks malicious requests; ensure ALB default rule denies unmatched requests and rotate header.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 642,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Global Accelerator static anycast IPs and multi-region UDP-capable NLB endpoints provide lowest-latency routing and health-based regional failover.",
+      "wrongOptions": null,
+      "memoryTip": "Global Accelerator static anycast IPs and multi-region UDP-capable NLB endpoints provide lowest-latency routing and health-based regional failover.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/about-accelerators.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 643,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ECS Fargate with ECR, separate production/testing services and autoscaling removes server management with less control-plane complexity than EKS; Lambda container packaging may require app refactor.",
+      "wrongOptions": null,
+      "memoryTip": "ECS Fargate with ECR, separate production/testing services and autoscaling removes server management with less control-plane complexity than EKS; Lambda container packaging may require app refactor.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 646,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "D DMS plus SCT to Aurora PostgreSQL modernizes Oracle, but complex Oracle stored procedures and spatial features require compatibility validation and conversion, and 'fast minimal downtime' needs CDC and cutover steps not specified. A RDS Oracle via DMS retains stored procedures but migration of code/schema not specified. No unqualified answer.",
+      "wrongOptions": null,
+      "memoryTip": "D DMS plus SCT to Aurora PostgreSQL modernizes Oracle, but complex Oracle stored procedures and spatial features require compatibility validation and conversion, and 'fast minimal downtime' needs CDC and cutover steps not specified. A RDS Oracle via DMS retains stored procedures but migration of code/schema not specified. No unqualified answer.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 647,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AppStream 2.0 Windows image builder and on-demand fleets stream legacy desktop application via browser to Linux and Windows users with minimal redevelopment; user pools handle login, AD federation may be better.",
+      "wrongOptions": null,
+      "memoryTip": "AppStream 2.0 Windows image builder and on-demand fleets stream legacy desktop application via browser to Linux and Windows users with minimal redevelopment; user pools handle login, AD federation may be better.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/appstream2/latest/developerguide/what-is-appstream.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 648,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 Transfer Acceleration uses AWS edge network to improve long-distance direct uploads to S3, especially from Europe to us-east-1.",
+      "wrongOptions": null,
+      "memoryTip": "S3 Transfer Acceleration uses AWS edge network to improve long-distance direct uploads to S3, especially from Europe to us-east-1.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 649,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "A+E is closest to correct: S3 hosts error page and CloudFront custom error response handles 502. However E unnecessarily instructs DNS change and does not explicitly add S3 as separate CloudFront origin/cache behavior; original C+E DNS health-check approach is incorrect for transient 502.",
+      "wrongOptions": null,
+      "memoryTip": "A+E is closest to correct: S3 hosts error page and CloudFront custom error response handles 502. However E unnecessarily instructs DNS change and does not explicitly add S3 as separate CloudFront origin/cache behavior; original C+E DNS health-check approach is incorrect for transient 502.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/creating-custom-error-pages.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 652,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EC2 ASG warm pools pre-initialize slow user-data package installation, lifecycle hooks control readiness, dynamic scaling reacts to load; instance warmup should reflect startup time.",
+      "wrongOptions": null,
+      "memoryTip": "EC2 ASG warm pools pre-initialize slow user-data package installation, lifecycle hooks control readiness, dynamic scaling reacts to load; instance warmup should reflect startup time.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-warm-pools.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 654,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Download/redeploy Lambda package to target account; AWS RAM share Aurora cluster for cross-account clone is faster than snapshot restore. Lambda functions cannot be shared via RAM as claimed in C; clone still requires write cutover/sync planning.",
+      "wrongOptions": null,
+      "memoryTip": "Download/redeploy Lambda package to target account; AWS RAM share Aurora cluster for cross-account clone is faster than snapshot restore. Lambda functions cannot be shared via RAM as claimed in C; clone still requires write cutover/sync planning.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.Cross-Account.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
+    },
+    {
+      "id": 655,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS WAF rate-based rule on ALB dynamically blocks sources exceeding login rate without maintaining rotating 500-IP denylist; configure rate aggregation and scope-down to login path.",
+      "wrongOptions": null,
+      "memoryTip": "AWS WAF rate-based rule on ALB dynamically blocks sources exceeding login rate without maintaining rotating 500-IP denylist; configure rate aggregation and scope-down to login path.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-rate-based.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original question unchanged; documentation pointers not all independently verified."
     }
   ]
 }
