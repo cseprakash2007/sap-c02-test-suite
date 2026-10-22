@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "scope": "Domain 1 first 50 single-answer questions (heuristic domain mapping)",
-  "lastUpdated": "2026-10-21",
-  "notes": "Every item remains pending independent verification. Do not equate source answer with verified answer.",
+  "lastUpdated": "2026-10-22",
+  "notes": "Three questions reviewed (84, 87, 89); remaining entries pending. Verified answers are separate from source keys. Q89 has flawed wording.",
   "items": [
     {
       "id": 13,
@@ -151,38 +151,66 @@
     {
       "id": 84,
       "sequence": 13,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "AWS Service Quotas quota request templates in the Organizations management account automatically request configured increases for newly created member accounts. This is less operational work than custom event-driven automation. Approval is not guaranteed.",
+      "wrongOptions": {
+        "A": "EventBridge/SNS/Lambda can request increases, but adds code and maintenance.",
+        "B": "Correct. Native Service Quotas organization quota request template.",
+        "C": "AWS Config evaluates configurations; it cannot directly set EC2 quotas.",
+        "D": "A custom Lambda creating Support cases is unnecessary and adds operational overhead."
+      },
+      "memoryTip": "New AWS account + repeat quota increases + least overhead = Service Quotas request template.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/servicequotas/latest/userguide/organization-templates.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 87,
       "sequence": 14,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-source-key-incorrect",
+      "reasoning": "An account created through AWS Organizations receives OrganizationAccountAccessRole by default. An authorized management-account principal assumes that role to administer the new member account, including creating IAM users.",
+      "wrongOptions": {
+        "A": "AWS Organizations does not email a 64-character root password.",
+        "B": "Correct. Assume OrganizationAccountAccessRole in the new account.",
+        "C": "The management account root password cannot authenticate the member account root user.",
+        "D": "An IAM user from the management account cannot directly sign into the new account using its own credentials; it must assume an authorized role."
+      },
+      "memoryTip": "Organizations-created account → OrganizationAccountAccessRole → assume role → create users.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 89,
       "sequence": 15,
-      "verificationStatus": "pending",
-      "verifiedAnswer": null,
-      "validity": "unreviewed",
-      "reasoning": null,
-      "wrongOptions": null,
-      "memoryTip": null,
-      "awsReferences": [],
-      "reviewedAt": null
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "flawed-option-wording",
+      "reasoning": "B captures the intended organization-wide resource perimeter using an RCP and aws:PrincipalOrgID, but it incorrectly says the RCP 'allows' access. Customer-managed RCPs use Deny statements; a valid implementation denies access for principals outside the organization, with service-principal exceptions as required. Treat B as the intended exam option, not a valid literal policy instruction.",
+      "wrongOptions": {
+        "A": "aws:PrincipalType=Service does not establish organization membership and the SCP approach does not protect against external resource principals.",
+        "B": "Intended answer, but wording must say deny outsiders, not allow insiders.",
+        "C": "aws:PrincipalAccount is a 12-digit account ID, not an organization ID; manual updates are high overhead.",
+        "D": "RAM account allowlists do not provide this organization-wide ECR resource perimeter."
+      },
+      "memoryTip": "RCP = resource perimeter; aws:PrincipalOrgID = organization identity; enforce with explicit Deny.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps.html",
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps_syntax.html"
+      ],
+      "reviewedAt": "2026-10-22"
     },
     {
       "id": 91,
