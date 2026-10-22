@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Fifteenth 20-question batch: 18 reviewed with caveats, 2 flagged Q428 Q447. Corrections Q427 B→A and Q435 B+E→C+E. Duplicate Q445/Q306.",
+  "notes": "Sixteenth 20-question batch: 18 reviewed with caveats, 2 flagged Q458 Q469; corrections Q448 D→C Q467 A→B Q474 C→D Q482 C→B.",
   "items": [
     {
       "id": 12,
@@ -9159,6 +9159,323 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Preliminary architecture review; source question unchanged. References are reading leads, not all individually validated."
+    },
+    {
+      "id": 448,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 object notification to Lambda selects ECS Fargate container task; processing up to two hours exceeds Lambda 15-minute timeout, so original D invalid.",
+      "wrongOptions": null,
+      "memoryTip": "S3 object notification to Lambda selects ECS Fargate container task; processing up to two hours exceeds Lambda 15-minute timeout, so original D invalid.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 450,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Compute Savings Plans cover EC2 across regions and Lambda during modernization; annual reassessment avoids locked EC2 family commitment. 3-year Compute Savings Plans might save more if stable commitment known, but absent from options.",
+      "wrongOptions": null,
+      "memoryTip": "Compute Savings Plans cover EC2 across regions and Lambda during modernization; annual reassessment avoids locked EC2 family commitment. 3-year Compute Savings Plans might save more if stable commitment known, but absent from options.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 453,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DMS can migrate MongoDB replica set with CDC into Amazon DocumentDB via source and target endpoints; test MongoDB compatibility.",
+      "wrongOptions": null,
+      "memoryTip": "DMS can migrate MongoDB replica set with CDC into Amazon DocumentDB via source and target endpoints; test MongoDB compatibility.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.MongoDB.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 458,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "IgnorePublicAcls blocks public access granted by ACLs only; public bucket policies could still expose reports. Need all four S3 Block Public Access controls, or confirm ACL-only exposure. Source D insufficient unconditionally.",
+      "wrongOptions": null,
+      "memoryTip": "IgnorePublicAcls blocks public access granted by ACLs only; public bucket policies could still expose reports. Need all four S3 Block Public Access controls, or confirm ACL-only exposure. Source D insufficient unconditionally.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 460,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Cross-Region RDS read replica offloads finance queries and can be promoted for DR; copy frontend AMIs and S3 CRR to DR Region. B incorrectly registers remote EC2 to existing ALB.",
+      "wrongOptions": null,
+      "memoryTip": "Cross-Region RDS read replica offloads finance queries and can be promoted for DR; copy frontend AMIs and S3 CRR to DR Region. B incorrectly registers remote EC2 to existing ALB.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 462,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFront/S3 static frontend, managed OpenSearch and Aurora PostgreSQL, App Runner API hosting minimize server and container control-plane maintenance.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFront/S3 static frontend, managed OpenSearch and Aurora PostgreSQL, App Runner API hosting minimize server and container control-plane maintenance.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apprunner/latest/dg/what-is-apprunner.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 464,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFront origin groups can fail over from primary to secondary on configured origin failure HTTP status codes, bypassing DNS caching delays; failover applies to supported requests.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFront origin groups can fail over from primary to secondary on configured origin failure HTTP status codes, bypassing DNS caching delays; failover applies to supported requests.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 467,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS IoT Core scales MQTT ingestion, custom domain preserves existing endpoint, IoT rule routes data to DynamoDB. ALB does not handle native MQTT broker protocol as posed.",
+      "wrongOptions": null,
+      "memoryTip": "AWS IoT Core scales MQTT ingestion, custom domain preserves existing endpoint, IoT rule routes data to DynamoDB. ALB does not handle native MQTT broker protocol as posed.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-endpoints-configurable.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 469,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Source D+E+F mutually conflicts: CloudFront viewer protocol cannot be both HTTPS Only and Redirect HTTP to HTTPS. D+F and S3 deny insecure transport B can be used for defense-in-depth, but B may be unnecessary and requires bucket context. Fix choose count or options.",
+      "wrongOptions": null,
+      "memoryTip": "Source D+E+F mutually conflicts: CloudFront viewer protocol cannot be both HTTPS Only and Redirect HTTP to HTTPS. D+F and S3 deny insecure transport B can be used for defense-in-depth, but B may be unnecessary and requires bucket context. Fix choose count or options.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-viewers-to-cloudfront.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 470,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SSM interface endpoints and S3 gateway endpoint support isolated instances; VPC peering reaches patch repository in other account with proper routing/security rules.",
+      "wrongOptions": null,
+      "memoryTip": "SSM interface endpoints and S3 gateway endpoint support isolated instances; VPC peering reaches patch repository in other account with proper routing/security rules.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-create-vpc.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 473,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Management account Cost Explorer rightsizing recommendations can cover organization; CloudWatch agent collects memory usage. Compute Optimizer is alternative but absent.",
+      "wrongOptions": null,
+      "memoryTip": "Management account Cost Explorer rightsizing recommendations can cover organization; CloudWatch agent collects memory usage. Compute Optimizer is alternative but absent.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-rightsizing.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 474,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "ECS service blue/green deployment with ALB and Service Auto Scaling meets HTTPS traffic routing and CloudWatch alarm scaling; Cluster Autoscaler for EKS not ECS Fargate.",
+      "wrongOptions": null,
+      "memoryTip": "ECS service blue/green deployment with ALB and Service Auto Scaling meets HTTPS traffic routing and CloudWatch alarm scaling; Cluster Autoscaler for EKS not ECS Fargate.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-auto-scaling.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 475,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Amazon Connect replaces call center platform and Pinpoint supports two-way SMS engagement; verify current AWS End User Messaging SMS migration path and regional capabilities.",
+      "wrongOptions": null,
+      "memoryTip": "Amazon Connect replaces call center platform and Pinpoint supports two-way SMS engagement; verify current AWS End User Messaging SMS migration path and regional capabilities.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/pinpoint/latest/userguide/channels-sms-two-way.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 477,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS Transfer Family managed SFTP directly writes to S3 and Route 53 DNS points to endpoint, removing single EC2 and cron staging.",
+      "wrongOptions": null,
+      "memoryTip": "AWS Transfer Family managed SFTP directly writes to S3 and Route 53 DNS points to endpoint, removing single EC2 and cron staging.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/transfer/latest/userguide/what-is-aws-transfer-family.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 478,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Migration Evaluator supports importing inventory/CMDB data via template to build TCO business case without deploying collection infrastructure.",
+      "wrongOptions": null,
+      "memoryTip": "Migration Evaluator supports importing inventory/CMDB data via template to build TCO business case without deploying collection infrastructure.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/migration-evaluator/latest/userguide/what-is-migration-evaluator.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 479,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "On-prem S3 File Gateway presents SMB share backed by S3 during phased migration; copy existing files into gateway share to preserve file access.",
+      "wrongOptions": null,
+      "memoryTip": "On-prem S3 File Gateway presents SMB share backed by S3 during phased migration; copy existing files into gateway share to preserve file access.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/storagegateway/latest/files3/what-is-file-s3.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 481,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Multi-AZ NAT gateways, RDS Multi-AZ, and ASG across three AZs with capacity three remove single-AZ failure points.",
+      "wrongOptions": null,
+      "memoryTip": "Multi-AZ NAT gateways, RDS Multi-AZ, and ASG across three AZs with capacity three remove single-AZ failure points.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZSingleStandby.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 482,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Managed Grafana workspace with exported/imported dashboards and CloudWatch datasource minimizes operations and provides managed availability. Original C single-instance ASG not highly available.",
+      "wrongOptions": null,
+      "memoryTip": "Managed Grafana workspace with exported/imported dashboards and CloudWatch datasource minimizes operations and provides managed availability. Original C single-instance ASG not highly available.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/grafana/latest/userguide/AMG-workspace-content-migration.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 485,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Aurora global database low-latency cross-region replication and managed failover is most appropriate for aggressive RPO/RTO; operational execution and lag can vary, no absolute SLA guarantee.",
+      "wrongOptions": null,
+      "memoryTip": "Aurora global database low-latency cross-region replication and managed failover is most appropriate for aggressive RPO/RTO; operational execution and lag can vary, no absolute SLA guarantee.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
+    },
+    {
+      "id": 486,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Lambda execution role in centralized account can sts:AssumeRole into per-account minimal roles; destination role trust restricts to central Lambda role.",
+      "wrongOptions": null,
+      "memoryTip": "Lambda execution role in centralized account can sts:AssumeRole into per-account minimal roles; destination role trust restricts to central Lambda role.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Preliminary architecture review; original source question unchanged."
     }
   ]
 }
