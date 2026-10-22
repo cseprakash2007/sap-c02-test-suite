@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Next ten Domain 1 questions",
   "lastUpdated": "2026-10-22",
-  "notes": "Eleventh 20-question batch: 16 answers reviewed with caveats; Q329 Q331 Q340 Q341 flagged for source repair.",
+  "notes": "Twelfth 20-question batch: 15 reviewed with caveats, 5 flagged Q343 Q345 Q346 Q347 Q354. Q343 B invalid container-image Lambda layer; Q347 Memcached Global Datastore invalid.",
   "items": [
     {
       "id": 12,
@@ -7885,6 +7885,319 @@
       ],
       "reviewedAt": "2026-10-22",
       "reviewNotes": "Reviewed source question/options; original question bank unchanged."
+    },
+    {
+      "id": 343,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Lambda layers must be ZIP archives, not container images. ECR images can package complete Lambda functions (D), but do not create a reusable Lambda layer for ZIP-based functions as the question intends. Correct answer D for deployment simplicity, or rewrite options to use ZIP layer.",
+      "wrongOptions": null,
+      "memoryTip": "Lambda layers must be ZIP archives, not container images. ECR images can package complete Lambda functions (D), but do not create a reusable Lambda layer for ZIP-based functions as the question intends. Correct answer D for deployment simplicity, or rewrite options to use ZIP layer.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/chapter-layers.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 344,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SQS durably buffers third-party requests for Lambda, supports retries and DLQ. Configure visibility timeout and failure handling to achieve eventual processing.",
+      "wrongOptions": null,
+      "memoryTip": "SQS durably buffers third-party requests for Lambda, supports retries and DLQ. Configure visibility timeout and failure handling to achieve eventual processing.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 345,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "A provisions only 75 MiBps against required 225 MiBps; EFS replication and burst credits may not meet peak requirement for 100 GB. D's 10-minute DataSync task offers sub-hour nominal RPO but does not guarantee completion. Source underspecified.",
+      "wrongOptions": null,
+      "memoryTip": "A provisions only 75 MiBps against required 225 MiBps; EFS replication and burst credits may not meet peak requirement for 100 GB. D's 10-minute DataSync task offers sub-hour nominal RPO but does not guarantee completion. Source underspecified.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/efs/latest/ug/performance.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 346,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "Question says Select THREE but only two answer IDs and four choices exist. NLB supports UDP and NACL restricts protocols, but WAF cannot attach to NLB. A+D are the only plausible choices; fix count/choices.",
+      "wrongOptions": null,
+      "memoryTip": "Question says Select THREE but only two answer IDs and four choices exist. NLB supports UDP and NACL restricts protocols, but WAF cannot attach to NLB. A+D are the only plausible choices; fix count/choices.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 347,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "B proposes ElastiCache global datastore for Memcached, which is unsupported; Global Datastore is for Redis OSS/Valkey. D (RDS cross-region replica plus DynamoDB global tables for sessions) is viable, though performance tradeoffs apply.",
+      "wrongOptions": null,
+      "memoryTip": "B proposes ElastiCache global datastore for Memcached, which is unsupported; Global Datastore is for Redis OSS/Valkey. D (RDS cross-region replica plus DynamoDB global tables for sessions) is viable, though performance tradeoffs apply.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Redis-Global-Datastore.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 348,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "AWS WAF SQL database managed rule group in block mode on ALB filters SQL injection before reaching Fargate tasks.",
+      "wrongOptions": null,
+      "memoryTip": "AWS WAF SQL database managed rule group in block mode on ALB filters SQL injection before reaching Fargate tasks.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-use-case.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 349,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "DataSync agent performs encrypted initial and incremental transfers from on-premises storage to cross-Region S3 without custom transfer code.",
+      "wrongOptions": null,
+      "memoryTip": "DataSync agent performs encrypted initial and incremental transfers from on-premises storage to cross-Region S3 without custom transfer code.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 350,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B",
+        "E"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "awsvpc gives per-task network interfaces/security groups and ECS task roles provide least-privilege credentials rather than static credentials.",
+      "wrongOptions": null,
+      "memoryTip": "awsvpc gives per-task network interfaces/security groups and ECS task roles provide least-privilege credentials rather than static credentials.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 351,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "A regional NLB with IP targets in the peered Region can front existing service endpoints for PrivateLink; ensure cross-Region routing and IP target support.",
+      "wrongOptions": null,
+      "memoryTip": "A regional NLB with IP targets in the peered Region can front existing service endpoints for PrivateLink; ensure cross-Region routing and IP target support.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 353,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "SES configuration-set event publishing to Firehose/S3 plus Athena queries supports delivery troubleshooting. Subject is not automatically in event records; add SES message tags or explicitly log metadata.",
+      "wrongOptions": null,
+      "memoryTip": "SES configuration-set event publishing to Firehose/S3 plus Athena queries supports delivery troubleshooting. Subject is not automatically in event records; add SES message tags or explicitly log metadata.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/ses/latest/dg/monitor-using-event-publishing.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 354,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": null,
+      "validity": "flagged-source-repair",
+      "reasoning": "C introduces TGW for scalability but requires migrating VPC connectivity away from existing peering; B can use existing VPC peering routes with Client VPN and may be cheaper. 'Most cost-effective' favors B if transitive routing not required; flag ambiguity.",
+      "wrongOptions": null,
+      "memoryTip": "C introduces TGW for scalability but requires migrating VPC connectivity away from existing peering; B can use existing VPC peering routes with Client VPN and may be cheaper. 'Most cost-effective' favors B if transitive routing not required; flag ambiguity.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering-basics.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 355,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "EC2 Auto Scaling scales backend fleet and DynamoDB auto scaling adjusts provisioned capacity with minimal code changes.",
+      "wrongOptions": null,
+      "memoryTip": "EC2 Auto Scaling scales backend fleet and DynamoDB auto scaling adjusts provisioned capacity with minimal code changes.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 356,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "CloudFront managed prefix list on ALB security group restricts origin reachability to CloudFront IP space with low operational overhead; does not restrict to only this distribution.",
+      "wrongOptions": null,
+      "memoryTip": "CloudFront managed prefix list on ALB security group restricts origin reachability to CloudFront IP space with low operational overhead; does not restrict to only this distribution.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/LocationsOfEdgeServers.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 357,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Nine On-Demand instances across three AZs protect SLA-critical 65% load and three Spot instances cover deferrable work; capacity reservations improve launch assurance without long-term purchase.",
+      "wrongOptions": null,
+      "memoryTip": "Nine On-Demand instances across three AZs protect SLA-critical 65% load and three Spot instances cover deferrable work; capacity reservations improve launch assurance without long-term purchase.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 361,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Share one customer-managed prefix list organization-wide through RAM; accounts reference it in security groups while security team updates central CIDRs.",
+      "wrongOptions": null,
+      "memoryTip": "Share one customer-managed prefix list organization-wide through RAM; accounts reference it in security groups while security team updates central CIDRs.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/sharing-managed-prefix-lists.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 363,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "VPC Flow Logs to CloudWatch Logs subscription then Firehose Splunk destination delivers near-real-time connection metadata; Lambda preprocessing can unpack subscription payload.",
+      "wrongOptions": null,
+      "memoryTip": "VPC Flow Logs to CloudWatch Logs subscription then Firehose Splunk destination delivers near-real-time connection metadata; Lambda preprocessing can unpack subscription payload.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/firehose/latest/dev/create-destination.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 364,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Compute Optimizer and Trusted Advisor identify rightsizing; autoscaling plus Compute Savings Plans optimize predictable EC2 compute. RDS reservations may additionally help but not in option.",
+      "wrongOptions": null,
+      "memoryTip": "Compute Optimizer and Trusted Advisor identify rightsizing; autoscaling plus Compute Savings Plans optimize predictable EC2 compute. RDS reservations may additionally help but not in option.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 365,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "S3 cross-Region replication with RTC targets replication within 15 minutes and emits OperationMissedThreshold events; SNS notifies operations.",
+      "wrongOptions": null,
+      "memoryTip": "S3 cross-Region replication with RTC targets replication within 15 minutes and emits OperationMissedThreshold events; SNS notifies operations.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-time-control.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 366,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Route 53 Resolver DNS Firewall allowlist followed by block-all rule uses ascending priority numbers. DNS firewall alone does not prevent direct-IP or alternate DNS bypass; require egress controls for strict enforcement.",
+      "wrongOptions": null,
+      "memoryTip": "Route 53 Resolver DNS Firewall allowlist followed by block-all rule uses ascending priority numbers. DNS firewall alone does not prevent direct-IP or alternate DNS bypass; require egress controls for strict enforcement.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-dns-firewall-rule-settings.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
+    },
+    {
+      "id": 367,
+      "verificationStatus": "reviewed",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "validity": "valid-with-caveat",
+      "reasoning": "Textract extracts form text/key-values, Comprehend can classify/extract entities, and Step Functions/Lambda orchestrate API updates without custom OCR hosting.",
+      "wrongOptions": null,
+      "memoryTip": "Textract extracts form text/key-values, Comprehend can classify/extract entities, and Step Functions/Lambda orchestrate API updates without custom OCR hosting.",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/textract/latest/dg/what-is.html"
+      ],
+      "reviewedAt": "2026-10-22",
+      "reviewNotes": "Source question and options reviewed; original question bank unchanged."
     }
   ]
 }
