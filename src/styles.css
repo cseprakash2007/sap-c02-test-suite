@@ -111,3 +111,12 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .review-panel .review-alert a{font-size:13px;overflow-wrap:anywhere}
 .review-panel .disclaimer{font-size:12px}
 @media(max-width:650px){.question-layout{gap:14px}.question-text{font-size:17px}.option{font-size:14px;padding:13px}.review-panel .answer-box strong{font-size:20px}}
+
+/* Detailed study presentation */
+.study-section-label{font-size:.76rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#64748b;margin:1.3rem 0 .65rem}
+.question-card .question-text{line-height:1.75;white-space:pre-line;overflow-wrap:anywhere}
+.question-card .option{line-height:1.65;align-items:flex-start;text-align:left;white-space:pre-line}
+.review-panel .note-block,.review-panel .review-alert{line-height:1.7;overflow-wrap:anywhere}
+.review-panel .note-block p,.review-panel .review-alert p{white-space:pre-line}
+.review-panel .explanation-heading{margin-top:1.1rem;margin-bottom:.6rem}
+@media(max-width:760px){.question-card,.review-panel{min-width:0}.question-card .question-text{font-size:1.1rem;line-height:1.65}.question-card .option{padding:1rem}.question-actions{flex-wrap:wrap;gap:.65rem}.question-actions .action-right{flex-wrap:wrap}}
