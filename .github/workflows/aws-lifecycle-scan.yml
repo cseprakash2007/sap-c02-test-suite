@@ -1,0 +1,47 @@
+name: AWS lifecycle candidate scan
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [domain1-answer-audit]
+    paths:
+      - 'scripts/scan_aws_lifecycle.py'
+      - 'src/data/questions.json'
+      - '.github/workflows/aws-lifecycle-scan.yml'
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Screen all question stems and answer choices
+        run: python scripts/scan_aws_lifecycle.py
+      - name: Show candidate summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('reports/aws-lifecycle-candidates.json')
+          report = json.loads(p.read_text())
+          assert report['totalQuestions'] == 674, f"Expected 674 questions, found {report['totalQuestions']}"
+          assert report['candidateQuestions'] == len(report['candidates']), 'Candidate count mismatch'
+          assert len({x['id'] for x in report['candidates']}) == report['candidateQuestions'], 'Duplicate candidate IDs'
+          print(f"Total questions: {report['totalQuestions']}")
+          print(f"Candidate questions: {report['candidateQuestions']}")
+          print("Question IDs:", ', '.join(str(x['id']) for x in report['candidates']))
+          with open(__import__('os').environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write(f"## AWS lifecycle screening\n\n")
+              f.write(f"- Questions scanned: {report['totalQuestions']}\n")
+              f.write(f"- Candidates for manual review: {report['candidateQuestions']}\n")
+              f.write(f"- IDs: {', '.join(str(x['id']) for x in report['candidates'])}\n\n")
+              f.write("Keyword matches are **not** confirmed outdated answers.\n")
+          PY
+      - name: Upload candidate JSON report
+        uses: actions/upload-artifact@v4
+        with:
+          name: aws-lifecycle-candidates
+          path: reports/aws-lifecycle-candidates.json
+          retention-days: 30

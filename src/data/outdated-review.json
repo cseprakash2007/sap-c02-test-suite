@@ -1,0 +1,55 @@
+{
+  "reviewedOn": "2026-10-22",
+  "scope": "Selected lifecycle candidates only; Q85 is an unsubstantiated discontinuation claim, not confirmed outdated. Not a complete 674-question audit.",
+  "items": [
+    {
+      "id": 16,
+      "category": "retired",
+      "service": "Aurora Serverless v1",
+      "finding": "Reached end of life March 31, 2025; review question against Aurora Serverless v2.",
+      "source": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/WhatsNew.html"
+    },
+    {
+      "id": 368,
+      "category": "retired",
+      "service": "Aurora Serverless v1",
+      "finding": "Reached end of life March 31, 2025; historical architecture needs modernization.",
+      "source": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/WhatsNew.html"
+    },
+    {
+      "id": 205,
+      "category": "discontinued",
+      "service": "AWS Snowcone",
+      "finding": "AWS discontinued Snowcone effective November 12, 2024.",
+      "source": "https://aws.amazon.com/blogs/storage/aws-snow-device-updates/"
+    },
+    {
+      "id": 249,
+      "category": "shut-down",
+      "service": "AWS Server Migration Service",
+      "finding": "AWS lists service in full shutdown, end of support April 1, 2023.",
+      "source": "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+    },
+    {
+      "id": 335,
+      "category": "new-customer-restricted",
+      "service": "CloudTrail Lake",
+      "finding": "No longer available to new customers from May 31, 2026; existing customers retain service.",
+      "source": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-service-availability-change.html"
+    },
+    {
+      "id": 405,
+      "category": "legacy-recommended-alternative",
+      "service": "Amazon EFS Max I/O",
+      "finding": "Previous-generation performance mode; AWS recommends General Purpose. Max I/O remains documented and is not universally shut down.",
+      "source": "https://docs.aws.amazon.com/efs/latest/ug/performance.html"
+    },
+    {
+      "id": 85,
+      "category": "discontinuation-claim-unsubstantiated",
+      "service": "AWS AppFabric",
+      "finding": "Previous audit claimed AppFabric was discontinued December 2024, but current AWS AppFabric product, API and endpoints documentation describes an available service. Do not classify as confirmed outdated without stronger evidence; re-evaluate the question and options.",
+      "source": "https://docs.aws.amazon.com/general/latest/gr/appfabric.html"
+    }
+  ]
+}
