@@ -26,6 +26,9 @@ jobs:
           from pathlib import Path
           p = Path('reports/aws-lifecycle-candidates.json')
           report = json.loads(p.read_text())
+          assert report['totalQuestions'] == 674, f"Expected 674 questions, found {report['totalQuestions']}"
+          assert report['candidateQuestions'] == len(report['candidates']), 'Candidate count mismatch'
+          assert len({x['id'] for x in report['candidates']}) == report['candidateQuestions'], 'Duplicate candidate IDs'
           print(f"Total questions: {report['totalQuestions']}")
           print(f"Candidate questions: {report['candidateQuestions']}")
           print("Question IDs:", ', '.join(str(x['id']) for x in report['candidates']))
