@@ -120,3 +120,12 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .review-panel .note-block p,.review-panel .review-alert p{white-space:pre-line}
 .review-panel .explanation-heading{margin-top:1.1rem;margin-bottom:.6rem}
 @media(max-width:760px){.question-card,.review-panel{min-width:0}.question-card .question-text{font-size:1.1rem;line-height:1.65}.question-card .option{padding:1rem}.question-actions{flex-wrap:wrap;gap:.65rem}.question-actions .action-right{flex-wrap:wrap}}
+
+/* Question number navigation and answer retries */
+.jump-question{display:flex;align-items:center;flex-wrap:wrap;gap:.65rem;margin:1rem 0;padding:.85rem 1rem;border:1px solid #cbd5e1;border-radius:12px}
+.jump-question label{font-weight:700;font-size:.9rem}
+.jump-question input{width:105px;max-width:100%;padding:.65rem;border:1px solid #94a3b8;border-radius:8px;background:transparent;color:inherit}
+.jump-help{font-size:.8rem;color:#64748b}
+.jump-error{flex-basis:100%;margin:0;color:#b91c1c;font-size:.85rem}
+.retry-row{margin:1rem 0;display:flex;justify-content:flex-start}
+@media(max-width:600px){.jump-question{align-items:stretch}.jump-question label{width:100%}.jump-question input{flex:1;min-width:0}.jump-help{width:100%}}
