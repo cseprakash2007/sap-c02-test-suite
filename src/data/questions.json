@@ -86,7 +86,7 @@
    },
    {
     "id": "D",
-    "text": "Deploy an AWS DataSync agent to an on-premises server that has access to the NFS file system. Send data over the Direct Connect connection to an AWS PrivateLink int"
+    "text": "Deploy an AWS DataSync agent to an on-premises server that has access to the NFS file system. Send data over the Direct Connect connection to an AWS PrivateLink interface VPC endpoint for Amazon EFS by using a private VIF. Configure a DataSync scheduled task to send the images to the EFS file system every 24 hours."
    }
   ],
   "answers": [
@@ -96,9 +96,16 @@
   "explanation": "AWS DataSync is built for this job. An agent reads the NFS share and DataSync copies directly into EFS, with scheduling, integrity\nchecks and incremental transfers. Using a PrivateLink interface endpoint for DataSync keeps the traffic private over Direct Connect\nand avoids the public internet and any extra hops.",
   "wrongOptionsExplanation": "A. A custom s3 sync script plus S3 events plus a Lambda copy to EFS has many moving parts to build and monitor (and Lambda time\nlimits). B. A File Gateway stores data in S3, not EFS, so you would still need another step to move files into EFS. C. Sends data to S3\nfirst and then needs Lambda to copy to EFS. It works but is far less efficient than copying straight to EFS.",
   "plainWords": "Each night new images land on an on-prem NFS share. Before cutover they must be copied to Amazon EFS over an existing Direct\nConnect link, with as little operational work as possible.",
-  "keyPoints": "• NFS/SMB to AWS storage on a schedule = DataSync. DataSync can target EFS, FSx and S3 directly. • Use a DataSync VPC\n(interface) endpoint to keep transfers private over Direct Connect.\nHEADS-UP ON THIS QUESTION\n• The text of option D is cut off in the source PDF. The answer key says D, and the standard design is DataSync agent -> PrivateLink\ninterface endpoint -> EFS.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Option D is truncated in the source.",
-  "sourceWarning": "Option D is truncated in the source PDF; do not infer missing text.",
-  "review": null,
+  "keyPoints": "• NFS/SMB to AWS storage on a schedule = DataSync. DataSync can target EFS, FSx and S3 directly. • Use a DataSync VPC\n(interface) endpoint to keep transfers private over Direct Connect.\nHEADS-UP ON THIS QUESTION\n• Option D has been restored from matching online exam-question copies. The intended design is DataSync agent -> DataSync PrivateLink interface endpoint -> EFS. The source wording incorrectly calls it an endpoint for Amazon EFS.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Option D restored from third-party copies; technical wording caveat remains.",
+  "sourceWarning": "Option D was truncated in the original source PDF. Full option restored from matching third-party exam question text; wording refers to a PrivateLink endpoint for Amazon EFS, but technically the interface VPC endpoint is for AWS DataSync. Answer key D is source-reported, not independently certified by AWS.",
+  "review": {
+   "restoration": "Option D completed from matching online question copies",
+   "sources": [
+    "https://shiun.notion.site/Exam-AWS-Certified-Solutions-Architect-Professional-SAP-C02-topic-1-question-331-discussion-Exam-19d6375918b34c9c9d56616d060d3c35",
+    "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-3/2/"
+   ],
+   "technicalCaveat": "PrivateLink interface endpoint is for DataSync, not EFS."
+  },
   "answerStatus": "source-key-unverified"
  },
  {
