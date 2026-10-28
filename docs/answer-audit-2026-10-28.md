@@ -21,6 +21,16 @@ Generated: 2026-10-28. **This is an inventory and structural check, not an indep
 
 Official exam guide: https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-professional-02/solutions-architect-professional-02.html
 
+## Batch 1 — independently checked against AWS docs (2026-10-28)
+
+| Question | Original | Updated | Result | Evidence |
+|---|---|---|---|---|
+| Q34 | C | B | Corrected: route tables cannot deny attacker IPs; Shield Advanced option is feasible | https://docs.aws.amazon.com/waf/latest/developerguide/ddos-app-layer-web-ACL-and-rbr.html ; https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html |
+| Q61 | B | C | Corrected: AWS Backup does not support CodeCommit | https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html |
+| Q95 | D | D (retained) | Disputed: AES256 is SSE-S3; no option clearly specifies a customer-managed KMS key | https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html |
+
+**Scope note:** These are AWS technical feasibility checks. Matching exact copies on third-party exam sites remains to be completed; do not describe the entire bank as verified.
+
 ## Question inventory
 
 | ID | Domain in bank | Stored answer(s) | Current status | Existing warning |
