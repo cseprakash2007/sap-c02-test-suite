@@ -50,6 +50,15 @@ All six answer keys retained pending stronger independent verification. AWS docs
 - **Q122**: [CertEnsure](https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html), [CertsTest](https://www.certstest.com/test/SAP-C02?page=8), and [FreePDFDumps](https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=15) all show A+B+D; [AWS vault notifications](https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html) reveal D's wording problem.
 - **Q16**: [AWS retirement announcement](https://repost.aws/questions/QUhcMVoChXRm2HLi8F-yih1g/announcement-support-for-aurora-serverless-v1-ending-soon) confirms v1 retirement. External exam-question match not yet found.
 
+## Batch 4 — applied study-text repairs (2026-10-28)
+
+- **Q16:** Option D modernized from Aurora Serverless v1 to v2 (NOT a restoration of original exam wording). Explanation now discusses write scaling and Compute Savings Plans. [AWS Aurora Serverless](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html).
+- **Q94:** Repaired question grammar, SQS typo in A, and the SNS subscription destination in C; expanded why A+C wins. [AWS cross-Region SNS](https://docs.aws.amazon.com/sns/latest/dg/sns-cross-region-delivery.html).
+- **Q122:** Fixed option D to vault-level SNS BACKUP_JOB_FAILED notifications and expanded why A+B+D wins. [AWS Backup notifications](https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html).
+- **Q408:** Normalized IAM action names and grammar; missing source IAM policy **not reconstructed**; answer remains provisional. [AWS S3 KMS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html).
+
+Every edited entry includes `originalQuestionSnapshot` preserving original stem, options, and source answers. The edits are corrected **study wording**, not independently restored original exam text. Do not mark Q408 fully verified.
+
 ## Question inventory
 
 | ID | Domain in bank | Stored answer(s) | Current status | Existing warning |
