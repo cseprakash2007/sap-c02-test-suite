@@ -31,6 +31,19 @@ Official exam guide: https://docs.aws.amazon.com/aws-certification/latest/soluti
 
 **Scope note:** These are AWS technical feasibility checks. Matching exact copies on third-party exam sites remains to be completed; do not describe the entire bank as verified.
 
+## Batch 2 — six further technical reviews (2026-10-28)
+
+| ID | Source answer | Audit classification | Finding |
+|---|---|---|---|
+| Q16 | D | outdated | Aurora Serverless v1 legacy; no current v2 option provided |
+| Q94 | A,C | disputed-wording | Single SNS topic must fan out to regional SQS queues, not regional SNS topics |
+| Q103 | B | disputed-cost-optimization | D has Spot and Compute Savings Plans for Fargate; cheapest choice depends on assumptions |
+| Q122 | A,B,D | disputed-wording | Backup SNS notifications belong to backup vault, event is BACKUP_JOB_FAILED |
+| Q190 | A,D,F | legacy-service-warning | AWS SMS is legacy; short names alone not truncation evidence |
+| Q408 | A | source-truncated | Missing IAM policy in stem and malformed action names |
+
+All six answer keys retained pending stronger independent verification. AWS docs: https://docs.aws.amazon.com/sns/latest/dg/sns-cross-region-delivery.html ; https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html ; https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
+
 ## Question inventory
 
 | ID | Domain in bank | Stored answer(s) | Current status | Existing warning |
