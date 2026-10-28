@@ -426,13 +426,67 @@
    "E"
   ],
   "answerCount": 3,
-  "explanation": "Two policies are always needed: an identity-based policy in Account A that allows sts:AssumeRole on the role ARN, and the role trust\npolicy in Account B that names Account A (or the user) as a trusted principal. SCPs must not deny the action either. The trust policy is\na resource-based policy, which is why the answer key lists \"resource-based policies\" together with the identity policy and the trust\npolicy.",
+  "explanation": "SOURCE ANSWER B,C,E IS AMBIGUOUS. Required cross-account AssumeRole setup is C (the Account A user has sts:AssumeRole permission) and E (the target role in Account B trusts the user/account). E is itself a resource-based trust policy, so B is redundant if it means an additional resource policy. SCPs in Account A must permit the action, but A is only a configuration change if existing SCPs restrict sts:AssumeRole. D concerns the wrong account's user; F is not how GetSessionToken works. Because the stem says select THREE without clarifying whether SCP changes are needed, do not treat B,C,E as independently confirmed.",
   "wrongOptionsExplanation": "A. An SCP does not grant access. It only needs to avoid blocking it. (See the note below.) D. The user lives in Account A. A policy on a\nuser in Account B does nothing for this action. F. Session policies only narrow a session after it exists. They are not required to\nassume a role.",
   "plainWords": "An IAM user in Account A must be able to assume a role in Account B in an organization that uses SCPs and several policy types.",
   "keyPoints": "• Cross-account = permission on the caller side (identity policy) and trust on the target side (role trust policy). • SCPs filter, they\nnever grant.\nHEADS-UP ON THIS QUESTION\n• The key says B, C, E. A trust policy is itself the role's resource-based policy, so B and E overlap. In a real design you would also\nconfirm the SCP in Account A does not deny sts:AssumeRole (option A). If this appears on a test, choose C and E for sure and follow\nthe wording for the third.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Trust policy and resource-based policy choices overlap.",
-  "sourceWarning": "Cross-account IAM role answer choices overlap in policy terminology; review the trust policy versus permission policy.",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Select THREE is ambiguous: trust policy (E) is a resource-based policy (B); SCP permission (A) is conditional on policy configuration.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "disputed-ambiguous-third-choice",
+   "originalAnswers": [
+    "B",
+    "C",
+    "E"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic-cross-account.html",
+    "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_update-role-trust-policy.html",
+    "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+   ],
+   "auditNote": "Select THREE is ambiguous: trust policy (E) is a resource-based policy (B); SCP permission (A) is conditional on policy configuration.",
+   "wrongOptionsReason": {
+    "A": "SCP must not block AssumeRole; editing is not necessarily needed.",
+    "B": "Trust policy E is itself the relevant resource-based policy; redundant wording.",
+    "D": "Identity policy on user in destination Account B is irrelevant.",
+    "F": "GetSessionToken is not used to pass an AssumeRole session policy."
+   }
+  },
+  "answerStatus": "disputed-ambiguous-third-choice",
+  "originalQuestionSnapshot": {
+   "stem": "A company is using AWS Organizations with a multi-account architecture. The company's current security configuration for the account architecture includes SCPs, resource-based policies, identity-based policies, trust policies, and session policies. A solutions architect needs to allow an IAM user in Account A to assume a role in Account B. Which combination of steps must the solutions architect take to meet this requirement? (Select THREE.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Configure the SCP for Account A to allow the action."
+    },
+    {
+     "id": "B",
+     "text": "Configure the resource-based policies to allow the action."
+    },
+    {
+     "id": "C",
+     "text": "Configure the identity-based policy on the user in Account A to allow the action."
+    },
+    {
+     "id": "D",
+     "text": "Configure the identity-based policy on the user in Account B to allow the action."
+    },
+    {
+     "id": "E",
+     "text": "Configure the trust policy on the target role in Account B to allow the action."
+    },
+    {
+     "id": "F",
+     "text": "Configure the session policy to allow the action and to be passed programmatically by the GetSessionToken API operation."
+    }
+   ],
+   "answers": [
+    "B",
+    "C",
+    "E"
+   ]
+  }
  },
  {
   "id": 13,
@@ -3364,7 +3418,7 @@
  {
   "id": 94,
   "domain": 2,
-  "stem": "A company runs a serverless application in a single AWS Region. The application accesses external URLs and extracts metadata from those sites. The company uses an Amazon Simple Notification Service (Amazon SNS) topic to publish URLs to an Amazon Simple Queue Service (Amazon SQS) queue An AWS Lambda function uses the queue as an event source and processes the URLs from the queue Results are saved to an Amazon S3 bucket The company wants to process each URL in other Regions to compare possible differences in site localization URLs must be published from the existing Region. Results must be written to the existing S3 bucket in the current Region. Which combination of changes will produce multi-Region deployment that meets these requirements? (Select TWO.)",
+  "stem": "A company runs a serverless application in a single AWS Region. The application accesses external URLs and extracts metadata from those sites. An Amazon SNS topic publishes URLs to an Amazon SQS queue. An AWS Lambda function processes messages from the queue and saves results to an Amazon S3 bucket. The company now needs to process each URL from additional AWS Regions to compare differences in website localization. URLs must continue to be published from the existing Region, and results must be saved to the existing S3 bucket. Which TWO changes meet these requirements? (Select TWO.)",
   "options": [
    {
     "id": "A",
@@ -3407,9 +3461,9 @@
    "references": [
     "https://docs.aws.amazon.com/sns/latest/dg/sns-cross-region-delivery.html"
    ],
-   "auditNote": "A+C are intended, but C says SNS topics in each Region while the stem requires a single original-Region publisher. Correct design subscribes each regional SQS queue to the original SNS topic.",
+   "auditNote": "Original stem and choices retained in originalQuestionSnapshot; A and C are corrected study options.",
    "correctedStudyVersion": true,
-   "correctionType": "repaired-misworded-answer-choice",
+   "correctionType": "full-grammar-repair-and-technical-choice-repair",
    "awsDocumentationLinks": [
     "https://docs.aws.amazon.com/sns/latest/dg/sns-cross-region-delivery.html"
    ]
@@ -3471,7 +3525,7 @@
    "D"
   ],
   "answerCount": 1,
-  "explanation": "",
+  "explanation": "DISPUTED QUESTION. The security team must control the encryption key for all existing and future objects. SSE-S3 (AES256) uses S3-managed keys, so A is wrong. B is the closest design because SSE-KMS can use a customer-managed KMS key, default encryption handles future uploads, and existing objects must be rewritten; however B does not explicitly require selecting a customer-managed KMS key. C neither re-encrypts existing objects nor correctly describes bucket policy behavior. D incorrectly combines AES256/default bucket encryption with a customer-managed key; SSE-C customer-provided keys cannot be configured as S3 bucket default encryption. No fully correct option as written. The original D is retained for audit traceability, NOT endorsed.",
   "wrongOptionsExplanation": "A. \"SSE-S3 with a customer managed key\" does not exist. SSE-S3 keys are managed by S3. C. A bucket policy cannot automatically\nencrypt on GetObject or PutObject. Existing objects also stay on SSE-S3 until re-written. D. \"AES-256 with a customer managed key\"\nis not a valid S3 option. AES-256 is the SSE-S3 setting.",
   "plainWords": "All current and future objects must be encrypted with keys managed by the security team. The bucket currently uses SSE-S3 and has\nno versioning. Why my answer (B) works Change the bucket default encryption to SSE-KMS using a customer managed KMS key (the\nsecurity team controls it), add a bucket policy that denies PutObject requests that do not use it, and re-copy the existing objects so\nthey are re-encrypted with the new key.",
   "keyPoints": "• Keys managed by you in S3 = SSE-KMS with a customer managed key (or SSE-C). • Changing default encryption does not touch\nexisting objects. You must re-copy them.\nHEADS-UP ON THIS QUESTION\n• The bank key says D, but \"AES-256 with a customer managed key\" is not a real S3 configuration. B is the closest valid answer if it\nuses a customer managed KMS key.\nReference: AWS documentation — https://docs.aws.amazon.com/",
@@ -3502,9 +3556,40 @@
     "https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html"
    ],
    "crossVerificationStatus": "conflicting-external-answer-keys",
-   "answerReason": "External sites disagree: FreeCram B; FreePDFDumps and Certsmania D. SSE-C uses AES256 with customer-provided keys but cannot be configured as S3 bucket default encryption; SSE-KMS supports customer-managed KMS keys but B does not explicitly name customer-managed rather than AWS-managed KMS key. Retain D only as source key and mark ambiguous."
+   "answerReason": "External sites disagree: FreeCram B; FreePDFDumps and Certsmania D. SSE-C uses AES256 with customer-provided keys but cannot be configured as S3 bucket default encryption; SSE-KMS supports customer-managed KMS keys but B does not explicitly name customer-managed rather than AWS-managed KMS key. Retain D only as source key and mark ambiguous.",
+   "wrongOptionsReason": {
+    "A": "SSE-S3 keys are not customer managed.",
+    "B": "Closest, but customer-managed KMS key selection is not specified.",
+    "C": "Existing objects remain unchanged; GetObject does not perform re-encryption.",
+    "D": "AES256 denotes SSE-S3 for bucket default encryption; cannot specify customer-managed key there."
+   },
+   "suggestedCorrectedOptionB": "Set default encryption to SSE-KMS using a customer-managed AWS KMS key controlled by the security team. Re-encrypt all existing objects using copy or re-upload operations, and enforce the intended KMS key for future PutObject requests with an S3 bucket policy."
   },
-  "answerStatus": "disputed-no-valid-option"
+  "answerStatus": "disputed-no-valid-option",
+  "originalQuestionSnapshot": {
+   "stem": "A health insurance company stores personally identifiable information (PII) in an Amazon S3 bucket. The company uses server-side encryption with S3 managed encryption keys (SSE-S3) to encrypt the objects. According to a new requirement, all current and future objects in the S3 bucket must be encrypted by keys that the company’s security team manages. The S3 bucket does not have versioning enabled. Which solution will meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "In the S3 bucket properties, change the default encryption to SSE-S3 with a customer managed key. Use the AWS CLI to re-upload all objects in the S3 bucket. Set an S3 bucket policy to deny unencrypted PutObject requests."
+    },
+    {
+     "id": "B",
+     "text": "In the S3 bucket properties, change the default encryption to server-side encryption with AWS KMS managed encryption keys (SSE-KMS). Set an S3 bucket policy to deny unencrypted PutObject requests. Use the AWS CLI to re-upload all objects in the S3 bucket."
+    },
+    {
+     "id": "C",
+     "text": "In the S3 bucket properties, change the default encryption to server-side encryption with AWS KMS managed encryption keys (SSE-KMS). Set an S3 bucket policy to automatically encrypt objects on GetObject and PutObject requests."
+    },
+    {
+     "id": "D",
+     "text": "In the S3 bucket properties, change the default encryption to AES-256 with a customer managed key. Attach a policy to deny unencrypted PutObject requests to any entities that access the S3 bucket. Use the AWS CLI to re-upload all objects in the S3 bucket."
+    }
+   ],
+   "answers": [
+    "D"
+   ]
+  }
  },
  {
   "id": 96,
@@ -3778,7 +3863,7 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "",
+  "explanation": "SOURCE KEY B DISPUTED. The baseline should receive committed-use discounts, while short event-driven peaks are candidates for Spot where interruption tolerance allows. Compute Savings Plans cover both EC2 and EKS Fargate usage, unlike EC2 Instance Savings Plans. B commits to a medium rather than baseline load and uses On-Demand Capacity Reservations for peaks, which primarily guarantee capacity, not discounts; read replicas help only read-heavy DB load. D better matches the stated cost optimization pattern (baseline Compute Savings Plans, Spot peak capacity, baseline RDS RI, temporary DB scale-up), but manual database resizing and Spot interruption constraints mean the question cannot establish a universally cheapest answer without more information. Stored B retained pending external question match.",
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
@@ -3796,9 +3881,43 @@
     "https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html",
     "https://docs.aws.amazon.com/eks/latest/best-practices/cost-opt-compute.html"
    ],
-   "auditNote": "B is source key, but On-Demand Capacity Reservations do not lower peak cost; D has Compute Savings Plans (also covers future Fargate), Spot peaks, and all-upfront baseline RDS RI. Cannot prove most cost-effective without workload assumptions; retain B pending comparison."
+   "auditNote": "B is source key, but On-Demand Capacity Reservations do not lower peak cost; D has Compute Savings Plans (also covers future Fargate), Spot peaks, and all-upfront baseline RDS RI. Cannot prove most cost-effective without workload assumptions; retain B pending comparison.",
+   "wrongOptionsReason": {
+    "A": "Reserves database capacity for infrequent peak all year.",
+    "B": "Source answer; reservations guarantee capacity rather than being a cost optimization for spikes; medium commitment may overcommit.",
+    "C": "EC2 Instance Savings Plans do not cover Fargate usage.",
+    "D": "Potentially better cost match, but manually scaling DB may require downtime and Spot may not suit all traffic."
+   },
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html",
+    "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html"
+   ]
   },
-  "answerStatus": "disputed-cost-optimization"
+  "answerStatus": "disputed-cost-optimization",
+  "originalQuestionSnapshot": {
+   "stem": "A company is running an event ticketing platform on AWS and wants to optimize the platform's cost-effectiveness. The platform is deployed on Amazon Elastic Kubernetes Service (Amazon EKS) with Amazon EC2 and is backed by an Amazon RDS for MySQL DB instance. The company is developing new application features to run on Amazon EKS with AWS Fargate. The platform experiences infrequent high peaks in demand. The surges in demand depend on event dates. Which solution will provide the MOST cost-effective setup for the platform?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Purchase Standard Reserved Instances for the EC2 instances that the EKS cluster uses in its baseline load. Scale the cluster with Spot Instances to handle peaks. Purchase 1-year All Upfront Reserved Instances for the database to meet predicted peak load for the year."
+    },
+    {
+     "id": "B",
+     "text": "Purchase Compute Savings Plans for the predicted medium load of the EKS cluster. Scale the cluster with On-Demand Capacity Reservations based on event dates for peaks. Purchase 1-year No Upfront Reserved Instances for the database to meet the predicted base load. Temporarily scale out database read replicas during peaks."
+    },
+    {
+     "id": "C",
+     "text": "Purchase EC2 Instance Savings Plans for the predicted base load of the EKS cluster. Scale the cluster with Spot Instances to handle peaks. Purchase 1-year All Upfront Reserved Instances for the database to meet the predicted base load. Temporarily scale up the DB instance manually during peaks."
+    },
+    {
+     "id": "D",
+     "text": "Purchase Compute Savings Plans for the predicted base load of the EKS cluster. Scale the cluster with Spot Instances to handle peaks. Purchase 1-year All Upfront Reserved Instances for the database to meet the predicted base load. Temporarily scale up the DB instance manually during peaks."
+    }
+   ],
+   "answers": [
+    "B"
+   ]
+  }
  },
  {
   "id": 104,
@@ -6993,7 +7112,7 @@
  {
   "id": 190,
   "domain": 4,
-  "stem": "A company wants to migrate its on-premises data center to the AWS Cloud. This includes thousands of virtualized Linux and Microsoft Windows servers, SAN storage, Java and PHP applications with MYSQL, and Oracle databases. There are many dependent services hosted either in the same data center or externally. The technical documentation is incomplete and outdated. A solutions architect needs to understand the current environment and estimate the cloud resource costs after the migration. Which tools or services should solutions architect use to plan the cloud migration? (Choose three.)",
+  "stem": "A company wants to migrate its on-premises data center to the AWS Cloud. This includes thousands of virtualized Linux and Microsoft Windows servers, SAN storage, Java and PHP applications with MySQL, and Oracle databases. There are many dependent services hosted either in the same data center or externally. The technical documentation is incomplete and outdated. A solutions architect needs to understand the current environment and estimate the cloud resource costs after the migration. Which tools or services should the solutions architect use to plan the cloud migration? (Choose three.)",
   "options": [
    {
     "id": "A",
@@ -7026,14 +7145,14 @@
    "F"
   ],
   "answerCount": 3,
-  "explanation": "",
+  "explanation": "A discovers on-premises server configuration, utilization, and dependencies. D assesses cloud adoption readiness and identifies migration gaps. F provides a central migration tracking and discovery view. B (AWS Server Migration Service) is a legacy server migration tool, not the primary assessment tool for this question. C (AWS X-Ray) traces distributed application requests after instrumentation; E (Amazon Inspector) assesses software vulnerabilities rather than mapping migration dependencies and estimating cloud costs. The question does not identify a dedicated cost estimation tool; AWS Pricing Calculator would be needed for a detailed estimate.",
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
   "sourceWarning": "AWS SMS (Server Migration Service) is a legacy migration option. Source key A,D,F retained. Short options B/C are service names, not necessarily truncated.",
   "review": {
    "reviewedAt": "2026-10-28",
-   "auditStatus": "legacy-service-warning",
+   "auditStatus": "study-grammar-corrected-answer-provisional",
    "originalAnswers": [
     "A",
     "D",
@@ -7042,9 +7161,48 @@
    "references": [
     "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html"
    ],
-   "auditNote": "AWS SMS (Server Migration Service) is a legacy migration option. Source key A,D,F retained. Short options B/C are service names, not necessarily truncated."
+   "auditNote": "AWS SMS (Server Migration Service) is a legacy migration option. Source key A,D,F retained. Short options B/C are service names, not necessarily truncated.",
+   "correctedStudyVersion": true,
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html",
+    "https://docs.aws.amazon.com/migrationhub/latest/ug/whatishub.html"
+   ]
   },
-  "answerStatus": "legacy-service-warning"
+  "answerStatus": "legacy-service-warning",
+  "originalQuestionSnapshot": {
+   "stem": "A company wants to migrate its on-premises data center to the AWS Cloud. This includes thousands of virtualized Linux and Microsoft Windows servers, SAN storage, Java and PHP applications with MYSQL, and Oracle databases. There are many dependent services hosted either in the same data center or externally. The technical documentation is incomplete and outdated. A solutions architect needs to understand the current environment and estimate the cloud resource costs after the migration. Which tools or services should solutions architect use to plan the cloud migration? (Choose three.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "AWS Application Discovery Service"
+    },
+    {
+     "id": "B",
+     "text": "AWS SMS"
+    },
+    {
+     "id": "C",
+     "text": "AWS x-Ray"
+    },
+    {
+     "id": "D",
+     "text": "AWS Cloud Adoption Readiness Tool (CART)"
+    },
+    {
+     "id": "E",
+     "text": "Amazon Inspector"
+    },
+    {
+     "id": "F",
+     "text": "AWS Migration Hub"
+    }
+   ],
+   "answers": [
+    "A",
+    "D",
+    "F"
+   ]
+  }
  },
  {
   "id": 191,
