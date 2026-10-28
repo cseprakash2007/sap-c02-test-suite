@@ -576,7 +576,14 @@
    "references": [
     "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html"
    ],
-   "auditNote": "Aurora Serverless v1 is retired; D is historically intended but no longer deployable as written. Aurora Serverless v2 is the modern alternative; none of the offered answers states it."
+   "auditNote": "Aurora Serverless v1 is retired; D is historically intended but no longer deployable as written. Aurora Serverless v2 is the modern alternative; none of the offered answers states it.",
+   "externalQuestionLinks": [],
+   "externalSiteAnswers": [],
+   "awsDocumentationLinks": [
+    "https://repost.aws/questions/QUhcMVoChXRm2HLi8F-yih1g/announcement-support-for-aurora-serverless-v1-ending-soon"
+   ],
+   "crossVerificationStatus": "aws-service-retired-external-match-pending",
+   "answerReason": "AWS re:Post confirms Aurora Serverless v1 end of support March 31, 2025. No exact question-site match established in this batch; D remains historically intended but outdated."
   },
   "answerStatus": "outdated"
  },
@@ -3419,7 +3426,23 @@
     "https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html",
     "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingServerSideEncryption.html"
    ],
-   "auditNote": "D invalid: AES256 is SSE-S3, not customer-managed KMS. B uses SSE-KMS but does not explicitly require customer-managed key, so no answer unambiguously meets the requirement. Preserve original key and flag."
+   "auditNote": "D invalid: AES256 is SSE-S3, not customer-managed KMS. B uses SSE-KMS but does not explicitly require customer-managed key, so no answer unambiguously meets the requirement. Preserve original key and flag.",
+   "externalQuestionLinks": [
+    "https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-health-insurance-company-stores-personally-identifiable-information-pii-in-an-amazon-s3-bucket-the",
+    "https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=28",
+    "https://www.certsmania.com/pdf/amazon-web-services-test-prep-material-pack-sap-c02-passing-score-by-binod.pdf"
+   ],
+   "externalSiteAnswers": [
+    "B",
+    "D",
+    "D"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html",
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html"
+   ],
+   "crossVerificationStatus": "conflicting-external-answer-keys",
+   "answerReason": "External sites disagree: FreeCram B; FreePDFDumps and Certsmania D. SSE-C uses AES256 with customer-provided keys but cannot be configured as S3 bucket default encryption; SSE-KMS supports customer-managed KMS keys but B does not explicitly name customer-managed rather than AWS-managed KMS key. Retain D only as source key and mark ambiguous."
   },
   "answerStatus": "disputed-no-valid-option"
  },
@@ -4439,7 +4462,23 @@
    "references": [
     "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html"
    ],
-   "auditNote": "A+B+D are intended. AWS Backup SNS notifications are configured on backup vaults, not plans; valid failure event is BACKUP_JOB_FAILED. D is not technically accurate as written."
+   "auditNote": "A+B+D are intended. AWS Backup SNS notifications are configured on backup vaults, not plans; valid failure event is BACKUP_JOB_FAILED. D is not technically accurate as written.",
+   "externalQuestionLinks": [
+    "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+    "https://www.certstest.com/test/SAP-C02?page=8",
+    "https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=15"
+   ],
+   "externalSiteAnswers": [
+    "A,B,D",
+    "A,B,D",
+    "A,B,D"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html",
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/cross-region-backup.html"
+   ],
+   "crossVerificationStatus": "external-agreement-technical-wording-flaw",
+   "answerReason": "Three external sites list A+B+D. A and B are valid. D incorrectly says attach SNS to backup plan and uses malformed status; SNS notifications attach to vault and BACKUP_JOB_FAILED is valid. Preserve source key and flag wording."
   },
   "answerStatus": "disputed-wording"
  },
