@@ -566,9 +566,19 @@
   "wrongOptionsExplanation": "A. Read replicas help reads, not a write-heavy load, and Instance Savings Plans plus reserved instances commit you to capacity you\noften do not use. B. Multi-master clusters are not designed for unpredictable scaling and commitments do not fit an irregular load. C.\nAurora Global Database is for cross-Region DR and low-latency reads, not for absorbing bursts.",
   "plainWords": "Usage is idle for long periods, then spikes suddenly. The write-heavy Aurora MySQL instance cannot cope. Find the most\ncost-effective way to handle the swings.",
   "keyPoints": "• Unpredictable or intermittent database load = Aurora Serverless. • Commitments (RI/Savings Plans) suit steady usage, not spiky\nusage.\nHEADS-UP ON THIS QUESTION\n• Aurora Serverless v1 has been retired or scheduled for retirement. Today the modern answer for this pattern is Aurora Serverless v2\n(which can also scale down to very low capacity). The reasoning is the same.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Aurora Serverless v1 is obsolete; consult current Aurora Serverless v2 guidance.",
-  "sourceWarning": "References retired Aurora Serverless v1. Review current Aurora Serverless v2 capabilities.",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Aurora Serverless v1 is retired; D is historically intended but no longer deployable as written. Aurora Serverless v2 is the modern alternative; none of the offered answers states it.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "outdated",
+   "originalAnswers": [
+    "D"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html"
+   ],
+   "auditNote": "Aurora Serverless v1 is retired; D is historically intended but no longer deployable as written. Aurora Serverless v2 is the modern alternative; none of the offered answers states it."
+  },
+  "answerStatus": "outdated"
  },
  {
   "id": 17,
@@ -3333,9 +3343,20 @@
   "wrongOptionsExplanation": "B. This direction is reversed: topics do not subscribe to queues. D. SQS queues do not publish to SNS topics. E. Extra SNS topics in\nother Regions would not automatically receive the URLs published in the original Region.",
   "plainWords": "URLs are published from one Region. The same URLs must also be processed in other Regions, and results must still go to the existing\nS3 bucket.",
   "keyPoints": "• SNS can fan out to SQS queues in other Regions.\nHEADS-UP ON THIS QUESTION\n• Option C is worded a little loosely in your PDF. The intended design is one topic in the original Region with queues in every Region\nsubscribed to it.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "A+C are intended, but C says SNS topics in each Region while the stem requires a single original-Region publisher. Correct design subscribes each regional SQS queue to the original SNS topic.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "disputed-wording",
+   "originalAnswers": [
+    "A",
+    "C"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/sns/latest/dg/sns-cross-region-delivery.html"
+   ],
+   "auditNote": "A+C are intended, but C says SNS topics in each Region while the stem requires a single original-Region publisher. Correct design subscribes each regional SQS queue to the original SNS topic."
+  },
+  "answerStatus": "disputed-wording"
  },
  {
   "id": 95,
@@ -3658,13 +3679,23 @@
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
-  "sourceWarning": "",
+  "sourceWarning": "B is source key, but On-Demand Capacity Reservations do not lower peak cost; D has Compute Savings Plans (also covers future Fargate), Spot peaks, and all-upfront baseline RDS RI. Cannot prove most cost-effective without workload assumptions; retain B pending comparison.",
   "review": {
    "status": "Answer key questionable",
    "note": "On-Demand Capacity Reservations guarantee capacity, not discounted pricing. Cheapest design depends on usage and workload assumptions.",
-   "reference": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/cost_pricing_model_analysis.html"
+   "reference": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/cost_pricing_model_analysis.html",
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "disputed-cost-optimization",
+   "originalAnswers": [
+    "B"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html",
+    "https://docs.aws.amazon.com/eks/latest/best-practices/cost-opt-compute.html"
+   ],
+   "auditNote": "B is source key, but On-Demand Capacity Reservations do not lower peak cost; D has Compute Savings Plans (also covers future Fargate), Spot peaks, and all-upfront baseline RDS RI. Cannot prove most cost-effective without workload assumptions; retain B pending comparison."
   },
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "disputed-cost-optimization"
  },
  {
   "id": 104,
@@ -4376,9 +4407,21 @@
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "A+B+D are intended. AWS Backup SNS notifications are configured on backup vaults, not plans; valid failure event is BACKUP_JOB_FAILED. D is not technically accurate as written.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "disputed-wording",
+   "originalAnswers": [
+    "A",
+    "B",
+    "D"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html"
+   ],
+   "auditNote": "A+B+D are intended. AWS Backup SNS notifications are configured on backup vaults, not plans; valid failure event is BACKUP_JOB_FAILED. D is not technically accurate as written."
+  },
+  "answerStatus": "disputed-wording"
  },
  {
   "id": 123,
@@ -6833,9 +6876,21 @@
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "AWS SMS (Server Migration Service) is a legacy migration option. Source key A,D,F retained. Short options B/C are service names, not necessarily truncated.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "legacy-service-warning",
+   "originalAnswers": [
+    "A",
+    "D",
+    "F"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html"
+   ],
+   "auditNote": "AWS SMS (Server Migration Service) is a legacy migration option. Source key A,D,F retained. Short options B/C are service names, not necessarily truncated."
+  },
+  "answerStatus": "legacy-service-warning"
  },
  {
   "id": 191,
@@ -14535,9 +14590,19 @@
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Stem references an IAM policy that is missing from the stored question. A (kms:GenerateDataKey) is technically plausible for encryption but cannot verify exact missing permission without original policy. Options B/C/D also have malformed IAM action names.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "source-truncated",
+   "originalAnswers": [
+    "A"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html"
+   ],
+   "auditNote": "Stem references an IAM policy that is missing from the stored question. A (kms:GenerateDataKey) is technically plausible for encryption but cannot verify exact missing permission without original policy. Options B/C/D also have malformed IAM action names."
+  },
+  "answerStatus": "source-truncated"
  },
  {
   "id": 409,
