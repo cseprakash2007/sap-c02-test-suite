@@ -444,13 +444,18 @@
     "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_update-role-trust-policy.html",
     "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
    ],
-   "auditNote": "Select THREE is ambiguous: trust policy (E) is a resource-based policy (B); SCP permission (A) is conditional on policy configuration.",
+   "auditNote": "AWS docs explicitly call IAM role trust policy a resource-based policy, so B and E are redundant if both are listed. C+E necessary in general, SCP A must not deny but changing SCP depends on its current contents. No unambiguous three-step solution.",
    "wrongOptionsReason": {
     "A": "SCP must not block AssumeRole; editing is not necessarily needed.",
     "B": "Trust policy E is itself the relevant resource-based policy; redundant wording.",
     "D": "Identity policy on user in destination Account B is irrelevant.",
     "F": "GetSessionToken is not used to pass an AssumeRole session policy."
-   }
+   },
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic-cross-account.html",
+    "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html",
+    "https://docs.aws.amazon.com/us_en/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html"
+   ]
   },
   "answerStatus": "disputed-ambiguous-third-choice",
   "originalQuestionSnapshot": {
@@ -3525,7 +3530,7 @@
    "D"
   ],
   "answerCount": 1,
-  "explanation": "DISPUTED QUESTION. The security team must control the encryption key for all existing and future objects. SSE-S3 (AES256) uses S3-managed keys, so A is wrong. B is the closest design because SSE-KMS can use a customer-managed KMS key, default encryption handles future uploads, and existing objects must be rewritten; however B does not explicitly require selecting a customer-managed KMS key. C neither re-encrypts existing objects nor correctly describes bucket policy behavior. D incorrectly combines AES256/default bucket encryption with a customer-managed key; SSE-C customer-provided keys cannot be configured as S3 bucket default encryption. No fully correct option as written. The original D is retained for audit traceability, NOT endorsed.",
+  "explanation": "DISPUTED QUESTION. The security team must control the encryption key for all existing and future objects. SSE-S3 (AES256) uses S3-managed keys, so A is wrong. B is the closest design because SSE-KMS can use a customer-managed KMS key, default encryption handles future uploads, and existing objects must be rewritten; however B does not explicitly require selecting a customer-managed KMS key. C neither re-encrypts existing objects nor correctly describes bucket policy behavior. D incorrectly combines AES256/default bucket encryption with a customer-managed key; SSE-C customer-provided keys cannot be configured as S3 bucket default encryption. No fully correct option as written. The original D is retained for audit traceability, NOT endorsed. CURRENT AWS UPDATE: Amazon S3 also documents UpdateObjectEncryption to change existing SSE-S3 objects to SSE-KMS without data movement; this does not make any original choice fully correct. A proper solution must explicitly configure a customer-managed KMS key.",
   "wrongOptionsExplanation": "A. \"SSE-S3 with a customer managed key\" does not exist. SSE-S3 keys are managed by S3. C. A bucket policy cannot automatically\nencrypt on GetObject or PutObject. Existing objects also stay on SSE-S3 until re-written. D. \"AES-256 with a customer managed key\"\nis not a valid S3 option. AES-256 is the SSE-S3 setting.",
   "plainWords": "All current and future objects must be encrypted with keys managed by the security team. The bucket currently uses SSE-S3 and has\nno versioning. Why my answer (B) works Change the bucket default encryption to SSE-KMS using a customer managed KMS key (the\nsecurity team controls it), add a bucket policy that denies PutObject requests that do not use it, and re-copy the existing objects so\nthey are re-encrypted with the new key.",
   "keyPoints": "• Keys managed by you in S3 = SSE-KMS with a customer managed key (or SSE-C). • Changing default encryption does not touch\nexisting objects. You must re-copy them.\nHEADS-UP ON THIS QUESTION\n• The bank key says D, but \"AES-256 with a customer managed key\" is not a real S3 configuration. B is the closest valid answer if it\nuses a customer managed KMS key.\nReference: AWS documentation — https://docs.aws.amazon.com/",
@@ -3540,7 +3545,7 @@
     "https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html",
     "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingServerSideEncryption.html"
    ],
-   "auditNote": "D invalid: AES256 is SSE-S3, not customer-managed KMS. B uses SSE-KMS but does not explicitly require customer-managed key, so no answer unambiguously meets the requirement. Preserve original key and flag.",
+   "auditNote": "No fully correct original option. Updated AWS documentation additionally supports UpdateObjectEncryption for changing existing SSE-S3 objects to SSE-KMS without copying; the original question's suggested re-upload is not the only method. AES256 default does not support a KMS customer-managed key.",
    "externalQuestionLinks": [
     "https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-health-insurance-company-stores-personally-identifiable-information-pii-in-an-amazon-s3-bucket-the",
     "https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=28",
@@ -3553,17 +3558,19 @@
    ],
    "awsDocumentationLinks": [
     "https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html",
-    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html"
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html",
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/update-sse-encryption.html",
+    "https://docs.aws.amazon.com/AmazonS3/latest/API/API_ServerSideEncryptionByDefault.html"
    ],
    "crossVerificationStatus": "conflicting-external-answer-keys",
    "answerReason": "External sites disagree: FreeCram B; FreePDFDumps and Certsmania D. SSE-C uses AES256 with customer-provided keys but cannot be configured as S3 bucket default encryption; SSE-KMS supports customer-managed KMS keys but B does not explicitly name customer-managed rather than AWS-managed KMS key. Retain D only as source key and mark ambiguous.",
    "wrongOptionsReason": {
     "A": "SSE-S3 keys are not customer managed.",
-    "B": "Closest, but customer-managed KMS key selection is not specified.",
+    "B": "Closest but unspecified KMS key defaults to AWS-managed aws/s3, not a security-team-controlled key.",
     "C": "Existing objects remain unchanged; GetObject does not perform re-encryption.",
     "D": "AES256 denotes SSE-S3 for bucket default encryption; cannot specify customer-managed key there."
    },
-   "suggestedCorrectedOptionB": "Set default encryption to SSE-KMS using a customer-managed AWS KMS key controlled by the security team. Re-encrypt all existing objects using copy or re-upload operations, and enforce the intended KMS key for future PutObject requests with an S3 bucket policy."
+   "suggestedCorrectedOptionB": "Configure S3 bucket default encryption as SSE-KMS with a security-team-controlled customer managed KMS key. Re-encrypt existing objects using UpdateObjectEncryption or an appropriate S3 Batch Operations copy, and enforce the designated key for future uploads using a bucket policy."
   },
   "answerStatus": "disputed-no-valid-option",
   "originalQuestionSnapshot": {
