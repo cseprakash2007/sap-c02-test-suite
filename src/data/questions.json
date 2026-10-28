@@ -86,14 +86,14 @@
    },
    {
     "id": "D",
-    "text": "Deploy an AWS DataSync agent to an on-premises server that has access to the NFS file system. Send data over the Direct Connect connection to an AWS PrivateLink interface VPC endpoint for Amazon EFS by using a private VIF. Configure a DataSync scheduled task to send the images to the EFS file system every 24 hours."
+    "text": "Deploy an AWS DataSync agent on premises with access to the NFS file system. Connect the agent privately to the AWS DataSync VPC service endpoint over Direct Connect using a private virtual interface. Schedule a DataSync task to transfer newly created images directly to the Amazon EFS file system every 24 hours."
    }
   ],
   "answers": [
    "D"
   ],
   "answerCount": 1,
-  "explanation": "AWS DataSync is built for this job. An agent reads the NFS share and DataSync copies directly into EFS, with scheduling, integrity\nchecks and incremental transfers. Using a PrivateLink interface endpoint for DataSync keeps the traffic private over Direct Connect\nand avoids the public internet and any extra hops.",
+  "explanation": "D is correct after a necessary technical wording correction: the AWS PrivateLink VPC interface endpoint belongs to the DataSync service, not to Amazon EFS. The on-premises DataSync agent reads the NFS share; DataSync uses task network interfaces to write directly to EFS. A and C introduce unnecessary S3 staging and Lambda orchestration. B uses S3-backed File Gateway rather than directly replicating to EFS. The private Direct Connect virtual interface and routing support the DataSync VPC endpoint and data-plane interfaces. Original D retained in originalQuestionSnapshot.",
   "wrongOptionsExplanation": "A. A custom s3 sync script plus S3 events plus a Lambda copy to EFS has many moving parts to build and monitor (and Lambda time\nlimits). B. A File Gateway stores data in S3, not EFS, so you would still need another step to move files into EFS. C. Sends data to S3\nfirst and then needs Lambda to copy to EFS. It works but is far less efficient than copying straight to EFS.",
   "plainWords": "Each night new images land on an on-prem NFS share. Before cutover they must be copied to Amazon EFS over an existing Direct\nConnect link, with as little operational work as possible.",
   "keyPoints": "• NFS/SMB to AWS storage on a schedule = DataSync. DataSync can target EFS, FSx and S3 directly. • Use a DataSync VPC\n(interface) endpoint to keep transfers private over Direct Connect.\nHEADS-UP ON THIS QUESTION\n• Option D has been restored from matching online exam-question copies. The intended design is DataSync agent -> DataSync PrivateLink interface endpoint -> EFS. The source wording incorrectly calls it an endpoint for Amazon EFS.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Option D restored from third-party copies; technical wording caveat remains.",
@@ -104,9 +104,43 @@
     "https://shiun.notion.site/Exam-AWS-Certified-Solutions-Architect-Professional-SAP-C02-topic-1-question-331-discussion-Exam-19d6375918b34c9c9d56616d060d3c35",
     "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-3/2/"
    ],
-   "technicalCaveat": "PrivateLink interface endpoint is for DataSync, not EFS."
+   "technicalCaveat": "Source option D incorrectly describes an interface VPC endpoint for EFS; corrected to DataSync VPC service endpoint.",
+   "auditStatus": "domain4-study-option-corrected",
+   "correctedStudyVersion": true,
+   "reviewedAt": "2026-10-28",
+   "originalAnswers": [
+    "D"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/datasync/latest/userguide/direct-connect-architecture.html",
+    "https://docs.aws.amazon.com/datasync/latest/userguide/choose-service-endpoint.html"
+   ]
   },
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "source-key-unverified",
+  "originalQuestionSnapshot": {
+   "stem": "A company is migrating an application to the AWS Cloud. The application runs in an on- premises data center and writes thousands of images into a mounted NFS file system each night. After the company migrates the application, the company will host the application on an Amazon EC2 instance with a mounted Amazon Elastic File System (Amazon EFS) file system. The company has established an AWS Direct Connect connection to AWS. Before the migration cutover, a solutions architect must build a process that will replicate the newly created on-premises images to the EFS file system. What is the MOST operationally efficient way to replicate the images?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Configure a periodic process to run the aws s3 sync command from the on-premises file system to Amazon S3. Configure an AWS Lambda function to process event notifications from Amazon S3 and copy the images from Amazon S3 to the EFS file system."
+    },
+    {
+     "id": "B",
+     "text": "Deploy an AWS Storage Gateway file gateway with an NFS mount point. Mount the file gateway file system on the on-premises server. Configure a process to periodically copy the images to the mount point."
+    },
+    {
+     "id": "C",
+     "text": "Deploy an AWS DataSync agent to an on-premises server that has access to the NFS file system. Send data over the Direct Connect connection to an S3 bucket by using public VIF. Configure an AWS Lambda function to process event notifications from Amazon S3 and copy the images from Amazon S3 to the EFS file system."
+    },
+    {
+     "id": "D",
+     "text": "Deploy an AWS DataSync agent to an on-premises server that has access to the NFS file system. Send data over the Direct Connect connection to an AWS PrivateLink interface VPC endpoint for Amazon EFS by using a private VIF. Configure a DataSync scheduled task to send the images to the EFS file system every 24 hours."
+    }
+   ],
+   "answers": [
+    "D"
+   ]
+  }
  },
  {
   "id": 4,
@@ -236,13 +270,47 @@
    "A"
   ],
   "answerCount": 1,
-  "explanation": "Bring your own IP (BYOIP) lets you register the customer-owned CIDR block in AWS and create Elastic IPs from it. You attach them to\nan internet-facing AWS Transfer Family SFTP server endpoint, which is fully managed and stores files in S3. The IPs stay the same and\nyou run no servers.",
+  "explanation": "A is correct, provided the AWS Transfer Family SFTP server is configured with an internet-facing VPC-hosted endpoint. Transfer Family supports attaching Elastic IPs allocated from a customer-owned BYOIP prefix, preserving IPs already in clients' firewall allowlists. A public (non-VPC-hosted) Transfer Family endpoint does not support attaching static IPs. B incorrectly uses an ALB for SFTP/FTP and adds unmanaged EC2 servers; C uses NLB but still requires self-managed servers and the BYOIP registration is wrong; D cannot enable SFTP on an S3 VPC endpoint. Source key A retained.",
   "wrongOptionsExplanation": "B. An ALB cannot be given Elastic IPs, and running FTP servers on EC2 with EBS is high effort. C. Route 53 does not register IP blocks,\nand you would again manage EC2 FTP servers. D. S3 does not provide an SFTP endpoint, and VPC endpoints do not take Elastic IPs\nthis way.",
   "plainWords": "Customers allow-list the SFTP server IP addresses. Those addresses cannot change after the move to AWS. You also want less\noperational work.",
   "keyPoints": "• Need SFTP/FTPS/FTP into S3 or EFS = AWS Transfer Family. • Must keep existing public IPs = BYOIP then assign EIPs.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "domain4-aws-docs-reviewed",
+   "originalAnswers": [
+    "A"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/transfer/latest/userguide/sftp-for-transfer-family.html"
+   ],
+   "crossVerificationStatus": "aws-docs-reviewed-external-question-match-pending"
+  },
+  "answerStatus": "source-key-unverified",
+  "originalQuestionSnapshot": {
+   "stem": "A company operates an on-premises software-as-a-service (SaaS) solution that ingests several files daily. The company provides multiple public SFTP endpoints to its customers to facilitate the file transfers. The customers add the SFTP endpoint IP addresses to their firewall allow list for outbound traffic. Changes to the SFTP endmost IP addresses are not permitted. The company wants to migrate the SaaS solution to AWS and decrease the operational overhead of the file transfer service. Which solution meets these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Register the customer-owned block of IP addresses in the company's AWS account. Create Elastic IP addresses from the address pool and assign them to an AWS Transfer for SFTP endpoint. Use AWS Transfer to store the files in Amazon S3."
+    },
+    {
+     "id": "B",
+     "text": "Add a subnet containing the customer-owned block of IP addresses to a VPC Create Elastic IP addresses from the address pool and assign them to an Application Load Balancer (ALB). Launch EC2 instances hosting FTP services in an Auto Scaling group behind the ALB. Store the files in attached Amazon Elastic Block Store (Amazon EBS) volumes."
+    },
+    {
+     "id": "C",
+     "text": "Register the customer-owned block of IP addresses with Amazon Route 53. Create alias records in Route 53 that point to a Network Load Balancer (NLB). Launch EC2 instances hosting FTP services in an Auto Scaling group behind the NLB. Store the files in Amazon S3."
+    },
+    {
+     "id": "D",
+     "text": "Register the customer-owned block of IP addresses in the company's AWS account. Create Elastic IP addresses from the address pool and assign them to an Amazon S3 VPC endpoint. Enable SFTP support on the S3 bucket."
+    }
+   ],
+   "answers": [
+    "A"
+   ]
+  }
  },
  {
   "id": 8,
@@ -2129,16 +2197,56 @@
    }
   ],
   "answers": [
-   "D"
+   "B"
   ],
   "answerCount": 1,
-  "explanation": "",
+  "explanation": "SOURCE KEY D IS TECHNICALLY INVALID AS WRITTEN. Registering an on-premises VM as a Systems Manager managed instance does not make AWS Backup create a VMware VM snapshot or AMI from that managed-instance registration. AWS Backup's VMware integration requires AWS Backup gateway and a registered VMware hypervisor; AWS Backup can then restore supported VM recovery points to EC2. B is the closest feasible listed option: export a VMware VM to a supported import image, upload it to S3, configure the VM Import service role, and use VM Import/Export to import it to EC2, subject to supported formats and OS restrictions. B's wording should specify supported export format and import-image steps. A/C do not describe a workable VM migration workflow. Keep original D in snapshot; the key is corrected to B as the best offered option, but exact source-site verification is pending.",
   "wrongOptionsExplanation": "A. DataSync and FSx for Windows are for file data, not a method to move whole VMs, so this combination does not make sense. C.\nStorage Gateway file shares do not capture a bootable VM image. D. Systems Manager hybrid activation manages servers but does\nnot snapshot an on-prem VM into an AMI, and AWS Backup does not back up arbitrary on-prem VMs this way.",
   "plainWords": "Migrate an application from on-prem VMware to EC2 while preserving the software and configuration settings. Why my answer (B)\nworks Export the VM from vSphere as an OVF/OVA image, upload it to S3, create the IAM role VM Import requires, and run the EC2\nimport command (VM Import/Export). The result is an AMI that contains the same operating system, software and settings as the\noriginal VM.",
   "keyPoints": "• Whole VM to an AMI = VM Import/Export (OVA/OVF to S3, then import). • For continuous replication and cutover, the managed\nservice is Application Migration Service (MGN).\nHEADS-UP ON THIS QUESTION\n• The bank key says D, but Systems Manager plus AWS Backup cannot turn an on-prem VM into an AMI. B is the answer commonly\naccepted for this question. In a new design you would usually pick AWS Application Migration Service.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "domain4-key-corrected-best-offered-external-pending",
+   "originalAnswers": [
+    "D"
+   ],
+   "correctedAnswers": [
+    "B"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/vm-backups.html",
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-vm.html",
+    "https://docs.aws.amazon.com/en_us/prescriptive-guidance/latest/patterns/migrate-an-on-premises-vm-to-amazon-ec2-by-using-aws-application-migration-service.html"
+   ],
+   "crossVerificationStatus": "official-aws-verified-external-question-match-pending",
+   "auditNote": "Source D does not describe AWS Backup VMware gateway mechanism. B is feasible using VM Import/Export; AWS MGN or AWS Backup gateway restore are modern alternatives not listed."
+  },
+  "answerStatus": "domain4-key-corrected-best-offered-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "A company wants to migrate an application to Amazon EC2 from VMware Infrastructure that runs in an on-premises data center. A solutions architect must preserve the software and configuration settings during the migration. What should the solutions architect do to meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Configure the AWS DataSync agent to start replicating the data store to Amazon FSx for Windows File Server Use the SMB share to host the VMware data store. Use VM Import/Export to move the VMs to Amazon EC2."
+    },
+    {
+     "id": "B",
+     "text": "Use the VMware vSphere client to export the application as an image in Open Virealization Format (OVF) format Create an Amazon S3 bucket to store the image in the destination AWS Region. Create and apply an IAM role for VM Import Use the AWS CLI to run the EC2 import command."
+    },
+    {
+     "id": "C",
+     "text": ". Configure AWS Storage Gateway for files service to export a Common Internet File System(CIFSJ share. Create a backup copy to the shared folder. Sign in to the AWS Management Console and create an AMI from the backup copy Launch an EC2 instance that is based on the AMI."
+    },
+    {
+     "id": "D",
+     "text": "Create a managed-instance activation for a hybrid environment in AWS Systems Manager. Download and install Systems Manager Agent on the on-premises VM Register the VM with Systems Manager to be a managed instance Use AWS Backup to create a snapshot of the VM and create an AMI. Launch an EC2 instance that is based on the AMI"
+    }
+   ],
+   "answers": [
+    "D"
+   ]
+  }
  },
  {
   "id": 45,
