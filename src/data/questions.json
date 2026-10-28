@@ -1196,16 +1196,27 @@
    }
   ],
   "answers": [
-   "C"
+   "B"
   ],
   "answerCount": 1,
   "explanation": "",
   "wrongOptionsExplanation": "A. A CloudWatch alarm cannot directly add an IP to a web ACL, and constantly changing IPs make manual lists useless. C. Route\ntables do not support deny rules. Only network ACLs and security groups filter traffic, so this design is not possible as written. D.\nBlocking whole countries by guessing is crude and Route 53 geolocation routing does not block traffic.",
   "plainWords": "Application-layer attacks come from many different IP addresses and cause traffic spikes. A WAF web ACL already protects the ALB.\nYou want the least operational work. Why my answer (B) works AWS Shield Advanced adds automatic application-layer DDoS\ndetection and mitigation on top of AWS WAF. It can create and apply WAF rules automatically in response to an attack, so you do not\nchase IP addresses by hand. You enable it and add the ALB as a protected resource.",
   "keyPoints": "• Layer 7 DDoS with minimal effort = Shield Advanced + WAF (automatic mitigation). • A WAF rate-based rule is the other common\ntool for request floods.\nHEADS-UP ON THIS QUESTION\n• The bank key says C, but a route table cannot hold a deny rule, so that option cannot work as written. B is the answer widely\naccepted for this scenario. If you see this on the real exam, look for Shield Advanced or a WAF rate-based rule.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-  "sourceWarning": "Source key appears questionable: route tables cannot deny arbitrary attacker IPs.",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Source key C invalid: VPC subnet route tables cannot deny traffic by source IP. B is feasible; WAF rate-based rules would be preferable but are not offered.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-verified-correction",
+   "originalAnswers": [
+    "C"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/waf/latest/developerguide/ddos-app-layer-web-ACL-and-rbr.html",
+    "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html"
+   ],
+   "auditNote": "C invalid: subnet route tables do not implement source-IP deny rules. B is the only feasible supplied managed mitigation, although WAF rate-based rules are a better low-overhead recommendation not offered."
+  },
+  "answerStatus": "corrected-aws-docs"
  },
  {
   "id": 35,
@@ -2144,16 +2155,26 @@
    }
   ],
   "answers": [
-   "B"
+   "C"
   ],
   "answerCount": 1,
   "explanation": "",
   "wrongOptionsExplanation": "A. Elastic Disaster Recovery replicates servers, not repositories. B. AWS Backup does not support CodeCommit as a resource type, so\nthis plan cannot be created. D. CodeCommit has no \"snapshot\" API that a Step Functions workflow could call.",
   "plainWords": "A CodeCommit repository needs a backup copy in a second Region. Why my answer (C) works CodeCommit has no cross-Region\nbackup feature of its own, and AWS Backup does not list CodeCommit as a supported resource. The practical pattern is automation:\nan EventBridge rule fires on repository pushes, starts a CodeBuild project that clones the repository, zips it and copies the archive to\nan S3 bucket in the second Region. Each push produces a fresh backup copy.",
   "keyPoints": "• Use AWS Backup only for services it supports (EBS, EFS, RDS, DynamoDB, S3, FSx and more). • When a service has no native\nbackup, think event-driven copy (EventBridge + CodeBuild/Lambda).\nHEADS-UP ON THIS QUESTION\n• The bank key says B, but AWS Backup does not support CodeCommit. C is the answer commonly accepted for this scenario.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Source key B invalid: AWS Backup does not support CodeCommit. C uses CodeBuild and S3 for cross-Region repository copy.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-verified-correction",
+   "originalAnswers": [
+    "B"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html"
+   ],
+   "auditNote": "B invalid: CodeCommit is not an AWS Backup supported resource. C uses push event to CodeBuild and copies archive to S3 in another Region."
+  },
+  "answerStatus": "corrected-aws-docs"
  },
  {
   "id": 62,
@@ -3346,9 +3367,20 @@
   "wrongOptionsExplanation": "A. \"SSE-S3 with a customer managed key\" does not exist. SSE-S3 keys are managed by S3. C. A bucket policy cannot automatically\nencrypt on GetObject or PutObject. Existing objects also stay on SSE-S3 until re-written. D. \"AES-256 with a customer managed key\"\nis not a valid S3 option. AES-256 is the SSE-S3 setting.",
   "plainWords": "All current and future objects must be encrypted with keys managed by the security team. The bucket currently uses SSE-S3 and has\nno versioning. Why my answer (B) works Change the bucket default encryption to SSE-KMS using a customer managed KMS key (the\nsecurity team controls it), add a bucket policy that denies PutObject requests that do not use it, and re-copy the existing objects so\nthey are re-encrypted with the new key.",
   "keyPoints": "• Keys managed by you in S3 = SSE-KMS with a customer managed key (or SSE-C). • Changing default encryption does not touch\nexisting objects. You must re-copy them.\nHEADS-UP ON THIS QUESTION\n• The bank key says D, but \"AES-256 with a customer managed key\" is not a real S3 configuration. B is the closest valid answer if it\nuses a customer managed KMS key.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Source key D invalid (AES256 means SSE-S3). B does not explicitly specify a customer managed KMS key. No option unambiguously satisfies requirement; original key retained pending original-source review.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "disputed-no-fully-correct-option",
+   "originalAnswers": [
+    "D"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html",
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingServerSideEncryption.html"
+   ],
+   "auditNote": "D invalid: AES256 is SSE-S3, not customer-managed KMS. B uses SSE-KMS but does not explicitly require customer-managed key, so no answer unambiguously meets the requirement. Preserve original key and flag."
+  },
+  "answerStatus": "disputed-no-valid-option"
  },
  {
   "id": 96,
