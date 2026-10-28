@@ -801,7 +801,7 @@
  {
   "id": 17,
   "domain": 3,
-  "stem": "A company is running a data-intensive application on AWS. The application runs on a cluster of hundreds of Amazon EC2 instances. A shared file system also runs on several EC2 instances that store 200 TB of data. The application reads and modifies the data on the shared file system and generates a report. The job runs once monthly, reads a subset of the files from the shared file system, and takes about 72 hours to complete. The compute instances scale in an Auto Scaling group, but the instances that host the shared file system run continuously. The compute and storage instances are all in the same AWS Region. A solutions architect needs to reduce costs by replacing the shared file system instances. The file system must provide high performance access to the needed data for the duration of the 72-hour run. Which solution will provide the LARGEST overall cost reduction while meeting these requirements?",
+  "stem": "A company runs a data-intensive monthly reporting job on hundreds of EC2 instances. Its shared file system, hosted on always-on EC2 instances, contains 200 TB of data. Each 72-hour job reads and modifies only a subset of files. Compute scales down between jobs, but the file servers remain running. Which replacement for the shared storage offers the greatest likely cost reduction while maintaining high-performance file access during each run?",
   "options": [
    {
     "id": "A",
@@ -824,18 +824,60 @@
    "A"
   ],
   "answerCount": 1,
-  "explanation": "Keep the data in S3 using Intelligent-Tiering (cheap, automatic tiering). Just before the job, create an FSx for Lustre file system linked\nto the bucket with lazy loading, so only files that the job actually reads are pulled into Lustre. Delete the file system afterward. You\npay for high-performance storage only for three days.",
+  "explanation": "A is the best choice among the supplied options. Store the durable dataset in S3 Intelligent-Tiering and create an FSx for Lustre file system for each monthly run, linked to S3. File metadata is imported and file contents are loaded on first access, so unaccessed content need not be fully copied. Export modified files back to S3 before deleting the temporary file system; this persistence step is essential and is omitted from the source option. B fails because EBS Multi-Attach is limited in attachment count and needs a cluster-aware file system. C uses full batch loading and S3 Standard, potentially transferring more than the subset used. D uses File Gateway, not a comparable high-performance parallel file system. Exact cost ranking depends on access pattern and S3 tiering fees; the source's absolute 'largest' claim is not provable without measurements.",
   "wrongOptionsExplanation": "B. EBS Multi-Attach supports only a limited number of instances in a single AZ, far fewer than hundreds, and is not a shared file\nsystem. C. Batch loading all 200 TB into Lustre wastes time and money when only a subset of files is needed. D. A File Gateway is for\nhybrid access and does not provide the high-performance parallel throughput the job needs.",
   "plainWords": "200 TB on always-on EC2 file servers, used only for a 72-hour monthly job that reads a subset of files. Replace it to cut cost while\nkeeping high performance during the job.",
   "keyPoints": "• Temporary HPC file system on S3 data = FSx for Lustre (scratch) linked to S3. • Lazy loading fetches only the files you read.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "A"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files-dra.html",
+    "https://docs.aws.amazon.com/fsx/latest/LustreGuide/overview-dra-data-repo.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files-dra.html",
+    "https://docs.aws.amazon.com/fsx/latest/LustreGuide/overview-dra-data-repo.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question retained in snapshot. Source answer unchanged; technical caveats documented."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "A company is running a data-intensive application on AWS. The application runs on a cluster of hundreds of Amazon EC2 instances. A shared file system also runs on several EC2 instances that store 200 TB of data. The application reads and modifies the data on the shared file system and generates a report. The job runs once monthly, reads a subset of the files from the shared file system, and takes about 72 hours to complete. The compute instances scale in an Auto Scaling group, but the instances that host the shared file system run continuously. The compute and storage instances are all in the same AWS Region. A solutions architect needs to reduce costs by replacing the shared file system instances. The file system must provide high performance access to the needed data for the duration of the 72-hour run. Which solution will provide the LARGEST overall cost reduction while meeting these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Migrate the data from the existing shared file system to an Amazon S3 bucket that uses the S3 Intelligent-Tiering storage class. Before the job runs each month, use Amazon FSx for Lustre to create a new file system with the data from Amazon S3 by using lazy loading. Use the new file system as the shared storage for the duration of the job. Delete the file system when the job is complete."
+    },
+    {
+     "id": "B",
+     "text": "Migrate the data from the existing shared file system to a large Amazon Elastic Block Store (Amazon EBS) volume with Multi-Attach enabled. Attach the EBS volume to each of the instances by using a user data script in the Auto Scaling group launch template. Use the EBS volume as the shared storage for the duration of the job. Detach the EBS volume when the job is complete."
+    },
+    {
+     "id": "C",
+     "text": "Migrate the data from the existing shared file system to an Amazon S3 bucket that uses the S3 Standard storage class. Before the job runs each month, use Amazon FSx for Lustre to create a new file system with the data from Amazon S3 by using batch loading. Use the new file system as the shared storage for the duration of the job. Delete the file system when the job is complete."
+    },
+    {
+     "id": "D",
+     "text": "Migrate the data from the existing shared file system to an Amazon S3 bucket. Before the job runs each month, use AWS Storage Gateway to create a file gateway with the data from Amazon S3. Use the file gateway as the shared storage for the job. Delete the file gateway when the job is complete."
+    }
+   ],
+   "answers": [
+    "A"
+   ]
+  }
  },
  {
   "id": 18,
   "domain": 3,
-  "stem": "An events company runs a ticketing platform on AWS. The company's customers configure and schedule their events on the platform The events result in large increases of traffic to the platform The company knows the date and time of each customer's events The company runs the platform on an Amazon Elastic Container Service (Amazon ECS) cluster The ECS cluster consists of Amazon EC2 On-Demand Instances that are in an Auto Scaling group. The Auto Scaling group uses a predictive scaling policy The ECS cluster makes frequent requests to an Amazon S3 bucket to download ticket assets The ECS cluster and the S3 bucket are in the same AWS Region and the same AWS account Traffic between the ECS cluster and the S3 bucket flows across a NAT gateway The company needs to optimize the cost of the platform without decreasing the platform's availability Which combination of steps will meet these requirements? (Select TWO)",
+  "stem": "An events company operates a ticketing platform on Amazon ECS backed by EC2 On-Demand instances in an Auto Scaling group. Customer event dates and times are known in advance, and the Auto Scaling group currently uses predictive scaling. ECS tasks frequently download ticket assets from an S3 bucket in the same Region and account, but this traffic currently passes through a NAT gateway. Which TWO changes reduce costs without compromising availability?",
   "options": [
    {
     "id": "A",
@@ -863,18 +905,66 @@
    "B"
   ],
   "answerCount": 2,
-  "explanation": "A gateway VPC endpoint for S3 is free and removes the NAT gateway data processing charge for S3 traffic. Adding a Spot-backed\ncapacity provider with a weighted strategy lowers compute cost while the existing On-Demand capacity keeps availability.",
+  "explanation": "A removes NAT gateway data-processing costs for S3 traffic by using an S3 gateway VPC endpoint, provided route tables and policies are configured. B adds a Spot-backed ECS capacity provider alongside existing On-Demand capacity, reducing average compute costs; availability depends on keeping sufficient On-Demand baseline capacity and making workloads resilient to Spot interruptions. C reserves On-Demand capacity but is not itself a discount. D S3 Transfer Acceleration is not useful for same-Region private traffic. E scheduled scaling may be useful for known events, but replacing predictive scaling is not inherently a cost reduction and risks missing unexpected load. Source A+B retained with Spot-availability caveat.",
   "wrongOptionsExplanation": "C. Capacity Reservations add commitment cost rather than reduce it. D. Transfer Acceleration is for long-distance uploads and adds\ncost. The cluster and bucket are in the same Region. E. Replacing predictive scaling with scheduled scaling does not make compute\ncheaper and may reduce flexibility.",
   "plainWords": "An ECS cluster on On-Demand EC2 downloads lots of S3 assets through a NAT gateway. Cut cost without lowering availability.",
   "keyPoints": "• NAT gateway charges for S3 or DynamoDB traffic = use a gateway endpoint. • Mix On-Demand and Spot with ECS capacity\nproviders to cut cost safely.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "A",
+    "B"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html",
+    "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/asg-capacity-providers.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html",
+    "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/asg-capacity-providers.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question retained in snapshot. Source answer unchanged; technical caveats documented."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "An events company runs a ticketing platform on AWS. The company's customers configure and schedule their events on the platform The events result in large increases of traffic to the platform The company knows the date and time of each customer's events The company runs the platform on an Amazon Elastic Container Service (Amazon ECS) cluster The ECS cluster consists of Amazon EC2 On-Demand Instances that are in an Auto Scaling group. The Auto Scaling group uses a predictive scaling policy The ECS cluster makes frequent requests to an Amazon S3 bucket to download ticket assets The ECS cluster and the S3 bucket are in the same AWS Region and the same AWS account Traffic between the ECS cluster and the S3 bucket flows across a NAT gateway The company needs to optimize the cost of the platform without decreasing the platform's availability Which combination of steps will meet these requirements? (Select TWO)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create a gateway VPC endpoint for the S3 bucket"
+    },
+    {
+     "id": "B",
+     "text": "Add another ECS capacity provider that uses an Auto Scaling group of Spot Instances Configure the new capacity provider strategy to have the same weight as the existing capacity provider strategy"
+    },
+    {
+     "id": "C",
+     "text": "Create On-Demand Capacity Reservations for the applicable instance type for the time period of the scheduled scaling policies"
+    },
+    {
+     "id": "D",
+     "text": "Enable S3 Transfer Acceleration on the S3 bucket"
+    },
+    {
+     "id": "E",
+     "text": "Replace the predictive scaling policy with scheduled scaling policies for the scheduled events"
+    }
+   ],
+   "answers": [
+    "A",
+    "B"
+   ]
+  }
  },
  {
   "id": 19,
   "domain": 2,
-  "stem": "A company is deploying a new API to AWS. The API uses Amazon API Gateway with a Regional API endpoint and an AWS Lambda function for hosting. The API retrieves data from an external vendor API, stores data in an Amazon DynamoDB global table, and retrieves data from the DynamoDB global table. The API key for the vendor's API is stored in AWS Secrets Manager and is encrypted with a customer managed key in AWS Key Management Service (AWS KMS). The company has deployed its own API into a single AWS Region. A solutions architect needs to change the API components of the company's API to ensure that the components can run across multiple Regions in an active-active configuration. Which combination of changes will meet this requirement with the LEAST operational overhead? (Choose three.)",
+  "stem": "A company hosts an API with a Regional Amazon API Gateway endpoint and AWS Lambda in one Region. The API calls a vendor service using a credential stored in Secrets Manager and encrypted with a customer-managed KMS key, and reads and writes a DynamoDB global table. The company needs active-active API deployment across multiple AWS Regions with minimal operational overhead. Which THREE changes best meet these requirements?",
   "options": [
    {
     "id": "A",
@@ -907,18 +997,72 @@
    "C"
   ],
   "answerCount": 3,
-  "explanation": "Deploy the API in each Region and use Route 53 to route to Regional endpoints (A). Create a KMS multi-Region key with replica keys\n(B) and use Secrets Manager secret replication so each Region has the secret encrypted with the right replica key (C). That is the\nlowest-effort way to keep keys and secrets consistent everywhere.",
+  "explanation": "A+B+C are the intended choices. A deploys regional API endpoints and uses Route 53 DNS routing; multivalue routing distributes healthy endpoint answers but is not a strict global load balancer. B creates a multi-Region customer-managed KMS key and regional replicas. C replicates the existing secret to other Regions with the selected regional KMS keys, so credential updates can propagate. D cannot convert an existing single-Region key to multi-Region and AWS-managed keys are not created that way. E creates manually managed secrets that can drift. F incorrectly asserts a native 'multi-Region option' on an existing API Gateway API. Note: option A alone does not explicitly state deploying the Lambda functions in each Region; regional Lambda deployments are an additional implementation requirement.",
   "wrongOptionsExplanation": "D. AWS managed keys cannot be converted to multi-Region keys. E. Manually copying secrets to each Region creates operational\noverhead and drift. F. API Gateway does not have a \"multi-Region option\" to attach per-Region Lambda backends like that. You\ndeploy the API per Region.",
   "plainWords": "An API Gateway + Lambda + DynamoDB global table API must become active-active in several Regions. Its vendor API key is in\nSecrets Manager encrypted with a customer managed KMS key.",
   "keyPoints": "• Multi-Region encryption = KMS multi-Region keys; multi-Region secrets = Secrets Manager replication. • Active-active API = deploy\nin each Region and route with Route 53.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "A",
+    "B",
+    "C"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/secretsmanager/latest/userguide/replicate-secrets.html",
+    "https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/secretsmanager/latest/userguide/replicate-secrets.html",
+    "https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question retained in snapshot. Source answer unchanged; technical caveats documented."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "A company is deploying a new API to AWS. The API uses Amazon API Gateway with a Regional API endpoint and an AWS Lambda function for hosting. The API retrieves data from an external vendor API, stores data in an Amazon DynamoDB global table, and retrieves data from the DynamoDB global table. The API key for the vendor's API is stored in AWS Secrets Manager and is encrypted with a customer managed key in AWS Key Management Service (AWS KMS). The company has deployed its own API into a single AWS Region. A solutions architect needs to change the API components of the company's API to ensure that the components can run across multiple Regions in an active-active configuration. Which combination of changes will meet this requirement with the LEAST operational overhead? (Choose three.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Deploy the API to multiple Regions. Configure Amazon Route 53 with custom domain names that route traffic to each Regional API endpoint. Implement a Route 53 multivalue answer routing policy."
+    },
+    {
+     "id": "B",
+     "text": "Create a new KMS multi-Region customer managed key. Create a new KMS customer managed replica key in each in-scope Region."
+    },
+    {
+     "id": "C",
+     "text": "Replicate the existing Secrets Manager secret to other Regions. For each in-scope Region's replicated secret, select the appropriate KMS key."
+    },
+    {
+     "id": "D",
+     "text": "Create a new AWS managed KMS key in each in-scope Region. Convert an existing key to a multi-Region key. Use the multi-Region key in other Regions."
+    },
+    {
+     "id": "E",
+     "text": "Create a new Secrets Manager secret in each in-scope Region. Copy the secret value from the existing Region to the new secret in each in-scope Region."
+    },
+    {
+     "id": "F",
+     "text": "Modify the deployment process for the Lambda function to repeat the deployment across in-scope Regions. Turn on the multi-Region option for the existing API. Select the Lambda function that is deployed in each Region as the backend for the multi-Region API."
+    }
+   ],
+   "answers": [
+    "A",
+    "B",
+    "C"
+   ]
+  }
  },
  {
   "id": 20,
   "domain": 1,
-  "stem": "A large company runs workloads in VPCs that are deployed across hundreds of AWS accounts. Each VPC consists to public subnets and private subnets that span across multiple Availability Zones. NAT gateways are deployed in the public subnets and allow outbound connectivity to the internet from the private subnets. A solutions architect is working on a hub-and-spoke design. All private subnets in the spoke VPCs must route traffic to the internet through an egress VPC. The solutions architect already has deployed a NAT gateway in an egress VPC in a central AWS account. Which set of additional steps should the solutions architect take to meet these requirements?",
+  "stem": "A company operates hundreds of VPCs across AWS accounts. Private subnets currently reach the internet through NAT gateways in their own VPCs. The company wants a hub-and-spoke architecture that routes all private-subnet internet traffic through an existing NAT gateway in a centralized egress VPC. Which additional steps meet this requirement?",
   "options": [
    {
     "id": "A",
@@ -941,13 +1085,55 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "Create one Transit Gateway, share it with the accounts through AWS RAM, attach the spoke VPCs and the egress VPC, and add routes\nsending 0.0.0.0/0 from the spokes to the egress VPC. This scales to hundreds of VPCs and keeps egress central.",
+  "explanation": "B is correct. Create and share an AWS Transit Gateway across accounts (for example using AWS RAM), attach the spoke and egress VPCs, and configure VPC and transit-gateway route tables so spoke default routes reach the egress VPC and return traffic reaches the correct spoke. A VPC peering does not provide transitive routing through a peer's internet gateway/NAT gateway. C proposes a transit gateway per account and incorrectly attaches a NAT gateway directly to transit gateways. D PrivateLink exposes specific endpoint services, not general internet egress. Centralized egress adds Transit Gateway processing charges and must be designed for high availability across AZs.",
   "wrongOptionsExplanation": "A. Peering is non-transitive and cannot use another VPC's NAT gateway. It also does not scale to hundreds of VPCs. C. You do not\ncreate a Transit Gateway in every account, and you cannot attach a NAT gateway to one. D. PrivateLink exposes specific services, it is\nnot a general internet egress path.",
   "plainWords": "Hundreds of accounts need their private subnets to reach the internet through one NAT gateway in a central egress VPC.",
   "keyPoints": "• Hub-and-spoke, many accounts, central egress = Transit Gateway + RAM + egress VPC. • VPC peering is not transitive.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "B"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/using-nat-gateway-for-centralized-egress.html",
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/transitioning-to-multiple-aws-accounts/centralized-egress.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/using-nat-gateway-for-centralized-egress.html",
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/transitioning-to-multiple-aws-accounts/centralized-egress.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question retained in snapshot. Source answer unchanged; technical caveats documented."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "A large company runs workloads in VPCs that are deployed across hundreds of AWS accounts. Each VPC consists to public subnets and private subnets that span across multiple Availability Zones. NAT gateways are deployed in the public subnets and allow outbound connectivity to the internet from the private subnets. A solutions architect is working on a hub-and-spoke design. All private subnets in the spoke VPCs must route traffic to the internet through an egress VPC. The solutions architect already has deployed a NAT gateway in an egress VPC in a central AWS account. Which set of additional steps should the solutions architect take to meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create peering connections between the egress VPC and the spoke VPCs. Configure the required routing to allow access to the internet."
+    },
+    {
+     "id": "B",
+     "text": "Create a transit gateway, and share it with the existing AWS accounts. Attach existing VPCs to the transit gateway Configure the required routing to allow access to the internet."
+    },
+    {
+     "id": "C",
+     "text": "Create a transit gateway in every account. Attach the NAT gateway to the transit gateways. Configure the required routing to allow access to the internet."
+    },
+    {
+     "id": "D",
+     "text": "Create an AWS PrivateLink connection between the egress VPC and the spoke VPCs. Configure the required routing to allow access to the internet"
+    }
+   ],
+   "answers": [
+    "B"
+   ]
+  }
  },
  {
   "id": 21,
