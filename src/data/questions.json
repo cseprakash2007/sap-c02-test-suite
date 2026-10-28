@@ -555,21 +555,21 @@
    },
    {
     "id": "D",
-    "text": "Migrate the database to Aurora Serverless v1. Purchase Compute Savings Plans."
+    "text": "Migrate the database to Aurora Serverless v2. Purchase Compute Savings Plans."
    }
   ],
   "answers": [
    "D"
   ],
   "answerCount": 1,
-  "explanation": "Aurora Serverless adjusts database capacity automatically and can pause when idle, so you pay for capacity only when it is used.\nCompute Savings Plans cover Lambda and Fargate usage, which also swing with demand.",
+  "explanation": "Corrected study wording (original option D specified retired Aurora Serverless v1): Aurora Serverless v2 automatically adjusts database capacity for unpredictable and write-heavy workloads, avoiding continuously provisioned peak capacity. Compute Savings Plans apply to Lambda and Fargate compute. A adds readers rather than scaling writes; B uses a legacy multi-master design; C adds global replication rather than elastic writer capacity. Original question and option are retained in originalQuestionSnapshot.",
   "wrongOptionsExplanation": "A. Read replicas help reads, not a write-heavy load, and Instance Savings Plans plus reserved instances commit you to capacity you\noften do not use. B. Multi-master clusters are not designed for unpredictable scaling and commitments do not fit an irregular load. C.\nAurora Global Database is for cross-Region DR and low-latency reads, not for absorbing bursts.",
   "plainWords": "Usage is idle for long periods, then spikes suddenly. The write-heavy Aurora MySQL instance cannot cope. Find the most\ncost-effective way to handle the swings.",
   "keyPoints": "• Unpredictable or intermittent database load = Aurora Serverless. • Commitments (RI/Savings Plans) suit steady usage, not spiky\nusage.\nHEADS-UP ON THIS QUESTION\n• Aurora Serverless v1 has been retired or scheduled for retirement. Today the modern answer for this pattern is Aurora Serverless v2\n(which can also scale down to very low capacity). The reasoning is the same.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Aurora Serverless v1 is obsolete; consult current Aurora Serverless v2 guidance.",
   "sourceWarning": "Aurora Serverless v1 is retired; D is historically intended but no longer deployable as written. Aurora Serverless v2 is the modern alternative; none of the offered answers states it.",
   "review": {
    "reviewedAt": "2026-10-28",
-   "auditStatus": "outdated",
+   "auditStatus": "study-wording-corrected-original-outdated",
    "originalAnswers": [
     "D"
    ],
@@ -580,12 +580,38 @@
    "externalQuestionLinks": [],
    "externalSiteAnswers": [],
    "awsDocumentationLinks": [
-    "https://repost.aws/questions/QUhcMVoChXRm2HLi8F-yih1g/announcement-support-for-aurora-serverless-v1-ending-soon"
+    "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html"
    ],
    "crossVerificationStatus": "aws-service-retired-external-match-pending",
-   "answerReason": "AWS re:Post confirms Aurora Serverless v1 end of support March 31, 2025. No exact question-site match established in this batch; D remains historically intended but outdated."
+   "answerReason": "AWS re:Post confirms Aurora Serverless v1 end of support March 31, 2025. No exact question-site match established in this batch; D remains historically intended but outdated.",
+   "correctedStudyVersion": true,
+   "correctionType": "modernized-option-not-original-exam-text"
   },
-  "answerStatus": "outdated"
+  "answerStatus": "outdated",
+  "originalQuestionSnapshot": {
+   "stem": "A company is running an application in the AWS Cloud. The application uses AWS Lambda functions and Amazon Elastic Container Service (Amazon ECS) containers that run with AWS Fargate technology as its primary compute. The load on the application is irregular. The application experiences long periods of no usage, followed by sudden and significant increases and decreases in traffic. The application is write-heavy and stores data in an Amazon Aurora MySQL database. The database runs on an Amazon RDS memory optimized DB instance that is not able to handle the load. What is the MOST cost-effective way for the company to handle the sudden and significant changes in traffic?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Add additional read replicas to the database. Purchase Instance Savings Plans and RDS Reserved Instances."
+    },
+    {
+     "id": "B",
+     "text": "Migrate the database to an Aurora multi-master DB cluster. Purchase Instance Savings Plans."
+    },
+    {
+     "id": "C",
+     "text": "Migrate the database to an Aurora global database. Purchase Compute Savings Plans and RDS Reserved Instances."
+    },
+    {
+     "id": "D",
+     "text": "Migrate the database to Aurora Serverless v1. Purchase Compute Savings Plans."
+    }
+   ],
+   "answers": [
+    "D"
+   ]
+  }
  },
  {
   "id": 17,
@@ -3338,11 +3364,11 @@
  {
   "id": 94,
   "domain": 2,
-  "stem": "A company runs a serverless application in a single AWS Region. The application accesses external URLs and extracts metadata from those sites. The company uses an Amazon Simple Notification Service (Amazon SNS) topic to publish URLs to an Amazon Simple Queue Service (Amazon SQS) queue An AWS Lambda function uses the queue as an event source and processes the URLs from the queue Results are saved to an Amazon S3 bucket The company wants to process each URL other Regions to compare possible differences in site localization URLs must be published from the existing Region. Results must be written to the existing S3 bucket in the current Region. Which combination of changes will produce multi-Region deployment that meets these requirements? (Select TWO.)",
+  "stem": "A company runs a serverless application in a single AWS Region. The application accesses external URLs and extracts metadata from those sites. The company uses an Amazon Simple Notification Service (Amazon SNS) topic to publish URLs to an Amazon Simple Queue Service (Amazon SQS) queue An AWS Lambda function uses the queue as an event source and processes the URLs from the queue Results are saved to an Amazon S3 bucket The company wants to process each URL in other Regions to compare possible differences in site localization URLs must be published from the existing Region. Results must be written to the existing S3 bucket in the current Region. Which combination of changes will produce multi-Region deployment that meets these requirements? (Select TWO.)",
   "options": [
    {
     "id": "A",
-    "text": "Deploy the SOS queue with the Lambda function to other Regions."
+    "text": "Deploy an SQS queue with the Lambda function to other Regions."
    },
    {
     "id": "B",
@@ -3350,7 +3376,7 @@
    },
    {
     "id": "C",
-    "text": "Subscribe the SQS queue in each Region to the SNS topics in each Region."
+    "text": "Subscribe the SQS queue in each Region to the existing SNS topic in the original Region."
    },
    {
     "id": "D",
@@ -3366,14 +3392,14 @@
    "C"
   ],
   "answerCount": 2,
-  "explanation": "Keep the SNS topic in the original Region. In each additional Region deploy an SQS queue with its Lambda consumer (A), and\nsubscribe each Regional queue to the SNS topic (C). SNS supports cross-Region delivery to SQS, so every Region gets each URL, and\nthe Lambdas write results back to the original bucket.",
+  "explanation": "Corrected study version: A deploys each regional SQS queue and Lambda consumer; C subscribes each regional queue to the single original-Region SNS topic. SNS supports cross-Region delivery to SQS, and each regional Lambda writes results to the original S3 bucket. B reverses SNS/SQS subscription direction; D assumes SQS publishes to SNS; E unnecessarily deploys regional SNS publishers.",
   "wrongOptionsExplanation": "B. This direction is reversed: topics do not subscribe to queues. D. SQS queues do not publish to SNS topics. E. Extra SNS topics in\nother Regions would not automatically receive the URLs published in the original Region.",
   "plainWords": "URLs are published from one Region. The same URLs must also be processed in other Regions, and results must still go to the existing\nS3 bucket.",
   "keyPoints": "• SNS can fan out to SQS queues in other Regions.\nHEADS-UP ON THIS QUESTION\n• Option C is worded a little loosely in your PDF. The intended design is one topic in the original Region with queues in every Region\nsubscribed to it.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "A+C are intended, but C says SNS topics in each Region while the stem requires a single original-Region publisher. Correct design subscribes each regional SQS queue to the original SNS topic.",
   "review": {
    "reviewedAt": "2026-10-28",
-   "auditStatus": "disputed-wording",
+   "auditStatus": "study-wording-corrected",
    "originalAnswers": [
     "A",
     "C"
@@ -3381,9 +3407,43 @@
    "references": [
     "https://docs.aws.amazon.com/sns/latest/dg/sns-cross-region-delivery.html"
    ],
-   "auditNote": "A+C are intended, but C says SNS topics in each Region while the stem requires a single original-Region publisher. Correct design subscribes each regional SQS queue to the original SNS topic."
+   "auditNote": "A+C are intended, but C says SNS topics in each Region while the stem requires a single original-Region publisher. Correct design subscribes each regional SQS queue to the original SNS topic.",
+   "correctedStudyVersion": true,
+   "correctionType": "repaired-misworded-answer-choice",
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/sns/latest/dg/sns-cross-region-delivery.html"
+   ]
   },
-  "answerStatus": "disputed-wording"
+  "answerStatus": "disputed-wording",
+  "originalQuestionSnapshot": {
+   "stem": "A company runs a serverless application in a single AWS Region. The application accesses external URLs and extracts metadata from those sites. The company uses an Amazon Simple Notification Service (Amazon SNS) topic to publish URLs to an Amazon Simple Queue Service (Amazon SQS) queue An AWS Lambda function uses the queue as an event source and processes the URLs from the queue Results are saved to an Amazon S3 bucket The company wants to process each URL other Regions to compare possible differences in site localization URLs must be published from the existing Region. Results must be written to the existing S3 bucket in the current Region. Which combination of changes will produce multi-Region deployment that meets these requirements? (Select TWO.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Deploy the SOS queue with the Lambda function to other Regions."
+    },
+    {
+     "id": "B",
+     "text": "Subscribe the SNS topic in each Region to the SQS queue."
+    },
+    {
+     "id": "C",
+     "text": "Subscribe the SQS queue in each Region to the SNS topics in each Region."
+    },
+    {
+     "id": "D",
+     "text": "Configure the SQS queue to publish URLs to SNS topics in each Region."
+    },
+    {
+     "id": "E",
+     "text": "Deploy the SNS topic and the Lambda function to other Regions."
+    }
+   ],
+   "answers": [
+    "A",
+    "C"
+   ]
+  }
  },
  {
   "id": 95,
@@ -4413,7 +4473,7 @@
  {
   "id": 122,
   "domain": 2,
-  "stem": "A company recently started hosting new application workloads in the AWS Cloud. The company is using Amazon EC2 instances, Amazon Elastic File System (Amazon EFS) file systems, and Amazon RDS DB instances. To meet regulatory and business requirements, the company must make the following changes for data backups: * Backups must be retained based on custom daily, weekly, and monthlyrequirements. * Backups must be replicated to at least one other AWS Region immediately after capture. * The backup solution must provide a single source of backup status across the AWS environment. * The backup solution must send immediate notifications upon failure of any resource backup. Which combination of steps will meet this requirement with the LEAST amount of operational overhead? (Select THREE.)",
+  "stem": "A company recently started hosting new application workloads in the AWS Cloud. The company is using Amazon EC2 instances, Amazon Elastic File System (Amazon EFS) file systems, and Amazon RDS DB instances. To meet regulatory and business requirements, the company must make the following changes for data backups: * Backups must be retained based on custom daily, weekly, and monthly requirements. * Backups must be replicated to at least one other AWS Region immediately after capture. * The backup solution must provide a single source of backup status across the AWS environment. * The backup solution must send immediate notifications upon failure of any resource backup. Which combination of steps will meet this requirement with the LEAST amount of operational overhead? (Select THREE.)",
   "options": [
    {
     "id": "A",
@@ -4429,7 +4489,7 @@
    },
    {
     "id": "D",
-    "text": "Add an Amazon Simple Notification Service (Amazon SNS) topic to the backup plan to send a notification for finished jobs that have any status except BACKUP- JOB- COMPLETED."
+    "text": "Configure Amazon SNS notifications on the AWS Backup vault for the BACKUP_JOB_FAILED event."
    },
    {
     "id": "E",
@@ -4446,14 +4506,14 @@
    "D"
   ],
   "answerCount": 3,
-  "explanation": "",
+  "explanation": "Corrected study version: A sets daily/weekly/monthly retention rules, B configures cross-Region backup copies, and D configures SNS notifications on the backup vault for BACKUP_JOB_FAILED. C requires custom replication and Lambda maintenance; E cannot centrally cover all listed resource types; F is limited to RDS and does not provide the full central policy and cross-Region notification solution. The source's option D incorrectly mentioned the backup plan and a malformed event name.",
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
   "sourceWarning": "A+B+D are intended. AWS Backup SNS notifications are configured on backup vaults, not plans; valid failure event is BACKUP_JOB_FAILED. D is not technically accurate as written.",
   "review": {
    "reviewedAt": "2026-10-28",
-   "auditStatus": "disputed-wording",
+   "auditStatus": "study-wording-corrected",
    "originalAnswers": [
     "A",
     "B",
@@ -4474,13 +4534,48 @@
     "A,B,D"
    ],
    "awsDocumentationLinks": [
-    "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html",
-    "https://docs.aws.amazon.com/aws-backup/latest/devguide/cross-region-backup.html"
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html"
    ],
    "crossVerificationStatus": "external-agreement-technical-wording-flaw",
-   "answerReason": "Three external sites list A+B+D. A and B are valid. D incorrectly says attach SNS to backup plan and uses malformed status; SNS notifications attach to vault and BACKUP_JOB_FAILED is valid. Preserve source key and flag wording."
+   "answerReason": "Three external sites list A+B+D. A and B are valid. D incorrectly says attach SNS to backup plan and uses malformed status; SNS notifications attach to vault and BACKUP_JOB_FAILED is valid. Preserve source key and flag wording.",
+   "correctedStudyVersion": true,
+   "correctionType": "repaired-aws-backup-notification-choice"
   },
-  "answerStatus": "disputed-wording"
+  "answerStatus": "disputed-wording",
+  "originalQuestionSnapshot": {
+   "stem": "A company recently started hosting new application workloads in the AWS Cloud. The company is using Amazon EC2 instances, Amazon Elastic File System (Amazon EFS) file systems, and Amazon RDS DB instances. To meet regulatory and business requirements, the company must make the following changes for data backups: * Backups must be retained based on custom daily, weekly, and monthlyrequirements. * Backups must be replicated to at least one other AWS Region immediately after capture. * The backup solution must provide a single source of backup status across the AWS environment. * The backup solution must send immediate notifications upon failure of any resource backup. Which combination of steps will meet this requirement with the LEAST amount of operational overhead? (Select THREE.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create an AWS Backup plan with a backup rule for each of the retention requirements."
+    },
+    {
+     "id": "B",
+     "text": "Configure an AWS backup plan to copy backups to another Region."
+    },
+    {
+     "id": "C",
+     "text": "Create an AWS Lambda function to replicate backups to another Region and send notification if a failure occurs."
+    },
+    {
+     "id": "D",
+     "text": "Add an Amazon Simple Notification Service (Amazon SNS) topic to the backup plan to send a notification for finished jobs that have any status except BACKUP- JOB- COMPLETED."
+    },
+    {
+     "id": "E",
+     "text": "Create an Amazon Data Lifecycle Manager (Amazon DLM) snapshot lifecycle policy for each of the retention requirements."
+    },
+    {
+     "id": "F",
+     "text": "Set up RDS snapshots on each database."
+    }
+   ],
+   "answers": [
+    "A",
+    "B",
+    "D"
+   ]
+  }
  },
  {
   "id": 123,
@@ -14622,46 +14717,73 @@
  {
   "id": 408,
   "domain": 3,
-  "stem": "A solutions architect needs to implement a client-side encryption mechanism for objects that will be stored in a new Amazon S3 bucket. The solutions architect created a CMK that is stored in AWS Key Management Service (AWS KMS) for this purpose. The solutions architect created the following IAM policy and attached it to an IAM role: During tests, me solutions architect was able to successfully get existing test objects m the S3 bucket However, attempts to upload a new object resulted in an error message. The error message stated that me action was forbidden. Which action must me solutions architect add to the IAM policy to meet all the requirements?",
+  "stem": "A solutions architect needs to implement a client-side encryption mechanism for objects that will be stored in a new Amazon S3 bucket. The solutions architect created a CMK that is stored in AWS Key Management Service (AWS KMS) for this purpose. The solutions architect created the following IAM policy and attached it to an IAM role: During tests, the solutions architect was able to successfully get existing test objects in the S3 bucket However, attempts to upload a new object resulted in an error message. The error message stated that me action was forbidden. Which action must me solutions architect add to the IAM policy to meet all the requirements?",
   "options": [
    {
     "id": "A",
-    "text": "Kms:GenerateDataKey"
+    "text": "kms:GenerateDataKey"
    },
    {
     "id": "B",
-    "text": "KmsGetKeyPolpcy"
+    "text": "kms:GetKeyPolicy"
    },
    {
     "id": "C",
-    "text": "kmsGetPubKKey"
+    "text": "kms:GetPublicKey"
    },
    {
     "id": "D",
-    "text": "kms:SKjn"
+    "text": "kms:Sign"
    }
   ],
   "answers": [
    "A"
   ],
   "answerCount": 1,
-  "explanation": "",
+  "explanation": "Provisional: kms:GenerateDataKey is required to generate a data key for KMS-backed encryption. kms:GetKeyPolicy retrieves a key policy; kms:GetPublicKey retrieves a public key for asymmetric keys; kms:Sign performs signing. The original question references an IAM policy that is absent from the source data, so the exact question remains incomplete and the answer is not fully verified.",
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
   "sourceWarning": "Stem references an IAM policy that is missing from the stored question. A (kms:GenerateDataKey) is technically plausible for encryption but cannot verify exact missing permission without original policy. Options B/C/D also have malformed IAM action names.",
   "review": {
    "reviewedAt": "2026-10-28",
-   "auditStatus": "source-truncated",
+   "auditStatus": "study-typos-corrected-source-incomplete",
    "originalAnswers": [
     "A"
    ],
    "references": [
     "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html"
    ],
-   "auditNote": "Stem references an IAM policy that is missing from the stored question. A (kms:GenerateDataKey) is technically plausible for encryption but cannot verify exact missing permission without original policy. Options B/C/D also have malformed IAM action names."
+   "auditNote": "Stem references an IAM policy that is missing from the stored question. A (kms:GenerateDataKey) is technically plausible for encryption but cannot verify exact missing permission without original policy. Options B/C/D also have malformed IAM action names.",
+   "correctedStudyVersion": true,
+   "correctionType": "normalized-malformed-action-names-not-restored-original",
+   "missingOriginalPolicy": true
   },
-  "answerStatus": "source-truncated"
+  "answerStatus": "source-truncated",
+  "originalQuestionSnapshot": {
+   "stem": "A solutions architect needs to implement a client-side encryption mechanism for objects that will be stored in a new Amazon S3 bucket. The solutions architect created a CMK that is stored in AWS Key Management Service (AWS KMS) for this purpose. The solutions architect created the following IAM policy and attached it to an IAM role: During tests, me solutions architect was able to successfully get existing test objects m the S3 bucket However, attempts to upload a new object resulted in an error message. The error message stated that me action was forbidden. Which action must me solutions architect add to the IAM policy to meet all the requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Kms:GenerateDataKey"
+    },
+    {
+     "id": "B",
+     "text": "KmsGetKeyPolpcy"
+    },
+    {
+     "id": "C",
+     "text": "kmsGetPubKKey"
+    },
+    {
+     "id": "D",
+     "text": "kms:SKjn"
+    }
+   ],
+   "answers": [
+    "A"
+   ]
+  }
  },
  {
   "id": 409,
