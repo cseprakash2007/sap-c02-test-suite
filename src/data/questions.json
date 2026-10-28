@@ -1138,7 +1138,7 @@
  {
   "id": 21,
   "domain": 4,
-  "stem": "An AWS customer has a web application that runs on premises. The web application fetches data from a third-party API that is behind a firewall. The third party accepts only one public CIDR block in each client's allow list. The customer wants to migrate their web application to the AWS Cloud. The application will be hosted on a set of Amazon EC2 instances behind an Application Load Balancer (ALB) in a VPC. The ALB is located in public subnets. The EC2 instances are located in private subnets. NAT gateways provide internet access to the private subnets. How should a solutions architect ensure that the web application can continue to call the third-parly API after the migration?",
+  "stem": "A company is migrating an on-premises web application to EC2 instances in private subnets behind a public Application Load Balancer. The application calls a third-party API whose firewall permits only one customer-owned public CIDR block. Internet-bound requests from the private instances use NAT gateways. How can the company preserve API access after migration?",
   "options": [
    {
     "id": "A",
@@ -1161,18 +1161,60 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "Outbound traffic to the internet leaves through the NAT gateways, so those are the source IPs the third party sees. Bring your own IP\nblock (BYOIP) into the account, create Elastic IPs from it, and assign them to the NAT gateways. The firewall rule stays valid.",
+  "explanation": "B is correct. Register the customer-owned public IPv4 prefix using Bring Your Own IP (BYOIP), allocate Elastic IP addresses from it, and associate them with the public NAT gateways. The third party sees the NAT gateways' public egress IP addresses; ensure all such addresses fall within the permitted CIDR. A merely assigns public addressing to public subnets and does not control private-instance NAT egress. C is invalid because ALBs do not accept static Elastic IP associations and are inbound-facing here. D uses Global Accelerator for inbound application traffic, not outbound API requests from private EC2 instances. The question assumes the customer owns the allowed prefix.",
   "wrongOptionsExplanation": "A. Associating a block to a VPC and enabling public IPs on subnets does not control the NAT source address. C. ALBs cannot be\nassigned Elastic IPs, and inbound ALB addresses are not the outbound source addresses. D. Global Accelerator provides static\ninbound IPs for users, not the outbound source address for calls to a vendor.",
   "plainWords": "A third party allows only one public CIDR block. The app will run behind an ALB with instances in private subnets that use NAT\ngateways for outbound calls.",
   "keyPoints": "• Source IP of outbound calls from private subnets = NAT gateway Elastic IP. • Need your existing IP range in AWS = BYOIP.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "B"
+   ],
+   "references": [
+    "https://aws.amazon.com/vpc/faqs/",
+    "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://aws.amazon.com/vpc/faqs/",
+    "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-question-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original text retained in snapshot. Answer unchanged; added AWS evidence and alternatives analysis."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "An AWS customer has a web application that runs on premises. The web application fetches data from a third-party API that is behind a firewall. The third party accepts only one public CIDR block in each client's allow list. The customer wants to migrate their web application to the AWS Cloud. The application will be hosted on a set of Amazon EC2 instances behind an Application Load Balancer (ALB) in a VPC. The ALB is located in public subnets. The EC2 instances are located in private subnets. NAT gateways provide internet access to the private subnets. How should a solutions architect ensure that the web application can continue to call the third-parly API after the migration?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Associate a block of customer-owned public IP addresses to the VPC. Enable public IP addressing for public subnets in the VPC."
+    },
+    {
+     "id": "B",
+     "text": "Register a block of customer-owned public IP addresses in the AWS account. Create Elastic IP addresses from the address block and assign them lo the NAT gateways in the VPC."
+    },
+    {
+     "id": "C",
+     "text": "Create Elastic IP addresses from the block of customer-owned IP addresses. Assign the static Elastic IP addresses to the ALB."
+    },
+    {
+     "id": "D",
+     "text": "Register a block of customer-owned public IP addresses in the AWS account. Set up AWS Global Accelerator to use Elastic IP addresses from the address block. Set the ALB as the accelerator endpoint."
+    }
+   ],
+   "answers": [
+    "B"
+   ]
+  }
  },
  {
   "id": 22,
   "domain": 4,
-  "stem": "An online gaming company needs to rehost its gaming platform on AWS. The company's gaming application requires high performance computing (HPC) processing. The application has a leaderboard that updates frequently. The company uses an Amazon EC2 compute optimized instance that runs Ubuntu to host a Node.js application to display the game. The company tracks the state of the application in an on-premises Redis instance. The company needs a migration strategy that optimizes application performance. Which solution will meet these requirements?",
+  "stem": "A gaming company is rehosting a compute-intensive application on AWS. It runs a Node.js application on Ubuntu EC2 compute-optimized instances and currently uses an on-premises Redis instance to maintain frequently updated leaderboards. Which architecture best preserves performance after migration?",
   "options": [
    {
     "id": "A",
@@ -1195,18 +1237,60 @@
    "C"
   ],
   "answerCount": 1,
-  "explanation": "Use compute optimized On-Demand instances (HPC-style CPU needs, stable game sessions) behind an ALB with Auto Scaling, and\nmove Redis to ElastiCache for Redis, which gives microsecond latency and sorted sets that are ideal for leaderboards, with almost no\ncode change.",
+  "explanation": "C is the best choice. Compute-optimized On-Demand EC2 instances support CPU-intensive application work with no Spot interruption risk, while ElastiCache for Redis OSS supports frequently updated leaderboards using sorted sets. A switches to memory-optimized Spot instances, mismatching compute requirements and introducing interruption risk. B uses OpenSearch for a workload already modeled in Redis and adds Spot interruption risk. D also changes the compute profile and replaces Redis with DynamoDB, requiring a leaderboard data-model change. Redis sorted sets support efficient score and ranking updates.",
   "wrongOptionsExplanation": "A. Memory optimized Spot instances are the wrong shape for compute-heavy HPC and Spot interruptions hurt live games. B.\nOpenSearch is a search and analytics engine, not a leaderboard store. D. Memory optimized instances do not match the compute\nneed and moving to DynamoDB requires redesigning the Redis logic.",
   "plainWords": "A game rehosted on EC2 needs HPC-class compute and a fast leaderboard that currently runs on an on-prem Redis instance.",
   "keyPoints": "• Leaderboard / sorted sets / existing Redis = ElastiCache for Redis. • Compute-heavy = compute optimized (C family).\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "C"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html",
+    "https://redis.io/docs/latest/develop/use-cases/leaderboard/"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html",
+    "https://redis.io/docs/latest/develop/use-cases/leaderboard/"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-question-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original text retained in snapshot. Answer unchanged; added AWS evidence and alternatives analysis."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "An online gaming company needs to rehost its gaming platform on AWS. The company's gaming application requires high performance computing (HPC) processing. The application has a leaderboard that updates frequently. The company uses an Amazon EC2 compute optimized instance that runs Ubuntu to host a Node.js application to display the game. The company tracks the state of the application in an on-premises Redis instance. The company needs a migration strategy that optimizes application performance. Which solution will meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create an Auto Scaling group of memory optimized Amazon EC2 Spot Instances behind an Application Load Balancer. Use an Amazon ElastiCache (Redis OSS) cluster to maintain the leaderboard."
+    },
+    {
+     "id": "B",
+     "text": "Create an Auto Scaling group of compute optimized Amazon EC2 Spot Instances behind an Application Load Balancer. Use an Amazon OpenSearch Service cluster to maintain the leaderboard."
+    },
+    {
+     "id": "C",
+     "text": "Create an Auto Scaling group of compute optimized Amazon EC2 On-Demand Instances behind an Application Load Balancer. Use an Amazon ElastiCache (Redis OSS) cluster to maintain the leaderboard."
+    },
+    {
+     "id": "D",
+     "text": "Create an Auto Scaling group of memory optimized Amazon EC2 On-Demand Instances behind an Application Load Balancer. Use an Amazon DynamoDB table to maintain the leaderboard."
+    }
+   ],
+   "answers": [
+    "C"
+   ]
+  }
  },
  {
   "id": 23,
   "domain": 2,
-  "stem": "An e-commerce company is revamping its IT infrastructure and is planning to use AWS services. The company's CIO has asked a solutions architect to design a simple, highly available, and loosely coupled order processing application. The application is responsible for receiving and processing orders before storing them in an Amazon DynamoDB table. The application has a sporadic traffic pattern and should be able to scale during marketing campaigns to process the orders with minimal delays. Which of the following is the MOST reliable approach to meet the requirements?",
+  "stem": "An e-commerce company needs a simple, highly available, loosely coupled order-processing application. Order traffic is sporadic, with spikes during marketing campaigns. Orders must be processed promptly and stored in DynamoDB. Which architecture is the most reliable?",
   "options": [
    {
     "id": "A",
@@ -1229,18 +1313,60 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "SQS durably stores orders and buffers spikes. Lambda polls the queue and scales automatically with the queue depth, then writes to\nDynamoDB. There are no servers to run, retries are built in, and a dead-letter queue catches poison messages.",
+  "explanation": "B is correct. SQS durably buffers incoming orders, and an SQS-triggered Lambda function scales processing before writing to DynamoDB. Configure a dead-letter queue, appropriate visibility timeout, retries, and idempotent writes because SQS and Lambda processing can be at least once. A couples intake and processing to EC2-hosted components. C uses Step Functions and ECS but adds orchestration complexity for straightforward asynchronous queue processing. D uses Kinesis and EC2, requiring shard/consumer capacity management without a demonstrated streaming requirement.",
   "wrongOptionsExplanation": "A. A database on EC2 plus EC2 processors is tightly coupled and needs scaling and patching. C. Step Functions as the intake point\nwith ECS tasks is more complex than needed for simple order queuing. D. Kinesis with EC2 consumers requires shard management\nand server operations for a sporadic workload.",
   "plainWords": "A simple, highly available, loosely coupled order pipeline with sporadic traffic and spikes during campaigns.",
   "keyPoints": "• Decouple + buffer + auto scale + minimal ops = SQS + Lambda. • Add a dead-letter queue for failed messages.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "B"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html",
+    "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-best-practices.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html",
+    "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-best-practices.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-question-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original text retained in snapshot. Answer unchanged; added AWS evidence and alternatives analysis."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "An e-commerce company is revamping its IT infrastructure and is planning to use AWS services. The company's CIO has asked a solutions architect to design a simple, highly available, and loosely coupled order processing application. The application is responsible for receiving and processing orders before storing them in an Amazon DynamoDB table. The application has a sporadic traffic pattern and should be able to scale during marketing campaigns to process the orders with minimal delays. Which of the following is the MOST reliable approach to meet the requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Receive the orders in an Amazon EC2-hosted database and use EC2 instances to process them."
+    },
+    {
+     "id": "B",
+     "text": "Receive the orders in an Amazon SQS queue and invoke an AWS Lambda function to processthem."
+    },
+    {
+     "id": "C",
+     "text": "Receive the orders using the AWS Step Functions program and launch an Amazon ECS container to process them."
+    },
+    {
+     "id": "D",
+     "text": "Receive the orders in Amazon Kinesis Data Streams and use Amazon EC2 instances to process them."
+    }
+   ],
+   "answers": [
+    "B"
+   ]
+  }
  },
  {
   "id": 24,
   "domain": 3,
-  "stem": "A company has multiple applications that run on Amazon EC2 instances in private subnets in a VPC. The company has deployed multiple NAT gateways in multiple Availability Zones for internet access. The company wants to block certain websites from being accessed through the NAT gateways. The company also wants to identify the internet destinations that the EC2 instances access. The company has already created VPC flow logs for the NAT gateways' elastic network interfaces. Which solution will meet these requirements?",
+  "stem": "A company runs EC2 applications in private VPC subnets that use NAT gateways across multiple Availability Zones for internet access. It must identify outbound internet destinations and block access to selected websites. VPC Flow Logs already capture traffic on the NAT gateways' network interfaces. Which solution meets these requirements?",
   "options": [
    {
     "id": "A",
@@ -1263,13 +1389,55 @@
    "A"
   ],
   "answerCount": 1,
-  "explanation": "Flow Logs record the source and destination IPs, which you can query with CloudWatch Logs Insights to see destinations. AWS\nNetwork Firewall can filter outbound traffic by domain name or IP inside the VPC, so it can block unwanted websites.",
+  "explanation": "A is the best offered answer. CloudWatch Logs Insights can analyze NAT interface VPC Flow Logs to identify destination IP addresses, while AWS Network Firewall can filter outbound traffic using domain-based or stateful rules when routed through firewall endpoints. Important caveat: VPC Flow Logs do not record domain names or URLs; add Network Firewall logs, DNS logs, or other application-layer telemetry to identify websites by name. B and D incorrectly use AWS WAF, which protects HTTP(S) applications and is not a general outbound NAT egress filter. C and D rely on CloudWatch byte-count metrics that cannot identify destinations. Firewall routing and AZ-aware deployment are required.",
   "wrongOptionsExplanation": "B. AWS WAF protects HTTP traffic to CloudFront, ALB or API Gateway. It does not filter outbound traffic from a NAT gateway. C.\nCloudWatch NAT metrics show byte totals, not the destinations. D. Same metrics problem, and WAF is the wrong place to block\negress.",
   "plainWords": "You need to identify which internet destinations EC2 instances contact through NAT gateways and block specific sites. VPC Flow Logs\nalready exist.",
   "keyPoints": "• Outbound domain filtering = Network Firewall (or DNS Firewall for DNS lookups). • WAF = inbound web requests. Flow Logs = who\ntalked to whom.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "A"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-outbound-network-traffic/vpc-security-requirements.html",
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/use-network-firewall-to-capture-the-dns-domain-names-from-the-server-name-indication-sni-for-outbound-traffic.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-outbound-network-traffic/vpc-security-requirements.html",
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/use-network-firewall-to-capture-the-dns-domain-names-from-the-server-name-indication-sni-for-outbound-traffic.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-question-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original text retained in snapshot. Answer unchanged; added AWS evidence and alternatives analysis."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "A company has multiple applications that run on Amazon EC2 instances in private subnets in a VPC. The company has deployed multiple NAT gateways in multiple Availability Zones for internet access. The company wants to block certain websites from being accessed through the NAT gateways. The company also wants to identify the internet destinations that the EC2 instances access. The company has already created VPC flow logs for the NAT gateways' elastic network interfaces. Which solution will meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Use Amazon CloudWatch Logs Insights to query the logs and determine the internet destinations that the EC2 instances communicate with. Use AWS Network Firewall to blockthe websites."
+    },
+    {
+     "id": "B",
+     "text": "Use Amazon CloudWatch Logs Insights to query the logs and determine the internet destinations that the EC2 instances communicate with. Use AWS WAF to block the websites."
+    },
+    {
+     "id": "C",
+     "text": "Use the BytesInFromSource and BytesInFromDestination Amazon CloudWatch metrics to determine the internet destinations that the EC2 instances communicate with. Use AWS Network Firewall to block the websites."
+    },
+    {
+     "id": "D",
+     "text": "Use the BytesInFromSource and BytesInFromDestination Amazon CloudWatch metrics to determine the internet destinations that the EC2 instances communicate with. Use AWS WAF to block the websites."
+    }
+   ],
+   "answers": [
+    "A"
+   ]
+  }
  },
  {
   "id": 25,
