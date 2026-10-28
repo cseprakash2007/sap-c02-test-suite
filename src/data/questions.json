@@ -2182,7 +2182,27 @@
    "references": [
     "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html"
    ],
-   "auditNote": "B invalid: CodeCommit is not an AWS Backup supported resource. C uses push event to CodeBuild and copies archive to S3 in another Region."
+   "auditNote": "B invalid: CodeCommit is not an AWS Backup supported resource. C uses push event to CodeBuild and copies archive to S3 in another Region.",
+   "externalQuestionLinks": [
+    "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=71",
+    "https://www.freecram.net/question/Amazon.SAP-C02.v2023-12-13.q142/a-company-uses-an-aws-codecommit-repository-the-company-must-store-a-backup-copy-of-the-data-that-is"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html",
+    "https://github.com/aws-samples/aws-codecommit-serverless-backup"
+   ],
+   "externalSiteAnswers": [
+    "B",
+    "B"
+   ],
+   "independentTechnicalConclusion": "C",
+   "crossVerificationStatus": "conflict-external-sites-vs-aws-docs",
+   "answerReason": "Two third-party sites list B, but official AWS Backup supported resources do not include CodeCommit. AWS sample shows CodeBuild exporting CodeCommit repository archives to S3; therefore C is technically implementable.",
+   "wrongOptionsReason": {
+    "A": "Elastic Disaster Recovery is server replication, not CodeCommit repository backup.",
+    "B": "AWS Backup does not support CodeCommit repositories.",
+    "D": "No native CodeCommit snapshot operation is provided for the described Step Functions workflow."
+   }
   },
   "answerStatus": "corrected-aws-docs"
  },
