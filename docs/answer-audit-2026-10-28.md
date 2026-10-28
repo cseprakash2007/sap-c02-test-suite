@@ -44,6 +44,12 @@ Official exam guide: https://docs.aws.amazon.com/aws-certification/latest/soluti
 
 All six answer keys retained pending stronger independent verification. AWS docs: https://docs.aws.amazon.com/sns/latest/dg/sns-cross-region-delivery.html ; https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html ; https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
 
+## Batch 3 — external site comparisons and links (2026-10-28)
+
+- **Q95**: [FreeCram says B](https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-health-insurance-company-stores-personally-identifiable-information-pii-in-an-amazon-s3-bucket-the); [FreePDFDumps says D](https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=28); [Certsmania says D](https://www.certsmania.com/pdf/amazon-web-services-test-prep-material-pack-sap-c02-passing-score-by-binod.pdf). AWS [SSE-C](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html) vs [SSE-KMS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html). Disputed; stored D unchanged.
+- **Q122**: [CertEnsure](https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html), [CertsTest](https://www.certstest.com/test/SAP-C02?page=8), and [FreePDFDumps](https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=15) all show A+B+D; [AWS vault notifications](https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html) reveal D's wording problem.
+- **Q16**: [AWS retirement announcement](https://repost.aws/questions/QUhcMVoChXRm2HLi8F-yih1g/announcement-support-for-aurora-serverless-v1-ending-soon) confirms v1 retirement. External exam-question match not yet found.
+
 ## Question inventory
 
 | ID | Domain in bank | Stored answer(s) | Current status | Existing warning |
