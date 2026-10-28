@@ -59,6 +59,18 @@ All six answer keys retained pending stronger independent verification. AWS docs
 
 Every edited entry includes `originalQuestionSnapshot` preserving original stem, options, and source answers. The edits are corrected **study wording**, not independently restored original exam text. Do not mark Q408 fully verified.
 
+## Batch 5 — detailed explanations and wording repair (2026-10-28)
+
+| ID | Change | Verification status |
+|---|---|---|
+| Q12 | Explain why B+C+E overlaps; SCP A conditional; original snapshot retained | Ambiguous source key; no new answer asserted |
+| Q94 | Rewrite stem for readability while retaining original and A+C | Corrected study wording |
+| Q95 | Full option-by-option rationale and proposed corrected B (not applied to options) | No fully correct source option; D retained as source key |
+| Q103 | Explain why B versus D cost comparison is disputed | Source B retained, not independently resolved |
+| Q190 | Fix MySQL/grammar; explain each choice and missing detailed cost estimator | Source A+D+F retained |
+
+Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic-cross-account.html), [IAM trust policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_update-role-trust-policy.html), [Savings Plans](https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html), [Migration Discovery](https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html).
+
 ## Question inventory
 
 | ID | Domain in bank | Stored answer(s) | Current status | Existing warning |
