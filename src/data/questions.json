@@ -496,7 +496,7 @@
  {
   "id": 13,
   "domain": 1,
-  "stem": "A company wants to use a third-party software-as-a-service (SaaS) application. The third- party SaaS application is consumed through several API calls. The third-party SaaS application also runs on AWS inside a VPC. The company will consume the third-party SaaS application from inside a VPC. The company has internal security policies that mandate the use of private connectivity that does not traverse the internet. No resources that run in the company VPC are allowed to be accessed from outside the company’s VPC. All permissions must conform to the principles of least privilege. Which solution meets these requirements?",
+  "stem": "A company plans to consume a third-party software-as-a-service (SaaS) application through APIs. The SaaS provider hosts the application in an AWS VPC, and the company will call it from its own VPC. Security policies require private connectivity without internet traversal, prohibit external access to resources in the company's VPC, and require least-privilege permissions. Which solution meets these requirements?",
   "options": [
    {
     "id": "A",
@@ -504,11 +504,11 @@
    },
    {
     "id": "B",
-    "text": "Create an AWS Site-to-Site VPN connection between the third-party SaaS application and thecompany VPC. Configure network ACLs to limit access across the VPN tunnels."
+    "text": "Create an AWS Site-to-Site VPN connection between the third-party SaaS provider and the company VPC. Configure network ACLs to limit access across the VPN tunnels."
    },
    {
     "id": "C",
-    "text": "Create a VPC peering connection between the third-party SaaS application and the company VPUpdate route tables by adding the needed routes for the peering connection."
+    "text": "Create a VPC peering connection between the third-party SaaS provider VPC and the company VPC. Update the route tables with the required peering routes."
    },
    {
     "id": "D",
@@ -519,26 +519,68 @@
    "A"
   ],
   "answerCount": 1,
-  "explanation": "The SaaS provider publishes a PrivateLink endpoint service. You create an interface VPC endpoint in your VPC that connects to it and\ncontrol it with a security group. Traffic stays on the AWS network, connectivity is one-way (you call them), and nothing in your VPC\nbecomes reachable from outside.",
+  "explanation": "A is correct. The SaaS provider publishes an AWS PrivateLink endpoint service, and the company creates an interface VPC endpoint as the service consumer. An endpoint security group limits permitted connections; no inbound network path into the company's VPC is exposed to the provider. B is less appropriate: Site-to-Site VPN uses tunnels and adds operational complexity, while the question explicitly asks for AWS-private SaaS access. C uses peering and routing between VPCs, granting broader network-level connectivity than a service-specific endpoint. D reverses the provider and consumer roles: it would let the SaaS provider connect to a service in the company's VPC. Source answer A retained.",
   "wrongOptionsExplanation": "B. A VPN to a SaaS provider is not how SaaS on AWS is consumed and still opens broader network access. C. VPC peering exposes\nwhole networks both ways and fails with overlapping CIDRs, violating least privilege. D. This reverses the roles: the provider would\nconnect into your VPC, which violates the rule that your resources cannot be reached from outside.",
   "plainWords": "You must call a SaaS API that runs in its own VPC, privately without the internet, and without exposing anything in your VPC to the\noutside, using least privilege.",
   "keyPoints": "• One-way private access to a service = PrivateLink interface endpoint. • The consumer creates the interface endpoint; the provider\ncreates the endpoint service.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-verified-study-wording",
+   "originalAnswers": [
+    "A"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html",
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html",
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question and options preserved in originalQuestionSnapshot. AWS technical documentation checked; no exact third-party question-page comparison completed for this batch."
+  },
+  "answerStatus": "aws-docs-verified-study-wording",
+  "originalQuestionSnapshot": {
+   "stem": "A company wants to use a third-party software-as-a-service (SaaS) application. The third- party SaaS application is consumed through several API calls. The third-party SaaS application also runs on AWS inside a VPC. The company will consume the third-party SaaS application from inside a VPC. The company has internal security policies that mandate the use of private connectivity that does not traverse the internet. No resources that run in the company VPC are allowed to be accessed from outside the company’s VPC. All permissions must conform to the principles of least privilege. Which solution meets these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create an AWS PrivateLink interface VPC endpoint. Connect this endpoint to the endpoint service that the third-party SaaS application provides. Create a security group to limit the access to the endpoint. Associate the security group with the endpoint."
+    },
+    {
+     "id": "B",
+     "text": "Create an AWS Site-to-Site VPN connection between the third-party SaaS application and thecompany VPC. Configure network ACLs to limit access across the VPN tunnels."
+    },
+    {
+     "id": "C",
+     "text": "Create a VPC peering connection between the third-party SaaS application and the company VPUpdate route tables by adding the needed routes for the peering connection."
+    },
+    {
+     "id": "D",
+     "text": "Create an AWS PrivateLink endpoint service. Ask the third-party SaaS provider to create an interface VPC endpoint for this endpoint service. Grant permissions for the endpoint service to the specific account of the third-party SaaS provider."
+    }
+   ],
+   "answers": [
+    "A"
+   ]
+  }
  },
  {
   "id": 14,
   "domain": 2,
-  "stem": "A company has an application in the AWS Cloud. The application runs on a fleet of 20 Amazon EC2 instances. The EC2 instances are persistent and store data on multiple attached Amazon Elastic Block Store (Amazon EBS) volumes. The company must maintain backups in a separate AWS Region. The company must be able to recover the EC2 instances and their configuration within I business day, with loss of no more than I day's worth of data. The company has limited staff and needs a backup solution that optimizes operational efficiency and cost. The company already has created an AWS CloudFormation template that can deploy the required network configuration in a secondary Region. Which solution will meet these requirements?",
+  "stem": "A company runs an application on 20 persistent Amazon EC2 instances with multiple attached Amazon EBS volumes. Backups must be stored in a second AWS Region. Recovery of the instances and their configuration must be possible within one business day, with no more than one day's data loss. The company has limited operations staff and already has a CloudFormation template for the network infrastructure in the recovery Region. Which solution best meets the requirements with minimal operational overhead and cost?",
   "options": [
    {
     "id": "A",
-    "text": "Create a second CloudFormation template that can recreate the EC2 instances in the secondary Region. Run daily multivolume snapshots by using AWS Systems Manager Automation runbooks. Copy the snapshots to the secondary Region. In the event of a failure, launch the CloudFormation templates, restore the EBS volumes from snapshots, and transfer usage to the secondary Region."
+    "text": "Create another CloudFormation template to recreate the EC2 instances in the secondary Region. Run daily multi-volume snapshots using AWS Systems Manager Automation runbooks, copy the snapshots to the secondary Region, and use the templates and snapshots to recover."
    },
    {
     "id": "B",
-    "text": "Use Amazon Data Lifecycle Manager (Amazon DLM) to create daily multivolume snapshots of the EBS volumes. In the event of a failure, launch theCloudFormation template and use Amazon DLM to restore the EBS volumes and transfer usage to the secondary Region."
+    "text": "Use Amazon Data Lifecycle Manager (Amazon DLM) to create daily multi-volume EBS snapshots. In a disaster, deploy the CloudFormation template and use DLM to restore the EBS volumes and transfer traffic to the secondary Region."
    },
    {
     "id": "C",
@@ -546,25 +588,67 @@
    },
    {
     "id": "D",
-    "text": "Deploy EC2 instances of the same size and configuration to the secondary Region. Configure AWS DataSync daily to copy data from the primary Region to the secondary Region. In the event of a failure, launch the CloudFormation template and transfer usage to the secondaryRegion."
+    "text": "Deploy equivalent EC2 instances in the secondary Region. Use AWS DataSync daily to copy data from the primary Region. During a disaster, deploy the CloudFormation template and transfer traffic to the secondary Region."
    }
   ],
   "answers": [
    "C"
   ],
   "answerCount": 1,
-  "explanation": "AWS Backup supports EC2 backups (instance configuration plus all attached EBS volumes), scheduled plans, and automatic\ncross-Region copy to another vault. One managed service covers backup, copy and restore with the lowest operational effort.",
+  "explanation": "C is correct. AWS Backup can schedule daily EC2 backups, automatically copy recovery points to a backup vault in another Region, and restore EC2 instances with root and attached EBS data volumes. A could be implemented but requires custom runbook/template orchestration. B is incomplete: DLM manages snapshot lifecycles, not the described EC2 instance recovery and traffic transfer workflow. D requires duplicate running instances and custom data synchronization, increasing cost and effort. Important limitation: AWS Backup does not preserve every instance setting (for example, launch user data); recovery must be tested to establish the one-business-day RTO. Source answer C retained.",
   "wrongOptionsExplanation": "A. Custom Systems Manager runbooks and snapshot copy scripts must be built and maintained. B. Data Lifecycle Manager handles\nEBS snapshots only and does not capture the instance configuration or provide the same centralized restore. D. Running a second\nfleet and using DataSync is expensive and DataSync does not copy EBS volumes.",
   "plainWords": "20 EC2 instances with many EBS volumes need daily backups copied to another Region, with restore of instances and configuration\ninside a day and minimal admin effort.",
   "keyPoints": "• Centralized backup policies, cross-Region and cross-account copy = AWS Backup. • RTO of one day and RPO of one day = backup\nand restore strategy.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-verified-study-wording",
+   "originalAnswers": [
+    "C"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-ec2.html",
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/cross-region-backup.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-ec2.html",
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/cross-region-backup.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question and options preserved in originalQuestionSnapshot. AWS technical documentation checked; no exact third-party question-page comparison completed for this batch."
+  },
+  "answerStatus": "aws-docs-verified-study-wording",
+  "originalQuestionSnapshot": {
+   "stem": "A company has an application in the AWS Cloud. The application runs on a fleet of 20 Amazon EC2 instances. The EC2 instances are persistent and store data on multiple attached Amazon Elastic Block Store (Amazon EBS) volumes. The company must maintain backups in a separate AWS Region. The company must be able to recover the EC2 instances and their configuration within I business day, with loss of no more than I day's worth of data. The company has limited staff and needs a backup solution that optimizes operational efficiency and cost. The company already has created an AWS CloudFormation template that can deploy the required network configuration in a secondary Region. Which solution will meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create a second CloudFormation template that can recreate the EC2 instances in the secondary Region. Run daily multivolume snapshots by using AWS Systems Manager Automation runbooks. Copy the snapshots to the secondary Region. In the event of a failure, launch the CloudFormation templates, restore the EBS volumes from snapshots, and transfer usage to the secondary Region."
+    },
+    {
+     "id": "B",
+     "text": "Use Amazon Data Lifecycle Manager (Amazon DLM) to create daily multivolume snapshots of the EBS volumes. In the event of a failure, launch theCloudFormation template and use Amazon DLM to restore the EBS volumes and transfer usage to the secondary Region."
+    },
+    {
+     "id": "C",
+     "text": "Use AWS Backup to create a scheduled daily backup plan for the EC2 instances. Configure the backup task to copy the backups to a vault in the secondary Region. In the event of a failure, launch the CloudFormation template, restore the instance volumes and configurations from the backup vault, and transfer usage to the secondary Region."
+    },
+    {
+     "id": "D",
+     "text": "Deploy EC2 instances of the same size and configuration to the secondary Region. Configure AWS DataSync daily to copy data from the primary Region to the secondary Region. In the event of a failure, launch the CloudFormation template and transfer usage to the secondaryRegion."
+    }
+   ],
+   "answers": [
+    "C"
+   ]
+  }
  },
  {
   "id": 15,
   "domain": 2,
-  "stem": "A company runs a video-on-demand (VOD) content streaming application on AWS. The application includes an Amazon CloudFront distribution that uses the default cache behavior. The distribution has a single origin that points to an Amazon S3 bucket that contains the video files. The company wants to improve the application’s reliability. The company creates a second S3 bucket and configures S3 Cross-Region Replication (CRR) between the S3 buckets. The company must implement high availability for the CloudFront deployment and must ensure that failover begins within 1 second. Which change to the current architecture will meet these requirements with the LEAST operational overhead?",
+  "stem": "A video-on-demand application serves videos through an Amazon CloudFront distribution with a default cache behavior and one Amazon S3 origin. A second S3 bucket has been configured for Cross-Region Replication (CRR). The company needs CloudFront origin failover to start as quickly as possible, targeting one second after a connection failure, with minimal operational overhead. Which change best meets these requirements?",
   "options": [
    {
     "id": "A",
@@ -587,13 +671,55 @@
    "C"
   ],
   "answerCount": 1,
-  "explanation": "Add the second bucket as another origin in the same distribution, create an origin group with primary and secondary origins, and set\nthe default cache behavior to use the origin group. Lowering the origin connection timeout and attempts to 1 makes CloudFront\nswitch to the secondary almost immediately when the primary fails.",
+  "explanation": "C is the best offered answer. Add the replicated S3 bucket as a second origin, create an origin group with primary and secondary origins, and configure the default cache behavior to use the group. Set the primary origin connection timeout to 1 second and connection attempts to 1. A incorrectly tries to group separate CloudFront distributions rather than origins. B creates an origin group but does not attach it to the cache behavior; response timeout is not the right lever for standard S3 origins. D introduces unnecessary Lambda automation and EventBridge cannot be scheduled every second. Qualification: the 1-second setting bounds a connection attempt; it does not guarantee all failover scenarios complete within one second. For S3 origins, origin response timeout is not configurable; failover depends on connection errors and configured status codes. Source answer C retained.",
   "wrongOptionsExplanation": "A. Origin groups contain origins, not distributions, and Route 53 health checks cannot achieve sub-second failover. B. It forgets to\npoint the cache behavior to the origin group, and it changes the response timeout instead of the connection timeout and attempts. D.\nA Lambda polling every second to rewrite the distribution is fragile, costly and slower than the built-in origin failover.",
   "plainWords": "CloudFront serves videos from one S3 bucket. A second bucket is replicated with CRR. Failover must start within about 1 second with\nthe least operational work.",
   "keyPoints": "• CloudFront high availability for origins = origin group with primary and secondary, and the behavior must use it. • Fast failover\ntuning = connection timeout and connection attempts.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-verified-study-wording",
+   "originalAnswers": [
+    "C"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html",
+    "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorS3Origin.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html",
+    "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorS3Origin.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question and options preserved in originalQuestionSnapshot. AWS technical documentation checked; no exact third-party question-page comparison completed for this batch."
+  },
+  "answerStatus": "aws-docs-verified-study-wording",
+  "originalQuestionSnapshot": {
+   "stem": "A company runs a video-on-demand (VOD) content streaming application on AWS. The application includes an Amazon CloudFront distribution that uses the default cache behavior. The distribution has a single origin that points to an Amazon S3 bucket that contains the video files. The company wants to improve the application’s reliability. The company creates a second S3 bucket and configures S3 Cross-Region Replication (CRR) between the S3 buckets. The company must implement high availability for the CloudFront deployment and must ensure that failover begins within 1 second. Which change to the current architecture will meet these requirements with the LEAST operational overhead?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create a second CloudFront distribution that uses the second S3 bucket as a single origin. Create an origin group. Add both distributions to the origin group. Set the original distribution as the primary distribution. Set the new distribution as the secondary distribution. Create an Amazon Route 53 health check to monitor the health of the primary distribution and secondary distribution every second."
+    },
+    {
+     "id": "B",
+     "text": "Create a new origin in the existing CloudFront distribution. Specify the second S3 bucket as the new origin. Create an origin group. Add the original origin as the primary origin. Add the new origin as the secondary origin. Set the origin response timeout value to 1. Set the origin connection attempts value to 1."
+    },
+    {
+     "id": "C",
+     "text": "Create a new origin in the existing CloudFront distribution. Specify the second S3 bucket as the new origin. Create an origin group. Add the original origin as the primary origin. Add the new origin as the secondary origin. Update the default cache behavior to use the origin group. Set the origin connection timeout value to 1. Set the origin connection attempts value to 1."
+    },
+    {
+     "id": "D",
+     "text": "Create a new origin in the existing CloudFront distribution. Specify the second S3 bucket as the new origin. Create an AWS Lambda function to monitor the health of the original origin. Program the Lambda function to update the CloudFront distribution and promote the secondary origin to primary if a health check fails. Create an Amazon EventBridge scheduled rule to invoke the Lambda function every second."
+    }
+   ],
+   "answers": [
+    "C"
+   ]
+  }
  },
  {
   "id": 16,
