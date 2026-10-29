@@ -924,3 +924,10 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - Aurora Global Database: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html ; AWS Backup Vault Lock: https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html .
 - A multivalue routing not failover, regional ECR dependency; B omits tamper protection and S3 recovery; C ECR replication, ECS secondary, Aurora global, compliance vault, S3 backup/replication, Route 53 failover; D governance mode removable and geolocation not failover.
 - Warnings: source typo 'secondaryrecord'; S3 PITR ambiguous (versioning versus continuous AWS Backup); asynchronous CRR does not guarantee 5-minute RPO; compliance vault lock does not automatically protect live S3 objects; RTO 15 minutes requires health checks, failover orchestration, tests.
+
+
+### Domain 4 Q202 — single-answer 34/139 (2026-10-29)
+- **Answer B AWS-doc verified**: EKS managed node groups can use custom host AMIs via EC2 launch templates to install proprietary security agents, while AWS manages Kubernetes control plane and node lifecycle; DMS to RDS MySQL Multi-AZ.
+- AWS references: https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html ; https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html .
+- A feasible host agent but higher self-managed orchestration overhead; C Lambda host agents unavailable; D **invalid** because Fargate cannot use a custom host AMI.
+- Caveats: custom AMI bootstrapping, node patching remain customer responsibilities; Multi-AZ standby is not a readable replica. Exact independent exam-site match **not confirmed**. Original wording/options preserved.

@@ -8739,13 +8739,33 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED source answer B. EKS managed node groups support custom AMIs through EC2 launch templates, allowing proprietary host-level security agents and managed node lifecycle. Deploy existing Docker workloads as Kubernetes pods; migrate MySQL via AWS DMS to managed RDS MySQL with Multi-AZ standby. AWS EKS launch template custom AMI documentation: https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html ; https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html .",
+    "wrongOptionsExplanation": "A: Agent on custom EC2 AMI is feasible but self-managed container platform/node orchestration adds overhead; Aurora read replica is not a substitute for Multi-AZ HA. B: CORRECT; EKS managed node groups custom AMI + RDS MySQL Multi-AZ, DMS migration. C: Lambda container images do not allow installing proprietary software on AWS-managed underlying host nodes, and moving APIs to Lambda may require redesign. D: INVALID; ECS Fargate does not support specifying a custom EC2 host AMI, so cannot satisfy host-installed agent requirement.",
+    "plainWords": "Keep the required security software installed on the worker machines, but let AWS manage Kubernetes and the MySQL high-availability database.",
+    "keyPoints": "EKS managed node groups support custom AMIs via launch templates; custom image must bootstrap/join correctly and customer patches it. Fargate does not permit custom host AMIs. Lambda image packaging is not host customization. RDS Multi-AZ standby differs from readable replicas; AWS DMS migrates data.",
+    "sourceWarning": "No independently verified exact third-party exam-site match found in this pass; answer B independently validated against AWS EKS docs. EKS custom AMI must be configured in a launch template and properly bootstrapped; patch responsibility remains with customer. Multi-AZ standby is not a readable replica; original source-replica topology does not necessarily imply read scaling. Choice D proposes impossible Fargate custom AMI.",
+    "review": {
+      "status": "aws-doc-verified-source-key-b-external-exact-match-pending",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 34,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html",
+        "https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html"
+      ],
+      "externalExactMatch": null,
+      "defects": [
+        "D incorrectly assumes Fargate supports custom host AMIs",
+        "RDS Multi-AZ standby does not replace read-scaling replica",
+        "Custom AMI bootstrapping and customer patching omitted"
+      ],
+      "notes": "EKS AWS docs independently validate key choice. No exact third-party exam-site match verified; do not claim external corroboration."
+    },
+    "answerStatus": "aws-verified-b-external-match-pending"
   },
   {
     "id": 203,
