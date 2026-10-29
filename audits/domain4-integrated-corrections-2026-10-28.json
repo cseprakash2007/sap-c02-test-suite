@@ -1,0 +1,68 @@
+{
+  "status": "proposed-not-merged-into-question-bank",
+  "corrections": [
+    {
+      "id": 44,
+      "from": [
+        "D"
+      ],
+      "to": [
+        "B"
+      ]
+    },
+    {
+      "id": 92,
+      "from": [
+        "C"
+      ],
+      "to": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": 347,
+      "from": [
+        "B"
+      ],
+      "to": [
+        "D"
+      ]
+    },
+    {
+      "id": 487,
+      "from": [
+        "A"
+      ],
+      "to": [
+        "B"
+      ]
+    },
+    {
+      "id": 654,
+      "from": [
+        "C"
+      ],
+      "to": [
+        "B"
+      ]
+    }
+  ],
+  "notGradable": [
+    249,
+    346,
+    636
+  ],
+  "ocrCorrections": [
+    92,
+    208,
+    244,
+    578
+  ],
+  "references": [
+    "https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html",
+    "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html",
+    "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.Cross-Account.html"
+  ],
+  "note": "A full corrected 674-question JSON was produced locally. React src/data/questions.json not updated. Third-party exam sites not checked."
+}
