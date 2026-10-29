@@ -8963,13 +8963,35 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED C. SQL Server Always On to RDS for MySQL is a heterogeneous engine migration. First convert source SQL Server schema and SQL objects to MySQL-compatible equivalents using AWS Schema Conversion Tool (SCT) or the newer recommended DMS Schema Conversion; then use AWS DMS to move data and optionally replicate changes to minimize downtime. AWS SQL Server to MySQL walkthrough: https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-sql-server-mysql.html ; https://aws.amazon.com/documentation-overview/dms/ .",
+    "wrongOptionsExplanation": "A: SQL Server native backup/restore cannot restore directly into a different engine (MySQL); schema and data conversions required. B: Snowball Edge transports bulk data to S3 but neither converts SQL Server schema nor makes SQL Server BULK INSERT a MySQL import solution. C: CORRECT; AWS SCT converts schemas and code, AWS DMS migrates rows/CDC to RDS MySQL. D: DataSync is file/object transfer, not heterogeneous relational database migration; SQL Server BULK INSERT is not a valid MySQL conversion path.",
+    "plainWords": "SQL Server and MySQL speak different SQL dialects. Convert the database structure first with SCT/DMS Schema Conversion, then transfer the actual records with AWS DMS.",
+    "keyPoints": "Heterogeneous DB migration = schema/code conversion + data migration. AWS SCT (legacy downloadable tool) or recommended DMS Schema Conversion for schema; AWS DMS full load plus CDC for data. Validate SQL Server Always On source/CDC setup, unsupported stored procedures, app SQL compatibility and RDS MySQL HA.",
+    "sourceWarning": "Option C has typo 'MeSQL' (intended MySQL); original preserved. AWS now recommends managed DMS Schema Conversion rather than legacy AWS SCT for new projects, but SCT remains supported/documented, so source answer C is valid. Exact independent third-party exam question match not confirmed. Business-critical migration requires CDC prerequisites, testing and target HA, none specified.",
+    "review": {
+      "status": "aws-doc-verified-source-key-c-external-exact-match-pending",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 35,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "C"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-sql-server-mysql.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_GettingStarted.SCT.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_SchemaConversion.html",
+        "https://aws.amazon.com/documentation-overview/dms/"
+      ],
+      "externalExactMatch": null,
+      "defects": [
+        "MeSQL typo in C",
+        "SCT is now legacy versus AWS-recommended DMS Schema Conversion",
+        "Always On/CDC prerequisites and application compatibility not specified"
+      ],
+      "notes": "AWS technical verification plus AWS sample; no exact independent third-party exam site corroboration."
+    },
+    "answerStatus": "aws-verified-c-external-match-pending"
   },
   {
     "id": 209,

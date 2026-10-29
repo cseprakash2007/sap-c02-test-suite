@@ -931,3 +931,9 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - AWS references: https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html ; https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html .
 - A feasible host agent but higher self-managed orchestration overhead; C Lambda host agents unavailable; D **invalid** because Fargate cannot use a custom host AMI.
 - Caveats: custom AMI bootstrapping, node patching remain customer responsibilities; Multi-AZ standby is not a readable replica. Exact independent exam-site match **not confirmed**. Original wording/options preserved.
+
+
+### Domain 4 Q208 — single-answer 35/139 (2026-10-29)
+- **Answer C AWS-doc verified**: SQL Server Always On -> RDS for MySQL heterogeneous migration uses schema conversion (SCT or DMS Schema Conversion) followed by AWS DMS data migration/CDC. AWS walkthrough: https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-sql-server-mysql.html ; overview: https://aws.amazon.com/documentation-overview/dms/ .
+- A incompatible SQL Server native restore into MySQL; B Snowball/S3 transport does not convert schema and SQL Server BULK INSERT is wrong target mechanism; C correct; D DataSync files/S3 cannot convert relational engine.
+- Defects: option C 'MeSQL' typo preserved; AWS recommends managed DMS Schema Conversion over legacy SCT now (https://docs.aws.amazon.com/dms/latest/userguide/CHAP_GettingStarted.SCT.html); business-critical migration requires SQL Server Always On CDC checks, code conversion, validation and HA. **Exact third-party exam-site match not verified**.
