@@ -8648,13 +8648,36 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "SOURCE KEY C, best of four: ECR cross-Region replication for images, secondary ECS Fargate, Aurora Global Database for fast low-lag database recovery, AWS Backup Vault Lock compliance mode for immutable backup recovery points, S3 recovery/replication configuration, and Route 53 failover records. AWS Aurora typically replicates within seconds and can recover in minutes, but stated RPO 5m/RTO 15m are targets, not guaranteed merely by selecting services. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html ; https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html",
+    "wrongOptionsExplanation": "A: Multivalue Route 53 answer routing is not a primary/secondary failover policy; regional ECR dependency and weaker database strategy. B: Route 53 failover is right but omits tamper-resistant backup configuration and S3 cross-Region recovery. C: BEST—ECR replication, ECS secondary, Aurora Global Database, Backup Vault Lock compliance, S3 backup/recovery, Route 53 failover; additional operational controls are required to actually meet RPO/RTO. D: Governance vault lock is removable by authorized users, less suitable for anti-tamper; geolocation routing is not disaster failover; S3 replication is missing.",
+    "plainWords": "Prepare a working copy of the ecommerce site in another Region, replicate database and images, protect backups from tampering, and direct users to the backup Region when primary is unhealthy.",
+    "keyPoints": "Aurora Global Database RPO typically seconds, RTO minutes with planned/tested failover. Compliance-mode Backup Vault Lock becomes immutable after grace period, unlike governance mode. ECR cross-Region replication removes image pull dependency. Route 53 failover needs health checks. S3 CRR asynchronous; S3 versioning/Object Lock/backup recovery point configuration and testing needed.",
+    "sourceWarning": "SOURCE QUALITY: No independently confirmed exact external question match located during this review; source key C retained based on AWS documentation. Option C typo 'secondaryrecord'. S3 'enable point-in-time recovery' is imprecise: S3 versioning/AWS Backup continuous backups are distinct mechanisms. S3 CRR does not guarantee 5-minute RPO; consider replication metrics/RTC. Backup Vault Lock protects recovery points, not necessarily live S3 objects; Object Lock may be needed. Aurora Global Database, DNS and app readiness do not alone guarantee RTO 15 minutes; drill and automate.",
+    "review": {
+      "status": "aws-doc-verified-source-key-c-external-exact-match-not-found",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 33,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "C"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html",
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html"
+      ],
+      "externalExactMatch": null,
+      "defects": [
+        "S3 point-in-time recovery wording is underspecified",
+        "S3 asynchronous replication does not guarantee 5-minute RPO",
+        "Vault Lock immutability applies to backup recovery points, not automatically live S3 objects",
+        "15-minute RTO requires operational design and drills",
+        "Option C 'secondaryrecord' typo"
+      ],
+      "notes": "Retained original question/options. AWS architecture supports C as strongest answer. No exact independent third-party match verified; do not label external verification complete."
+    },
+    "answerStatus": "aws-verified-c-external-match-pending-caveats"
   },
   {
     "id": 201,

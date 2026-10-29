@@ -917,3 +917,10 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - ECS on EC2 consolidates Java/Node.js containers, supports multi-hour jobs and task/cluster scaling. AWS: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-auto-scaling.html and https://docs.aws.amazon.com/AmazonECS/latest/developerguide/managed-scaling-behavior.html .
 - A cannot accommodate uninterrupted several-hour processing: standard Lambda 15 min; eligible Lambda Managed Instances async/ESM 90 min since September 2026 (https://aws.amazon.com/blogs/compute/announcing-90-minute-function-timeout-on-aws-lambda-managed-instances/). C per-app Beanstalk has inefficient baseline; D reserves peak fleet for 3 years.
 - Source typos preserved ('tor', punctuation); 75% memory target is not guaranteed optimal, recommend ECS capacity providers, binpack and scheduled task runs where applicable.
+
+
+### Domain 4 Q200 — single-answer 33/139 (2026-10-29)
+- Source answer **C** best-supported by AWS docs; no exact third-party exam match independently confirmed. Original question and options retained.
+- Aurora Global Database: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html ; AWS Backup Vault Lock: https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html .
+- A multivalue routing not failover, regional ECR dependency; B omits tamper protection and S3 recovery; C ECR replication, ECS secondary, Aurora global, compliance vault, S3 backup/replication, Route 53 failover; D governance mode removable and geolocation not failover.
+- Warnings: source typo 'secondaryrecord'; S3 PITR ambiguous (versioning versus continuous AWS Backup); asynchronous CRR does not guarantee 5-minute RPO; compliance vault lock does not automatically protect live S3 objects; RTO 15 minutes requires health checks, failover orchestration, tests.
