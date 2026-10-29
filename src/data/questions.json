@@ -9346,13 +9346,36 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "HISTORICAL KEY C, BUT DEFECTIVE IN 2026. Offline Snowball Edge could transfer 60 TB despite slow internet; DMS can migrate FROM S3 to Aurora MySQL only if source data are appropriately formatted CSV or supported Parquet with external table definitions, not raw MySQL backup files. AWS Snowball Edge unavailable to new customers since 2025-11-07 and end of commercial-region support announced for 2026-12-31. No fastest option is provable without shipping/import and Direct Connect provisioning durations. https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.S3.html ; https://aws.amazon.com/snowball/",
+    "wrongOptionsExplanation": "A: Direct Connect 1 Gbps plus DMS is technically valid and raw 60 TB at sustained 1 Gbps takes about 5.6 days, excluding overhead and provisioning; cannot prove slower without provisioning time. B: DataSync file transfer and Application Migration Service server lift-and-shift do not migrate relational database directly into Aurora. C: historical intended offline Snowball Edge + S3 + DMS, but Snowball new-customer closure and missing S3 CSV/Parquet conversion invalidate as unconditional answer. D: older Snowball/S3 Adapter wording plus Application Migration Service cannot import S3 objects as Aurora MySQL database.",
+    "plainWords": "To move a 60 TB database from a slow network, physical transfer historically avoided internet bottlenecks. Today Snowball is closed to new customers; a dedicated high-speed network or current physical-transfer alternatives must be evaluated with realistic timing.",
+    "keyPoints": "Snowball Edge no new customers Nov 7 2025; commercial region support ends Dec 31 2026. AWS DMS S3 source supports formatted CSV/Parquet and mapping, not arbitrary database backup files. Direct Connect 1 Gbps ideal lower bound for 60 TB ~5.6 days, plus overhead; lead time unknown. AWS Application Migration Service moves servers, not S3-to-Aurora data.",
+    "sourceWarning": "MAJOR OUTDATED/DEFECTIVE QUESTION. Original key C preserved as historical only: Snowball Edge unavailable to new customers after 2025-11-07, commercial region support ends 2026-12-31; S3-to-DMS needs formatted CSV/Parquet and schema mappings, absent in option. 'LEAST time' unanswerable without shipping, device order/import, and Direct Connect provisioning timelines; A can be faster depending on lead times. D uses obsolete Snowball Adapter and unsupported MGN S3->Aurora. Typos/missing punctuation in stem and choices. Exact external exam-site match not verified.",
+    "review": {
+      "status": "historical-source-c-outdated-defective-2026",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 38,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "C"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.S3.html",
+        "https://aws.amazon.com/snowball/"
+      ],
+      "externalExactMatch": null,
+      "defects": [
+        "Snowball closed to new customers November 2025",
+        "Snowball commercial support ends December 2026",
+        "S3 DMS requires formatted CSV/Parquet and table mappings, not raw MySQL dump",
+        "No timing information proving C faster than A",
+        "Typos and obsolete Snowball adapter in D"
+      ],
+      "notes": "Preserve historical source answer C; current question cannot be scored as unconditionally valid. Exact external exam match not verified."
+    },
+    "answerStatus": "outdated-defective-historical-c"
   },
   {
     "id": 218,

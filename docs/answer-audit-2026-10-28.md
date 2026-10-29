@@ -951,3 +951,9 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **MAJOR OUTDATED/DEFECTIVE SOURCE**: AWS Migration Hub stopped accepting **new customers Nov 7, 2025**; AWS recommends **AWS Transform** for new migrations. https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html . None of four options reflects the current new-customer recommendation; preserve historical source C with warning.
 - A SSM/Application Manager/Pricing Calculator do not provide complete discovery/sizing pipeline; B Inspector is vulnerability scanning; C historically correct; D CloudWatch agent/Compute Optimizer lack comprehensive migration dependency mapping.
 - Independent external technical note corroborates retirement: https://certnotes.cloud/services/migration-transfer/migration-hub/ . No exact external practice-site question match confirmed. Original question/options preserved.
+
+
+### Domain 4 Q217 — single-answer 38/139 (2026-10-29)
+- **Historical source C; defective for new 2026 customers.** Snowball Edge no new customers since 2025-11-07 (https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html), end of support in commercial Regions 2026-12-31 (https://aws.amazon.com/snowball/).
+- C's DMS S3 source requires structured CSV/Parquet and mappings, not raw MySQL backups (https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.S3.html). A Direct Connect 1 Gbps + DMS valid; 60 TB theoretical transfer ~5.6 days before overhead, but provisioning unknown. Cannot prove which option takes least total time without shipping/provisioning estimates.
+- B DataSync+MGN does not migrate DB into Aurora; D old Snowball/S3 Adapter + MGN S3->Aurora unsupported. Typos in stem/choices. External exact exam-site match not confirmed. Original wording/key preserved and marked outdated-defective.
