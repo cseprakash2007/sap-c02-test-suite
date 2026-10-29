@@ -1,0 +1,50 @@
+{
+  "status": "preliminary",
+  "batch": 2,
+  "domain": 4,
+  "questionIds": [
+    142,
+    143,
+    144,
+    146,
+    148,
+    153,
+    160,
+    161,
+    168,
+    169,
+    171,
+    176,
+    178,
+    183,
+    185,
+    186,
+    189,
+    190,
+    199,
+    200
+  ],
+  "reviewNotes": [
+    {
+      "id": 142,
+      "flag": "Discovery Agent vs agentless connector: validate exact data collection and Athena export"
+    },
+    {
+      "id": 144,
+      "flag": "Source answer B questionable: Trusted Advisor underutilized EC2 threshold and event integration require review"
+    },
+    {
+      "id": 148,
+      "flag": "Cross-Region read replica and latency routing appear aligned; option D truncated"
+    },
+    {
+      "id": 186,
+      "flag": "SNS-to-SQS fanout vs EventBridge cross-account event buses: ambiguous requirements; validate answer B"
+    },
+    {
+      "id": 190,
+      "flag": "Legacy AWS SMS and migration readiness tools: verify current service availability and answer A,D,F"
+    }
+  ],
+  "policy": "No question answers changed; audit flags only until AWS documentation verification."
+}

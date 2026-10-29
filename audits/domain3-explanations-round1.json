@@ -1,0 +1,40 @@
+{
+  "domain": 3,
+  "totalQuestions": 297,
+  "round": 1,
+  "reviewed": [
+    {
+      "id": 1,
+      "answer": [
+        "B"
+      ],
+      "finding": "SSE-S3 removes AWS KMS request charges; Batch Operations copies objects with new encryption",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-copy-object.html"
+      ]
+    },
+    {
+      "id": 2,
+      "answer": [
+        "C"
+      ],
+      "finding": "RDS Proxy pools concurrent Lambda connections",
+      "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-rds.html"
+      ]
+    },
+    {
+      "id": 4,
+      "answer": [
+        "B"
+      ],
+      "finding": "Stop/start all cluster placement group instances to attempt capacity re-placement; disruption risk",
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-strategies.html"
+      ]
+    }
+  ],
+  "reactQuestionBankUpdated": false,
+  "thirdPartySitesChecked": false
+}

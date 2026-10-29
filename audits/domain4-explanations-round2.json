@@ -1,0 +1,36 @@
+{
+  "round": 2,
+  "domain": 4,
+  "reviewed": [
+    {
+      "id": 44,
+      "answer": [
+        "B"
+      ],
+      "status": "supported-with-wording-fix",
+      "note": "Use supported OVA image format for VM Import/Export; source says OVF",
+      "reference": "https://docs.aws.amazon.com/vm-import/latest/userguide/import-vm-image.html"
+    },
+    {
+      "id": 66,
+      "answer": [
+        "C"
+      ],
+      "status": "source-option-needs-repair",
+      "note": "FSx for Lustre mounts with Lustre client, not NFS; asynchronous S3 export deadline not guaranteed",
+      "reference": "https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoexport-data-repo-dra.html"
+    },
+    {
+      "id": 102,
+      "answer": [
+        "C"
+      ],
+      "status": "needs-architecture-verification",
+      "note": "FSx interface VPC endpoint is for management API, not SMB data transfer; DataSync endpoint and network topology must be validated",
+      "reference": "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/fsx-vpc-endpoints.html"
+    }
+  ],
+  "fullDetailedLocalFile": "questions_domain4_explanations_round2.json",
+  "reactQuestionBankUpdated": false,
+  "thirdPartyQuestionSitesChecked": false
+}

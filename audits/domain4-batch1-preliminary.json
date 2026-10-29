@@ -1,0 +1,64 @@
+{
+  "status": "preliminary-not-independently-verified",
+  "source": "user uploaded questions(2).json",
+  "questionIds": [
+    3,
+    7,
+    21,
+    22,
+    44,
+    56,
+    62,
+    66,
+    74,
+    77,
+    92,
+    102,
+    106,
+    116,
+    119,
+    128,
+    134,
+    137,
+    138,
+    141
+  ],
+  "proposedChanges": [
+    {
+      "id": 44,
+      "answers": [
+        "B"
+      ],
+      "note": "Provisional: VM Import/Export versus Systems Manager hybrid activation; requires independent verification"
+    },
+    {
+      "id": 92,
+      "answers": [
+        "C",
+        "D"
+      ],
+      "answerCount": 2,
+      "optionD": "Use AWS DMS to migrate the source databases to Amazon RDS.",
+      "note": "Provisional: select TWO and correct OCR typos"
+    }
+  ],
+  "flags": [
+    {
+      "id": 3,
+      "note": "Option D truncated; restore original source"
+    },
+    {
+      "id": 62,
+      "note": "Stored procedure compatibility may need manual remediation"
+    },
+    {
+      "id": 102,
+      "note": "Preserve existing needs-further-validation flag; DataSync networking ambiguous"
+    },
+    {
+      "id": 141,
+      "note": "Architecture options need review"
+    }
+  ],
+  "note": "Companion audit only. Main questions.json intentionally unchanged pending reconciliation with current branch and independent source validation."
+}

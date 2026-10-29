@@ -1,0 +1,56 @@
+{
+  "reviewed": [
+    {
+      "id": 92,
+      "answers": [
+        "C",
+        "D"
+      ],
+      "explanation": "AWS SCT assesses/converts heterogeneous schemas and supported database code; DMS migrates data and can replicate changes. Unsupported stored procedures may need manual remediation.",
+      "incorrect": {
+        "A": "Migration Evaluator is not schema conversion",
+        "B": "MGN is server migration",
+        "E": "DataSync is file transfer"
+      },
+      "links": [
+        "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html"
+      ]
+    },
+    {
+      "id": 106,
+      "answers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "explanation": "Application Discovery Agent collects processes and network connections for physical and virtual hosts; Migration Hub supports grouping. Validate the precise instance recommendation feature before treating E as fully verified.",
+      "incorrect": {
+        "B": "SSM Agent is not the discovery dependency-mapping tool",
+        "C": "Application Manager is not the requested migration grouping flow",
+        "F": "Trusted Advisor does not assess imported on-premises inventory this way"
+      },
+      "links": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html",
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html"
+      ]
+    },
+    {
+      "id": 137,
+      "answers": [
+        "A"
+      ],
+      "explanation": "DynamoDB global tables provide multi-Region replicas and RDS MySQL cross-Region read replica provides regional reads. Promote RDS replica to writable standalone database during DR failover.",
+      "incorrect": {
+        "B": "DAX cache not replication",
+        "C": "Multi-AZ is same-Region",
+        "D": "Custom stream replication adds effort"
+      },
+      "links": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html"
+      ]
+    }
+  ],
+  "note": "Detailed source-linked explanations added to local 674-question JSON; app src/data/questions.json not updated. Third-party exam websites not cross-checked."
+}

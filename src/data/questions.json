@@ -86,14 +86,14 @@
    },
    {
     "id": "D",
-    "text": "Deploy an AWS DataSync agent to an on-premises server that has access to the NFS file system. Send data over the Direct Connect connection to an AWS PrivateLink interface VPC endpoint for Amazon EFS by using a private VIF. Configure a DataSync scheduled task to send the images to the EFS file system every 24 hours."
+    "text": "Deploy an AWS DataSync agent on premises with access to the NFS file system. Connect the agent privately to the AWS DataSync VPC service endpoint over Direct Connect using a private virtual interface. Schedule a DataSync task to transfer newly created images directly to the Amazon EFS file system every 24 hours."
    }
   ],
   "answers": [
    "D"
   ],
   "answerCount": 1,
-  "explanation": "AWS DataSync is built for this job. An agent reads the NFS share and DataSync copies directly into EFS, with scheduling, integrity\nchecks and incremental transfers. Using a PrivateLink interface endpoint for DataSync keeps the traffic private over Direct Connect\nand avoids the public internet and any extra hops.",
+  "explanation": "D is correct after a necessary technical wording correction: the AWS PrivateLink VPC interface endpoint belongs to the DataSync service, not to Amazon EFS. The on-premises DataSync agent reads the NFS share; DataSync uses task network interfaces to write directly to EFS. A and C introduce unnecessary S3 staging and Lambda orchestration. B uses S3-backed File Gateway rather than directly replicating to EFS. The private Direct Connect virtual interface and routing support the DataSync VPC endpoint and data-plane interfaces. Original D retained in originalQuestionSnapshot.",
   "wrongOptionsExplanation": "A. A custom s3 sync script plus S3 events plus a Lambda copy to EFS has many moving parts to build and monitor (and Lambda time\nlimits). B. A File Gateway stores data in S3, not EFS, so you would still need another step to move files into EFS. C. Sends data to S3\nfirst and then needs Lambda to copy to EFS. It works but is far less efficient than copying straight to EFS.",
   "plainWords": "Each night new images land on an on-prem NFS share. Before cutover they must be copied to Amazon EFS over an existing Direct\nConnect link, with as little operational work as possible.",
   "keyPoints": "• NFS/SMB to AWS storage on a schedule = DataSync. DataSync can target EFS, FSx and S3 directly. • Use a DataSync VPC\n(interface) endpoint to keep transfers private over Direct Connect.\nHEADS-UP ON THIS QUESTION\n• Option D has been restored from matching online exam-question copies. The intended design is DataSync agent -> DataSync PrivateLink interface endpoint -> EFS. The source wording incorrectly calls it an endpoint for Amazon EFS.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Option D restored from third-party copies; technical wording caveat remains.",
@@ -104,9 +104,43 @@
     "https://shiun.notion.site/Exam-AWS-Certified-Solutions-Architect-Professional-SAP-C02-topic-1-question-331-discussion-Exam-19d6375918b34c9c9d56616d060d3c35",
     "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-3/2/"
    ],
-   "technicalCaveat": "PrivateLink interface endpoint is for DataSync, not EFS."
+   "technicalCaveat": "Source option D incorrectly describes an interface VPC endpoint for EFS; corrected to DataSync VPC service endpoint.",
+   "auditStatus": "domain4-study-option-corrected",
+   "correctedStudyVersion": true,
+   "reviewedAt": "2026-10-28",
+   "originalAnswers": [
+    "D"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/datasync/latest/userguide/direct-connect-architecture.html",
+    "https://docs.aws.amazon.com/datasync/latest/userguide/choose-service-endpoint.html"
+   ]
   },
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "source-key-unverified",
+  "originalQuestionSnapshot": {
+   "stem": "A company is migrating an application to the AWS Cloud. The application runs in an on- premises data center and writes thousands of images into a mounted NFS file system each night. After the company migrates the application, the company will host the application on an Amazon EC2 instance with a mounted Amazon Elastic File System (Amazon EFS) file system. The company has established an AWS Direct Connect connection to AWS. Before the migration cutover, a solutions architect must build a process that will replicate the newly created on-premises images to the EFS file system. What is the MOST operationally efficient way to replicate the images?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Configure a periodic process to run the aws s3 sync command from the on-premises file system to Amazon S3. Configure an AWS Lambda function to process event notifications from Amazon S3 and copy the images from Amazon S3 to the EFS file system."
+    },
+    {
+     "id": "B",
+     "text": "Deploy an AWS Storage Gateway file gateway with an NFS mount point. Mount the file gateway file system on the on-premises server. Configure a process to periodically copy the images to the mount point."
+    },
+    {
+     "id": "C",
+     "text": "Deploy an AWS DataSync agent to an on-premises server that has access to the NFS file system. Send data over the Direct Connect connection to an S3 bucket by using public VIF. Configure an AWS Lambda function to process event notifications from Amazon S3 and copy the images from Amazon S3 to the EFS file system."
+    },
+    {
+     "id": "D",
+     "text": "Deploy an AWS DataSync agent to an on-premises server that has access to the NFS file system. Send data over the Direct Connect connection to an AWS PrivateLink interface VPC endpoint for Amazon EFS by using a private VIF. Configure a DataSync scheduled task to send the images to the EFS file system every 24 hours."
+    }
+   ],
+   "answers": [
+    "D"
+   ]
+  }
  },
  {
   "id": 4,
@@ -236,13 +270,47 @@
    "A"
   ],
   "answerCount": 1,
-  "explanation": "Bring your own IP (BYOIP) lets you register the customer-owned CIDR block in AWS and create Elastic IPs from it. You attach them to\nan internet-facing AWS Transfer Family SFTP server endpoint, which is fully managed and stores files in S3. The IPs stay the same and\nyou run no servers.",
+  "explanation": "A is correct, provided the AWS Transfer Family SFTP server is configured with an internet-facing VPC-hosted endpoint. Transfer Family supports attaching Elastic IPs allocated from a customer-owned BYOIP prefix, preserving IPs already in clients' firewall allowlists. A public (non-VPC-hosted) Transfer Family endpoint does not support attaching static IPs. B incorrectly uses an ALB for SFTP/FTP and adds unmanaged EC2 servers; C uses NLB but still requires self-managed servers and the BYOIP registration is wrong; D cannot enable SFTP on an S3 VPC endpoint. Source key A retained.",
   "wrongOptionsExplanation": "B. An ALB cannot be given Elastic IPs, and running FTP servers on EC2 with EBS is high effort. C. Route 53 does not register IP blocks,\nand you would again manage EC2 FTP servers. D. S3 does not provide an SFTP endpoint, and VPC endpoints do not take Elastic IPs\nthis way.",
   "plainWords": "Customers allow-list the SFTP server IP addresses. Those addresses cannot change after the move to AWS. You also want less\noperational work.",
   "keyPoints": "• Need SFTP/FTPS/FTP into S3 or EFS = AWS Transfer Family. • Must keep existing public IPs = BYOIP then assign EIPs.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "domain4-aws-docs-reviewed",
+   "originalAnswers": [
+    "A"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/transfer/latest/userguide/sftp-for-transfer-family.html"
+   ],
+   "crossVerificationStatus": "aws-docs-reviewed-external-question-match-pending"
+  },
+  "answerStatus": "source-key-unverified",
+  "originalQuestionSnapshot": {
+   "stem": "A company operates an on-premises software-as-a-service (SaaS) solution that ingests several files daily. The company provides multiple public SFTP endpoints to its customers to facilitate the file transfers. The customers add the SFTP endpoint IP addresses to their firewall allow list for outbound traffic. Changes to the SFTP endmost IP addresses are not permitted. The company wants to migrate the SaaS solution to AWS and decrease the operational overhead of the file transfer service. Which solution meets these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Register the customer-owned block of IP addresses in the company's AWS account. Create Elastic IP addresses from the address pool and assign them to an AWS Transfer for SFTP endpoint. Use AWS Transfer to store the files in Amazon S3."
+    },
+    {
+     "id": "B",
+     "text": "Add a subnet containing the customer-owned block of IP addresses to a VPC Create Elastic IP addresses from the address pool and assign them to an Application Load Balancer (ALB). Launch EC2 instances hosting FTP services in an Auto Scaling group behind the ALB. Store the files in attached Amazon Elastic Block Store (Amazon EBS) volumes."
+    },
+    {
+     "id": "C",
+     "text": "Register the customer-owned block of IP addresses with Amazon Route 53. Create alias records in Route 53 that point to a Network Load Balancer (NLB). Launch EC2 instances hosting FTP services in an Auto Scaling group behind the NLB. Store the files in Amazon S3."
+    },
+    {
+     "id": "D",
+     "text": "Register the customer-owned block of IP addresses in the company's AWS account. Create Elastic IP addresses from the address pool and assign them to an Amazon S3 VPC endpoint. Enable SFTP support on the S3 bucket."
+    }
+   ],
+   "answers": [
+    "A"
+   ]
+  }
  },
  {
   "id": 8,
@@ -426,18 +494,77 @@
    "E"
   ],
   "answerCount": 3,
-  "explanation": "Two policies are always needed: an identity-based policy in Account A that allows sts:AssumeRole on the role ARN, and the role trust\npolicy in Account B that names Account A (or the user) as a trusted principal. SCPs must not deny the action either. The trust policy is\na resource-based policy, which is why the answer key lists \"resource-based policies\" together with the identity policy and the trust\npolicy.",
+  "explanation": "SOURCE ANSWER B,C,E IS AMBIGUOUS. Required cross-account AssumeRole setup is C (the Account A user has sts:AssumeRole permission) and E (the target role in Account B trusts the user/account). E is itself a resource-based trust policy, so B is redundant if it means an additional resource policy. SCPs in Account A must permit the action, but A is only a configuration change if existing SCPs restrict sts:AssumeRole. D concerns the wrong account's user; F is not how GetSessionToken works. Because the stem says select THREE without clarifying whether SCP changes are needed, do not treat B,C,E as independently confirmed.",
   "wrongOptionsExplanation": "A. An SCP does not grant access. It only needs to avoid blocking it. (See the note below.) D. The user lives in Account A. A policy on a\nuser in Account B does nothing for this action. F. Session policies only narrow a session after it exists. They are not required to\nassume a role.",
   "plainWords": "An IAM user in Account A must be able to assume a role in Account B in an organization that uses SCPs and several policy types.",
   "keyPoints": "• Cross-account = permission on the caller side (identity policy) and trust on the target side (role trust policy). • SCPs filter, they\nnever grant.\nHEADS-UP ON THIS QUESTION\n• The key says B, C, E. A trust policy is itself the role's resource-based policy, so B and E overlap. In a real design you would also\nconfirm the SCP in Account A does not deny sts:AssumeRole (option A). If this appears on a test, choose C and E for sure and follow\nthe wording for the third.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Trust policy and resource-based policy choices overlap.",
-  "sourceWarning": "Cross-account IAM role answer choices overlap in policy terminology; review the trust policy versus permission policy.",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Select THREE is ambiguous: trust policy (E) is a resource-based policy (B); SCP permission (A) is conditional on policy configuration.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "disputed-ambiguous-third-choice",
+   "originalAnswers": [
+    "B",
+    "C",
+    "E"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic-cross-account.html",
+    "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_update-role-trust-policy.html",
+    "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+   ],
+   "auditNote": "AWS docs explicitly call IAM role trust policy a resource-based policy, so B and E are redundant if both are listed. C+E necessary in general, SCP A must not deny but changing SCP depends on its current contents. No unambiguous three-step solution.",
+   "wrongOptionsReason": {
+    "A": "SCP must not block AssumeRole; editing is not necessarily needed.",
+    "B": "Trust policy E is itself the relevant resource-based policy; redundant wording.",
+    "D": "Identity policy on user in destination Account B is irrelevant.",
+    "F": "GetSessionToken is not used to pass an AssumeRole session policy."
+   },
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic-cross-account.html",
+    "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html",
+    "https://docs.aws.amazon.com/us_en/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html"
+   ]
+  },
+  "answerStatus": "disputed-ambiguous-third-choice",
+  "originalQuestionSnapshot": {
+   "stem": "A company is using AWS Organizations with a multi-account architecture. The company's current security configuration for the account architecture includes SCPs, resource-based policies, identity-based policies, trust policies, and session policies. A solutions architect needs to allow an IAM user in Account A to assume a role in Account B. Which combination of steps must the solutions architect take to meet this requirement? (Select THREE.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Configure the SCP for Account A to allow the action."
+    },
+    {
+     "id": "B",
+     "text": "Configure the resource-based policies to allow the action."
+    },
+    {
+     "id": "C",
+     "text": "Configure the identity-based policy on the user in Account A to allow the action."
+    },
+    {
+     "id": "D",
+     "text": "Configure the identity-based policy on the user in Account B to allow the action."
+    },
+    {
+     "id": "E",
+     "text": "Configure the trust policy on the target role in Account B to allow the action."
+    },
+    {
+     "id": "F",
+     "text": "Configure the session policy to allow the action and to be passed programmatically by the GetSessionToken API operation."
+    }
+   ],
+   "answers": [
+    "B",
+    "C",
+    "E"
+   ]
+  }
  },
  {
   "id": 13,
   "domain": 1,
-  "stem": "A company wants to use a third-party software-as-a-service (SaaS) application. The third- party SaaS application is consumed through several API calls. The third-party SaaS application also runs on AWS inside a VPC. The company will consume the third-party SaaS application from inside a VPC. The company has internal security policies that mandate the use of private connectivity that does not traverse the internet. No resources that run in the company VPC are allowed to be accessed from outside the company’s VPC. All permissions must conform to the principles of least privilege. Which solution meets these requirements?",
+  "stem": "A company plans to consume a third-party software-as-a-service (SaaS) application through APIs. The SaaS provider hosts the application in an AWS VPC, and the company will call it from its own VPC. Security policies require private connectivity without internet traversal, prohibit external access to resources in the company's VPC, and require least-privilege permissions. Which solution meets these requirements?",
   "options": [
    {
     "id": "A",
@@ -445,11 +572,11 @@
    },
    {
     "id": "B",
-    "text": "Create an AWS Site-to-Site VPN connection between the third-party SaaS application and thecompany VPC. Configure network ACLs to limit access across the VPN tunnels."
+    "text": "Create an AWS Site-to-Site VPN connection between the third-party SaaS provider and the company VPC. Configure network ACLs to limit access across the VPN tunnels."
    },
    {
     "id": "C",
-    "text": "Create a VPC peering connection between the third-party SaaS application and the company VPUpdate route tables by adding the needed routes for the peering connection."
+    "text": "Create a VPC peering connection between the third-party SaaS provider VPC and the company VPC. Update the route tables with the required peering routes."
    },
    {
     "id": "D",
@@ -460,26 +587,68 @@
    "A"
   ],
   "answerCount": 1,
-  "explanation": "The SaaS provider publishes a PrivateLink endpoint service. You create an interface VPC endpoint in your VPC that connects to it and\ncontrol it with a security group. Traffic stays on the AWS network, connectivity is one-way (you call them), and nothing in your VPC\nbecomes reachable from outside.",
+  "explanation": "A is correct. The SaaS provider publishes an AWS PrivateLink endpoint service, and the company creates an interface VPC endpoint as the service consumer. An endpoint security group limits permitted connections; no inbound network path into the company's VPC is exposed to the provider. B is less appropriate: Site-to-Site VPN uses tunnels and adds operational complexity, while the question explicitly asks for AWS-private SaaS access. C uses peering and routing between VPCs, granting broader network-level connectivity than a service-specific endpoint. D reverses the provider and consumer roles: it would let the SaaS provider connect to a service in the company's VPC. Source answer A retained.",
   "wrongOptionsExplanation": "B. A VPN to a SaaS provider is not how SaaS on AWS is consumed and still opens broader network access. C. VPC peering exposes\nwhole networks both ways and fails with overlapping CIDRs, violating least privilege. D. This reverses the roles: the provider would\nconnect into your VPC, which violates the rule that your resources cannot be reached from outside.",
   "plainWords": "You must call a SaaS API that runs in its own VPC, privately without the internet, and without exposing anything in your VPC to the\noutside, using least privilege.",
   "keyPoints": "• One-way private access to a service = PrivateLink interface endpoint. • The consumer creates the interface endpoint; the provider\ncreates the endpoint service.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-verified-study-wording",
+   "originalAnswers": [
+    "A"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html",
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html",
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question and options preserved in originalQuestionSnapshot. AWS technical documentation checked; no exact third-party question-page comparison completed for this batch."
+  },
+  "answerStatus": "aws-docs-verified-study-wording",
+  "originalQuestionSnapshot": {
+   "stem": "A company wants to use a third-party software-as-a-service (SaaS) application. The third- party SaaS application is consumed through several API calls. The third-party SaaS application also runs on AWS inside a VPC. The company will consume the third-party SaaS application from inside a VPC. The company has internal security policies that mandate the use of private connectivity that does not traverse the internet. No resources that run in the company VPC are allowed to be accessed from outside the company’s VPC. All permissions must conform to the principles of least privilege. Which solution meets these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create an AWS PrivateLink interface VPC endpoint. Connect this endpoint to the endpoint service that the third-party SaaS application provides. Create a security group to limit the access to the endpoint. Associate the security group with the endpoint."
+    },
+    {
+     "id": "B",
+     "text": "Create an AWS Site-to-Site VPN connection between the third-party SaaS application and thecompany VPC. Configure network ACLs to limit access across the VPN tunnels."
+    },
+    {
+     "id": "C",
+     "text": "Create a VPC peering connection between the third-party SaaS application and the company VPUpdate route tables by adding the needed routes for the peering connection."
+    },
+    {
+     "id": "D",
+     "text": "Create an AWS PrivateLink endpoint service. Ask the third-party SaaS provider to create an interface VPC endpoint for this endpoint service. Grant permissions for the endpoint service to the specific account of the third-party SaaS provider."
+    }
+   ],
+   "answers": [
+    "A"
+   ]
+  }
  },
  {
   "id": 14,
   "domain": 2,
-  "stem": "A company has an application in the AWS Cloud. The application runs on a fleet of 20 Amazon EC2 instances. The EC2 instances are persistent and store data on multiple attached Amazon Elastic Block Store (Amazon EBS) volumes. The company must maintain backups in a separate AWS Region. The company must be able to recover the EC2 instances and their configuration within I business day, with loss of no more than I day's worth of data. The company has limited staff and needs a backup solution that optimizes operational efficiency and cost. The company already has created an AWS CloudFormation template that can deploy the required network configuration in a secondary Region. Which solution will meet these requirements?",
+  "stem": "A company runs an application on 20 persistent Amazon EC2 instances with multiple attached Amazon EBS volumes. Backups must be stored in a second AWS Region. Recovery of the instances and their configuration must be possible within one business day, with no more than one day's data loss. The company has limited operations staff and already has a CloudFormation template for the network infrastructure in the recovery Region. Which solution best meets the requirements with minimal operational overhead and cost?",
   "options": [
    {
     "id": "A",
-    "text": "Create a second CloudFormation template that can recreate the EC2 instances in the secondary Region. Run daily multivolume snapshots by using AWS Systems Manager Automation runbooks. Copy the snapshots to the secondary Region. In the event of a failure, launch the CloudFormation templates, restore the EBS volumes from snapshots, and transfer usage to the secondary Region."
+    "text": "Create another CloudFormation template to recreate the EC2 instances in the secondary Region. Run daily multi-volume snapshots using AWS Systems Manager Automation runbooks, copy the snapshots to the secondary Region, and use the templates and snapshots to recover."
    },
    {
     "id": "B",
-    "text": "Use Amazon Data Lifecycle Manager (Amazon DLM) to create daily multivolume snapshots of the EBS volumes. In the event of a failure, launch theCloudFormation template and use Amazon DLM to restore the EBS volumes and transfer usage to the secondary Region."
+    "text": "Use Amazon Data Lifecycle Manager (Amazon DLM) to create daily multi-volume EBS snapshots. In a disaster, deploy the CloudFormation template and use DLM to restore the EBS volumes and transfer traffic to the secondary Region."
    },
    {
     "id": "C",
@@ -487,25 +656,67 @@
    },
    {
     "id": "D",
-    "text": "Deploy EC2 instances of the same size and configuration to the secondary Region. Configure AWS DataSync daily to copy data from the primary Region to the secondary Region. In the event of a failure, launch the CloudFormation template and transfer usage to the secondaryRegion."
+    "text": "Deploy equivalent EC2 instances in the secondary Region. Use AWS DataSync daily to copy data from the primary Region. During a disaster, deploy the CloudFormation template and transfer traffic to the secondary Region."
    }
   ],
   "answers": [
    "C"
   ],
   "answerCount": 1,
-  "explanation": "AWS Backup supports EC2 backups (instance configuration plus all attached EBS volumes), scheduled plans, and automatic\ncross-Region copy to another vault. One managed service covers backup, copy and restore with the lowest operational effort.",
+  "explanation": "C is correct. AWS Backup can schedule daily EC2 backups, automatically copy recovery points to a backup vault in another Region, and restore EC2 instances with root and attached EBS data volumes. A could be implemented but requires custom runbook/template orchestration. B is incomplete: DLM manages snapshot lifecycles, not the described EC2 instance recovery and traffic transfer workflow. D requires duplicate running instances and custom data synchronization, increasing cost and effort. Important limitation: AWS Backup does not preserve every instance setting (for example, launch user data); recovery must be tested to establish the one-business-day RTO. Source answer C retained.",
   "wrongOptionsExplanation": "A. Custom Systems Manager runbooks and snapshot copy scripts must be built and maintained. B. Data Lifecycle Manager handles\nEBS snapshots only and does not capture the instance configuration or provide the same centralized restore. D. Running a second\nfleet and using DataSync is expensive and DataSync does not copy EBS volumes.",
   "plainWords": "20 EC2 instances with many EBS volumes need daily backups copied to another Region, with restore of instances and configuration\ninside a day and minimal admin effort.",
   "keyPoints": "• Centralized backup policies, cross-Region and cross-account copy = AWS Backup. • RTO of one day and RPO of one day = backup\nand restore strategy.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-verified-study-wording",
+   "originalAnswers": [
+    "C"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-ec2.html",
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/cross-region-backup.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-ec2.html",
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/cross-region-backup.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question and options preserved in originalQuestionSnapshot. AWS technical documentation checked; no exact third-party question-page comparison completed for this batch."
+  },
+  "answerStatus": "aws-docs-verified-study-wording",
+  "originalQuestionSnapshot": {
+   "stem": "A company has an application in the AWS Cloud. The application runs on a fleet of 20 Amazon EC2 instances. The EC2 instances are persistent and store data on multiple attached Amazon Elastic Block Store (Amazon EBS) volumes. The company must maintain backups in a separate AWS Region. The company must be able to recover the EC2 instances and their configuration within I business day, with loss of no more than I day's worth of data. The company has limited staff and needs a backup solution that optimizes operational efficiency and cost. The company already has created an AWS CloudFormation template that can deploy the required network configuration in a secondary Region. Which solution will meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create a second CloudFormation template that can recreate the EC2 instances in the secondary Region. Run daily multivolume snapshots by using AWS Systems Manager Automation runbooks. Copy the snapshots to the secondary Region. In the event of a failure, launch the CloudFormation templates, restore the EBS volumes from snapshots, and transfer usage to the secondary Region."
+    },
+    {
+     "id": "B",
+     "text": "Use Amazon Data Lifecycle Manager (Amazon DLM) to create daily multivolume snapshots of the EBS volumes. In the event of a failure, launch theCloudFormation template and use Amazon DLM to restore the EBS volumes and transfer usage to the secondary Region."
+    },
+    {
+     "id": "C",
+     "text": "Use AWS Backup to create a scheduled daily backup plan for the EC2 instances. Configure the backup task to copy the backups to a vault in the secondary Region. In the event of a failure, launch the CloudFormation template, restore the instance volumes and configurations from the backup vault, and transfer usage to the secondary Region."
+    },
+    {
+     "id": "D",
+     "text": "Deploy EC2 instances of the same size and configuration to the secondary Region. Configure AWS DataSync daily to copy data from the primary Region to the secondary Region. In the event of a failure, launch the CloudFormation template and transfer usage to the secondaryRegion."
+    }
+   ],
+   "answers": [
+    "C"
+   ]
+  }
  },
  {
   "id": 15,
   "domain": 2,
-  "stem": "A company runs a video-on-demand (VOD) content streaming application on AWS. The application includes an Amazon CloudFront distribution that uses the default cache behavior. The distribution has a single origin that points to an Amazon S3 bucket that contains the video files. The company wants to improve the application’s reliability. The company creates a second S3 bucket and configures S3 Cross-Region Replication (CRR) between the S3 buckets. The company must implement high availability for the CloudFront deployment and must ensure that failover begins within 1 second. Which change to the current architecture will meet these requirements with the LEAST operational overhead?",
+  "stem": "A video-on-demand application serves videos through an Amazon CloudFront distribution with a default cache behavior and one Amazon S3 origin. A second S3 bucket has been configured for Cross-Region Replication (CRR). The company needs CloudFront origin failover to start as quickly as possible, targeting one second after a connection failure, with minimal operational overhead. Which change best meets these requirements?",
   "options": [
    {
     "id": "A",
@@ -528,13 +739,55 @@
    "C"
   ],
   "answerCount": 1,
-  "explanation": "Add the second bucket as another origin in the same distribution, create an origin group with primary and secondary origins, and set\nthe default cache behavior to use the origin group. Lowering the origin connection timeout and attempts to 1 makes CloudFront\nswitch to the secondary almost immediately when the primary fails.",
+  "explanation": "C is the best offered answer. Add the replicated S3 bucket as a second origin, create an origin group with primary and secondary origins, and configure the default cache behavior to use the group. Set the primary origin connection timeout to 1 second and connection attempts to 1. A incorrectly tries to group separate CloudFront distributions rather than origins. B creates an origin group but does not attach it to the cache behavior; response timeout is not the right lever for standard S3 origins. D introduces unnecessary Lambda automation and EventBridge cannot be scheduled every second. Qualification: the 1-second setting bounds a connection attempt; it does not guarantee all failover scenarios complete within one second. For S3 origins, origin response timeout is not configurable; failover depends on connection errors and configured status codes. Source answer C retained.",
   "wrongOptionsExplanation": "A. Origin groups contain origins, not distributions, and Route 53 health checks cannot achieve sub-second failover. B. It forgets to\npoint the cache behavior to the origin group, and it changes the response timeout instead of the connection timeout and attempts. D.\nA Lambda polling every second to rewrite the distribution is fragile, costly and slower than the built-in origin failover.",
   "plainWords": "CloudFront serves videos from one S3 bucket. A second bucket is replicated with CRR. Failover must start within about 1 second with\nthe least operational work.",
   "keyPoints": "• CloudFront high availability for origins = origin group with primary and secondary, and the behavior must use it. • Fast failover\ntuning = connection timeout and connection attempts.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-verified-study-wording",
+   "originalAnswers": [
+    "C"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html",
+    "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorS3Origin.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html",
+    "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorS3Origin.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question and options preserved in originalQuestionSnapshot. AWS technical documentation checked; no exact third-party question-page comparison completed for this batch."
+  },
+  "answerStatus": "aws-docs-verified-study-wording",
+  "originalQuestionSnapshot": {
+   "stem": "A company runs a video-on-demand (VOD) content streaming application on AWS. The application includes an Amazon CloudFront distribution that uses the default cache behavior. The distribution has a single origin that points to an Amazon S3 bucket that contains the video files. The company wants to improve the application’s reliability. The company creates a second S3 bucket and configures S3 Cross-Region Replication (CRR) between the S3 buckets. The company must implement high availability for the CloudFront deployment and must ensure that failover begins within 1 second. Which change to the current architecture will meet these requirements with the LEAST operational overhead?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create a second CloudFront distribution that uses the second S3 bucket as a single origin. Create an origin group. Add both distributions to the origin group. Set the original distribution as the primary distribution. Set the new distribution as the secondary distribution. Create an Amazon Route 53 health check to monitor the health of the primary distribution and secondary distribution every second."
+    },
+    {
+     "id": "B",
+     "text": "Create a new origin in the existing CloudFront distribution. Specify the second S3 bucket as the new origin. Create an origin group. Add the original origin as the primary origin. Add the new origin as the secondary origin. Set the origin response timeout value to 1. Set the origin connection attempts value to 1."
+    },
+    {
+     "id": "C",
+     "text": "Create a new origin in the existing CloudFront distribution. Specify the second S3 bucket as the new origin. Create an origin group. Add the original origin as the primary origin. Add the new origin as the secondary origin. Update the default cache behavior to use the origin group. Set the origin connection timeout value to 1. Set the origin connection attempts value to 1."
+    },
+    {
+     "id": "D",
+     "text": "Create a new origin in the existing CloudFront distribution. Specify the second S3 bucket as the new origin. Create an AWS Lambda function to monitor the health of the original origin. Program the Lambda function to update the CloudFront distribution and promote the secondary origin to primary if a health check fails. Create an Amazon EventBridge scheduled rule to invoke the Lambda function every second."
+    }
+   ],
+   "answers": [
+    "C"
+   ]
+  }
  },
  {
   "id": 16,
@@ -555,25 +808,68 @@
    },
    {
     "id": "D",
-    "text": "Migrate the database to Aurora Serverless v1. Purchase Compute Savings Plans."
+    "text": "Migrate the database to Aurora Serverless v2. Purchase Compute Savings Plans."
    }
   ],
   "answers": [
    "D"
   ],
   "answerCount": 1,
-  "explanation": "Aurora Serverless adjusts database capacity automatically and can pause when idle, so you pay for capacity only when it is used.\nCompute Savings Plans cover Lambda and Fargate usage, which also swing with demand.",
+  "explanation": "Corrected study wording (original option D specified retired Aurora Serverless v1): Aurora Serverless v2 automatically adjusts database capacity for unpredictable and write-heavy workloads, avoiding continuously provisioned peak capacity. Compute Savings Plans apply to Lambda and Fargate compute. A adds readers rather than scaling writes; B uses a legacy multi-master design; C adds global replication rather than elastic writer capacity. Original question and option are retained in originalQuestionSnapshot.",
   "wrongOptionsExplanation": "A. Read replicas help reads, not a write-heavy load, and Instance Savings Plans plus reserved instances commit you to capacity you\noften do not use. B. Multi-master clusters are not designed for unpredictable scaling and commitments do not fit an irregular load. C.\nAurora Global Database is for cross-Region DR and low-latency reads, not for absorbing bursts.",
   "plainWords": "Usage is idle for long periods, then spikes suddenly. The write-heavy Aurora MySQL instance cannot cope. Find the most\ncost-effective way to handle the swings.",
   "keyPoints": "• Unpredictable or intermittent database load = Aurora Serverless. • Commitments (RI/Savings Plans) suit steady usage, not spiky\nusage.\nHEADS-UP ON THIS QUESTION\n• Aurora Serverless v1 has been retired or scheduled for retirement. Today the modern answer for this pattern is Aurora Serverless v2\n(which can also scale down to very low capacity). The reasoning is the same.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Aurora Serverless v1 is obsolete; consult current Aurora Serverless v2 guidance.",
-  "sourceWarning": "References retired Aurora Serverless v1. Review current Aurora Serverless v2 capabilities.",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Aurora Serverless v1 is retired; D is historically intended but no longer deployable as written. Aurora Serverless v2 is the modern alternative; none of the offered answers states it.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "study-wording-corrected-original-outdated",
+   "originalAnswers": [
+    "D"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html"
+   ],
+   "auditNote": "Aurora Serverless v1 is retired; D is historically intended but no longer deployable as written. Aurora Serverless v2 is the modern alternative; none of the offered answers states it.",
+   "externalQuestionLinks": [],
+   "externalSiteAnswers": [],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html"
+   ],
+   "crossVerificationStatus": "aws-service-retired-external-match-pending",
+   "answerReason": "AWS re:Post confirms Aurora Serverless v1 end of support March 31, 2025. No exact question-site match established in this batch; D remains historically intended but outdated.",
+   "correctedStudyVersion": true,
+   "correctionType": "modernized-option-not-original-exam-text"
+  },
+  "answerStatus": "outdated",
+  "originalQuestionSnapshot": {
+   "stem": "A company is running an application in the AWS Cloud. The application uses AWS Lambda functions and Amazon Elastic Container Service (Amazon ECS) containers that run with AWS Fargate technology as its primary compute. The load on the application is irregular. The application experiences long periods of no usage, followed by sudden and significant increases and decreases in traffic. The application is write-heavy and stores data in an Amazon Aurora MySQL database. The database runs on an Amazon RDS memory optimized DB instance that is not able to handle the load. What is the MOST cost-effective way for the company to handle the sudden and significant changes in traffic?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Add additional read replicas to the database. Purchase Instance Savings Plans and RDS Reserved Instances."
+    },
+    {
+     "id": "B",
+     "text": "Migrate the database to an Aurora multi-master DB cluster. Purchase Instance Savings Plans."
+    },
+    {
+     "id": "C",
+     "text": "Migrate the database to an Aurora global database. Purchase Compute Savings Plans and RDS Reserved Instances."
+    },
+    {
+     "id": "D",
+     "text": "Migrate the database to Aurora Serverless v1. Purchase Compute Savings Plans."
+    }
+   ],
+   "answers": [
+    "D"
+   ]
+  }
  },
  {
   "id": 17,
   "domain": 3,
-  "stem": "A company is running a data-intensive application on AWS. The application runs on a cluster of hundreds of Amazon EC2 instances. A shared file system also runs on several EC2 instances that store 200 TB of data. The application reads and modifies the data on the shared file system and generates a report. The job runs once monthly, reads a subset of the files from the shared file system, and takes about 72 hours to complete. The compute instances scale in an Auto Scaling group, but the instances that host the shared file system run continuously. The compute and storage instances are all in the same AWS Region. A solutions architect needs to reduce costs by replacing the shared file system instances. The file system must provide high performance access to the needed data for the duration of the 72-hour run. Which solution will provide the LARGEST overall cost reduction while meeting these requirements?",
+  "stem": "A company runs a data-intensive monthly reporting job on hundreds of EC2 instances. Its shared file system, hosted on always-on EC2 instances, contains 200 TB of data. Each 72-hour job reads and modifies only a subset of files. Compute scales down between jobs, but the file servers remain running. Which replacement for the shared storage offers the greatest likely cost reduction while maintaining high-performance file access during each run?",
   "options": [
    {
     "id": "A",
@@ -596,18 +892,60 @@
    "A"
   ],
   "answerCount": 1,
-  "explanation": "Keep the data in S3 using Intelligent-Tiering (cheap, automatic tiering). Just before the job, create an FSx for Lustre file system linked\nto the bucket with lazy loading, so only files that the job actually reads are pulled into Lustre. Delete the file system afterward. You\npay for high-performance storage only for three days.",
+  "explanation": "A is the best choice among the supplied options. Store the durable dataset in S3 Intelligent-Tiering and create an FSx for Lustre file system for each monthly run, linked to S3. File metadata is imported and file contents are loaded on first access, so unaccessed content need not be fully copied. Export modified files back to S3 before deleting the temporary file system; this persistence step is essential and is omitted from the source option. B fails because EBS Multi-Attach is limited in attachment count and needs a cluster-aware file system. C uses full batch loading and S3 Standard, potentially transferring more than the subset used. D uses File Gateway, not a comparable high-performance parallel file system. Exact cost ranking depends on access pattern and S3 tiering fees; the source's absolute 'largest' claim is not provable without measurements.",
   "wrongOptionsExplanation": "B. EBS Multi-Attach supports only a limited number of instances in a single AZ, far fewer than hundreds, and is not a shared file\nsystem. C. Batch loading all 200 TB into Lustre wastes time and money when only a subset of files is needed. D. A File Gateway is for\nhybrid access and does not provide the high-performance parallel throughput the job needs.",
   "plainWords": "200 TB on always-on EC2 file servers, used only for a 72-hour monthly job that reads a subset of files. Replace it to cut cost while\nkeeping high performance during the job.",
   "keyPoints": "• Temporary HPC file system on S3 data = FSx for Lustre (scratch) linked to S3. • Lazy loading fetches only the files you read.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "A"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files-dra.html",
+    "https://docs.aws.amazon.com/fsx/latest/LustreGuide/overview-dra-data-repo.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files-dra.html",
+    "https://docs.aws.amazon.com/fsx/latest/LustreGuide/overview-dra-data-repo.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question retained in snapshot. Source answer unchanged; technical caveats documented."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "A company is running a data-intensive application on AWS. The application runs on a cluster of hundreds of Amazon EC2 instances. A shared file system also runs on several EC2 instances that store 200 TB of data. The application reads and modifies the data on the shared file system and generates a report. The job runs once monthly, reads a subset of the files from the shared file system, and takes about 72 hours to complete. The compute instances scale in an Auto Scaling group, but the instances that host the shared file system run continuously. The compute and storage instances are all in the same AWS Region. A solutions architect needs to reduce costs by replacing the shared file system instances. The file system must provide high performance access to the needed data for the duration of the 72-hour run. Which solution will provide the LARGEST overall cost reduction while meeting these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Migrate the data from the existing shared file system to an Amazon S3 bucket that uses the S3 Intelligent-Tiering storage class. Before the job runs each month, use Amazon FSx for Lustre to create a new file system with the data from Amazon S3 by using lazy loading. Use the new file system as the shared storage for the duration of the job. Delete the file system when the job is complete."
+    },
+    {
+     "id": "B",
+     "text": "Migrate the data from the existing shared file system to a large Amazon Elastic Block Store (Amazon EBS) volume with Multi-Attach enabled. Attach the EBS volume to each of the instances by using a user data script in the Auto Scaling group launch template. Use the EBS volume as the shared storage for the duration of the job. Detach the EBS volume when the job is complete."
+    },
+    {
+     "id": "C",
+     "text": "Migrate the data from the existing shared file system to an Amazon S3 bucket that uses the S3 Standard storage class. Before the job runs each month, use Amazon FSx for Lustre to create a new file system with the data from Amazon S3 by using batch loading. Use the new file system as the shared storage for the duration of the job. Delete the file system when the job is complete."
+    },
+    {
+     "id": "D",
+     "text": "Migrate the data from the existing shared file system to an Amazon S3 bucket. Before the job runs each month, use AWS Storage Gateway to create a file gateway with the data from Amazon S3. Use the file gateway as the shared storage for the job. Delete the file gateway when the job is complete."
+    }
+   ],
+   "answers": [
+    "A"
+   ]
+  }
  },
  {
   "id": 18,
   "domain": 3,
-  "stem": "An events company runs a ticketing platform on AWS. The company's customers configure and schedule their events on the platform The events result in large increases of traffic to the platform The company knows the date and time of each customer's events The company runs the platform on an Amazon Elastic Container Service (Amazon ECS) cluster The ECS cluster consists of Amazon EC2 On-Demand Instances that are in an Auto Scaling group. The Auto Scaling group uses a predictive scaling policy The ECS cluster makes frequent requests to an Amazon S3 bucket to download ticket assets The ECS cluster and the S3 bucket are in the same AWS Region and the same AWS account Traffic between the ECS cluster and the S3 bucket flows across a NAT gateway The company needs to optimize the cost of the platform without decreasing the platform's availability Which combination of steps will meet these requirements? (Select TWO)",
+  "stem": "An events company operates a ticketing platform on Amazon ECS backed by EC2 On-Demand instances in an Auto Scaling group. Customer event dates and times are known in advance, and the Auto Scaling group currently uses predictive scaling. ECS tasks frequently download ticket assets from an S3 bucket in the same Region and account, but this traffic currently passes through a NAT gateway. Which TWO changes reduce costs without compromising availability?",
   "options": [
    {
     "id": "A",
@@ -635,18 +973,66 @@
    "B"
   ],
   "answerCount": 2,
-  "explanation": "A gateway VPC endpoint for S3 is free and removes the NAT gateway data processing charge for S3 traffic. Adding a Spot-backed\ncapacity provider with a weighted strategy lowers compute cost while the existing On-Demand capacity keeps availability.",
+  "explanation": "A removes NAT gateway data-processing costs for S3 traffic by using an S3 gateway VPC endpoint, provided route tables and policies are configured. B adds a Spot-backed ECS capacity provider alongside existing On-Demand capacity, reducing average compute costs; availability depends on keeping sufficient On-Demand baseline capacity and making workloads resilient to Spot interruptions. C reserves On-Demand capacity but is not itself a discount. D S3 Transfer Acceleration is not useful for same-Region private traffic. E scheduled scaling may be useful for known events, but replacing predictive scaling is not inherently a cost reduction and risks missing unexpected load. Source A+B retained with Spot-availability caveat.",
   "wrongOptionsExplanation": "C. Capacity Reservations add commitment cost rather than reduce it. D. Transfer Acceleration is for long-distance uploads and adds\ncost. The cluster and bucket are in the same Region. E. Replacing predictive scaling with scheduled scaling does not make compute\ncheaper and may reduce flexibility.",
   "plainWords": "An ECS cluster on On-Demand EC2 downloads lots of S3 assets through a NAT gateway. Cut cost without lowering availability.",
   "keyPoints": "• NAT gateway charges for S3 or DynamoDB traffic = use a gateway endpoint. • Mix On-Demand and Spot with ECS capacity\nproviders to cut cost safely.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "A",
+    "B"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html",
+    "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/asg-capacity-providers.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html",
+    "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/asg-capacity-providers.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question retained in snapshot. Source answer unchanged; technical caveats documented."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "An events company runs a ticketing platform on AWS. The company's customers configure and schedule their events on the platform The events result in large increases of traffic to the platform The company knows the date and time of each customer's events The company runs the platform on an Amazon Elastic Container Service (Amazon ECS) cluster The ECS cluster consists of Amazon EC2 On-Demand Instances that are in an Auto Scaling group. The Auto Scaling group uses a predictive scaling policy The ECS cluster makes frequent requests to an Amazon S3 bucket to download ticket assets The ECS cluster and the S3 bucket are in the same AWS Region and the same AWS account Traffic between the ECS cluster and the S3 bucket flows across a NAT gateway The company needs to optimize the cost of the platform without decreasing the platform's availability Which combination of steps will meet these requirements? (Select TWO)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create a gateway VPC endpoint for the S3 bucket"
+    },
+    {
+     "id": "B",
+     "text": "Add another ECS capacity provider that uses an Auto Scaling group of Spot Instances Configure the new capacity provider strategy to have the same weight as the existing capacity provider strategy"
+    },
+    {
+     "id": "C",
+     "text": "Create On-Demand Capacity Reservations for the applicable instance type for the time period of the scheduled scaling policies"
+    },
+    {
+     "id": "D",
+     "text": "Enable S3 Transfer Acceleration on the S3 bucket"
+    },
+    {
+     "id": "E",
+     "text": "Replace the predictive scaling policy with scheduled scaling policies for the scheduled events"
+    }
+   ],
+   "answers": [
+    "A",
+    "B"
+   ]
+  }
  },
  {
   "id": 19,
   "domain": 2,
-  "stem": "A company is deploying a new API to AWS. The API uses Amazon API Gateway with a Regional API endpoint and an AWS Lambda function for hosting. The API retrieves data from an external vendor API, stores data in an Amazon DynamoDB global table, and retrieves data from the DynamoDB global table. The API key for the vendor's API is stored in AWS Secrets Manager and is encrypted with a customer managed key in AWS Key Management Service (AWS KMS). The company has deployed its own API into a single AWS Region. A solutions architect needs to change the API components of the company's API to ensure that the components can run across multiple Regions in an active-active configuration. Which combination of changes will meet this requirement with the LEAST operational overhead? (Choose three.)",
+  "stem": "A company hosts an API with a Regional Amazon API Gateway endpoint and AWS Lambda in one Region. The API calls a vendor service using a credential stored in Secrets Manager and encrypted with a customer-managed KMS key, and reads and writes a DynamoDB global table. The company needs active-active API deployment across multiple AWS Regions with minimal operational overhead. Which THREE changes best meet these requirements?",
   "options": [
    {
     "id": "A",
@@ -679,18 +1065,72 @@
    "C"
   ],
   "answerCount": 3,
-  "explanation": "Deploy the API in each Region and use Route 53 to route to Regional endpoints (A). Create a KMS multi-Region key with replica keys\n(B) and use Secrets Manager secret replication so each Region has the secret encrypted with the right replica key (C). That is the\nlowest-effort way to keep keys and secrets consistent everywhere.",
+  "explanation": "A+B+C are the intended choices. A deploys regional API endpoints and uses Route 53 DNS routing; multivalue routing distributes healthy endpoint answers but is not a strict global load balancer. B creates a multi-Region customer-managed KMS key and regional replicas. C replicates the existing secret to other Regions with the selected regional KMS keys, so credential updates can propagate. D cannot convert an existing single-Region key to multi-Region and AWS-managed keys are not created that way. E creates manually managed secrets that can drift. F incorrectly asserts a native 'multi-Region option' on an existing API Gateway API. Note: option A alone does not explicitly state deploying the Lambda functions in each Region; regional Lambda deployments are an additional implementation requirement.",
   "wrongOptionsExplanation": "D. AWS managed keys cannot be converted to multi-Region keys. E. Manually copying secrets to each Region creates operational\noverhead and drift. F. API Gateway does not have a \"multi-Region option\" to attach per-Region Lambda backends like that. You\ndeploy the API per Region.",
   "plainWords": "An API Gateway + Lambda + DynamoDB global table API must become active-active in several Regions. Its vendor API key is in\nSecrets Manager encrypted with a customer managed KMS key.",
   "keyPoints": "• Multi-Region encryption = KMS multi-Region keys; multi-Region secrets = Secrets Manager replication. • Active-active API = deploy\nin each Region and route with Route 53.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "A",
+    "B",
+    "C"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/secretsmanager/latest/userguide/replicate-secrets.html",
+    "https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/secretsmanager/latest/userguide/replicate-secrets.html",
+    "https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question retained in snapshot. Source answer unchanged; technical caveats documented."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "A company is deploying a new API to AWS. The API uses Amazon API Gateway with a Regional API endpoint and an AWS Lambda function for hosting. The API retrieves data from an external vendor API, stores data in an Amazon DynamoDB global table, and retrieves data from the DynamoDB global table. The API key for the vendor's API is stored in AWS Secrets Manager and is encrypted with a customer managed key in AWS Key Management Service (AWS KMS). The company has deployed its own API into a single AWS Region. A solutions architect needs to change the API components of the company's API to ensure that the components can run across multiple Regions in an active-active configuration. Which combination of changes will meet this requirement with the LEAST operational overhead? (Choose three.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Deploy the API to multiple Regions. Configure Amazon Route 53 with custom domain names that route traffic to each Regional API endpoint. Implement a Route 53 multivalue answer routing policy."
+    },
+    {
+     "id": "B",
+     "text": "Create a new KMS multi-Region customer managed key. Create a new KMS customer managed replica key in each in-scope Region."
+    },
+    {
+     "id": "C",
+     "text": "Replicate the existing Secrets Manager secret to other Regions. For each in-scope Region's replicated secret, select the appropriate KMS key."
+    },
+    {
+     "id": "D",
+     "text": "Create a new AWS managed KMS key in each in-scope Region. Convert an existing key to a multi-Region key. Use the multi-Region key in other Regions."
+    },
+    {
+     "id": "E",
+     "text": "Create a new Secrets Manager secret in each in-scope Region. Copy the secret value from the existing Region to the new secret in each in-scope Region."
+    },
+    {
+     "id": "F",
+     "text": "Modify the deployment process for the Lambda function to repeat the deployment across in-scope Regions. Turn on the multi-Region option for the existing API. Select the Lambda function that is deployed in each Region as the backend for the multi-Region API."
+    }
+   ],
+   "answers": [
+    "A",
+    "B",
+    "C"
+   ]
+  }
  },
  {
   "id": 20,
   "domain": 1,
-  "stem": "A large company runs workloads in VPCs that are deployed across hundreds of AWS accounts. Each VPC consists to public subnets and private subnets that span across multiple Availability Zones. NAT gateways are deployed in the public subnets and allow outbound connectivity to the internet from the private subnets. A solutions architect is working on a hub-and-spoke design. All private subnets in the spoke VPCs must route traffic to the internet through an egress VPC. The solutions architect already has deployed a NAT gateway in an egress VPC in a central AWS account. Which set of additional steps should the solutions architect take to meet these requirements?",
+  "stem": "A company operates hundreds of VPCs across AWS accounts. Private subnets currently reach the internet through NAT gateways in their own VPCs. The company wants a hub-and-spoke architecture that routes all private-subnet internet traffic through an existing NAT gateway in a centralized egress VPC. Which additional steps meet this requirement?",
   "options": [
    {
     "id": "A",
@@ -713,18 +1153,60 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "Create one Transit Gateway, share it with the accounts through AWS RAM, attach the spoke VPCs and the egress VPC, and add routes\nsending 0.0.0.0/0 from the spokes to the egress VPC. This scales to hundreds of VPCs and keeps egress central.",
+  "explanation": "B is correct. Create and share an AWS Transit Gateway across accounts (for example using AWS RAM), attach the spoke and egress VPCs, and configure VPC and transit-gateway route tables so spoke default routes reach the egress VPC and return traffic reaches the correct spoke. A VPC peering does not provide transitive routing through a peer's internet gateway/NAT gateway. C proposes a transit gateway per account and incorrectly attaches a NAT gateway directly to transit gateways. D PrivateLink exposes specific endpoint services, not general internet egress. Centralized egress adds Transit Gateway processing charges and must be designed for high availability across AZs.",
   "wrongOptionsExplanation": "A. Peering is non-transitive and cannot use another VPC's NAT gateway. It also does not scale to hundreds of VPCs. C. You do not\ncreate a Transit Gateway in every account, and you cannot attach a NAT gateway to one. D. PrivateLink exposes specific services, it is\nnot a general internet egress path.",
   "plainWords": "Hundreds of accounts need their private subnets to reach the internet through one NAT gateway in a central egress VPC.",
   "keyPoints": "• Hub-and-spoke, many accounts, central egress = Transit Gateway + RAM + egress VPC. • VPC peering is not transitive.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "B"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/using-nat-gateway-for-centralized-egress.html",
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/transitioning-to-multiple-aws-accounts/centralized-egress.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/using-nat-gateway-for-centralized-egress.html",
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/transitioning-to-multiple-aws-accounts/centralized-egress.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original question retained in snapshot. Source answer unchanged; technical caveats documented."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "A large company runs workloads in VPCs that are deployed across hundreds of AWS accounts. Each VPC consists to public subnets and private subnets that span across multiple Availability Zones. NAT gateways are deployed in the public subnets and allow outbound connectivity to the internet from the private subnets. A solutions architect is working on a hub-and-spoke design. All private subnets in the spoke VPCs must route traffic to the internet through an egress VPC. The solutions architect already has deployed a NAT gateway in an egress VPC in a central AWS account. Which set of additional steps should the solutions architect take to meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create peering connections between the egress VPC and the spoke VPCs. Configure the required routing to allow access to the internet."
+    },
+    {
+     "id": "B",
+     "text": "Create a transit gateway, and share it with the existing AWS accounts. Attach existing VPCs to the transit gateway Configure the required routing to allow access to the internet."
+    },
+    {
+     "id": "C",
+     "text": "Create a transit gateway in every account. Attach the NAT gateway to the transit gateways. Configure the required routing to allow access to the internet."
+    },
+    {
+     "id": "D",
+     "text": "Create an AWS PrivateLink connection between the egress VPC and the spoke VPCs. Configure the required routing to allow access to the internet"
+    }
+   ],
+   "answers": [
+    "B"
+   ]
+  }
  },
  {
   "id": 21,
   "domain": 4,
-  "stem": "An AWS customer has a web application that runs on premises. The web application fetches data from a third-party API that is behind a firewall. The third party accepts only one public CIDR block in each client's allow list. The customer wants to migrate their web application to the AWS Cloud. The application will be hosted on a set of Amazon EC2 instances behind an Application Load Balancer (ALB) in a VPC. The ALB is located in public subnets. The EC2 instances are located in private subnets. NAT gateways provide internet access to the private subnets. How should a solutions architect ensure that the web application can continue to call the third-parly API after the migration?",
+  "stem": "A company is migrating an on-premises web application to EC2 instances in private subnets behind a public Application Load Balancer. The application calls a third-party API whose firewall permits only one customer-owned public CIDR block. Internet-bound requests from the private instances use NAT gateways. How can the company preserve API access after migration?",
   "options": [
    {
     "id": "A",
@@ -747,18 +1229,60 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "Outbound traffic to the internet leaves through the NAT gateways, so those are the source IPs the third party sees. Bring your own IP\nblock (BYOIP) into the account, create Elastic IPs from it, and assign them to the NAT gateways. The firewall rule stays valid.",
+  "explanation": "B is correct. Register the customer-owned public IPv4 prefix using Bring Your Own IP (BYOIP), allocate Elastic IP addresses from it, and associate them with the public NAT gateways. The third party sees the NAT gateways' public egress IP addresses; ensure all such addresses fall within the permitted CIDR. A merely assigns public addressing to public subnets and does not control private-instance NAT egress. C is invalid because ALBs do not accept static Elastic IP associations and are inbound-facing here. D uses Global Accelerator for inbound application traffic, not outbound API requests from private EC2 instances. The question assumes the customer owns the allowed prefix.",
   "wrongOptionsExplanation": "A. Associating a block to a VPC and enabling public IPs on subnets does not control the NAT source address. C. ALBs cannot be\nassigned Elastic IPs, and inbound ALB addresses are not the outbound source addresses. D. Global Accelerator provides static\ninbound IPs for users, not the outbound source address for calls to a vendor.",
   "plainWords": "A third party allows only one public CIDR block. The app will run behind an ALB with instances in private subnets that use NAT\ngateways for outbound calls.",
   "keyPoints": "• Source IP of outbound calls from private subnets = NAT gateway Elastic IP. • Need your existing IP range in AWS = BYOIP.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "B"
+   ],
+   "references": [
+    "https://aws.amazon.com/vpc/faqs/",
+    "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://aws.amazon.com/vpc/faqs/",
+    "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-question-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original text retained in snapshot. Answer unchanged; added AWS evidence and alternatives analysis."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "An AWS customer has a web application that runs on premises. The web application fetches data from a third-party API that is behind a firewall. The third party accepts only one public CIDR block in each client's allow list. The customer wants to migrate their web application to the AWS Cloud. The application will be hosted on a set of Amazon EC2 instances behind an Application Load Balancer (ALB) in a VPC. The ALB is located in public subnets. The EC2 instances are located in private subnets. NAT gateways provide internet access to the private subnets. How should a solutions architect ensure that the web application can continue to call the third-parly API after the migration?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Associate a block of customer-owned public IP addresses to the VPC. Enable public IP addressing for public subnets in the VPC."
+    },
+    {
+     "id": "B",
+     "text": "Register a block of customer-owned public IP addresses in the AWS account. Create Elastic IP addresses from the address block and assign them lo the NAT gateways in the VPC."
+    },
+    {
+     "id": "C",
+     "text": "Create Elastic IP addresses from the block of customer-owned IP addresses. Assign the static Elastic IP addresses to the ALB."
+    },
+    {
+     "id": "D",
+     "text": "Register a block of customer-owned public IP addresses in the AWS account. Set up AWS Global Accelerator to use Elastic IP addresses from the address block. Set the ALB as the accelerator endpoint."
+    }
+   ],
+   "answers": [
+    "B"
+   ]
+  }
  },
  {
   "id": 22,
   "domain": 4,
-  "stem": "An online gaming company needs to rehost its gaming platform on AWS. The company's gaming application requires high performance computing (HPC) processing. The application has a leaderboard that updates frequently. The company uses an Amazon EC2 compute optimized instance that runs Ubuntu to host a Node.js application to display the game. The company tracks the state of the application in an on-premises Redis instance. The company needs a migration strategy that optimizes application performance. Which solution will meet these requirements?",
+  "stem": "A gaming company is rehosting a compute-intensive application on AWS. It runs a Node.js application on Ubuntu EC2 compute-optimized instances and currently uses an on-premises Redis instance to maintain frequently updated leaderboards. Which architecture best preserves performance after migration?",
   "options": [
    {
     "id": "A",
@@ -781,18 +1305,60 @@
    "C"
   ],
   "answerCount": 1,
-  "explanation": "Use compute optimized On-Demand instances (HPC-style CPU needs, stable game sessions) behind an ALB with Auto Scaling, and\nmove Redis to ElastiCache for Redis, which gives microsecond latency and sorted sets that are ideal for leaderboards, with almost no\ncode change.",
+  "explanation": "C is the best choice. Compute-optimized On-Demand EC2 instances support CPU-intensive application work with no Spot interruption risk, while ElastiCache for Redis OSS supports frequently updated leaderboards using sorted sets. A switches to memory-optimized Spot instances, mismatching compute requirements and introducing interruption risk. B uses OpenSearch for a workload already modeled in Redis and adds Spot interruption risk. D also changes the compute profile and replaces Redis with DynamoDB, requiring a leaderboard data-model change. Redis sorted sets support efficient score and ranking updates.",
   "wrongOptionsExplanation": "A. Memory optimized Spot instances are the wrong shape for compute-heavy HPC and Spot interruptions hurt live games. B.\nOpenSearch is a search and analytics engine, not a leaderboard store. D. Memory optimized instances do not match the compute\nneed and moving to DynamoDB requires redesigning the Redis logic.",
   "plainWords": "A game rehosted on EC2 needs HPC-class compute and a fast leaderboard that currently runs on an on-prem Redis instance.",
   "keyPoints": "• Leaderboard / sorted sets / existing Redis = ElastiCache for Redis. • Compute-heavy = compute optimized (C family).\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "C"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html",
+    "https://redis.io/docs/latest/develop/use-cases/leaderboard/"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html",
+    "https://redis.io/docs/latest/develop/use-cases/leaderboard/"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-question-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original text retained in snapshot. Answer unchanged; added AWS evidence and alternatives analysis."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "An online gaming company needs to rehost its gaming platform on AWS. The company's gaming application requires high performance computing (HPC) processing. The application has a leaderboard that updates frequently. The company uses an Amazon EC2 compute optimized instance that runs Ubuntu to host a Node.js application to display the game. The company tracks the state of the application in an on-premises Redis instance. The company needs a migration strategy that optimizes application performance. Which solution will meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create an Auto Scaling group of memory optimized Amazon EC2 Spot Instances behind an Application Load Balancer. Use an Amazon ElastiCache (Redis OSS) cluster to maintain the leaderboard."
+    },
+    {
+     "id": "B",
+     "text": "Create an Auto Scaling group of compute optimized Amazon EC2 Spot Instances behind an Application Load Balancer. Use an Amazon OpenSearch Service cluster to maintain the leaderboard."
+    },
+    {
+     "id": "C",
+     "text": "Create an Auto Scaling group of compute optimized Amazon EC2 On-Demand Instances behind an Application Load Balancer. Use an Amazon ElastiCache (Redis OSS) cluster to maintain the leaderboard."
+    },
+    {
+     "id": "D",
+     "text": "Create an Auto Scaling group of memory optimized Amazon EC2 On-Demand Instances behind an Application Load Balancer. Use an Amazon DynamoDB table to maintain the leaderboard."
+    }
+   ],
+   "answers": [
+    "C"
+   ]
+  }
  },
  {
   "id": 23,
   "domain": 2,
-  "stem": "An e-commerce company is revamping its IT infrastructure and is planning to use AWS services. The company's CIO has asked a solutions architect to design a simple, highly available, and loosely coupled order processing application. The application is responsible for receiving and processing orders before storing them in an Amazon DynamoDB table. The application has a sporadic traffic pattern and should be able to scale during marketing campaigns to process the orders with minimal delays. Which of the following is the MOST reliable approach to meet the requirements?",
+  "stem": "An e-commerce company needs a simple, highly available, loosely coupled order-processing application. Order traffic is sporadic, with spikes during marketing campaigns. Orders must be processed promptly and stored in DynamoDB. Which architecture is the most reliable?",
   "options": [
    {
     "id": "A",
@@ -815,18 +1381,60 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "SQS durably stores orders and buffers spikes. Lambda polls the queue and scales automatically with the queue depth, then writes to\nDynamoDB. There are no servers to run, retries are built in, and a dead-letter queue catches poison messages.",
+  "explanation": "B is correct. SQS durably buffers incoming orders, and an SQS-triggered Lambda function scales processing before writing to DynamoDB. Configure a dead-letter queue, appropriate visibility timeout, retries, and idempotent writes because SQS and Lambda processing can be at least once. A couples intake and processing to EC2-hosted components. C uses Step Functions and ECS but adds orchestration complexity for straightforward asynchronous queue processing. D uses Kinesis and EC2, requiring shard/consumer capacity management without a demonstrated streaming requirement.",
   "wrongOptionsExplanation": "A. A database on EC2 plus EC2 processors is tightly coupled and needs scaling and patching. C. Step Functions as the intake point\nwith ECS tasks is more complex than needed for simple order queuing. D. Kinesis with EC2 consumers requires shard management\nand server operations for a sporadic workload.",
   "plainWords": "A simple, highly available, loosely coupled order pipeline with sporadic traffic and spikes during campaigns.",
   "keyPoints": "• Decouple + buffer + auto scale + minimal ops = SQS + Lambda. • Add a dead-letter queue for failed messages.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "B"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html",
+    "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-best-practices.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html",
+    "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-best-practices.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-question-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original text retained in snapshot. Answer unchanged; added AWS evidence and alternatives analysis."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "An e-commerce company is revamping its IT infrastructure and is planning to use AWS services. The company's CIO has asked a solutions architect to design a simple, highly available, and loosely coupled order processing application. The application is responsible for receiving and processing orders before storing them in an Amazon DynamoDB table. The application has a sporadic traffic pattern and should be able to scale during marketing campaigns to process the orders with minimal delays. Which of the following is the MOST reliable approach to meet the requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Receive the orders in an Amazon EC2-hosted database and use EC2 instances to process them."
+    },
+    {
+     "id": "B",
+     "text": "Receive the orders in an Amazon SQS queue and invoke an AWS Lambda function to processthem."
+    },
+    {
+     "id": "C",
+     "text": "Receive the orders using the AWS Step Functions program and launch an Amazon ECS container to process them."
+    },
+    {
+     "id": "D",
+     "text": "Receive the orders in Amazon Kinesis Data Streams and use Amazon EC2 instances to process them."
+    }
+   ],
+   "answers": [
+    "B"
+   ]
+  }
  },
  {
   "id": 24,
   "domain": 3,
-  "stem": "A company has multiple applications that run on Amazon EC2 instances in private subnets in a VPC. The company has deployed multiple NAT gateways in multiple Availability Zones for internet access. The company wants to block certain websites from being accessed through the NAT gateways. The company also wants to identify the internet destinations that the EC2 instances access. The company has already created VPC flow logs for the NAT gateways' elastic network interfaces. Which solution will meet these requirements?",
+  "stem": "A company runs EC2 applications in private VPC subnets that use NAT gateways across multiple Availability Zones for internet access. It must identify outbound internet destinations and block access to selected websites. VPC Flow Logs already capture traffic on the NAT gateways' network interfaces. Which solution meets these requirements?",
   "options": [
    {
     "id": "A",
@@ -849,13 +1457,55 @@
    "A"
   ],
   "answerCount": 1,
-  "explanation": "Flow Logs record the source and destination IPs, which you can query with CloudWatch Logs Insights to see destinations. AWS\nNetwork Firewall can filter outbound traffic by domain name or IP inside the VPC, so it can block unwanted websites.",
+  "explanation": "A is the best offered answer. CloudWatch Logs Insights can analyze NAT interface VPC Flow Logs to identify destination IP addresses, while AWS Network Firewall can filter outbound traffic using domain-based or stateful rules when routed through firewall endpoints. Important caveat: VPC Flow Logs do not record domain names or URLs; add Network Firewall logs, DNS logs, or other application-layer telemetry to identify websites by name. B and D incorrectly use AWS WAF, which protects HTTP(S) applications and is not a general outbound NAT egress filter. C and D rely on CloudWatch byte-count metrics that cannot identify destinations. Firewall routing and AZ-aware deployment are required.",
   "wrongOptionsExplanation": "B. AWS WAF protects HTTP traffic to CloudFront, ALB or API Gateway. It does not filter outbound traffic from a NAT gateway. C.\nCloudWatch NAT metrics show byte totals, not the destinations. D. Same metrics problem, and WAF is the wrong place to block\negress.",
   "plainWords": "You need to identify which internet destinations EC2 instances contact through NAT gateways and block specific sites. VPC Flow Logs\nalready exist.",
   "keyPoints": "• Outbound domain filtering = Network Firewall (or DNS Firewall for DNS lookups). • WAF = inbound web requests. Flow Logs = who\ntalked to whom.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-reviewed-external-pending",
+   "originalAnswers": [
+    "A"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-outbound-network-traffic/vpc-security-requirements.html",
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/use-network-firewall-to-capture-the-dns-domain-names-from-the-server-name-indication-sni-for-outbound-traffic.html"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-outbound-network-traffic/vpc-security-requirements.html",
+    "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/use-network-firewall-to-capture-the-dns-domain-names-from-the-server-name-indication-sni-for-outbound-traffic.html"
+   ],
+   "externalQuestionLinks": [],
+   "crossVerificationStatus": "aws-docs-checked-third-party-question-match-pending",
+   "correctedStudyVersion": true,
+   "auditNote": "Original text retained in snapshot. Answer unchanged; added AWS evidence and alternatives analysis."
+  },
+  "answerStatus": "aws-docs-reviewed-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "A company has multiple applications that run on Amazon EC2 instances in private subnets in a VPC. The company has deployed multiple NAT gateways in multiple Availability Zones for internet access. The company wants to block certain websites from being accessed through the NAT gateways. The company also wants to identify the internet destinations that the EC2 instances access. The company has already created VPC flow logs for the NAT gateways' elastic network interfaces. Which solution will meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Use Amazon CloudWatch Logs Insights to query the logs and determine the internet destinations that the EC2 instances communicate with. Use AWS Network Firewall to blockthe websites."
+    },
+    {
+     "id": "B",
+     "text": "Use Amazon CloudWatch Logs Insights to query the logs and determine the internet destinations that the EC2 instances communicate with. Use AWS WAF to block the websites."
+    },
+    {
+     "id": "C",
+     "text": "Use the BytesInFromSource and BytesInFromDestination Amazon CloudWatch metrics to determine the internet destinations that the EC2 instances communicate with. Use AWS Network Firewall to block the websites."
+    },
+    {
+     "id": "D",
+     "text": "Use the BytesInFromSource and BytesInFromDestination Amazon CloudWatch metrics to determine the internet destinations that the EC2 instances communicate with. Use AWS WAF to block the websites."
+    }
+   ],
+   "answers": [
+    "A"
+   ]
+  }
  },
  {
   "id": 25,
@@ -1196,16 +1846,27 @@
    }
   ],
   "answers": [
-   "C"
+   "B"
   ],
   "answerCount": 1,
   "explanation": "",
   "wrongOptionsExplanation": "A. A CloudWatch alarm cannot directly add an IP to a web ACL, and constantly changing IPs make manual lists useless. C. Route\ntables do not support deny rules. Only network ACLs and security groups filter traffic, so this design is not possible as written. D.\nBlocking whole countries by guessing is crude and Route 53 geolocation routing does not block traffic.",
   "plainWords": "Application-layer attacks come from many different IP addresses and cause traffic spikes. A WAF web ACL already protects the ALB.\nYou want the least operational work. Why my answer (B) works AWS Shield Advanced adds automatic application-layer DDoS\ndetection and mitigation on top of AWS WAF. It can create and apply WAF rules automatically in response to an attack, so you do not\nchase IP addresses by hand. You enable it and add the ALB as a protected resource.",
   "keyPoints": "• Layer 7 DDoS with minimal effort = Shield Advanced + WAF (automatic mitigation). • A WAF rate-based rule is the other common\ntool for request floods.\nHEADS-UP ON THIS QUESTION\n• The bank key says C, but a route table cannot hold a deny rule, so that option cannot work as written. B is the answer widely\naccepted for this scenario. If you see this on the real exam, look for Shield Advanced or a WAF rate-based rule.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-  "sourceWarning": "Source key appears questionable: route tables cannot deny arbitrary attacker IPs.",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Source key C invalid: VPC subnet route tables cannot deny traffic by source IP. B is feasible; WAF rate-based rules would be preferable but are not offered.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-verified-correction",
+   "originalAnswers": [
+    "C"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/waf/latest/developerguide/ddos-app-layer-web-ACL-and-rbr.html",
+    "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html"
+   ],
+   "auditNote": "C invalid: subnet route tables do not implement source-IP deny rules. B is the only feasible supplied managed mitigation, although WAF rate-based rules are a better low-overhead recommendation not offered."
+  },
+  "answerStatus": "corrected-aws-docs"
  },
  {
   "id": 35,
@@ -1536,16 +2197,56 @@
    }
   ],
   "answers": [
-   "D"
+   "B"
   ],
   "answerCount": 1,
-  "explanation": "",
+  "explanation": "SOURCE KEY D IS TECHNICALLY INVALID AS WRITTEN. Registering an on-premises VM as a Systems Manager managed instance does not make AWS Backup create a VMware VM snapshot or AMI from that managed-instance registration. AWS Backup's VMware integration requires AWS Backup gateway and a registered VMware hypervisor; AWS Backup can then restore supported VM recovery points to EC2. B is the closest feasible listed option: export a VMware VM to a supported import image, upload it to S3, configure the VM Import service role, and use VM Import/Export to import it to EC2, subject to supported formats and OS restrictions. B's wording should specify supported export format and import-image steps. A/C do not describe a workable VM migration workflow. Keep original D in snapshot; the key is corrected to B as the best offered option, but exact source-site verification is pending.",
   "wrongOptionsExplanation": "A. DataSync and FSx for Windows are for file data, not a method to move whole VMs, so this combination does not make sense. C.\nStorage Gateway file shares do not capture a bootable VM image. D. Systems Manager hybrid activation manages servers but does\nnot snapshot an on-prem VM into an AMI, and AWS Backup does not back up arbitrary on-prem VMs this way.",
   "plainWords": "Migrate an application from on-prem VMware to EC2 while preserving the software and configuration settings. Why my answer (B)\nworks Export the VM from vSphere as an OVF/OVA image, upload it to S3, create the IAM role VM Import requires, and run the EC2\nimport command (VM Import/Export). The result is an AMI that contains the same operating system, software and settings as the\noriginal VM.",
   "keyPoints": "• Whole VM to an AMI = VM Import/Export (OVA/OVF to S3, then import). • For continuous replication and cutover, the managed\nservice is Application Migration Service (MGN).\nHEADS-UP ON THIS QUESTION\n• The bank key says D, but Systems Manager plus AWS Backup cannot turn an on-prem VM into an AMI. B is the answer commonly\naccepted for this question. In a new design you would usually pick AWS Application Migration Service.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "domain4-key-corrected-best-offered-external-pending",
+   "originalAnswers": [
+    "D"
+   ],
+   "correctedAnswers": [
+    "B"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/vm-backups.html",
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-vm.html",
+    "https://docs.aws.amazon.com/en_us/prescriptive-guidance/latest/patterns/migrate-an-on-premises-vm-to-amazon-ec2-by-using-aws-application-migration-service.html"
+   ],
+   "crossVerificationStatus": "official-aws-verified-external-question-match-pending",
+   "auditNote": "Source D does not describe AWS Backup VMware gateway mechanism. B is feasible using VM Import/Export; AWS MGN or AWS Backup gateway restore are modern alternatives not listed."
+  },
+  "answerStatus": "domain4-key-corrected-best-offered-external-pending",
+  "originalQuestionSnapshot": {
+   "stem": "A company wants to migrate an application to Amazon EC2 from VMware Infrastructure that runs in an on-premises data center. A solutions architect must preserve the software and configuration settings during the migration. What should the solutions architect do to meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Configure the AWS DataSync agent to start replicating the data store to Amazon FSx for Windows File Server Use the SMB share to host the VMware data store. Use VM Import/Export to move the VMs to Amazon EC2."
+    },
+    {
+     "id": "B",
+     "text": "Use the VMware vSphere client to export the application as an image in Open Virealization Format (OVF) format Create an Amazon S3 bucket to store the image in the destination AWS Region. Create and apply an IAM role for VM Import Use the AWS CLI to run the EC2 import command."
+    },
+    {
+     "id": "C",
+     "text": ". Configure AWS Storage Gateway for files service to export a Common Internet File System(CIFSJ share. Create a backup copy to the shared folder. Sign in to the AWS Management Console and create an AMI from the backup copy Launch an EC2 instance that is based on the AMI."
+    },
+    {
+     "id": "D",
+     "text": "Create a managed-instance activation for a hybrid environment in AWS Systems Manager. Download and install Systems Manager Agent on the on-premises VM Register the VM with Systems Manager to be a managed instance Use AWS Backup to create a snapshot of the VM and create an AMI. Launch an EC2 instance that is based on the AMI"
+    }
+   ],
+   "answers": [
+    "D"
+   ]
+  }
  },
  {
   "id": 45,
@@ -1967,13 +2668,53 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "The AWS Application Discovery Agent installs on servers (physical or virtual) and collects configuration, performance, running\nprocesses and network connections, which reveals dependencies. Migration Hub stores the data, and Migration Hub Strategy\nRecommendations analyzes applications and suggests strategies.",
+  "explanation": "B is the intended answer. The Application Discovery Agent gathers server configuration, performance, running processes, and network connections from supported physical and virtual servers; Strategy Recommendations adds application analysis for migration planning. A focuses on cost assessment and does not fully capture the application relationship workflow. C incorrectly says to run the agentless collector 'on the servers' and to group servers using Application Migration Service. D assumes an existing inventory despite the stem stating it is incomplete. Verify current availability of legacy Migration Hub Strategy Recommendations before implementing this as a new architecture.",
   "wrongOptionsExplanation": "A. Migration Evaluator is a business case and TCO tool and the agentless collector does not collect network dependencies. C. The\nagentless collector supports VMware VMs only and does not capture network connections. It does not work for physical servers. D.\nImporting details requires you to already have the data.",
   "plainWords": "The company has physical and virtual Windows and Linux servers, no reliable inventory, and needs network connections and\napplication relationships to rightsize and plan.",
   "keyPoints": "• Dependency mapping for physical and virtual servers = Application Discovery Agent. • Agentless collector = VMware only, no\nnetwork connections.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "domain4-reviewed-legacy-service-check-needed",
+   "originalAnswers": [
+    "B"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html",
+    "https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/what-is-mhub-strategy.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html",
+    "https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/what-is-mhub-strategy.html"
+   ],
+   "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
+   "auditNote": "Source answer retained; technical caveats documented."
+  },
+  "answerStatus": "domain4-reviewed-legacy-service-check-needed",
+  "originalQuestionSnapshot": {
+   "stem": "A company is planning to migrate to the AWS Cloud. The company hosts many applications on Windows servers and Linux servers. Some of the servers are physical, and some of the servers are virtual. The company uses several types of databases in its on- premises environment. The company does not have an accurate inventory of its on- premises servers and applications. The company wants to rightsize its resources during migration. A solutions architect needs to obtain information about the network connections and the application relationships. The solutions architect must assess the company's current environment and develop a migration plan. Which solution will provide the solutions architect with the required information to develop the migration plan?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Use Migration Evaluator to request an evaluation of the environment from AWS. Use the AWS Application Discovery Service Agentless Collector to import the details into a Migration Evaluator Quick Insights report."
+    },
+    {
+     "id": "B",
+     "text": "Use AWS Migration Hub and install the AWS Application Discovery Agent on the servers. Deploy the Migration Hub Strategy Recommendations application data collector. Generate a report by using Migration Hub Strategy Recommendations."
+    },
+    {
+     "id": "C",
+     "text": "Use AWS Migration Hub and run the AWS Application Discovery Service Agentless Collector on the servers. Group the servers and databases by using AWS Application Migration Service. Generate a report by using Migration Hub Strategy Recommendations."
+    },
+    {
+     "id": "D",
+     "text": "Use the AWS Migration Hub import tool to load the details of the company's on- premises environment. Generate a report by using Migration Hub Strategy Recommendations."
+    }
+   ],
+   "answers": [
+    "B"
+   ]
+  }
  },
  {
   "id": 57,
@@ -2144,16 +2885,46 @@
    }
   ],
   "answers": [
-   "B"
+   "C"
   ],
   "answerCount": 1,
   "explanation": "",
   "wrongOptionsExplanation": "A. Elastic Disaster Recovery replicates servers, not repositories. B. AWS Backup does not support CodeCommit as a resource type, so\nthis plan cannot be created. D. CodeCommit has no \"snapshot\" API that a Step Functions workflow could call.",
   "plainWords": "A CodeCommit repository needs a backup copy in a second Region. Why my answer (C) works CodeCommit has no cross-Region\nbackup feature of its own, and AWS Backup does not list CodeCommit as a supported resource. The practical pattern is automation:\nan EventBridge rule fires on repository pushes, starts a CodeBuild project that clones the repository, zips it and copies the archive to\nan S3 bucket in the second Region. Each push produces a fresh backup copy.",
   "keyPoints": "• Use AWS Backup only for services it supports (EBS, EFS, RDS, DynamoDB, S3, FSx and more). • When a service has no native\nbackup, think event-driven copy (EventBridge + CodeBuild/Lambda).\nHEADS-UP ON THIS QUESTION\n• The bank key says B, but AWS Backup does not support CodeCommit. C is the answer commonly accepted for this scenario.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Source key B invalid: AWS Backup does not support CodeCommit. C uses CodeBuild and S3 for cross-Region repository copy.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "aws-docs-verified-correction",
+   "originalAnswers": [
+    "B"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html"
+   ],
+   "auditNote": "B invalid: CodeCommit is not an AWS Backup supported resource. C uses push event to CodeBuild and copies archive to S3 in another Region.",
+   "externalQuestionLinks": [
+    "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=71",
+    "https://www.freecram.net/question/Amazon.SAP-C02.v2023-12-13.q142/a-company-uses-an-aws-codecommit-repository-the-company-must-store-a-backup-copy-of-the-data-that-is"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html",
+    "https://github.com/aws-samples/aws-codecommit-serverless-backup"
+   ],
+   "externalSiteAnswers": [
+    "B",
+    "B"
+   ],
+   "independentTechnicalConclusion": "C",
+   "crossVerificationStatus": "conflict-external-sites-vs-aws-docs",
+   "answerReason": "Two third-party sites list B, but official AWS Backup supported resources do not include CodeCommit. AWS sample shows CodeBuild exporting CodeCommit repository archives to S3; therefore C is technically implementable.",
+   "wrongOptionsReason": {
+    "A": "Elastic Disaster Recovery is server replication, not CodeCommit repository backup.",
+    "B": "AWS Backup does not support CodeCommit repositories.",
+    "D": "No native CodeCommit snapshot operation is provided for the described Step Functions workflow."
+   }
+  },
+  "answerStatus": "corrected-aws-docs"
  },
  {
   "id": 62,
@@ -2181,13 +2952,53 @@
    "D"
   ],
   "answerCount": 1,
-  "explanation": "AWS Schema Conversion Tool converts the Oracle schema and stored procedures to PostgreSQL. AWS DMS then does the full load\nand keeps the target in sync with change data capture, so the cutover downtime is tiny. Aurora PostgreSQL is a managed, highly\navailable (multi-AZ storage, replicas) target.",
+  "explanation": "D is the best listed managed target for heterogeneous Oracle-to-PostgreSQL migration: AWS SCT or DMS Schema Conversion converts schemas and supported stored procedures; AWS DMS migrates data and captures ongoing changes. Aurora PostgreSQL offers managed availability. A wrongly treats an S3 bucket as RDS database storage; B is self-managed on EC2 and incurs a prolonged stop; C cannot run Oracle stored procedures in DAX and requires substantial redesign. Caveat: not all Oracle procedural code converts automatically, and DMS CDC is asynchronous; validate converted code and use a controlled cutover to minimize, not guarantee zero, downtime.",
   "wrongOptionsExplanation": "A. RDS cannot use an S3 bucket as its database storage and S3 replication has nothing to do with database HA. B. Backup and restore\nonto EC2 means long downtime and you run the database yourself. C. Moving a relational Oracle database with stored procedures to\nDynamoDB is a full redesign, and DAX cannot run stored procedures.",
   "plainWords": "Migrate an Oracle database with stored procedures quickly and with minimal downtime to a highly available managed database.",
   "keyPoints": "• Heterogeneous migration = SCT for schema and code + DMS for data (full load + CDC). • Managed + highly available relational =\nAurora or Multi-AZ RDS.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "domain4-aws-docs-reviewed",
+   "originalAnswers": [
+    "D"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-oracle-postgresql.html",
+    "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-oracle-postgresql.html",
+    "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html"
+   ],
+   "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
+   "auditNote": "Source answer retained; technical caveats documented."
+  },
+  "answerStatus": "domain4-aws-docs-reviewed",
+  "originalQuestionSnapshot": {
+   "stem": "A company has an application that uses an on-premises Oracle database. The company is migrating the database to the AWS Cloud. The database contains customer data and stored procedures. The company needs to migrate the database as quickly as possible with minimum downtime. The solution on AWS must provide high availability and must use managed services for the database. Which solution will meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Use AWS DMS to replicate data from the on-premises Oracle database to a new Amazon RDS for Oracle database. Transfer the database files to an Amazon S3 bucket. Configure the RDS database to use the S3 bucket as database storage. Set up S3 replication for high availability. Redirect the application to the RDS DB instance."
+    },
+    {
+     "id": "B",
+     "text": "Create a database backup of the on-premises Oracle database. Upload the backup to an Amazon S3 bucket. Shut down the on-premises Oracle database to avoid any new transactions. Restore the backup to a new Oracle cluster that consists of Amazon EC2 instances across two Availability Zones. Redirect the application to the EC2 instances."
+    },
+    {
+     "id": "C",
+     "text": "Use AWS DMS to replicate data from the on-premises Oracle database to a new Amazon DynamoDB table. Use DynamoDB Accelerator (DAX) and implement global tables for high availability. Rewrite the stored procedures in AWS Lambda. Run the stored procedures in DAX. After replication, redirect the application to the DAX cluster endpoint."
+    },
+    {
+     "id": "D",
+     "text": "Use AWS DMS to replicate data from the on-premises Oracle database to a new Amazon Aurora PostgreSQL database. Use AWS SCT to convert the schema and stored procedures. Redirect the application to the Aurora DB cluster."
+    }
+   ],
+   "answers": [
+    "D"
+   ]
+  }
  },
  {
   "id": 63,
@@ -2319,16 +3130,62 @@
    }
   ],
   "answers": [
-   "C"
+   "B"
   ],
   "answerCount": 1,
-  "explanation": "",
+  "explanation": "SOURCE ANSWER C IS INVALID AS WRITTEN because Amazon FSx for Lustre is mounted using the Lustre client and Lustre protocol, not NFS. B is the closest technically valid choice for the unchanged Linux application: mount an Amazon S3 File Gateway NFS share, use its local write-back cache, and let it upload objects asynchronously to S3. RefreshCache is only required for changes written directly to S3, not for files written through the gateway, so that extra clause is unnecessary. Verify the 30-minute availability requirement against gateway upload latency, cache sizing, and operational monitoring; File Gateway does not guarantee every upload completes within 30 minutes. A requires a rewrite; D needs scheduled or event-driven sync and may not meet low-effort/local file-access needs. The original C key is preserved in the snapshot; B is a provisional corrected best option, not a guarantee of the stated SLA.",
   "wrongOptionsExplanation": "A. Rewriting the server as Lambda with the S3 SDK is exactly the code change the company cannot do right now. C. FSx for Lustre is a\nhigh-performance HPC file system, is mounted with the Lustre client (not NFS), and needs import and export configuration. It is\nheavier than needed. D. DataSync on a schedule syncs in batches and adds an extra instance to manage. It is not a live shared file\nsystem.",
   "plainWords": "A Linux server cannot be changed to use the S3 API and needs fast local file access. The files must be in S3 for public download within\n30 minutes. Why my answer (B) works An S3 File Gateway presents an NFS share backed by S3 with a local cache, so the server gets\nfast file access and the gateway uploads new files to S3 within minutes. Customers download from S3 directly. When objects change\nin S3, a RefreshCache call updates what the gateway shows.",
   "keyPoints": "• Legacy NFS/SMB app that must end up in S3 = S3 File Gateway. • Lustre is mounted with the Lustre client, not NFS.\nHEADS-UP ON THIS QUESTION\n• The bank key is C, but option C itself says Lustre is mounted by NFS, which is not correct. I believe B (File Gateway) is the intended\nanswer. This one is less clear-cut than the others.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "domain4-answer-corrected-source-option-invalid",
+   "originalAnswers": [
+    "C"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/fsx/latest/LustreGuide/getting-started.html",
+    "https://docs.aws.amazon.com/filegateway/latest/files3/Requirements.html",
+    "https://docs.aws.amazon.com/filegateway/latest/files3/troubleshooting-file-share-issues.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/fsx/latest/LustreGuide/getting-started.html",
+    "https://docs.aws.amazon.com/filegateway/latest/files3/Requirements.html",
+    "https://docs.aws.amazon.com/filegateway/latest/files3/troubleshooting-file-share-issues.html"
+   ],
+   "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
+   "auditNote": "Corrected best answer B; source C incorrectly specifies NFS for FSx for Lustre. 30-minute SLA not guaranteed.",
+   "correctedAnswers": [
+    "B"
+   ],
+   "correctedStudyVersion": true
+  },
+  "answerStatus": "domain4-answer-corrected-source-option-invalid",
+  "originalQuestionSnapshot": {
+   "stem": "A company is migrating a document processing workload to AWS. The company has updated many applications to natively use the Amazon S3 API to store, retrieve, and modify documents that a processing server generates at a rate of approximately 5 documents every second. After the document processing is finished, customers can download the documents directly from Amazon S3. During the migration, the company discovered that it could not immediately update the processing server that generates many documents to support the S3 API. The server runs on Linux and requires fast local access to the files that the server generates and modifies. When the server finishes processing, the files must be available to the public for download within 30 minutes. Which solution will meet these requirements with the LEAST amount of effort?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Migrate the application to an AWS Lambda function. Use the AWS SDK for Java to generate, modify, and access the files that the company stores directly in Amazon S3."
+    },
+    {
+     "id": "B",
+     "text": "Set up an Amazon S3 File Gateway and configure a file share that is linked to the document store. Mount the file share on an Amazon EC2 instance by using NFS. When changes occur in Amazon S3, initiate a RefreshCache API call to update the S3 File Gateway."
+    },
+    {
+     "id": "C",
+     "text": "Configure Amazon FSx for Lustre with an import and export policy. Link the new file system to an S3 bucket. Install the Lustre client and mount the document store to an Amazon EC2 instance by using NFS."
+    },
+    {
+     "id": "D",
+     "text": "Configure AWS DataSync to connect to an Amazon EC2 instance. Configure a task to synchronize the generated files to and from Amazon S3."
+    }
+   ],
+   "answers": [
+    "C"
+   ]
+  }
  },
  {
   "id": 67,
@@ -2614,13 +3471,65 @@
    "E"
   ],
   "answerCount": 3,
-  "explanation": "Create the PostgreSQL target and convert the schema with SCT (A). Connect the two accounts privately with VPC peering and\nmatching security group rules (C). Run DMS with full load plus change data capture so existing data and ongoing changes arrive (E),\nthen flip the CNAME.",
+  "explanation": "A+C+E is the intended combination. A provisions the target RDS PostgreSQL instance and uses AWS SCT to convert schema and code. C establishes private connectivity between source and target VPCs and configures DB security groups. E runs AWS DMS full load plus CDC and then updates the existing Route 53 CNAME. B misstates AWS SCT as creating a target DB and migrating all initial data. D needlessly exposes the source database publicly. F uses CDC only, omitting existing rows. Critical caveat: DMS CDC is asynchronous; before DNS cutover, quiesce writes, verify lag is zero, validate target consistency and application compatibility, then change DNS and manage existing connections. 'No downtime' and perfectly identical data cannot be guaranteed from these three choices alone.",
   "wrongOptionsExplanation": "B. SCT converts schema and code but does not create the RDS instance with the initial data load. D. Making a production database\npublicly accessible is unnecessary and unsafe. F. CDC only captures changes after it starts. Without a full load the existing data would\nbe missing.",
   "plainWords": "Migrate RDS Oracle to RDS PostgreSQL in another account with no downtime, copying existing and new data, then switch a Route 53\nCNAME.",
   "keyPoints": "• No downtime database migration = DMS full load + CDC, then DNS cutover. • Use a CNAME in the apps so cutover is a DNS change.\nReference: AWS documentation — https://docs.aws.amazon.com/",
   "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "domain4-reviewed-zero-downtime-claim-qualified",
+   "originalAnswers": [
+    "A",
+    "C",
+    "E"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html",
+    "https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-oracle-postgresql.html"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html",
+    "https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-oracle-postgresql.html"
+   ],
+   "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
+   "auditNote": "Source answer retained; technical caveats documented."
+  },
+  "answerStatus": "domain4-reviewed-zero-downtime-claim-qualified",
+  "originalQuestionSnapshot": {
+   "stem": "A company is planning to migrate an Amazon RDS for Oracle database to an RDS for PostgreSQL DB instance in another AWS account. A solutions architect needs to design a migration strategy that will require no downtime and that will minimize the amount of time necessary to complete the migration. The migration strategy must replicate all existing data and any new data that is created during the migration The target database must be identical to the source database at completion of the migration process All applications currently use an Amazon Route 53 CNAME record as their endpoint for communication with the RDS for Oracle DB instance The RDS for Oracle DB instance is in a private subnet. Which combination of steps should the solutions architect take to meet these requirements? (Select THREE)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create a new RDS for PostgreSQL DB instance in the target account Use the AWS Schema Conversion Tool (AWS SCT) to migrate the database schema from the source database to the target database"
+    },
+    {
+     "id": "B",
+     "text": "Use the AWS Schema Conversion Tool (AWS SCT) to create a new RDS for PostgreSQL DB instance in the target account with the schema and initial data from thesource database"
+    },
+    {
+     "id": "C",
+     "text": "Configure VPC peering between the VPCs in the two AWS accounts to provide connectivity to both DB instances from the target account. Configure the security groups that are attached to each DB instance to allow traffic on the database port from the VPC in the target account."
+    },
+    {
+     "id": "D",
+     "text": "Temporarily allow the source DB instance to be publicly accessible to provide connectivity from the VPC in the target account Configure the security groups that are attached to each DB instance to allow traffic on the database port from the VPC in the target account."
+    },
+    {
+     "id": "E",
+     "text": "Use AWS Database Migration Service (AWS DMS) in the target account to perform a full load plus change data capture (CDC) migration from the source database to the target database When the migration is complete, change the CNAME record to point to the target DB instance endpoint"
+    },
+    {
+     "id": "F",
+     "text": "Use AWS Database Migration Service (AWS DMS) in the target account to perform a change data capture (CDC) migration from the source database to the target database When the migration is complete change the CNAME record to pointto the target DB instance endpoint."
+    }
+   ],
+   "answers": [
+    "A",
+    "C",
+    "E"
+   ]
+  }
  },
  {
   "id": 75,
@@ -3280,11 +4189,11 @@
  {
   "id": 94,
   "domain": 2,
-  "stem": "A company runs a serverless application in a single AWS Region. The application accesses external URLs and extracts metadata from those sites. The company uses an Amazon Simple Notification Service (Amazon SNS) topic to publish URLs to an Amazon Simple Queue Service (Amazon SQS) queue An AWS Lambda function uses the queue as an event source and processes the URLs from the queue Results are saved to an Amazon S3 bucket The company wants to process each URL other Regions to compare possible differences in site localization URLs must be published from the existing Region. Results must be written to the existing S3 bucket in the current Region. Which combination of changes will produce multi-Region deployment that meets these requirements? (Select TWO.)",
+  "stem": "A company runs a serverless application in a single AWS Region. The application accesses external URLs and extracts metadata from those sites. An Amazon SNS topic publishes URLs to an Amazon SQS queue. An AWS Lambda function processes messages from the queue and saves results to an Amazon S3 bucket. The company now needs to process each URL from additional AWS Regions to compare differences in website localization. URLs must continue to be published from the existing Region, and results must be saved to the existing S3 bucket. Which TWO changes meet these requirements? (Select TWO.)",
   "options": [
    {
     "id": "A",
-    "text": "Deploy the SOS queue with the Lambda function to other Regions."
+    "text": "Deploy an SQS queue with the Lambda function to other Regions."
    },
    {
     "id": "B",
@@ -3292,7 +4201,7 @@
    },
    {
     "id": "C",
-    "text": "Subscribe the SQS queue in each Region to the SNS topics in each Region."
+    "text": "Subscribe the SQS queue in each Region to the existing SNS topic in the original Region."
    },
    {
     "id": "D",
@@ -3308,13 +4217,58 @@
    "C"
   ],
   "answerCount": 2,
-  "explanation": "Keep the SNS topic in the original Region. In each additional Region deploy an SQS queue with its Lambda consumer (A), and\nsubscribe each Regional queue to the SNS topic (C). SNS supports cross-Region delivery to SQS, so every Region gets each URL, and\nthe Lambdas write results back to the original bucket.",
+  "explanation": "Corrected study version: A deploys each regional SQS queue and Lambda consumer; C subscribes each regional queue to the single original-Region SNS topic. SNS supports cross-Region delivery to SQS, and each regional Lambda writes results to the original S3 bucket. B reverses SNS/SQS subscription direction; D assumes SQS publishes to SNS; E unnecessarily deploys regional SNS publishers.",
   "wrongOptionsExplanation": "B. This direction is reversed: topics do not subscribe to queues. D. SQS queues do not publish to SNS topics. E. Extra SNS topics in\nother Regions would not automatically receive the URLs published in the original Region.",
   "plainWords": "URLs are published from one Region. The same URLs must also be processed in other Regions, and results must still go to the existing\nS3 bucket.",
   "keyPoints": "• SNS can fan out to SQS queues in other Regions.\nHEADS-UP ON THIS QUESTION\n• Option C is worded a little loosely in your PDF. The intended design is one topic in the original Region with queues in every Region\nsubscribed to it.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "A+C are intended, but C says SNS topics in each Region while the stem requires a single original-Region publisher. Correct design subscribes each regional SQS queue to the original SNS topic.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "study-wording-corrected",
+   "originalAnswers": [
+    "A",
+    "C"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/sns/latest/dg/sns-cross-region-delivery.html"
+   ],
+   "auditNote": "Original stem and choices retained in originalQuestionSnapshot; A and C are corrected study options.",
+   "correctedStudyVersion": true,
+   "correctionType": "full-grammar-repair-and-technical-choice-repair",
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/sns/latest/dg/sns-cross-region-delivery.html"
+   ]
+  },
+  "answerStatus": "disputed-wording",
+  "originalQuestionSnapshot": {
+   "stem": "A company runs a serverless application in a single AWS Region. The application accesses external URLs and extracts metadata from those sites. The company uses an Amazon Simple Notification Service (Amazon SNS) topic to publish URLs to an Amazon Simple Queue Service (Amazon SQS) queue An AWS Lambda function uses the queue as an event source and processes the URLs from the queue Results are saved to an Amazon S3 bucket The company wants to process each URL other Regions to compare possible differences in site localization URLs must be published from the existing Region. Results must be written to the existing S3 bucket in the current Region. Which combination of changes will produce multi-Region deployment that meets these requirements? (Select TWO.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Deploy the SOS queue with the Lambda function to other Regions."
+    },
+    {
+     "id": "B",
+     "text": "Subscribe the SNS topic in each Region to the SQS queue."
+    },
+    {
+     "id": "C",
+     "text": "Subscribe the SQS queue in each Region to the SNS topics in each Region."
+    },
+    {
+     "id": "D",
+     "text": "Configure the SQS queue to publish URLs to SNS topics in each Region."
+    },
+    {
+     "id": "E",
+     "text": "Deploy the SNS topic and the Lambda function to other Regions."
+    }
+   ],
+   "answers": [
+    "A",
+    "C"
+   ]
+  }
  },
  {
   "id": 95,
@@ -3342,13 +4296,73 @@
    "D"
   ],
   "answerCount": 1,
-  "explanation": "",
+  "explanation": "DISPUTED QUESTION. The security team must control the encryption key for all existing and future objects. SSE-S3 (AES256) uses S3-managed keys, so A is wrong. B is the closest design because SSE-KMS can use a customer-managed KMS key, default encryption handles future uploads, and existing objects must be rewritten; however B does not explicitly require selecting a customer-managed KMS key. C neither re-encrypts existing objects nor correctly describes bucket policy behavior. D incorrectly combines AES256/default bucket encryption with a customer-managed key; SSE-C customer-provided keys cannot be configured as S3 bucket default encryption. No fully correct option as written. The original D is retained for audit traceability, NOT endorsed. CURRENT AWS UPDATE: Amazon S3 also documents UpdateObjectEncryption to change existing SSE-S3 objects to SSE-KMS without data movement; this does not make any original choice fully correct. A proper solution must explicitly configure a customer-managed KMS key.",
   "wrongOptionsExplanation": "A. \"SSE-S3 with a customer managed key\" does not exist. SSE-S3 keys are managed by S3. C. A bucket policy cannot automatically\nencrypt on GetObject or PutObject. Existing objects also stay on SSE-S3 until re-written. D. \"AES-256 with a customer managed key\"\nis not a valid S3 option. AES-256 is the SSE-S3 setting.",
   "plainWords": "All current and future objects must be encrypted with keys managed by the security team. The bucket currently uses SSE-S3 and has\nno versioning. Why my answer (B) works Change the bucket default encryption to SSE-KMS using a customer managed KMS key (the\nsecurity team controls it), add a bucket policy that denies PutObject requests that do not use it, and re-copy the existing objects so\nthey are re-encrypted with the new key.",
   "keyPoints": "• Keys managed by you in S3 = SSE-KMS with a customer managed key (or SSE-C). • Changing default encryption does not touch\nexisting objects. You must re-copy them.\nHEADS-UP ON THIS QUESTION\n• The bank key says D, but \"AES-256 with a customer managed key\" is not a real S3 configuration. B is the closest valid answer if it\nuses a customer managed KMS key.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Source key D invalid (AES256 means SSE-S3). B does not explicitly specify a customer managed KMS key. No option unambiguously satisfies requirement; original key retained pending original-source review.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "disputed-no-fully-correct-option",
+   "originalAnswers": [
+    "D"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html",
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingServerSideEncryption.html"
+   ],
+   "auditNote": "No fully correct original option. Updated AWS documentation additionally supports UpdateObjectEncryption for changing existing SSE-S3 objects to SSE-KMS without copying; the original question's suggested re-upload is not the only method. AES256 default does not support a KMS customer-managed key.",
+   "externalQuestionLinks": [
+    "https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-health-insurance-company-stores-personally-identifiable-information-pii-in-an-amazon-s3-bucket-the",
+    "https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=28",
+    "https://www.certsmania.com/pdf/amazon-web-services-test-prep-material-pack-sap-c02-passing-score-by-binod.pdf"
+   ],
+   "externalSiteAnswers": [
+    "B",
+    "D",
+    "D"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html",
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html",
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/update-sse-encryption.html",
+    "https://docs.aws.amazon.com/AmazonS3/latest/API/API_ServerSideEncryptionByDefault.html"
+   ],
+   "crossVerificationStatus": "conflicting-external-answer-keys",
+   "answerReason": "External sites disagree: FreeCram B; FreePDFDumps and Certsmania D. SSE-C uses AES256 with customer-provided keys but cannot be configured as S3 bucket default encryption; SSE-KMS supports customer-managed KMS keys but B does not explicitly name customer-managed rather than AWS-managed KMS key. Retain D only as source key and mark ambiguous.",
+   "wrongOptionsReason": {
+    "A": "SSE-S3 keys are not customer managed.",
+    "B": "Closest but unspecified KMS key defaults to AWS-managed aws/s3, not a security-team-controlled key.",
+    "C": "Existing objects remain unchanged; GetObject does not perform re-encryption.",
+    "D": "AES256 denotes SSE-S3 for bucket default encryption; cannot specify customer-managed key there."
+   },
+   "suggestedCorrectedOptionB": "Configure S3 bucket default encryption as SSE-KMS with a security-team-controlled customer managed KMS key. Re-encrypt existing objects using UpdateObjectEncryption or an appropriate S3 Batch Operations copy, and enforce the designated key for future uploads using a bucket policy."
+  },
+  "answerStatus": "disputed-no-valid-option",
+  "originalQuestionSnapshot": {
+   "stem": "A health insurance company stores personally identifiable information (PII) in an Amazon S3 bucket. The company uses server-side encryption with S3 managed encryption keys (SSE-S3) to encrypt the objects. According to a new requirement, all current and future objects in the S3 bucket must be encrypted by keys that the company’s security team manages. The S3 bucket does not have versioning enabled. Which solution will meet these requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "In the S3 bucket properties, change the default encryption to SSE-S3 with a customer managed key. Use the AWS CLI to re-upload all objects in the S3 bucket. Set an S3 bucket policy to deny unencrypted PutObject requests."
+    },
+    {
+     "id": "B",
+     "text": "In the S3 bucket properties, change the default encryption to server-side encryption with AWS KMS managed encryption keys (SSE-KMS). Set an S3 bucket policy to deny unencrypted PutObject requests. Use the AWS CLI to re-upload all objects in the S3 bucket."
+    },
+    {
+     "id": "C",
+     "text": "In the S3 bucket properties, change the default encryption to server-side encryption with AWS KMS managed encryption keys (SSE-KMS). Set an S3 bucket policy to automatically encrypt objects on GetObject and PutObject requests."
+    },
+    {
+     "id": "D",
+     "text": "In the S3 bucket properties, change the default encryption to AES-256 with a customer managed key. Attach a policy to deny unencrypted PutObject requests to any entities that access the S3 bucket. Use the AWS CLI to re-upload all objects in the S3 bucket."
+    }
+   ],
+   "answers": [
+    "D"
+   ]
+  }
  },
  {
   "id": 96,
@@ -3622,17 +4636,61 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "",
+  "explanation": "SOURCE KEY B DISPUTED. The baseline should receive committed-use discounts, while short event-driven peaks are candidates for Spot where interruption tolerance allows. Compute Savings Plans cover both EC2 and EKS Fargate usage, unlike EC2 Instance Savings Plans. B commits to a medium rather than baseline load and uses On-Demand Capacity Reservations for peaks, which primarily guarantee capacity, not discounts; read replicas help only read-heavy DB load. D better matches the stated cost optimization pattern (baseline Compute Savings Plans, Spot peak capacity, baseline RDS RI, temporary DB scale-up), but manual database resizing and Spot interruption constraints mean the question cannot establish a universally cheapest answer without more information. Stored B retained pending external question match.",
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
-  "sourceWarning": "",
+  "sourceWarning": "B is source key, but On-Demand Capacity Reservations do not lower peak cost; D has Compute Savings Plans (also covers future Fargate), Spot peaks, and all-upfront baseline RDS RI. Cannot prove most cost-effective without workload assumptions; retain B pending comparison.",
   "review": {
    "status": "Answer key questionable",
    "note": "On-Demand Capacity Reservations guarantee capacity, not discounted pricing. Cheapest design depends on usage and workload assumptions.",
-   "reference": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/cost_pricing_model_analysis.html"
+   "reference": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/cost_pricing_model_analysis.html",
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "disputed-cost-optimization",
+   "originalAnswers": [
+    "B"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html",
+    "https://docs.aws.amazon.com/eks/latest/best-practices/cost-opt-compute.html"
+   ],
+   "auditNote": "B is source key, but On-Demand Capacity Reservations do not lower peak cost; D has Compute Savings Plans (also covers future Fargate), Spot peaks, and all-upfront baseline RDS RI. Cannot prove most cost-effective without workload assumptions; retain B pending comparison.",
+   "wrongOptionsReason": {
+    "A": "Reserves database capacity for infrequent peak all year.",
+    "B": "Source answer; reservations guarantee capacity rather than being a cost optimization for spikes; medium commitment may overcommit.",
+    "C": "EC2 Instance Savings Plans do not cover Fargate usage.",
+    "D": "Potentially better cost match, but manually scaling DB may require downtime and Spot may not suit all traffic."
+   },
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html",
+    "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html"
+   ]
   },
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "disputed-cost-optimization",
+  "originalQuestionSnapshot": {
+   "stem": "A company is running an event ticketing platform on AWS and wants to optimize the platform's cost-effectiveness. The platform is deployed on Amazon Elastic Kubernetes Service (Amazon EKS) with Amazon EC2 and is backed by an Amazon RDS for MySQL DB instance. The company is developing new application features to run on Amazon EKS with AWS Fargate. The platform experiences infrequent high peaks in demand. The surges in demand depend on event dates. Which solution will provide the MOST cost-effective setup for the platform?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Purchase Standard Reserved Instances for the EC2 instances that the EKS cluster uses in its baseline load. Scale the cluster with Spot Instances to handle peaks. Purchase 1-year All Upfront Reserved Instances for the database to meet predicted peak load for the year."
+    },
+    {
+     "id": "B",
+     "text": "Purchase Compute Savings Plans for the predicted medium load of the EKS cluster. Scale the cluster with On-Demand Capacity Reservations based on event dates for peaks. Purchase 1-year No Upfront Reserved Instances for the database to meet the predicted base load. Temporarily scale out database read replicas during peaks."
+    },
+    {
+     "id": "C",
+     "text": "Purchase EC2 Instance Savings Plans for the predicted base load of the EKS cluster. Scale the cluster with Spot Instances to handle peaks. Purchase 1-year All Upfront Reserved Instances for the database to meet the predicted base load. Temporarily scale up the DB instance manually during peaks."
+    },
+    {
+     "id": "D",
+     "text": "Purchase Compute Savings Plans for the predicted base load of the EKS cluster. Scale the cluster with Spot Instances to handle peaks. Purchase 1-year All Upfront Reserved Instances for the database to meet the predicted base load. Temporarily scale up the DB instance manually during peaks."
+    }
+   ],
+   "answers": [
+    "B"
+   ]
+  }
  },
  {
   "id": 104,
@@ -4307,7 +5365,7 @@
  {
   "id": 122,
   "domain": 2,
-  "stem": "A company recently started hosting new application workloads in the AWS Cloud. The company is using Amazon EC2 instances, Amazon Elastic File System (Amazon EFS) file systems, and Amazon RDS DB instances. To meet regulatory and business requirements, the company must make the following changes for data backups: * Backups must be retained based on custom daily, weekly, and monthlyrequirements. * Backups must be replicated to at least one other AWS Region immediately after capture. * The backup solution must provide a single source of backup status across the AWS environment. * The backup solution must send immediate notifications upon failure of any resource backup. Which combination of steps will meet this requirement with the LEAST amount of operational overhead? (Select THREE.)",
+  "stem": "A company recently started hosting new application workloads in the AWS Cloud. The company is using Amazon EC2 instances, Amazon Elastic File System (Amazon EFS) file systems, and Amazon RDS DB instances. To meet regulatory and business requirements, the company must make the following changes for data backups: * Backups must be retained based on custom daily, weekly, and monthly requirements. * Backups must be replicated to at least one other AWS Region immediately after capture. * The backup solution must provide a single source of backup status across the AWS environment. * The backup solution must send immediate notifications upon failure of any resource backup. Which combination of steps will meet this requirement with the LEAST amount of operational overhead? (Select THREE.)",
   "options": [
    {
     "id": "A",
@@ -4323,7 +5381,7 @@
    },
    {
     "id": "D",
-    "text": "Add an Amazon Simple Notification Service (Amazon SNS) topic to the backup plan to send a notification for finished jobs that have any status except BACKUP- JOB- COMPLETED."
+    "text": "Configure Amazon SNS notifications on the AWS Backup vault for the BACKUP_JOB_FAILED event."
    },
    {
     "id": "E",
@@ -4340,13 +5398,76 @@
    "D"
   ],
   "answerCount": 3,
-  "explanation": "",
+  "explanation": "Corrected study version: A sets daily/weekly/monthly retention rules, B configures cross-Region backup copies, and D configures SNS notifications on the backup vault for BACKUP_JOB_FAILED. C requires custom replication and Lambda maintenance; E cannot centrally cover all listed resource types; F is limited to RDS and does not provide the full central policy and cross-Region notification solution. The source's option D incorrectly mentioned the backup plan and a malformed event name.",
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "A+B+D are intended. AWS Backup SNS notifications are configured on backup vaults, not plans; valid failure event is BACKUP_JOB_FAILED. D is not technically accurate as written.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "study-wording-corrected",
+   "originalAnswers": [
+    "A",
+    "B",
+    "D"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html"
+   ],
+   "auditNote": "A+B+D are intended. AWS Backup SNS notifications are configured on backup vaults, not plans; valid failure event is BACKUP_JOB_FAILED. D is not technically accurate as written.",
+   "externalQuestionLinks": [
+    "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+    "https://www.certstest.com/test/SAP-C02?page=8",
+    "https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=15"
+   ],
+   "externalSiteAnswers": [
+    "A,B,D",
+    "A,B,D",
+    "A,B,D"
+   ],
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-notifications.html"
+   ],
+   "crossVerificationStatus": "external-agreement-technical-wording-flaw",
+   "answerReason": "Three external sites list A+B+D. A and B are valid. D incorrectly says attach SNS to backup plan and uses malformed status; SNS notifications attach to vault and BACKUP_JOB_FAILED is valid. Preserve source key and flag wording.",
+   "correctedStudyVersion": true,
+   "correctionType": "repaired-aws-backup-notification-choice"
+  },
+  "answerStatus": "disputed-wording",
+  "originalQuestionSnapshot": {
+   "stem": "A company recently started hosting new application workloads in the AWS Cloud. The company is using Amazon EC2 instances, Amazon Elastic File System (Amazon EFS) file systems, and Amazon RDS DB instances. To meet regulatory and business requirements, the company must make the following changes for data backups: * Backups must be retained based on custom daily, weekly, and monthlyrequirements. * Backups must be replicated to at least one other AWS Region immediately after capture. * The backup solution must provide a single source of backup status across the AWS environment. * The backup solution must send immediate notifications upon failure of any resource backup. Which combination of steps will meet this requirement with the LEAST amount of operational overhead? (Select THREE.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Create an AWS Backup plan with a backup rule for each of the retention requirements."
+    },
+    {
+     "id": "B",
+     "text": "Configure an AWS backup plan to copy backups to another Region."
+    },
+    {
+     "id": "C",
+     "text": "Create an AWS Lambda function to replicate backups to another Region and send notification if a failure occurs."
+    },
+    {
+     "id": "D",
+     "text": "Add an Amazon Simple Notification Service (Amazon SNS) topic to the backup plan to send a notification for finished jobs that have any status except BACKUP- JOB- COMPLETED."
+    },
+    {
+     "id": "E",
+     "text": "Create an Amazon Data Lifecycle Manager (Amazon DLM) snapshot lifecycle policy for each of the retention requirements."
+    },
+    {
+     "id": "F",
+     "text": "Set up RDS snapshots on each database."
+    }
+   ],
+   "answers": [
+    "A",
+    "B",
+    "D"
+   ]
+  }
  },
  {
   "id": 123,
@@ -6764,7 +7885,7 @@
  {
   "id": 190,
   "domain": 4,
-  "stem": "A company wants to migrate its on-premises data center to the AWS Cloud. This includes thousands of virtualized Linux and Microsoft Windows servers, SAN storage, Java and PHP applications with MYSQL, and Oracle databases. There are many dependent services hosted either in the same data center or externally. The technical documentation is incomplete and outdated. A solutions architect needs to understand the current environment and estimate the cloud resource costs after the migration. Which tools or services should solutions architect use to plan the cloud migration? (Choose three.)",
+  "stem": "A company wants to migrate its on-premises data center to the AWS Cloud. This includes thousands of virtualized Linux and Microsoft Windows servers, SAN storage, Java and PHP applications with MySQL, and Oracle databases. There are many dependent services hosted either in the same data center or externally. The technical documentation is incomplete and outdated. A solutions architect needs to understand the current environment and estimate the cloud resource costs after the migration. Which tools or services should the solutions architect use to plan the cloud migration? (Choose three.)",
   "options": [
    {
     "id": "A",
@@ -6797,13 +7918,64 @@
    "F"
   ],
   "answerCount": 3,
-  "explanation": "",
+  "explanation": "A discovers on-premises server configuration, utilization, and dependencies. D assesses cloud adoption readiness and identifies migration gaps. F provides a central migration tracking and discovery view. B (AWS Server Migration Service) is a legacy server migration tool, not the primary assessment tool for this question. C (AWS X-Ray) traces distributed application requests after instrumentation; E (Amazon Inspector) assesses software vulnerabilities rather than mapping migration dependencies and estimating cloud costs. The question does not identify a dedicated cost estimation tool; AWS Pricing Calculator would be needed for a detailed estimate.",
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "AWS SMS (Server Migration Service) is a legacy migration option. Source key A,D,F retained. Short options B/C are service names, not necessarily truncated.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "study-grammar-corrected-answer-provisional",
+   "originalAnswers": [
+    "A",
+    "D",
+    "F"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html"
+   ],
+   "auditNote": "AWS SMS (Server Migration Service) is a legacy migration option. Source key A,D,F retained. Short options B/C are service names, not necessarily truncated.",
+   "correctedStudyVersion": true,
+   "awsDocumentationLinks": [
+    "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html",
+    "https://docs.aws.amazon.com/migrationhub/latest/ug/whatishub.html"
+   ]
+  },
+  "answerStatus": "legacy-service-warning",
+  "originalQuestionSnapshot": {
+   "stem": "A company wants to migrate its on-premises data center to the AWS Cloud. This includes thousands of virtualized Linux and Microsoft Windows servers, SAN storage, Java and PHP applications with MYSQL, and Oracle databases. There are many dependent services hosted either in the same data center or externally. The technical documentation is incomplete and outdated. A solutions architect needs to understand the current environment and estimate the cloud resource costs after the migration. Which tools or services should solutions architect use to plan the cloud migration? (Choose three.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "AWS Application Discovery Service"
+    },
+    {
+     "id": "B",
+     "text": "AWS SMS"
+    },
+    {
+     "id": "C",
+     "text": "AWS x-Ray"
+    },
+    {
+     "id": "D",
+     "text": "AWS Cloud Adoption Readiness Tool (CART)"
+    },
+    {
+     "id": "E",
+     "text": "Amazon Inspector"
+    },
+    {
+     "id": "F",
+     "text": "AWS Migration Hub"
+    }
+   ],
+   "answers": [
+    "A",
+    "D",
+    "F"
+   ]
+  }
  },
  {
   "id": 191,
@@ -14476,36 +15648,73 @@
  {
   "id": 408,
   "domain": 3,
-  "stem": "A solutions architect needs to implement a client-side encryption mechanism for objects that will be stored in a new Amazon S3 bucket. The solutions architect created a CMK that is stored in AWS Key Management Service (AWS KMS) for this purpose. The solutions architect created the following IAM policy and attached it to an IAM role: During tests, me solutions architect was able to successfully get existing test objects m the S3 bucket However, attempts to upload a new object resulted in an error message. The error message stated that me action was forbidden. Which action must me solutions architect add to the IAM policy to meet all the requirements?",
+  "stem": "A solutions architect needs to implement a client-side encryption mechanism for objects that will be stored in a new Amazon S3 bucket. The solutions architect created a CMK that is stored in AWS Key Management Service (AWS KMS) for this purpose. The solutions architect created the following IAM policy and attached it to an IAM role: During tests, the solutions architect was able to successfully get existing test objects in the S3 bucket However, attempts to upload a new object resulted in an error message. The error message stated that me action was forbidden. Which action must me solutions architect add to the IAM policy to meet all the requirements?",
   "options": [
    {
     "id": "A",
-    "text": "Kms:GenerateDataKey"
+    "text": "kms:GenerateDataKey"
    },
    {
     "id": "B",
-    "text": "KmsGetKeyPolpcy"
+    "text": "kms:GetKeyPolicy"
    },
    {
     "id": "C",
-    "text": "kmsGetPubKKey"
+    "text": "kms:GetPublicKey"
    },
    {
     "id": "D",
-    "text": "kms:SKjn"
+    "text": "kms:Sign"
    }
   ],
   "answers": [
    "A"
   ],
   "answerCount": 1,
-  "explanation": "",
+  "explanation": "Provisional: kms:GenerateDataKey is required to generate a data key for KMS-backed encryption. kms:GetKeyPolicy retrieves a key policy; kms:GetPublicKey retrieves a public key for asymmetric keys; kms:Sign performs signing. The original question references an IAM policy that is absent from the source data, so the exact question remains incomplete and the answer is not fully verified.",
   "wrongOptionsExplanation": "",
   "plainWords": "",
   "keyPoints": "",
-  "sourceWarning": "",
-  "review": null,
-  "answerStatus": "source-key-unverified"
+  "sourceWarning": "Stem references an IAM policy that is missing from the stored question. A (kms:GenerateDataKey) is technically plausible for encryption but cannot verify exact missing permission without original policy. Options B/C/D also have malformed IAM action names.",
+  "review": {
+   "reviewedAt": "2026-10-28",
+   "auditStatus": "study-typos-corrected-source-incomplete",
+   "originalAnswers": [
+    "A"
+   ],
+   "references": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html"
+   ],
+   "auditNote": "Stem references an IAM policy that is missing from the stored question. A (kms:GenerateDataKey) is technically plausible for encryption but cannot verify exact missing permission without original policy. Options B/C/D also have malformed IAM action names.",
+   "correctedStudyVersion": true,
+   "correctionType": "normalized-malformed-action-names-not-restored-original",
+   "missingOriginalPolicy": true
+  },
+  "answerStatus": "source-truncated",
+  "originalQuestionSnapshot": {
+   "stem": "A solutions architect needs to implement a client-side encryption mechanism for objects that will be stored in a new Amazon S3 bucket. The solutions architect created a CMK that is stored in AWS Key Management Service (AWS KMS) for this purpose. The solutions architect created the following IAM policy and attached it to an IAM role: During tests, me solutions architect was able to successfully get existing test objects m the S3 bucket However, attempts to upload a new object resulted in an error message. The error message stated that me action was forbidden. Which action must me solutions architect add to the IAM policy to meet all the requirements?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Kms:GenerateDataKey"
+    },
+    {
+     "id": "B",
+     "text": "KmsGetKeyPolpcy"
+    },
+    {
+     "id": "C",
+     "text": "kmsGetPubKKey"
+    },
+    {
+     "id": "D",
+     "text": "kms:SKjn"
+    }
+   ],
+   "answers": [
+    "A"
+   ]
+  }
  },
  {
   "id": 409,
