@@ -5874,13 +5874,13 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "",
-  "wrongOptionsExplanation": "",
-  "plainWords": "",
-  "keyPoints": "",
-  "sourceWarning": "",
+  "explanation": "Verified intended answer B: AWS DMS full load copies the 5 TB existing MySQL database and change data capture (CDC) replicates ongoing transactions for minimal-downtime cutover to the precreated Amazon RDS for MySQL schema. Place the DMS replication instance in private subnets and connect to the on-premises MySQL source over the existing AWS Direct Connect private VIF, with correct routing and security groups. Use TLS for source/target database connections and KMS-backed encryption for DMS storage; independently ensure RDS storage is encrypted at rest. VPC endpoints can provide private access to supported AWS service dependencies but do not themselves connect DMS to an on-premises MySQL source. Configure MySQL binary logging/CDC permissions, validate replication lag and data, then briefly quiesce writes and cut over. DMS is minimal downtime, not guaranteed zero downtime.",
+  "wrongOptionsExplanation": "A: Snowball Edge shipment and restore provide a one-time snapshot but no continuous MySQL CDC, with operational delay. B: Correct, full load plus CDC preserves changes during the migration and supports private Direct Connect connectivity. C: DataSync copies backup files, not ongoing database transactions, and backup/restore alone needs a longer cutover. D: S3 File Gateway and PrivateLink support private file-transfer patterns but backup/restore still lacks CDC and adds unnecessary steps.",
+  "plainWords": "Migrate a constantly changing 5 TB on-premises MySQL database to encrypted Amazon RDS for MySQL over existing 1 Gbps Direct Connect without public internet and with minimal cutover downtime.",
+  "keyPoints": "B. DMS full load = existing data; CDC = ongoing changes; Direct Connect private VIF = private database path; TLS = transit encryption; KMS/RDS storage encryption = at rest. AWS: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReplicationInstance.VPC.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReplicationInstance.PublicPrivate.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_VPC_Endpoints.html ; external exact question https://www.examtopics.com/discussions/amazon/view/126850-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-393-discussion/ ; https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+  "sourceWarning": "Original stem and option wording retained. Option B says 'Create VPC endpoints for AWS DMS': private DMS database replication to MySQL over Direct Connect does not universally require a DMS service VPC endpoint. Private endpoints are used as appropriate for AWS service dependencies, not as the on-premises database data path. KMS encryption of DMS storage alone does not ensure the target RDS instance is encrypted; configure RDS encryption separately. Source CDC requires MySQL binlog setup and privileges.",
   "review": null,
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "aws-doc-verified-external-question-matched"
  },
  {
   "id": 135,
