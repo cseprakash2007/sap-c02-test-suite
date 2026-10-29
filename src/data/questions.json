@@ -6236,16 +6236,16 @@
    }
   ],
   "answers": [
-   "B"
+   "C"
   ],
   "answerCount": 1,
-  "explanation": "",
-  "wrongOptionsExplanation": "",
-  "plainWords": "",
-  "keyPoints": "",
-  "sourceWarning": "",
+  "explanation": "CORRECTED B -> C based on AWS Trusted Advisor official documentation, AWS-published Trusted-Advisor-Tools automation example, and external exact-question SAP-C02 copy selecting C. The specific threshold (<=10% daily average CPU and <=5 MB network I/O on at least 4 of previous 14 days) exactly matches the legacy Trusted Advisor Low utilization Amazon EC2 instances check (Qch7DwouX1). Trusted Advisor identifies underutilized EC2 resources without custom historical metric processing; EventBridge check notifications can trigger Lambda, which validates department/business-unit/environment tags, checks current state, and stops eligible development EC2 instances. Trusted Advisor EventBridge events are best effort and emitted in us-east-1; production implementations should use periodic reconciliation and avoid stopping critical or ASG-managed instances without safeguards. The legacy check is now superseded by newer Cost Optimization Hub-backed EC2 cost optimization recommendations.",
+  "wrongOptionsExplanation": "A: CloudWatch dashboards visualize utilization but do not by themselves implement the 4-of-14-days CPU+network check or detect instances for EventBridge; custom evaluation is required. B: Original incorrect key; Systems Manager does not provide this exact Trusted Advisor low-utilization check and the option never defines the required 14-day rule; extra configuration. C: Correct intended choice; Trusted Advisor native low-utilization finding -> EventBridge -> Lambda checks tags and stops development instances. D: Daily Lambda + DynamoDB history + QuickSight dashboard is custom, high-overhead and QuickSight does not itself stop instances.",
+  "plainWords": "Automatically stop only development EC2 instances meeting AWS's specific low-utilization rule while minimizing the need to build custom monitoring.",
+  "keyPoints": "Q144 answer CORRECTED B -> C. Trusted Advisor legacy check Qch7DwouX1 uses <=10% CPU, <=5 MB network I/O for >=4 of previous 14 days. EventBridge receives Trusted Advisor events in us-east-1 on best-effort basis; Lambda filters environment/dept/business-unit tags and safely calls EC2 StopInstances. Sources: https://docs.aws.amazon.com/awssupport/latest/user/cost-optimization-checks.html ; https://docs.aws.amazon.com/awssupport/latest/user/cloudwatch-events-ta.html ; https://github.com/aws/Trusted-Advisor-Tools/blob/master/LowUtilizationEC2Instances/README.md ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-1",
+  "sourceWarning": "SOURCE ANSWER ERROR: Original JSON keyed B, but exact AWS Trusted Advisor threshold and external exact question verify C. Legacy/outdated wording: AWS Business Support plan name differs from current AWS Business Support+ documentation, and Trusted Advisor Low utilization Amazon EC2 instances check Qch7DwouX1 is explicitly marked legacy in current docs, superseded by EC2 cost optimization recommendations backed by Cost Optimization Hub. Trusted Advisor EventBridge notifications are best effort, emitted in us-east-1, and should not be the only production detection mechanism; implement periodic reconciliation, tag safeguards and exclusions. Original stem and options preserved, including typo 'thecost-effectiveness'.",
   "review": null,
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "corrected-source-key-aws-doc-verified-external-question-matched-legacy-check"
  },
  {
   "id": 145,
