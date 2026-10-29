@@ -749,3 +749,17 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 | 672 | 4 | A,C,F | source-key-unverified | — |
 | 673 | 3 | D | source-key-unverified | — |
 | 674 | 4 | B | source-key-unverified | — |
+
+## Q144 — Domain 4 single-answer 18/138 (verified 2026-10-29)
+
+- **Answer: C (AWS Trusted Advisor → EventBridge → Lambda)**. Previously corrected from B in question bank; review reconfirmed from current AWS documentation and exact-question external source.
+- **Original question retained** in `src/data/questions.json`; original typo `thecost-effectiveness` preserved.
+- **Threshold:** Legacy Trusted Advisor low-utilization EC2 check `Qch7DwouX1` flags ≤10% daily average CPU and ≤5 MB network I/O on at least 4 of previous 14 days. AWS now recommends newer check `c1z7kmr00n`.
+- **A incorrect:** CloudWatch dashboard does not implement historical 4-of-14-day combined metric evaluation by itself.
+- **B incorrect:** Systems Manager does not provide the stated check; monitoring and history logic would need further implementation.
+- **C correct (intended exam answer):** Trusted Advisor evaluates the legacy threshold; EventBridge invokes Lambda to filter environment/department/business-unit tags and stop eligible development EC2 instances.
+- **D incorrect:** Custom Lambda collection, DynamoDB storage and QuickSight dashboard add overhead; dashboard alone does not stop instances.
+- **Caveats:** Trusted Advisor event delivery best effort and emitted from `us-east-1`; production systems should reconcile periodically, avoid stopping Auto Scaling-managed or critical instances and apply tag-based exclusion rules. AWS documentation now uses Business Support+ terminology.
+- **Official references:** https://docs.aws.amazon.com/awssupport/latest/user/cost-optimization-checks.html ; https://docs.aws.amazon.com/awssupport/latest/user/cloudwatch-events-ta.html ; https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-trustedadvisor.html
+- **Exact-question matches:** https://www.examtopics.com/discussions/amazon/view/143186-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-524-discussion/ ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-1
+- **Review classification:** verified-with-legacy-warning. External answer C agrees, but AWS documentation is the technical authority.
