@@ -6326,13 +6326,38 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified intended answer B against current AWS EKS documentation and exact matching external practice question (CertEnsure SAP-C02 Question 33). EKS retains Kubernetes-native deployment via manifests/kubectl and AWS manages the control plane; managed node groups automate EC2 node provisioning and lifecycle. However the option includes Aurora without any database requirement in the stem; Aurora is an unjustified add-on, so B is best available rather than an unqualified fully specified solution. EKS Auto Mode (available in 2026) can reduce operational overhead further but is not offered.",
+    "wrongOptionsExplanation": "A: App Runner deploys web services from code/images, not Kubernetes manifest-driven workloads, so migration requires reconfiguration. B: Best intended answer, preserving Kubernetes APIs and manifests; managed node groups lower worker-node management, but Aurora is unsupported by stated requirements. C: ECS requires task definitions rather than Kubernetes manifests, implying workload conversion and extra effort. D: Self-managed Kubernetes on EC2 preserves Kubernetes but adds control-plane, node lifecycle, patching, and scaling burden.",
+    "plainWords": "An app already runs on Kubernetes and has manifest files. Choose a managed Kubernetes service so the team can reuse its deployments rather than rebuild or convert them.",
+    "keyPoints": "Intended answer B; EKS retains Kubernetes API/manifests; managed node groups automate node lifecycle; ECS uses task definitions; App Runner is source/image web service; manually operating Kubernetes on EC2 adds overhead. Current alternative EKS Auto Mode may reduce management further. AWS: https://docs.aws.amazon.com/eks/latest/userguide/sample-deployment.html ; https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html ; https://docs.aws.amazon.com/eks/latest/userguide/automode.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html . Exact external match: https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Question 33).",
+    "sourceWarning": "DEFECTIVE/ABBREVIATED SOURCE: Stem and all options are unusually terse; exact copy found on external practice site, but full original exam wording not established. B includes 'Aurora' although no database is mentioned, so this component is not justified. Typo 'EKSwith' preserved in original option. 2026 AWS EKS Auto Mode is a more managed alternative, not among choices. Retain original stem/options and intended key B; mark qualified rather than fully valid. Domain 4 answerCount=1 dataset currently has 139 items, conflicting with prior 138 claim; Q146 ranks 20/139 by ID, not 19/138.",
+    "review": {
+      "status": "verified-intended-answer-with-defective-wording",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 20,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "exactExternalMatch": "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+      "externalQuestionNumber": 33,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/sample-deployment.html",
+        "https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html",
+        "https://docs.aws.amazon.com/eks/latest/userguide/automode.html",
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html",
+        "https://docs.aws.amazon.com/apprunner/latest/dg/service-source-code.html"
+      ],
+      "defects": [
+        "Aurora included without database requirement",
+        "Abbreviated stem and options",
+        "EKSwith typo",
+        "Newer EKS Auto Mode alternative absent"
+      ],
+      "note": "B technically best of listed choices, but not fully justified because of Aurora. No invented question restoration."
+    },
+    "answerStatus": "verified-intended-answer-b-source-defective"
   },
   {
     "id": 147,
