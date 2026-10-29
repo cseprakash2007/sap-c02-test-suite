@@ -840,3 +840,16 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS sources:** https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html ; https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/getting-started-get-recommendations.html ; https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html
 - **External study source (not exact exam question):** https://certnotes.cloud/services/migration-transfer/application-discovery-service/ supports agent/agentless comparison and 2025 availability change. **Exact external question match pending**; do not claim independently confirmed third-party answer key.
 - **Classification:** `historically-correct-outdated-migration-hub-new-customers`. Original wording retained; JSON explanation, per-option reasoning, references, status and warnings added for React.
+
+## Q171 — Domain 4 single-answer 26/139 (2026-10-29)
+
+- **Verified answer B retained.** Existing on-premises Hyper-V capacity hosts DataSync agent, reads zipped image archives from NFS, copies directly to S3 Glacier Deep Archive; schedule off-hours and apply DataSync bandwidth throttle. Deep Archive hours-to-days restore fits retrieval within one week.
+- **A wrong:** Unneeded GPU EC2 host plus higher-cost Glacier Instant Retrieval for access that need not be instant.
+- **B correct:** Hyper-V VM DataSync agent, direct NFS to S3 Glacier Deep Archive, built-in transfer scheduling/throttling; least long-term cost for rare retrieval.
+- **C wrong:** Extra EC2 compute and S3 Standard temporary staging/lifecycle transition cost; direct Deep Archive transfer is supported.
+- **D wrong:** Tape Gateway uses virtual tape/backup workflow, not straightforward NFS ZIP file transfer; adds workflow changes and complexity.
+- **AWS documentation:** https://aws.amazon.com/datasync/faqs/ ; https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html (direct Deep Archive supported; archived object restore needed; verification setting).
+- **Exact external match:** https://www.examtopics.com/discussions/amazon/view/136604-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-457-discussion/ (SAP-C02 Q457); https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-an-application-that-analyzes-and-stores-image-data-on-premises-the-application-receives (answer B).
+- **Source defects:** OCR `imagestogether`, `t week` = **1 week**, `dunng`, missing punctuation. Preserve original JSON stem/options; corrected copy externally confirmed.
+- **Operational caution:** Delete source only after successful verified transfer; use DataSync Verify only data transferred for Deep Archive; archive retrieval requires an S3 restore operation.
+- **Classification:** `verified-aws-doc-external-exact-match-source-ocr`; React question data enriched with option-by-option explanation, plain words, AWS and external references, and source warning.
