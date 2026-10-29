@@ -865,3 +865,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Official AWS:** https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Java.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-tomcat-platform.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-se-platform.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-rds.html
 - **Exact external matches:** https://www.examtopics.com/discussions/amazon/view/142998-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-504-discussion/ (Q504); https://www.certstopics.com/questions/exactprep-sap-c02-questions.html (Q48, key D). Both retain packaging ambiguity.
 - **Classification:** `verified-intended-answer-with-jar-war-packaging-defect`. Original stem/options preserved; JSON enriched with option analysis, explanations, references and source warning for React.
+
+## Q178 — Domain 4 single-answer 28/139 (2026-10-29)
+
+- **Verified intended answer B retained:** GitHub change-event webhook, existing Jenkins build/test workflow, SNS bad-build alerts, and CodeDeploy blue/green traffic shifting for safer rollback.
+- **A wrong:** GitHub 'websockets' incorrect for source-change triggers; in-place all-at-once deployment risks downtime.
+- **B best intended:** GitHub webhook, Jenkins test/build integration, SNS failure alerts, CodeDeploy blue/green deployment and rollback. Blue/green needs configured health checks and traffic shifting to achieve minimal/zero user-visible downtime.
+- **C wrong:** GitHub websockets wrong; AWS X-Ray is tracing, not unit testing/static analysis. Blue/green alone does not rescue choice.
+- **D wrong:** X-Ray is not a test framework; all-at-once in-place deployment risks interruption.
+- **Exact external question match:** https://myportal.utt.edu.tt/ICS/icsfs/e500bdfa-17d4-440e-8e02-1a46ed59d675.pdf?target=95f8256a-0bbf-48f2-b967-cb2097efacb3 . **IMPORTANT: external answer letter C corresponds to the same technical text as JSON answer B because external options are reordered.** Never change the user's JSON key to C.
+- **2026 AWS guidance:** https://docs.aws.amazon.com/codepipeline/latest/userguide/update-github-action-connections.html ; https://docs.aws.amazon.com/codepipeline/latest/userguide/connections-github.html ; https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-CodestarConnectionSource.html . For new pipelines AWS recommends GitHub App via AWS CodeConnections rather than old OAuth-plus-separate-webhook GitHub source action.
+- **Defects:** OCR `sates`, `CodePipelme`, `inan`, `blue'green`, `m-place`; 'Jenkins plugin for AWS CodeBuild' is ambiguous (Jenkins CodePipeline action vs Jenkins invoking CodeBuild); zero downtime depends on deployment readiness and traffic-shifting details.
+- **Classification:** `verified-intended-b-external-option-reordered-legacy-github-source`. Original question/options preserved; React JSON enriched with explanations, AWS/external refs, warnings and answer status.
