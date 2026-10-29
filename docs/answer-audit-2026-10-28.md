@@ -803,3 +803,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS references:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specify-efs-config.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-best-practices.html ; https://docs.aws.amazon.com/fsx/latest/LustreGuide/mounting-ecs.html
 - **External exact question:** https://www.examtopics.com/discussions/amazon/view/110392-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://pupuweb.com/aws-sap-c02-exam-question-answer-secure-scalable-containerized-solution/ (selects A).
 - **Classification:** `verified-answer-minor-iam-terminology`; answer A retained. Question data now has explanation, per-option reasoning, study notes, source warning and references for React display.
+
+## Q160 — Domain 4 single-answer 23/139 (2026-10-29)
+
+- **AWS-doc-verified answer C retained:** ECS services on Fargate spread multiple tasks across AZs, and adding an Aurora PostgreSQL reader in another AZ supplies automatic failover target.
+- **A wrong:** RDS Proxy and Aurora Replica improve database availability but leave the single EC2 ECS host as an application SPOF.
+- **B wrong:** Cross-Region reader and scripted manual failover create unnecessary operational overhead and do not provide automatic writer failover.
+- **C correct:** AWS-managed Fargate removes EC2 instance operations and distributes ECS tasks across AZs; Aurora Replica in another AZ can be promoted automatically if writer fails.
+- **D wrong:** Multi-Region global DB and active-active DNS add complexity; Aurora Global Database normally has a single writable primary Region, so routing both Regions active-active does not independently enable writes.
+- **Defects/caveats:** Aurora's cross-AZ reader configuration should not be conflated with the distinct RDS Multi-AZ DB cluster product (writer + two readers across 3 AZs). Production needs >=2 Fargate tasks, multi-AZ ALB, health checks, and idempotent payment processing.
+- **Official AWS evidence:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_service-options.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
+- **External exam sites:** Exact independent question match **not established**; external answer-key verification pending. Do not classify as exact-site-verified.
+- **Classification:** `aws-doc-verified-external-exact-match-pending`. Original question and options preserved. JSON populated with explanations, review notes, and source warnings for React.
