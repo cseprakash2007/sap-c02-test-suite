@@ -7679,13 +7679,37 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Intended answer B: GitHub change notifications trigger CodePipeline, Jenkins performs existing build/unit tests (integration via Jenkins action or CodeBuild Jenkins plugin must be clarified), Amazon SNS sends failed-build alerts, and AWS CodeDeploy blue/green traffic shifting enables lower-downtime deployments and rollback. AWS current recommendation for new GitHub source actions is AWS CodeConnections GitHub App, rather than legacy OAuth source action with separate webhook. Exact external exam copy lists same correct technical combination as option C because choices are reordered; user's JSON correct choice is B. AWS: https://docs.aws.amazon.com/codepipeline/latest/userguide/update-github-action-connections.html ; https://docs.aws.amazon.com/codepipeline/latest/userguide/connections-github.html ; https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments.html . External: https://myportal.utt.edu.tt/ICS/icsfs/e500bdfa-17d4-440e-8e02-1a46ed59d675.pdf?target=95f8256a-0bbf-48f2-b967-cb2097efacb3 .",
+    "wrongOptionsExplanation": "A: 'GitHub websockets' is not the appropriate push-change trigger, and in-place all-at-once CodeDeploy risks downtime and poor rollback. B: Correct historical option; GitHub webhooks, Jenkins testing, SNS alerts, and CodeDeploy blue/green deployment. Current best practice is GitHub App CodeConnections; 'Jenkins plugin for AWS CodeBuild' is imprecise about how Jenkins is integrated. C: Websockets are wrong and AWS X-Ray traces distributed requests; it is not a unit-testing or static analysis replacement, although blue/green is good. D: GitHub webhook and SNS are fine but X-Ray is not a test/analysis tool, and all-at-once in-place deploy risks interruption.",
+    "plainWords": "For safer CI/CD, trigger builds from GitHub changes, keep Jenkins tests, alert on failures, and deploy blue/green so you can switch back if a release breaks. Today prefer a GitHub App connection.",
+    "keyPoints": "GitHub event triggers: webhooks/CodeConnections, not websockets. AWS X-Ray: distributed tracing, not unit testing. SNS: notifications on failed pipeline/build via EventBridge/notifications. CodeDeploy blue/green: shift traffic to new version, support rollback. In-place all-at-once: downtime risk. CodeConnections GitHub App preferred to legacy GitHub OAuth/webhook source. External exact copy reorders correct choice as C; JSON correct B. https://docs.aws.amazon.com/codepipeline/latest/userguide/update-github-action-connections.html ; https://docs.aws.amazon.com/codepipeline/latest/userguide/connections-github.html .",
+    "sourceWarning": "SOURCE OCR: 'sates' means sales; 'CodePipelme', 'inan', 'blue\\'green', 'm-place' and missing punctuation. TECHNICAL AMBIGUITY: 'Jenkins plugin for AWS CodeBuild' conflates Jenkins-as-CodePipeline action with invoking CodeBuild via Jenkins plugin; specify actual integration in production. OUTDATED: legacy GitHub OAuth action + separate webhook is no longer AWS-recommended; use GitHub App via CodeConnections for new pipelines. EXACT EXTERNAL MATCH: external source labels correct technical combination C due to reordered options, while JSON answer B is the same solution; never copy external option letter without matching text. Blue/green can reduce downtime but zero downtime depends on health checks, target readiness, and traffic-shift configuration.",
+    "review": {
+      "status": "verified-intended-b-external-option-reordered-legacy-github-source",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 28,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/codepipeline/latest/userguide/update-github-action-connections.html",
+        "https://docs.aws.amazon.com/codepipeline/latest/userguide/connections-github.html",
+        "https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-CodestarConnectionSource.html",
+        "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments.html"
+      ],
+      "externalExactMatch": "https://myportal.utt.edu.tt/ICS/icsfs/e500bdfa-17d4-440e-8e02-1a46ed59d675.pdf?target=95f8256a-0bbf-48f2-b967-cb2097efacb3",
+      "externalCorrectOption": "C (same technical text as JSON B; reordered)",
+      "defects": [
+        "OCR errors in stem/options",
+        "Legacy OAuth webhook source is not recommended for new CodePipeline integrations",
+        "Jenkins CodeBuild plugin wording conflates integration modes",
+        "Zero downtime needs appropriate health checks and traffic-shifting"
+      ],
+      "notes": "Correct architecture independently supported. Keep JSON B; external C is same content with different letter."
+    },
+    "answerStatus": "verified-b-external-reordered-c-legacy-github-warning"
   },
   {
     "id": 179,
