@@ -7366,13 +7366,35 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED B using AWS DataSync FAQ and user guide plus exact SAP-C02 Question 457 external match. Deploy the DataSync agent as an on-premises Hyper-V VM to reuse existing compute; transfer NFS-stored ZIP archives directly to S3 Glacier Deep Archive, with DataSync task scheduling for non-business hours and built-in bandwidth throttling. Deep Archive retrieval (hours to days) meets within-one-week requirement at lower long-term storage cost than Instant Retrieval or S3 Standard. Verify successful transfers and integrity before removing local source files. AWS: https://aws.amazon.com/datasync/faqs/ ; https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html . Exact external: https://www.examtopics.com/discussions/amazon/view/136604-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-457-discussion/ .",
+    "wrongOptionsExplanation": "A: GPU EC2 instance is unnecessary and adds cost; S3 Glacier Instant Retrieval has higher long-term storage cost than Deep Archive and immediate access is not needed. B: CORRECT; DataSync agent on existing Hyper-V compute reads NFS, directly stores in Deep Archive, supports schedule and bandwidth limits. C: New EC2 agent and initial S3 Standard staging/lifecycle transition add compute, temporary storage and management costs; direct transfer to Deep Archive is supported. D: Tape Gateway is designed for virtual tape backup applications, not a direct NFS ZIP archive transfer, and requires a new tape-oriented workflow.",
+    "plainWords": "Use the spare Hyper-V capacity to run a DataSync agent, copy compressed archive files from NFS directly to low-cost S3 Glacier Deep Archive at night, and throttle bandwidth.",
+    "keyPoints": "DataSync supports on-premises Hyper-V agent, NFS source, direct S3 Glacier Deep Archive destination, off-hours task scheduling and bandwidth throttling. S3 Glacier Deep Archive restoration takes hours to days, meeting one-week SLA; verify successful copy before source deletion. Deep Archive verification use Verify only data transferred, not Verify all destination. Exact ExamTopics SAP-C02 Q457 confirms B. https://aws.amazon.com/datasync/faqs/ ; https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html ; https://www.examtopics.com/discussions/amazon/view/136604-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-457-discussion/ .",
+    "sourceWarning": "OCR errors in original stem: 'imagestogether', 't week' (external exact copy says '1 week'), 'dunng'; missing punctuation throughout. Original strings preserved. Do not delete local archive merely on task initiation: ensure success and transfer integrity. Deep Archive requires restore before retrieval and DataSync destination verification should use 'Verify only the data transferred' rather than 'Verify all data in destination'. No substantive outdated or incorrect answer key detected.",
+    "review": {
+      "status": "verified-aws-doc-external-exact-match-source-ocr",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 26,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "externalExactMatch": "https://www.examtopics.com/discussions/amazon/view/136604-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-457-discussion/",
+      "externalQuestionNumber": 457,
+      "externalAdditionalMatch": "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-an-application-that-analyzes-and-stores-image-data-on-premises-the-application-receives",
+      "awsReferences": [
+        "https://aws.amazon.com/datasync/faqs/",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html"
+      ],
+      "defects": [
+        "OCR stem 't week' means '1 week'",
+        "OCR 'imagestogether' and 'dunng'",
+        "Missing punctuation"
+      ],
+      "notes": "B verified; on-prem Hyper-V DataSync agent, NFS->S3 Glacier Deep Archive, schedule and throttle, validate before source deletion."
+    },
+    "answerStatus": "verified-aws-doc-external-exact-match-ocr-warning"
   },
   {
     "id": 172,
