@@ -853,3 +853,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Source defects:** OCR `imagestogether`, `t week` = **1 week**, `dunng`, missing punctuation. Preserve original JSON stem/options; corrected copy externally confirmed.
 - **Operational caution:** Delete source only after successful verified transfer; use DataSync Verify only data transferred for Deep Archive; archive retrieval requires an S3 restore operation.
 - **Classification:** `verified-aws-doc-external-exact-match-source-ocr`; React question data enriched with option-by-option explanation, plain words, AWS and external references, and source warning.
+
+## Q176 — Domain 4 single-answer 27/139 (2026-10-29)
+
+- **Verified intended answer D**, source key retained. Elastic Beanstalk Tomcat load-balanced environment with Auto Scaling across AZs + RDS for PostgreSQL + ALB; CloudFront can accelerate cacheable/static content. Lowest operational overhead among options.
+- **A incorrect:** Manual EC2 Tomcat and PostgreSQL deployment plus Step Functions custom scale-out has high operational burden; EFS is not a managed relational DB architecture.
+- **B incorrect:** EKS multi-Region container and PostgreSQL deployment introduces unnecessary Kubernetes/stateful DB operations; NLB is not an auto-scaler.
+- **C incorrect:** Refactoring Java to Python is infeasible without source code, DynamoDB requires major data/application redesign, Storage Gateway unrelated to scale-out.
+- **D best available:** Elastic Beanstalk supports Java/Tomcat, managed EC2 provisioning and Auto Scaling; RDS PostgreSQL removes database host management. ALB balances; Auto Scaling scales capacity; CloudFront optional for cacheable traffic.
+- **Critical source defect:** Stem says only Java Archive **JAR** files can be deployed, but Elastic Beanstalk **Tomcat** expects a deployable **WAR**. Elastic Beanstalk **Java SE** can run an executable JAR, which is not the same as an arbitrary Tomcat JAR. If only library JARs are available, none of the options fully specifies a deployable artifact. Preserve source text and qualify answer D.
+- **Official AWS:** https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Java.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-tomcat-platform.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-se-platform.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-rds.html
+- **Exact external matches:** https://www.examtopics.com/discussions/amazon/view/142998-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-504-discussion/ (Q504); https://www.certstopics.com/questions/exactprep-sap-c02-questions.html (Q48, key D). Both retain packaging ambiguity.
+- **Classification:** `verified-intended-answer-with-jar-war-packaging-defect`. Original stem/options preserved; JSON enriched with option analysis, explanations, references and source warning for React.
