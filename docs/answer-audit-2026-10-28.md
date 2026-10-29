@@ -877,3 +877,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **2026 AWS guidance:** https://docs.aws.amazon.com/codepipeline/latest/userguide/update-github-action-connections.html ; https://docs.aws.amazon.com/codepipeline/latest/userguide/connections-github.html ; https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-CodestarConnectionSource.html . For new pipelines AWS recommends GitHub App via AWS CodeConnections rather than old OAuth-plus-separate-webhook GitHub source action.
 - **Defects:** OCR `sates`, `CodePipelme`, `inan`, `blue'green`, `m-place`; 'Jenkins plugin for AWS CodeBuild' is ambiguous (Jenkins CodePipeline action vs Jenkins invoking CodeBuild); zero downtime depends on deployment readiness and traffic-shifting details.
 - **Classification:** `verified-intended-b-external-option-reordered-legacy-github-source`. Original question/options preserved; React JSON enriched with explanations, AWS/external refs, warnings and answer status.
+
+## Q183 — Domain 4 single-answer 29/139 (2026-10-29)
+
+- **Verified answer B retained.** API Gateway HTTP API `SQS-SendMessage` integration receives REST/HTTP requests, SQS buffers traffic, Lambda polls SQS via event source mapping to run business logic, Lambda publishes to AppSync Events HTTP endpoint, clients subscribe via managed WebSockets.
+- **A wrong:** Step Functions state machines do not use arbitrary connected WebSocket clients as targets or deliver WebSocket streams.
+- **B correct:** API Gateway HTTP API + SQS + Lambda + AWS AppSync Events provides fully managed ingestion, burst decoupling, processing and real-time WebSocket broadcasting.
+- **C wrong:** Direct SQS-AppSync integration and EventBridge rules with arbitrary WebSocket clients as targets are not supported as described.
+- **D wrong:** CloudFront Functions cannot be CloudFront origins or serve as general application logic with IoT MQTT publishing; IoT Core WebSockets support alone is insufficient.
+- **AWS evidence:** https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html ; https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html ; https://docs.aws.amazon.com/appsync/latest/eventapi/publish-http.html ; https://docs.aws.amazon.com/appsync/latest/eventapi/event-api-websocket-protocol.html ; https://docs.aws.amazon.com/appsync/latest/devguide/ (AppSync Events available since March 2025).
+- **Exact independent exam-site match:** https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html Question 179, matching original stem and options.
+- **Minor technical source defect:** SQS does **not** itself push-invoke Lambda; Lambda polls via an event source mapping. AppSync Events requires Event API/channel/authorization and HTTP publish request, omitted in simplified answer. Consider SQS/Lambda idempotency, retry and DLQ handling.
+- **Classification:** `verified-aws-doc-external-exact-match-minor-technical-imprecision`. Original stem and options preserved, source answer B retained, explanations/links/warnings added to JSON for React.
