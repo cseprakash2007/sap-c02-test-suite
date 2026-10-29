@@ -778,3 +778,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Official docs:** https://docs.aws.amazon.com/eks/latest/userguide/sample-deployment.html ; https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html ; https://docs.aws.amazon.com/eks/latest/userguide/automode.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html ; https://docs.aws.amazon.com/apprunner/latest/dg/service-source-code.html
 - **External exact match:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Question 33).
 - **Classification:** `verified-intended-answer-with-defective-wording`; preserve original key B and source text. React question data populated with explanation, option analysis, plain words, key points, source warning, and review metadata.
+
+## Q148 — Domain 4 single-answer 21/139 (reviewed 2026-10-29)
+
+- **Verified answer C**, original answer retained: cross-Region Amazon RDS for MySQL read replica in Europe and Route 53 latency-based routing to regional API Gateway APIs. External exact match CertEnsure SAP-C02 Question 150 also selects C.
+- **A wrong:** DMS full load alone does not keep the regional database current after migration, despite appropriate latency routing.
+- **B wrong:** DMS full load+CDC can replicate ongoing changes but adds operational management, while geolocation routing targets geographic locations rather than lowest measured latency.
+- **C correct:** Native RDS asynchronous cross-Region read replication supports >90% read-only reports in Europe, while Route 53 latency records select a low-latency regional API. Regional Lambda must use regional read endpoints and direct writes to US primary.
+- **D wrong:** Replica suitable but geolocation routing not latency optimized. **Source defective:** Option D ends at `connect to the API` in both source JSON and exact external Question 150; do not invent missing text.
+- **Caveats:** Replica lag and eventual consistency; CloudFront for frontend does not eliminate backend API/database latency. CertEnsure explanation includes unrelated Redshift options and must not be treated as reliable option-specific reasoning.
+- **AWS sources:** https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-geo.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html
+- **External exact match:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Question 150, key C).
+- **Classification:** `verified-answer-with-truncated-option`. Original stem and options preserved; React source JSON now has explanations, sources and defect flags.
