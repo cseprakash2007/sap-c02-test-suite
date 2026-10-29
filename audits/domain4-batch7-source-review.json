@@ -1,0 +1,109 @@
+{
+  "batch": 7,
+  "domain": 4,
+  "questionIds": [
+    479,
+    481,
+    485,
+    487,
+    491,
+    492,
+    495,
+    497,
+    498,
+    502,
+    504,
+    506,
+    510,
+    511,
+    513,
+    514,
+    517,
+    520,
+    526,
+    527
+  ],
+  "reviewed": {
+    "479": {
+      "answers": [
+        "D"
+      ],
+      "status": "supported",
+      "references": [
+        "https://docs.aws.amazon.com/filegateway/latest/files3/what-is-file-s3.html"
+      ]
+    },
+    "481": {
+      "answers": [
+        "A"
+      ],
+      "status": "reasoned-unverified"
+    },
+    "487": {
+      "sourceAnswer": [
+        "A"
+      ],
+      "recommendedAnswer": [
+        "B"
+      ],
+      "reason": "Server-side JavaScript cannot run on static S3 website; ECS Fargate containers preserve UI and Python API with Multi-AZ RDS."
+    },
+    "491": {
+      "answers": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/workspaces/latest/adminguide/connect-mfa.html"
+      ]
+    },
+    "517": {
+      "answers": [
+        "B"
+      ],
+      "wordingFix": "DRS uses staging resources and EBS volumes, not full application EC2 replication instances",
+      "references": [
+        "https://docs.aws.amazon.com/drs/latest/userguide/failback-performing-main.html"
+      ]
+    },
+    "520": {
+      "answers": [
+        "B"
+      ],
+      "status": "reasoned-unverified"
+    },
+    "526": {
+      "answers": [
+        "A",
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_s3_home-directory-console.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/cloudtrail-request-identification.html"
+      ]
+    },
+    "527": {
+      "answers": [
+        "D"
+      ],
+      "note": "SES v1 SendTemplatedEmail valid; v2 SendEmail templated API is newer",
+      "references": [
+        "https://docs.aws.amazon.com/ses/latest/dg/send-personalized-email-api.html"
+      ]
+    }
+  },
+  "unverifiedQuestionIds": [
+    485,
+    492,
+    495,
+    497,
+    498,
+    502,
+    504,
+    506,
+    510,
+    511,
+    513,
+    514
+  ],
+  "note": "Third-party question sites not cross-checked. Main React questions.json not modified; proposed answer Q487 requires reconciliation."
+}
