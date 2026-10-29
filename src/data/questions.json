@@ -8032,13 +8032,40 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "SOURCE KEY B (intended), but question is ambiguous: both B and A satisfy the stated requirements. EventBridge central event bus and rules route matching events to cross-account targets/buses with appropriate IAM execution roles and target resource policies. A cross-account SNS topic -> one SQS queue per service also fans out copies of each event independently and meets the requirements. Do not claim B uniquely correct without an additional requirement for content-based event routing. AWS: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-cross-account.html ; https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-cross-account.html ; https://docs.aws.amazon.com/sns/latest/dg/sns-send-message-to-sqs-cross-account.html . Exact external matches https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q7), https://www.freecram.net/question/Amazon.SAP-C02.v2026-08-19.q305/a-company-wants-to-modernize-a-monolithic-application-in-the-company-s-data-center-and-deploy-the-application (source key B).",
+    "wrongOptionsExplanation": "A: ALSO TECHNICALLY CORRECT—SNS fan-out to one cross-account SQS queue per microservice independently delivers each published event. Requires topic subscription permission and destination queue access policies. B: SOURCE-INTENDED—EventBridge event patterns and rules can route matching events to cross-account event buses or supported services (including SQS) with execution role and resource-based permissions; wording omits destinations and permissions detail. C: As written incorrect: Kinesis streams do not automatically invoke ECS Fargate microservices merely by setting each microservice as an event source; application consumers would need stream-reading logic. D: Incorrect: a single SQS queue implements competing consumers and does not distribute independent copies of each event to every microservice.",
+    "plainWords": "Several microservices in separate AWS accounts need their own copy of events emitted centrally. EventBridge rule routing is a valid approach, and SNS fan-out to per-service SQS queues also works.",
+    "keyPoints": "B is the third-party answer key but NOT unique. EventBridge supports filtered cross-account delivery, requiring a receiving target plus role/resource permissions. SNS topic + one SQS queue per service also provides cross-account fan-out. Single shared SQS queue delivers messages to competing consumers; Kinesis does not automatically invoke ECS Fargate services.",
+    "sourceWarning": "DEFECTIVE SINGLE-ANSWER ITEM: BOTH A and B meet the literal requirements. Third-party keys choose B but AWS explicitly documents SNS->SQS cross-account fan-out. Option B is underspecified (target destinations and IAM/resource policy omitted). Reword to REQUIRE content-based filtered routing or rule-based event-bus integration to make B uniquely best.",
+    "review": {
+      "status": "source-key-b-but-nonunique-answer-defective",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 31,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "alsoTechnicallyValid": [
+        "A"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-cross-account.html",
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-cross-account.html",
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html",
+        "https://docs.aws.amazon.com/sns/latest/dg/sns-send-message-to-sqs-cross-account.html"
+      ],
+      "externalExactMatches": [
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-08-19.q305/a-company-wants-to-modernize-a-monolithic-application-in-the-company-s-data-center-and-deploy-the-application"
+      ],
+      "defects": [
+        "A is an equally valid cross-account distribution architecture",
+        "B omits destination resources and target IAM/resource-based permission configuration"
+      ],
+      "notes": "The external answer key says B; independently assessed against AWS documentation, A also satisfies all stated requirements. Retain answer key for compatibility but flag ambiguity for learner."
+    },
+    "answerStatus": "defective-nonunique-a-and-b-source-key-b"
   },
   {
     "id": 187,

@@ -902,3 +902,11 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Source implementation caveat:** Option D omits Direct Connect physical connection, Direct Connect gateway, transit virtual interface, BGP and Cloud WAN core-network/VPC attachments. Direct Connect is not inherently encrypted; payment workloads require appropriate TLS/MACsec, redundancy and security review.
 - **Outdated external/AWS background:** Pre-November 25, 2024 architecture articles that require intermediate Transit Gateway for Cloud WAN–Direct Connect are stale. Native gateway attachment is now supported.
 - **Classification:** `verified-aws-doc-external-exact-match-implementation-caveats`. Original stem/options preserved; JSON explanation, option analysis, warnings and references updated for React.
+
+
+### Domain 4 Q186 — single-answer 31/139 (2026-10-29)
+- **Original source answer: B**, confirmed by matching third-party practice question at [CertEnsure Q7](https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html) and [FreeCram](https://www.freecram.net/question/Amazon.SAP-C02.v2026-08-19.q305/a-company-wants-to-modernize-a-monolithic-application-in-the-company-s-data-center-and-deploy-the-application).
+- **Audit verdict: DEFECTIVE / NON-UNIQUE. A is also valid.** AWS documents cross-account SNS topic subscription to independent per-microservice SQS queues: https://docs.aws.amazon.com/sns/latest/dg/sns-send-message-to-sqs-cross-account.html .
+- **B** central EventBridge with content-filter rules works when event bus or cross-account targets and appropriate IAM execution roles/resource policies are configured: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-cross-account.html ; https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-cross-account.html .
+- **C** falsely implies a Kinesis stream can directly invoke arbitrary Fargate microservices without consumer implementation. **D** shares a single SQS competing-consumer queue and does not fan out every message.
+- **Correction proposal:** Add a requirement for per-microservice *content-based routing by event fields* and central rules; otherwise accept A and B. Keep original wording and options unchanged for traceability.
