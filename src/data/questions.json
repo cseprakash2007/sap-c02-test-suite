@@ -4598,17 +4598,17 @@
    "C"
   ],
   "answerCount": 1,
-  "explanation": "",
-  "wrongOptionsExplanation": "",
-  "plainWords": "",
-  "keyPoints": "",
-  "sourceWarning": "",
+  "explanation": "Answer C (independently cross-checked with exact question copies on Freecram and Certstopics and with AWS documentation). Create FSx for Windows File Server in the DR Region, use inter-Region VPC peering for private connectivity, and use AWS DataSync to copy data and Windows metadata (including NTFS ACLs) to the DR file system. DataSync supports scheduled FSx-to-FSx cross-Region replication. The source option also specifies AWS PrivateLink interface VPC endpoints; these provide private DataSync agent-to-service connectivity where an agent is used, but modern same-account AWS-to-AWS FSx transfers generally do not require an agent or customer-managed interface endpoints. For production verify that the actual DataSync data path, service configuration, DNS, routing, security groups, Active Directory authentication, and backup/RPO requirements meet the no-public-internet rule. DataSync replication is periodic, not synchronous or a substitute for immutable backups.",
+  "wrongOptionsExplanation": "A: Amazon FSx File Gateway is not a service that turns an FSx for Windows file system into an S3 continuous-backup source. B: Site-to-Site VPN and the stated 'VPN endpoints' are not the appropriate direct inter-Region VPC networking and DataSync configuration. C: Best answer: FSx in both Regions, VPC peering, and DataSync; PrivateLink detail is unnecessary for common agentless transfers. D: Inter-Region Transit Gateway connectivity is possible, but AWS Transfer Family is for managed file-transfer protocols, not purpose-built FSx-to-FSx replication; use DataSync.",
+  "plainWords": "Copy sensitive Windows SMB file-server data from a primary AWS Region to a second Region for disaster recovery, without public-internet exposure.",
+  "keyPoints": "C. FSx for Windows + AWS DataSync scheduled cross-Region copy + private VPC networking. Preserve NTFS permissions and metadata; validate RPO, backups and AD/DNS. Exact question and C key: https://www.freecram.net/question/Amazon.SAP-C02.v2024-03-21.q171/a-company-is-migrating-an-application-from-on-premises-infrastructure-to-the-aws-cloud-during-migration ; https://www.certstopics.com/questions/last-attempt-sap-c02-questions.html . AWS: https://docs.aws.amazon.com/fsx/latest/WindowsGuide/migrate-files-to-fsx-datasync.html ; https://aws.amazon.com/datasync/faqs/ ; https://aws.amazon.com/blogs/storage/how-to-replicate-amazon-fsx-file-server-data-across-aws-regions/ ; https://docs.aws.amazon.com/datasync/latest/userguide/do-i-need-datasync-agent.html",
+  "sourceWarning": "The original C option explicitly mentions PrivateLink interface endpoints. That is a valid private endpoint pattern for DataSync agents but is not a universal requirement for modern agentless AWS-to-AWS FSx replication. Do not conflate PrivateLink control/service connectivity with SMB data transfer. The question's DR design also needs separate consideration of backup retention and recovery objectives.",
   "review": {
-   "status": "Needs further validation",
-   "note": "DataSync cross-Region private networking and endpoint placement are not specified sufficiently to independently confirm the answer.",
-   "reference": "https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html"
+   "status": "Verified intended answer with implementation caveat",
+   "note": "External question copies agree on C; AWS supports FSx cross-Region DataSync. PrivateLink endpoint detail is over-specific for agentless transfers.",
+   "reference": "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/migrate-files-to-fsx-datasync.html"
   },
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "aws-doc-verified-external-question-matched"
  },
  {
   "id": 103,
