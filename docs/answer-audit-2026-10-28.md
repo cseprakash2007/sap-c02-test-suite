@@ -937,3 +937,10 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Answer C AWS-doc verified**: SQL Server Always On -> RDS for MySQL heterogeneous migration uses schema conversion (SCT or DMS Schema Conversion) followed by AWS DMS data migration/CDC. AWS walkthrough: https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-sql-server-mysql.html ; overview: https://aws.amazon.com/documentation-overview/dms/ .
 - A incompatible SQL Server native restore into MySQL; B Snowball/S3 transport does not convert schema and SQL Server BULK INSERT is wrong target mechanism; C correct; D DataSync files/S3 cannot convert relational engine.
 - Defects: option C 'MeSQL' typo preserved; AWS recommends managed DMS Schema Conversion over legacy SCT now (https://docs.aws.amazon.com/dms/latest/userguide/CHAP_GettingStarted.SCT.html); business-critical migration requires SQL Server Always On CDC checks, code conversion, validation and HA. **Exact third-party exam-site match not verified**.
+
+
+### Domain 4 Q211 — single-answer 36/139 (2026-10-29)
+- **B independently verified**: AWS DataSync scheduled SMB->Amazon FSx for Windows File Server over Direct Connect, supports Windows ACL/metadata preservation. AWS: https://docs.aws.amazon.com/fsx/latest/WindowsGuide/migrate-files-to-fsx-datasync.html ; https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html .
+- Exact external matches **B**: https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=31 (Q150); https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 (Q137); https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q183).
+- A S3-backed File Gateway not direct Windows FSx replication; B correct; C Data Pipeline unsuitable and EFS NFS; D DataSync SMB->EFS **supported**, but EFS lacks native Windows SMB semantics.
+- Original text preserved. Defects: B should specify FSx for Windows File Server; D 'lo' typo; C 'on- premises' spacing. For implementation verify SMB permissions, AD/NTFS ACL transfer and DataSync agent networking.

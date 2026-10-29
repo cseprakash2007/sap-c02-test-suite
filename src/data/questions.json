@@ -9097,13 +9097,37 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED B: schedule AWS DataSync transfer from on-premises Windows SMB server to Amazon FSx for Windows File Server across existing Direct Connect. DataSync supports recurring tasks and Windows metadata/NTFS ACL preservation. AWS explicitly recommends DataSync for FSx Windows migrations. https://docs.aws.amazon.com/fsx/latest/WindowsGuide/migrate-files-to-fsx-datasync.html ; https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html ; external exact match: https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=31 (question 150), https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 (Q137).",
+    "wrongOptionsExplanation": "A: Storage Gateway File Gateway exposes S3-backed file shares; it is not the appropriate Windows SMB file-system migration and scheduled replication to FSx. B: CORRECT: scheduled DataSync SMB-to-FSx Windows migration over Direct Connect, preserves relevant Windows metadata/ACLs when configured. C: Data Pipeline is not a Windows file-share replication tool; EFS is NFS, not native SMB. D: DataSync SMB-to-EFS is technically supported, but EFS does not supply native Windows SMB/NTFS semantics; FSx Windows is the suitable destination.",
+    "plainWords": "Every day, copy new files from the Windows server into a managed Windows file system in AWS using DataSync over the existing Direct Connect link.",
+    "keyPoints": "DataSync SMB source -> FSx for Windows File Server destination; scheduled tasks; Direct Connect supported; NTFS ownership, DACL and SACL copy subject to credentials/AD trust. EFS uses NFS and is not a native SMB replacement. DataSync SMB->EFS technically possible; reject D on workload fit, not impossible transfer.",
+    "sourceWarning": "Original B says generic 'Amazon FSx' but should specify FSx for Windows File Server. D typo 'task lo replicate'; C typo 'on- premises'. D is technically valid SMB-to-EFS DataSync transfer, but less suitable for Windows-native file access. Exact external matching practice questions confirm B, including FreePDFDumps Q150 and SPOTO Q137; AWS documentation is primary authority.",
+    "review": {
+      "status": "verified-aws-doc-and-external-exact-match",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 36,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/migrate-files-to-fsx-datasync.html",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html"
+      ],
+      "externalExactMatch": "https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=31",
+      "additionalExternalMatches": [
+        "https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html"
+      ],
+      "defects": [
+        "Generic FSx should say FSx for Windows File Server",
+        "D and C transcription typos",
+        "DataSync SMB-to-EFS is supported, but not best Windows-native destination"
+      ]
+    },
+    "answerStatus": "verified-b-aws-and-external"
   },
   {
     "id": 212,
