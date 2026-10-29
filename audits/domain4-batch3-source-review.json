@@ -1,0 +1,95 @@
+{
+  "status": "source-cross-checked-selected-items",
+  "domain": 4,
+  "batch": 3,
+  "questionIds": [
+    202,
+    208,
+    211,
+    212,
+    217,
+    218,
+    220,
+    221,
+    224,
+    227,
+    228,
+    238,
+    239,
+    240,
+    241,
+    242,
+    244,
+    248,
+    249,
+    258
+  ],
+  "verifiedItems": [
+    {
+      "id": 208,
+      "sourceAnswer": [
+        "C"
+      ],
+      "recommendedAnswer": [
+        "C"
+      ],
+      "wordingCorrections": [
+        {
+          "from": "MeSQL",
+          "to": "MySQL"
+        }
+      ],
+      "explanation": "SQL Server to MySQL is heterogeneous; AWS SCT converts schema and database code where supported; AWS DMS migrates data. Unsupported constructs need manual conversion.",
+      "references": [
+        "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html"
+      ]
+    },
+    {
+      "id": 244,
+      "sourceAnswer": [
+        "B"
+      ],
+      "recommendedAnswer": [
+        "B"
+      ],
+      "wordingCorrections": [
+        {
+          "from": "Aurora duster",
+          "to": "Aurora cluster"
+        }
+      ],
+      "explanation": "Site-to-Site VPN can be provisioned without the lead time of Direct Connect. DMS full load plus CDC replicates ongoing changes, enabling low-downtime cutover after validating replication lag. CDC does not guarantee zero data loss by itself; pause source writes, drain changes, validate, then switch.",
+      "references": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_DMS_migration.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.MySQL.html"
+      ]
+    },
+    {
+      "id": 249,
+      "sourceAnswer": [
+        "A",
+        "D"
+      ],
+      "recommendedAnswer": null,
+      "status": "outdated-no-valid-current-option-pair",
+      "explanation": "AWS Server Migration Service was discontinued in 2022. Both keyed answers use it; VM Import/Export does not provide continuous block-level replication. Modernize options to use AWS Transform MGN (formerly AWS Application Migration Service) for both servers, retaining continuous replication and cutover testing. Re-author choices before grading.",
+      "references": [
+        "https://aws.amazon.com/about-aws/whats-new/2021/05/announcing-general-availability-of-aws-application-migration-service/",
+        "https://aws.amazon.com/about-aws/whats-new/2026/06/aws-transform-mgn-rebrand/"
+      ]
+    }
+  ],
+  "needsFurtherValidation": [
+    {
+      "id": 202,
+      "reason": "Verify custom AMI support for EKS managed node groups and whether proprietary agent requirement rules out Fargate."
+    },
+    {
+      "id": 217,
+      "reason": "Snowball/S3 to Aurora via DMS option feasibility; source endpoints and import mechanisms must be validated."
+    }
+  ],
+  "note": "Only Q208, Q244, Q249 have specific source-backed review notes here. Other batch IDs not verified. Application questions.json not modified."
+}
