@@ -24,7 +24,7 @@ const OUTDATED_CANDIDATE_IDS = new Set(outdatedReview.items.filter(item=>item.ca
 const OUTDATED_REVIEWS = new Map(outdatedReview.items.map(item=>[item.id,item]));
 const QUESTIONS = raw as Question[];
 function effectiveAnswers(q:Question){const a=AUDITS.get(q.id);return a?.verifiedAnswer?.length?a.verifiedAnswer:[];}
-function isFlagged(q:Question){return !!AUDITS.get(q.id)&&!AUDITS.get(q.id)?.verifiedAnswer?.length;}
+function isFlagged(q:Question){return REVIEW_NOTES[q.id]?.status==='not-gradable'||(!!AUDITS.get(q.id)&&!AUDITS.get(q.id)?.verifiedAnswer?.length);}
 function isConfirmed(q:Question){const a=AUDITS.get(q.id);return !!a&&a.verificationStatus==='reviewed'&&!!a.verifiedAnswer?.length;}
 const byId = new Map(QUESTIONS.map(q=>[q.id,q]));
 const DOMAIN_NAMES = ['All domains','Organizational Complexity','New Solutions','Continuous Improvement','Migration & Modernization'];
