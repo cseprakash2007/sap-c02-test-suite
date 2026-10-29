@@ -763,3 +763,18 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Official references:** https://docs.aws.amazon.com/awssupport/latest/user/cost-optimization-checks.html ; https://docs.aws.amazon.com/awssupport/latest/user/cloudwatch-events-ta.html ; https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-trustedadvisor.html
 - **Exact-question matches:** https://www.examtopics.com/discussions/amazon/view/143186-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-524-discussion/ ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-1
 - **Review classification:** verified-with-legacy-warning. External answer C agrees, but AWS documentation is the technical authority.
+
+## Q146 — Domain 4 single-answer 20/139 (2026-10-29)
+
+- **Answer: B (retained, qualified).** Exact wording/options match CertEnsure SAP-C02 Question 33, which selects B. AWS EKS docs independently support retaining Kubernetes manifests and using managed node groups to reduce node management.
+- **Original question:** `A company is migrating a containerized Kubernetes app with manifest files to AWS. What is the easiest migration path?`
+- **Original options:** A `App Runner + open-source repo`; B `Amazon EKSwith managed node groups and Aurora`; C `ECS on EC2 + task definitions`; D `Rebuild Kubernetes cluster on EC2 manually`.
+- **A incorrect:** App Runner consumes source code or images for web services; no direct Kubernetes manifest deployment semantics.
+- **B intended correct:** EKS runs Kubernetes and supports deploying existing manifests using kubectl; managed node groups automate node provisioning and lifecycle. **Defect:** Aurora is not warranted because no database is described. This is best among options, not an unqualified fully specified solution.
+- **C incorrect:** ECS needs task definitions, implying conversion from Kubernetes manifests and potentially orchestration changes.
+- **D incorrect:** Manually running Kubernetes on EC2 increases control-plane and node maintenance overhead.
+- **Source warnings:** Original question/options unusually abbreviated; exact external copy is similarly abbreviated and does not prove complete original exam wording. Typo `EKSwith` preserved. EKS Auto Mode offers additional managed infrastructure in 2026 but is not an answer option.
+- **Count discrepancy:** In current `questions.json`, Domain 4 entries with `answerCount===1` number **139**; Q146 is **20/139** in ascending ID order, rather than 19/138 inferred from prior turn. Do not change dataset counts or IDs without separate audit.
+- **Official docs:** https://docs.aws.amazon.com/eks/latest/userguide/sample-deployment.html ; https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html ; https://docs.aws.amazon.com/eks/latest/userguide/automode.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html ; https://docs.aws.amazon.com/apprunner/latest/dg/service-source-code.html
+- **External exact match:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Question 33).
+- **Classification:** `verified-intended-answer-with-defective-wording`; preserve original key B and source text. React question data populated with explanation, option analysis, plain words, key points, source warning, and review metadata.
