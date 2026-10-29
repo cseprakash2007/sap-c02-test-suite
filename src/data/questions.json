@@ -6171,13 +6171,13 @@
    "D"
   ],
   "answerCount": 1,
-  "explanation": "",
-  "wrongOptionsExplanation": "",
-  "plainWords": "",
-  "keyPoints": "",
-  "sourceWarning": "",
+  "explanation": "Historical intended answer D, verified against exact external SAP-C02 question copies (ExamPal, SPOTO, ExamTopics Q46) and AWS Application Discovery Service documentation. Discovery Agent installed on each supported on-premises server collects detailed CPU/RAM/system performance, operating system, running processes and network dependencies. Migration Hub Data Exploration/continuous export delivers agent data to S3, and Amazon Athena supports predefined and custom SQL queries against os_info_agent, sys_performance_agent, processes_agent and other datasets. Agentless VMware discovery lacks the same running-process detail. CRITICAL 2026 LIFECYCLE UPDATE: AWS Application Discovery Service and Migration Hub closed to NEW customers on November 7, 2025; existing customers can continue their projects. AWS recommends AWS Transform for new migration assessments. The legacy Discovery Connector stopped accepting new data on November 17, 2025. Thus D is the best original historical exam answer but is not a generally deployable recommendation for a new customer in 2026.",
+  "wrongOptionsExplanation": "A: Legacy Agentless Discovery Connector can collect VMware configuration/performance, but not the process-level information demanded; Glue and S3 Select cannot recover missing data. Also legacy Connector stopped accepting new data in November 2025. B: Exporting only VM performance metrics omits running-process details and is insufficient; QuickSight visualizes data but does not collect process inventory. C: Custom scripts add unnecessary development and Migration Hub put-resource-attributes is not a detailed time-series/process inventory ingestion API; console alone is not the Athena exploration pipeline. D: Historically correct: Discovery Agent + Migration Hub continuous data exploration + S3 + Athena for SQL analysis, subject to service availability for existing customers.",
+  "plainWords": "Before migrating 1,000 VMware servers, collect CPU, RAM, OS and running-process inventory and query the detailed discovery data.",
+  "keyPoints": "Original key D (legacy, outdated for new customers in 2026). Agentless VMware collector: basic inventory/utilization; Discovery Agent: running processes, network dependencies, time series; continuous export to S3 + Athena SQL. AWS docs: https://docs.aws.amazon.com/application-discovery/latest/userguide/view-and-explore.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/explore-data.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/explore-direct-in-ate.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/application-discovery-service-availability-change.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/doc-history.html ; external https://exampal.app/questions/aws-sap-c02-a-company-is-planning-to-migrate-1000-on-premises-servers-to-aws-the-servers-run-on-several-vmware/ ; https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2",
+  "sourceWarning": "OUTDATED SERVICE (2026): AWS Application Discovery Service closed to new customers November 7, 2025; existing customers can continue. AWS Transform is the recommended current alternative. Legacy Discovery Connector stopped accepting new data November 17, 2025. Answer D is historically valid only for eligible existing customers and as an older SAP-C02 practice question; flag as outdated rather than unqualified current advice. Original question and all options preserved.",
   "review": null,
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "aws-doc-verified-external-question-matched-outdated-service"
  },
  {
   "id": 143,
