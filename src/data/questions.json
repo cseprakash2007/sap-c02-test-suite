@@ -8592,13 +8592,35 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED B. ECS on EC2 supports shared container capacity for Java/Node.js workloads including multi-hour billing jobs; EC2 Auto Scaling and ECS task/service scaling can adapt to sporadic use. AWS ECS capacity provider managed scaling and binpack placement optimize instance utilization. Exact external SAP-C02 CertEmpire demo Q7 selects B. Note 75% memory threshold is illustrative, not guaranteed cost-optimal. https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-auto-scaling.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/managed-scaling-behavior.html ; https://certempire.com/demo-files/sap-c02-demo-certempire.pdf",
+    "wrongOptionsExplanation": "A: Ordinary Lambda Event Functions run at most 15 minutes, and even eligible Lambda Managed Instances asynchronous/event-source-mapping functions introduced in 2026 max out at 90 minutes; uninterrupted multi-hour billing jobs do not fit. CloudTrail is not a dedicated job-completion monitor. B: CORRECT, standardized ECS container deployments with task scaling and shared autoscaled EC2 cluster; use ECS capacity providers, binpack, and scheduling to avoid idle hosts. C: Per-app Beanstalk environments and their baseline EC2 capacity are less economical for 20 rarely used applications. D: 3-year Reserved Instances sized to Auto Scaling GroupMaxSize overcommit to peak capacity and are wasteful for infrequent use.",
+    "plainWords": "Twenty rarely used Java/Node.js applications include a critical report that runs for hours. Package them as ECS containers and share an autoscaling EC2 fleet rather than running a separate always-on environment per app.",
+    "keyPoints": "ECS on EC2 handles long-running containers, shared infrastructure, task/service scaling and EC2 capacity providers. Binpack placement improves utilization. Lambda 15-minute standard timeout; September 2026 eligible Lambda Managed Instances extend asynchronous/ESM runs to 90 minutes, still not multi-hour. Avoid long-term reservations sized to infrequent peaks.",
+    "sourceWarning": "Source typos: 'tor' should be 'for'; missing punctuation around 'other times Average' and '. though'. Source answer B verified exact-match CertEmpire PDF. 75% memory-based scaling alone does not guarantee lowest cost; scheduled run-task and capacity-provider managed scaling/binpack are implementation refinements. As of Sep 2026, blanket statement 'Lambda maximum 15 minutes' is outdated for eligible Lambda Managed Instances (90 minutes), but does not change answer for jobs running several hours.",
+    "review": {
+      "status": "verified-aws-doc-external-exact-match-with-2026-lambda-caveat",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 32,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-auto-scaling.html",
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/managed-scaling-behavior.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html",
+        "https://aws.amazon.com/blogs/compute/announcing-90-minute-function-timeout-on-aws-lambda-managed-instances/"
+      ],
+      "externalExactMatch": "https://certempire.com/demo-files/sap-c02-demo-certempire.pdf",
+      "externalQuestionNumber": 7,
+      "defects": [
+        "Minor original-source transcription errors",
+        "2026 Lambda Managed Instances 90-minute exception must be acknowledged",
+        "Fixed 75% scaling does not prove global cost minimum"
+      ]
+    },
+    "answerStatus": "verified-b-exact-external-2026-caveats"
   },
   {
     "id": 200,

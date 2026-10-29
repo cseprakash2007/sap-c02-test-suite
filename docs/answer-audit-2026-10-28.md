@@ -910,3 +910,10 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **B** central EventBridge with content-filter rules works when event bus or cross-account targets and appropriate IAM execution roles/resource policies are configured: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-cross-account.html ; https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-cross-account.html .
 - **C** falsely implies a Kinesis stream can directly invoke arbitrary Fargate microservices without consumer implementation. **D** shares a single SQS competing-consumer queue and does not fan out every message.
 - **Correction proposal:** Add a requirement for per-microservice *content-based routing by event fields* and central rules; otherwise accept A and B. Keep original wording and options unchanged for traceability.
+
+
+### Domain 4 Q199 — single-answer 32/139 (2026-10-29)
+- **Source answer B VERIFIED**, exact external [CertEmpire SAP-C02 PDF Q7](https://certempire.com/demo-files/sap-c02-demo-certempire.pdf).
+- ECS on EC2 consolidates Java/Node.js containers, supports multi-hour jobs and task/cluster scaling. AWS: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-auto-scaling.html and https://docs.aws.amazon.com/AmazonECS/latest/developerguide/managed-scaling-behavior.html .
+- A cannot accommodate uninterrupted several-hour processing: standard Lambda 15 min; eligible Lambda Managed Instances async/ESM 90 min since September 2026 (https://aws.amazon.com/blogs/compute/announcing-90-minute-function-timeout-on-aws-lambda-managed-instances/). C per-app Beanstalk has inefficient baseline; D reserves peak fleet for 3 years.
+- Source typos preserved ('tor', punctuation); 75% memory target is not guaranteed optimal, recommend ECS capacity providers, binpack and scheduled task runs where applicable.
