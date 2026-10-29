@@ -6621,13 +6621,35 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified answer A from AWS documentation and exact external SAP-C02 matches (ExamTopics topic 1 Q191 and PUPUWEB). ECS Fargate runs Docker containers without provisioning/managing EC2 hosts; EFS supports NFSv4 shared elastic file storage and ECS Fargate EFS volume definitions. Define EFS fileSystemId, mountPoints and IAM authorization (authorizationConfig.iam ENABLED using ECS task role), enable transitEncryption, and apply EFS access point and security-group controls. Official: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specify-efs-config.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-best-practices.html .",
+    "wrongOptionsExplanation": "A: CORRECT. Fargate is serverless container compute and EFS is managed NFS shared storage; ECS task definition configures the EFS mount and IAM task role authorization. B: WRONG. FSx for Lustre uses Lustre rather than NFSv4; AWS explicitly states FSx for Lustre mounting is unsupported on Fargate. C: WRONG. EFS works with ECS EC2, but EC2 host provisioning, OS patching, node capacity and mounts remain managed by customer, violating no infrastructure management. D: WRONG. ECS EC2 needs host management, and EBS Multi-Attach is block storage rather than an NFSv4 shared file service; concurrent writes require suitable coordination/cluster-aware file systems.",
+    "plainWords": "Run Docker containers without managing servers, while preserving the existing shared NFS file storage: use ECS Fargate plus EFS.",
+    "keyPoints": "Fargate=no EC2 host management; EFS=managed shared NFSv4 file system; ECS EFS volume configuration uses fileSystemId, mountPoints, authorizationConfig.iam ENABLED with taskRoleArn, transitEncryption ENABLED. FSx for Lustre unsupported on Fargate. EC2 launch type requires managing hosts. EBS Multi-Attach is block storage, not NFS. AWS: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specify-efs-config.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-best-practices.html ; https://docs.aws.amazon.com/fsx/latest/LustreGuide/mounting-ecs.html . Exact external: https://www.examtopics.com/discussions/amazon/view/110392-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://pupuweb.com/aws-sap-c02-exam-question-answer-secure-scalable-containerized-solution/ .",
+    "sourceWarning": "MINOR IAM TERMINOLOGY IMPRECISION: Option A says 'EFS authorization IAM role' but ECS EFS IAM authorization actually uses the ECS task IAM role with authorizationConfig.iam=ENABLED and transitEncryption=ENABLED, not a separate named EFS role property. The option is still clearly correct. Source stem and options match independent external sites; no substantive outdated content found. EFS NFS ingress 2049, TLS, IAM and EFS access points recommended.",
+    "review": {
+      "status": "verified-answer-minor-iam-terminology",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 22,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "A"
+      ],
+      "originalTextPreserved": true,
+      "externalExactMatches": [
+        "https://www.examtopics.com/discussions/amazon/view/110392-exam-aws-certified-solutions-architect-professional-sap-c02/",
+        "https://pupuweb.com/aws-sap-c02-exam-question-answer-secure-scalable-containerized-solution/"
+      ],
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specify-efs-config.html",
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-best-practices.html",
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/mounting-ecs.html"
+      ],
+      "defects": [
+        "Option A calls task IAM role an EFS authorization IAM role, a minor terminology imprecision"
+      ],
+      "notes": "A remains correct. Fargate+EFS meets NFSv4 and no host management; FSx Lustre unsupported on Fargate."
+    },
+    "answerStatus": "verified-aws-doc-external-exact-match-minor-iam-terminology"
   },
   {
     "id": 154,
