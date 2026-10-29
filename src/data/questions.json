@@ -6429,13 +6429,35 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED C against AWS documentation and exact matching CertEnsure SAP-C02 Question 150. RDS for MySQL supports asynchronous cross-Region read replicas to serve >90% read-only report queries from a nearby European database. Route 53 latency-based routing chooses the deployed API Gateway Region with the lowest measured user-to-Region latency. Ensure European Lambda uses the European replica endpoint and all writes still go to the US primary; replication lag means read-after-write consistency is not guaranteed. AWS official: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html . Exact external match: https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Question 150).",
+    "wrongOptionsExplanation": "A: DMS full load migrates existing data only; it does not continuously replicate subsequent updates, making regional reports stale even though latency routing is appropriate. B: DMS full load + CDC does support ongoing replication but adds migration/replication management; geolocation chooses by user geography rather than measured latency. C: Native RDS cross-Region read replica is managed and suits read-heavy reporting; Route 53 latency routing optimizes API Region selection. D: Native replica is appropriate, but geolocation is not latency-optimized; original D text is truncated after 'connect to the API'.",
+    "plainWords": "Keep the writable MySQL database in the US, place a continuously updated read replica near European users, and send each user's API requests to the lowest-latency AWS Region.",
+    "keyPoints": "RDS MySQL cross-Region read replica (asynchronous, read-only, potential replication lag); Route 53 latency-based routing vs geolocation; DMS full load vs full load+CDC; Lambda must use regional replica for reads and primary for writes. Official: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html . Exact third-party question/answer C: https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html Question 150.",
+    "sourceWarning": "TRUNCATED SOURCE OPTION D: 'Configure a cross-Region read replica for the RDS database in the new Region. Change the Route 53 record to geolocation routing to connect to the API' is missing the end of its sentence. Exact CertEnsure Question 150 has the same truncation, so full original text is not recoverable from that match. Do not silently append presumed 'Gateway API'. External site's long explanation contains unrelated Redshift alternatives and should not be trusted as option analysis. Cross-Region read replicas are asynchronous; replica lag and write routing must be considered. Original question/options preserved.",
+    "review": {
+      "status": "verified-answer-with-truncated-option",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 21,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "C"
+      ],
+      "externalExactMatch": "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+      "externalQuestionNumber": 150,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-geo.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html"
+      ],
+      "originalTextPreserved": true,
+      "defects": [
+        "Option D truncated in JSON and matched external copy",
+        "External explanation includes unrelated Redshift options"
+      ],
+      "notes": "RDS read replica async; regional Lambda reads from replica; writes primary. Current Domain 4 single answer total 139."
+    },
+    "answerStatus": "verified-aws-doc-external-exact-match-option-d-truncated"
   },
   {
     "id": 149,
