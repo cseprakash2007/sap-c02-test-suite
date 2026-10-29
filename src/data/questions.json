@@ -7578,13 +7578,41 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is the intended best answer, corroborated by exact external SAP-C02 copies (ExamTopics Q504; CertsTopics Q48 answer D) and current AWS Elastic Beanstalk/RDS documentation. Elastic Beanstalk Tomcat load-balanced environment provisions and Auto Scales Java/Tomcat servers across AZs; RDS PostgreSQL manages DB infrastructure; ALB distributes requests and CloudFront caches suitable content. IMPORTANT defect: source says deployable JARs only, whereas Elastic Beanstalk Tomcat requires a deployable WAR. Elastic Beanstalk Java SE can run executable JARs but is not identical to Tomcat platform; if only library JARs are available, more packaging detail is needed. Official: https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Java.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-tomcat-platform.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-se-platform.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-rds.html .",
+    "wrongOptionsExplanation": "A: EC2 Tomcat and PostgreSQL self-management plus Step Functions custom scaling is operationally expensive; EFS shared mounts do not provide appropriate relational DB architecture. B: EKS containerization and Kubernetes across Regions add complexity; PostgreSQL in app containers adds stateful DB burden; NLB distributes traffic but does not itself scale EKS workloads. C: Source code unavailable, so Java-to-Python refactor is infeasible; DynamoDB requires data-model/application rewrite; Storage Gateway is irrelevant. D: Best available: Elastic Beanstalk Tomcat managed environment with multi-AZ Auto Scaling, RDS PostgreSQL, ALB and optionally CloudFront. Caveat: Tomcat platform expects WAR, not arbitrary JAR; Java SE platform can run executable JARs.",
+    "plainWords": "For an existing Tomcat and PostgreSQL application with monthly traffic spikes, choose managed Elastic Beanstalk scaling and RDS rather than rebuilding the application or managing servers. Confirm the available Java package is deployable.",
+    "keyPoints": "Elastic Beanstalk Tomcat supports Java servlet WAR apps, load-balanced multi-AZ Auto Scaling; Java SE supports executable JAR apps. RDS PostgreSQL handles managed DB. ALB balances traffic; CloudFront improves cacheable/static responses but is not the core Auto Scaling mechanism. Exact external Q504 and Q48 answer D. https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-tomcat-platform.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-se-platform.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-rds.html .",
+    "sourceWarning": "TECHNICAL PACKAGING DEFECT: Question says company can deploy Java Archive (JAR) files, but choice D uses Elastic Beanstalk Tomcat platform, which expects a web application archive (WAR). A runnable fat/executable JAR may work with Elastic Beanstalk Java SE, not automatically on Tomcat. If JARs are only dependencies and no deployable WAR exists, none of the options fully describes a working deployment. D is best intended architecture, not an unqualified deployable configuration. CloudFront optional for cacheable content; ALB does not itself increase EC2 capacity—Auto Scaling does. Exact external matches preserve same defect.",
+    "review": {
+      "status": "verified-intended-answer-with-jar-war-packaging-defect",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 27,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "D"
+      ],
+      "originalTextPreserved": true,
+      "externalExactMatches": [
+        "https://www.examtopics.com/discussions/amazon/view/142998-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-504-discussion/",
+        "https://www.certstopics.com/questions/exactprep-sap-c02-questions.html"
+      ],
+      "externalQuestionNumbers": [
+        "ExamTopics 504",
+        "CertsTopics 48"
+      ],
+      "awsReferences": [
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Java.html",
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-tomcat-platform.html",
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-se-platform.html",
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-rds.html"
+      ],
+      "defects": [
+        "JAR-only source conflicts with Tomcat WAR deployment requirement",
+        "ALB balances traffic; Auto Scaling adjusts capacity; CloudFront is optional"
+      ],
+      "notes": "Retain D as exam-intended best choice; warn WAR/JAR packaging gap. AWS documentation and two exact exam sites checked."
+    },
+    "answerStatus": "verified-intended-d-jar-war-source-defect"
   },
   {
     "id": 177,
