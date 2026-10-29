@@ -7975,13 +7975,36 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED D. AWS Cloud WAN centrally manages multi-Region hybrid routing, segmentation and attachment policy; AWS Direct Connect provides dedicated private physical connectivity between on-premises HSM networks and AWS VPC workloads. Native Cloud WAN Direct Connect gateway attachments support BGP route propagation and remove the formerly required intermediate Transit Gateway (launched November 25, 2024). Exact external SAP-C02 Q15 selects D: https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html . AWS: https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-dxattach-about.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-cloud-wan.html ; https://aws.amazon.com/about-aws/whats-new/2024/11/aws-cloud-wan-on-premises-connectivity-direct-connect/ .",
+    "wrongOptionsExplanation": "A: Global Accelerator optimizes routing to internet-facing/public application endpoints and does not create dedicated private connectivity from on-premises HSMs. B: Standard Site-to-Site VPN plus Transit Gateway provides encrypted connectivity and centralized routing but not a dedicated private circuit; typical VPN runs over public Internet. C: CloudHSM relocates HSM functionality to AWS instead of connecting the company's existing on-premises HSMs; not the requested networking solution. D: CORRECT; Direct Connect dedicated network connection with Cloud WAN centralized global core-network policy, segmentation, multi-Region routing, and native Direct Connect gateway attachment.",
+    "plainWords": "Keep the regulated HSMs in the company's data centers, connect them privately through AWS Direct Connect, and manage routing across AWS Regions centrally with Cloud WAN.",
+    "keyPoints": "Cloud WAN + Direct Connect gateway native attachment (November 2024) supports BGP route propagation, policy-based segmentation and central management without mandatory intermediate TGW. Configure actual Direct Connect circuits, transit VIF, DX gateway, core network attachment, and VPC attachments. Direct Connect dedicated private link does not by itself ensure end-to-end encryption; use TLS/MACsec as appropriate, redundancy, and monitor latency. https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-dxattach-about.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-cloud-wan.html .",
+    "sourceWarning": "Option D is architecturally correct but underspecified: native Cloud WAN attachment attaches a Direct Connect GATEWAY, not a raw physical Direct Connect connection; requires existing DX circuit, transit VIF, DX gateway, Cloud WAN core network, attachment and BGP route configuration. Native support was released November 25, 2024; older AWS blogs claiming TGW is mandatory are stale. Direct Connect is not encryption by default; PCI/payment use case needs transport security and redundancy. External exact-match SAP-C02 Q15 independently supports D.",
+    "review": {
+      "status": "verified-aws-doc-external-exact-match-implementation-caveats",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 30,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "D"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-dxattach-about.html",
+        "https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-dxattachment-add.html",
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-cloud-wan.html",
+        "https://aws.amazon.com/about-aws/whats-new/2024/11/aws-cloud-wan-on-premises-connectivity-direct-connect/"
+      ],
+      "externalExactMatch": "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+      "externalQuestionNumber": 15,
+      "defects": [
+        "Option D abbreviates DX gateway and transit VIF prerequisites",
+        "Older AWS docs/blogs requiring intermediate TGW are obsolete since November 2024",
+        "Dedicated DX does not inherently encrypt sensitive payment traffic"
+      ],
+      "notes": "D independently confirmed by AWS documentation and exact third-party Q15. Native Direct Connect gateway attachment to Cloud WAN core network is current."
+    },
+    "answerStatus": "verified-d-native-cloud-wan-dx-exact-external"
   },
   {
     "id": 186,
