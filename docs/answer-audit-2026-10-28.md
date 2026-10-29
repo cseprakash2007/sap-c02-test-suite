@@ -790,3 +790,16 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS sources:** https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-geo.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html
 - **External exact match:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Question 150, key C).
 - **Classification:** `verified-answer-with-truncated-option`. Original stem and options preserved; React source JSON now has explanations, sources and defect flags.
+
+## Q153 — Domain 4 single-answer 22/139 (reviewed 2026-10-29)
+
+- **Verified answer A** (retained): ECS Fargate with Amazon EFS meets Docker, NFS version 4, secure shared storage and no underlying host management requirements.
+- **Original stem/options:** Preserved verbatim in `src/data/questions.json`; complete wording independently matched at ExamTopics SAP-C02 topic 1 Q191 and PUPUWEB.
+- **A correct:** Fargate manages container infrastructure, EFS provides managed elastic NFS shared storage; ECS task definition configures EFS file system ID, mount point and IAM authorization.
+- **B wrong:** FSx for Lustre uses Lustre rather than NFSv4 and AWS explicitly states FSx for Lustre cannot be mounted by Fargate tasks.
+- **C wrong:** EFS appropriate but ECS EC2 launch type requires customer-managed EC2 instances, patching, capacity and host configuration, violating no infrastructure management.
+- **D wrong:** EC2 management remains, and EBS Multi-Attach is block storage rather than NFSv4 shared file service; multi-writer correctness needs careful file-system coordination.
+- **Minor source imprecision:** 'EFS authorization IAM role' is not a separate ECS task definition field. EFS IAM authorization uses ECS **task IAM role** with `authorizationConfig.iam=ENABLED`, `transitEncryption=ENABLED`. For secure use restrict TCP 2049 via security groups, apply least privilege and EFS access points.
+- **AWS references:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specify-efs-config.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-best-practices.html ; https://docs.aws.amazon.com/fsx/latest/LustreGuide/mounting-ecs.html
+- **External exact question:** https://www.examtopics.com/discussions/amazon/view/110392-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://pupuweb.com/aws-sap-c02-exam-question-answer-secure-scalable-containerized-solution/ (selects A).
+- **Classification:** `verified-answer-minor-iam-terminology`; answer A retained. Question data now has explanation, per-option reasoning, study notes, source warning and references for React display.
