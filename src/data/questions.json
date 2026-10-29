@@ -7236,13 +7236,36 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historically B is best of four options. AWS Application Discovery Agent runs on physical and virtual Linux/Windows hosts and collects system utilization, running processes and TCP network connections, enabling dependency mapping and sizing. Migration Hub Strategy Recommendations assesses migration/modernization options. IMPORTANT 2026 UPDATE: AWS Migration Hub stopped accepting new customers on 2025-11-07; AWS recommends AWS Transform for new projects. Existing Migration Hub customers can continue using the service. No exact external exam-site question match established. AWS: https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html ; https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html .",
+    "wrongOptionsExplanation": "A: Migration Evaluator and Agentless Collector help assess infrastructure and cost but are less comprehensive for physical/virtual server running-process and application dependency discovery. B: Intended historical correct answer: Discovery Agent inventories physical and virtual servers with processes, performance and TCP dependencies; Strategy Recommendations supports migration planning. As of 2025-11-07 Migration Hub does not accept new customers, so use AWS Transform for new projects. C: Agentless Collector covers VMware VMs and database metadata but differs from per-server agent for physical host/process detail; 'Migration Service' is ambiguous and does not provide complete planning strategy. D: Migration Hub import uses preexisting inventory data and cannot independently detect processes or live network connections.",
+    "plainWords": "To plan migration, first discover which physical and virtual servers exist, how busy they are, and which applications talk to each other. Historically use Discovery Agents with Migration Hub strategy planning; for new 2026 projects use AWS Transform.",
+    "keyPoints": "Discovery Agent: physical+VM Windows/Linux, CPU/RAM, processes, TCP dependencies. Agentless Collector: VMware and DB inventory/metrics, different coverage. CSV import does not discover runtime dependencies. Migration Hub Strategy Recommendations historically supports migration planning; AWS Migration Hub stopped onboarding new customers Nov 7 2025 and AWS Transform is recommended. https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html ; https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html . External background: https://certnotes.cloud/services/migration-transfer/application-discovery-service/ (not exact question).",
+    "sourceWarning": "OUTDATED AS OF 2025-11-07: AWS Migration Hub stopped accepting new customers; AWS Transform is recommended for new projects, although existing customers can use Migration Hub. Stem/options are abbreviated and no complete original exam question established. No exact external exam-site answer-key match found; 2026 third-party study reference corroborates agent/agentless distinctions only. Historical answer B retained with current-service warning. 'Migration Service' in C is ambiguous.",
+    "review": {
+      "status": "historically-correct-outdated-migration-hub-new-customers",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 25,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html",
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html",
+        "https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html",
+        "https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/getting-started-get-recommendations.html"
+      ],
+      "externalSupportingStudySite": "https://certnotes.cloud/services/migration-transfer/application-discovery-service/",
+      "externalExactMatch": null,
+      "defects": [
+        "Migration Hub stopped onboarding new customers November 7 2025",
+        "Question stem/options abbreviated",
+        "Option C ambiguous 'Migration Service'"
+      ],
+      "notes": "Retain B as historical exam intent. AWS Transform is current recommended path for new projects. Exact external exam question not established."
+    },
+    "answerStatus": "historical-key-b-verified-but-outdated-aws-transform"
   },
   {
     "id": 169,
