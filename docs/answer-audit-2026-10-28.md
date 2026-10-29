@@ -944,3 +944,10 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - Exact external matches **B**: https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=31 (Q150); https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 (Q137); https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q183).
 - A S3-backed File Gateway not direct Windows FSx replication; B correct; C Data Pipeline unsuitable and EFS NFS; D DataSync SMB->EFS **supported**, but EFS lacks native Windows SMB semantics.
 - Original text preserved. Defects: B should specify FSx for Windows File Server; D 'lo' typo; C 'on- premises' spacing. For implementation verify SMB permissions, AD/NTFS ACL transfer and DataSync agent networking.
+
+
+### Domain 4 Q212 — single-answer 37/139 (2026-10-29)
+- Historical answer **C** verified for **existing** Migration Hub users: Application Discovery Agent collects on-prem physical/VM metrics, running processes, TCP connections; Migration Hub groups applications and generates EC2 sizing recommendations. https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/ec2-recommendation-prerequisites.html .
+- **MAJOR OUTDATED/DEFECTIVE SOURCE**: AWS Migration Hub stopped accepting **new customers Nov 7, 2025**; AWS recommends **AWS Transform** for new migrations. https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html . None of four options reflects the current new-customer recommendation; preserve historical source C with warning.
+- A SSM/Application Manager/Pricing Calculator do not provide complete discovery/sizing pipeline; B Inspector is vulnerability scanning; C historically correct; D CloudWatch agent/Compute Optimizer lack comprehensive migration dependency mapping.
+- Independent external technical note corroborates retirement: https://certnotes.cloud/services/migration-transfer/migration-hub/ . No exact external practice-site question match confirmed. Original question/options preserved.

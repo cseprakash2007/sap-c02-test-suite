@@ -9155,13 +9155,34 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "HISTORICAL SOURCE ANSWER C VERIFIED for existing AWS Migration Hub customers: AWS Application Discovery Agent installed on physical/virtual Linux/Windows servers captures host configuration, utilization, processes and TCP connections. Migration Hub groups servers into applications and generates EC2 instance recommendations from discovery metrics. CRITICAL 2026 UPDATE: Migration Hub closed to NEW customers November 7, 2025; AWS recommends AWS Transform for new migrations. https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/ec2-recommendation-prerequisites.html ; https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html",
+    "wrongOptionsExplanation": "A: SSM Agent and Systems Manager Application Manager are not the purpose-built on-premises migration discovery/dependency mapping and AWS Pricing Calculator is an estimator, not discovery-derived EC2 recommendation generator. B: Amazon Inspector scans for security vulnerabilities/exposure, not complete server usage/process/dependency discovery; AWS Compute Optimizer is not the stated on-premises discovery pipeline. C: HISTORICALLY CORRECT: Application Discovery Agent -> Migration Hub application grouping and EC2 sizing; unavailable to new Migration Hub customers since Nov 2025, use AWS Transform. D: CloudWatch agent collects telemetry, not complete process and TCP dependency inventory for Migration Hub; Compute Optimizer does not replace migration discovery/recommendations.",
+    "plainWords": "Install the migration discovery agent on physical servers and VMs to map processes, connections and resource use; group discovered servers and size EC2 instances. For a new migration in 2026, use AWS Transform rather than signing up for Migration Hub.",
+    "keyPoints": "AWS Application Discovery Agent: Windows/Linux physical and VM host metrics, process and TCP connection inventory; agentless collector cannot cover all physical hosts and running processes. AWS Migration Hub EC2 Instance Recommendations historically uses discovery utilization. AWS Migration Hub stopped accepting new customers November 7, 2025; AWS Transform recommended successor.",
+    "sourceWarning": "MAJOR OUTDATED SOURCE: AWS Migration Hub stopped accepting new customers November 7, 2025. Historical answer C valid only for existing Migration Hub customers; for a new 2026 project AWS recommends AWS Transform, which is absent from options. This makes question outdated and operationally defective for new customers. No exact independent third-party exam question match verified; independent external technical notes https://certnotes.cloud/services/migration-transfer/migration-hub/ corroborate 2025 closure. Do not mark source answer universally valid.",
+    "review": {
+      "status": "historically-correct-c-outdated-new-customers-2026",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 37,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "C"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html",
+        "https://docs.aws.amazon.com/migrationhub/latest/ug/ec2-recommendation-prerequisites.html",
+        "https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html"
+      ],
+      "externalTechnicalCorroboration": "https://certnotes.cloud/services/migration-transfer/migration-hub/",
+      "externalExactMatch": null,
+      "defects": [
+        "Migration Hub closed to new customers since 2025-11-07",
+        "AWS Transform missing from answers for new 2026 deployments"
+      ],
+      "notes": "Retain source C for historical exam context; flag outdated/defective for new AWS customers."
+    },
+    "answerStatus": "outdated-historical-c-new-customers-aws-transform"
   },
   {
     "id": 213,
