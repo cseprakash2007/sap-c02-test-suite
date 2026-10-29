@@ -889,3 +889,16 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Exact independent exam-site match:** https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html Question 179, matching original stem and options.
 - **Minor technical source defect:** SQS does **not** itself push-invoke Lambda; Lambda polls via an event source mapping. AppSync Events requires Event API/channel/authorization and HTTP publish request, omitted in simplified answer. Consider SQS/Lambda idempotency, retry and DLQ handling.
 - **Classification:** `verified-aws-doc-external-exact-match-minor-technical-imprecision`. Original stem and options preserved, source answer B retained, explanations/links/warnings added to JSON for React.
+
+## Q185 — Domain 4 single-answer 30/139 (2026-10-29)
+
+- **Verified answer D retained:** AWS Cloud WAN core network with native AWS Direct Connect gateway attachments supplies dedicated on-premises connectivity, centrally managed multi-Region routing/segmentation, and BGP dynamic route propagation.
+- **A wrong:** Global Accelerator optimizes endpoint traffic but does not establish a dedicated private link to existing on-premises HSMs.
+- **B wrong:** Standard Site-to-Site VPN plus TGW gives centralized routing/encrypted tunnels, but not dedicated private Direct Connect connectivity.
+- **C wrong:** CloudHSM replaces or changes the on-premises HSM deployment rather than connecting the existing HSMs to AWS workloads.
+- **D correct:** Direct Connect provides dedicated circuit, Cloud WAN centralizes policy and global routing. Native Direct Connect gateway attachments avoid a mandatory intermediate TGW.
+- **AWS current evidence:** https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-dxattach-about.html ; https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-dxattachment-add.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-cloud-wan.html ; https://aws.amazon.com/about-aws/whats-new/2024/11/aws-cloud-wan-on-premises-connectivity-direct-connect/ .
+- **Exact external match:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html Q15, same wording and options, answer D.
+- **Source implementation caveat:** Option D omits Direct Connect physical connection, Direct Connect gateway, transit virtual interface, BGP and Cloud WAN core-network/VPC attachments. Direct Connect is not inherently encrypted; payment workloads require appropriate TLS/MACsec, redundancy and security review.
+- **Outdated external/AWS background:** Pre-November 25, 2024 architecture articles that require intermediate Transit Gateway for Cloud WAN–Direct Connect are stale. Native gateway attachment is now supported.
+- **Classification:** `verified-aws-doc-external-exact-match-implementation-caveats`. Original stem/options preserved; JSON explanation, option analysis, warnings and references updated for React.
