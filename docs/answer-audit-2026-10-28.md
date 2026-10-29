@@ -964,3 +964,9 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - Exact third-party matches select **D**: https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-4 (Q36 No1508) and https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q6).
 - A DynamoDB/API Gateway not foreign tables; B SQL Server native replication and Glue crawler cannot create Oracle foreign tables; C MGN not bidirectional database CDC, IGW not foreign tables; D correct with omitted setup.
 - **Source caveats:** 'native spatial' needs PostGIS; 'cron on DB instance' means pg_cron SQL jobs not OS crontab; Direct Connect only network path—must install oracle_fdw and configure foreign server, user mapping, foreign table, security/routing. Preserve original wording.
+
+
+### Domain 4 Q220 — single-answer 40/139 (2026-10-29)
+- **Answer A AWS-doc verified**: one VGW attached to VPC, two Site-to-Site VPN connections to separate CGWs, each VPN has two tunnels. AWS https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-redundant-connection.html and https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-edit-static-routes.html .
+- B: customer gateway cannot attach to VPC; C: invalid two-VGW topology and propagation from CGW; D: same plus incorrectly one tunnel per VPN.
+- Source defects: OCR '5ite-to-5ite' and 'Site-to-Slte'; propagation should be on relevant route tables, not all; static VPN requires remote CIDR routes on connections. No exact external practice-site question match confirmed. Original wording preserved.

@@ -9493,13 +9493,32 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified answer A: attach one virtual private gateway to the VPC; create two AWS Site-to-Site VPN connections, each to a separate existing customer gateway with distinct public IP. Each VPN connection has two tunnels. For static routing, define on-premises destination CIDRs as VPN static routes and enable virtual private gateway route propagation on relevant VPC route tables. AWS: https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-redundant-connection.html and https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-edit-static-routes.html",
+    "wrongOptionsExplanation": "A CORRECT: one VPC-associated virtual private gateway, two VPN connections to separate customer gateways, two tunnels each; configure static remote CIDRs. B INCORRECT: customer gateway is on premises, cannot attach to VPC or propagate routes as VGW. C INCORRECT: two virtual private gateways cannot both attach to same VPC; propagation is not configured for customer gateways. D INCORRECT: same invalid dual-VGW topology; VPN connections have two tunnels, not one.",
+    "plainWords": "Use one AWS-side VPN gateway connected to both on-premises VPN devices, with two tunnels for each VPN connection.",
+    "keyPoints": "Virtual private gateway = AWS VPC side; customer gateway = on-premises side. Two Site-to-Site VPN connections to two customer gateways provide four tunnels. Static routing requires remote CIDRs on VPN connections; propagate only to relevant VPC route tables. VGW does not provide ECMP.",
+    "sourceWarning": "Original question contains OCR errors ('5ite-to-5ite', 'Site-to-Slte'). Source A is AWS-supported but 'all VPC route tables' propagation is overbroad; static VPN remote CIDR configuration omitted. No exact third-party practice-question match verified.",
+    "review": {
+      "status": "aws-doc-verified-external-exact-match-pending",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 40,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "A"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-redundant-connection.html",
+        "https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-edit-static-routes.html"
+      ],
+      "externalExactMatch": null,
+      "defects": [
+        "Site-to-Site OCR typos",
+        "All route tables propagation overbroad",
+        "Static VPN routes not specified"
+      ]
+    },
+    "answerStatus": "aws-verified-a-external-match-pending"
   },
   {
     "id": 221,
