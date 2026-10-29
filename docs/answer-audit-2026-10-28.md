@@ -815,3 +815,16 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Official AWS evidence:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_service-options.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
 - **External exam sites:** Exact independent question match **not established**; external answer-key verification pending. Do not classify as exact-site-verified.
 - **Classification:** `aws-doc-verified-external-exact-match-pending`. Original question and options preserved. JSON populated with explanations, review notes, and source warnings for React.
+
+## Q161 — Domain 4 single-answer 24/139 (2026-10-29)
+
+- **Answer A verified by current AWS documentation**, original JSON answer retained. Use AWS Transfer Family managed SFTP with internet-facing VPC-hosted endpoint and one Elastic IP per selected subnet, backed by EFS Regional shared NFS storage accessible to downstream applications, including via Direct Connect if networking allows.
+- **A correct:** Transfer Family VPC internet-facing endpoints support fixed public EIPs, multi-AZ hosting and EFS NFS backing; least operational overhead.
+- **B incorrect:** Ordinary public Transfer Family endpoint cannot associate static Elastic IPs, violating vendor allowlist requirement.
+- **C incorrect:** Lift-and-shift to a single EC2 SFTP host retains single compute SPOF and host administration.
+- **D incorrect:** AWS MGN cannot migrate VM into managed Transfer Family; ordinary public endpoint lacks EIP; FSx for Lustre not an NFS replacement.
+- **Exact external match:** https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341 Question 292. **WARNING: external printed key B is wrong**; community votes A (100%), and official AWS endpoint matrix definitively supports A.
+- **OCR/source defects:** Original JSON options contain typos `pace`, `Fie system`, `EFSfile`, `FSx for Luster`, malformed punctuation. Cleaner complete wording available in the external Question 292; original source strings preserved in JSON, with warnings, rather than silently edited.
+- **AWS docs:** https://docs.aws.amazon.com/transfer/latest/userguide/sftp-for-transfer-family.html ; https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html ; https://docs.aws.amazon.com/transfer/latest/userguide/configure-storage.html ; https://docs.aws.amazon.com/transfer/latest/userguide/
+- **Implementation notes:** EFS Regional file system and mount targets across AZs, TCP 2049 for NFS, Transfer Family endpoint source-IP security groups, Direct Connect routes and IAM/POSIX permissions.
+- **Classification:** `aws-doc-verified-external-key-conflict-ocr-defects`; answer A retained; JSON populated for React with detailed explanation, option analysis, sources and warnings.
