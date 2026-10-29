@@ -6916,13 +6916,34 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "AWS-DOC-VERIFIED intended answer C: move ECS service from a single unmanaged EC2 host to ECS on Fargate with multiple tasks across at least two AZs; add an Aurora PostgreSQL reader in another AZ as an automatic failover target. Fargate eliminates host management and ECS balances tasks across AZs. Aurora reader promotion addresses writer-instance failure. Configure multi-AZ load balancer, task desiredCount>=2, health checks, scaling and idempotent payment retries. Official: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_service-options.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html .",
+    "wrongOptionsExplanation": "A: RDS Proxy plus Aurora Replica improves DB availability but leaves the ECS application on a single EC2 host in one AZ. B: Cross-Region reader and manual failover script introduce unnecessary operational overhead; read replica is not automatic writer replacement. C: Correct; Fargate multi-AZ ECS services plus cross-AZ Aurora reader remove both main single points of failure with AWS-managed failover. D: Multi-Region global database and active-active Route 53 are much more complex; Aurora Global Database has one writable primary Region by default and requires carefully planned write routing and cross-Region failover.",
+    "plainWords": "The application and its database each have a single point of failure. Run containers on Fargate across AZs and add an Aurora reader in another AZ for automatic failover.",
+    "keyPoints": "C: ECS Fargate multi-AZ task spread + Aurora PostgreSQL cross-AZ Replica for automated promotion. A misses compute HA; B manual failover and cross-Region complexity; D Aurora global database not multi-writer merely from Route 53 active-active. AWS: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html .",
+    "sourceWarning": "TERMINOLOGY: Aurora DB cluster with reader in another AZ is not the same as distinct RDS Multi-AZ DB cluster (writer + two readers across three AZs). Option C uses loose 'Multi-AZ DB cluster' wording; intended architecture remains correct. Missing explicit multi-AZ load balancer, minimum 2 healthy tasks, and payment idempotency safeguards. No exact independent exam-site match established in this review; do not claim external answer-key confirmation.",
+    "review": {
+      "status": "aws-doc-verified-external-exact-match-pending",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 23,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "C"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html",
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_service-options.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html"
+      ],
+      "externalExactMatch": null,
+      "defects": [
+        "Loose Aurora Multi-AZ DB cluster terminology",
+        "Missing load balancer and minimum task count details"
+      ],
+      "notes": "AWS architecture confirmed; exact third-party exam copy not found. Answer C retained."
+    },
+    "answerStatus": "aws-doc-verified-external-match-pending"
   },
   {
     "id": 161,
