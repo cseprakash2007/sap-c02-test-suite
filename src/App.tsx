@@ -3,6 +3,7 @@ import { BookOpen, Bookmark, BookmarkCheck, ChartNoAxesColumn, CheckCircle2, Che
 import raw from './data/questions.json';
 import { REVIEW_NOTES } from './data/review-notes';
 import { Q3_CORRECTION } from './data/q3-correction';
+import { Q22_CORRECTION } from './data/q22-correction';
 import auditRaw from './data/domain1-verification.json';
 import auditNextRaw from './data/domain1-verification-next.json';
 import outdatedReview from './data/outdated-review.json';
@@ -23,7 +24,7 @@ const flaggedCount = (raw as Question[]).filter(q=>REVIEW_NOTES[q.id]?.status===
 // This is a review queue, not a complete or independently verified list of outdated questions.
 const OUTDATED_CANDIDATE_IDS = new Set(outdatedReview.items.filter(item=>item.category!=='discontinuation-claim-unsubstantiated').map(item=>item.id));
 const OUTDATED_REVIEWS = new Map(outdatedReview.items.map(item=>[item.id,item]));
-const QUESTIONS = (raw as Question[]).map(q=>q.id===3?{...q,...Q3_CORRECTION}:q);
+const QUESTIONS = (raw as Question[]).map(q=>q.id===3?{...q,...Q3_CORRECTION}:q.id===22?{...q,...Q22_CORRECTION}:q);
 function effectiveAnswers(q:Question){const a=AUDITS.get(q.id);if(a?.verificationStatus==='reviewed'&&a.verifiedAnswer?.length)return a.verifiedAnswer;const note=REVIEW_NOTES[q.id];return note?.status==='reviewed'&&note.answer?.length?note.answer:[];}
 function isFlagged(q:Question){return REVIEW_NOTES[q.id]?.status==='not-gradable'||!effectiveAnswers(q).length;}
 function isConfirmed(q:Question){return effectiveAnswers(q).length>0;}
