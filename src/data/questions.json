@@ -6205,13 +6205,13 @@
    "C"
   ],
   "answerCount": 1,
-  "explanation": "",
-  "wrongOptionsExplanation": "",
-  "plainWords": "",
-  "keyPoints": "",
-  "sourceWarning": "",
+  "explanation": "Verified answer C using AWS Storage Gateway Volume Gateway and AWS Backup documentation plus exact-question SAP-C02 external copies (ExamTopics Q494, ExamCollection, Pass4Future). Cached Volume Gateway exposes iSCSI block volumes to on-premises servers, stores primary data in Amazon S3 and caches frequently accessed blocks locally for low-latency access. AWS Backup supports point-in-time backups of cached and stored gateway volumes, represented as EBS snapshots, and restore to Storage Gateway volumes or EBS. The local cache is not a complete offline copy; uncached reads require cloud connectivity. The application accesses a filesystem placed on the iSCSI volume; it does not use File Gateway SMB/NFS access.",
+  "wrongOptionsExplanation": "A: Tape Gateway exposes virtual tape library/tape drives for backup software (including iSCSI tape targets), not normal writable iSCSI disk volumes for application data. B: FSx File Gateway and S3 File Gateway offer file protocols such as SMB/NFS, not required iSCSI block volumes. C: Correct, cached Volume Gateway provides iSCSI, local hot-data cache, S3-backed capacity, and AWS Backup point-in-time volume protection. D: S3 File Gateway caches file shares but does not provide iSCSI disk volumes.",
+  "plainWords": "Provide scalable cloud-backed storage to legacy on-premises applications using iSCSI, keep frequently used data fast in a local cache, and back up volumes using AWS Backup.",
+  "keyPoints": "Domain 4 single-answer position 17/138 (Q143 of 674 total bank). C. Volume Gateway cached mode = iSCSI block device + local hot-data cache + S3 primary storage. AWS Backup snapshots stored as EBS snapshots. Stored Volume Gateway keeps all primary data locally, unlike cached mode. AWS: https://docs.aws.amazon.com/storagegateway/latest/vgw/StorageGatewayConcepts.html ; https://docs.aws.amazon.com/storagegateway/latest/vgw/backing-up-volumes.html ; https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html . External exact question: https://www.examtopics.com/discussions/amazon/view/142930-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://www.examcollection.us/exam/SAP-C02-question-answer-2.html ; https://www.pass4future.com/questions/amazon/sap-c02",
+  "sourceWarning": "Original question and options preserved; source has missing space in 'data.Which' and uses 'file applications' while explicitly requiring iSCSI block storage. Tape Gateway may expose iSCSI virtual tape devices but not ordinary iSCSI block disks; distinguish tape from Volume Gateway. Cached mode depends on AWS for cache misses and does not guarantee all data locally. No answer-changing defect identified.",
   "review": null,
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "aws-doc-verified-external-question-matched"
  },
  {
   "id": 144,
