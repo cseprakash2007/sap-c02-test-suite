@@ -5986,13 +5986,13 @@
    "A"
   ],
   "answerCount": 1,
-  "explanation": "",
-  "wrongOptionsExplanation": "",
-  "plainWords": "",
-  "keyPoints": "",
-  "sourceWarning": "",
+  "explanation": "Verified answer A against the exact SAP-C02 question at Certstopics and AWS service documentation. DynamoDB global tables are managed, multi-Region, multi-active replicas that permit local reads and writes in the DR Region without custom replication code. A cross-Region Amazon RDS for MySQL read replica provides local read access to customer data, which is all the stem requires from MySQL. This minimizes development effort versus DynamoDB Streams-based custom replication. DR caveat: an RDS read replica is read-only; if the secondary workload must write to MySQL, promote the read replica to a standalone writable DB instance and repoint the application. Replication is asynchronous for RDS and typically for DynamoDB MREC, so account for RPO/replication lag. The application must use secondary-Region endpoints and have independent infrastructure/credentials.",
+  "wrongOptionsExplanation": "A: Correct; managed DynamoDB global tables and RDS cross-Region read replica meet local DynamoDB read/write and MySQL read requirements with minimal custom development. B: DAX is a DynamoDB cache, not a standalone durable writable cross-Region DynamoDB replica, and cannot remove primary-table dependencies. C: RDS Multi-AZ standbys are in other Availability Zones within the same Region, not the DR Region; standard Multi-AZ standby is not readable. D: Custom DynamoDB Streams processing and replication adds application code, operational complexity and error handling versus managed global tables.",
+  "plainWords": "A disaster recovery Region must read and write DynamoDB and read MySQL customer records locally, without depending on the primary Region at runtime, with minimal development effort.",
+  "keyPoints": "A. DynamoDB global tables = managed multi-Region read/write replication. RDS for MySQL cross-Region read replica = managed secondary-Region reads; promote if writes are needed after failover. Multi-AZ = same-Region HA, not cross-Region DR. DAX = cache, not replication. Sources: https://www.certstopics.com/questions/amazon-web-services-sap-c02-questions-answers.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZSingleStandby.html",
+  "sourceWarning": "The source says secondary Region 'must function without dependencies on the primary Region'. Answer A is valid for the stated MySQL READ-only access even during primary-Region outage, using data already replicated. For independent MySQL WRITES, a separate read-replica promotion/cutover step is required. Cross-Region replication may lag. Original stem and options preserved.",
   "review": null,
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "aws-doc-verified-external-question-matched"
  },
  {
   "id": 138,
