@@ -1,0 +1,18 @@
+// Q3 reconstructed from cross-checked practice-question copies. Preserve the original option D wording;
+// the endpoint terminology issue is explained separately, not silently rewritten.
+export const Q3_CORRECTION = {
+ stem: 'A company is migrating an application to the AWS Cloud. The application runs in an on-premises data center and writes thousands of images into a mounted NFS file system each night. After the company migrates the application, the company will host the application on an Amazon EC2 instance with a mounted Amazon Elastic File System (Amazon EFS) file system. The company has established an AWS Direct Connect connection to AWS. Before the migration cutover, a solutions architect must build a process that will replicate the newly created on-premises images to the EFS file system. What is the MOST operationally efficient way to replicate the images?',
+ options: [
+  {id:'A',text:'Configure a periodic process to run the aws s3 sync command from the on-premises file system to Amazon S3. Configure an AWS Lambda function to process event notifications from Amazon S3 and copy the images from Amazon S3 to the EFS file system.'},
+  {id:'B',text:'Deploy an AWS Storage Gateway file gateway with an NFS mount point. Mount the file gateway file system on the on-premises server. Configure a process to periodically copy the images to the mount point.'},
+  {id:'C',text:'Deploy an AWS DataSync agent to an on-premises server that has access to the NFS file system. Send data over the Direct Connect connection to an S3 bucket by using public VIF. Configure an AWS Lambda function to process event notifications from Amazon S3 and copy the images from Amazon S3 to the EFS file system.'},
+  {id:'D',text:'Deploy an AWS DataSync agent to an on-premises server that has access to the NFS file system. Send data over the Direct Connect connection to an AWS PrivateLink interface VPC endpoint for Amazon EFS by using a private VIF. Configure a DataSync scheduled task to send the images to the EFS file system every 24 hours.'}
+ ],
+ answers:['D'],answerCount:1,
+ explanation:'Intended answer D. AWS DataSync can schedule incremental transfers from an on-premises NFS share directly to Amazon EFS over Direct Connect. The original option D inaccurately calls the endpoint an Amazon EFS PrivateLink interface endpoint. A DataSync VPC service endpoint handles DataSync control traffic, while DataSync task network interfaces access EFS. Preserve the original wording for exam study, but recognize this distinction.',
+ wrongOptionsExplanation:'A: Custom S3 synchronization plus Lambda adds components and management. B: File Gateway stores data in S3 rather than replicating directly to EFS. C: Staging through S3 and Lambda adds an unnecessary transfer step. D: Direct scheduled NFS-to-EFS replication is the intended most operationally efficient approach, notwithstanding its inaccurate endpoint terminology.',
+ plainWords:'Copy newly created nightly images from an on-premises NFS share directly to Amazon EFS before cutover, using existing Direct Connect.',
+ keyPoints:'DataSync agent; NFS source; EFS destination; scheduled incremental copy; Direct Connect private VIF; DataSync VPC service endpoint is not the EFS API endpoint. AWS: https://docs.aws.amazon.com/datasync/latest/userguide/direct-connect-architecture.html',
+ sourceWarning:'Original D wording restored from external practice-question copies. Its description of an EFS PrivateLink endpoint is technically inaccurate. This is a reconstructed question, not an AWS-authored exam question.',
+ answerStatus:'cross-checked-practice-sites-with-aws-wording-warning'
+};

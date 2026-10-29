@@ -749,3 +749,224 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 | 672 | 4 | A,C,F | source-key-unverified | — |
 | 673 | 3 | D | source-key-unverified | — |
 | 674 | 4 | B | source-key-unverified | — |
+
+## Q144 — Domain 4 single-answer 18/138 (verified 2026-10-29)
+
+- **Answer: C (AWS Trusted Advisor → EventBridge → Lambda)**. Previously corrected from B in question bank; review reconfirmed from current AWS documentation and exact-question external source.
+- **Original question retained** in `src/data/questions.json`; original typo `thecost-effectiveness` preserved.
+- **Threshold:** Legacy Trusted Advisor low-utilization EC2 check `Qch7DwouX1` flags ≤10% daily average CPU and ≤5 MB network I/O on at least 4 of previous 14 days. AWS now recommends newer check `c1z7kmr00n`.
+- **A incorrect:** CloudWatch dashboard does not implement historical 4-of-14-day combined metric evaluation by itself.
+- **B incorrect:** Systems Manager does not provide the stated check; monitoring and history logic would need further implementation.
+- **C correct (intended exam answer):** Trusted Advisor evaluates the legacy threshold; EventBridge invokes Lambda to filter environment/department/business-unit tags and stop eligible development EC2 instances.
+- **D incorrect:** Custom Lambda collection, DynamoDB storage and QuickSight dashboard add overhead; dashboard alone does not stop instances.
+- **Caveats:** Trusted Advisor event delivery best effort and emitted from `us-east-1`; production systems should reconcile periodically, avoid stopping Auto Scaling-managed or critical instances and apply tag-based exclusion rules. AWS documentation now uses Business Support+ terminology.
+- **Official references:** https://docs.aws.amazon.com/awssupport/latest/user/cost-optimization-checks.html ; https://docs.aws.amazon.com/awssupport/latest/user/cloudwatch-events-ta.html ; https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-trustedadvisor.html
+- **Exact-question matches:** https://www.examtopics.com/discussions/amazon/view/143186-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-524-discussion/ ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-1
+- **Review classification:** verified-with-legacy-warning. External answer C agrees, but AWS documentation is the technical authority.
+
+## Q146 — Domain 4 single-answer 20/139 (2026-10-29)
+
+- **Answer: B (retained, qualified).** Exact wording/options match CertEnsure SAP-C02 Question 33, which selects B. AWS EKS docs independently support retaining Kubernetes manifests and using managed node groups to reduce node management.
+- **Original question:** `A company is migrating a containerized Kubernetes app with manifest files to AWS. What is the easiest migration path?`
+- **Original options:** A `App Runner + open-source repo`; B `Amazon EKSwith managed node groups and Aurora`; C `ECS on EC2 + task definitions`; D `Rebuild Kubernetes cluster on EC2 manually`.
+- **A incorrect:** App Runner consumes source code or images for web services; no direct Kubernetes manifest deployment semantics.
+- **B intended correct:** EKS runs Kubernetes and supports deploying existing manifests using kubectl; managed node groups automate node provisioning and lifecycle. **Defect:** Aurora is not warranted because no database is described. This is best among options, not an unqualified fully specified solution.
+- **C incorrect:** ECS needs task definitions, implying conversion from Kubernetes manifests and potentially orchestration changes.
+- **D incorrect:** Manually running Kubernetes on EC2 increases control-plane and node maintenance overhead.
+- **Source warnings:** Original question/options unusually abbreviated; exact external copy is similarly abbreviated and does not prove complete original exam wording. Typo `EKSwith` preserved. EKS Auto Mode offers additional managed infrastructure in 2026 but is not an answer option.
+- **Count discrepancy:** In current `questions.json`, Domain 4 entries with `answerCount===1` number **139**; Q146 is **20/139** in ascending ID order, rather than 19/138 inferred from prior turn. Do not change dataset counts or IDs without separate audit.
+- **Official docs:** https://docs.aws.amazon.com/eks/latest/userguide/sample-deployment.html ; https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html ; https://docs.aws.amazon.com/eks/latest/userguide/automode.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html ; https://docs.aws.amazon.com/apprunner/latest/dg/service-source-code.html
+- **External exact match:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Question 33).
+- **Classification:** `verified-intended-answer-with-defective-wording`; preserve original key B and source text. React question data populated with explanation, option analysis, plain words, key points, source warning, and review metadata.
+
+## Q148 — Domain 4 single-answer 21/139 (reviewed 2026-10-29)
+
+- **Verified answer C**, original answer retained: cross-Region Amazon RDS for MySQL read replica in Europe and Route 53 latency-based routing to regional API Gateway APIs. External exact match CertEnsure SAP-C02 Question 150 also selects C.
+- **A wrong:** DMS full load alone does not keep the regional database current after migration, despite appropriate latency routing.
+- **B wrong:** DMS full load+CDC can replicate ongoing changes but adds operational management, while geolocation routing targets geographic locations rather than lowest measured latency.
+- **C correct:** Native RDS asynchronous cross-Region read replication supports >90% read-only reports in Europe, while Route 53 latency records select a low-latency regional API. Regional Lambda must use regional read endpoints and direct writes to US primary.
+- **D wrong:** Replica suitable but geolocation routing not latency optimized. **Source defective:** Option D ends at `connect to the API` in both source JSON and exact external Question 150; do not invent missing text.
+- **Caveats:** Replica lag and eventual consistency; CloudFront for frontend does not eliminate backend API/database latency. CertEnsure explanation includes unrelated Redshift options and must not be treated as reliable option-specific reasoning.
+- **AWS sources:** https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-geo.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html
+- **External exact match:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Question 150, key C).
+- **Classification:** `verified-answer-with-truncated-option`. Original stem and options preserved; React source JSON now has explanations, sources and defect flags.
+
+## Q153 — Domain 4 single-answer 22/139 (reviewed 2026-10-29)
+
+- **Verified answer A** (retained): ECS Fargate with Amazon EFS meets Docker, NFS version 4, secure shared storage and no underlying host management requirements.
+- **Original stem/options:** Preserved verbatim in `src/data/questions.json`; complete wording independently matched at ExamTopics SAP-C02 topic 1 Q191 and PUPUWEB.
+- **A correct:** Fargate manages container infrastructure, EFS provides managed elastic NFS shared storage; ECS task definition configures EFS file system ID, mount point and IAM authorization.
+- **B wrong:** FSx for Lustre uses Lustre rather than NFSv4 and AWS explicitly states FSx for Lustre cannot be mounted by Fargate tasks.
+- **C wrong:** EFS appropriate but ECS EC2 launch type requires customer-managed EC2 instances, patching, capacity and host configuration, violating no infrastructure management.
+- **D wrong:** EC2 management remains, and EBS Multi-Attach is block storage rather than NFSv4 shared file service; multi-writer correctness needs careful file-system coordination.
+- **Minor source imprecision:** 'EFS authorization IAM role' is not a separate ECS task definition field. EFS IAM authorization uses ECS **task IAM role** with `authorizationConfig.iam=ENABLED`, `transitEncryption=ENABLED`. For secure use restrict TCP 2049 via security groups, apply least privilege and EFS access points.
+- **AWS references:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specify-efs-config.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-best-practices.html ; https://docs.aws.amazon.com/fsx/latest/LustreGuide/mounting-ecs.html
+- **External exact question:** https://www.examtopics.com/discussions/amazon/view/110392-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://pupuweb.com/aws-sap-c02-exam-question-answer-secure-scalable-containerized-solution/ (selects A).
+- **Classification:** `verified-answer-minor-iam-terminology`; answer A retained. Question data now has explanation, per-option reasoning, study notes, source warning and references for React display.
+
+## Q160 — Domain 4 single-answer 23/139 (2026-10-29)
+
+- **AWS-doc-verified answer C retained:** ECS services on Fargate spread multiple tasks across AZs, and adding an Aurora PostgreSQL reader in another AZ supplies automatic failover target.
+- **A wrong:** RDS Proxy and Aurora Replica improve database availability but leave the single EC2 ECS host as an application SPOF.
+- **B wrong:** Cross-Region reader and scripted manual failover create unnecessary operational overhead and do not provide automatic writer failover.
+- **C correct:** AWS-managed Fargate removes EC2 instance operations and distributes ECS tasks across AZs; Aurora Replica in another AZ can be promoted automatically if writer fails.
+- **D wrong:** Multi-Region global DB and active-active DNS add complexity; Aurora Global Database normally has a single writable primary Region, so routing both Regions active-active does not independently enable writes.
+- **Defects/caveats:** Aurora's cross-AZ reader configuration should not be conflated with the distinct RDS Multi-AZ DB cluster product (writer + two readers across 3 AZs). Production needs >=2 Fargate tasks, multi-AZ ALB, health checks, and idempotent payment processing.
+- **Official AWS evidence:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_service-options.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
+- **External exam sites:** Exact independent question match **not established**; external answer-key verification pending. Do not classify as exact-site-verified.
+- **Classification:** `aws-doc-verified-external-exact-match-pending`. Original question and options preserved. JSON populated with explanations, review notes, and source warnings for React.
+
+## Q161 — Domain 4 single-answer 24/139 (2026-10-29)
+
+- **Answer A verified by current AWS documentation**, original JSON answer retained. Use AWS Transfer Family managed SFTP with internet-facing VPC-hosted endpoint and one Elastic IP per selected subnet, backed by EFS Regional shared NFS storage accessible to downstream applications, including via Direct Connect if networking allows.
+- **A correct:** Transfer Family VPC internet-facing endpoints support fixed public EIPs, multi-AZ hosting and EFS NFS backing; least operational overhead.
+- **B incorrect:** Ordinary public Transfer Family endpoint cannot associate static Elastic IPs, violating vendor allowlist requirement.
+- **C incorrect:** Lift-and-shift to a single EC2 SFTP host retains single compute SPOF and host administration.
+- **D incorrect:** AWS MGN cannot migrate VM into managed Transfer Family; ordinary public endpoint lacks EIP; FSx for Lustre not an NFS replacement.
+- **Exact external match:** https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341 Question 292. **WARNING: external printed key B is wrong**; community votes A (100%), and official AWS endpoint matrix definitively supports A.
+- **OCR/source defects:** Original JSON options contain typos `pace`, `Fie system`, `EFSfile`, `FSx for Luster`, malformed punctuation. Cleaner complete wording available in the external Question 292; original source strings preserved in JSON, with warnings, rather than silently edited.
+- **AWS docs:** https://docs.aws.amazon.com/transfer/latest/userguide/sftp-for-transfer-family.html ; https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html ; https://docs.aws.amazon.com/transfer/latest/userguide/configure-storage.html ; https://docs.aws.amazon.com/transfer/latest/userguide/
+- **Implementation notes:** EFS Regional file system and mount targets across AZs, TCP 2049 for NFS, Transfer Family endpoint source-IP security groups, Direct Connect routes and IAM/POSIX permissions.
+- **Classification:** `aws-doc-verified-external-key-conflict-ocr-defects`; answer A retained; JSON populated for React with detailed explanation, option analysis, sources and warnings.
+
+## Q168 — Domain 4 single-answer 25/139 (2026-10-29)
+
+- **Historical answer B retained (qualified/outdated):** Application Discovery Agent captures utilization, running processes and TCP network dependencies on physical and virtual hosts; Migration Hub Strategy Recommendations supports migration strategy analysis.
+- **Original stem/options:** Short/abbreviated in source; preserved verbatim in JSON. No complete original question or exact third-party exam-site match established.
+- **A wrong:** Migration Evaluator with Agentless Collector helps assessment/cost and VMware/DB inventory but is not the strongest choice for comprehensive physical-server and application/process dependencies.
+- **B historically correct:** Discovery Agent covers physical/VM hosts, processes, network connections and performance; Strategy Recommendations provides migration options. **2026 defect:** AWS Migration Hub stopped accepting new customers Nov 7 2025, and AWS recommends AWS Transform for new projects; existing customers continue using Migration Hub.
+- **C wrong:** Agentless Collector differs from Discovery Agent for process/physical-host discovery, and vague 'Migration Service' does not provide the stated migration strategy workflow.
+- **D wrong:** CSV/import requires previously collected data and cannot inspect runtime processes/network dependencies.
+- **AWS sources:** https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html ; https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/getting-started-get-recommendations.html ; https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html
+- **External study source (not exact exam question):** https://certnotes.cloud/services/migration-transfer/application-discovery-service/ supports agent/agentless comparison and 2025 availability change. **Exact external question match pending**; do not claim independently confirmed third-party answer key.
+- **Classification:** `historically-correct-outdated-migration-hub-new-customers`. Original wording retained; JSON explanation, per-option reasoning, references, status and warnings added for React.
+
+## Q171 — Domain 4 single-answer 26/139 (2026-10-29)
+
+- **Verified answer B retained.** Existing on-premises Hyper-V capacity hosts DataSync agent, reads zipped image archives from NFS, copies directly to S3 Glacier Deep Archive; schedule off-hours and apply DataSync bandwidth throttle. Deep Archive hours-to-days restore fits retrieval within one week.
+- **A wrong:** Unneeded GPU EC2 host plus higher-cost Glacier Instant Retrieval for access that need not be instant.
+- **B correct:** Hyper-V VM DataSync agent, direct NFS to S3 Glacier Deep Archive, built-in transfer scheduling/throttling; least long-term cost for rare retrieval.
+- **C wrong:** Extra EC2 compute and S3 Standard temporary staging/lifecycle transition cost; direct Deep Archive transfer is supported.
+- **D wrong:** Tape Gateway uses virtual tape/backup workflow, not straightforward NFS ZIP file transfer; adds workflow changes and complexity.
+- **AWS documentation:** https://aws.amazon.com/datasync/faqs/ ; https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html (direct Deep Archive supported; archived object restore needed; verification setting).
+- **Exact external match:** https://www.examtopics.com/discussions/amazon/view/136604-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-457-discussion/ (SAP-C02 Q457); https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-an-application-that-analyzes-and-stores-image-data-on-premises-the-application-receives (answer B).
+- **Source defects:** OCR `imagestogether`, `t week` = **1 week**, `dunng`, missing punctuation. Preserve original JSON stem/options; corrected copy externally confirmed.
+- **Operational caution:** Delete source only after successful verified transfer; use DataSync Verify only data transferred for Deep Archive; archive retrieval requires an S3 restore operation.
+- **Classification:** `verified-aws-doc-external-exact-match-source-ocr`; React question data enriched with option-by-option explanation, plain words, AWS and external references, and source warning.
+
+## Q176 — Domain 4 single-answer 27/139 (2026-10-29)
+
+- **Verified intended answer D**, source key retained. Elastic Beanstalk Tomcat load-balanced environment with Auto Scaling across AZs + RDS for PostgreSQL + ALB; CloudFront can accelerate cacheable/static content. Lowest operational overhead among options.
+- **A incorrect:** Manual EC2 Tomcat and PostgreSQL deployment plus Step Functions custom scale-out has high operational burden; EFS is not a managed relational DB architecture.
+- **B incorrect:** EKS multi-Region container and PostgreSQL deployment introduces unnecessary Kubernetes/stateful DB operations; NLB is not an auto-scaler.
+- **C incorrect:** Refactoring Java to Python is infeasible without source code, DynamoDB requires major data/application redesign, Storage Gateway unrelated to scale-out.
+- **D best available:** Elastic Beanstalk supports Java/Tomcat, managed EC2 provisioning and Auto Scaling; RDS PostgreSQL removes database host management. ALB balances; Auto Scaling scales capacity; CloudFront optional for cacheable traffic.
+- **Critical source defect:** Stem says only Java Archive **JAR** files can be deployed, but Elastic Beanstalk **Tomcat** expects a deployable **WAR**. Elastic Beanstalk **Java SE** can run an executable JAR, which is not the same as an arbitrary Tomcat JAR. If only library JARs are available, none of the options fully specifies a deployable artifact. Preserve source text and qualify answer D.
+- **Official AWS:** https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Java.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-tomcat-platform.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-se-platform.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-rds.html
+- **Exact external matches:** https://www.examtopics.com/discussions/amazon/view/142998-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-504-discussion/ (Q504); https://www.certstopics.com/questions/exactprep-sap-c02-questions.html (Q48, key D). Both retain packaging ambiguity.
+- **Classification:** `verified-intended-answer-with-jar-war-packaging-defect`. Original stem/options preserved; JSON enriched with option analysis, explanations, references and source warning for React.
+
+## Q178 — Domain 4 single-answer 28/139 (2026-10-29)
+
+- **Verified intended answer B retained:** GitHub change-event webhook, existing Jenkins build/test workflow, SNS bad-build alerts, and CodeDeploy blue/green traffic shifting for safer rollback.
+- **A wrong:** GitHub 'websockets' incorrect for source-change triggers; in-place all-at-once deployment risks downtime.
+- **B best intended:** GitHub webhook, Jenkins test/build integration, SNS failure alerts, CodeDeploy blue/green deployment and rollback. Blue/green needs configured health checks and traffic shifting to achieve minimal/zero user-visible downtime.
+- **C wrong:** GitHub websockets wrong; AWS X-Ray is tracing, not unit testing/static analysis. Blue/green alone does not rescue choice.
+- **D wrong:** X-Ray is not a test framework; all-at-once in-place deployment risks interruption.
+- **Exact external question match:** https://myportal.utt.edu.tt/ICS/icsfs/e500bdfa-17d4-440e-8e02-1a46ed59d675.pdf?target=95f8256a-0bbf-48f2-b967-cb2097efacb3 . **IMPORTANT: external answer letter C corresponds to the same technical text as JSON answer B because external options are reordered.** Never change the user's JSON key to C.
+- **2026 AWS guidance:** https://docs.aws.amazon.com/codepipeline/latest/userguide/update-github-action-connections.html ; https://docs.aws.amazon.com/codepipeline/latest/userguide/connections-github.html ; https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-CodestarConnectionSource.html . For new pipelines AWS recommends GitHub App via AWS CodeConnections rather than old OAuth-plus-separate-webhook GitHub source action.
+- **Defects:** OCR `sates`, `CodePipelme`, `inan`, `blue'green`, `m-place`; 'Jenkins plugin for AWS CodeBuild' is ambiguous (Jenkins CodePipeline action vs Jenkins invoking CodeBuild); zero downtime depends on deployment readiness and traffic-shifting details.
+- **Classification:** `verified-intended-b-external-option-reordered-legacy-github-source`. Original question/options preserved; React JSON enriched with explanations, AWS/external refs, warnings and answer status.
+
+## Q183 — Domain 4 single-answer 29/139 (2026-10-29)
+
+- **Verified answer B retained.** API Gateway HTTP API `SQS-SendMessage` integration receives REST/HTTP requests, SQS buffers traffic, Lambda polls SQS via event source mapping to run business logic, Lambda publishes to AppSync Events HTTP endpoint, clients subscribe via managed WebSockets.
+- **A wrong:** Step Functions state machines do not use arbitrary connected WebSocket clients as targets or deliver WebSocket streams.
+- **B correct:** API Gateway HTTP API + SQS + Lambda + AWS AppSync Events provides fully managed ingestion, burst decoupling, processing and real-time WebSocket broadcasting.
+- **C wrong:** Direct SQS-AppSync integration and EventBridge rules with arbitrary WebSocket clients as targets are not supported as described.
+- **D wrong:** CloudFront Functions cannot be CloudFront origins or serve as general application logic with IoT MQTT publishing; IoT Core WebSockets support alone is insufficient.
+- **AWS evidence:** https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html ; https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html ; https://docs.aws.amazon.com/appsync/latest/eventapi/publish-http.html ; https://docs.aws.amazon.com/appsync/latest/eventapi/event-api-websocket-protocol.html ; https://docs.aws.amazon.com/appsync/latest/devguide/ (AppSync Events available since March 2025).
+- **Exact independent exam-site match:** https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html Question 179, matching original stem and options.
+- **Minor technical source defect:** SQS does **not** itself push-invoke Lambda; Lambda polls via an event source mapping. AppSync Events requires Event API/channel/authorization and HTTP publish request, omitted in simplified answer. Consider SQS/Lambda idempotency, retry and DLQ handling.
+- **Classification:** `verified-aws-doc-external-exact-match-minor-technical-imprecision`. Original stem and options preserved, source answer B retained, explanations/links/warnings added to JSON for React.
+
+## Q185 — Domain 4 single-answer 30/139 (2026-10-29)
+
+- **Verified answer D retained:** AWS Cloud WAN core network with native AWS Direct Connect gateway attachments supplies dedicated on-premises connectivity, centrally managed multi-Region routing/segmentation, and BGP dynamic route propagation.
+- **A wrong:** Global Accelerator optimizes endpoint traffic but does not establish a dedicated private link to existing on-premises HSMs.
+- **B wrong:** Standard Site-to-Site VPN plus TGW gives centralized routing/encrypted tunnels, but not dedicated private Direct Connect connectivity.
+- **C wrong:** CloudHSM replaces or changes the on-premises HSM deployment rather than connecting the existing HSMs to AWS workloads.
+- **D correct:** Direct Connect provides dedicated circuit, Cloud WAN centralizes policy and global routing. Native Direct Connect gateway attachments avoid a mandatory intermediate TGW.
+- **AWS current evidence:** https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-dxattach-about.html ; https://docs.aws.amazon.com/network-manager/latest/cloudwan/cloudwan-dxattachment-add.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-cloud-wan.html ; https://aws.amazon.com/about-aws/whats-new/2024/11/aws-cloud-wan-on-premises-connectivity-direct-connect/ .
+- **Exact external match:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html Q15, same wording and options, answer D.
+- **Source implementation caveat:** Option D omits Direct Connect physical connection, Direct Connect gateway, transit virtual interface, BGP and Cloud WAN core-network/VPC attachments. Direct Connect is not inherently encrypted; payment workloads require appropriate TLS/MACsec, redundancy and security review.
+- **Outdated external/AWS background:** Pre-November 25, 2024 architecture articles that require intermediate Transit Gateway for Cloud WAN–Direct Connect are stale. Native gateway attachment is now supported.
+- **Classification:** `verified-aws-doc-external-exact-match-implementation-caveats`. Original stem/options preserved; JSON explanation, option analysis, warnings and references updated for React.
+
+
+### Domain 4 Q186 — single-answer 31/139 (2026-10-29)
+- **Original source answer: B**, confirmed by matching third-party practice question at [CertEnsure Q7](https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html) and [FreeCram](https://www.freecram.net/question/Amazon.SAP-C02.v2026-08-19.q305/a-company-wants-to-modernize-a-monolithic-application-in-the-company-s-data-center-and-deploy-the-application).
+- **Audit verdict: DEFECTIVE / NON-UNIQUE. A is also valid.** AWS documents cross-account SNS topic subscription to independent per-microservice SQS queues: https://docs.aws.amazon.com/sns/latest/dg/sns-send-message-to-sqs-cross-account.html .
+- **B** central EventBridge with content-filter rules works when event bus or cross-account targets and appropriate IAM execution roles/resource policies are configured: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-cross-account.html ; https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-cross-account.html .
+- **C** falsely implies a Kinesis stream can directly invoke arbitrary Fargate microservices without consumer implementation. **D** shares a single SQS competing-consumer queue and does not fan out every message.
+- **Correction proposal:** Add a requirement for per-microservice *content-based routing by event fields* and central rules; otherwise accept A and B. Keep original wording and options unchanged for traceability.
+
+
+### Domain 4 Q199 — single-answer 32/139 (2026-10-29)
+- **Source answer B VERIFIED**, exact external [CertEmpire SAP-C02 PDF Q7](https://certempire.com/demo-files/sap-c02-demo-certempire.pdf).
+- ECS on EC2 consolidates Java/Node.js containers, supports multi-hour jobs and task/cluster scaling. AWS: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-auto-scaling.html and https://docs.aws.amazon.com/AmazonECS/latest/developerguide/managed-scaling-behavior.html .
+- A cannot accommodate uninterrupted several-hour processing: standard Lambda 15 min; eligible Lambda Managed Instances async/ESM 90 min since September 2026 (https://aws.amazon.com/blogs/compute/announcing-90-minute-function-timeout-on-aws-lambda-managed-instances/). C per-app Beanstalk has inefficient baseline; D reserves peak fleet for 3 years.
+- Source typos preserved ('tor', punctuation); 75% memory target is not guaranteed optimal, recommend ECS capacity providers, binpack and scheduled task runs where applicable.
+
+
+### Domain 4 Q200 — single-answer 33/139 (2026-10-29)
+- Source answer **C** best-supported by AWS docs; no exact third-party exam match independently confirmed. Original question and options retained.
+- Aurora Global Database: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html ; AWS Backup Vault Lock: https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html .
+- A multivalue routing not failover, regional ECR dependency; B omits tamper protection and S3 recovery; C ECR replication, ECS secondary, Aurora global, compliance vault, S3 backup/replication, Route 53 failover; D governance mode removable and geolocation not failover.
+- Warnings: source typo 'secondaryrecord'; S3 PITR ambiguous (versioning versus continuous AWS Backup); asynchronous CRR does not guarantee 5-minute RPO; compliance vault lock does not automatically protect live S3 objects; RTO 15 minutes requires health checks, failover orchestration, tests.
+
+
+### Domain 4 Q202 — single-answer 34/139 (2026-10-29)
+- **Answer B AWS-doc verified**: EKS managed node groups can use custom host AMIs via EC2 launch templates to install proprietary security agents, while AWS manages Kubernetes control plane and node lifecycle; DMS to RDS MySQL Multi-AZ.
+- AWS references: https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html ; https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html .
+- A feasible host agent but higher self-managed orchestration overhead; C Lambda host agents unavailable; D **invalid** because Fargate cannot use a custom host AMI.
+- Caveats: custom AMI bootstrapping, node patching remain customer responsibilities; Multi-AZ standby is not a readable replica. Exact independent exam-site match **not confirmed**. Original wording/options preserved.
+
+
+### Domain 4 Q208 — single-answer 35/139 (2026-10-29)
+- **Answer C AWS-doc verified**: SQL Server Always On -> RDS for MySQL heterogeneous migration uses schema conversion (SCT or DMS Schema Conversion) followed by AWS DMS data migration/CDC. AWS walkthrough: https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-sql-server-mysql.html ; overview: https://aws.amazon.com/documentation-overview/dms/ .
+- A incompatible SQL Server native restore into MySQL; B Snowball/S3 transport does not convert schema and SQL Server BULK INSERT is wrong target mechanism; C correct; D DataSync files/S3 cannot convert relational engine.
+- Defects: option C 'MeSQL' typo preserved; AWS recommends managed DMS Schema Conversion over legacy SCT now (https://docs.aws.amazon.com/dms/latest/userguide/CHAP_GettingStarted.SCT.html); business-critical migration requires SQL Server Always On CDC checks, code conversion, validation and HA. **Exact third-party exam-site match not verified**.
+
+
+### Domain 4 Q211 — single-answer 36/139 (2026-10-29)
+- **B independently verified**: AWS DataSync scheduled SMB->Amazon FSx for Windows File Server over Direct Connect, supports Windows ACL/metadata preservation. AWS: https://docs.aws.amazon.com/fsx/latest/WindowsGuide/migrate-files-to-fsx-datasync.html ; https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html .
+- Exact external matches **B**: https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=31 (Q150); https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 (Q137); https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q183).
+- A S3-backed File Gateway not direct Windows FSx replication; B correct; C Data Pipeline unsuitable and EFS NFS; D DataSync SMB->EFS **supported**, but EFS lacks native Windows SMB semantics.
+- Original text preserved. Defects: B should specify FSx for Windows File Server; D 'lo' typo; C 'on- premises' spacing. For implementation verify SMB permissions, AD/NTFS ACL transfer and DataSync agent networking.
+
+
+### Domain 4 Q212 — single-answer 37/139 (2026-10-29)
+- Historical answer **C** verified for **existing** Migration Hub users: Application Discovery Agent collects on-prem physical/VM metrics, running processes, TCP connections; Migration Hub groups applications and generates EC2 sizing recommendations. https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/ec2-recommendation-prerequisites.html .
+- **MAJOR OUTDATED/DEFECTIVE SOURCE**: AWS Migration Hub stopped accepting **new customers Nov 7, 2025**; AWS recommends **AWS Transform** for new migrations. https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html . None of four options reflects the current new-customer recommendation; preserve historical source C with warning.
+- A SSM/Application Manager/Pricing Calculator do not provide complete discovery/sizing pipeline; B Inspector is vulnerability scanning; C historically correct; D CloudWatch agent/Compute Optimizer lack comprehensive migration dependency mapping.
+- Independent external technical note corroborates retirement: https://certnotes.cloud/services/migration-transfer/migration-hub/ . No exact external practice-site question match confirmed. Original question/options preserved.
+
+
+### Domain 4 Q217 — single-answer 38/139 (2026-10-29)
+- **Historical source C; defective for new 2026 customers.** Snowball Edge no new customers since 2025-11-07 (https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html), end of support in commercial Regions 2026-12-31 (https://aws.amazon.com/snowball/).
+- C's DMS S3 source requires structured CSV/Parquet and mappings, not raw MySQL backups (https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.S3.html). A Direct Connect 1 Gbps + DMS valid; 60 TB theoretical transfer ~5.6 days before overhead, but provisioning unknown. Cannot prove which option takes least total time without shipping/provisioning estimates.
+- B DataSync+MGN does not migrate DB into Aurora; D old Snowball/S3 Adapter + MGN S3->Aurora unsupported. Typos in stem/choices. External exact exam-site match not confirmed. Original wording/key preserved and marked outdated-defective.
+
+
+### Domain 4 Q218 — single-answer 39/139 (2026-10-29)
+- **D verified** by AWS oracle_fdw documentation https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/postgresql-oracle-fdw.html and RDS PostgreSQL extension versions https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html . AWS SCT/DMS migrates selected Oracle DBs to RDS PostgreSQL; PostGIS spatial, pg_cron scheduled SQL jobs, oracle_fdw queries retained Oracle tables over Direct Connect.
+- Exact third-party matches select **D**: https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-4 (Q36 No1508) and https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q6).
+- A DynamoDB/API Gateway not foreign tables; B SQL Server native replication and Glue crawler cannot create Oracle foreign tables; C MGN not bidirectional database CDC, IGW not foreign tables; D correct with omitted setup.
+- **Source caveats:** 'native spatial' needs PostGIS; 'cron on DB instance' means pg_cron SQL jobs not OS crontab; Direct Connect only network path—must install oracle_fdw and configure foreign server, user mapping, foreign table, security/routing. Preserve original wording.
+
+
+### Domain 4 Q220 — single-answer 40/139 (2026-10-29)
+- **Answer A AWS-doc verified**: one VGW attached to VPC, two Site-to-Site VPN connections to separate CGWs, each VPN has two tunnels. AWS https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-redundant-connection.html and https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-edit-static-routes.html .
+- B: customer gateway cannot attach to VPC; C: invalid two-VGW topology and propagation from CGW; D: same plus incorrectly one tunnel per VPN.
+- Source defects: OCR '5ite-to-5ite' and 'Site-to-Slte'; propagation should be on relevant route tables, not all; static VPN requires remote CIDR routes on connections. No exact external practice-site question match confirmed. Original wording preserved.
