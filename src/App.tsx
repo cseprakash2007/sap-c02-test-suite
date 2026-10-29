@@ -23,9 +23,9 @@ const flaggedCount = [...AUDITS.values()].filter(a=>!a.verifiedAnswer?.length).l
 const OUTDATED_CANDIDATE_IDS = new Set(outdatedReview.items.filter(item=>item.category!=='discontinuation-claim-unsubstantiated').map(item=>item.id));
 const OUTDATED_REVIEWS = new Map(outdatedReview.items.map(item=>[item.id,item]));
 const QUESTIONS = raw as Question[];
-function effectiveAnswers(q:Question){const a=AUDITS.get(q.id);return a?.verifiedAnswer?.length?a.verifiedAnswer:[];}
-function isFlagged(q:Question){return REVIEW_NOTES[q.id]?.status==='not-gradable'||(!!AUDITS.get(q.id)&&!AUDITS.get(q.id)?.verifiedAnswer?.length);}
-function isConfirmed(q:Question){const a=AUDITS.get(q.id);return !!a&&a.verificationStatus==='reviewed'&&!!a.verifiedAnswer?.length;}
+function effectiveAnswers(q:Question){const a=AUDITS.get(q.id);if(a?.verificationStatus==='reviewed'&&a.verifiedAnswer?.length)return a.verifiedAnswer;const note=REVIEW_NOTES[q.id];return note?.status==='reviewed'&&note.answer?.length?note.answer:[];}
+function isFlagged(q:Question){return REVIEW_NOTES[q.id]?.status==='not-gradable'||!effectiveAnswers(q).length;}
+function isConfirmed(q:Question){return effectiveAnswers(q).length>0;}
 const byId = new Map(QUESTIONS.map(q=>[q.id,q]));
 const DOMAIN_NAMES = ['All domains','Organizational Complexity','New Solutions','Continuous Improvement','Migration & Modernization'];
 const KEY='sap-c02-practice-v1';const SESSION_KEY='sap-c02-active-session-v1';
