@@ -1,0 +1,100 @@
+{
+  "domain": 4,
+  "batch": 5,
+  "questionIds": [
+    326,
+    327,
+    334,
+    337,
+    341,
+    346,
+    347,
+    350,
+    355,
+    363,
+    365,
+    367,
+    374,
+    376,
+    377,
+    381,
+    385,
+    386,
+    395,
+    401
+  ],
+  "status": "targeted-source-review",
+  "reviewed": [
+    {
+      "id": 346,
+      "status": "invalid-source-incomplete",
+      "sourceAnswers": [
+        "A",
+        "D"
+      ],
+      "sourceAnswerCount": 2,
+      "stemSays": "Select THREE",
+      "recommendation": "Do not grade. Original stem and option A,B,D are truncated; recover original before completing any wording or answers.",
+      "links": []
+    },
+    {
+      "id": 347,
+      "status": "answer-correction-supported",
+      "sourceAnswers": [
+        "B"
+      ],
+      "recommendedAnswers": [
+        "D"
+      ],
+      "answerCount": 1,
+      "explanation": "Memcached does not support ElastiCache global datastore; option B is technically invalid. Option D uses RDS cross-Region read replica for product data and DynamoDB global tables for replicated sessions. DynamoDB global tables support multi-Region replication. Validate whether the performance objective requires additional caching not offered by choices.",
+      "wrongOptionsExplanation": "A combines session and product data; B incorrectly claims Memcached global datastore; C unnecessarily moves structured relational product data to DynamoDB and DAX is not a substitute for product relational needs.",
+      "links": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.deployment.html",
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Redis-Global-Datastores-Console.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html"
+      ]
+    },
+    {
+      "id": 401,
+      "status": "answer-supported",
+      "sourceAnswers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "recommendedAnswers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "answerCount": 3,
+      "explanation": "Upload DataSync manifest to S3; S3 event triggers Lambda to start DataSync execution using ManifestConfig; EventBridge task execution state notifications can publish to SNS. Confirm DataSync manifest format and IAM permissions.",
+      "wrongOptionsExplanation": "B/C introduce DynamoDB and custom on-prem copying rather than DataSync manifest; F requires custom Lambda polling/handling instead of native EventBridge-to-SNS integration.",
+      "links": [
+        "https://docs.aws.amazon.com/datasync/latest/apireference/API_StartTaskExecution.html",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/run-task.html"
+      ]
+    }
+  ],
+  "unverifiedQuestionIds": [
+    326,
+    327,
+    334,
+    337,
+    341,
+    350,
+    355,
+    363,
+    365,
+    367,
+    374,
+    376,
+    377,
+    381,
+    385,
+    386,
+    395
+  ],
+  "note": "Cross-check from AWS official documentation. Third-party question sites not verified for these entries. Main questions.json unchanged; this audit is actionable for later integration."
+}
