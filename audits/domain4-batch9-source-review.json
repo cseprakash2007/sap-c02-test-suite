@@ -1,0 +1,96 @@
+{
+  "batch": 9,
+  "domain": 4,
+  "reviewed": [
+    {
+      "id": 624,
+      "status": "needs-validation",
+      "note": "API Gateway canary routes stage traffic, not directly SageMaker model versions; compare B vs D"
+    },
+    {
+      "id": 625,
+      "status": "supported",
+      "answer": [
+        "B"
+      ],
+      "note": "Fix truncated NLB ALB target option"
+    },
+    {
+      "id": 626,
+      "status": "needs-validation",
+      "note": "Compare VPN and on-prem AD cost vs managed AD RDP gateway"
+    },
+    {
+      "id": 636,
+      "status": "invalid",
+      "note": "No answer clearly meets Migration Evaluator on-prem collector and Migration Hub requirements",
+      "url": "https://aws.amazon.com/migration-evaluator/faqs/"
+    },
+    {
+      "id": 638,
+      "status": "supported",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "id": 646,
+      "status": "needs-validation",
+      "note": "SCT stored procedure remediation caveat"
+    },
+    {
+      "id": 647,
+      "status": "supported-renamed",
+      "answer": [
+        "C"
+      ],
+      "url": "https://aws.amazon.com/workspaces/applications/"
+    },
+    {
+      "id": 654,
+      "status": "correction-proposed",
+      "old": [
+        "C"
+      ],
+      "recommended": [
+        "B"
+      ],
+      "note": "AWS RAM supports Aurora cross-account cloning, not sharing Lambda functions",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.Cross-Account.html"
+    },
+    {
+      "id": 669,
+      "status": "supported",
+      "answer": [
+        "A",
+        "C",
+        "F"
+      ]
+    },
+    {
+      "id": 671,
+      "status": "supported-with-caveat",
+      "answer": [
+        "A"
+      ]
+    },
+    {
+      "id": 672,
+      "status": "supported",
+      "answer": [
+        "A",
+        "C",
+        "F"
+      ]
+    },
+    {
+      "id": 674,
+      "status": "supported",
+      "answer": [
+        "B"
+      ]
+    }
+  ],
+  "applicationAnswersChanged": false,
+  "thirdPartyQuestionSitesChecked": false
+}
