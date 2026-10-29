@@ -6137,13 +6137,13 @@
    "D"
   ],
   "answerCount": 1,
-  "explanation": "",
-  "wrongOptionsExplanation": "",
-  "plainWords": "",
-  "keyPoints": "",
-  "sourceWarning": "",
+  "explanation": "Correct intended answer D. EKS managed node groups host containerized web and application tiers, Kubernetes Deployments manage replica lifecycle, DynamoDB stores highly available session state independent of individual frontend pods, and EFS provides shared file access to application pods across Availability Zones through the EFS CSI driver. External exact-question copies (Certensure, ExamCollection, ExamTopics) corroborate D. Although ECS on Fargate with EFS and DynamoDB/Redis could have lower operational overhead, that combination is not offered. EKS managed node groups still require Kubernetes cluster/add-on maintenance and scaling configuration.",
+  "wrongOptionsExplanation": "A: ECS on Fargate + EFS is viable, but SQS is a message queue, not a suitable frontend session store; the original option typo 'SOS' means SQS. B: ElastiCache Redis is a good session store, but EBS Multi-Attach volumes cannot span Availability Zones; AWS limits Multi-Attach to multiple instances in the SAME AZ and requires coordinated concurrent access. C: EKS with EFS can share files, but using EFS for frontend session state is less suitable than DynamoDB/Redis and directly managing ReplicaSets lacks Deployment rolling-update/rollout functionality; original typo 'Me system' means file system. D: Best supplied architecture: EKS Deployments, DynamoDB for session state, EFS for shared files.",
+  "plainWords": "Move a scalable, fault-tolerant multi-tier web application into containers; let all application replicas access shared files while frontend sessions survive changes in web pods.",
+  "keyPoints": "D. DynamoDB for distributed session state, EFS for shared files across AZs, EKS Deployments + managed node groups for container orchestration. EBS Multi-Attach is same-AZ only. SQS is not a session store. EFS CSI driver: https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html ; EBS Multi-Attach: https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volumes-multi.html ; external exact questions: https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html ; https://www.examcollection.us/exam/SAP-C02-question-answer-2.html ; https://www.examtopics.com/discussions/amazon/view/112869-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-228-discussion/",
+  "sourceWarning": "Original stem and choices preserved including source typos 'web. application', 'Amazon SOS', 'EFS Me system', and missing punctuation. Option B is technically impossible as stated because EBS Multi-Attach cannot span AZs. Pupuweb incorrectly keys B and ignores this AWS limitation; stronger sources key D. 'Least ongoing operational overhead' is relative to supplied options; a hypothetical ECS Fargate + EFS + DynamoDB/Redis design could be simpler than EKS. D requires appropriate EFS CSI configuration and application-level DynamoDB session integration.",
   "review": null,
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "aws-doc-verified-external-question-matched"
  },
  {
   "id": 142,
