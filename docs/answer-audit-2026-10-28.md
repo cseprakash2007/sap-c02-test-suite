@@ -828,3 +828,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS docs:** https://docs.aws.amazon.com/transfer/latest/userguide/sftp-for-transfer-family.html ; https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html ; https://docs.aws.amazon.com/transfer/latest/userguide/configure-storage.html ; https://docs.aws.amazon.com/transfer/latest/userguide/
 - **Implementation notes:** EFS Regional file system and mount targets across AZs, TCP 2049 for NFS, Transfer Family endpoint source-IP security groups, Direct Connect routes and IAM/POSIX permissions.
 - **Classification:** `aws-doc-verified-external-key-conflict-ocr-defects`; answer A retained; JSON populated for React with detailed explanation, option analysis, sources and warnings.
+
+## Q168 — Domain 4 single-answer 25/139 (2026-10-29)
+
+- **Historical answer B retained (qualified/outdated):** Application Discovery Agent captures utilization, running processes and TCP network dependencies on physical and virtual hosts; Migration Hub Strategy Recommendations supports migration strategy analysis.
+- **Original stem/options:** Short/abbreviated in source; preserved verbatim in JSON. No complete original question or exact third-party exam-site match established.
+- **A wrong:** Migration Evaluator with Agentless Collector helps assessment/cost and VMware/DB inventory but is not the strongest choice for comprehensive physical-server and application/process dependencies.
+- **B historically correct:** Discovery Agent covers physical/VM hosts, processes, network connections and performance; Strategy Recommendations provides migration options. **2026 defect:** AWS Migration Hub stopped accepting new customers Nov 7 2025, and AWS recommends AWS Transform for new projects; existing customers continue using Migration Hub.
+- **C wrong:** Agentless Collector differs from Discovery Agent for process/physical-host discovery, and vague 'Migration Service' does not provide the stated migration strategy workflow.
+- **D wrong:** CSV/import requires previously collected data and cannot inspect runtime processes/network dependencies.
+- **AWS sources:** https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html ; https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/getting-started-get-recommendations.html ; https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html
+- **External study source (not exact exam question):** https://certnotes.cloud/services/migration-transfer/application-discovery-service/ supports agent/agentless comparison and 2025 availability change. **Exact external question match pending**; do not claim independently confirmed third-party answer key.
+- **Classification:** `historically-correct-outdated-migration-hub-new-customers`. Original wording retained; JSON explanation, per-option reasoning, references, status and warnings added for React.
