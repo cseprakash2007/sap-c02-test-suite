@@ -15,9 +15,9 @@ type Mode = 'practice'|'mock'|'study';
 type Session = {mode:Mode;ids:number[];index:number;responses:Record<number,string[]>;revealed:number[];startedAt:number;durationMinutes:number;finished:boolean};
 type Audit = {id:number;verificationStatus:string;verifiedAnswer:string[]|null;validity:string;reasoning:string|null;wrongOptions:Record<string,string>|null;memoryTip:string|null;awsReferences:string[];reviewedAt:string|null;proposedSourceRepair?:string};
 const AUDITS = new Map<number,Audit>([...(auditRaw.items as Audit[]),...(auditNextRaw.items as Audit[])].map(item=>[item.id,item]));
-const reviewedCount = [...AUDITS.values()].filter(a=>a.verificationStatus==='reviewed' && !!a.verifiedAnswer?.length).length;
+const reviewedCount = new Set([...AUDITS.values()].filter(a=>a.verificationStatus==='reviewed' && !!a.verifiedAnswer?.length).map(a=>a.id).concat(Object.entries(REVIEW_NOTES).filter(([,n])=>n.status==='reviewed' && !!n.answer?.length).map(([id])=>Number(id)))).size;
 const auditedCount = AUDITS.size;
-const flaggedCount = [...AUDITS.values()].filter(a=>!a.verifiedAnswer?.length).length;
+const flaggedCount = (raw as Question[]).filter(q=>REVIEW_NOTES[q.id]?.status==='not-gradable'||!(AUDITS.get(q.id)?.verificationStatus==='reviewed'&&AUDITS.get(q.id)?.verifiedAnswer?.length)&&!(REVIEW_NOTES[q.id]?.status==='reviewed'&&REVIEW_NOTES[q.id]?.answer?.length)).length;
 // Curated from explicit retired/discontinued/deprecated-service concerns in preliminary audit notes.
 // This is a review queue, not a complete or independently verified list of outdated questions.
 const OUTDATED_CANDIDATE_IDS = new Set(outdatedReview.items.filter(item=>item.category!=='discontinuation-claim-unsubstantiated').map(item=>item.id));
