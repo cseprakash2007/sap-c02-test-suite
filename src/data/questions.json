@@ -7883,13 +7883,37 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED B: API Gateway HTTP API supports first-class SQS-SendMessage integration; SQS buffers request bursts; Lambda SQS event source mapping polls queue and invokes business logic; Lambda publishes results to AWS AppSync Events HTTP endpoint; subscribed clients receive real-time WebSocket messages. AppSync Events launched March 2025 and is current, not outdated. AWS docs: https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html ; https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html ; https://docs.aws.amazon.com/appsync/latest/eventapi/publish-http.html ; https://docs.aws.amazon.com/appsync/latest/eventapi/event-api-websocket-protocol.html . Exact third-party question copy: https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html (question 179).",
+    "wrongOptionsExplanation": "A: API Gateway REST+Lambda can accept input, but Step Functions state machines cannot use arbitrary WebSocket clients as direct targets or deliver live WebSocket broadcasts. B: CORRECT: HTTP API->SQS->Lambda->AppSync Events channel->WebSocket subscribers, with fully managed scalable ingestion and broadcasting. C: AppSync API does not directly consume SQS as described, and EventBridge rules cannot use arbitrary WebSocket clients as targets. D: CloudFront Functions cannot serve as CloudFront origins or act as general-purpose backend to publish to IoT Core MQTT; although IoT Core supports MQTT over WebSockets, proposed integration is invalid.",
+    "plainWords": "Receive client data through API Gateway, queue it to handle spikes, process it with Lambda, then broadcast updates through AppSync Events WebSockets.",
+    "keyPoints": "HTTP API has native SQS-SendMessage integration; Lambda event source mapping polls SQS (SQS does not push-invoke Lambda); AWS AppSync Events Event API supports HTTP publishing and WebSocket subscriptions; configure channel namespace and IAM/auth permissions; at-least-once queue processing needs idempotency. Step Functions/EventBridge cannot directly target WebSocket clients; CloudFront Functions cannot be origins. https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html ; https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html ; https://docs.aws.amazon.com/appsync/latest/eventapi/publish-http.html ; https://docs.aws.amazon.com/appsync/latest/eventapi/event-api-websocket-protocol.html .",
+    "sourceWarning": "Option B shorthand 'Use the SQS queue to invoke the Lambda function' is technically imprecise: Lambda polls SQS using an event source mapping. AppSync Events publishing requires a configured Event API, channel namespace, authorization and HTTP publish call; the source omits details but architecture is valid. SQS/Lambda is at-least-once, so idempotency and DLQ/error handling should be considered. Exact third-party question found as DumpsPedia question 179; source answer B matches AWS service capabilities. AppSync Events was introduced March 2025, so not outdated.",
+    "review": {
+      "status": "verified-aws-doc-external-exact-match-minor-technical-imprecision",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 29,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "externalExactMatch": "https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html",
+      "externalQuestionNumber": 179,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html",
+        "https://docs.aws.amazon.com/appsync/latest/eventapi/publish-http.html",
+        "https://docs.aws.amazon.com/appsync/latest/eventapi/event-api-websocket-protocol.html",
+        "https://docs.aws.amazon.com/appsync/latest/devguide/"
+      ],
+      "defects": [
+        "SQS does not push-invoke Lambda; Lambda event source mapping polls queue",
+        "AppSync Events channel/auth/HTTP publishing configuration omitted",
+        "At-least-once SQS Lambda delivery requires idempotency"
+      ],
+      "notes": "AWS docs and exact third-party wording corroborate B. No obsolete service identified."
+    },
+    "answerStatus": "verified-b-aws-doc-exact-external-minor-wording"
   },
   {
     "id": 184,
