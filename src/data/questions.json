@@ -6020,13 +6020,13 @@
    "B"
   ],
   "answerCount": 1,
-  "explanation": "",
-  "wrongOptionsExplanation": "",
-  "plainWords": "",
-  "keyPoints": "",
-  "sourceWarning": "",
+  "explanation": "Intended source answer B, corroborated by multiple exact-question practice-site copies. AWS Elastic Disaster Recovery (DRS) installs an AWS Replication Agent on supported on-premises physical servers, continuously replicates block-level data into an AWS staging environment, and can launch recovery EC2 instances using configured launch settings. It protects application servers and MySQL server workloads together with lower operational overhead than separately rebuilding and replicating applications and databases. Important caveat: B says 'Frequently perform failover and fallback', which is NOT AWS best practice for routine DR testing. AWS recommends non-disruptive recovery drills, and reserves actual recovery/failover/failback for incidents or controlled exercises. A describes appropriate drills but incorrectly says to 'cut over to the test instances' in a disaster; AWS distinguishes drill instances from actual recovery instances. This is an imperfectly worded question; do not present B as an unqualified technically flawless choice.",
+  "wrongOptionsExplanation": "A: Replication Agent and non-disruptive drills are sound, but 'cut over to the test instances' in a real failure is incorrect/ambiguous: AWS DRS launches recovery instances for real recovery, not drill instances. B: Intended keyed answer: explicit AWS DRS initialization and launch settings. Its frequent production failover/failback wording is poor; use periodic recovery drills instead. C: DMS replicates MySQL data but not whole application servers; AWS SCT does not run the described local CDC task (CDC is an AWS DMS capability); rebuilding the app on EC2 adds overhead. D: Storage Gateway volume snapshots and manual EC2 application rebuild/restore add substantial overhead and do not provide DRS continuous whole-server recovery.",
+  "plainWords": "Protect a physical on-premises application and MySQL server so the workload can recover on EC2 with minimal ongoing DR administration.",
+  "keyPoints": "Intended B, with wording warning. DRS: agent-based continuous block replication, staging resources, launch settings, recovery instances, non-disruptive DRILLS, actual recovery, failover traffic switch, failback. AWS docs: https://docs.aws.amazon.com/drs/latest/userguide/failback.html ; https://docs.aws.amazon.com/drs/latest/userguide/failback-preparing-failover.html ; https://aws.amazon.com/disaster-recovery/faqs/ . Exact question copies: https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-8/2/ ; https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-wants-to-use-aws-to-create-a-business-continuity-solution-in-case-the-company-s-main-on-premises",
+  "sourceWarning": "QUESTION QUALITY WARNING: B's 'frequently perform failover and fallback' is contrary to routine AWS DRS guidance; conduct non-disruptive recovery drills instead. A also has an error: 'cut over to the test instances' rather than launch recovery instances. Source key B is corroborated externally, but no supplied option is perfectly worded. Preserve original choices; mark intended answer with this caveat. External PassTest copy selects C, but incorrectly attributes CDC to AWS SCT.",
   "review": null,
-  "answerStatus": "source-key-unverified"
+  "answerStatus": "source-key-corroborated-question-wording-flawed"
  },
  {
   "id": 139,
