@@ -6971,13 +6971,40 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "AWS-DOC-VERIFIED A: AWS Transfer Family managed SFTP with internet-facing VPC-hosted endpoint can associate one Elastic IP address per selected subnet/AZ, giving vendors stable public addresses for allowlisting. Backing storage Amazon EFS offers NFS file sharing to downstream clients, including on-premises via Direct Connect if VPC routing and security groups allow. Use multiple AZs and EFS Regional mount targets. AWS official: https://docs.aws.amazon.com/transfer/latest/userguide/sftp-for-transfer-family.html ; https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html ; https://docs.aws.amazon.com/transfer/latest/userguide/configure-storage.html . Independent exact question: https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341 (Question 292) prints B but community votes A 100%; AWS documentation resolves the conflicting key in favor of A.",
+    "wrongOptionsExplanation": "A: CORRECT: managed SFTP with internet-facing VPC endpoint, per-subnet Elastic IPs, and EFS NFS storage; multi-AZ endpoint and EFS mount targets support HA. B: WRONG: ordinary publicly accessible Transfer Family endpoint does not permit assigning static Elastic IP addresses, even though EFS backend is suitable. C: WRONG: Application Migration Service lifts Linux VM into a self-managed EC2 SFTP host; a single EC2/EIP remains an HA SPOF and adds maintenance. D: WRONG: Application Migration Service does not migrate VMs into AWS Transfer Family managed servers; ordinary public endpoint lacks fixed EIPs and FSx for Lustre is not NFS share replacement.",
+    "plainWords": "Move SFTP to a managed service, give partners fixed public IPs, and retain shared NFS storage for applications: Transfer Family VPC internet-facing endpoint with EIPs plus EFS.",
+    "keyPoints": "Transfer Family PUBLIC endpoint cannot attach static EIPs; VPC-hosted internet-facing endpoint can attach Elastic IP per subnet. EFS supports NFS storage for Transfer Family and downstream consumers over Direct Connect with routing/security groups. Managed Transfer Family supports multi-AZ. Exact external Q292 conflicting printed key B vs community 100% A; AWS docs verify A. Official: https://docs.aws.amazon.com/transfer/latest/userguide/sftp-for-transfer-family.html ; https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html ; https://docs.aws.amazon.com/transfer/latest/userguide/configure-storage.html ; https://docs.aws.amazon.com/transfer/latest/userguide/ .",
+    "sourceWarning": "OCR ERRORS IN ORIGINAL OPTIONS: 'pace files', 'Amazon Elastic Files System', 'Amazon Elastic Fie system', 'EFSfile', 'FSx for Luster', 'Transfer Family sever', malformed punctuation and missing spaces. Exact external copy at https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341 Question 292 provides cleaner option wording. EXTERNAL SOURCE ANSWER ERROR: printed Correct Answer B but community vote A 100%; AWS official endpoint matrix explicitly disproves B because PUBLIC endpoint cannot attach static IPs. JSON answer A retained. Preserve original text and separately flag OCR cleanup for later controlled restoration. Ensure EFS Regional mount targets, Direct Connect network routing and TCP/2049 access.",
+    "review": {
+      "status": "aws-doc-verified-external-key-conflict-ocr-defects",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 24,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "A"
+      ],
+      "originalTextPreserved": true,
+      "externalExactMatch": "https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341",
+      "externalQuestionNumber": 292,
+      "externalPrintedAnswer": [
+        "B"
+      ],
+      "externalCommunityVote": "A (100%)",
+      "awsReferences": [
+        "https://docs.aws.amazon.com/transfer/latest/userguide/sftp-for-transfer-family.html",
+        "https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html",
+        "https://docs.aws.amazon.com/transfer/latest/userguide/configure-storage.html",
+        "https://docs.aws.amazon.com/transfer/latest/userguide/"
+      ],
+      "defects": [
+        "OCR corruption across original options",
+        "External printed key B contradicts AWS static EIP support and community A",
+        "NFS connectivity over Direct Connect requires route/security-group setup"
+      ],
+      "notes": "A verified independently from AWS endpoint matrix. Do not follow third-party B answer. Source text preserved."
+    },
+    "answerStatus": "verified-aws-doc-external-printed-key-b-incorrect-ocr-source"
   },
   {
     "id": 162,
