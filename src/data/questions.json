@@ -9403,13 +9403,35 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED D, AWS documentation and exact third-party match. Migrate selected Oracle schemas to Amazon RDS for PostgreSQL using AWS SCT/DMS. Use PostGIS extension for spatial data, pg_cron for scheduled SQL maintenance tasks, and oracle_fdw extension to query Oracle tables that remain on premises via foreign tables. AWS Direct Connect provides private network connectivity, but foreign-table support requires CREATE EXTENSION oracle_fdw, CREATE SERVER, USER MAPPING, FOREIGN TABLE, plus routing/firewall permissions. AWS: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/postgresql-oracle-fdw.html ; https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html ; external exact match https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-4 (Q36 No1508).",
+    "wrongOptionsExplanation": "A: DynamoDB/Athena/API Gateway do not provide PostgreSQL-style foreign tables to on-prem Oracle, and EventBridge cannot run cron jobs inside DynamoDB. B: SQL Server native replication cannot directly migrate heterogeneous Oracle schemas as described; Glue crawlers catalog data, not expose on-prem Oracle as SQL foreign tables in RDS SQL Server. C: AWS Application Migration Service replicates servers, not bidirectional Oracle CDC; EC2 Auto Scaling is not a suitable database clustering strategy and internet gateway is not an Oracle foreign-data wrapper. D: CORRECT intended solution; SCT/DMS for heterogeneous migration, RDS PostgreSQL with PostGIS, pg_cron and oracle_fdw over Direct Connect. Clarify 'cron jobs on DB instance' means pg_cron extension SQL jobs, not OS-level crontab.",
+    "plainWords": "Move some Oracle databases to managed PostgreSQL, keep others on premises, and use PostgreSQL extensions for maps, scheduled database jobs, and live queries to the remaining Oracle databases.",
+    "keyPoints": "RDS PostgreSQL extensions: PostGIS spatial, pg_cron SQL scheduling, oracle_fdw foreign Oracle tables. Direct Connect is connectivity only. SCT/DMS handles heterogeneous Oracle->PostgreSQL conversion and data transfer. RDS does not grant host OS crontab access. oracle_fdw requires server, user mapping, foreign table and network reachability.",
+    "sourceWarning": "Exact third-party practice question found, answer D matches (PracticeCF Q36 No1508; CertEnsure Q6). SOURCE IMPRECISION: 'PostgreSQL native spatial' requires PostGIS extension; 'Run cron jobs on DB instance' means pg_cron database extension, NOT OS crontab; Direct Connect alone does not implement foreign tables—oracle_fdw and network/security configuration are necessary. Answer D valid if these implicit configuration steps are supplied. Original text preserved.",
+    "review": {
+      "status": "verified-aws-doc-and-two-external-exact-matches-with-implementation-caveats",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 39,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "D"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/postgresql-oracle-fdw.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html"
+      ],
+      "externalExactMatch": "https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-4",
+      "additionalExternalMatches": [
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html"
+      ],
+      "defects": [
+        "Foreign-table support requires oracle_fdw, not Direct Connect alone",
+        "RDS cannot run OS cron; use pg_cron",
+        "PostGIS is an extension, not built-in native spatial feature"
+      ]
+    },
+    "answerStatus": "verified-d-aws-and-external-with-caveats"
   },
   {
     "id": 219,
