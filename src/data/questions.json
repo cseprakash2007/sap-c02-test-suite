@@ -12003,13 +12003,24 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B VERIFIED against AWS documentation: FSx for Lustre offers POSIX-compatible mounted Linux filesystem with S3 data repository association; configure AutoImportPolicy and AutoExportPolicy for NEW/CHANGED (and DELETED as needed), install Lustre client on EC2 and mount. S3 input metadata is imported and content fetched on first access; outputs exported asynchronously after files close. A DataSync tasks are transfers, not a mounted POSIX file system; C EFS does not support FSx Lustre S3 data repository associations and native auto import/export; D S3 File Gateway RefreshCache requires explicit refresh for direct S3 changes and lacks this policy-based bidirectional sync. Caveats: automatic import requires same Region; avoid concurrent edits; automatic export unavailable on unsupported older FSx versions. AWS: https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo-dra.html ; https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoexport-data-repo-dra.html ; https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-linked-dra.html ; https://docs.aws.amazon.com/filegateway/latest/files3/troubleshooting-file-share-issues.html . External exact-stem source and Choose TWO/THREE variants were not independently established in this audit; do not assert a confirmed external match.",
+    "wrongOptionsExplanation": "A: DataSync is task-based copying, not POSIX mount. C: EFS has NFS/POSIX but not FSx for Lustre S3 data repository association and automatic import/export policies. D: S3 File Gateway RefreshCache is needed for direct S3 modifications; not automatic bidirectional policy synchronization.",
+    "plainWords": "Mount FSx for Lustre on Linux and connect it to S3 with automatic import/export policies.",
+    "keyPoints": "B; S3 and FSx must be in same Region for auto import; outputs export asynchronously; avoid concurrent modifications.",
+    "sourceWarning": "AWS primary documentation confirms B. External exact-stem and Choose TWO/THREE source variants not confirmed in current search; no claim of exhaustive negative result.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-29",
+      "domainPosition": 55,
+      "domainSingleTotal": 139,
+      "multiSelectVariant": "Not found in limited external search; not conclusively ruled out",
+      "references": [
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo-dra.html",
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoexport-data-repo-dra.html",
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-linked-dra.html"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 282,

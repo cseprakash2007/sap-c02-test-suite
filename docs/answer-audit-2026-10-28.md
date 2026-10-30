@@ -1104,3 +1104,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS docs:** https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
 - **Exact-stem external:** https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=29 keys original C; https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341 keys C. https://www.freecram.net/question/Amazon.SAP-C02.v2023-03-07.q318/a-company-is-creating-a-sequel-for-a-popular-online-game-a-large-number-of-users-from-all-over-the-world reorders choices and marks C, mapping to original B, an unreliable source key. No verified Choose TWO/THREE exact-stem variant.
 - **Caveats:** MREC global tables enable Streams automatically, and MRSC replication does not use Streams; explicit manual enablement wording is dated. CloudFront failover does not apply to all HTTP methods; CRR is asynchronous and regional routing for DynamoDB clients is separate.
+
+
+### Q281 — Domain 4, position 55/139 (2026-10-29)
+
+- **AWS-verified B:** FSx for Lustre mounted via Lustre client, with S3 data repository association and automatic import/export policies. Original stem/options preserved.
+- **A:** DataSync is a transfer task, not a POSIX mounted file system. **B:** native POSIX and S3 automatic import/export. **C:** EFS cannot use FSx-for-Lustre S3 data repository association policies. **D:** S3 File Gateway requires RefreshCache for directly modified S3 objects and lacks the specified managed policy model.
+- **AWS primary sources:** https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo-dra.html ; https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoexport-data-repo-dra.html ; https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-linked-dra.html ; https://docs.aws.amazon.com/filegateway/latest/files3/troubleshooting-file-share-issues.html
+- **Caveats:** automatic import requires same Region; export is asynchronous; file content loaded on demand; concurrent writes on S3 and Lustre can conflict; older FSx versions have export limitations.
+- **External source verification:** No exact-stem independent external exam copy or Choose TWO/THREE variant confirmed by this limited search. This is a verification gap, not proof that variants do not exist.
