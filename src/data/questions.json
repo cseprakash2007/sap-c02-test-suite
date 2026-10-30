@@ -11320,13 +11320,42 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A VERIFIED: AWS Application Discovery Service Discovery Agent installed on each on-premises VM collects host configuration, CPU/RAM/disk utilization, running process inventory, and TCP network connections. AWS official: https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html and https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html . The process inventory requirement makes agent-based discovery necessary. Cost-effective is contextual; agent-based discovery is the directly supported method for ALL requested data.",
+    "wrongOptionsExplanation": "A: Correct; Discovery Agent captures host metrics, running processes and network dependencies. B: CloudWatch agent collects host metrics and logs, but not the complete process/network dependency inventory and CloudWatch metrics normally go to CloudWatch metrics rather than Logs. C: Agentless Collector gathers VM metrics and, since Nov 2024, network connections, but does not capture running process inventory. D: Application Discovery Service does not scan all on-prem VMs merely via firewall/VPN permission without supported collector/agent.",
+    "plainWords": "Install the AWS Application Discovery Agent on each VM to learn CPU/RAM/disk use, running processes, and which servers communicate.",
+    "keyPoints": "AWS Application Discovery Agent vs Agentless Collector; running processes only agent-based; agentless network connections available since 2024-11-08; utilization and TCP dependencies; Migration Hub; older exam explanations outdated.",
+    "sourceWarning": "Original typos: 'CPU. memory' punctuation and 'visualization environment' instead of virtualization environment. AWS Nov 8 2024 added agentless network-connection discovery, making old explanation 'agentless cannot see network connections' obsolete, but agentless still cannot inventory running processes. Exact single-answer sources CertEnsure and Pupuweb key A. Older SOP-C01 practice answer PDF incorrectly keys B (CloudWatch), despite matching stem/options. No Choose TWO/THREE version found in checked sources. Cost-effectiveness cannot be quantified without environment/scale; A is uniquely feature-complete.",
+    "review": {
+      "status": "verified-aws-external-single-answer-with-outdated-explanation-warning",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 51,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "A"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html",
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-agent.html",
+        "https://aws.amazon.com/about-aws/whats-new/2024/11/network-connections-aws-application-discovery-service-agentless-collector/"
+      ],
+      "externalMatches": [
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-5/5/"
+      ],
+      "externalConflictingAnswerKey": [
+        "https://itpracticetest.online/wp-content/uploads/AWS-Certified-Solutions-Architect-Professional-SOP-C01-Exam-2-Answers.pdf"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "'visualization environment' should be 'virtualization environment'",
+        "Original 'CPU. memory' punctuation typo",
+        "Outdated explanations claim agentless collector cannot discover network connections, changed November 2024",
+        "Old SOP-C01 answer PDF incorrectly keys CloudWatch B"
+      ],
+      "notes": "AWS documentation establishes agent-based is the only listed choice meeting all utilization, running process, and network dependency requirements. Agentless now collects network dependencies but still lacks running-process inventory."
+    },
+    "answerStatus": "verified-a-aws-external-agentless-2024-update"
   },
   {
     "id": 265,
