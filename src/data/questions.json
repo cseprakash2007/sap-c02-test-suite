@@ -10570,13 +10570,38 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B VERIFIED best choice: Site-to-Site VPN establishes private hybrid connectivity without waiting to provision a new Direct Connect circuit. AWS DMS full load plus ongoing CDC migrates 2 TB existing MySQL rows and captures subsequent changes via row-based binary logs, enabling minimal-downtime cutover to Aurora after lag reaches zero. AWS docs: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html and https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.MySQL.html . Explicitly select 'Migrate existing data and replicate ongoing changes', not CDC-only if Aurora target is empty.",
+    "wrongOptionsExplanation": "A: VPN is appropriate, but mysqldump/S3 import alone loses ongoing changes or requires prolonged write freeze. B: Correct; VPN + DMS full load and CDC. C: New Direct Connect circuit delays migration start, and manual dump/import plus unspecified replication adds complexity. D: DMS CDC is suitable but waiting for new Direct Connect provisioning conflicts with begin-as-soon-as-possible requirement.",
+    "plainWords": "Use VPN to connect the private data center quickly, and DMS to copy the database while continuously replaying new changes until cutover.",
+    "keyPoints": "AWS Site-to-Site VPN private connectivity; DMS full load plus CDC; MySQL row-based binlog and retention; Aurora MySQL-compatible target; replication lag validation and write pause at cutover; new Direct Connect provisioning lead time.",
+    "sourceWarning": "Original text repeatedly says 'Aurora duster' instead of 'Aurora cluster', option D lacks sentence punctuation. Critical ambiguity: 'Configure a DMS task with ongoing replication' should explicitly specify full load plus CDC for an initially empty target; CDC-only does not copy 2 TB of existing rows. 'No data lost' is contingent on MySQL binlog configuration/retention, lag catching up, and a controlled cutover. Exact single-answer variant found in Scribd SAP-C02 Updated Questions (question 37); no Choose TWO/THREE variant found in targeted searches; third-party answer key should not be treated as authoritative.",
+    "review": {
+      "status": "verified-aws-single-answer-external-cardinality-caveats",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 49,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.MySQL.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_BestPractices.html"
+      ],
+      "externalMatches": [
+        "https://www.scribd.com/document/946282982/SAP-C02-Updated-Questions-AWS-Certified-Solutions-Architect-Professional"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "Repeated 'Aurora duster' OCR error",
+        "Option D punctuation missing",
+        "DMS task wording 'ongoing replication' is underspecified; initial full load plus CDC is required for empty target",
+        "Zero data loss requires validation, binlog retention and controlled cutover"
+      ],
+      "notes": "Exact stem with four choices found in external SAP-C02 collection question 37. No conflicting Choose TWO/THREE variant in targeted searches. VPN+full-load+CDC supported independently by AWS."
+    },
+    "answerStatus": "verified-b-aws-external-full-load-cdc-caveat"
   },
   {
     "id": 245,
