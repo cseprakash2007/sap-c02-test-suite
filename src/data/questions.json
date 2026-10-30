@@ -10243,13 +10243,40 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D VERIFIED as best of supplied options. ECS with EC2 launch type provides managed container orchestration while retaining control of the EC2 host OS, networking, and instance configuration. Aurora MySQL Serverless v2 is relational and automatically scales capacity; Amazon SQS is managed asynchronous queueing suitable for replacing MSMQ patterns. AWS ECS launch types: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html ; Aurora Serverless v2: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html ; SQS: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html . NOTE: SQL Server to Aurora MySQL is a heterogeneous database migration requiring schema, SQL and application compatibility conversion, not automatic SQL Server engine compatibility.",
+    "wrongOptionsExplanation": "A: App Runner abstracts the underlying hosts and does not provide full host/network configuration control; RDS SQL Server is relational and EventBridge asynchronous, but host-control requirement fails. B: ECS Fargate does not give full host OS control, and DynamoDB is NoSQL rather than a strongly relational SQL schema; SNS pub/sub does not provide MSMQ-like durable per-consumer queue semantics by itself. C: Elastic Beanstalk is not the best fit for complex container orchestration; Aurora PostgreSQL is relational and MSK is asynchronous streaming but adds Kafka complexity instead of simple queue semantics; EC2 host control can exist under Beanstalk, so do not claim it is categorically impossible. D: ECS EC2 + Aurora MySQL Serverless v2 + SQS satisfies orchestration, host/network control, relational data and async queue requirements.",
+    "plainWords": "Use ECS on EC2 when you need container orchestration plus control of the machines. Choose a relational Aurora database and SQS queues for asynchronous component communication.",
+    "keyPoints": "ECS EC2 launch type vs Fargate; EC2 host OS and network control; Aurora MySQL Serverless v2 relational; SQS asynchronous durable queues vs SNS pub/sub and MSK streaming; SQL Server-to-MySQL heterogeneous migration and schema conversion.",
+    "sourceWarning": "Exact single-answer D versions found at Exam-Tests, DumpsQuestion, SalesforceExamDumps and ExamTopics. No conflicting Choose TWO/THREE variant identified in searched sources. CRITICAL external explanation defect: Exam-Tests claims Aurora MySQL is 'using the same database engine as SQL Server' / directly compatible; FALSE. SQL Server and MySQL are different engines and require heterogeneous schema/code migration. Original stem/options preserved.",
+    "review": {
+      "status": "verified-aws-single-answer-with-external-defect",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 45,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "D"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html",
+        "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html",
+        "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html"
+      ],
+      "externalMatches": [
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2024-12-04.q106.html?p=20",
+        "https://examsdocs.dumpsquestion.com/articles/assume-amazon-sap-c02-dumps-pdf-are-going-to-be-the-best-score-q27-q52/",
+        "https://www.salesforcexamdumps.com/sap-c02-practice-questions/9",
+        "https://www.examtopics.com/discussions/amazon/view/126814-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-346-discussion/"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "External explanation incorrectly equates SQL Server and MySQL engine compatibility",
+        "Migration requires heterogeneous schema/code conversion and testing"
+      ],
+      "notes": "D best of four. Source variants searched present four options and one answer; no Choose TWO/THREE found, not proof of nonexistence."
+    },
+    "answerStatus": "verified-d-aws-external-heterogeneous-migration-warning"
   },
   {
     "id": 239,
