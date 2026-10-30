@@ -10465,13 +10465,40 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is the best intended cost-effective answer: AWS Backup scheduled cross-Region copies for Aurora and DynamoDB, restore databases in secondary Region, CloudFormation redeploys ECS infrastructure and CodePipeline deploys code, then Route 53 failover to Regional API Gateway. AWS calls backup-and-restore the lowest-cost DR strategy with RPO hours but typical full-stack RTO up to 24 hours; 4-hour RTO is NOT guaranteed and requires timed restore tests, suitably small datasets, appropriate backup schedules/copy completion and infrastructure automation. AWS docs: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-database-disaster-recovery/defining.html ; https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html ; https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html .",
+    "wrongOptionsExplanation": "A: Global Aurora and DynamoDB replication is higher recurring cost; CloudFront origin failover is limited to certain HTTP methods and not a general write-API DR failover mechanism. B: DMS plus DynamoDB Streams, EventBridge and Lambda custom replication is complex and operationally expensive compared with backup/restore. C: Lowest-cost backup/restore candidate, but Route 53 failover alone does not restore databases or deploy ECS; use CloudFormation/CodePipeline runbooks and validate 4-hour RTO. D: Aurora global database and DynamoDB global tables provide stronger RPO/RTO but at higher ongoing cross-Region replication cost than C.",
+    "plainWords": "For two hours of acceptable data loss and four hours to recover, backups in another Region are cheaper than continuously running global database replicas—but only if tested restoration fits four hours.",
+    "keyPoints": "RPO 2 hours; RTO 4 hours; AWS Backup Aurora/DynamoDB cross-Region copy; backup and restore lowest cost; Route 53 failover routing; CloudFormation/CodePipeline redeployment; no guaranteed 4-hour restore time; CloudFront origin failover not general-purpose API write failover.",
+    "sourceWarning": "Source typos and missing punctuation: 'databases The', 'CloudFormation The', 'MOST cost-effectively\\'?', 'secondaryRegion'. Exact single-answer C variants found FreeCram, Exam-Tests, ExamTopics, AWS re:Post and shuffled-answer ExamsReviews; no matching Choose TWO/THREE variant identified. Significant TECHNICAL DEFECT: C alone does not establish a four-hour RTO, since AWS backup/restore full-stack RTO may be up to 24 hours; restore time and backup copy latency not specified. Route 53 failover to secondary API Gateway is not sufficient unless ECS/application and DB have actually been restored. Mark as best intended rather than guaranteed.",
+    "review": {
+      "status": "best-intended-aws-external-single-answer-rto-not-guaranteed",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 48,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "C"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-database-disaster-recovery/defining.html",
+        "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html",
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html"
+      ],
+      "externalMatches": [
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-12-13.q142/a-company-implements-a-containerized-application-by-using-amazon-elastic-container-service-amazon-ecs",
+        "https://www.examtopics.com/discussions/amazon/view/112793-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-296-discussion/",
+        "https://www.examsreviews.com/articles/best-preparations-of-sap-c02-exam-2025-aws-certified-solutions-architect-unlimited-510-questions-q190-q208/"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "Original punctuation and spacing errors",
+        "Backup/restore does not inherently meet 4-hour RTO; full-stack recovery may take much longer",
+        "Option C omits explicit ECS/database restore and redeployment runbook",
+        "Cross-Region copy freshness must be validated for 2-hour RPO"
+      ],
+      "notes": "Preserved C as intended answer but do not mark unconditional four-hour RTO as proven. External copies consistently single-choice; no multi-answer variant found in checked results."
+    },
+    "answerStatus": "best-intended-c-aws-external-rto-not-guaranteed"
   },
   {
     "id": 243,
