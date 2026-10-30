@@ -1194,3 +1194,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS:** https://aws.amazon.com/aws-transfer-family/faqs/ ; https://docs.aws.amazon.com/transfer/latest/userguide/eventbridge.html ; https://docs.aws.amazon.com/glue/latest/dg/about-triggers.html ; https://docs.aws.amazon.com/glue/latest/dg/automating-awsglue-with-cloudwatch-events.html
 - **External source:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html Q61 full-length keys C; https://www.scribd.com/document/946282982/SAP-C02-Updated-Questions-AWS-Certified-Solutions-Architect-Professional abbreviated variant also C. No confirmed Choose TWO/THREE version.
 - **Defects:** dataset question abbreviated: loses explicit queue, 'LEAST operational overhead', full option implementations. S3 event notifications do not invoke Glue jobs directly: use EventBridge/Glue event triggers, Lambda or other orchestration. Transfer Family completed-upload EventBridge event is more precise than generic S3 object-created event when avoiding partial uploads.
+
+
+### Q308 — Domain 4, position 65/139 (2026-10-30)
+
+- **Verified A (retained):** Two redundant Direct Connect connections, each with a private VIF to a common Direct Connect gateway, plus a VPC-attached virtual private gateway association. Future Regions can associate their own VGWs to the same DX gateway.
+- **A:** Correct architecture. Corrected 'interlace' to 'interface' and 'victual' to 'virtual'. 'Connect DX gateway to VPC' means associate with VGW attached to that VPC.
+- **B:** Two same-Region direct private VIFs can give VPC redundancy but cannot meet cross-Region expansion as described.
+- **C:** Public VIF exposes AWS public services, not a direct private VPC attachment.
+- **D:** A private VIF does not connect directly to Transit Gateway; correct TGW implementation needs a transit VIF, Direct Connect gateway, and TGW association.
+- **AWS:** https://docs.aws.amazon.com/directconnect/latest/UserGuide/virtualgateways.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/WorkingWithVirtualInterfaces.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html ; https://docs.aws.amazon.com/directconnect/latest/APIReference/API_CreatePrivateVirtualInterface.html
+- **External exact-stem sources:** https://examguru.io/exams/sap-c02/review ; https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/2 ; https://passitexams.com/articles/quizzes/sap-c02-question-7/. All single-answer, A selected/supported; no confirmed Choose TWO/THREE conflicting variant.
+- **Caveats:** Provision links on diverse devices/paths and configure/test BGP failover; deleting an existing VIF can interrupt production connectivity. AWS docs, not third-party answer keys, establish technical correctness.
