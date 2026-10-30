@@ -11086,13 +11086,43 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is the original repository and FreeCram/Exam-Tests answer: Amazon DocumentDB MongoDB-compatible provisioned instances including replicas in multiple AZs + Java backend EC2 Auto Scaling across AZs. AWS explicitly recommends >=2 DocumentDB instances in >=2 AZs and ideally 3 in 3 AZs: https://docs.aws.amazon.com/documentdb/latest/devguide/best_practices.html . IMPORTANT: D is ambiguous/also technically plausible because Amazon DocumentDB supports on-demand instance pricing and DocumentDB Serverless is on-demand autoscaling Multi-AZ; cannot rule D out on 'on-demand' grounds. AWS: https://docs.aws.amazon.com/documentdb/latest/devguide/docdb-serverless.html and https://docs.aws.amazon.com/documentdb/latest/devguide/limits.html . No-change MongoDB compatibility is not guaranteed for all operators, drivers and authentication; test compatibility.",
+    "wrongOptionsExplanation": "A: Aurora is relational, not MongoDB API compatible; would require changes. B: MongoDB EC2 may preserve DB engine, but single-AZ application tier violates HA. C: Intended answer, Multi-AZ DocumentDB primary+replicas and Multi-AZ EC2 ASG. D: Not reliably incorrect in current AWS: on-demand DocumentDB instances and DocumentDB Serverless support Multi-AZ HA. Question lacks a constraint differentiating C and D, making it defective as unique-answer item.",
+    "plainWords": "Use a MongoDB-compatible DocumentDB cluster with replicas across AZs and run the Java app on EC2 Auto Scaling across AZs. Beware: option D can also be valid.",
+    "keyPoints": "Amazon DocumentDB MongoDB API compatibility; primary+replica across AZs; EC2 ASG across AZs; DocumentDB provisioned on-demand billing; DocumentDB Serverless on-demand Multi-AZ; original answer key C not uniquely provable; test no-code-change MongoDB compatibility.",
+    "sourceWarning": "SERIOUS DEFECT: C and D can both satisfy HA as written. FreeCram and Exam-Tests key C based on obsolete/misleading claim 'on-demand capacity mode is DynamoDB only'; AWS now explicitly offers DocumentDB on-demand instances and DocumentDB Serverless on-demand autoscaling Multi-AZ. JPNTest reorders options and keys B (which is original D), conflicting external ANSWER KEY. No Choose TWO/THREE cardinality variant found in checked exact-stem sources; this is a single-choice question with competing plausible options and conflicting external keys. OCR typo 'DocumentD3' instead of DocumentDB, 'NOSQL', missing punctuation. Preserve source stem/options and original C but flag question as defective/ambiguous, do not call C unconditionally verified.",
+    "review": {
+      "status": "defective-ambiguous-single-answer-two-plausible-options",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 50,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "C"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/documentdb/latest/devguide/best_practices.html",
+        "https://docs.aws.amazon.com/documentdb/latest/devguide/replication.html",
+        "https://docs.aws.amazon.com/documentdb/latest/devguide/docdb-serverless.html",
+        "https://docs.aws.amazon.com/documentdb/latest/devguide/limits.html",
+        "https://docs.aws.amazon.com/documentdb/latest/devguide/compatibility.html"
+      ],
+      "externalMatches": [
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2024-05-06.q201/a-company-has-an-on-premises-website-application-that-provides-real-estate-information-for-potential",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=46",
+        "https://www.jpntest.com/blog/2025%E5%B9%B4%E6%9C%80%E6%96%B0%E3%81%AE%E5%AE%9F%E9%9A%9B%E3%81%AB%E5%87%BA%E3%82%8B%E3%81%A8%E7%A2%BA%E8%AA%8D%E3%81%95%E3%82%8C%E3%81%9F-%E7%84%A1%E6%96%99amazon-aws-solutions-architect-professional%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C-q220-q242/"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "Original DocumentD3 OCR typo, NOSQL capitalization, missing punctuation",
+        "C and D both technically plausible due to DocumentDB on-demand/serverless capabilities",
+        "FreeCram/Exam-Tests explanation 'on-demand capacity mode is DynamoDB only' is misleading",
+        "JPNTest reordered options and keys original D instead of original C",
+        "DocumentDB MongoDB API compatibility is not universal; no-change requirement needs testing"
+      ],
+      "notes": "Single-answer presentation found on multiple external sites; no Choose TWO/THREE variant identified. Source answer C retained for exam study, but mark technically defective due to option D and conflicting key."
+    },
+    "answerStatus": "source-c-defective-ambiguous-d-also-valid"
   },
   {
     "id": 259,
