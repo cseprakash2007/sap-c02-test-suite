@@ -11661,13 +11661,26 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "INTENDED ANSWER B (independently checked 2026-10-29): Aurora PostgreSQL plus EC2 Auto Scaling behind an ALB retains the existing multi-tier/VM architecture more closely than containerization, while AppStream 2.0 streams an application near users to reduce WAN sensitivity for the desktop client. For real high availability, configure Aurora reader instance(s) in another AZ for automatic instance failover and spread EC2 ASG/ALB across >=2 AZs; an unspecified Aurora configuration alone does not guarantee 99.95% end-to-end uptime. A self-managed PostgreSQL on one EC2 instance retains database SPOF, and per-user WorkSpaces desktops may add cost/management. C RDS PostgreSQL Multi-AZ is valid HA and Fargate can be resilient, but rewriting VM tiers into containers adds migration changes; ElastiCache does not specifically solve desktop WAN latency, while NLB L4 is less apt for HTTP presentation routing. D Redshift is analytics-oriented, not an OLTP PostgreSQL replacement; CloudFront is not a generic fix for latency-sensitive desktop client/server protocols. External exact-stem copies: FreeCram https://www.freecram.com/discussions/Amazon/exam-aws-solutions-architect-professional-topic-1-question-352-discussion-p1349665.html ; Actual4Exams https://latestdumps.actual4exams.com/articles/sap-c02-questions-pass-on-your-first-attempt-dumps-for-aws-certified-solutions-architect-certified-q116-q135/ (reorders B to D). IMPORTANT: an older SOP-C01 PDF keys original option D (Redshift) despite literal identical options: https://itpracticetest.online/wp-content/uploads/AWS-Certified-Solutions-Architect-Professional-SOP-C01-Exam-4-Answers.pdf ; this external key is technically defective, not multi-select. AWS: https://docs.aws.amazon.com/rds/latest/auroraextendedcontent/aurora-features-availability.html ; https://docs.aws.amazon.com/rds/latest/auroraextendedcontent/aurora-faq-availability-and-durability.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/saas-multitenant-managed-postgresql/availability.html . Treat minimized cost as qualitative only; no price or AppStream eligibility supplied.",
+    "wrongOptionsExplanation": "A: EC2-hosted PostgreSQL without explicit HA remains a single point of failure; WorkSpaces per user introduces desktop infrastructure/cost. C: RDS PostgreSQL Multi-AZ is a credible HA database, but converting tiers to Fargate containers introduces application changes; ElastiCache accelerates cacheable backend accesses rather than desktop streaming. D: Redshift is a data warehouse, not compatible OLTP replacement; CloudFront cannot transparently accelerate arbitrary desktop-client communications.",
+    "plainWords": "Keep PostgreSQL-compatible managed database and EC2-based web/app servers, spread across AZs, and stream the remote desktop application with AppStream 2.0.",
+    "keyPoints": "Answer B is intended, not a demonstrated 99.95% SLA or cheapest solution. Explicitly provision Aurora replica(s), multi-AZ ASG/ALB, and test client compatibility and AppStream costs. Older SOP-C01 PDF wrongly keys D; external exact-stem copies do not show Choose TWO/THREE.",
+    "sourceWarning": "Historical original-stem SOP-C01 PDF keys D (Redshift), which is technically wrong; do not automatically accept legacy keys. Source omits multi-AZ Aurora replica and AppStream sizing/cost information; answer B is defensible but SLA and cheapest cost not proven.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-29",
+      "domainPosition": 53,
+      "domainSingleTotal": 139,
+      "sourceConflict": "SOP-C01 PDF marks original D despite Redshift unsuitability",
+      "multiSelectVariant": "None seen in checked exact-stem sources",
+      "references": [
+        "https://www.freecram.com/discussions/Amazon/exam-aws-solutions-architect-professional-topic-1-question-352-discussion-p1349665.html",
+        "https://latestdumps.actual4exams.com/articles/sap-c02-questions-pass-on-your-first-attempt-dumps-for-aws-certified-solutions-architect-certified-q116-q135/",
+        "https://itpracticetest.online/wp-content/uploads/AWS-Certified-Solutions-Architect-Professional-SOP-C01-Exam-4-Answers.pdf",
+        "https://docs.aws.amazon.com/rds/latest/auroraextendedcontent/aurora-features-availability.html"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 273,
