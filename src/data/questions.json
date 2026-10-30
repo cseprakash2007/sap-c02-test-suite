@@ -11414,16 +11414,47 @@
       }
     ],
     "answers": [
-      "D"
+      "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "AWS-DOCUMENTED CORRECTION: B. AWS Migration Hub import accepts on-prem physical/VMware server CSV inventory in its supported schema, including CPU/RAM specification and utilization. Migration Hub EC2 instance recommendations use that imported data and generate downloadable EC2InstanceRecommendations CSV with instance model and cost. AWS: https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-import.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/ec2-recommendation-prerequisites.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/generating-ec2-recommendations.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/understanding-ec2-recommendations.html . Original D is keyed by exam sites, but its exact automated S3-to-Migration Evaluator Quick Insights-to-S3 export workflow is not substantiated by AWS docs. Migration Evaluator does accept existing inventory and offers Quick Insights and detailed CSV exports through its assessment workflow; D therefore has partial functional overlap but is mis-specified.",
+    "wrongOptionsExplanation": "A: Compute Optimizer does not support direct arbitrary on-prem CSV import for these EC2 recommendations. B: Correct by documented AWS Migration Hub CSV import -> EC2 instance sizing/cost -> downloadable CSV. C: Agentless Collector is a VMware discovery appliance, not a generic importer of an existing physical+VMware CSV; extra discovery is unnecessary. D: Migration Evaluator supports existing inventory and detailed CSV assessments, but the asserted automatic S3 bucket import and final S3 CSV export via Quick Insights is not a documented supported workflow. External dumps key D despite documented B.",
+    "plainWords": "Use AWS Migration Hub to import your server inventory CSV and export EC2 instance-size and price recommendations as another CSV.",
+    "keyPoints": "Migration Hub import supports on-prem physical and VMware inventory; supported CSV schema; EC2 recommendation sizing by CPU/RAM utilization; recommendation CSV includes instance model and pricing; Migration Evaluator assessment/Quick Insights not an S3 automated workflow; external answer key D defective.",
+    "sourceWarning": "MAJOR SOURCE ANSWER DEFECT: original D from Certstopics and FreeCram (reordered to A) contradicts the explicit AWS Migration Hub CSV import and EC2 instance recommendations/export workflow in B. Corrected answer to B with AWS primary docs. D partly plausible in broad business assessment sense, but exact S3 import/Quick Insights/S3 CSV workflow not documented. Existing onprem.csv must match Migration Hub import template; question omits schema. No Choose TWO/THREE exact-stem variant identified in checked sources. Preserve original stem and options.",
+    "review": {
+      "status": "corrected-source-key-aws-documentation-b-external-d-defective",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 52,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalSourceAnswer": [
+        "D"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-import.html",
+        "https://docs.aws.amazon.com/migrationhub/latest/ug/ec2-recommendation-prerequisites.html",
+        "https://docs.aws.amazon.com/migrationhub/latest/ug/generating-ec2-recommendations.html",
+        "https://docs.aws.amazon.com/migrationhub/latest/ug/understanding-ec2-recommendations.html",
+        "https://aws.amazon.com/migration-evaluator/getting-started/"
+      ],
+      "externalMatches": [
+        "https://www.certstopics.com/questions/aws-certified-professional-sap-c02-release-date.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-is-planning-to-migrate-workloads-from-its-on-premises-data-center-to-amazon-ec2-instances",
+        "https://www.scribd.com/document/946282982/SAP-C02-Updated-Questions-AWS-Certified-Solutions-Architect-Professional"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "External exam sites key D (or reordered A), while AWS directly documents option B",
+        "Option D claims undocumented automatic S3-to-Migration Evaluator Quick Insights-to-S3 CSV workflow",
+        "CSV import requires supported schema, not provided in question"
+      ],
+      "notes": "Corrected answers from D to B. Migration Evaluator offers CSV assessment exports but not as D precisely describes. External answer key conflict explicitly flagged."
+    },
+    "answerStatus": "corrected-b-aws-external-key-d-defective"
   },
   {
     "id": 267,
