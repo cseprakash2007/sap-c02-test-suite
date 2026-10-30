@@ -10363,13 +10363,42 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B VERIFIED by AWS. AWS IoT Greengrass V2 deploys custom ML model, runtime and inference components to an on-premises Linux core device, enabling local still-image inference and calls to the local API without internet access once deployed. AWS: https://docs.aws.amazon.com/greengrass/v2/developerguide/perform-machine-learning-inference.html ; https://docs.aws.amazon.com/greengrass/v2/developerguide/machine-learning-components.html . Requires local power, camera/LAN connectivity, downloaded model and dependencies.",
+    "wrongOptionsExplanation": "A: Cloud Kinesis Video Streams, EC2, S3, SageMaker endpoint and Lambda require internet, violating outage requirement. B: Correct; Greengrass runs local inference and local API integration. C: Snowball is not the simple durable deployment for an existing Linux server and the proposed conventional SageMaker endpoint hosted on Snowball is technically defective. D: Amazon Monitron is condition monitoring for industrial machinery, not custom camera ML inference, and Monitron closed to new customers Oct 31 2024.",
+    "plainWords": "Put the trained defect-detection model on the factory's Linux server with AWS IoT Greengrass, so it works even without internet.",
+    "keyPoints": "Greengrass V2 edge ML model/runtime/inference components; SageMaker-trained model artifacts; local camera processing and local API; offline inference after deployment; cloud SageMaker endpoints depend on network; Monitron closed to new customers Oct 31 2024.",
+    "sourceWarning": "Original 'IPcameras' spacing error and option C 'Deploy a SageMaker endpoint the ML model' missing preposition. Conflicting external ANSWER KEY: Scribd SAP-C02 CSL 09-26-341 marks D for exact same four-choice stem; this is technically wrong versus AWS Greengrass docs and two other exact-match exam sites answering B. No conflicting Choose TWO/THREE variant identified in checked sources. Amazon Monitron unavailable to new customers since Oct 31 2024. Preserve original text and explicitly flag external answer-key defect.",
+    "review": {
+      "status": "verified-aws-external-conflicting-answer-key",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 47,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/greengrass/v2/developerguide/perform-machine-learning-inference.html",
+        "https://docs.aws.amazon.com/greengrass/v2/developerguide/machine-learning-components.html",
+        "https://aws.amazon.com/blogs/machine-learning/maintain-access-and-consider-alternatives-for-amazon-monitron/"
+      ],
+      "externalMatches": [
+        "https://www.examsvce.com/sap-c02/a-manufacturing-company-is-building-an-inspection-95912-question-answer.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2024-05-06.q201/a-manufacturing-company-is-building-an-inspection-solution-for-its-factory-the-company-has-ip-cameras"
+      ],
+      "externalConflictingAnswerKey": [
+        "https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "'IPcameras' transcription typo",
+        "Option C missing preposition after endpoint",
+        "Scribd practice collection incorrectly keys D despite same options; AWS docs support B",
+        "Amazon Monitron closed to new customers 2024-10-31"
+      ],
+      "notes": "No Choose TWO/THREE variant found; conflicting answer key D is distinct from cardinality conflict. Model and runtime must be locally available before outage."
+    },
+    "answerStatus": "verified-b-aws-conflicting-external-key-d"
   },
   {
     "id": 241,
