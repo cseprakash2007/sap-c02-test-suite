@@ -13014,13 +13014,28 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is the intended answer: Transfer Family SFTP uploads to S3, S3/Transfer Family completed-upload events routed through EventBridge (or other supported trigger/orchestration) initiate AWS Glue transformation, and successful processing sends a message to Amazon SQS. This removes SFTP, scheduler, transformation-server and queue-server management. A: EFS is storage and cannot execute cron jobs itself; SNS is pub/sub rather than the queue required by full source. B: EMR adds processing complexity; SNS not SQS. D: time-based Glue could work for cadence, but omits queue notification and EFS is not the natural event-driven Glue source. AWS https://aws.amazon.com/aws-transfer-family/faqs/ ; https://docs.aws.amazon.com/transfer/latest/userguide/eventbridge.html ; https://docs.aws.amazon.com/glue/latest/dg/about-triggers.html ; https://docs.aws.amazon.com/glue/latest/dg/automating-awsglue-with-cloudwatch-events.html .",
+    "wrongOptionsExplanation": "A: cron does not execute on EFS; requires compute, plus SNS not durable queue. B: EMR overkill for unspecified file transforms, SNS not queue. D: scheduled Glue lacks completion message and doesn't provide event-driven processing. C: correct with explicit event orchestration.",
+    "plainWords": "Use managed SFTP to land files in S3, transform with Glue after upload, and send completion messages to SQS.",
+    "keyPoints": "C; Transfer Family SFTP+S3; Glue ETL; S3/Transfer Family event via EventBridge; SQS completion queue; source stem shortened and omits queue requirement.",
+    "sourceWarning": "Dataset Q306 is an abbreviated paraphrase of the full-length source question: original says transformation app sends a message to a queue, asks LEAST operational overhead, and has fuller options. 'Glue triggered by S3 events' needs actual EventBridge/Glue trigger or Lambda orchestration; S3 events do not invoke Glue automatically. Original dataset stem/options preserved; see full-length CertEnsure Q61. No verified Choose TWO/THREE variant.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-30",
+      "domainPosition": 64,
+      "domainSingleTotal": 139,
+      "sourceConflict": "CertEnsure Q61 and Scribd shortened copy both key C; no substantive conflict",
+      "multiSelectVariant": "No confirmed Choose TWO/THREE exact-scenario variant",
+      "references": [
+        "https://aws.amazon.com/aws-transfer-family/faqs/",
+        "https://docs.aws.amazon.com/transfer/latest/userguide/eventbridge.html",
+        "https://docs.aws.amazon.com/glue/latest/dg/about-triggers.html",
+        "https://docs.aws.amazon.com/glue/latest/dg/automating-awsglue-with-cloudwatch-events.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.scribd.com/document/946282982/SAP-C02-Updated-Questions-AWS-Certified-Solutions-Architect-Professional"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 307,
