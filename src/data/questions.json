@@ -9546,13 +9546,34 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "ANSWER B VERIFIED: provision Aurora MySQL target cluster in second account, establish cross-account network connectivity, configure AWS DMS full-load plus CDC to copy data and continuously apply source changes. Monitor replication lag, briefly stop source writes, allow CDC to catch up, validate target and perform DNS cutover. AWS DMS MySQL CDC requires row-based binlogs and appropriate privileges; DMS does not guarantee zero latency and does not replicate all schema objects. AWS documentation https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.MySQL.html ; https://aws.amazon.com/blogs/database/perform-cross-account-amazon-aurora-mysql-migration-with-minimal-downtime/ . Exact independent exam question + B answer: https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-holden-24-05-2024-12qa-certsdeals.pdf",
+    "wrongOptionsExplanation": "A: Cross-account manual Aurora snapshot sharing/restoration is valid for initial data copy, but does not capture subsequent writes, so alone cannot minimize interruption at final DNS cutover. B: CORRECT: DMS full load and CDC keeps destination nearly current while source serves traffic; pause writes and catch up before cutover. C: AWS Backup cross-account sharing/restoration can restore a point-in-time copy but no continuous changes are replicated by this option; AWS Organizations membership enables sharing eligibility but not live replication. D: AWS Application Migration Service is for server lift-and-shift, not Aurora DB-to-DB logical replication.",
+    "plainWords": "Copy the database to the new AWS account while the original keeps running, replicate every subsequent change with AWS DMS, and switch the application's DNS after the copies have caught up.",
+    "keyPoints": "AWS DMS full-load + CDC minimizes migration downtime; MySQL row-based binary logs and permissions are required; DMS CDC is asynchronous, no zero-lag guarantee. Cross-account network path/security groups needed. Snapshots alone are point-in-time; AWS Backup cross-account backup is not continuous database replication. AWS blog also recommends snapshot or Aurora clone initial load plus CDC/native binlog replication for some homogeneous migrations.",
+    "sourceWarning": "Exact external practice-site question with source answer B confirmed. Source B omits explicit 'full load plus CDC' task mode, MySQL binlog configuration, cross-account network/security setup, lag validation and write-freeze at DNS cutover. AWS also documents optimized same-Region Aurora clone plus native binlog replication, but it is not an offered option. No defective answer key or material outdated service detected. Avoid promising zero downtime or instant CDC.",
+    "review": {
+      "status": "verified-aws-doc-and-external-exact-match",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 41,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.MySQL.html",
+        "https://aws.amazon.com/blogs/database/perform-cross-account-amazon-aurora-mysql-migration-with-minimal-downtime/",
+        "https://aws.amazon.com/blogs/database/cross-account-amazon-aurora-mysql-migration-with-aurora-cloning-and-binlog-replication-for-reduced-downtime/"
+      ],
+      "externalExactMatch": "https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-holden-24-05-2024-12qa-certsdeals.pdf",
+      "defects": [
+        "B omits explicit CDC setup and prerequisites",
+        "DMS does not guarantee zero replication lag"
+      ],
+      "notes": "Exact question and B key corroborated; AWS independently supports full-load plus CDC; no outdated-service issue."
+    },
+    "answerStatus": "verified-b-aws-and-external"
   },
   {
     "id": 222,
