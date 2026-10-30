@@ -1113,3 +1113,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS primary sources:** https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo-dra.html ; https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoexport-data-repo-dra.html ; https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-linked-dra.html ; https://docs.aws.amazon.com/filegateway/latest/files3/troubleshooting-file-share-issues.html
 - **Caveats:** automatic import requires same Region; export is asynchronous; file content loaded on demand; concurrent writes on S3 and Lustre can conflict; older FSx versions have export limitations.
 - **External source verification:** No exact-stem independent external exam copy or Choose TWO/THREE variant confirmed by this limited search. This is a verification gap, not proof that variants do not exist.
+
+
+### Q286 — Domain 4, position 56/139 (2026-10-29)
+
+- **Answer B confirmed.** ECS Fargate + EFS shared file system; configure EFS Elastic Throughput for unpredictable demand and General Purpose for latency-sensitive access. Original stem/options unchanged.
+- **A:** S3 object store requires application changes to replace shared filesystem. **B:** Fargate removes host administration; EFS concurrently mounts across tasks. **C:** Fargate now supports EBS, but ECS task EBS volumes are not a shared cross-task file system. **D:** EC2 + Docker requires host administration.
+- **AWS:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_data_volumes.html ; https://docs.aws.amazon.com/efs/latest/ug/managing-throughput.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ebs-volumes.html ; https://docs.aws.amazon.com/us_eg/AmazonECS/latest/bestpracticesguide/storage.html
+- **External exact stem:** https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-is-planning-to-migrate-its-on-premises-transaction-processing-application-to-aws-the-applicatio marks **A** because its options are reordered; this is **original B**. No confirmed Choose TWO/THREE exact-stem variant in checked sources.
+- **Defects/caveats:** original 'VMS' typo; EFS Elastic Throughput not explicitly selected in choice B; 'low latency' is unquantified and EFS is not guaranteed sub-millisecond latency. Preserve original question and answer.

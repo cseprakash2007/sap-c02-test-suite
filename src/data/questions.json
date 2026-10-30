@@ -12194,13 +12194,26 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B: ECS on Fargate avoids host administration and mounts EFS as persistent concurrent NFS shared storage. Configure EFS Elastic Throughput for unpredictable traffic, General Purpose performance for latency-sensitive operations, and ECS task definition efsVolumeConfiguration plus mountPoints. A S3 object storage replaces shared filesystem and requires application modifications. C ECS Fargate supports EBS currently, but per-task EBS volumes cannot be concurrently shared across independent tasks. D EC2+Docker+EFS has shared storage but requires Docker/EC2 host management. AWS docs https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_data_volumes.html ; https://docs.aws.amazon.com/efs/latest/ug/managing-throughput.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ebs-volumes.html . External exact-stem https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-is-planning-to-migrate-its-on-premises-transaction-processing-application-to-aws-the-applicatio reorders options and marks A, corresponding to original B.",
+    "wrongOptionsExplanation": "A: S3 object API does not replace a shared file-system mount without application changes. C: EBS on Fargate is supported, but task EBS volumes do not offer concurrent cross-task shared filesystem. D: EC2 Docker hosting retains server/host administration.",
+    "plainWords": "Keep the Docker containers, let Fargate manage the hosts, and mount one shared EFS file system in every task.",
+    "keyPoints": "B; Fargate + EFS; use Elastic Throughput for unpredictable workloads; General Purpose for latency; EBS Fargate is supported but not shared.",
+    "sourceWarning": "Original typo 'VMS'. Question does not explicitly specify EFS Elastic Throughput or quantify latency; EFS may not suit sub-millisecond transaction storage. External exact-stem copy reorders options, so its A equals dataset B. No confirmed Choose TWO/THREE exact-stem variant.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-29",
+      "domainPosition": 56,
+      "domainSingleTotal": 139,
+      "sourceConflict": "FreeCram answer A corresponds to original B due to option reordering; not an answer conflict.",
+      "multiSelectVariant": "No Choose TWO/THREE exact-stem variant confirmed in checked sources",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_data_volumes.html",
+        "https://docs.aws.amazon.com/efs/latest/ug/managing-throughput.html",
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ebs-volumes.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-is-planning-to-migrate-its-on-premises-transaction-processing-application-to-aws-the-applicatio"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 287,
