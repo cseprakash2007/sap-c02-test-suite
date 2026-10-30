@@ -12763,13 +12763,29 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B. Deploy a DataSync agent near on-premises Solaris NFS exports; configure NFS source locations and separate transfer tasks for Amazon S3, EFS, and FSx for Windows File Server. DataSync accelerates online transfers, copies initial dataset and subsequent changes via repeated/scheduled executions, encrypts data in transit, and verifies integrity with checksums plus configurable end-of-task checks. A Application Migration Service/legacy CloudEndure replicates servers rather than NFS files to these destinations. C aws s3 sync only addresses S3 and lacks integrated multi-target transfer workflow and integrity settings. D Transfer Family FTP not designed for NFS source and all destinations; plain FTP lacks encryption. AWS https://aws.amazon.com/datasync/faqs/ ; https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html ; https://docs.aws.amazon.com/datasync/latest/userguide/configure-data-verification-options.html ; https://docs.aws.amazon.com/datasync/latest/userguide/working-with-locations.html .",
+    "wrongOptionsExplanation": "A: MGN migrates server workloads, not NFS shares to S3/EFS/FSx. C: S3 sync is S3-specific and not a managed multi-destination NFS migration. D: FTP is not NFS migration; FTP unencrypted and scripted transfers add operational burden.",
+    "plainWords": "Install a DataSync agent on the local network, then run separate managed transfer tasks from NFS to each AWS storage destination, repeating for changes until cutover.",
+    "keyPoints": "B; DataSync NFS source; S3/EFS/FSx Windows targets; initial + incremental tasks; TLS + checksums; Basic mode for FSx Windows.",
+    "sourceWarning": "Older exam variants name CloudEndure in A; newer variants use AWS Application Migration Service. Both are wrong for file share migration. FSx Windows destination needs DataSync Basic mode, and each target needs a separate task. No verified Choose TWO/THREE variant.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-30",
+      "domainPosition": 62,
+      "domainSingleTotal": 139,
+      "multiSelectVariant": "Checked exact-stem sources are single-answer; no conflicting Choose TWO/THREE confirmed",
+      "sourceConflict": "Older source versions use CloudEndure instead of AWS Application Migration Service for option A; answer B unchanged",
+      "references": [
+        "https://aws.amazon.com/datasync/faqs/",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/configure-data-verification-options.html",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/working-with-locations.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-4/4/",
+        "https://www.scribd.com/document/818710370/AWS-SAP-Questions-and-Answers"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 301,
