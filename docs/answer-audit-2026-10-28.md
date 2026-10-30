@@ -993,3 +993,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **External question matches:** [SalesforceExamDumps](https://www.salesforcexamdumps.com/sap-c02-practice-questions/2), [DumpsPedia](https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html), [P2PExams](https://www.p2pexams.com/free-questions/certsinside-sap-c02-aws-certified-solutions-architect-professional-exam-verified-questions-answers-by-burgess-15-04-2024-12qa.pdf). No Choose TWO/THREE variant identified in checked sources; copied source text is not independent AWS authority.
 - **Options:** A daily Lambda/EventBridge job is custom and may leave a delay; B is native, centralized and automatic; C requires per-account manual upkeep; D adds unnecessary SSM Automation/State Manager complexity.
 - **Source defects:** Original text contains 'will cost' (likely 'will create'), 'turns on AWS accounts' (likely CloudTrail), 'AYYS', 'dally', 'Automaton'. Original stem/options remain unchanged; annotate rather than silently rewrite.
+
+
+### Q227 — Domain 4, position 43/139 (2026-10-29)
+
+- **Correct answer: C** (single answer). Use IAM policy on developer IAM identities restricting `ec2:RunInstances` using `ec2:InstanceType`. For strong enforcement add explicit Deny with `StringNotEquals` for unapproved types.
+- **AWS documentation:** [EC2 example policies](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html) explicitly documents allowed instance-type lists; [EC2 console policy examples](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-policies-ec2-console.html).
+- **External exact-stem copies:** [ExamsReviews](https://www.examsreviews.com/articles/best-preparations-of-sap-c02-exam-2025-aws-certified-solutions-architect-unlimited-510-questions-q190-q208/), [FreeCram](https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf), [AllFreeDumps](https://www.allfreedumps.com/downloadfile.html?id=23185). No explicit Choose TWO/THREE variant identified in the searched sources; not authoritative proof of original cardinality.
+- **Options:** A AWS Config is detective rather than preventative; B launch templates require separate IAM policy enforcement; C IAM conditions prevent unapproved launches; D EC2 Image Builder creates AMIs rather than instance-type controls.
+- **Defects:** 'tothe' typo; option C calls members of an IAM group 'IAM accounts' (should be IAM users); original text/options preserved with annotations.

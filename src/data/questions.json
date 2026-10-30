@@ -9808,13 +9808,38 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C VERIFIED: use an identity-based IAM policy scoped to developers (group or preferably role) that restricts ec2:RunInstances with the ec2:InstanceType condition key. AWS explicitly documents allowing t2.micro/t2.small and denying other types to control cost: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html . Explicit deny for non-approved instance types on instance/* avoids bypass by other allows; existing launch permissions still needed.",
+    "wrongOptionsExplanation": "A: AWS Config desired-instance-type detects instance-type compliance after launch, not preventive IAM authorization. B: A launch template alone is not a mandatory security boundary; an IAM policy must require use of an approved template to enforce it. C: Correct; attach a condition-based IAM policy to developer identities (group or roles). D: EC2 Image Builder creates AMIs, not restrictions on instance types.",
+    "plainWords": "Developers are choosing expensive EC2 sizes. Block launches of unapproved sizes using IAM before the cost occurs.",
+    "keyPoints": "ec2:RunInstances; ec2:InstanceType; StringEquals allowlist or explicit Deny StringNotEquals; attach to developer IAM group/role; AWS Config detective vs IAM preventive; launch templates not enforced without IAM.",
+    "sourceWarning": "Source transcription typo 'tothe' and awkward phrase 'limit the instance types that only the developers can launch'; source option C says 'IAM accounts' but IAM groups contain IAM users, not accounts. Preserve original question/options, annotate corrected terminology. Exact external single-answer variants located at ExamsReviews, FreeCram, AllFreeDumps/Scribd; no explicit Choose TWO/THREE variant found in searches, but external copies are not authoritative exam originals.",
+    "review": {
+      "status": "verified-aws-and-external-single-variant",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 43,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "C"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-policies-ec2-console.html"
+      ],
+      "externalMatches": [
+        "https://www.examsreviews.com/articles/best-preparations-of-sap-c02-exam-2025-aws-certified-solutions-architect-unlimited-510-questions-q190-q208/",
+        "https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf",
+        "https://www.allfreedumps.com/downloadfile.html?id=23185"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "'tothe' transcription typo",
+        "Option C incorrectly says 'IAM accounts' inside an IAM group; IAM groups contain users",
+        "Launch templates can be enforced through IAM, but option B does not describe that control"
+      ],
+      "notes": "AWS explicit EC2 example verifies IAM ec2:InstanceType condition. External exact-stem copies show single-answer form; no multi-select source found in limited searches."
+    },
+    "answerStatus": "verified-c-aws-external-source-defects"
   },
   {
     "id": 228,
