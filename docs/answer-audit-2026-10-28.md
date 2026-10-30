@@ -1122,3 +1122,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_data_volumes.html ; https://docs.aws.amazon.com/efs/latest/ug/managing-throughput.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ebs-volumes.html ; https://docs.aws.amazon.com/us_eg/AmazonECS/latest/bestpracticesguide/storage.html
 - **External exact stem:** https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-is-planning-to-migrate-its-on-premises-transaction-processing-application-to-aws-the-applicatio marks **A** because its options are reordered; this is **original B**. No confirmed Choose TWO/THREE exact-stem variant in checked sources.
 - **Defects/caveats:** original 'VMS' typo; EFS Elastic Throughput not explicitly selected in choice B; 'low latency' is unquantified and EFS is not guaranteed sub-millisecond latency. Preserve original question and answer.
+
+
+### Q290 — Domain 4, position 57/139 (2026-10-29)
+
+- **Verified original answer C:** S3 for static videos and CloudFront CDN for video delivery, offloading EC2/ALB/EFS. Original stem/options preserved.
+- **A:** EFS Maximum I/O alone is not video CDN and is legacy terminology. **B:** instance store ephemeral and unsuited to shared persistent ASG content. **C:** S3 scalable media storage with CloudFront caching. **D:** CloudFront ALB origin supported but retains EC2/EFS load for cache misses, making it less efficient than separating videos.
+- **AWS:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorS3Origin.html ; https://repost.aws/knowledge-center/cloudfront-serve-static-website ; https://docs.aws.amazon.com/id_id/whitepapers/latest/amazon-cloudfront-media/cloudfront-configuration-best-practices.html
+- **External exact stem:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-07-08.q291/a-company-used-amazon-ec2-instances-to-deploy-a-web-fleet-to-host-a-blog-site-the-ec2-instances-are-behind ; https://certempire.com/demo-files/aws-sap-c02-demo-file.pdf ; https://examguru.io/exams/sap-c02/review — all key C. No conflicting Choose TWO/THREE in checked copies.
+- **Source defects:** OCR typos 'Auto ScaSng', 'Moggers', 'Nog', 'win'; EFS Maximum I/O dated terminology. Preserve original question while recording corrections.

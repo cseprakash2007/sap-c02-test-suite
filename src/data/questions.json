@@ -12343,13 +12343,26 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C: Move large static video objects from EFS to S3 and serve via CloudFront edge caching. This offloads bandwidth and origin requests from EC2/ALB/EFS and scales better for 10x video traffic. A: EFS Maximum I/O is not a CDN and is legacy performance-mode terminology; it does not solve geographically distributed video delivery. B: instance-store storage is ephemeral, unsuited to persistent shared blog assets and ASG turnover. D: CloudFront in front of ALB is supported but cache misses still traverse EC2 and EFS, unlike S3 media offload. AWS https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorS3Origin.html ; https://repost.aws/knowledge-center/cloudfront-serve-static-website ; https://docs.aws.amazon.com/id_id/whitepapers/latest/amazon-cloudfront-media/cloudfront-configuration-best-practices.html . Exact-stem independent sources FreeCram, CertEmpire, ExamGuru agree original C.",
+    "wrongOptionsExplanation": "A: EFS throughput adjustment alone does not offload large video content; Maximum I/O is legacy. B: instance store is ephemeral and not shared across ASG nodes. D: CloudFront with ALB is possible, but video origin remains the web fleet and EFS on cache misses.",
+    "plainWords": "Put videos in S3 and deliver them through CloudFront instead of sending every video through EC2 and EFS.",
+    "keyPoints": "C; CDN edge caching; S3 object origin; decouple static media from dynamic web application; preserve ALB for blog.",
+    "sourceWarning": "Multiple OCR typos: Auto ScaSng, Moggers, Nog, win. Maximum I/O performance mode is legacy terminology. No confirmed conflicting Choose TWO/THREE variant; checked exact-stem copies key C.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-29",
+      "domainPosition": 57,
+      "domainSingleTotal": 139,
+      "multiSelectVariant": "No conflicting Choose TWO/THREE in checked copies; cannot exclude all unsearched variants",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorS3Origin.html",
+        "https://repost.aws/knowledge-center/cloudfront-serve-static-website",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-07-08.q291/a-company-used-amazon-ec2-instances-to-deploy-a-web-fleet-to-host-a-blog-site-the-ec2-instances-are-behind",
+        "https://certempire.com/demo-files/aws-sap-c02-demo-file.pdf",
+        "https://examguru.io/exams/sap-c02/review"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 291,
