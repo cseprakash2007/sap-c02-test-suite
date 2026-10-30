@@ -10304,13 +10304,38 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B VERIFIED. Amazon Aurora MySQL retains MySQL compatibility with six storage copies across three AZs; an ALB with an EC2 Auto Scaling group distributes requests across multiple web instances; an ElastiCache for Redis OSS replication group allows shared stateful sessions with replication and (when Multi-AZ/automatic failover is configured) failover. AWS: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html and https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html . For true high availability deploy Aurora readers in distinct AZs and enable Redis Multi-AZ/auto failover; those configurations are not expressly specified in B.",
+    "wrongOptionsExplanation": "A: RDS MySQL Multi-AZ and ALB/ASG are resilient, but Amazon Neptune is a graph database and unsuitable for session storage. B: Correct; Aurora MySQL, ALB/ASG and replicated Redis provide the most suitable resilient combination. C: DocumentDB is document-oriented rather than MySQL-relational; Firehose is not a session store. D: RDS MariaDB Multi-AZ and ALB/ASG are plausible, but ElastiCache Memcached has no native multi-node replication or automatic failover, making it less reliable for sessions than Redis replication.",
+    "plainWords": "Run multiple web servers behind an ALB, keep MySQL data in Aurora, and share login/session state in a replicated Redis cache.",
+    "keyPoints": "Aurora MySQL 6 copies across 3 AZs; Aurora readers for compute failover; ALB + EC2 Auto Scaling; externalize web session state; ElastiCache Redis replication group Multi-AZ automatic failover; Memcached lacks native replication; Neptune graph DB; Firehose streaming delivery.",
+    "sourceWarning": "Exact single-choice answer B on FreeCram and DumpsTech; Actual4Exams rearranges options but picks same Aurora/Redis design (C in that source). No Choose TWO/THREE variant found in checked sources. Some third-party PDFs corrupt formatting by splitting compound options into separate lettered fragments; these are not genuine multi-answer variants. Technical caveat: option B does not explicitly enable Aurora multi-AZ reader instances or Redis Multi-AZ automatic failover, so highest reliability requires those configuration details.",
+    "review": {
+      "status": "verified-aws-and-external-single-variant-with-ha-caveat",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 46,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html",
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html",
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Scaling.RedisReplGrps.html"
+      ],
+      "externalMatches": [
+        "https://www.freecram.net/question/Amazon.AWS-Solutions-Architect-Professional.v2024-07-06.q214/an-online-retail-company-hosts-its-stateful-web-based-application-and-mysql-database-in-an-on-premises",
+        "https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-9.html",
+        "https://latestdumps.actual4exams.com/articles/free-sap-c02-pdf-files-with-updated-and-accurate-dumps-training-q188-q213/"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "Some third-party PDF text extraction splits compound answer options into separately lettered fragments",
+        "Option B omits explicit Aurora cross-AZ replicas and Redis Multi-AZ automatic failover configuration"
+      ],
+      "notes": "Verified B as best choice; external single-answer versions agree on architecture despite shuffled option labels. Do not claim that Aurora six-copy storage alone ensures DB compute HA."
+    },
+    "answerStatus": "verified-b-aws-external-ha-config-caveat"
   },
   {
     "id": 240,
