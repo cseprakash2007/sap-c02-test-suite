@@ -12675,13 +12675,28 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is correct: migrate simple MySQL user-profile records into DynamoDB (AWS DMS supports relational source to DynamoDB target via object mapping) and put 4 GB video objects in Amazon S3, storing only each video's S3 object key in DynamoDB. AWS specifically recommends S3 objects with DynamoDB references for large attributes. A puts multi-GB base64 video in Aurora PostgreSQL TEXT and creates DB overhead; B separates media traffic. C uses Keyspaces as a DMS target although AWS DMS supported target endpoint list excludes Keyspaces; S3 itself is fine. D impossible because DynamoDB item maximum is 400 KB. Use multipart S3 uploads for 4 GB, optionally presigned URLs for client-to-S3 transfer. Caveats: AWS SCT is not necessary for simple DynamoDB object mapping; S3 and DynamoDB writes are not atomic. AWS https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-use-s3-too.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.DynamoDB.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Introduction.Targets.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-upload-object.html . Exact-stem NerdExam original B, SPOTO reordered C same architecture.",
+    "wrongOptionsExplanation": "A: 4 GB videos in base64 relational TEXT create heavy database overhead and poor scaling. C: Amazon Keyspaces is not a supported AWS DMS target endpoint and adds unnecessary Cassandra-model migration. D: DynamoDB item limit 400 KB makes 4 GB base64 videos impossible.",
+    "plainWords": "Store small profile records and S3 keys in DynamoDB, and store large video files directly in S3.",
+    "keyPoints": "B; S3 for multi-GB video; DynamoDB 400 KB item limit; DMS MySQL to DynamoDB object mapping; multipart upload; S3/DynamoDB not transactional.",
+    "sourceWarning": "Minor wording caveat: AWS SCT is not strictly required for DMS relational-to-DynamoDB object mapping. For 4 GB uploads use S3 multipart upload and ideally client-direct transfers. External SPOTO keys C because it reorders choices; same as original B. No confirmed Choose TWO/THREE exact-stem variant.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-30",
+      "domainPosition": 61,
+      "domainSingleTotal": 139,
+      "sourceConflict": "NerdExam B; SPOTO C is same solution after option reordering, not a substantive disagreement",
+      "multiSelectVariant": "No confirmed Choose TWO/THREE exact-stem variant in checked sources",
+      "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-use-s3-too.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.DynamoDB.html",
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Introduction.Targets.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-upload-object.html",
+        "https://nerdexam.com/exams/sap-c02/questions/715",
+        "https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part4"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 299,
