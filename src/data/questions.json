@@ -12390,13 +12390,27 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is the best available option conditional on the application supporting STARTTLS. Amazon SES SMTP requires TLS (STARTTLS 25/587/2587 or TLS Wrapper 465/2465) AND SES-specific SMTP username/password. Option B supplies both. A provides TLS Wrapper but an EC2 IAM role is not a substitute for SES SMTP credentials. C and D require SES API/SDK rather than SMTP and contradict the application limitation. Critical ambiguity: the legacy SMTP SERVER lacks TLS; the stem does not explicitly establish that the APPLICATION can negotiate STARTTLS. If the application cannot, no answer as written suffices; a TLS-capable relay/proxy is necessary. EC2 port 25 throttled by default and 'lifted SES limits' is not necessarily the same as lifting EC2 port 25 restrictions. AWS: https://docs.aws.amazon.com/ses/latest/dg/smtp-connect.html ; https://docs.aws.amazon.com/ses/latest/dg/smtp-credentials.html ; https://docs.aws.amazon.com/ses/latest/dg/troubleshoot-smtp.html . External: https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/9/ keys A incorrectly; https://quizlet.com/814619921/aws-sa-professional-testing-flash-cards/ keys B.",
+    "wrongOptionsExplanation": "A: TLS Wrapper supported, but EC2 IAM role alone does not authenticate SES SMTP; missing SES SMTP credentials. C: SES API incompatible with SMTP-only app and SES service-role wording misleading. D: SDK/API not SMTP and requires application rewrite.",
+    "plainWords": "Use SES SMTP with STARTTLS and SES SMTP credentials if the app supports TLS; otherwise add a TLS-capable SMTP relay.",
+    "keyPoints": "B conditional; SES SMTP always TLS; STARTTLS ports 25/587/2587; TLS Wrapper 465/2465; SMTP credentials differ from IAM role/API keys; port 25 EC2 restriction.",
+    "sourceWarning": "Defective/ambiguous: 'legacy SMTP server does not support TLS' does not prove SMTP application can negotiate STARTTLS. If client lacks TLS no option is complete. Pupuweb exact-stem source incorrectly keys A; Quizlet keys B. SES sending limit removal is distinct from EC2 port 25 throttle removal.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-29",
+      "domainPosition": 58,
+      "domainSingleTotal": 139,
+      "sourceConflict": "Pupuweb exact stem keys A despite missing SES SMTP credentials; Quizlet keys B; AWS supports B if client supports STARTTLS",
+      "multiSelectVariant": "No confirmed Choose TWO/THREE exact-stem variant in checked results",
+      "references": [
+        "https://docs.aws.amazon.com/ses/latest/dg/smtp-connect.html",
+        "https://docs.aws.amazon.com/ses/latest/dg/smtp-credentials.html",
+        "https://docs.aws.amazon.com/ses/latest/dg/troubleshoot-smtp.html",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/9/",
+        "https://quizlet.com/814619921/aws-sa-professional-testing-flash-cards/"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 292,

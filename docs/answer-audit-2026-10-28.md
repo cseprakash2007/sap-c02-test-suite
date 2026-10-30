@@ -1131,3 +1131,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorS3Origin.html ; https://repost.aws/knowledge-center/cloudfront-serve-static-website ; https://docs.aws.amazon.com/id_id/whitepapers/latest/amazon-cloudfront-media/cloudfront-configuration-best-practices.html
 - **External exact stem:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-07-08.q291/a-company-used-amazon-ec2-instances-to-deploy-a-web-fleet-to-host-a-blog-site-the-ec2-instances-are-behind ; https://certempire.com/demo-files/aws-sap-c02-demo-file.pdf ; https://examguru.io/exams/sap-c02/review — all key C. No conflicting Choose TWO/THREE in checked copies.
 - **Source defects:** OCR typos 'Auto ScaSng', 'Moggers', 'Nog', 'win'; EFS Maximum I/O dated terminology. Preserve original question while recording corrections.
+
+
+### Q291 — Domain 4, position 58/139 (2026-10-29)
+
+- **Best original answer B, CONDITIONAL/AMBIGUOUS.** SES SMTP requires TLS and SES SMTP credentials; B provides STARTTLS plus SMTP credentials, but the stem only says legacy SMTP *server* cannot do TLS. If the application cannot do STARTTLS, no offered choice is complete; a TLS-capable relay/proxy is needed. Preserve original stem/options.
+- **A:** TLS Wrapper valid on 465/2465, but EC2 IAM role cannot replace SMTP credentials. **B:** STARTTLS on 25/587/2587 with SES SMTP credentials, valid if client supports it. **C/D:** SES API/SDK not usable by SMTP-only application.
+- **AWS:** https://docs.aws.amazon.com/ses/latest/dg/smtp-connect.html ; https://docs.aws.amazon.com/ses/latest/dg/smtp-credentials.html ; https://docs.aws.amazon.com/ses/latest/dg/troubleshoot-smtp.html
+- **External exact-stem:** https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/9/ marks A (defective: IAM role alone lacks SMTP auth); https://quizlet.com/814619921/aws-sa-professional-testing-flash-cards/ marks B; https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part4 has matching single-answer version. No confirmed Choose TWO/THREE exact-stem variant in checked results.
+- **Other caveat:** lifting SES sending limits is not necessarily removal of EC2 port 25 throttling; prefer 587 when possible.
