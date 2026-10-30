@@ -12813,13 +12813,29 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is the AWS-supported topology: each of two physically separate Direct Connect connections uses a transit VIF to one Direct Connect gateway; associate both eu-west-1 and us-east-1 transit gateways with the DX gateway; peer the transit gateways for direct inter-Region VPC routing and add required route-table entries. A uses private VIFs, which cannot associate with transit gateways. B claims DX gateways can peer, which is unsupported, and provides only one Direct Connect path per TGW. C incorrectly treats DX gateway as a transit gateway-to-transit gateway router; DX gateway does not propagate routes between associated TGWs. AWS https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/WorkingWithVirtualInterfaces.html ; https://aws.amazon.com/blogs/networking-and-content-delivery/hybrid-cloud-architectures-using-aws-direct-connect-gateway/ ; https://docs.aws.amazon.com/vpc/latest/tgw/tgw-peering.html . Caveat: literal 'no single points of failure' is stronger than one shared DX gateway and one TGW per Region; D is intended best option, not comprehensive proof of end-to-end resilience.",
+    "wrongOptionsExplanation": "A: private VIF incompatible with TGW associations; use transit VIF. B: Direct Connect gateways do not support peering and paths are split by Region. C: DX gateway cannot route between its associated transit gateways. D: transit VIF redundancy and TGW peering meet intended connectivity.",
+    "plainWords": "Use both Direct Connect links as transit VIFs to one Direct Connect gateway; connect both Regional transit gateways to it, and peer the transit gateways to let VPCs talk across Regions.",
+    "keyPoints": "D; transit VIF vs private VIF; DX gateway multi-TGW association; DX gateway not east-west router; TGW inter-Region peering; routing/ASN/allowed prefixes.",
+    "sourceWarning": "External Scribd copy claims A despite AWS private-VIF incompatibility; other exact-stem sites key D. Literal no-single-points-of-failure wording is stronger than topology specified (single DX gateway and one TGW per Region). Need TGW route-table entries, nonoverlapping CIDRs, BGP ASNs and prefixes. No verified Choose TWO/THREE variant.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-30",
+      "domainPosition": 63,
+      "domainSingleTotal": 139,
+      "sourceConflict": "ExamsVCE and Dumps-Files key D; Scribd displays inconsistent A despite community voting D and AWS requirements",
+      "multiSelectVariant": "No confirmed Choose TWO/THREE exact-stem version in checked sources",
+      "references": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html",
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/WorkingWithVirtualInterfaces.html",
+        "https://aws.amazon.com/blogs/networking-and-content-delivery/hybrid-cloud-architectures-using-aws-direct-connect-gateway/",
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-peering.html",
+        "https://www.examsvce.com/sap-c02/a-retail-company-has-an-onpremises-data-question-answer.html",
+        "https://www.dumps-files.com/downloadfile.html?id=8451",
+        "https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 302,
