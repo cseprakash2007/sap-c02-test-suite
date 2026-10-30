@@ -9677,13 +9677,37 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B VERIFIED. Create a CloudTrail organization trail in the AWS Organizations management account (or via a delegated administrator). The trail applies to all existing member accounts and automatically to newly added accounts, avoiding custom automation and account-by-account maintenance. AWS: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html ; https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-cloudtrail.html",
+    "wrongOptionsExplanation": "A: Lambda with daily EventBridge schedule adds code, maintenance and possible logging gaps. B: Correct; centrally managed organization trail propagates automatically. C: Per-account trails require ongoing manual provisioning and management. D: Systems Manager Automation/State Manager is unnecessary custom orchestration for native CloudTrail organization-wide functionality.",
+    "plainWords": "Turn on CloudTrail once for the whole AWS Organization, including new accounts automatically.",
+    "keyPoints": "CloudTrail organization trail; AWS Organizations all-features requirement; management or delegated administrator; automatic coverage of new accounts; member accounts cannot modify organization trail; verify event selectors, Region coverage, S3 permissions and KMS configuration.",
+    "sourceWarning": "Original stem and options contain transcription defects ('will cost' likely 'will create'; 'turns on AWS accounts' likely 'turns on CloudTrail for AWS accounts'; 'AYYS', 'dally', 'Automaton'). Preserve original text, mark corrected interpretation separately. Exact matching external single-answer copies found; no Choose TWO/THREE conflict in searched sources. External sites may duplicate the same erroneous transcription; not independent technical authority.",
+    "review": {
+      "status": "verified-aws-doc-external-single-variant",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 42,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "B"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html",
+        "https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-cloudtrail.html"
+      ],
+      "externalExactMatches": [
+        "https://www.salesforcexamdumps.com/sap-c02-practice-questions/2",
+        "https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html",
+        "https://www.p2pexams.com/free-questions/certsinside-sap-c02-aws-certified-solutions-architect-professional-exam-verified-questions-answers-by-burgess-15-04-2024-12qa.pdf"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "Malformed question stem and multiple typographical errors",
+        "External practice sites appear to replicate same malformed wording"
+      ],
+      "notes": "B confirmed by AWS organization-trail auto-enrollment behavior; no multi-answer variant found in checked sources."
+    },
+    "answerStatus": "verified-b-aws-external-wording-defects"
   },
   {
     "id": 225,
