@@ -12485,13 +12485,28 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Source key A is the closest option for low-operations cross-Region Aurora disaster recovery, but it FAILS the literal zero-data-loss RPO=0 requirement. Aurora cross-Region replicas and Aurora Global Database use asynchronous replication; unexpected primary-Region failure may lose recently committed transactions. Planned Global Database switchover can have RPO=0, but this is not unplanned failover. B DataSync does not continuously replicate Aurora MySQL transaction logs. C DMS CDC is asynchronous and adds operational complexity, also no RPO=0 guarantee. D Amazon DLM targets EBS snapshots/AMIs, not 5-minute Aurora transactional zero-loss DR. AWS: https://docs.aws.amazon.com/prescriptive-guidance/latest/aurora-replication-options/compare-solutions.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html . External exact-stem https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-is-running-an-application-in-the-aws-cloud-the-application-runs-on-containers-in-an-amazon keys A with inaccurate zero-loss assertion; https://braindumps2go.dumpsmaterials.com/articles/new-sap-c02-dumps-for-preparing-aws-certified-solutions-architect-certified-amazon-exam-well-q56-q76/ reorders Aurora option to B, same logical choice.",
+    "wrongOptionsExplanation": "A: best relative choice but asynchronous cross-Region replica can lose committed data on unexpected failure. B: DataSync not Aurora database transaction replication. C: DMS CDC asynchronous and operationally heavier, cannot guarantee zero loss. D: DLM snapshots not continuous Aurora replication, snapshots would not meet RPO=0.",
+    "plainWords": "Cross-Region Aurora replication is easiest, but cannot guarantee zero data loss during a sudden Regional outage; the question has no fully correct option.",
+    "keyPoints": "Defective source question; RPO=0 requirement incompatible with asynchronous cross-Region Aurora replication; planned switchover RPO=0 differs from unplanned failover.",
+    "sourceWarning": "TECHNICALLY DEFECTIVE: 'no data can be lost' cannot be guaranteed by any option. Source exam sites repeatedly assert incorrect zero-loss claim for cross-Region Aurora replicas. Original A retained as closest for exam recognition, not technically valid. No Choose TWO/THREE exact-stem variant found in checked sources.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-29",
+      "domainPosition": 60,
+      "domainSingleTotal": 139,
+      "defective": true,
+      "verdict": "No fully correct answer under strict RPO=0; A closest",
+      "sourceConflict": "Multiple exam sites key A or reordered equivalent but incorrectly claim no data loss; AWS says cross-Region replication asynchronous",
+      "multiSelectVariant": "Checked copies single-answer; no conflicting Choose TWO/THREE exact-stem variant found",
+      "references": [
+        "https://docs.aws.amazon.com/prescriptive-guidance/latest/aurora-replication-options/compare-solutions.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-is-running-an-application-in-the-aws-cloud-the-application-runs-on-containers-in-an-amazon",
+        "https://braindumps2go.dumpsmaterials.com/articles/new-sap-c02-dumps-for-preparing-aws-certified-solutions-architect-certified-amazon-exam-well-q56-q76/"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 294,
