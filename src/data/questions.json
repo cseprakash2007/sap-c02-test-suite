@@ -9550,30 +9550,38 @@
     "wrongOptionsExplanation": "A: Cross-account manual Aurora snapshot sharing/restoration is valid for initial data copy, but does not capture subsequent writes, so alone cannot minimize interruption at final DNS cutover. B: CORRECT: DMS full load and CDC keeps destination nearly current while source serves traffic; pause writes and catch up before cutover. C: AWS Backup cross-account sharing/restoration can restore a point-in-time copy but no continuous changes are replicated by this option; AWS Organizations membership enables sharing eligibility but not live replication. D: AWS Application Migration Service is for server lift-and-shift, not Aurora DB-to-DB logical replication.",
     "plainWords": "Copy the database to the new AWS account while the original keeps running, replicate every subsequent change with AWS DMS, and switch the application's DNS after the copies have caught up.",
     "keyPoints": "AWS DMS full-load + CDC minimizes migration downtime; MySQL row-based binary logs and permissions are required; DMS CDC is asynchronous, no zero-lag guarantee. Cross-account network path/security groups needed. Snapshots alone are point-in-time; AWS Backup cross-account backup is not continuous database replication. AWS blog also recommends snapshot or Aurora clone initial load plus CDC/native binlog replication for some homogeneous migrations.",
-    "sourceWarning": "Exact external practice-site question with source answer B confirmed. Source B omits explicit 'full load plus CDC' task mode, MySQL binlog configuration, cross-account network/security setup, lag validation and write-freeze at DNS cutover. AWS also documents optimized same-Region Aurora clone plus native binlog replication, but it is not an offered option. No defective answer key or material outdated service detected. Avoid promising zero downtime or instant CDC.",
+    "sourceWarning": "SOURCE VARIANT CONFLICT (2026-10-29): The repository and single-answer copies (ExamsVCE, P2PExams) key B; other external versions of this exact stem explicitly say '(Choose two)' and key A+B (ExamTopics reproduction / exam-tests.com). Therefore the single-answer classification is disputed and the 'original text preserved' assertion cannot be established across versions. For THIS four-option single-answer variant B is best: configure cross-account network, DMS full-load plus CDC or snapshot restore followed by CDC to minimize downtime. A alone is a valid initial copy but doesn't replicate later writes. AWS cross-account Aurora guidance explicitly combines snapshot and replication, making A+B logical in a choose-two variant. DMS CDC is asynchronous and doesn't guarantee zero downtime. See https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html ; https://aws.amazon.com/blogs/database/perform-cross-account-amazon-aurora-mysql-migration-with-minimal-downtime/ ; https://www.examsvce.com/sap-c02/a-company-wants-to-migrate-an-amazon-question-answer.html ; https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2026-06-29.q712.html?p=2 . FLAG FOR MANUAL ORIGINAL-PDF PROMPT VERIFICATION.",
     "review": {
-      "status": "verified-aws-doc-and-external-exact-match",
+      "status": "verified-technical-b-but-question-cardinality-conflicted",
       "reviewedOn": "2026-10-29",
       "domainSingleAnswerIndex": 41,
       "domainSingleAnswerTotal": 139,
       "correctAnswer": [
         "B"
       ],
-      "originalTextPreserved": true,
+      "originalTextPreserved": false,
       "awsReferences": [
         "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html",
         "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.MySQL.html",
         "https://aws.amazon.com/blogs/database/perform-cross-account-amazon-aurora-mysql-migration-with-minimal-downtime/",
         "https://aws.amazon.com/blogs/database/cross-account-amazon-aurora-mysql-migration-with-aurora-cloning-and-binlog-replication-for-reduced-downtime/"
       ],
-      "externalExactMatch": "https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-holden-24-05-2024-12qa-certsdeals.pdf",
+      "externalExactMatch": "https://www.examsvce.com/sap-c02/a-company-wants-to-migrate-an-amazon-question-answer.html",
       "defects": [
         "B omits explicit CDC setup and prerequisites",
-        "DMS does not guarantee zero replication lag"
+        "DMS does not guarantee zero replication lag",
+        "Conflicting original prompt cardinality: exact stem also published as Choose two, answer A+B",
+        "A (snapshot share and restore) is a legitimate initial step when paired with replication; alone insufficient for minimal interruption"
       ],
-      "notes": "Exact question and B key corroborated; AWS independently supports full-load plus CDC; no outdated-service issue."
+      "notes": "The technical single-answer B is AWS-supported; flag conflicting two-answer version A+B. Preserve source version until authoritative original exam prompt can be verified.",
+      "sourceVariantConflict": true,
+      "variantDetails": {
+        "singleAnswer": "B (repository, ExamsVCE, P2PExams)",
+        "chooseTwo": "A+B (ExamTopics reproductions and exam-tests.com)"
+      },
+      "externalConflictingVariant": "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2026-06-29.q712.html?p=2"
     },
-    "answerStatus": "verified-b-aws-and-external"
+    "answerStatus": "verified-b-technical-question-cardinality-conflict"
   },
   {
     "id": 222,
