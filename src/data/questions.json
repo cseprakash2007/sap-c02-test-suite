@@ -9867,13 +9867,39 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C VERIFIED. AWS IoT Core ingests MQTT messages from sensors, an IoT rule action sends them to Amazon Data Firehose (formerly Kinesis Data Firehose), Firehose can invoke AWS Lambda to transform records and deliver to S3. AWS reference implementation: https://aws.amazon.com/blogs/iot/ingesting-enriched-iot-data-into-amazon-s3-using-amazon-kinesis-data-firehose/ ; https://docs.aws.amazon.com/iot/latest/developerguide/kinesis-firehose-rule-action.html ; https://aws.amazon.com/firehose/faqs/ . Managed ingestion and delivery avoid a single self-managed Kafka server. Configure IoT retry/QoS, monitoring, error handling and raw record backup for resilience; no absolute zero-loss guarantee.",
+    "wrongOptionsExplanation": "A: Active/standby EC2 plus Route 53 reduces one failure but is self-managed, has DNS/failover and Kafka replication gaps, and does not inherently prevent lost records. B: MSK provides managed Kafka, but a single broker behind NLB is not a proper MQTT-native ingest and S3-transform design; the claim that MSK categorically cannot handle 10,000 devices is unsubstantiated. C: Correct; IoT Core MQTT -> IoT rule -> Firehose -> Lambda transform -> S3. D: One EC2 Kafka server recreates the single-point-of-failure.",
+    "plainWords": "Replace the crashed self-hosted MQTT-to-Kafka pipeline with managed IoT ingestion and Firehose-to-S3 delivery, using Lambda to transform events.",
+    "keyPoints": "AWS IoT Core MQTT; IoT rule Firehose action; Amazon Data Firehose Lambda transformation and S3 destination; 2024 Kinesis Data Firehose rename; high availability, retries and failure backups; MSK is not an MQTT broker.",
+    "sourceWarning": "Original question contains transcription errors ('10.000', 'on- premises', 'loT', 'NL8'). Amazon Kinesis Data Firehose was renamed Amazon Data Firehose in Feb 2024, so product naming is outdated but architecture remains valid. Some third-party answer explanations incorrectly assert MSK cannot handle 10,000 sensors based on broker connection limits; do not repeat this as AWS fact. Single-choice variant explicitly found; no Choose TWO/THREE conflicting version found in checked results.",
+    "review": {
+      "status": "verified-aws-and-external-single-variant",
+      "reviewedOn": "2026-10-29",
+      "domainSingleAnswerIndex": 44,
+      "domainSingleAnswerTotal": 139,
+      "correctAnswer": [
+        "C"
+      ],
+      "originalTextPreserved": true,
+      "awsReferences": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/kinesis-firehose-rule-action.html",
+        "https://aws.amazon.com/blogs/iot/ingesting-enriched-iot-data-into-amazon-s3-using-amazon-kinesis-data-firehose/",
+        "https://aws.amazon.com/firehose/faqs/",
+        "https://aws.amazon.com/about-aws/whats-new/2024/02/amazon-data-firehose-formerly-kinesis-data-firehose/"
+      ],
+      "externalMatches": [
+        "https://www.pass2lead.com/sap-c02.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html"
+      ],
+      "chooseTwoThreeVariantFound": false,
+      "defects": [
+        "Malformed number and OCR: 10.000, on- premises, loT, NL8",
+        "Kinesis Data Firehose renamed Amazon Data Firehose February 2024",
+        "Third-party MSK 1000-connection assertion is misleading and not needed to justify C"
+      ],
+      "notes": "Single-choice explicitly identified on Pass2Lead; CertEnsure reproduces exact stem with answer C. AWS IoT Firehose action and Firehose Lambda/S3 processing independently verified. No contradictory Choose TWO/THREE version identified in limited external search."
+    },
+    "answerStatus": "verified-c-aws-external-legacy-name-defects"
   },
   {
     "id": 229,
