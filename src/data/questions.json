@@ -13078,7 +13078,7 @@
     "options": [
       {
         "id": "A",
-        "text": "Provision a Direct Connect gateway. Delete the existing private virtual interface from the existing connection. Create the second Direct Connect connection. Create a new private virtual interlace on each connection, and connect both private victual interfaces to the Direct Connect gateway. Connect the Direct Connect gateway to the single VPC."
+        "text": "Provision a Direct Connect gateway. Delete the existing private virtual interface from the existing connection. Create the second Direct Connect connection. Create a new private virtual interface on each connection, and connect both private virtual interfaces to the Direct Connect gateway. Connect the Direct Connect gateway to the single VPC."
       },
       {
         "id": "B",
@@ -13097,13 +13097,29 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct: A. A Direct Connect gateway is a global resource that enables private virtual interfaces from both redundant Direct Connect connections to reach virtual private gateways associated with VPCs in multiple AWS Regions. Create a private VIF on each connection to the same Direct Connect gateway and associate the existing VPC's virtual private gateway; add virtual private gateways for future nonoverlapping VPCs in other Regions. AWS confirms private VIF to Direct Connect gateway provides cross-Region access, whereas direct private VIF to VGW is limited to one same-Region VPC. Existing private VIF migration/recreation should be scheduled to avoid downtime. See official documentation and independent exact-question copies.",
+    "wrongOptionsExplanation": "A: Correct intended design; wording 'connect Direct Connect gateway to the VPC' is shorthand for association with the VPC-attached virtual private gateway. B: Two private VIFs directly to one regional virtual private gateway can add redundancy for that VPC but not the required scalable access to VPCs across Regions. C: Public VIF is for AWS public endpoints, not private VPC attachment, so fails both private VPC access and redundancy. D: Transit Gateway cannot accept a private VIF directly; valid transit architecture requires transit VIF -> Direct Connect gateway -> associated Transit Gateway -> VPC attachments. No such architecture is described.",
+    "plainWords": "Use two Direct Connect links, each with a private virtual interface connected to one Direct Connect gateway. Associate the existing VPC's virtual private gateway, then add virtual private gateways in other Regions as needed.",
+    "keyPoints": "Two physical connections give link redundancy; DX gateway enables multi-Region VPC reachability; private VIF connects to DX gateway; VGW connects to VPC; public VIF does not connect to private VPC; Transit Gateway uses transit VIF through DX gateway.",
+    "sourceWarning": "Source typos corrected in option A: 'interlace' -> 'interface', 'victual' -> 'virtual'. Option A imprecisely says Direct Connect gateway connects to VPC (technically associates with VPC-attached VGW). Option D presents impossible direct private-VIF-to-Transit-Gateway path. Redundancy requires separate devices/paths and BGP failover; modifying the existing VIF can cause interruption. Independent exact-stem copies found with same single-answer formulation; no Choose TWO/THREE variant confirmed.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-10-30",
+      "answer": [
+        "A"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/virtualgateways.html",
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/WorkingWithVirtualInterfaces.html",
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html",
+        "https://docs.aws.amazon.com/directconnect/latest/APIReference/API_CreatePrivateVirtualInterface.html",
+        "https://examguru.io/exams/sap-c02/review",
+        "https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/2",
+        "https://passitexams.com/articles/quizzes/sap-c02-question-7/"
+      ],
+      "notes": "65/139 single-answer Domain 4; cross-checked AWS technical docs plus external exact-stem exam copies. Original answer A retained; spelling defects in A corrected."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 309,
