@@ -1140,3 +1140,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS:** https://docs.aws.amazon.com/ses/latest/dg/smtp-connect.html ; https://docs.aws.amazon.com/ses/latest/dg/smtp-credentials.html ; https://docs.aws.amazon.com/ses/latest/dg/troubleshoot-smtp.html
 - **External exact-stem:** https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/9/ marks A (defective: IAM role alone lacks SMTP auth); https://quizlet.com/814619921/aws-sa-professional-testing-flash-cards/ marks B; https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part4 has matching single-answer version. No confirmed Choose TWO/THREE exact-stem variant in checked results.
 - **Other caveat:** lifting SES sending limits is not necessarily removal of EC2 port 25 throttling; prefer 587 when possible.
+
+
+### Q292 — Domain 4, position 59/139 (2026-10-29)
+
+- **Verified A:** EC2 AMI + Auto Scaling/ALB for existing web VMs, Amazon MQ for RabbitMQ to preserve AMQP broker behavior, EKS for managed Kubernetes backend. Preserve original stem/options.
+- **A:** lowest changes and managed services. **B:** Lambda/API Gateway custom runtime changes front-end architecture. **C:** self-managed Kubernetes EC2 increases control-plane burden. **D:** SQS not drop-in RabbitMQ/AMQP replacement; app integration changes.
+- **AWS:** https://aws.amazon.com/amazon-mq/faqs/ ; https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html ; https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html
+- **External exact stem:** https://www.certsmania.com/pdf/practice-session-solution-download-full-version-sap-c02-exam-by-enrique.pdf (A); https://www.examcollection.us/exam/SAP-C02-question-answer-5.html ; https://www.brainscape.com/flashcards/solutions-architect-professional-deck-04-15140182/packs/21889491 (A). Checked variants single answer, no conflicting Choose TWO/THREE identified.
+- **Defects:** Missing punctuation around 'VMs RabbitMQ'; creating AMI directly from on-premises VM is shorthand for migration/import; EKS workers still need compute configuration.

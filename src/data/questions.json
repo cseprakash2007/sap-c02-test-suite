@@ -12438,13 +12438,26 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A is best: migrate VM front-end into an EC2 AMI/Auto Scaling group behind ALB; use managed Amazon MQ for RabbitMQ to preserve broker protocol/API; use EKS managed Kubernetes control plane for existing containerized backend. B Lambda custom runtime/API Gateway entails web rewrite. C self-managed Kubernetes on EC2 adds control plane operations. D SQS is not RabbitMQ/AMQP drop-in and requires messaging integration changes. AWS https://aws.amazon.com/amazon-mq/faqs/ ; https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html ; https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html . Exact stem external: https://www.certsmania.com/pdf/practice-session-solution-download-full-version-sap-c02-exam-by-enrique.pdf keys A; https://www.examcollection.us/exam/SAP-C02-question-answer-5.html ; https://www.brainscape.com/flashcards/solutions-architect-professional-deck-04-15140182/packs/21889491 keys A.",
+    "wrongOptionsExplanation": "B: custom Lambda runtime and API Gateway require major front-end rewrite. C: self-managed Kubernetes EC2 fleet adds management overhead versus EKS. D: SQS lacks RabbitMQ AMQP broker compatibility, requiring app changes.",
+    "plainWords": "Keep the VM web tier on EC2, replace RabbitMQ with managed Amazon MQ, and move Kubernetes backend to EKS.",
+    "keyPoints": "A; minimal changes; Amazon MQ supports RabbitMQ; EKS manages Kubernetes control plane; SQS is not drop-in AMQP broker.",
+    "sourceWarning": "Original punctuation missing around 'VMs RabbitMQ' and sentence boundary. 'Create AMI of on-premises VM' is shorthand: VM must first be migrated/imported to AWS; EKS worker nodes still need a compute strategy. No confirmed Choose TWO/THREE variant in checked exact-stem sources.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-29",
+      "domainPosition": 59,
+      "domainSingleTotal": 139,
+      "multiSelectVariant": "Checked exact-stem versions single-answer A; no conflicting Choose TWO/THREE variant identified",
+      "references": [
+        "https://aws.amazon.com/amazon-mq/faqs/",
+        "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html",
+        "https://www.certsmania.com/pdf/practice-session-solution-download-full-version-sap-c02-exam-by-enrique.pdf",
+        "https://www.examcollection.us/exam/SAP-C02-question-answer-5.html",
+        "https://www.brainscape.com/flashcards/solutions-architect-professional-deck-04-15140182/packs/21889491"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 293,
