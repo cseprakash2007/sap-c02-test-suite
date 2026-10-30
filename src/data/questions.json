@@ -11888,13 +11888,26 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is the best original choice: cross-Region S3 replication to a second bucket, CloudFront origin failover for eligible GET/HEAD/OPTIONS requests, and DynamoDB global tables with a replica in another Region. CloudFront edge caching lowers asset latency; DynamoDB global tables support regional read/write endpoints, but application regional routing is needed. A does not explicitly establish two CloudFront origins and failover; B uses same-Region S3 replication and unnecessary DMS CDC; D leaves both S3 origins in one Region. Caveat: MREC global tables automatically enable DynamoDB Streams, while MRSC does not use Streams for replication; original instruction to 'enable Streams' is dated. CloudFront origin failover does not automatically fail over dynamic writes or all HTTP methods; S3 CRR is asynchronous and existing objects may need batch replication. Sources: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html ; exact source https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=29 ; reordered conflicting FreeCram key https://www.freecram.net/question/Amazon.SAP-C02.v2023-03-07.q318/a-company-is-creating-a-sequel-for-a-popular-online-game-a-large-number-of-users-from-all-over-the-world",
+    "wrongOptionsExplanation": "A: no explicitly configured CloudFront two-origin failover; B: S3 same-Region replication and unnecessary DMS CDC; D: S3 origins remain in same Region, so no Region-level asset recovery.",
+    "plainWords": "Put game assets in two Regions, use CloudFront caching with origin failover, and replicate scores with DynamoDB global tables.",
+    "keyPoints": "Best original C; no verified Choose TWO/THREE exact-stem variant; Streams wording is legacy and CRR is asynchronous.",
+    "sourceWarning": "Original contains OCR typos. Modern MREC global tables enable Streams automatically; MRSC does not use Streams for replication. CloudFront origin failover is limited by method/status and does not route DynamoDB clients.",
+    "review": {
+      "status": "reviewed",
+      "date": "2026-10-29",
+      "domainPosition": 54,
+      "domainSingleTotal": 139,
+      "sourceConflict": "FreeCram reordered variant marks C, which maps to original B; other exact-stem sources key original C",
+      "multiSelectVariant": "No explicit Choose TWO/THREE found in checked copies",
+      "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=29",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-03-07.q318/a-company-is-creating-a-sequel-for-a-popular-online-game-a-large-number-of-users-from-all-over-the-world"
+      ]
+    },
+    "answerStatus": "reviewed-with-caveats"
   },
   {
     "id": 279,
