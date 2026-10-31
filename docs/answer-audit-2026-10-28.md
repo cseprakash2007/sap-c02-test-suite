@@ -1416,3 +1416,13 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - External exact-stem SAP-C02 collection found with different option order; map answer by text, not letter. Single-choice source; no independently verified Choose TWO/THREE variant: https://examsdocs.dumpsquestion.com/articles/assume-amazon-sap-c02-dumps-pdf-are-going-to-be-the-best-score-q27-q52/
 - AWS references: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-volumes.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-administration.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-properties-ecs-service-loadbalancer.html ; https://repost.aws/knowledge-center/ecs-fargate-mount-efs-containers-tasks
 - Caveats: use ALB IP target type for Fargate; tune EFS throughput and Aurora reader endpoint routing. RDS Multi-AZ DB clusters are not invalid solely because of read scaling.
+
+
+### Domain 4 Q420 — 85/139 (2026-10-31)
+
+- Next eligible Domain 4 single-answer after Q416; Q417–419 belong to other domains. Correct **C**: DMS full-load + CDC on-prem MySQL to Aurora, Aurora Replica for aggregation, ALB -> Lambda collector -> RDS Proxy -> Aurora writer, DNS cutover.
+- A invalid: NLB does not directly target Lambda; restarting an Aurora reader as primary is not the specified migration cutover. B leaves reporting on the Aurora writer, perpetuating ingestion/reporting contention. C isolates reads and maintains a customer-facing HTTP endpoint. D: Kinesis stream is not an equivalent customer HTTP endpoint and Firehose does not directly deliver to Aurora MySQL.
+- Fixed original punctuation/OCR defects (`Node js`, `endpomts`, `wnte`, `AuroraReplica`, missing periods). Historical exam source answer C preserved.
+- **Cutover caveat:** DMS CDC is asynchronous; 'without interruptions' is not guaranteed. Quiesce writes, monitor lag, validate target, account for DNS TTL and client connections, and only then stop DMS after cutover.
+- External exact-stem single-answer source: https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 (Q58, C). Additional matching stem: https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/ . No verified Choose TWO/THREE variant.
+- AWS references: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html ; https://docs.aws.amazon.com/lambda/latest/dg/services-rds.html ; https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html
