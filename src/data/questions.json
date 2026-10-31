@@ -14573,16 +14573,33 @@
       }
     ],
     "answers": [
-      "B"
+      "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Corrected to C from invalid source B. B proposes an ElastiCache Global Datastore for Memcached, which AWS does not support: Global Datastore is for Valkey or Redis OSS. C separates product and temporary session data into two DynamoDB global tables with cross-Region replication and adds DAX for eligible low-latency read caching, making it the strongest supported performance-focused option if the product model is suitable for DynamoDB. D is a viable relational-product/session-separation alternative but lacks DAX caching. DAX is regional and global table replication bypasses DAX, potentially causing stale cached reads in the DR Region. Exact-stem external exam copy keys B incorrectly.",
+    "wrongOptionsExplanation": "A: Two schemas share one RDS DB instance and do not isolate session and product storage/throughput; cross-Region replica alone does not decouple workloads. B: Invalid; Memcached does not support ElastiCache Global Datastore, which requires Valkey or Redis OSS. C: Corrected best valid answer, assuming product data access patterns fit DynamoDB; two global tables isolate workloads and replicate to DR Region, with regional DAX caches for read acceleration. D: Technically valid for relational product data plus DynamoDB session data and cross-Region replication, but no DAX caching, so C has the strongest stated performance feature.",
+    "plainWords": "The old answer B cannot be deployed because Memcached has no Global Datastore. Use separate DynamoDB global tables for product and session records and DAX for fast cached reads, if the product data model fits DynamoDB.",
+    "keyPoints": "ElastiCache Global Datastore = Valkey/Redis OSS only, NOT Memcached; DynamoDB global tables replicate cross-Region; DAX caches are regional, do not replicate, and may become stale after cross-Region writes; DynamoDB product modeling needs appropriate access patterns.",
+    "sourceWarning": "CRITICAL source-key defect: exact external question keys B, but ElastiCache Global Datastore for Memcached is unsupported. Correct answer changed B→C based on AWS documentation. C is contingent on suitability of product data for DynamoDB; if relational queries are required, D is a reasonable alternative and 'highest performance' is underspecified. DAX is Region-specific and cross-Region replication bypasses it, so stale cached reads possible. Source C/D punctuation defects preserved. Q346 has contradictory Select THREE with only two stored answers/four options, skipped. No conflicting Choose TWO/THREE variant for Q347 confirmed.",
+    "review": {
+      "status": "corrected-source-defect",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "previousAnswer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Redis-Global-Datastores-Console.html",
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.deployment.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/dax-config-considerations.html",
+        "https://www.examsvce.com/sap-c02/a-company-wants-to-migrate-its-onpremises-31851-question-answer.html"
+      ],
+      "notes": "Domain 4 71/139. Q346 Select THREE skipped and internally inconsistent. Exact-stem exam copy keys invalid B. AWS Global Datastore does not support Memcached. Correct to C with DynamoDB data model and DAX staleness caveats."
+    },
+    "answerStatus": "corrected-source-defect"
   },
   {
     "id": 348,
