@@ -16094,13 +16094,27 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A is the best single answer. A VPC DHCP options set supports the ntp-servers parameter for custom NTP server IP addresses. Associate the option set with the VPC, ensure the on-premises NTP server is reachable over existing Direct Connect and UDP/123 is permitted, and confirm the EC2 guest time synchronization client consumes the DHCP-provided NTP setting. This centralizes the configuration without extra servers or tunnels. AWS official VPC documentation explicitly supports custom NTP servers and association with the VPC.",
+    "wrongOptionsExplanation": "A: Correct, subject to operating-system DHCP/NTP-client support and network reachability. B: Amazon Time Sync Service at 169.254.169.123 is a different clock source; it does not synchronize the instances specifically to the required on-premises atomic clock. C: A third-party relay adds an EC2/server appliance to operate and is unnecessary when clients can reach the on-prem NTP service directly; NACL ingress alone also does not ensure the full bidirectional path. D: An IPsec VPN is unnecessary for ordinary NTP connectivity when Direct Connect and routing already exist, and merely adding a VPN does not configure the EC2 clocks to use the atomic source.",
+    "plainWords": "Set the on-premises NTP appliance address in the VPC DHCP options and let EC2 instances obtain that time-server setting, using Direct Connect for connectivity.",
+    "keyPoints": "VPC DHCP options can specify ntp-servers; one option set per VPC. Direct Connect provides private connectivity but requires routes and UDP/123 access. Amazon Time Sync Service 169.254.169.123 is NOT the same as the required on-prem atomic clock. Confirm guest chrony/ntpd/Windows Time actually uses DHCP-provided NTP. Stratum-0 refers to a reference clock, with its NTP-serving appliance typically stratum-1.",
+    "sourceWarning": "MODERATE: DHCP-provided NTP server settings do not guarantee every AMI/OS time client automatically adopts them; verify and adjust chrony, systemd-timesyncd, or Windows Time if necessary, and remove any overriding default Amazon Time Sync configuration. Also the phrase 'stratum-0 atomic clock network appliance acts as an NTP source' is imprecise: the atomic reference is stratum-0, while the attached NTP server is normally stratum-1. External exact-stem Choose TWO/THREE variants not independently established.",
+    "review": {
+      "status": "verified-with-os-configuration-caveat",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "A"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/DHCPOptionSet.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/DHCPOptionSetConcepts.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDhcpOptions.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-ec2-ntp.html"
+      ],
+      "notes": "Domain 4 79/139. AWS primary documentation validates custom ntp-servers in VPC DHCP option sets. No independently confirmed exact-stem external exam copy or Choose TWO/THREE variant; flag verification limitation. OS-specific NTP client adoption and stratum-0 phrasing caveats."
+    },
+    "answerStatus": "verified-with-os-configuration-caveat"
   },
   {
     "id": 387,
