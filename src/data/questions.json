@@ -17709,7 +17709,7 @@
   {
     "id": 427,
     "domain": 4,
-    "stem": "A company has many services running in its on-premises data center. The data center is connected to AWS using AWS Direct Connect (DX)and an IPsec VPN. The service data is sensitive and connectivity cannot traverse the interne. The company wants to expand to a new market segment and begin offering Is services to other companies that are using AWS. Which solution will meet these requirements?",
+    "stem": "A company has many services running in its on-premises data center. The data center is connected to AWS using AWS Direct Connect (DX) and an IPsec VPN. The service data is sensitive and connectivity cannot traverse the internet. The company wants to expand to a new market segment and begin offering its services to other companies that are using AWS. Which solution will meet these requirements?",
     "options": [
       {
         "id": "A",
@@ -17721,24 +17721,40 @@
       },
       {
         "id": "C",
-        "text": "Attach an internet gateway to the VPC. and ensure that network access control and security group rules allow the relevant inbound and outbound traffic."
+        "text": "Attach an internet gateway to the VPC, and ensure that network access control and security group rules allow the relevant inbound and outbound traffic."
       },
       {
         "id": "D",
-        "text": "Attach a NAT gateway to the VPC. and ensue that network access control and security group rules allow the relevant inbound and outbound traffic."
+        "text": "Attach a NAT gateway to the VPC, and ensure that network access control and security group rules allow the relevant inbound and outbound traffic."
       }
     ],
     "answers": [
-      "B"
+      "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A is correct. AWS PrivateLink endpoint services are backed by a Network Load Balancer (or Gateway Load Balancer), not a standalone Application Load Balancer. Create a TCP NLB in the provider VPC with IP targets reachable on premises over Direct Connect/VPN; publish it as an endpoint service and grant customer AWS principals access. Customers create interface VPC endpoints, keeping connectivity private.",
+    "wrongOptionsExplanation": "A: Correct: NLB-backed PrivateLink endpoint service supports TCP and private customer access; on-prem IP targets require supported routing and health checks. B: Incorrect: an ALB cannot be attached directly as a PrivateLink endpoint-service load balancer, although an ALB may sit behind an NLB. C: Incorrect: an internet gateway creates public internet exposure and violates the requirement. D: Incorrect: NAT gateway supports outbound translation, not publishing a private endpoint service to customers.",
+    "plainWords": "Put an NLB in AWS in front of the on-premises services, publish an AWS PrivateLink endpoint service, and allow customer VPCs to connect privately.",
+    "keyPoints": "PrivateLink endpoint service requires NLB or GWLB. NLB can forward TCP to on-premises IP targets over hybrid connectivity when target IPs are supported and reachable. Interface endpoints allow cross-account private consumption. ALB alone is not a valid endpoint-service backing load balancer.",
+    "sourceWarning": "CORRECTED WRONG SOURCE KEY B -> A. Source option B incorrectly asserts an ALB can directly back a VPC endpoint service. Source has OCR defects: 'DX)and', 'interne', 'Is services', 'ensue'. The phrase 'make service available over DX' is shorthand: Direct Connect links provider AWS VPC to on-prem targets, while customers access via PrivateLink endpoints. Exact-stem external PDF confirms four-option single-answer presentation, but answer key should not supersede AWS primary docs; no confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-corrected-source-key",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "A"
+      ],
+      "previousAnswer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html",
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html",
+        "https://aws.amazon.com/privatelink/faqs/",
+        "https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-espinoza-09-08-2024-10qa-go4braindumps.pdf"
+      ],
+      "notes": "Domain 4 88/139. Primary AWS docs mandate NLB or GWLB for endpoint service; B (ALB alone) invalid. Correct to A. External exact-stem PDF displays single-answer four-choice format; no independently confirmed multi-answer variant."
+    },
+    "answerStatus": "verified-corrected-source-key"
   },
   {
     "id": 428,
