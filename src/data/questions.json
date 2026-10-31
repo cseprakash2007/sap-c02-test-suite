@@ -17476,7 +17476,7 @@
     "wrongOptionsExplanation": "A: Correct: centrally distribute the on-premises NTP server address through VPC DHCP options, subject to OS configuration and network reachability. B: Amazon Time Sync at 169.254.169.123 uses AWS's time source, not the required on-premises atomic clock. C: Third-party Marketplace NTP relay adds an unnecessary managed appliance. D: An IPsec VPN adds complexity and does not configure NTP clients; Direct Connect already provides connectivity if routing and firewalls allow UDP/123.",
     "plainWords": "Point the VPC DHCP NTP setting to the company's existing atomic-clock-backed NTP server so EC2 instances can synchronize with it.",
     "keyPoints": "Confirmed duplicate/abbreviated variant of Q386 (Domain 4 position 79/139). VPC DHCP option ntp-servers supports custom NTP server IP addresses. Direct Connect needs routing and UDP/123 reachability. EC2 guest chrony/ntpd/Windows Time must apply the setting. AWS Time Sync is a different time source. An external practice explanation wrongly favors AWS Time Sync despite the on-premises-source requirement.",
-    "sourceWarning": "DUPLICATE OF Q386 — not a distinct SAP-C02 study topic. Fixed 'on-premisesatomic' and 'theleast' spacing defects. Exact-stem full variants are single-answer; no independently confirmed Choose TWO/THREE variant. One external exam site includes a conflicting rationale favoring AWS Time Sync; reject it based on the on-premises-clock requirement and AWS DHCP documentation. Stratum-0 atomic reference typically feeds a stratum-1 NTP server; OS client adoption must be verified.",
+    "sourceWarning": "DUPLICATE OF Q386 — not a distinct SAP-C02 study topic. Fixed 'on-premisesatomic' and 'theleast' spacing defects. Exact-stem full variants are single-answer; no independently confirmed Choose TWO/THREE variant. One external exam site includes a conflicting rationale favoring AWS Time Sync; reject it based on the on-premises-clock requirement and AWS DHCP documentation. Stratum-0 atomic reference typically feeds a stratum-1 NTP server; OS client adoption must be verified. Additional external discrepancy: ExamsLabs rearranges the option letters and lists A for an Amazon Time Sync AMI despite DHCP being labeled C; its keyed answer contradicts the requirement for the on-premises atomic reference. Prefer solution content over the site's letter. Verified full-stem single-answer copies at solution2pass, DumpsMate, and FreeCram all favor the DHCP option.",
     "review": {
       "status": "verified-duplicate-of-Q386",
       "reviewedAt": "2026-10-31",
@@ -17490,9 +17490,14 @@
         "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDhcpOptions.html",
         "https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf",
         "https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-10.html",
-        "https://blog.surepassexams.com/2026/10/26/online-sap-c02-test-brain-dump-question-and-test-engine-q89-q105/"
+        "https://blog.surepassexams.com/2026/10/26/online-sap-c02-test-brain-dump-question-and-test-engine-q89-q105/",
+        "https://www.solution2pass.com/Amazon-Web-Services/SAP-C02-question-answers.html",
+        "https://www.dumpsmate.com/SAP-C02-exam.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-is-planning-to-migrate-its-on-premises-data-analysis-application-to-aws-the-application-is",
+        "https://realexamcollection.examslabs.com/articles/mar-2025-newly-released-sap-c02-exam-questions-for-you-to-pass-q59-q76/",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-ec2-ntp.html"
       ],
-      "notes": "Domain 4 86/139. Confirmed abbreviated duplicate of Q386, same solution choices and answer A. External full-stem sources single-answer, no confirmed Choose TWO/THREE variant. One external explanation erroneously promotes AWS Time Sync; AWS primary docs verify custom DHCP ntp-servers. Fixed missing spaces."
+      "notes": "Domain 4 86/139. Confirmed abbreviated duplicate of Q386, same solution choices and answer A. External full-stem sources single-answer, no confirmed Choose TWO/THREE variant. One external explanation erroneously promotes AWS Time Sync; AWS primary docs verify custom DHCP ntp-servers. Fixed missing spaces. October 31 independent cross-check: Solution2Pass, DumpsMate, and FreeCram each provide full four-option single-answer stem with DHCP as A. ExamsLabs has reordered labels (DHCP is C there), yet lists answer A (AMI), which fails on-premises clock condition; flag contradictory external key. No independently confirmed Choose TWO/THREE variant. Existing JSON Q421 intentionally abbreviated; Q386 retains full original wording."
     },
     "answerStatus": "verified-duplicate-of-Q386"
   },
