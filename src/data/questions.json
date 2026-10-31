@@ -17449,7 +17449,7 @@
   {
     "id": 421,
     "domain": 4,
-    "stem": "How should EC2 instances in AWS synchronize their clocks with an on-premisesatomic clock NTP server, with theleast administrative overhead?",
+    "stem": "How should EC2 instances in AWS synchronize their clocks with an on-premises atomic clock NTP server, with the least administrative overhead?",
     "options": [
       {
         "id": "A",
@@ -17472,13 +17472,29 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A is correct. An Amazon VPC DHCP options set supports the ntp-servers setting for on-premises NTP IP addresses. Associate the custom option set with the VPC, permit NTP UDP/123 over existing Direct Connect routing, and ensure the EC2 guest OS actually honors the DHCP NTP setting. This is a compressed duplicate of Q386, which presents the full scenario and same four solutions. AWS primary documentation verifies this behavior; third-party exact-stem longer variants also key the DHCP answer.",
+    "wrongOptionsExplanation": "A: Correct: centrally distribute the on-premises NTP server address through VPC DHCP options, subject to OS configuration and network reachability. B: Amazon Time Sync at 169.254.169.123 uses AWS's time source, not the required on-premises atomic clock. C: Third-party Marketplace NTP relay adds an unnecessary managed appliance. D: An IPsec VPN adds complexity and does not configure NTP clients; Direct Connect already provides connectivity if routing and firewalls allow UDP/123.",
+    "plainWords": "Point the VPC DHCP NTP setting to the company's existing atomic-clock-backed NTP server so EC2 instances can synchronize with it.",
+    "keyPoints": "Confirmed duplicate/abbreviated variant of Q386 (Domain 4 position 79/139). VPC DHCP option ntp-servers supports custom NTP server IP addresses. Direct Connect needs routing and UDP/123 reachability. EC2 guest chrony/ntpd/Windows Time must apply the setting. AWS Time Sync is a different time source. An external practice explanation wrongly favors AWS Time Sync despite the on-premises-source requirement.",
+    "sourceWarning": "DUPLICATE OF Q386 — not a distinct SAP-C02 study topic. Fixed 'on-premisesatomic' and 'theleast' spacing defects. Exact-stem full variants are single-answer; no independently confirmed Choose TWO/THREE variant. One external exam site includes a conflicting rationale favoring AWS Time Sync; reject it based on the on-premises-clock requirement and AWS DHCP documentation. Stratum-0 atomic reference typically feeds a stratum-1 NTP server; OS client adoption must be verified.",
+    "review": {
+      "status": "verified-duplicate-of-Q386",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "A"
+      ],
+      "duplicateOf": 386,
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/DHCPOptionSet.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/DHCPOptionSetConcepts.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDhcpOptions.html",
+        "https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf",
+        "https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-10.html",
+        "https://blog.surepassexams.com/2026/10/26/online-sap-c02-test-brain-dump-question-and-test-engine-q89-q105/"
+      ],
+      "notes": "Domain 4 86/139. Confirmed abbreviated duplicate of Q386, same solution choices and answer A. External full-stem sources single-answer, no confirmed Choose TWO/THREE variant. One external explanation erroneously promotes AWS Time Sync; AWS primary docs verify custom DHCP ntp-servers. Fixed missing spaces."
+    },
+    "answerStatus": "verified-duplicate-of-Q386"
   },
   {
     "id": 422,
