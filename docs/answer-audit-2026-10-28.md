@@ -1269,3 +1269,16 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS:** https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/monitoring-health-checks.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover.html ; https://aws.amazon.com/blogs/networking-and-content-delivery/creating-disaster-recovery-mechanisms-using-amazon-route-53/ ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.Promote.html
 - **External exact stem:** https://www.examtopics.com/discussions/amazon/view/90943-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-8-discussion/ ; https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/ ; https://www.freecram.net/question/Amazon.SAP-C02.v2024-05-06.q201/a-company-has-a-multi-tier-web-application-that-runs-on-a-fleet-of-amazon-ec2-instances-behind-an-applicat; all single-answer B; no confirmed Choose TWO/THREE variant.
 - **Defects:** Route 53 does not directly send SNS; requires CloudWatch alarm. DNS may fail over before replica promotion/ASG readiness; RTO <15 min not guaranteed and needs orchestrated, readiness-gated recovery and test. RDS replica promotion may take minutes+ and asynchronous replication entails RPO. Option C 'Replicationbetween' typo. Preserve original stem/options verbatim.
+
+
+### Q347 — Domain 4, position 71/139 (2026-10-31)
+
+- **Skipped Q346:** explicit Select THREE despite only 4 options and 2 recorded answers A/D; inconsistent/incomplete source.
+- **CORRECTED ANSWER B → C:** External exact-stem source keys B, but B proposes ElastiCache Global Datastore for Memcached, which AWS does not support (only Valkey/Redis OSS). This is a verifiable technical impossibility.
+- **A:** RDS separate schemas share DB compute and do not truly isolate session workload.
+- **B:** INVALID SERVICE COMBINATION, despite original answer key.
+- **C:** Strongest supported performance-focused choice: separate product/session DynamoDB global tables replicate cross-Region; DAX provides regional read cache if DynamoDB data modeling is appropriate.
+- **D:** Technically valid RDS product + DynamoDB global session alternative, but lacks DAX read cache; potentially preferable if relational requirements exist.
+- **Official AWS:** https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Redis-Global-Datastores-Console.html ; https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.deployment.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/dax-config-considerations.html
+- **External exact stem (incorrect B key):** https://www.examsvce.com/sap-c02/a-company-wants-to-migrate-its-onpremises-31851-question-answer.html. No confirmed Choose TWO/THREE Q347 variant.
+- **Caveats:** 'highest performance' is underspecified without access patterns and relational needs; DAX caches are per-Region and global table replication bypasses DAX, risking stale cached reads. Preserve source punctuation defects in C/D.
