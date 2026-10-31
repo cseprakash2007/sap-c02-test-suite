@@ -14091,13 +14091,29 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is the best supplied single answer. EKS on AWS Fargate removes EC2 worker node management and can scale pods behind an ALB configured with IP targets; Amazon MSK provides managed Apache Kafka compatible with the existing Kafka clients; RDS PostgreSQL read replicas offload read-heavy traffic; S3 with CloudFront efficiently delivers static content. This reduces operational work while providing scale-out options. The source key D is retained; independent exact-stem exam copies confirm the architecture, including reordered options.",
+    "wrongOptionsExplanation": "A: EC2 Auto Scaling still requires EC2 maintenance; moving existing Kafka clients to Kinesis increases migration work; no CloudFront for static delivery. B: EC2 maintenance and Kafka-to-Kinesis conversion remain; RDS Multi-AZ improves HA and storage autoscaling capacity, but neither replaces read scaling; direct S3 misses CloudFront. C: Kafka-compatible MSK and CloudFront are appropriate, but self-managed Kubernetes on EC2 retains control-plane/node management; Multi-AZ does not scale reads like read replicas. D: Correct as best option, combining EKS Fargate, MSK, RDS read replicas, and CloudFront.",
+    "plainWords": "Move containers to EKS Fargate, self-managed Kafka to MSK, add RDS PostgreSQL read replicas for reads, and serve static files through S3 plus CloudFront.",
+    "keyPoints": "Fargate removes EC2 node operations; ALB for Fargate requires IP targets; MSK preserves Kafka client compatibility; RDS read replicas scale reads not writes; Multi-AZ mainly HA; CloudFront caches S3 static content.",
+    "sourceWarning": "Option B typo 'theDB'. Stem predicts increased 'orders' but does not specify read/write ratio; read replicas cannot scale database writes, so D is best of listed options rather than a guaranteed solution to all order-processing bottlenecks. Configure Kubernetes HPA/Fargate profiles, AWS Load Balancer Controller IP target mode, MSK client networking, and replica read routing. Independent exact-stem copies reorder options, including one with D text labeled B; no confirmed Select TWO/THREE variant.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "D"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/fargate.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/what-is-msk.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PostgreSQL.Replication.ReadReplicas.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html",
+        "https://blog.surepassexams.com/2026/10/26/online-sap-c02-test-brain-dump-question-and-test-engine-q89-q105/",
+        "https://www.certstopics.com/questions/aws-certified-professional-sap-c02-syllabus-exam-questions-answers.html",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/5/"
+      ],
+      "notes": "Domain 4 single-answer 69/139; AWS technical confirmation plus multiple external exact-stem copies; options reordered in one source; no multi-answer variant; read-vs-write caveat."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 335,
