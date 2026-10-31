@@ -1320,3 +1320,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Official AWS:** https://docs.aws.amazon.com/textract/latest/dg/how-it-works-analyzing.html ; https://docs.aws.amazon.com/textract/latest/dg/how-it-works-kvp.html ; https://docs.aws.amazon.com/textract/latest/dg/textract-to-comprehend.html ; https://docs.aws.amazon.com/step-functions/latest/dg/connect-textract.html
 - **External exact stem:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-migrated-its-forms-processing-application-to-aws-when-users-interact-with-the-application ; https://www.freecram.net/question/Amazon.SAP-C02.v2023-03-07.q318/a-company-has-migrated-its-forms-processing-application-to-aws-when-users-interact-with-the-application; Textract architecture D in 2026 variant and B in 2023 variant due to reordered choices. No confirmed Choose TWO/THREE variant.
 - **Defects:** Comprehend is NLP, not OCR, despite option D wording; Textract does OCR. Comprehend optional if only key-value form extraction required. Need confidence-based validation and possible human review; async Textract for multipage documents. Option C 'Al/ML' typo. Preserve original stem/options.
+
+
+### Q374 — Domain 4, position 75/139 (2026-10-31)
+
+- **Verified B (retained):** Aurora PostgreSQL clusters per Region retain raw PII locally; AWS Glue DataBrew can mask/redact data before approved anonymized output is analyzed across Regions in Amazon Redshift Serverless.
+- **A:** Outposts is customer-site infrastructure, unnecessary for ordinary Region residency and adds complexity.
+- **B:** Correct conceptual managed design, but privacy boundaries need explicit enforcement.
+- **C:** Custom Lambda anonymization is possible; PrivateLink/QuickSight alone cannot ensure only anonymized cross-Region datasets are analyzed.
+- **D:** Macie detects/classifies sensitive data; it does NOT anonymize it. S3 Block Public Access is not anonymization.
+- **Official AWS:** https://docs.aws.amazon.com/databrew/latest/dg/personal-information-protection.html ; https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-datasharing.html ; https://docs.aws.amazon.com/redshift/latest/dg/across-region.html ; https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html
+- **External exact stem:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html ; https://www.practicetorrent.com/SAP-C02-practice-exam-torrent.html; CertEnsure Question 169 keys B; no confirmed Choose TWO/THREE variant.
+- **Defects/caveats:** Require in-Region DataBrew processing, approved anonymized output isolation, permissions to prevent raw PII replication/access, validation against re-identification, and Redshift regional feature availability. DataBrew masking can be reversible and does not automatically establish legal anonymization. Original stem/options preserved.
