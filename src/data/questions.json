@@ -17399,36 +17399,52 @@
   {
     "id": 420,
     "domain": 4,
-    "stem": "A company wants to migrate its data analytics environment from on premises to AWS The environment consists of two simple Node js applications One of the applications collects sensor data and loads it into a MySQL database The other application aggregates the data into reports When the aggregation jobs run. some of the load jobs fail to run correctly The company must resolve the data loading issue The company also needs the migration to occur without interruptions or changes for the company's customers What should a solutions architect do to meet these requirements?",
+    "stem": "A company wants to migrate its data analytics environment from on premises to AWS. The environment consists of two simple Node.js applications. One application collects sensor data and loads it into a MySQL database. The other application aggregates the data into reports. When the aggregation jobs run, some of the load jobs fail to run correctly. The company must resolve the data loading issue. The company also needs the migration to occur without interruptions or changes for the company's customers. What should a solutions architect do to meet these requirements?",
     "options": [
       {
         "id": "A",
-        "text": "Set up an Amazon Aurora MySQL database as a replication target for the on-premises database Create an Aurora Replica for the Aurora MySQL database, and move the aggregation jobs to run against the Aurora Replica Set up collection endpomts as AWS Lambda functions behind a Network Load Balancer (NLB). and use Amazon RDS Proxy to wnte to the Aurora MySQL database When the databases are synced disable the replication job and restart the Aurora Replica as the primary instance. Point the collector DNS record to the NLB."
+        "text": "Set up an Amazon Aurora MySQL database as a replication target for the on-premises database. Create an Aurora Replica for the Aurora MySQL database, and move the aggregation jobs to run against the Aurora Replica. Set up collection endpoints as AWS Lambda functions behind a Network Load Balancer (NLB), and use Amazon RDS Proxy to write to the Aurora MySQL database. When the databases are synced, disable the replication job and restart the Aurora Replica as the primary instance. Point the collector DNS record to the NLB."
       },
       {
         "id": "B",
-        "text": "Set up an Amazon Aurora MySQL database Use AWS Database Migration Service (AWS DMS) to perform continuous data replication from the on-premises database to Aurora Move the aggregation jobs to run against the Aurora MySQL database Set up collection endpomts behind an Application Load Balancer (ALB) as Amazon EC2 instances in an Auto Scaling group When the databases are synced, point the collector DNS record to the ALB Disable the AWS DMS sync task after the cutover from on premises to AWS"
+        "text": "Set up an Amazon Aurora MySQL database. Use AWS Database Migration Service (AWS DMS) to perform continuous data replication from the on-premises database to Aurora. Move the aggregation jobs to run against the Aurora MySQL database. Set up collection endpoints behind an Application Load Balancer (ALB) as Amazon EC2 instances in an Auto Scaling group. When the databases are synced, point the collector DNS record to the ALB. Disable the AWS DMS sync task after the cutover from on premises to AWS."
       },
       {
         "id": "C",
-        "text": "Set up an Amazon Aurora MySQL database Use AWS Database Migration Service (AWS DMS) to perform continuous data replication from the on-premises database to Aurora Create an AuroraReplica for the Aurora MySQL database and move the aggregation jobs to run against the Aurora Replica Set up collection endpoints as AWS Lambda functions behind an Application Load Balancer (ALB) and use Amazon RDS Proxy to write to the Aurora MySQL database When the databases are synced, point the collector DNS record to the ALB Disable the AWS DMS sync task after the cutover from on premises to AWS"
+        "text": "Set up an Amazon Aurora MySQL database. Use AWS Database Migration Service (AWS DMS) to perform continuous data replication from the on-premises database to Aurora. Create an Aurora Replica for the Aurora MySQL database and move the aggregation jobs to run against the Aurora Replica. Set up collection endpoints as AWS Lambda functions behind an Application Load Balancer (ALB), and use Amazon RDS Proxy to write to the Aurora MySQL database. When the databases are synced, point the collector DNS record to the ALB. Disable the AWS DMS sync task after the cutover from on premises to AWS."
       },
       {
         "id": "D",
-        "text": "Set up an Amazon Aurora MySQL database Create an Aurora Replica for the Aurora MySQL database and move the aggregation jobs to run against the Aurora Replica Set up collection endpoints as an Amazon Kinesis data stream Use Amazon Kinesis Data Firehose to replicate the data to the Aurora MySQL database When the databases are synced disable the replication job and restart the Aurora Replica as the primary instance Point the collector DNS record to the Kinesis data stream."
+        "text": "Set up an Amazon Aurora MySQL database. Create an Aurora Replica for the Aurora MySQL database and move the aggregation jobs to run against the Aurora Replica. Set up collection endpoints as an Amazon Kinesis data stream. Use Amazon Kinesis Data Firehose to replicate the data to the Aurora MySQL database. When the databases are synced, disable the replication job and restart the Aurora Replica as the primary instance. Point the collector DNS record to the Kinesis data stream."
       }
     ],
     "answers": [
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is correct. AWS DMS full-load-plus-CDC continuously copies on-premises MySQL data into Aurora MySQL during migration, preserving the original service until controlled cutover. An Aurora reader instance and its reader endpoint isolate expensive aggregation SELECT queries from writer-side ingestion. ALB can target Lambda functions that implement the existing collection HTTP API; RDS Proxy pools database connections from concurrently executing Lambda functions. Once DMS lag reaches zero and writes are coordinated, repoint the existing collector DNS name to the ALB and stop CDC after successful cutover. This is a near-zero-downtime strategy, not a literal guarantee of zero interruption.",
+    "wrongOptionsExplanation": "A: Network Load Balancer does not support Lambda targets directly (ALB does), and 'restart the Aurora Replica as primary' is not a valid standard cutover procedure. B: DMS/ALB/EC2 can migrate ingestion but reporting against the same Aurora writer does not isolate aggregation load, so contention can persist. C: Correct: DMS CDC + Aurora read replica for reports + ALB Lambda collector + RDS Proxy for pooled writes + DNS cutover. D: Kinesis data streams cannot simply replace the existing HTTP collection endpoint; Amazon Data Firehose does not have a direct Aurora MySQL delivery destination, and the replication/cutover design is unsupported.",
+    "plainWords": "Keep the current MySQL system running while DMS copies it to Aurora, send heavy reports to an Aurora reader, and move sensor collection to Lambda behind the same DNS name using ALB and RDS Proxy.",
+    "keyPoints": "DMS full-load + CDC supports low-downtime MySQL migration; monitor replication lag and coordinate final writes. Aurora reader endpoint offloads reporting SELECT queries. ALB supports Lambda target groups; NLB does not. RDS Proxy manages Lambda-to-Aurora connections. DNS repointing does not ensure absolutely zero disruption. Data Firehose does not directly deliver to Aurora MySQL.",
+    "sourceWarning": "MODERATE: Repaired extensive punctuation/OCR defects in stem/options without changing technical intent. 'Without interruptions' is overly absolute: DMS CDC has variable replication lag; final write quiescence, validation, DNS TTL and client connection behavior must be planned. Exact-stem third-party practice site presents C as a single-answer question; no independently confirmed Choose TWO/THREE variant. Original option A's 'restart Aurora Replica as primary' is technically misleading.",
+    "review": {
+      "status": "verified-aws-and-external-with-cutover-caveat",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-rds.html",
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html",
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html",
+        "https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/"
+      ],
+      "notes": "Domain 4 85/139. AWS docs validate DMS CDC, Aurora read endpoint, Lambda/RDS Proxy and ALB. Exact-stem external SPOTO Q58 keys C, single-answer; Pupuweb same stem. No confirmed Choose TWO/THREE variant. Corrected OCR typos and flagged near-zero vs zero downtime."
+    },
+    "answerStatus": "verified-aws-and-external-with-cutover-caveat"
   },
   {
     "id": 421,
