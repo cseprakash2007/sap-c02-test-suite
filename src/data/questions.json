@@ -17139,13 +17139,28 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is correct for the specified services. S3 Object Created events can be delivered to Amazon EventBridge (when S3 EventBridge delivery is enabled); an EventBridge rule can start a Step Functions state machine; Step Functions can run ECS Fargate tasks with the ecs:runTask.sync integration and wait for long-running container work. Fargate removes always-on EC2 host management and charges for running tasks instead of idle hosts. The S3/EventBridge/Step Functions pattern is explicitly documented in AWS's Step Functions tutorial.",
+    "wrongOptionsExplanation": "A: Standard AWS Lambda container-image functions have a 15-minute timeout; these jobs can take hours. B: S3 Event Notifications do not directly target a Step Functions state machine; an EventBridge rule is needed (or another intermediary). C: Correct: S3 EventBridge notifications -> EventBridge rule -> Step Functions -> ECS Fargate tasks; works for hours-long processing without idle EC2 hosts. D: Lambda layers are ZIP dependency archives, not container-image packaging; standard Lambda execution time is also too short.",
+    "plainWords": "Trigger a Step Functions workflow when nightly files arrive in S3, run the existing processing containers on Fargate, and stop them when processing finishes.",
+    "keyPoints": "S3 EventBridge delivery must be enabled; EventBridge rules can start Step Functions; Step Functions ecs:runTask.sync waits for ECS/Fargate completion; Fargate removes EC2 host management. Standard Lambda functions time out after 15 minutes; container images cannot be packaged as Lambda layers. Multiple S3 events may start duplicate or premature workflows without a batch-completion signal.",
+    "sourceWarning": "MODERATE AMBIGUITY: 'when data is uploaded' could trigger one execution per S3 Object Created event, potentially starting processing before the nightly batch is complete. Add an upload-completion marker, aggregation, or idempotency if one nightly run is required. S3-to-EventBridge delivery must be explicitly enabled. AWS documents a distinct Lambda Managed Instances mode with longer timeouts; ordinary Lambda container-image functions described in A/D remain unsuitable. No independently confirmed exact-stem external exam site or conflicting Choose TWO/THREE variant in available search results.",
+    "review": {
+      "status": "aws-verified-external-variant-unconfirmed",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/step-functions/latest/dg/tutorial-cloudwatch-events-s3.html",
+        "https://docs.aws.amazon.com/step-functions/latest/dg/connect-ecs.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventBridge.html",
+        "https://docs.aws.amazon.com/step-functions/latest/dg/statemachine-starting.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/chapter-layers.html"
+      ],
+      "notes": "Domain 4 82/139; Q410–Q412 outside Domain 4. Official AWS docs validate C. External exact-stem single/multiple-answer variant not independently established. C requires S3 EventBridge enabled; account for multiple events and nightly batch completion. Distinguish standard Lambda 15m limit from newer Managed Instances mode."
+    },
+    "answerStatus": "aws-verified-external-variant-unconfirmed"
   },
   {
     "id": 414,
