@@ -1493,3 +1493,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **2025 feature change:** AWS regional NAT gateway can automatically span AZs, but may use separate EIPs per AZ; not a simple single-EIP substitute. https://aws.amazon.com/blogs/networking-and-content-delivery/introducing-amazon-vpc-regional-nat-gateway/
 - AWS primary: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html ; https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html ; https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateNatGateway.html
 - Corrected minor option B/C OCR and spacing; preserved intent and original source answer C with explicit defect warning.
+
+
+### Domain 4 Q448 — 93/139 (2026-10-31)
+
+- **CRITICAL SOURCE KEY CORRECTION D → C.** Processing can take two hours, exceeding Lambda's maximum 15-minute invocation duration even when deployed as a Lambda container image. S3 ObjectCreated event invokes a short Lambda dispatcher to choose and start an ECS Fargate task. Update processing to use S3 for file input/output.
+- A: EFS does not natively emit per-file-created EventBridge events. B: EFS has no native file-created notification to invoke a Fargate service. C: Correct event-driven, long-running Fargate solution. D: Lambda image-based function remains capped at 15 minutes.
+- Original stem/option OCR defects fixed (punctuation and missing spaces). Four-option single-answer question appears on ExamTopics Q511, CertEnsure Q184, PracticeCF Q1481 and ExamsTrack Q131; no confirmed Choose TWO/THREE variant. AWS documentation takes precedence over unverified answer keys.
+- AWS: https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html ; https://docs.aws.amazon.com/lambda/latest/dg/with-s3.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html
+- External: https://www.examtopics.com/discussions/amazon/view/143048-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-511-discussion/ ; https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-1 ; https://www.examstrack.com/amazon-web-services-exams/how-to-pass-sap-c02-test-9
