@@ -16987,13 +16987,29 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is the independently AWS-documentation-supported answer. Install the AWS DataSync agent on an on-premises hypervisor, expose the VM-hosted CSV files via a supported NFS or SMB share, configure the on-premises source and S3 destination, use DataSync include/exclude filters to select directories, and schedule the task daily. DataSync can transfer changed files incrementally and verify transfers. The existing Direct Connect link can support private connectivity with correct endpoint/network configuration. For about 1 million files, consider Enhanced mode where supported or check Basic mode quotas. DataSync is a transfer/replication mechanism, not inherently a point-in-time versioned backup.",
+    "wrongOptionsExplanation": "A: S3 CopyObject/UploadPartCopy copies objects already in S3, not on-premises VM files; custom upload and scheduling code adds overhead. B: AWS Backup plans do not directly back up an arbitrary on-premises VM filesystem to S3 with the stated DataSync-style directory filters; source type and integration are missing. C: Correct: DataSync agent + NFS/SMB source + S3 target + include/exclude filters + daily schedule + incremental changed-file transfers. D: Snowball Edge adds physical-device logistics for initial 10 TB despite Direct Connect, and is no longer available to new customers since November 7, 2025; daily DataSync still needed.",
+    "plainWords": "Use DataSync to copy selected folders from an on-premises NFS/SMB share into S3 every day, sending only changed files after the initial transfer.",
+    "keyPoints": "DataSync supports NFS/SMB-to-S3, on-premises agent, include/exclude directory filters, daily task scheduling, changed-file transfers, verification. S3 CopyObject is S3-to-S3. AWS Backup is not generic on-prem file share backup. DataSync replication is not immutable historical backup; use S3 Versioning/retention as appropriate. Snowball Edge closed to new customers Nov 7, 2025. Enhanced task mode can handle virtually unlimited files; Basic has object-count quotas.",
+    "sourceWarning": "MODERATE: The stem says files are 'hosted on a VM' without specifying an NFS/SMB share; DataSync requires a supported source protocol and appropriate access. 'Backups' should not be confused with point-in-time recovery: configure S3 Versioning/Object Lock/retention if needed. Check Basic vs Enhanced mode for 1 million files. D is additionally outdated: Snowball Edge is not available to new customers from November 7, 2025. External exact-stem exam-site match or conflicting Choose TWO/THREE variant not independently found; AWS primary documentation verifies C.",
+    "review": {
+      "status": "aws-verified-external-variant-unconfirmed",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/task-options.html",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/working-with-locations.html",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html",
+        "https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html"
+      ],
+      "notes": "Domain 4 81/139. Q401 skipped (Select THREE). Original C independently verified against AWS documentation. No confirmed exact-stem external exam-site copy or conflicting multi-answer version. Caveats: NFS/SMB source must be exposed, DataSync is not retention backup, Basic-mode quotas, Snowball Edge new-customer availability."
+    },
+    "answerStatus": "aws-verified-external-variant-unconfirmed"
   },
   {
     "id": 410,
