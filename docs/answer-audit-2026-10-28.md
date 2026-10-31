@@ -1426,3 +1426,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Cutover caveat:** DMS CDC is asynchronous; 'without interruptions' is not guaranteed. Quiesce writes, monitor lag, validate target, account for DNS TTL and client connections, and only then stop DMS after cutover.
 - External exact-stem single-answer source: https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 (Q58, C). Additional matching stem: https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/ . No verified Choose TWO/THREE variant.
 - AWS references: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html ; https://docs.aws.amazon.com/lambda/latest/dg/services-rds.html ; https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html
+
+
+### Domain 4 Q421 — 86/139 (2026-10-31)
+
+- **Duplicate of Q386 (79/139)**: Q421 is a short paraphrase of the same on-premises atomic-clock NTP / EC2 / DHCP options question. Correct **A**. Mark as duplicate, not a new study topic.
+- A: VPC DHCP option `ntp-servers` points to the on-premises NTP appliance, with Direct Connect routing and UDP/123. B: Amazon Time Sync is not the on-premises clock. C: Marketplace NTP relay adds maintenance. D: IPsec VPN does not configure EC2 time clients and adds complexity.
+- Fixed `on-premisesatomic` and `theleast` spacing. OS NTP client must honor DHCP option; stratum-0 reference is normally served by stratum-1 NTP appliance.
+- Full-stem external single-answer matches: https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf ; https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-10.html . No verified Choose TWO/THREE version. Conflicting/wrong explanation favoring AWS Time Sync appears at https://blog.surepassexams.com/2026/10/26/online-sap-c02-test-brain-dump-question-and-test-engine-q89-q105/ ; reject because it fails the required on-premises time source.
+- AWS references: https://docs.aws.amazon.com/vpc/latest/userguide/DHCPOptionSet.html ; https://docs.aws.amazon.com/vpc/latest/userguide/DHCPOptionSetConcepts.html ; https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDhcpOptions.html
