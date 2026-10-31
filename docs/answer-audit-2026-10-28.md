@@ -1465,3 +1465,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - Defects: missing punctuation in stem fixed. At-least-once/out-of-order S3 notifications require idempotency. Conflicting Brainscape flashcard keys D, while SPOTO explicitly keys A. Full-stem single-answer copies exist; no confirmed Choose TWO/THREE variant.
 - AWS: https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html ; https://docs.aws.amazon.com/lambda/latest/dg/with-s3.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html ; https://aws.amazon.com/blogs/storage/manage-event-ordering-and-duplicate-events-with-amazon-s3-event-notifications/
 - External: https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part1 ; https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/3/ ; https://www.brainscape.com/flashcards/solutions-architect-professional-deck-02-15140066/packs/21889491
+
+
+### Domain 4 Q437 — 90/139 (2026-10-31)
+
+- **Best answer C:** EKS on Fargate + Aurora Serverless MySQL + Redshift Serverless + EventBridge. Preserves transactional/analytical separation, uses serverless application compute, and enables event routing.
+- A: MySQL on EC2 not serverless; Neptune graph database unsuitable for OLAP. B: EC2 ASGs not serverless; Aurora MySQL not analytical warehouse. C: Best architecture, but requires an actual ingestion integration to write events into Redshift. D: AppStream 2.0 desktop streaming and IoT Core do not fit retail microservices.
+- **MODERATE DEFECT:** EventBridge does not directly populate Redshift Serverless tables simply by routing events; configure an ingestion pipeline/consumer. EKS on Fargate still needs cluster management.
+- External exact-stem single-answer copies: https://www.examtopics.com/discussions/amazon/view/136656-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-474-discussion/ (C) and https://www.pdfdumps.com/articles/real-amazon-sap-c02-exam-questions-study-guide-q217-q242/ (D with rearranged options); both select the same architecture. No independently confirmed Choose TWO/THREE variant.
+- AWS: https://aws.amazon.com/eventbridge/faqs/ ; https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-redshift-serverless.html ; https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-event-notifications-eventbridge.html
