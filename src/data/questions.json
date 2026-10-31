@@ -15675,13 +15675,30 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is the intended historical single answer. AWS Outposts extends AWS-managed infrastructure, supported services, APIs and developer tooling into the company's central on-premises data center, supporting low-latency local processing, local data residency and hybrid consistency. Snowball Edge Compute Optimized historically supplied local EC2-style compute for remote factory sites with restricted/intermittent connectivity. The exact-stem practice copies key the Outposts + Snowball Edge Compute Optimized combination (option lettering varies). IMPORTANT 2026 LIFECYCLE DEFECT: Snowball Edge has not been offered to new customers since November 7, 2025, and AWS has announced the end of support in commercial AWS Regions on December 31, 2026. Thus C is exam-historical, not a fully deployable recommendation for a new customer in 2026; rearchitect remote factory compute using currently available edge/on-premises solutions after checking supported form factors, network requirements and relevant region/country restrictions.",
+    "wrongOptionsExplanation": "A: Direct Connect provides dedicated connectivity to an AWS Region, but does not place compute in the local data center or reliably achieve single-digit-millisecond local application interactions; it also does not address disconnected factory compute. B: Storage Optimized is intended primarily for high-capacity storage/data transfer, while Wavelength runs at telecommunications providers' 5G edge rather than installing locally at disconnected factories. C: Correct historically because Outposts provides consistent AWS APIs and locally hosted workloads at the central data center, and Snowball Edge Compute Optimized formerly provided compute at poorly connected factory sites; now lifecycle-obsolete for new customers. D: Local Zones are AWS-operated extensions closer to end users rather than resources installed at the customer's specified on-premises data center; Wavelength is built for carrier 5G mobile-edge workloads, not factory offline processing.",
+    "plainWords": "Historically, put AWS Outposts in the main company data center and Snowball Edge Compute Optimized boxes at disconnected factories. As of 2026, retain C only as the legacy exam answer because new customers can no longer obtain Snowball Edge.",
+    "keyPoints": "Outposts = managed AWS compute on premises with AWS tools/APIs, data-locality and low latency, but normally requires a service link to a home AWS Region. Snowball Edge Compute Optimized = historical offline/remote edge compute, NOT currently available to new customers. Snowball Edge Storage Optimized primarily emphasizes storage capacity. Local Zones = AWS-operated nearby compute. Wavelength = telecom 5G edge. Direct Connect = private connection, not local compute.",
+    "sourceWarning": "HIGH — OUTDATED/NO LONGER NEWLY DEPLOYABLE: AWS Snowball Edge stopped accepting new customers effective November 7, 2025; AWS announces commercial-Region support ending December 31, 2026. Option C remains the original correct answer, but the question does not distinguish existing customers or historic timing, so it should not be taught as a current greenfield solution. Also Outposts requires site readiness and sustained Region service-link connectivity; country-specific residency and available form factors must be validated. Cross-source option letters differ: Pupuweb lists C, GoShiken has identical solution at D. Checked exact-stem published variants and did not find an authenticated Choose TWO/THREE version.",
+    "review": {
+      "status": "verified-historical-outdated-service",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/outposts/latest/userguide/",
+        "https://docs.aws.amazon.com/outposts/latest/server-userguide/how-outposts-works.html",
+        "https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html",
+        "https://docs.aws.amazon.com/snowball/latest/developer-guide/doc-history.html",
+        "https://aws.amazon.com/snowball/",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html",
+        "https://pupuweb.com/aws-sap-c02-exam-question-answer-consistent-hybrid-dev-experience/",
+        "https://www.goshiken.com/blog/goshiken%E3%81%8B%E3%82%89%E3%81%AE%E8%A9%A6%E9%A8%93%E5%90%88%E6%A0%BC%E6%BA%96%E5%82%99%E3%81%AE%E5%BF%85%E9%9C%80%E5%93%81sap-c02%E8%A9%A6%E5%90%8F%E3%83%88%E3%83%AC%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%E5%95%8F%E9%A1%8C-q527-q543/"
+      ],
+      "notes": "Domain 4 76/139. Q375 skipped (Choose THREE). Exact-stem sources confirm Outposts + Snowball Edge Compute Optimized as the legacy correct answer, despite remapped choice letters. AWS official Nov 2025 new-customer cutoff and Dec 2026 commercial support end make this a high-priority outdated item. No substantiated multi-answer variant located."
+    },
+    "answerStatus": "verified-historical-outdated-service"
   },
   {
     "id": 377,
