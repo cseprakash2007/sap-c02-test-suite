@@ -1474,3 +1474,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **MODERATE DEFECT:** EventBridge does not directly populate Redshift Serverless tables simply by routing events; configure an ingestion pipeline/consumer. EKS on Fargate still needs cluster management.
 - External exact-stem single-answer copies: https://www.examtopics.com/discussions/amazon/view/136656-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-474-discussion/ (C) and https://www.pdfdumps.com/articles/real-amazon-sap-c02-exam-questions-study-guide-q217-q242/ (D with rearranged options); both select the same architecture. No independently confirmed Choose TWO/THREE variant.
 - AWS: https://aws.amazon.com/eventbridge/faqs/ ; https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-redshift-serverless.html ; https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-event-notifications-eventbridge.html
+
+
+### Domain 4 Q445 — 91/139 (2026-10-31)
+
+- **Correct C:** AWS Transfer Family SFTP → S3 → EventBridge/Glue workflow trigger → AWS Glue transformation → SQS completion notification. Event-driven and managed, with no recurring host or messaging server.
+- A: EFS is storage, cannot run cron; SNS is not the requested work queue. B: EMR adds unnecessary operational complexity and SNS does not replace SQS semantics. C: Best solution with explicit event and completion integrations. D: EFS plus scheduled Glue retains periodic polling and integration overhead.
+- **MODERATE DEFECT:** S3 notifications alone do not invoke a Glue job directly; configure EventBridge and Glue event trigger/workflow. Send SQS completion messages from job logic or a Glue-success EventBridge consumer. No confirmed Choose TWO/THREE variant.
+- AWS sources: https://aws.amazon.com/aws-transfer-family/faqs/ ; https://docs.aws.amazon.com/transfer/latest/userguide/eventbridge.html ; https://docs.aws.amazon.com/glue/latest/dg/starting-workflow-eventbridge.html ; https://docs.aws.amazon.com/glue/latest/dg/automating-awsglue-with-cloudwatch-events.html
+- External single-answer corroboration (C): https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html ; https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-3.html ; https://www.examstrack.com/amazon-web-services-exams/how-to-pass-sap-c02-test-9 ; https://www.certsmania.com/pdf/practice-session-solution-download-full-version-sap-c02-exam-by-enrique.pdf
