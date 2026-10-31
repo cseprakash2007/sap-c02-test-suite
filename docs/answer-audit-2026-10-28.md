@@ -1307,3 +1307,16 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Official AWS:** https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html ; https://docs.aws.amazon.com/firehose/latest/dev/writing-with-cloudwatch-logs.html ; https://aws.amazon.com/blogs/big-data/ingest-vpc-flow-logs-into-splunk-using-amazon-kinesis-data-firehose/ ; https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-firehose.html ; https://docs.aws.amazon.com/kinesisanalytics/latest/dev/
 - **External exact stem:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-08-19.q305/a-company-has-developed-a-hybrid-solution-between-its-data-center-and-aws-the-company-uses-amazon-vpc ; https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-9.html; single-answer B, no confirmed Choose TWO/THREE variant.
 - **Defects/current guidance:** Stem typo 'application togs'; D 'SOL Applications'. Kinesis Data Firehose renamed Amazon Data Firehose; VPC Flow Logs can publish directly to Firehose, with Splunk HEC and native CloudWatch Logs decompression. Splunk on-prem HEC must be reachable securely. Flow logs are aggregated metadata, not packet payload or SQL statements. Original stem/options preserved.
+
+
+### Q367 — Domain 4, position 74/139 (2026-10-31)
+
+- **Skipped Q365:** explicit Select TWO A/C.
+- **Verified D (retained):** Step Functions/Lambda orchestrate managed Textract OCR/form extraction, optional Comprehend NLP, S3 output, validation and target API integration.
+- **A:** Custom OCR and EKS/EC2 operations increase time and maintenance.
+- **B:** Step Functions/Lambda good, but self-trained EC2-hosted OCR models add work.
+- **C:** Custom SageMaker model and EC2 tier plus ElastiCache unnecessary.
+- **D:** Best low-operations managed service workflow.
+- **Official AWS:** https://docs.aws.amazon.com/textract/latest/dg/how-it-works-analyzing.html ; https://docs.aws.amazon.com/textract/latest/dg/how-it-works-kvp.html ; https://docs.aws.amazon.com/textract/latest/dg/textract-to-comprehend.html ; https://docs.aws.amazon.com/step-functions/latest/dg/connect-textract.html
+- **External exact stem:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-migrated-its-forms-processing-application-to-aws-when-users-interact-with-the-application ; https://www.freecram.net/question/Amazon.SAP-C02.v2023-03-07.q318/a-company-has-migrated-its-forms-processing-application-to-aws-when-users-interact-with-the-application; Textract architecture D in 2026 variant and B in 2023 variant due to reordered choices. No confirmed Choose TWO/THREE variant.
+- **Defects:** Comprehend is NLP, not OCR, despite option D wording; Textract does OCR. Comprehend optional if only key-value form extraction required. Need confidence-based validation and possible human review; async Textract for multipage documents. Option C 'Al/ML' typo. Preserve original stem/options.
