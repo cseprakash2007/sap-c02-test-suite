@@ -18430,13 +18430,30 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is the best answer. AWS Transfer Family receives SFTP uploads into S3. S3 object-created events can be routed through EventBridge to an AWS Glue workflow or trigger, replacing the fixed five-minute polling schedule. Glue transforms uploaded data, and job code or a success-state event consumer sends an SQS completion message. These managed services eliminate self-managed SFTP, transformation hosts, and messaging servers. S3 event notifications do not automatically run Glue without the trigger integration.",
+    "wrongOptionsExplanation": "A: Incorrect: Amazon EFS is storage and cannot execute a cron job; a compute host would be required. SNS is pub/sub rather than a queue replacement. B: Incorrect: EMR is unnecessarily complex for this managed event-driven file-processing use case, and SNS is not a direct replacement for a durable SQS work queue. C: Correct: Transfer Family + S3 + event-triggered Glue + SQS minimizes component administration while preserving queued completion messages. D: Incorrect: EFS with a scheduled Glue job retains time-based polling and adds unnecessary storage integration complexity; event-driven S3 processing is more suitable.",
+    "plainWords": "Upload SFTP files to S3 with Transfer Family, trigger Glue when a file arrives, and send an SQS message after transformation succeeds.",
+    "keyPoints": "Transfer Family supports S3 and EFS. S3 notifications/EventBridge can initiate Glue workflows via configured triggers. Glue can emit job state changes; use job logic or EventBridge consumer to send SQS message on successful completion. EFS is not compute and cannot run cron. SNS pub/sub differs from SQS queue.",
+    "sourceWarning": "MODERATE: Option C abbreviates the necessary S3 EventBridge-to-Glue trigger configuration and Glue-to-SQS completion publishing. S3 notifications alone do not directly execute a Glue job. Option A is technically invalid because cron cannot run on EFS. Exact-stem external practice sources key C as a single-answer question; no independently confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-aws-and-external-with-trigger-caveat",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://aws.amazon.com/aws-transfer-family/faqs/",
+        "https://docs.aws.amazon.com/transfer/latest/userguide/eventbridge.html",
+        "https://docs.aws.amazon.com/glue/latest/dg/starting-workflow-eventbridge.html",
+        "https://docs.aws.amazon.com/glue/latest/dg/automating-awsglue-with-cloudwatch-events.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-3.html",
+        "https://www.examstrack.com/amazon-web-services-exams/how-to-pass-sap-c02-test-9",
+        "https://www.certsmania.com/pdf/practice-session-solution-download-full-version-sap-c02-exam-by-enrique.pdf"
+      ],
+      "notes": "Domain 4 91/139. Four external sources key C, single-answer; AWS primary docs support Transfer Family S3 and EventBridge Glue workflow triggers. No confirmed Choose TWO/THREE variant. Flag S3-to-Glue and Glue-to-SQS orchestration omissions."
+    },
+    "answerStatus": "verified-aws-and-external-with-trigger-caveat"
   },
   {
     "id": 446,
