@@ -1360,3 +1360,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - Exact-stem external practice PDF (certsmania, Q67, p.83) keys C as a single-choice question. No substantiated Choose TWO/THREE variant found.
 - Caveat: API keys must not be treated as authentication/authorization; usage-plan throttling is best effort. Add an appropriate auth mechanism.
 - AWS references: https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-usage-plans.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-setup-api-keys.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html ; https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html . External: https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf
+
+
+### Domain 4 Q386 — 79/139 (2026-10-31)
+
+- Original single-answer Q386, keyed **A**. AWS VPC DHCP option sets support custom `ntp-servers` and association with a VPC. Existing Direct Connect and appropriate routing/UDP 123 allow access to the on-premises atomic-clock-derived NTP service.
+- A correct with OS-specific client verification. B uses Amazon Time Sync rather than the required on-prem source. C introduces an unnecessary third-party relay. D adds VPN complexity and does not set the time client.
+- Caveats: DHCP NTP adoption depends on AMI/OS time service configuration; check chrony/ntpd/Windows Time and remove conflicting default sources. Atomic clock is stratum-0 reference; NTP server attached to it generally stratum-1.
+- Exact-stem third-party exam-site variant and Choose TWO/THREE conflict **not independently confirmed**; do not claim cross-source verification.
+- AWS sources: https://docs.aws.amazon.com/vpc/latest/userguide/DHCPOptionSet.html ; https://docs.aws.amazon.com/vpc/latest/userguide/DHCPOptionSetConcepts.html ; https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDhcpOptions.html ; https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-ec2-ntp.html
