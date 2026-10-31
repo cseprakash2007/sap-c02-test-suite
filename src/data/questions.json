@@ -18500,11 +18500,11 @@
       },
       {
         "id": "B",
-        "text": "Replace the ALB with a Network Load Balancer (NLB). Assign the Elastic IP address to the NLB Turn on health checks for the NLB. In the case of a failed health check, redeploy the NLB in different subnets."
+        "text": "Replace the ALB with a Network Load Balancer (NLB). Assign the Elastic IP address to the NLB. Turn on health checks for the NLB. In the case of a failed health check, redeploy the NLB in different subnets."
       },
       {
         "id": "C",
-        "text": "Deploy a single NAT gateway in a public subnet. Assign the Elastic IP address to the NAT gateway. Use Amazon CloudWatch with a custom metric tomonitor the NAT gateway. If the NAT gateway is unhealthy, invoke an AWS Lambda function to create a new NAT gateway in a different subnet. Assign the Elastic IP address to the new NAT gateway."
+        "text": "Deploy a single NAT gateway in a public subnet. Assign the Elastic IP address to the NAT gateway. Use Amazon CloudWatch with a custom metric to monitor the NAT gateway. If the NAT gateway is unhealthy, invoke an AWS Lambda function to create a new NAT gateway in a different subnet. Assign the Elastic IP address to the new NAT gateway."
       },
       {
         "id": "D",
@@ -18515,13 +18515,29 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is the intended legacy single-answer exam key, corroborated by Pass2Lead and FreeCram, but the scenario is architecturally ambiguous and cannot be considered unconditionally valid. A single zonal public NAT gateway can translate outbound private-subnet instance traffic to one EIP only when traffic egresses via an internet gateway. Custom CloudWatch alarm/Lambda orchestration could replace a failed zonal NAT gateway in another AZ, but must release/reassociate the EIP, update all affected subnet routes, and handle recovery races. Critically, AWS documents that traffic routed to on-premises via transit gateway/virtual private gateway uses the NAT gateway's PRIVATE IP as source, not its EIP. The question calls the allowlisted IP internal while calling it an EIP; the connectivity path is unspecified. Modern regional NAT gateways (introduced Nov 2025) change the best-practice design, but can use separate EIPs per AZ, conflicting with a strict single-EIP requirement.",
+    "wrongOptionsExplanation": "A: Impossible to associate one EIP with three separate NAT gateways concurrently; NAT gateway health-check/recreation is not a built-in option as written. B: An NLB's static IP is for inbound listener connections; replacing the ALB does not provide outbound source NAT for EC2 traffic to on-premises systems. C: Intended exam answer for single fixed public egress IP with custom failover; requires EIP release, route table updates, connectivity path clarification, and is wrong if private DX/VPN routing expects EIP source. D: ALB does not support directly associating EIPs, and Route 53 health checks cannot implement outbound NAT.",
+    "plainWords": "For the original public-egress exam interpretation, use one NAT gateway with a fixed EIP and automate failover. For private on-premises connectivity, the source address is the NAT gateway private IP instead; clarify routing before deployment.",
+    "keyPoints": "EIP cannot be simultaneously attached to multiple NAT gateways. NLB is not outbound NAT. ALB cannot directly use an EIP. Public NAT gateway's EIP is used only via IGW; via TGW/VGW the private NAT address is used. Zonal NAT failover needs EIP reassignment and route updates. AWS added regional NAT gateways in Nov 2025, but multi-AZ EIP behavior may violate one-IP allowlisting.",
+    "sourceWarning": "HIGH / DEFECTIVE AMBIGUOUS QUESTION. The source states an IP from internal range and also an Elastic IP, but these are not equivalent. No DX/VPN/IGW path specified; NAT EIP is not source over private TGW/VGW. C is intended legacy key, not guaranteed valid as written. External sites Pass2Lead/FreeCram key C; PUPUWEB keys B with technically false NLB outbound-SNAT explanation. Modern regional NAT gateway feature (Nov 2025) makes zonal-Lambda solution outdated for some use cases, but regional mode may use multiple EIPs. Minor OCR typo 'tomonitor' and NLB wording corrected. Checked copies single-choice, no confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "source-defective-intended-answer-c",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateNatGateway.html",
+        "https://aws.amazon.com/blogs/networking-and-content-delivery/introducing-amazon-vpc-regional-nat-gateway/",
+        "https://www.pass2lead.com/sap-c02/questions.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-09-11.q137/a-company-has-migrated-a-legacy-application-to-the-aws-cloud-the-application-runs-on-three-amazon-ec2",
+        "https://pupuweb.com/sap-c02-secure-on-premises-communication-with-aws-network-load-balancer-and-elastic-ip/"
+      ],
+      "notes": "Domain 4 92/139. Retain intended source C with HIGH warning, not fully valid for private on-prem route. Pass2Lead and FreeCram C, PUPUWEB erroneous B. New regional NAT capability Nov 2025 noted. No confirmed multi-answer variant."
+    },
+    "answerStatus": "source-defective-intended-answer-c"
   },
   {
     "id": 448,
