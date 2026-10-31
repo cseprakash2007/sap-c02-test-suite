@@ -1282,3 +1282,16 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Official AWS:** https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Redis-Global-Datastores-Console.html ; https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.deployment.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/dax-config-considerations.html
 - **External exact stem (incorrect B key):** https://www.examsvce.com/sap-c02/a-company-wants-to-migrate-its-onpremises-31851-question-answer.html. No confirmed Choose TWO/THREE Q347 variant.
 - **Caveats:** 'highest performance' is underspecified without access patterns and relational needs; DAX caches are per-Region and global table replication bypasses DAX, risking stale cached reads. Preserve source punctuation defects in C/D.
+
+
+### Q355 — Domain 4, position 72/139 (2026-10-31)
+
+- **Skipped Q350:** explicitly Choose two, B/E.
+- **Verified C (retained):** EC2 Auto Scaling groups scale existing ALB-backed backend, and DynamoDB auto scaling adjusts provisioned read/write capacity without changing code.
+- **A:** Lambda migration adds development; manual DynamoDB capacity increase is not responsive scaling.
+- **B:** Lambda rewrite plus DynamoDB global tables (multi-Region replication, not direct single-Region throughput remedy).
+- **C:** Best minimal-development architecture.
+- **D:** SQS/Lambda introduces asynchronous write integration and does not directly fix read latency.
+- **Official AWS:** https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-groups.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CostOptimization_AutoScalingSettings.html
+- **External exact stem:** https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=19 ; https://www.examcollection.us/exam/SAP-C02-question-answer-4.html ; https://www.shikenpass.com/SAP-C02-shiken.html; correct architecture same despite option reorderings. No confirmed Choose TWO/THREE Q355 variant.
+- **Caveats:** DynamoDB auto scaling presumes provisioned capacity mode; on-demand is an alternative outside options. Target-tracking scaling reacts to sustained demand with minutes of CloudWatch evaluation/UpdateTable lag; consider scheduled scaling/pre-warming for seasonal bursts. Original stem/options preserved.
