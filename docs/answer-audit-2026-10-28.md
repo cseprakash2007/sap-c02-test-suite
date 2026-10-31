@@ -1218,3 +1218,16 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Official AWS:** https://docs.aws.amazon.com/datasync/latest/userguide/create-ontap-location.html ; https://aws.amazon.com/datasync/faqs/ ; https://aws.amazon.com/fsx/netapp-ontap/features/ ; https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/supported-fsx-clients.html
 - **External exact stem:** https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-pearson.pdf Question 11, keys C. No confirmed Choose TWO/THREE variant.
 - **Defects/caveats:** Scheduling/event triggering, gating complete output, EKS volume mounting omitted. DataSync ONTAP NFS location supports NFSv3 (not NFSv4), although ONTAP itself supports newer NFS. No answer correction needed.
+
+
+### Q324 — Domain 4, position 67/139 (2026-10-31)
+
+- **Skip Q321:** explicitly Select THREE, A/D/F.
+- **Verified B (retained):** AWS MGN automated VMware rehosting + AWS DataSync on-prem NFS → EFS via existing 10 Gbps Direct Connect.
+- **A:** Manual VM export/import and Snowball shipping add elapsed time and operational work.
+- **B:** Correct, separates block-level VM migration and file-level NFS transfer.
+- **C:** Rebuilding 120 custom VMs is slower; Lustre is not the best general-purpose NFS destination.
+- **D:** Offline shipping, import, and staged S3-to-EFS transfer add unnecessary steps.
+- **AWS:** https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/configuring-storage-offload-vmware-cloud-aws/data-migration.html ; https://aws.amazon.com/datasync/faqs/ ; https://docs.aws.amazon.com/pdfs/mgn/latest/ug/user-guide.pdf
+- **External exact stem:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html ; https://www.examtopics.com/discussions/amazon/view/124802-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-302-discussion/; single-answer B, no confirmed Choose TWO/THREE variant.
+- **Defects:** Original text contains 'VMS', 'AMIS', '10 GbpsAWS', 'isloaded', spacing errors. MGN 'connection/replication job' is loose wording; MGN has agent-based or VMware vCenter agentless workflows. OS support and agentless prerequisites must be checked; MGN does not copy NFS NAS shares, so DataSync is needed. Original options retained verbatim.
