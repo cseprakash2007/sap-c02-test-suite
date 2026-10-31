@@ -1379,3 +1379,13 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **HIGH outdated-service warning:** AWS Migration Hub closed to new customers November 7, 2025; preserve historical exam answer A but do not recommend blindly for greenfield 2026 migrations.
 - External exact-stem single-choice copies: https://www.examcollection.us/exam/SAP-C02-question-answer-6.html ; https://www.examtopics.com/discussions/amazon/view/132905-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-423-discussion/ . No confirmed Choose TWO/THREE version.
 - AWS references: https://docs.aws.amazon.com/migrationhub/latest/ug/network-diagram.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/network-diagram-prerequisites.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html ; https://aws.amazon.com/about-aws/whats-new/2024/11/network-connections-aws-application-discovery-service-agentless-collector/
+
+
+### Domain 4 Q409 — 81/139 (2026-10-31)
+
+- Q409 is next genuine single-answer after Q395; Q401 is Select THREE and is skipped. Correct answer **C — AWS DataSync agent, on-prem source, S3 destination, daily scheduled task**.
+- AWS docs independently verify NFS/SMB-to-S3 transfers, include/exclude filters, daily scheduling, incremental changed-file copies and task modes.
+- A: `CopyObject` copies existing S3 objects, not on-prem VM files. B: AWS Backup plan alone does not provide an arbitrary on-prem VM file-source and directory filters. C: DataSync meets the filtering, schedule, transfer and operational overhead requirements. D: Snowball Edge device adds logistics, with Direct Connect already available; unavailable to new customers since November 7, 2025.
+- Caveats: expose VM data via supported NFS/SMB; DataSync transfer/replication is not point-in-time backup retention; consider S3 Versioning/Object Lock; Basic vs Enhanced task mode quotas for ~1 million files. Snowball Edge is outdated for new customers.
+- External exam-site exact-stem or Choose TWO/THREE variant not independently confirmed; do not claim third-party corroboration.
+- AWS references: https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html ; https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html ; https://docs.aws.amazon.com/datasync/latest/userguide/task-options.html ; https://docs.aws.amazon.com/datasync/latest/userguide/working-with-locations.html ; https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html ; https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html ; https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html
