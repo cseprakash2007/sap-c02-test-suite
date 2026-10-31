@@ -15582,13 +15582,28 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is the best single answer: independently deployed Aurora PostgreSQL clusters in each Region keep raw customer PII local; Glue DataBrew can detect, mask, redact or otherwise transform PII in-region; Amazon Redshift Serverless can analyze only the resulting approved anonymized datasets across Regions. AWS documents DataBrew PII transforms and Redshift Serverless cross-Region sharing. Exact-stem external exam copy keys B. Implementation must strictly prevent unmasked PII from entering cross-Region analytics; some DataBrew masking methods are reversible and not automatically equivalent to irreversible anonymization.",
+    "wrongOptionsExplanation": "A: Outposts places AWS infrastructure at customer premises, unnecessary for regional data residency and adds operational complexity; Athena is possible but Outposts does not solve the problem more appropriately than regional managed databases. B: Correct if DataBrew processing occurs in each source Region and only approved anonymized outputs are shared for Redshift Serverless analytics. C: Lambda anonymization could be valid but requires custom logic; PrivateLink alone neither anonymizes data nor guarantees that cross-Region QuickSight queries expose only anonymized data. D: Macie discovers/classifies PII in S3 but does NOT anonymize source records; Block Public Access is unrelated to ensuring no raw PII crosses Regions.",
+    "plainWords": "Store raw customer PII in an Aurora database in its original AWS Region, anonymize locally with DataBrew, and send only approved anonymized datasets to Redshift Serverless for global analysis.",
+    "keyPoints": "Data residency applies to raw PII, not necessarily de-identified analytics; DataBrew can mask/redact PII but not all masking is irreversible; Redshift Serverless supports cross-Region data sharing; Macie detects sensitive data, not anonymizes it; Outposts is on-prem AWS hardware.",
+    "sourceWarning": "Option B is conceptually correct but underspecified: it does not explicitly require in-Region DataBrew jobs, restricted output locations, only anonymized Redshift ingestion/sharing, or prevention of cross-Region raw PII access. Masking/encryption/pseudonymization may be reversible and may not satisfy legal anonymization; validate re-identification risk. Redshift cross-Region sharing availability depends on Region. External exact-stem copy keys B; no confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-with-privacy-caveats",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/databrew/latest/dg/personal-information-protection.html",
+        "https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-datasharing.html",
+        "https://docs.aws.amazon.com/redshift/latest/dg/across-region.html",
+        "https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.practicetorrent.com/SAP-C02-practice-exam-torrent.html"
+      ],
+      "notes": "Domain 4 75/139. AWS DataBrew, Redshift Serverless, Macie docs and exact-stem exam copy support B. In-Region masking, irreversible anonymization validation and access restrictions required."
+    },
+    "answerStatus": "verified-with-privacy-caveats"
   },
   {
     "id": 375,
