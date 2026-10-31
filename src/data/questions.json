@@ -15162,13 +15162,29 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is the best source answer. VPC Flow Logs capture IP connection metadata for EC2 network interfaces, including source/destination addresses and ports for connections to on-premises databases. CloudWatch Logs subscription filters stream flow logs to Amazon Data Firehose, which delivers to on-prem Splunk via HTTP Event Collector (HEC), with optional decompression/transformation and S3 failure backup. This meets near-real-time monitoring with little application change. AWS now supports direct VPC Flow Logs to Firehose and built-in CloudWatch log decompression, making option B's Lambda transformation optional depending on Splunk add-on and format. Independent exact-stem single-answer exam copies key B.",
+    "wrongOptionsExplanation": "A: Periodic CloudWatch export to S3 and Splunk polling introduce batch latency and unnecessary static access-key management. B: Correct; VPC Flow Logs→CloudWatch subscription→Data Firehose→Splunk HEC streams network metadata near real time. C: Requires instrumenting every database request, Athena batch queries, and multiple S3/Lambda transfers, increasing delay and complexity. D: Detects anomalies instead of reporting all EC2/database connections, adds unnecessary Kinesis processing, and Kinesis Data Analytics for SQL Applications was discontinued effective January 27, 2026.",
+    "plainWords": "Stream VPC Flow Logs through CloudWatch Logs and Amazon Data Firehose to the existing Splunk HEC endpoint to see which EC2 IPs connect to on-premises database IPs.",
+    "keyPoints": "VPC Flow Logs provide connection metadata not packet payloads; CloudWatch Logs subscriptions deliver near real time; Amazon Data Firehose (renamed from Kinesis Data Firehose) supports Splunk HEC and decompression; direct Flow Logs→Firehose now supported; Kinesis Data Analytics for SQL discontinued Jan 27 2026.",
+    "sourceWarning": "Original stem typo 'application togs' (logs); option A 'VPC flows logs'; option D 'SOL Applications' (SQL) and '1 -minute'. D relies on Kinesis Data Analytics for SQL, discontinued Jan 27 2026. B's preprocessing Lambda is no longer universally required: native Firehose decompression and updated Splunk add-ons can handle events, and direct VPC Flow Logs→Firehose is supported. VPC Flow Logs are aggregated network metadata (not SQL statements), near-real-time rather than instantaneous; Splunk HEC must be securely reachable from AWS. External exact-stem versions are single-answer B; no confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-with-outdated-alternatives",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html",
+        "https://docs.aws.amazon.com/firehose/latest/dev/writing-with-cloudwatch-logs.html",
+        "https://aws.amazon.com/blogs/big-data/ingest-vpc-flow-logs-into-splunk-using-amazon-kinesis-data-firehose/",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-firehose.html",
+        "https://docs.aws.amazon.com/kinesisanalytics/latest/dev/",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-08-19.q305/a-company-has-developed-a-hybrid-solution-between-its-data-center-and-aws-the-company-uses-amazon-vpc",
+        "https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-9.html"
+      ],
+      "notes": "Domain 4 73/139; source B retained. Exact external single-answer copies confirm B. AWS docs show direct Firehose ingestion and optional Lambda; option D service discontinued 2026. Typos and limitations flagged."
+    },
+    "answerStatus": "verified-with-outdated-alternatives"
   },
   {
     "id": 364,
