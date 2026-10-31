@@ -1206,3 +1206,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS:** https://docs.aws.amazon.com/directconnect/latest/UserGuide/virtualgateways.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/WorkingWithVirtualInterfaces.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html ; https://docs.aws.amazon.com/directconnect/latest/APIReference/API_CreatePrivateVirtualInterface.html
 - **External exact-stem sources:** https://examguru.io/exams/sap-c02/review ; https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/2 ; https://passitexams.com/articles/quizzes/sap-c02-question-7/. All single-answer, A selected/supported; no confirmed Choose TWO/THREE conflicting variant.
 - **Caveats:** Provision links on diverse devices/paths and configure/test BGP failover; deleting an existing VIF can interrupt production connectivity. AWS docs, not third-party answer keys, establish technical correctness.
+
+
+### Q320 — Domain 4, position 66/139 (2026-10-31)
+
+- **Verified C (original key retained):** AWS DataSync on-premises → FSx for NetApp ONTAP → EKS shared volume → DataSync → S3. FSx ONTAP offers NFS/SMB multiprotocol access.
+- **A:** EFS is NFS-based, not SMB/NFS multiprotocol; Transfer Family is not direct EFS-to-S3 copy.
+- **B:** FSx Lustre is high-performance POSIX storage, not multiprotocol SMB/NFS.
+- **C:** Correct; DataSync supports ONTAP as source/destination and S3 as destination.
+- **D:** ONTAP correct, but Transfer Family SFTP is not the intended ONTAP-to-S3 transfer mechanism.
+- **Official AWS:** https://docs.aws.amazon.com/datasync/latest/userguide/create-ontap-location.html ; https://aws.amazon.com/datasync/faqs/ ; https://aws.amazon.com/fsx/netapp-ontap/features/ ; https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/supported-fsx-clients.html
+- **External exact stem:** https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-pearson.pdf Question 11, keys C. No confirmed Choose TWO/THREE variant.
+- **Defects/caveats:** Scheduling/event triggering, gating complete output, EKS volume mounting omitted. DataSync ONTAP NFS location supports NFSv3 (not NFSv4), although ONTAP itself supports newer NFS. No answer correction needed.
