@@ -1350,3 +1350,13 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - A: Migration Evaluator collector, scenario, Quick Insights; best answer. B: DMS assessment plus EKS calculator lacks complete TCO. C: MGN migrates servers, not a TCO report. D: Cloud Value Framework does not create a Cost and Usage Report.
 - Defect: Quick Insights is a directional infrastructure estimate and does not guarantee detailed EKS managed-node/RDS PostgreSQL TCO; model EKS control plane, nodes, RDS, networking, storage, and operating costs separately.
 - References: https://aws.amazon.com/migration-evaluator/getting-started/ ; https://aws.amazon.com/migration-evaluator/features/ ; https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-tools/business-case-migration-evaluator.html ; https://docs.aws.amazon.com/transform/latest/userguide/transform-app-assessments.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-wants-to-migrate-its-website-to-aws-the-website-uses-containers-that-are-deployed-in-an-on-prem ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-1
+
+
+### Domain 4 Q385 — 78/139 (2026-10-31)
+
+- Next eligible after Q377: Q381 is Select THREE; Q378-380 and Q382-384 are outside Domain 4. Q385 is single-answer.
+- Correct answer **C**: API Gateway REST API + Lambda + DynamoDB on-demand. AWS API Gateway REST API usage plans support API keys, stages, per-client throttling and quotas; Lambda scales business logic and DynamoDB provides low-latency elastic session data access.
+- A: NLB and fixed EC2 lack native API Gateway usage plans and elasticity. B: ALB/Lambda/DynamoDB lacks REST API Gateway's API key usage plans. D: AppSync is primarily GraphQL, changing the REST API model; Aurora does not address API key throttling.
+- Exact-stem external practice PDF (certsmania, Q67, p.83) keys C as a single-choice question. No substantiated Choose TWO/THREE variant found.
+- Caveat: API keys must not be treated as authentication/authorization; usage-plan throttling is best effort. Add an appropriate auth mechanism.
+- AWS references: https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-usage-plans.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-setup-api-keys.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html ; https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html . External: https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf
