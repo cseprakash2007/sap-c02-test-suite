@@ -13691,13 +13691,28 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is correct. AWS Application Migration Service (MGN) performs automated lift-and-shift block-level replication and launch of supported VMware virtual machines as EC2 instances; AWS DataSync migrates the separate 10 TB on-premises NFS share to managed Amazon EFS over the existing 10 Gbps Direct Connect path. This minimizes manual rebuilding and physical device shipping. MGN does not replicate shared NFS NAS mounts; DataSync handles that independently. Check OS compatibility and MGN agentless/agent-based VMware prerequisites.",
+    "wrongOptionsExplanation": "A: VM Import/Export plus Snowball requires manual exports, device ordering, shipping, and restoring a self-managed NFS server despite available Direct Connect. B: Correct; AWS MGN rehosts supported VMs while DataSync copies NFS to EFS online. C: Manually recreating 120 EC2 VMs and reinstalling packages is slower; FSx for Lustre is not the natural general NFS migration target. D: Two Snowball devices, VM Import/Export, and S3-to-EFS staging add avoidable physical logistics and copying.",
+    "plainWords": "Use MGN to migrate the 120 VMware servers and DataSync to copy the 10 TB NFS share into EFS through Direct Connect.",
+    "keyPoints": "MGN = VM rehosting; DataSync = NFS share migration; EFS = managed NFS destination; Direct Connect = existing high-bandwidth network; Snowball = offline shipping; MGN does not copy shared NFS mounts.",
+    "sourceWarning": "Original question and options have formatting typos (VMS, 10 GbpsAWS, AMIS, on- premises, isloaded). 'Configure MGN with a connection to VMware cluster/create replication job' is conceptual: actual setup uses supported agent-based or vCenter agentless replication workflows. MGN OS support is not universal; verify all 120 VMs. Direct Connect throughput and transfer duration are not guaranteed. Independent exact-stem sites use single-answer B; no confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html",
+        "https://docs.aws.amazon.com/prescriptive-guidance/latest/configuring-storage-offload-vmware-cloud-aws/data-migration.html",
+        "https://aws.amazon.com/datasync/faqs/",
+        "https://docs.aws.amazon.com/pdfs/mgn/latest/ug/user-guide.pdf",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.examtopics.com/discussions/amazon/view/124802-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-302-discussion/"
+      ],
+      "notes": "Domain 4 67/139; Q321 Select THREE skipped; exact external single-answer sources support B; independently validated AWS MGN+DataSync; original spelling preserved and flagged."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 325,
