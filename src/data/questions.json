@@ -13526,13 +13526,27 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct C. AWS DataSync copies raw on-premises file data to FSx for NetApp ONTAP. FSx for ONTAP supports concurrent NFS/SMB multiprotocol file access and EKS workloads can mount it for processing. A separate DataSync task moves completed processed files from FSx for ONTAP to Amazon S3 for long-term storage. AWS documents ONTAP as a DataSync source and destination. The original answer C is retained; independent exact-stem exam copy (Question 11) also keys C.",
+    "wrongOptionsExplanation": "A: EFS is NFS-based rather than general NFS/SMB multiprotocol; Transfer Family does not provide the proposed simple EFS-to-S3 copy workflow. B: FSx for Lustre is optimized for high-performance POSIX workloads, not simultaneous SMB/NFS multiprotocol access. C: Correct, combines multiprotocol ONTAP storage for EKS with DataSync in both directions. D: ONTAP is appropriate, but AWS Transfer Family SFTP is not the intended FSx for ONTAP-to-S3 automated copy solution; use DataSync.",
+    "plainWords": "Move incoming files automatically with DataSync to FSx for NetApp ONTAP. Let EKS containers process them on shared storage, then use another DataSync task to send finished files to S3.",
+    "keyPoints": "FSx for NetApp ONTAP = NFS+SMB multiprotocol and EKS mountable; DataSync supports on-premises, FSx ONTAP, and S3; FSx Lustre lacks SMB; Transfer Family is for file-transfer endpoints, not direct FSx-to-S3 synchronization.",
+    "sourceWarning": "No confirmed Choose TWO/THREE variant: exact external copy labels this MultipleChoice and keys C. Stem says 'automated' but options omit task schedules/event triggers, completion gating, and EKS CSI/storage configuration. DataSync ONTAP NFS location supports NFSv3 (SMB also supported), despite ONTAP file system supporting newer NFS versions. Avoid copying partially written output.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/create-ontap-location.html",
+        "https://aws.amazon.com/datasync/faqs/",
+        "https://aws.amazon.com/fsx/netapp-ontap/features/",
+        "https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/supported-fsx-clients.html",
+        "https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-pearson.pdf"
+      ],
+      "notes": "Domain 4 single-answer 66/139. AWS independently confirms DataSync ONTAP/S3 and EKS multiprotocol; exact external Q11 answer C. No conflicting multi-answer version confirmed."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 321,
