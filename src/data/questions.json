@@ -14875,13 +14875,28 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is verified. Existing backend services already run on EC2 behind an ALB, so EC2 Auto Scaling groups increase/decrease instances with traffic without rewriting the backend. DynamoDB auto scaling adjusts provisioned read and write throughput of tables and GSIs using target utilization, addressing seasonal database throttling with minimal development. AWS docs confirm both services. Exact-stem external exam copies support the same architecture, sometimes with reordered option letters.",
+    "wrongOptionsExplanation": "A: Lambda migration requires code and deployment changes; manually increasing DynamoDB read/write capacity does not automatically adapt to seasonal demand. B: Lambda migration adds development work; DynamoDB global tables are for multi-Region replication, not a direct remedy for existing single-Region read/write capacity. C: Correct; existing EC2 application and DynamoDB provisioned throughput can both scale without rewriting application architecture. D: SQS plus Lambda can buffer asynchronous writes, but changes application semantics/integration and does not directly address synchronous reads; more development than C.",
+    "plainWords": "Keep the existing EC2 backend, put it in an Auto Scaling group behind the ALB, and enable DynamoDB auto scaling for reads and writes.",
+    "keyPoints": "EC2 ASG scales application instances; DynamoDB auto scaling scales provisioned RCU/WCU and GSIs; DynamoDB on-demand is a different capacity mode; DynamoDB auto scaling can lag sharp spikes; global tables solve multi-Region replication, not baseline capacity.",
+    "sourceWarning": "No substantive source-answer defect. Option C assumes DynamoDB provisioned capacity mode; on-demand capacity is a viable modern alternative but not an offered answer. Target-tracking DynamoDB auto scaling responds to sustained load with CloudWatch evaluation and capacity-update lag, so scheduled scaling/pre-warming may help predictable seasonal spikes. External sources may reorder answer letters; compare answer text. Q350 explicitly Choose two and was skipped. No confirmed Choose TWO/THREE Q355 variant.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-groups.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CostOptimization_AutoScalingSettings.html",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=19",
+        "https://www.examcollection.us/exam/SAP-C02-question-answer-4.html",
+        "https://www.shikenpass.com/SAP-C02-shiken.html"
+      ],
+      "notes": "Domain 4 72/139. Q350 Choose two skipped. AWS EC2 and DynamoDB autoscaling documentation plus exact-stem external single-answer versions support C; capacity mode and scale-up lag caveats."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 356,
