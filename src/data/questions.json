@@ -16429,13 +16429,28 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A is the documented historical exam answer. AWS Application Discovery Service Discovery Agent running on Linux VMware guests collects detailed server and network connection data; AWS Migration Hub's network diagram visualizes hostnames, IPs and server dependencies. The official Migration Hub network diagram prerequisites specifically require Discovery Agent on mapped servers and access to discovery:GetNetworkConnectionGraph. Select a Migration Hub home Region, deploy agents, collect data, and view the graph. Caveat: Migration Hub became unavailable to new customers in November 2025; do not present this as a universal 2026 greenfield solution.",
+    "wrongOptionsExplanation": "A: Correct historical choice: Discovery Agent and Migration Hub network diagram meet the dependency mapping requirement. B: Agentless Collector gained network-connection discovery in November 2024, so its premise is no longer inherently wrong; however, the specified direct PNG export of the Migration Hub network diagram is not established by the official workflow, and the network diagram documentation calls for Discovery Agent. C: Application Migration Service replication agent is for server migration, not Application Discovery Service network graph discovery; Workload Discovery does not correct that mismatch. D: CloudWatch dashboards do not transform a CSV export from Migration Hub into the specified server connection topology diagram.",
+    "plainWords": "Install AWS Application Discovery Agents on the Linux VMs, enable Migration Hub network diagram permissions, and inspect the server-to-server dependency map.",
+    "keyPoints": "Discovery Agent collects processes and network connections; Migration Hub network diagram visualizes hostnames/IP addresses/dependencies; IAM permission discovery:GetNetworkConnectionGraph. AWS recommends 2–6 weeks of discovery. Agentless Collector added network connection discovery in November 2024, but the option's PNG export remains unsupported. Migration Hub access for new customers changed November 2025.",
+    "sourceWarning": "HIGH — HISTORICAL/OUTDATED-SERVICE: AWS Migration Hub closed to new customers on November 7, 2025; the original exam workflow is not a universal current new-customer recommendation. Also Agentless Collector gained network-connection discovery November 8, 2024, making B's discovery premise viable, though its PNG-export claim is not documented. The Migration Hub diagram prerequisites still explicitly require Discovery Agent. Exact-stem exam copies checked are single-answer; no verified Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-historical-outdated-service",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "A"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/migrationhub/latest/ug/network-diagram.html",
+        "https://docs.aws.amazon.com/migrationhub/latest/ug/network-diagram-prerequisites.html",
+        "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html",
+        "https://aws.amazon.com/about-aws/whats-new/2024/11/network-connections-aws-application-discovery-service-agentless-collector/",
+        "https://www.examcollection.us/exam/SAP-C02-question-answer-6.html",
+        "https://www.examtopics.com/discussions/amazon/view/132905-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-423-discussion/"
+      ],
+      "notes": "Domain 4 80/139. Exact stem found at ExamCollection question 89 and ExamTopics discussion question 423, both single-choice. No confirmed Choose TWO/THREE variant. Historical A documented by Migration Hub network diagram prerequisites; flag agentless 2024 change and Migration Hub 2025 new-customer closure."
+    },
+    "answerStatus": "verified-historical-outdated-service"
   },
   {
     "id": 396,
