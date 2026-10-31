@@ -15319,13 +15319,28 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D verified. Amazon Textract is managed OCR/document analysis and extracts printed/handwritten text, form key-value pairs and tables. Amazon Comprehend can analyze extracted text (but is NOT the OCR engine). Step Functions and Lambda orchestrate extraction, validation, S3 output, error handling, and downstream API integration without training/hosting custom OCR models or managing servers. Official AWS documentation includes Textract-to-Comprehend processing; exact-stem external single-answer copies identify the same architecture, though letters are reordered.",
+    "wrongOptionsExplanation": "A: Custom OCR libraries plus EKS and EC2-hosted application tier require extensive model/application development and cluster/node operations, contrary to rapid delivery and low maintenance. B: Step Functions/Lambda are good orchestration, but training and hosting custom OCR models on EC2 adds ML training, deployment and infrastructure overhead. C: SageMaker-hosted custom OCR plus EC2 app tier and ElastiCache introduces training, infrastructure and ephemeral result storage complexity; managed Textract is simpler. D: Correct; Textract extracts text/forms, Comprehend optionally analyzes language, Step Functions/Lambda automate validation and API calls.",
+    "plainWords": "Use S3 uploads to start a Step Functions/Lambda workflow that calls Textract to read scanned forms, optionally Comprehend to analyze the text, validates extracted fields, and submits them to the destination API.",
+    "keyPoints": "Textract performs OCR and form key-value extraction; Comprehend performs NLP, NOT OCR; Step Functions/Lambda orchestrate managed processing; confidence thresholds and human review for low-confidence fields; asynchronous Textract for large/multipage documents.",
+    "sourceWarning": "Option D inaccurately implies both Textract and Comprehend perform OCR; Comprehend performs NLP only and is optional if only form key-value extraction is required. Neither service guarantees accurate extraction without confidence validation/human review. Option C typo 'Al/ML' (AI/ML). External exact-stem copies reorder option letters (Textract architecture D in 2026 copy, B in 2023 copy); no confirmed Choose TWO/THREE variant. Q365 Select TWO skipped.",
+    "review": {
+      "status": "verified-with-wording-caveat",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "D"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/textract/latest/dg/how-it-works-analyzing.html",
+        "https://docs.aws.amazon.com/textract/latest/dg/how-it-works-kvp.html",
+        "https://docs.aws.amazon.com/textract/latest/dg/textract-to-comprehend.html",
+        "https://docs.aws.amazon.com/step-functions/latest/dg/connect-textract.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-migrated-its-forms-processing-application-to-aws-when-users-interact-with-the-application",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-03-07.q318/a-company-has-migrated-its-forms-processing-application-to-aws-when-users-interact-with-the-application"
+      ],
+      "notes": "Domain 4 74/139. Q365 Select TWO skipped. AWS Textract/Comprehend documentation confirms managed extraction/NLP. External exam variants agree on architecture but reorder option letters. Flag Comprehend-not-OCR and validation/human-review caveats."
+    },
+    "answerStatus": "verified-with-wording-caveat"
   },
   {
     "id": 368,
