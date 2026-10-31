@@ -17973,7 +17973,7 @@
   {
     "id": 434,
     "domain": 4,
-    "stem": "A company runs a Python script on an Amazon EC2 instance to process data. The script runs every 10 minutes. The script ingests files from an Amazon S3 bucket and processes the files. On average, the script takes approximately 5 minutes to process each file The script will not reprocess a file that the script has already processed. The company reviewed Amazon CloudWatch metrics and noticed that the EC2 instance is idle for approximately 40% of the time because of the file processing speed. The company wants to make the workload highly available and scalable. The company also wants to reduce long-term management overhead. Which solution will meet these requirements MOST cost-effectively?",
+    "stem": "A company runs a Python script on an Amazon EC2 instance to process data. The script runs every 10 minutes. The script ingests files from an Amazon S3 bucket and processes the files. On average, the script takes approximately 5 minutes to process each file. The script will not reprocess a file that the script has already processed. The company reviewed Amazon CloudWatch metrics and noticed that the EC2 instance is idle for approximately 40% of the time because of the file processing speed. The company wants to make the workload highly available and scalable. The company also wants to reduce long-term management overhead. Which solution will meet these requirements MOST cost-effectively?",
     "options": [
       {
         "id": "A",
@@ -17996,13 +17996,29 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A is correct. S3 ObjectCreated event notifications invoke Lambda asynchronously for each new file, eliminating periodic EC2 polling and idle capacity. The five-minute average processing time is within Lambda's 15-minute maximum. Lambda provides managed scaling and usage-based pricing, reducing operational overhead compared with EC2 and ECS. Confirm worst-case runtime, memory, temporary storage, and concurrency; handle duplicate S3 notifications with idempotency.",
+    "wrongOptionsExplanation": "A: Correct. Direct S3-to-Lambda events provide serverless, event-driven processing with no always-on EC2 capacity. B: S3 to SQS to EC2 Auto Scaling is feasible but minimum one EC2 instance remains running and requires OS, scaling and worker management. C: EC2-hosted container still needs always-on EC2, polling and HA operations. D: Fargate adds ECS task startup and operational complexity for jobs Lambda can handle; wording says invoke RunTask when the container processes the file, reversing the required invocation sequence.",
+    "plainWords": "Trigger the existing Python processing logic as a Lambda function whenever a new file lands in S3; stop paying for an idle EC2 worker.",
+    "keyPoints": "Lambda supports 15-minute maximum execution, sufficient for five-minute average but verify worst case. S3 ObjectCreated notifications can directly invoke Lambda. S3 event notifications are at least once and can be out of order, so implement idempotency. Set appropriate memory, timeout and concurrency. Watch for recursive triggers if output is written to same bucket.",
+    "sourceWarning": "MINOR: Corrected missing period after 'each file'. Average processing time alone does not guarantee all jobs fit Lambda's 15-minute limit. At-least-once S3 notifications require duplicate handling. Option D reverses RunTask invocation order. External SPOTO keys A; Brainscape flashcard keys D despite the stated Lambda-suitable workload, an external answer conflict. Exact-stem four-option single-answer versions found; no confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-aws-and-external-with-conflicting-source",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "A"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-s3.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html",
+        "https://aws.amazon.com/blogs/storage/manage-event-ordering-and-duplicate-events-with-amazon-s3-event-notifications/",
+        "https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part1",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/3/",
+        "https://www.brainscape.com/flashcards/solutions-architect-professional-deck-02-15140066/packs/21889491"
+      ],
+      "notes": "Domain 4 89/139. AWS supports direct S3 Lambda notifications and five-minute average fits 15-minute Lambda maximum. SPOTO keys A; Brainscape flashcard claims D, but D unnecessarily adds Fargate and has reversed RunTask timing. No confirmed multi-answer variant."
+    },
+    "answerStatus": "verified-aws-and-external-with-conflicting-source"
   },
   {
     "id": 435,
