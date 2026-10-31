@@ -1447,3 +1447,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **A:** apex CNAME not allowed, Route 53 migration unnecessary. **B:** CNAME to literal IP and apex CNAME invalid, NLB tier unnecessary. **D:** apex CNAME invalid; API Gateway/Lambda router unnecessary and adds regional dependency.
 - AWS: https://docs.aws.amazon.com/global-accelerator/latest/dg/about-endpoints.html ; https://docs.aws.amazon.com/global-accelerator/latest/dg/dns-addressing-custom-domains.dns-addressing.html ; https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-how-it-works.html
 - Exact-stem third-party single-answer cross-check: https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-global-media-company-is-planning-a-multi-region-deployment-of-an-application-amazon-dynamodb-global ; https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/4/ ; https://www.passtest.jp/articles/2023%E5%B9%B410%E6%9C%88-%E6%9B%B4%E6%96%B0%E3%81%AEamazon-sap-c02%E8%A9%A6%E9%A8%93%E5%9F%BA%E6%9C%AC%E5%95%8F%E9%A1%8C%E3%81%AB%E3%81%AF%E8%A7%A3%E7%AD%94%E3%81%8C%E4%BB%98%E3%81%8D%E3%81%BE%E3%81%99-q39-q64/ . PassTest reorders options but chooses Global Accelerator. No verified Choose TWO/THREE variant.
+
+
+### Domain 4 Q427 — 88/139 (2026-10-31)
+
+- **CORRECTED SOURCE ANSWER B → A**. NLB-backed TCP AWS PrivateLink endpoint service is supported. Standalone ALB-backed endpoint service in B is not supported (NLB/GWLB only).
+- A: NLB TCP service published through PrivateLink; route from NLB to on-prem IP targets over DX/VPN; consumers use interface endpoints. B: ALB cannot directly back endpoint service, though NLB can target ALB. C: IGW exposes internet connectivity. D: NAT gateway cannot publish service.
+- Fixed OCR and punctuation errors in stem and C/D without changing intent. DX is the hybrid backend path; PrivateLink is the customer-facing private path. No verified Choose TWO/THREE variant.
+- AWS documentation: https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html ; https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html ; https://aws.amazon.com/privatelink/faqs/
+- External exact-stem single-answer question: https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-espinoza-09-08-2024-10qa-go4braindumps.pdf . Prior B answer contradicted AWS primary docs.
