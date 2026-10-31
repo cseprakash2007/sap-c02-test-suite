@@ -1295,3 +1295,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Official AWS:** https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-groups.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CostOptimization_AutoScalingSettings.html
 - **External exact stem:** https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=19 ; https://www.examcollection.us/exam/SAP-C02-question-answer-4.html ; https://www.shikenpass.com/SAP-C02-shiken.html; correct architecture same despite option reorderings. No confirmed Choose TWO/THREE Q355 variant.
 - **Caveats:** DynamoDB auto scaling presumes provisioned capacity mode; on-demand is an alternative outside options. Target-tracking scaling reacts to sustained demand with minutes of CloudWatch evaluation/UpdateTable lag; consider scheduled scaling/pre-warming for seasonal bursts. Original stem/options preserved.
+
+
+### Q363 — Domain 4, position 73/139 (2026-10-31)
+
+- **Verified B (retained):** VPC Flow Logs → CloudWatch Logs subscription → Amazon Data Firehose → Splunk HEC; near-real-time IP/port connection metadata to on-prem DBs.
+- **A:** Periodic CloudWatch export to S3 + Splunk polling is batch/delayed and uses long-lived credentials.
+- **B:** Correct streaming pattern; Firehose Lambda preprocessing optional today depending on data format/add-on.
+- **C:** Custom per-request logging + Athena/S3/Lambda is slower and requires application changes.
+- **D:** Anomaly detection not requested; Kinesis Data Analytics for SQL Applications discontinued January 27 2026.
+- **Official AWS:** https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html ; https://docs.aws.amazon.com/firehose/latest/dev/writing-with-cloudwatch-logs.html ; https://aws.amazon.com/blogs/big-data/ingest-vpc-flow-logs-into-splunk-using-amazon-kinesis-data-firehose/ ; https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-firehose.html ; https://docs.aws.amazon.com/kinesisanalytics/latest/dev/
+- **External exact stem:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-08-19.q305/a-company-has-developed-a-hybrid-solution-between-its-data-center-and-aws-the-company-uses-amazon-vpc ; https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-9.html; single-answer B, no confirmed Choose TWO/THREE variant.
+- **Defects/current guidance:** Stem typo 'application togs'; D 'SOL Applications'. Kinesis Data Firehose renamed Amazon Data Firehose; VPC Flow Logs can publish directly to Firehose, with Splunk HEC and native CloudWatch Logs decompression. Splunk on-prem HEC must be reachable securely. Flow logs are aggregated metadata, not packet payload or SQL statements. Original stem/options preserved.
