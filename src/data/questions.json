@@ -13818,13 +13818,28 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct A. AWS App2Container inventories and analyzes supported Java applications, creates Docker containers, and generates deployment configurations. AWS documentation explicitly supports Java on Linux for ECS Fargate and makes Fargate the default Java ECS target. ECR hosts images; the ECS task execution role authorizes ECR pulls; ALB routes web requests. Fargate removes EC2 host management, unlike EKS managed node groups. External exact-stem SAP-C02 variants are single-answer and support A.",
+    "wrongOptionsExplanation": "A: Correct, assuming the source Java app meets App2Container supported-platform prerequisites. B: Lambda container images still require adapting the Java server to Lambda's event-driven runtime and execution constraints. C: App2Container can target EKS, but EKS managed node groups require EC2 node lifecycle administration and API Gateway integration adds complexity. D: ALB supports Lambda targets but Lambda compatibility and potential code changes remain; not the least effort.",
+    "plainWords": "Package the existing supported Java app with App2Container, push its image to ECR, and run it on ECS Fargate behind an ALB.",
+    "keyPoints": "App2Container supports Java Linux to ECS Fargate; Fargate avoids managing servers; ECS task execution role pulls from ECR; EKS managed nodes retain node management; Lambda container image does not automatically adapt a traditional server.",
+    "sourceWarning": "Original stem says 'stable. but' and option A says 'permission 10' instead of 'permission to'. Java source OS, server/framework and dependencies are unspecified; App2Container support must be checked. Option C's API Gateway integration is not impossible but is unnecessary complexity. No confirmed conflicting Choose TWO/THREE version found. Current AWS App2Container docs still describe Java-on-Linux ECS Fargate support; verify tool availability and prerequisites for deployment.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "A"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/app2container/",
+        "https://docs.aws.amazon.com/app2container/latest/UserGuide/a2c-integrations-ecs.html",
+        "https://docs.aws.amazon.com/app2container/latest/UserGuide/config-deployment.html",
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=67",
+        "https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-4-question-484-discussion-p1143155.html"
+      ],
+      "notes": "Domain 4 68/139, Q326 Select THREE skipped; AWS docs independently validate Java Linux App2Container to ECS Fargate; external exact-stem single-answer copies found; typo and compatibility caveats flagged."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 328,
