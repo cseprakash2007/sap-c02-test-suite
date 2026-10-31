@@ -14355,13 +14355,29 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is the intended best single answer: Route 53 health-check-based failover records implement active/passive DNS, and a CloudWatch alarm on Route 53 health check status can publish SNS to invoke Lambda, which promotes the cross-Region RDS read replica and raises standby Auto Scaling group capacity. AWS RDS documents replica promotion as a recovery mechanism; AWS Route 53 documents DNS failover and CloudWatch/SNS notifications. However, Route 53 does NOT send SNS directly; CloudWatch alarm mediates it, and the DNS failover may occur before the zero-capacity standby is ready. This option does not guarantee RTO <15 minutes without orchestration, readiness gating, and drills. Independent exact-stem exam copies key B.",
+    "wrongOptionsExplanation": "A: Latency routing is not the desired active/passive primary/standby strategy, and ALB 5XX alarm can miss failures or be noisy; secondary ASG is zero. B: Best: Route 53 health-check failover plus CloudWatch alarm/SNS/Lambda promotion and standby ASG scale-out, with missing sequencing caveat. C: Fully sized secondary compute raises costs; latency routing creates active-active behavior; snapshot/S3 is not continuous RDS cross-Region replication. D: Equal-weight Global Accelerator endpoints are inconsistent with cold standby and may route before readiness; ALB 5XX alarm alone is insufficient.",
+    "plainWords": "Keep backup compute off, monitor the primary web app with Route 53, and use CloudWatch alarm → SNS → Lambda to promote the standby database and start backup servers. Route 53 switches DNS when standby is ready.",
+    "keyPoints": "Active/passive uses Route 53 failover routing, not latency; health check notifications require CloudWatch alarm to SNS; SNS can invoke Lambda; RDS cross-Region read replica can be promoted; standby ASG zero saves cost but slows RTO; DNS failover must be sequenced with readiness.",
+    "sourceWarning": "Original option B incorrectly implies Route 53 health check directly sends SNS; actual chain is health check → CloudWatch alarm → SNS → Lambda. Route 53 DNS failover can precede promotion and ASG warm-up, creating outage; 15-minute RTO not guaranteed. RDS promotion can take several minutes or longer and replication is asynchronous (potential data loss). Need readiness-gated traffic cutover, IAM permissions, database endpoint update, safe failback and tested RTO. Option C typo 'Replicationbetween'. No confirmed Choose TWO/THREE exact-stem variant; external exact copies single-answer B.",
+    "review": {
+      "status": "verified-with-caveats",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/monitoring-health-checks.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover.html",
+        "https://aws.amazon.com/blogs/networking-and-content-delivery/creating-disaster-recovery-mechanisms-using-amazon-route-53/",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.Promote.html",
+        "https://www.examtopics.com/discussions/amazon/view/90943-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-8-discussion/",
+        "https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2024-05-06.q201/a-company-has-a-multi-tier-web-application-that-runs-on-a-fleet-of-amazon-ec2-instances-behind-an-applicat"
+      ],
+      "notes": "Domain 4 70/139; Q337 Select THREE skipped; intended B confirmed by AWS plus external exact copies. Technically incomplete SNS chain, readiness sequencing, RTO guarantee flagged."
+    },
+    "answerStatus": "verified-with-caveats"
   },
   {
     "id": 342,
