@@ -18119,13 +18119,27 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is the best single answer. EKS pods on AWS Fargate provide serverless container compute; Aurora Serverless MySQL handles operational transactions; Redshift Serverless provides an analytics warehouse; and EventBridge routes application events to consumers. However, EventBridge alone does not automatically insert event payloads into Redshift Serverless tables. A compatible ingestion component or pipeline must load the data, and EKS still requires cluster administration.",
+    "wrongOptionsExplanation": "A: Fargate microservices are suitable, but EC2-hosted MySQL is not serverless, and Neptune is a graph database rather than a general OLAP replacement. B: EC2 Auto Scaling groups are not serverless, and Aurora MySQL is not an appropriate substitute for a dedicated analytics warehouse. C: Best fit: Fargate, Aurora Serverless, Redshift Serverless, and EventBridge support event-driven serverless application and analytics architecture, subject to implementing ingestion into Redshift. D: AppStream 2.0 streams end-user desktop applications rather than backend microservices; IoT Core is not the general event bus for retail orders and returns.",
+    "plainWords": "Move retail microservices to EKS on Fargate, transactions to Aurora Serverless, analytics to Redshift Serverless, and distribute business events with EventBridge plus an actual warehouse ingestion pipeline.",
+    "keyPoints": "EventBridge routes application events near real time but does not itself load Redshift Serverless tables. Redshift Serverless is the OLAP warehouse. Aurora Serverless is the transactional MySQL-compatible store. EKS Fargate removes node management, not Kubernetes cluster operations. External exam sites reorder letters: ExamTopics C, PDFDumps D, same solution.",
+    "sourceWarning": "MODERATE ARCHITECTURAL OMISSION: The option implies EventBridge directly sends all data to Redshift Serverless; a supported ingestion integration/consumer is needed for table inserts. EKS on Fargate still has Kubernetes operational overhead. External single-answer copies agree on architecture with reordered letters. No independently confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-best-answer-with-ingestion-caveat",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://www.examtopics.com/discussions/amazon/view/136656-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-474-discussion/",
+        "https://www.pdfdumps.com/articles/real-amazon-sap-c02-exam-questions-study-guide-q217-q242/",
+        "https://aws.amazon.com/eventbridge/faqs/",
+        "https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-redshift-serverless.html",
+        "https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-event-notifications-eventbridge.html"
+      ],
+      "notes": "Domain 4 90/139. ExamTopics answer C and PDFDumps answer D correspond to identical EKS Fargate + Aurora Serverless + Redshift Serverless + EventBridge solution. EventBridge is not automatic Redshift row ingestion. No confirmed Choose TWO/THREE variant."
+    },
+    "answerStatus": "verified-best-answer-with-ingestion-caveat"
   },
   {
     "id": 438,
