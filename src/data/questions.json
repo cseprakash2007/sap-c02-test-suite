@@ -17248,11 +17248,11 @@
   {
     "id": 416,
     "domain": 4,
-    "stem": "A company migrated an application to the AWS Cloud. The application runs on two Amazon EC2 instances behind an Application Load Balancer (ALB). Application data is stored in a MySQL database that runs on an additional EC2 instance. The application's use of the database is read-heavy. The loads static content from Amazon Elastic Block Store (Amazon EBS) volumes that are attached to each EC2 instance. The static content is updated frequently and must be copied to each EBS volume. The load on the application changes throughout the day. During peak hours, the application cannot handle all the incoming requests. Trace data shows that the database cannot handle the read load during peak hours. Which solution will improve the reliability of the application?",
+    "stem": "A company migrated an application to the AWS Cloud. The application runs on two Amazon EC2 instances behind an Application Load Balancer (ALB). Application data is stored in a MySQL database that runs on an additional EC2 instance. The application's use of the database is read-heavy. The application loads static content from Amazon Elastic Block Store (Amazon EBS) volumes that are attached to each EC2 instance. The static content is updated frequently and must be copied to each EBS volume. The load on the application changes throughout the day. During peak hours, the application cannot handle all the incoming requests. Trace data shows that the database cannot handle the read load during peak hours. Which solution will improve the reliability of the application?",
     "options": [
       {
         "id": "A",
-        "text": "Migrate the application to a set of AWS Lambda functions. Set the Lambda functions as targets for the ALB. Create a new single EBS volume for the static content. Configure the Lambda functions to read from the new EBSvolume. Migrate the database to an Amazon RDS for MySQL Multi-AZ DB cluster."
+        "text": "Migrate the application to a set of AWS Lambda functions. Set the Lambda functions as targets for the ALB. Create a new single EBS volume for the static content. Configure the Lambda functions to read from the new EBS volume. Migrate the database to an Amazon RDS for MySQL Multi-AZ DB cluster."
       },
       {
         "id": "B",
@@ -17260,24 +17260,39 @@
       },
       {
         "id": "C",
-        "text": "Containerize the application. Migrate the application to an Amazon Elastic Container Service (Amazon ECS) Cluster. Use the AWS Fargate launch type for the tasks that host the application. Create a new single EBS volume the static content. Mount the new EBS volume on the ECS duster. Configure AWS Application Auto Scaling on ECS cluster. Set the ECS service as a target for the ALB. Migrate the database to an Amazon RDS for MySOL Multi-AZ DB cluster."
+        "text": "Containerize the application. Migrate the application to an Amazon Elastic Container Service (Amazon ECS) Cluster. Use the AWS Fargate launch type for the tasks that host the application. Create a new single EBS volume for the static content. Mount the new EBS volume on the ECS cluster. Configure AWS Application Auto Scaling on ECS cluster. Set the ECS service as a target for the ALB. Migrate the database to an Amazon RDS for MySQL Multi-AZ DB cluster."
       },
       {
         "id": "D",
-        "text": "Containerize the application. Migrate the application to an Amazon Elastic Container Service (Amazon ECS) cluster. Use the AWS Fargate launch type for the tasks that host the application. Create an Amazon Elastic File System (Amazon EFS) file system for the static content. Mount the EFS file system to each container. Configure AWS Application Auto Scaling on the ECS cluster Set the ECS service as a target for the ALB. Migrate the database to Amazon Aurora MySQL Serverless v2 with a reader DB instance."
+        "text": "Containerize the application. Migrate the application to an Amazon Elastic Container Service (Amazon ECS) cluster. Use the AWS Fargate launch type for the tasks that host the application. Create an Amazon Elastic File System (Amazon EFS) file system for the static content. Mount the EFS file system to each container. Configure AWS Application Auto Scaling on the ECS cluster. Set the ECS service as a target for the ALB. Migrate the database to Amazon Aurora MySQL Serverless v2 with a reader DB instance."
       }
     ],
     "answers": [
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is correct: migrate the application to an ECS service using AWS Fargate with ECS Service Auto Scaling to handle changing HTTP demand, use Amazon EFS as a concurrently accessible shared file system for frequently updated static assets, and migrate the read-heavy MySQL database to Aurora MySQL Serverless v2 with a reader DB instance for elastic read scaling. The ECS service can be registered with the ALB using IP-type targets. AWS documentation confirms EFS shared access from Fargate and Aurora Serverless v2 reader scaling.",
+    "wrongOptionsExplanation": "A: Lambda can be an ALB target and RDS MySQL Multi-AZ DB clusters can have readable standbys, but Lambda cannot mount an EBS volume as specified. B: Step Functions state machines are workflow orchestration resources, not ALB targets or compute instances that mount EFS. C: ECS Fargate scaling and an RDS MySQL Multi-AZ DB cluster with readable standbys are viable, but a single shared EBS volume is not a general concurrent shared filesystem for independently scaling Fargate tasks; task-attached EBS volumes are task-scoped. D: Correct: ECS Fargate auto scaling + shared EFS + Aurora Serverless v2 reader resolves application, content consistency, and read bottlenecks.",
+    "plainWords": "Auto-scale the application containers on Fargate, share changing static files through EFS, and use a scalable Aurora database with a reader for heavy queries.",
+    "keyPoints": "ECS Fargate service auto scaling; ALB IP targets for awsvpc tasks; EFS can be mounted by multiple Fargate tasks; Fargate EBS volumes are task-scoped, not a multi-task shared file system; Aurora Serverless v2 supports reader instances and elastic capacity; RDS for MySQL Multi-AZ DB clusters also offer readable standby instances; Step Functions cannot be direct ALB targets; Lambda cannot mount EBS.",
+    "sourceWarning": "MODERATE: Corrected grammatical/typing defects in stem and options: 'The loads static content', 'EBSvolume', 'ECS duster', 'MySOL', missing 'for', and punctuation. RDS MySQL Multi-AZ DB cluster is not inherently unsuitable for reads; C fails on EBS sharing. Source external exam copy uses a different option order; map by content, not answer letter. Matching exact-stem external source is single-answer; no independently confirmed Choose TWO/THREE variant. Consider EFS throughput/latency and Aurora reader endpoint routing in implementation.",
+    "review": {
+      "status": "verified-aws-and-external-with-wording-fixes",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "D"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-volumes.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-administration.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-properties-ecs-service-loadbalancer.html",
+        "https://repost.aws/knowledge-center/ecs-fargate-mount-efs-containers-tasks",
+        "https://www.repost.aws/knowledge-center/ecs-fargate-increase-disk-space",
+        "https://examsdocs.dumpsquestion.com/articles/assume-amazon-sap-c02-dumps-pdf-are-going-to-be-the-best-score-q27-q52/"
+      ],
+      "notes": "Domain 4 84/139. Historical correct D validated independently against AWS docs. Exact-stem third-party copy found with reordered options; no confirmed Choose TWO/THREE variant. Fixed typos. Clarified that RDS Multi-AZ DB cluster supports readable standbys, so C fails because task-scoped EBS is not shared EFS."
+    },
+    "answerStatus": "verified-aws-and-external-with-wording-fixes"
   },
   {
     "id": 417,
