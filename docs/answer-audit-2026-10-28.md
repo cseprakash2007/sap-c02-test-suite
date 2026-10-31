@@ -1406,3 +1406,13 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - Corrected typo `usersshould` to `users should` in original stem.
 - Caveats: explicitly configure Cognito-authorized S3 upload permissions, private storage paths and bucket access. CloudFront serves static assets; direct S3 uploads are a separate path, not automatically accelerated by website CDN.
 - AWS references: https://docs.aws.amazon.com/amplify/latest/userguide/deploy-website-from-s3.html ; https://docs.amplify.aws/react/frontend/storage/upload-files/ ; https://aws.amazon.com/blogs/storage/allowing-external-users-to-securely-and-directly-upload-files-to-amazon-s3/ ; https://aws.amazon.com/blogs/networking-and-content-delivery/implementing-secure-file-uploads-to-amazon-s3-at-the-edge-choosing-the-right-pattern/ . External: https://www.examsvce.com/sap-c02/a-company-runs-an-application-in-an-55856-question-answer.html ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-5
+
+
+### Domain 4 Q416 — 84/139 (2026-10-31)
+
+- Q416 next Domain 4 single-answer after Q414 (Q415 belongs to Domain 3). Verified **D — ECS Fargate with ECS Service Auto Scaling, shared EFS, Aurora MySQL Serverless v2 reader**.
+- A: Lambda supports ALB targets but cannot mount EBS as specified. B: Step Functions state machines cannot serve as ALB targets or mount EFS. C: Fargate scaling and RDS MySQL Multi-AZ DB cluster (including readable standby instances) are feasible, but a single EBS volume cannot serve as the common shared file system across independently scaling Fargate tasks. D: resolves scaling, shared file consistency, and read-heavy database pressure.
+- Wording fixes applied: `The loads static content` -> `The application loads static content`; `EBSvolume`, `ECS duster`, `MySOL`, missing `for`, and punctuation in option D. Technical intent unchanged.
+- External exact-stem SAP-C02 collection found with different option order; map answer by text, not letter. Single-choice source; no independently verified Choose TWO/THREE variant: https://examsdocs.dumpsquestion.com/articles/assume-amazon-sap-c02-dumps-pdf-are-going-to-be-the-best-score-q27-q52/
+- AWS references: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-volumes.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-administration.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-properties-ecs-service-loadbalancer.html ; https://repost.aws/knowledge-center/ecs-fargate-mount-efs-containers-tasks
+- Caveats: use ALB IP target type for Fargate; tune EFS throughput and Aurora reader endpoint routing. RDS Multi-AZ DB clusters are not invalid solely because of read scaling.
