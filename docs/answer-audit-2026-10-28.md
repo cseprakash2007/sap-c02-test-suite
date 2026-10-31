@@ -1502,3 +1502,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - Original stem/option OCR defects fixed (punctuation and missing spaces). Four-option single-answer question appears on ExamTopics Q511, CertEnsure Q184, PracticeCF Q1481 and ExamsTrack Q131; no confirmed Choose TWO/THREE variant. AWS documentation takes precedence over unverified answer keys.
 - AWS: https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html ; https://docs.aws.amazon.com/lambda/latest/dg/with-s3.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html
 - External: https://www.examtopics.com/discussions/amazon/view/143048-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-511-discussion/ ; https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-1 ; https://www.examstrack.com/amazon-web-services-exams/how-to-pass-sap-c02-test-9
+
+
+### Domain 4 Q450 — 94/139 (2026-10-31)
+
+- **Correct A:** AWS Cost Management/Cost Explorer annual recommendations and 1-year Compute Savings Plans. Compute Savings Plans cover eligible EC2 across Regions/families and Lambda as application components migrate during the next two years.
+- A: Correct and adaptable. B: EC2 Instance Savings Plans are family/Region scoped, do not cover Lambda; three-year lock-in. C: Short-term but EC2-only, regional/family restriction; future commitments may change but existing ones cannot. D: Existing three-year commitment cannot be decreased and cannot cover Lambda.
+- **MINOR QUALIFICATION:** 'MAXIMIZE' cannot be proven numerically without usage/prices. Three-year Compute Savings Plans might offer greater discounts on predictable baseline, but are not an option. No Upfront changes payment terms, not commitment flexibility.
+- External exact-stem single-answer question: https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-migrated-an-application-from-on-premises-vms-to-amazon-ec2-instances-in-an-aws-account-6-months . No confirmed Choose TWO/THREE variant.
+- AWS primary sources: https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html ; https://aws.amazon.com/savingsplans/faqs/ ; https://aws.amazon.com/savingsplans/compute-pricing/
