@@ -1231,3 +1231,16 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS:** https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/configuring-storage-offload-vmware-cloud-aws/data-migration.html ; https://aws.amazon.com/datasync/faqs/ ; https://docs.aws.amazon.com/pdfs/mgn/latest/ug/user-guide.pdf
 - **External exact stem:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html ; https://www.examtopics.com/discussions/amazon/view/124802-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-302-discussion/; single-answer B, no confirmed Choose TWO/THREE variant.
 - **Defects:** Original text contains 'VMS', 'AMIS', '10 GbpsAWS', 'isloaded', spacing errors. MGN 'connection/replication job' is loose wording; MGN has agent-based or VMware vCenter agentless workflows. OS support and agentless prerequisites must be checked; MGN does not copy NFS NAS shares, so DataSync is needed. Original options retained verbatim.
+
+
+### Q327 — Domain 4, position 68/139 (2026-10-31)
+
+- **Skip Q326:** Select THREE C/D/E.
+- **Verified A (retained):** App2Container supports containerizing Java-on-Linux apps and deploying to ECS Fargate, reducing code changes and eliminating host administration; ECR + ECS task execution role + ALB complete the solution.
+- **A:** Correct, conditional on App2Container-supported Java OS/framework/dependencies.
+- **B:** Lambda container image still requires Lambda-compatible execution model and code integration.
+- **C:** EKS managed EC2 nodes need more management than ECS Fargate; API Gateway unnecessary.
+- **D:** ALB-to-Lambda supported, but Lambda still requires adaptation and runtime constraints.
+- **AWS:** https://docs.aws.amazon.com/app2container/ ; https://docs.aws.amazon.com/app2container/latest/UserGuide/a2c-integrations-ecs.html ; https://docs.aws.amazon.com/app2container/latest/UserGuide/config-deployment.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html
+- **External exact stem:** https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=67 ; https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-4-question-484-discussion-p1143155.html; single-answer A; no confirmed Choose TWO/THREE conflicting variant.
+- **Defects:** 'stable. but' and 'permission 10' are transcription errors. Missing source Java framework/OS details preclude guaranteeing App2Container support. Original options preserved verbatim.
