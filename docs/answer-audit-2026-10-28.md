@@ -1369,3 +1369,13 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - Caveats: DHCP NTP adoption depends on AMI/OS time service configuration; check chrony/ntpd/Windows Time and remove conflicting default sources. Atomic clock is stratum-0 reference; NTP server attached to it generally stratum-1.
 - Exact-stem third-party exam-site variant and Choose TWO/THREE conflict **not independently confirmed**; do not claim cross-source verification.
 - AWS sources: https://docs.aws.amazon.com/vpc/latest/userguide/DHCPOptionSet.html ; https://docs.aws.amazon.com/vpc/latest/userguide/DHCPOptionSetConcepts.html ; https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDhcpOptions.html ; https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-ec2-ntp.html
+
+
+### Domain 4 Q395 — 80/139 (2026-10-31)
+
+- Next genuine Domain 4 single-answer after Q386: Q395; Q387–394 belong to other domains. Historical correct answer **A**.
+- A: AWS Application Discovery Service Discovery Agent collects server connections; Migration Hub network diagram shows hostnames/IPs/dependencies. Prerequisites require Discovery Agent and permission `discovery:GetNetworkConnectionGraph`.
+- B: Agentless Collector has supported network connection discovery since November 2024, but the stated PNG network-diagram export is not established in AWS's documented workflow. C: Application Migration Service agent is for replication/migration, not the specified discovery graph. D: CloudWatch dashboard does not produce dependency topology from a CSV export.
+- **HIGH outdated-service warning:** AWS Migration Hub closed to new customers November 7, 2025; preserve historical exam answer A but do not recommend blindly for greenfield 2026 migrations.
+- External exact-stem single-choice copies: https://www.examcollection.us/exam/SAP-C02-question-answer-6.html ; https://www.examtopics.com/discussions/amazon/view/132905-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-423-discussion/ . No confirmed Choose TWO/THREE version.
+- AWS references: https://docs.aws.amazon.com/migrationhub/latest/ug/network-diagram.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/network-diagram-prerequisites.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html ; https://aws.amazon.com/about-aws/whats-new/2024/11/network-connections-aws-application-discovery-service-agentless-collector/
