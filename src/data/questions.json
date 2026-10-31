@@ -16044,13 +16044,29 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is correct. API Gateway REST APIs preserve the existing REST model and support API keys, usage plans, API stages and per-client throttling/quota targets. Lambda scales stateless business logic with variable traffic. DynamoDB on-demand is appropriate for unpredictable game-session read/write throughput and low-latency keyed access. An exact-stem third-party SAP-C02 practice PDF identifies C. API keys identify clients for usage-plan metering, NOT authentication or authorization; throttling is best-effort, not a hard limit.",
+    "wrongOptionsExplanation": "A: NLB is a layer-4 load balancer without API Gateway REST usage plans/API keys, and a single EC2 instance does not inherently handle peak variability; Aurora Serverless is not the most direct key-value session store. B: ALB supports HTTP and Lambda targets, and DynamoDB is suitable, but ALB lacks API Gateway's built-in API-key usage plans and API stages for live/test traffic management. C: Correct: REST API Gateway with stages, API keys and throttling, Lambda elastic compute, DynamoDB on-demand low-latency session store. D: AppSync focuses on GraphQL and managed real-time APIs rather than preserving the specified REST API model; Aurora Serverless does not address API Gateway-style API-key throttling.",
+    "plainWords": "Keep REST endpoints in API Gateway, execute game logic with Lambda, and store player sessions in DynamoDB on-demand. Separate live/test stages and usage plans.",
+    "keyPoints": "API Gateway REST API = stages + API keys + usage plans + throttling. Lambda = serverless elastic execution. DynamoDB on-demand = variable throughput and low-latency key-value access. ALB is not equivalent to API Gateway usage plans. AppSync is not a drop-in REST API replacement. API keys are not authorization and usage-plan limits are best effort.",
+    "sourceWarning": "LOW/MODERATE IMPLEMENTATION CAVEAT: The stem does not explicitly say the API keys are used for authentication; do not use them as authorization. Configure Cognito/IAM/Lambda authorizer as appropriate. Usage-plan throttling/quotas are best effort, not hard security or spend controls. No substantiated Choose TWO/THREE variant found in checked sources; exact-stem third-party PDF keys C.",
+    "review": {
+      "status": "verified-with-api-key-security-caveat",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-usage-plans.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-setup-api-keys.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-request-throttling.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html",
+        "https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf"
+      ],
+      "notes": "Domain 4 78/139. Q381 skipped (Choose THREE). Exact-stem external SAP-C02 PDF page 83, question 67, keys C; no verified multi-answer variant. API Gateway REST API keys and usage plans distinguish C from B; API keys are not auth."
+    },
+    "answerStatus": "verified-with-api-key-security-caveat"
   },
   {
     "id": 386,
