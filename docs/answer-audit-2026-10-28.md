@@ -1244,3 +1244,15 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **AWS:** https://docs.aws.amazon.com/app2container/ ; https://docs.aws.amazon.com/app2container/latest/UserGuide/a2c-integrations-ecs.html ; https://docs.aws.amazon.com/app2container/latest/UserGuide/config-deployment.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html
 - **External exact stem:** https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=67 ; https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-4-question-484-discussion-p1143155.html; single-answer A; no confirmed Choose TWO/THREE conflicting variant.
 - **Defects:** 'stable. but' and 'permission 10' are transcription errors. Missing source Java framework/OS details preclude guaranteeing App2Container support. Original options preserved verbatim.
+
+
+### Q334 — Domain 4, position 69/139 (2026-10-31)
+
+- **Verified intended D (retained):** EKS on Fargate behind ALB, RDS PostgreSQL read replicas, managed Kafka via MSK, static S3 via CloudFront.
+- **A:** EC2 maintenance; Kafka-to-Kinesis migration; direct S3 delivery.
+- **B:** EC2 and Kinesis drawbacks; Multi-AZ and storage autoscaling are HA/capacity, not read scaling.
+- **C:** Self-managed Kubernetes on EC2 increases overhead; Multi-AZ not substitute for read replicas.
+- **D:** Best combination for reduced ops and scaling, assuming read traffic is a bottleneck.
+- **Official AWS:** https://docs.aws.amazon.com/eks/latest/userguide/fargate.html ; https://docs.aws.amazon.com/msk/latest/developerguide/what-is-msk.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PostgreSQL.Replication.ReadReplicas.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html
+- **External exact stem:** https://blog.surepassexams.com/2026/10/26/online-sap-c02-test-brain-dump-question-and-test-engine-q89-q105/ ; https://www.certstopics.com/questions/aws-certified-professional-sap-c02-syllabus-exam-questions-answers.html ; https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/5/; option ordering varies, correct text is EKS Fargate+MSK+RDS read replicas+CloudFront. No confirmed Choose TWO/THREE variant.
+- **Defects/caveats:** Option B typo 'theDB'; 'increased orders' does not establish read-heavy DB load. Read replicas do not scale writes. Fargate ALB requires IP targets, HPA/Fargate profiles, MSK networking, and explicit application read routing. Retain D with caveat.
