@@ -17610,13 +17610,28 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is correct. AWS Global Accelerator provides two static anycast IPv4 addresses by default and supports ALBs as regional endpoints. Create a standard accelerator, listener and endpoint groups for each Region, attach the existing public ALBs, then create apex-domain A records in the existing authoritative DNS pointing to both accelerator IP addresses. Global Accelerator routes to healthy regional endpoints without DNS migration or an extra proxy tier.",
+    "wrongOptionsExplanation": "A: Invalid: standard CNAME records cannot be placed at the zone apex; Route 53 alias A/AAAA records could point to ALBs but are not what the option says and require migrating DNS. B: Invalid: a CNAME cannot target a literal NLB IP address and cannot be used at the apex; extra NLBs and DNS migration add effort. C: Correct: static Global Accelerator IP addresses support apex A records and regional ALB endpoints, retaining existing DNS. D: Invalid: apex CNAME limitation remains, and API Gateway plus Lambda round-robin routing adds complexity and a single-Region routing dependency.",
+    "plainWords": "Keep the company's existing DNS. Point the root domain's A records to AWS Global Accelerator's static IP addresses, and connect the accelerator to the ALBs in both Regions.",
+    "keyPoints": "Apex/root domains cannot use ordinary CNAME records. Global Accelerator allocates two IPv4 addresses by default; publish both as A records. A standard accelerator supports ALB endpoints and regional health-aware traffic distribution. Route 53 alias records are a different valid apex-domain mechanism, but not offered correctly here. No independently verified Choose TWO/THREE variant.",
+    "sourceWarning": "Original options B and D contain invalid DNS constructions; B attempts CNAME to an IP address and apex CNAME; A and D attempt apex CNAME. External sites reorder option letters, so compare the Global Accelerator solution content, not letter. The wording 'static IP address' is singular, while standard IPv4 Global Accelerator allocates two; configure A records for both. DynamoDB global tables do not by themselves guarantee strong cross-Region consistency. No confirmed multi-answer variant.",
+    "review": {
+      "status": "verified-aws-and-external",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/about-endpoints.html",
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/dns-addressing-custom-domains.dns-addressing.html",
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-how-it-works.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-global-media-company-is-planning-a-multi-region-deployment-of-an-application-amazon-dynamodb-global",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/4/",
+        "https://www.passtest.jp/articles/2023%E5%B9%B410%E6%9C%88-%E6%9B%B4%E6%96%B0%E3%81%AEamazon-sap-c02%E8%A9%A6%E9%A8%93%E5%9F%BA%E6%9C%AC%E5%95%8F%E9%A1%8C%E3%81%AB%E3%81%AF%E8%A7%A3%E7%AD%94%E3%81%8C%E4%BB%98%E3%81%8D%E3%81%BE%E3%81%99-q39-q64/"
+      ],
+      "notes": "Domain 4 87/139; full-stem single-answer verified. FreeCram and Pupuweb key C; PassTest reorders and keys A, same Global Accelerator solution. No confirmed Choose TWO/THREE variant. Correct answer C; record apex-CNAME and singular-IP defects."
+    },
+    "answerStatus": "verified-aws-and-external"
   },
   {
     "id": 425,
