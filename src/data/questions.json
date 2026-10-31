@@ -17165,7 +17165,7 @@
   {
     "id": 414,
     "domain": 4,
-    "stem": "A company runs an application in an on-premises data center. The application gives users the ability to upload media files. The files persist in a file server. The web application has many users. The application server is overutilized, which causes data uploads to fail occasionally. The company frequently adds new storage to the file server. The company wants to resolve these challenges by migrating the application to AWS. Users from across the United States and Canada access the application. Only authenticated usersshould have the ability to access the application to upload files. The company will consider a solution that refactors the application, and the company needs to accelerate application development. Which solution will meet these requirements with the LEAST operational overhead?",
+    "stem": "A company runs an application in an on-premises data center. The application gives users the ability to upload media files. The files persist in a file server. The web application has many users. The application server is overutilized, which causes data uploads to fail occasionally. The company frequently adds new storage to the file server. The company wants to resolve these challenges by migrating the application to AWS. Users from across the United States and Canada access the application. Only authenticated users should have the ability to access the application to upload files. The company will consider a solution that refactors the application, and the company needs to accelerate application development. Which solution will meet these requirements with the LEAST operational overhead?",
     "options": [
       {
         "id": "A",
@@ -17188,13 +17188,28 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is correct. AWS Amplify accelerates development and deployment of a static upload frontend. Amplify Hosting uses Amazon CloudFront to deliver website assets across North America; Amazon Cognito authenticates users; Amplify Storage supports direct authorized browser uploads to Amazon S3, avoiding the overloaded on-premises application server and fixed file-server capacity. AWS documentation and an AWS Storage Blog architecture corroborate this combination. Exact-stem SAP-C02 exam sites examsvce and examtopics.cn both key D as a single-answer item.",
+    "wrongOptionsExplanation": "A: EC2 Auto Scaling, ALB, S3 and Cognito could work but preserve EC2 infrastructure and management overhead despite permitted refactoring. B: Same EC2/ALB operational burden, and IAM Identity Center is primarily workforce access rather than the best fit for a public customer-facing upload application. C: Static S3 frontend, AppSync, Lambda and Cognito can be engineered, but adds GraphQL API/resolver complexity and potentially proxies file payloads through Lambda; direct S3 uploads with Amplify are simpler. D: Correct: Amplify static frontend and Hosting/CloudFront CDN, Cognito user authentication, S3 storage and direct upload capabilities minimize operational overhead.",
+    "plainWords": "Replace the overloaded upload server with a static Amplify website, use Cognito sign-in, and send media directly from users' browsers to S3.",
+    "keyPoints": "Amplify Hosting serves frontend assets through CloudFront. Amplify Storage supports direct uploads to S3. Cognito provides end-user sign-in. S3 removes fixed file-server capacity. IAM Identity Center focuses on workforce access. AppSync/Lambda resolvers add unnecessary API complexity for basic file uploads. CloudFront distribution of the website does not itself accelerate S3 upload traffic.",
+    "sourceWarning": "LOW: Original stem typo 'usersshould' corrected to 'users should'. Enforce authorized S3 upload access via Cognito-linked credentials/permissions, bucket policies and object prefixes. CloudFront CDN is for hosting assets and does not by itself guarantee accelerated S3 uploads. Exact-stem external sources examsvce and examtopics.cn both key D, single answer; no verified Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-aws-and-external",
+      "reviewedAt": "2026-10-31",
+      "answer": [
+        "D"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/amplify/latest/userguide/deploy-website-from-s3.html",
+        "https://docs.amplify.aws/react/frontend/storage/upload-files/",
+        "https://aws.amazon.com/blogs/storage/allowing-external-users-to-securely-and-directly-upload-files-to-amazon-s3/",
+        "https://aws.amazon.com/blogs/networking-and-content-delivery/implementing-secure-file-uploads-to-amazon-s3-at-the-edge-choosing-the-right-pattern/",
+        "https://www.examsvce.com/sap-c02/a-company-runs-an-application-in-an-55856-question-answer.html",
+        "https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-5"
+      ],
+      "notes": "Domain 4 83/139. Correct D verified against AWS documentation and two exact-stem external exam sites; both single answer. Corrected source typo 'usersshould'. Cognito/S3 upload authorization and CloudFront vs S3 upload path caveats."
+    },
+    "answerStatus": "verified-aws-and-external"
   },
   {
     "id": 415,
