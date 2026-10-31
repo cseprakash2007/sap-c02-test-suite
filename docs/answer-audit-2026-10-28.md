@@ -1256,3 +1256,16 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - **Official AWS:** https://docs.aws.amazon.com/eks/latest/userguide/fargate.html ; https://docs.aws.amazon.com/msk/latest/developerguide/what-is-msk.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PostgreSQL.Replication.ReadReplicas.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html
 - **External exact stem:** https://blog.surepassexams.com/2026/10/26/online-sap-c02-test-brain-dump-question-and-test-engine-q89-q105/ ; https://www.certstopics.com/questions/aws-certified-professional-sap-c02-syllabus-exam-questions-answers.html ; https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/5/; option ordering varies, correct text is EKS Fargate+MSK+RDS read replicas+CloudFront. No confirmed Choose TWO/THREE variant.
 - **Defects/caveats:** Option B typo 'theDB'; 'increased orders' does not establish read-heavy DB load. Read replicas do not scale writes. Fargate ALB requires IP targets, HPA/Fargate profiles, MSK networking, and explicit application read routing. Retain D with caveat.
+
+
+### Q341 — Domain 4, position 70/139 (2026-10-31)
+
+- **Skipped Q337:** explicit Select THREE A/C/E.
+- **Verified intended B (retained, caveated):** Route 53 failover policy + health check, CloudWatch alarm → SNS → Lambda to promote cross-Region RDS read replica and raise standby ASG capacity.
+- **A:** Latency routing not primary/standby; ALB 5XX alarm incomplete failure detection.
+- **B:** Best option, but SNS chain and readiness coordination omitted.
+- **C:** Full-size standby costly, latency routing active-active; S3 snapshots not continuous cross-Region RDS replication.
+- **D:** Global Accelerator equal weights incompatible with cold standby; ALB 5XX alarm incomplete.
+- **AWS:** https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/monitoring-health-checks.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover.html ; https://aws.amazon.com/blogs/networking-and-content-delivery/creating-disaster-recovery-mechanisms-using-amazon-route-53/ ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.Promote.html
+- **External exact stem:** https://www.examtopics.com/discussions/amazon/view/90943-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-8-discussion/ ; https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/ ; https://www.freecram.net/question/Amazon.SAP-C02.v2024-05-06.q201/a-company-has-a-multi-tier-web-application-that-runs-on-a-fleet-of-amazon-ec2-instances-behind-an-applicat; all single-answer B; no confirmed Choose TWO/THREE variant.
+- **Defects:** Route 53 does not directly send SNS; requires CloudWatch alarm. DNS may fail over before replica promotion/ASG readiness; RTO <15 min not guaranteed and needs orchestrated, readiness-gated recovery and test. RDS replica promotion may take minutes+ and asynchronous replication entails RPO. Option C 'Replicationbetween' typo. Preserve original stem/options verbatim.
