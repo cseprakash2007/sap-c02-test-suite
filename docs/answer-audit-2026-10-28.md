@@ -1456,3 +1456,12 @@ Official references: [IAM cross-account policy](https://docs.aws.amazon.com/IAM/
 - Fixed OCR and punctuation errors in stem and C/D without changing intent. DX is the hybrid backend path; PrivateLink is the customer-facing private path. No verified Choose TWO/THREE variant.
 - AWS documentation: https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html ; https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html ; https://aws.amazon.com/privatelink/faqs/
 - External exact-stem single-answer question: https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-espinoza-09-08-2024-10qa-go4braindumps.pdf . Prior B answer contradicted AWS primary docs.
+
+
+### Domain 4 Q434 — 89/139 (2026-10-31)
+
+- **Verified answer A:** S3 ObjectCreated notifications invoke AWS Lambda; average five-minute runtime fits 15-minute maximum, but worst-case duration must be checked. No idle EC2 and minimal management.
+- A correct: direct event-driven Lambda. B: SQS/EC2 Auto Scaling minimum one instance costs more and requires administration. C: EC2 container retains polling and EC2 management. D: ECS Fargate unnecessary; option reverses `RunTask` invocation order.
+- Defects: missing punctuation in stem fixed. At-least-once/out-of-order S3 notifications require idempotency. Conflicting Brainscape flashcard keys D, while SPOTO explicitly keys A. Full-stem single-answer copies exist; no confirmed Choose TWO/THREE variant.
+- AWS: https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html ; https://docs.aws.amazon.com/lambda/latest/dg/with-s3.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html ; https://aws.amazon.com/blogs/storage/manage-event-ordering-and-duplicate-events-with-amazon-s3-event-notifications/
+- External: https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part1 ; https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/3/ ; https://www.brainscape.com/flashcards/solutions-architect-professional-deck-02-15140066/packs/21889491
