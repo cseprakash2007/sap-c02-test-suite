@@ -16627,13 +16627,75 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B,D,F verified against IAM SAML federation documentation. B IAM role trust policy must trust the same-account SAML provider as Federated Principal and permit sts:AssumeRoleWithSAML, normally with saml:aud condition. D API-based federation exchanges signed assertion plus RoleArn and PrincipalArn using STS AssumeRoleWithSAML; console SAML SSO may instead POST to AWS sign-in endpoint, so portal need not literally call API. F IdP must emit correctly mapped Role/RoleSessionName assertions to IAM role/provider ARNs and user/group authorization.",
+    "wrongOptionsExplanation": "A wrong: SAML federated users assume IAM roles; no per-person IAM user permission policy required. B correct: role trust policy references federated SAML provider ARN and sts:AssumeRoleWithSAML action. C wrong as universal rule: AWSFederatedUsers is not an AWS-required group, although an enterprise-specific IdP group assignment might be relevant if actually configured. D correct for STS API federation; console federation can use browser redirect/POST to AWS sign-in SAML endpoint. E wrong: user browser/IdP and AWS sign-in endpoint handle federation; IdP DNS need not be reachable from arbitrary VPCs. F correct: IdP assertion must map authorized users/groups to valid role ARN and SAML provider ARN, with appropriate role permissions.",
+    "plainWords": "If an admin can sign in to AWS through company SSO but ordinary users cannot, check the IAM role trust, the SAML assertion and role/group mapping, and the STS or AWS sign-in federation flow. You do not need an IAM user per employee or VPC access to the company IdP.",
+    "keyPoints": "SAML federation: IdP signs assertion -> role/provider ARNs -> role trust Federated principal plus sts:AssumeRoleWithSAML and saml:aud -> temporary role credentials. IAM user policies do not gate federation. Role trust and role permission policies are different. IAM Identity Center is modern workforce access option but IAM SAML federation remains supported. Console SAML POST may bypass a direct web portal STS call. Test group membership, attribute claims, NameID/RoleSessionName, audience, expiry and clock skew.",
+    "sourceWarning": "Original source has OCR corruption ('1AM','SAML 2 0','isproperly') and no punctuation; snapshot preserved. D is phrased as if every portal must call STS, but console SAML federation can post to AWS sign-in instead. C names a nonstandard IdP group and cannot be assumed required. Older SAP-C01 variant keys a group-membership distractor incorrectly; answer letters reorder across sites. No deprecated IAM SAML service.",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "domain4-multi-answer-aws-verified-source-ocr-and-flow-caveat",
+      "originalAnswers": [
+        "B",
+        "D",
+        "F"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_saml.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_saml.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-solutions-architect-has-implemented-a-saml-2-0-federated-identity-solution-with-their-company-s-on",
+        "https://www.freecram.net/question/Amazon.AWS-Solutions-Architect-Professional.v2024-07-06.q214/a-solutions-architect-has-implemented-a-saml-2-0-federated-identity-solution-with-their-company-s-on-premi",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=28",
+        "https://www.freecram.net/question/Amazon.SAP-C01.v2021-11-16.q64/a-solutions-architect-has-implemented-a-saml-2.0-federated-identity-solution-with-their-company-s-on-premi"
+      ],
+      "externalVariantStatus": "multiple exact reordered SAP-C02 variants B,D,F conceptually; older SAP-C01 source wrongly favors fixed group choice",
+      "exactDuplicateIDs": [],
+      "similarQuestionIDs": [
+        226,
+        439,
+        593,
+        603,
+        605
+      ]
+    },
+    "answerStatus": "aws-docs-verified-ocr-caveat",
+    "originalQuestionSnapshot": {
+      "stem": "A solutions architect has implemented a SAML 2 0 federated identity solution with their company's on-premises identity provider (IdP) to authenticate users' access to the AWS environment. When the solutions architect tests authentication through the federated identity web portal, access to the AWS environment is granted However when test users attempt to authenticate through the federated identity web portal, they are not able to access the AWS environment Which items should the solutions architect check to ensure identity federation isproperly configured? (Select THREE)",
+      "options": [
+        {
+          "id": "A",
+          "text": "The 1AM user's permissions policy has allowed the use of SAML federation for that user"
+        },
+        {
+          "id": "B",
+          "text": "The 1AM roles created for the federated users' or federated groups' trust policy have set the SAML provider as the principal"
+        },
+        {
+          "id": "C",
+          "text": "Test users are not in the AWSFederatedUsers group in the company's IdP"
+        },
+        {
+          "id": "D",
+          "text": "The web portal calls the AWS STS AssumeRoleWithSAML API with the ARN of the SAML provider, the ARN of the 1AM role, and the SAML assertion from IdP"
+        },
+        {
+          "id": "E",
+          "text": "The on-premises IdP's DNS hostname is reachable from the AWS environment VPCs"
+        },
+        {
+          "id": "F",
+          "text": "The company's IdP defines SAML assertions that properly map users or groups in the company to 1AM roles with appropriate permissions"
+        }
+      ],
+      "answers": [
+        "B",
+        "D",
+        "F"
+      ]
+    }
   },
   {
     "id": 382,
