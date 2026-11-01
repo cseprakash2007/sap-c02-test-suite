@@ -21462,13 +21462,20 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is the best answer: preserve the existing stateless EC2 application and AMI deployment model, use an ALB and EC2 Auto Scaling across multiple Availability Zones to address CPU saturation and patching-related downtime, install/configure SSM Agent for Systems Manager Patch Manager automation, and migrate self-managed MySQL to compatible managed Aurora MySQL with replicas/failover for high availability. Less application redevelopment than Lambda/containers and changing database model. AWS: https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-benefits.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html .",
+    "wrongOptionsExplanation": "A: Lambda conversion requires application rewrite, DocumentDB is MongoDB-compatible rather than MySQL-compatible, and GuardDuty is not the primary Lambda vulnerability scanner (Amazon Inspector is). B: ALB/ASG is good, but Graviton/ARM compatibility with the existing AMI is not assured and replacing MySQL with DynamoDB demands a substantial relational-to-NoSQL redesign. C: Containerization adds work; ECS on EC2 still requires EC2 patching, and Neptune graph DB is not a MySQL replacement. D: Retain EC2/AMI, add ALB+ASG and SSM patching, migrate to compatible Aurora MySQL; lowest development effort among options.",
+    "plainWords": "Instead of rewriting the app, run several smaller copies of the existing EC2 app behind an ALB, scale them automatically, automate patching, and move MySQL to Aurora.",
+    "keyPoints": "Stateless EC2 app + CPU 100% -> ALB + ASG across AZs; patching -> Systems Manager Patch Manager and rolling/instance refresh; MySQL high availability -> Aurora MySQL with multi-AZ replicas; least development time -> avoid switching relational DB to DynamoDB, DocumentDB, or Neptune. SSM Agent alone does not automate patches; Patch Manager and maintenance/rolling deployment must be configured.",
+    "sourceWarning": "Source OCR defects: 'MySOL', 'theLambda functbns', missing punctuation, lowercase 'use'. Option A inaccurately assigns Lambda vulnerability scanning to GuardDuty rather than Amazon Inspector. Option D is best available but is incomplete: merely adding SSM Agent does not automatically patch hosts, and Aurora MySQL must have replicas/failover configuration for high availability. Multi-AZ ASG and rolling updates are implicit design requirements, not explicitly stated in option. External exact-stem SAP-C02 copy and Choose TWO/THREE variant not independently confirmed. AWS docs: https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html .",
+    "review": {
+      "status": "aws-doc-verified",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "Architecture independently checked against AWS docs; no exact duplicate; original defects and incomplete patching/HA caveats flagged; external exact-stem and multi-answer variants unconfirmed."
+    },
+    "answerStatus": "aws-doc-verified"
   },
   {
     "id": 515,
