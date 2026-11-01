@@ -3471,31 +3471,27 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "Correct answers A, C, E. A: Create the target RDS for PostgreSQL instance and convert the Oracle schema and compatible database code using AWS SCT; manually remediate unsupported objects. C: Establish private cross-account VPC peering, configure routes, security groups and DNS as needed so AWS DMS in the target VPC can reach the private Oracle source and PostgreSQL target. E: Run AWS DMS full load plus CDC to copy existing rows and replicate ongoing writes. After CDC catches up, quiesce source writes, validate consistency, and update the Route 53 CNAME to the target endpoint. In practice DNS caching and open database connections mean zero downtime cannot be guaranteed; this is the minimal-downtime option.",
-    "wrongOptionsExplanation": "B: AWS SCT converts schema/code but does not provision RDS and load all initial data as stated. D: Exposing the private source database publicly is unnecessary and increases risk; use private VPC peering. F: CDC alone replicates changes, not the existing source rows, so it does not satisfy full migration.",
-    "plainWords": "Move a private RDS Oracle database to PostgreSQL in a different AWS account: convert schema, connect VPCs privately, copy all data and ongoing changes, then switch the existing CNAME.",
-    "keyPoints": "A + C + E. SCT = schema/code conversion. VPC peering = private cross-account access. DMS full load + CDC = existing and new data. CNAME cutover after validation. AWS: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_SchemaConversion.html ; https://docs.aws.amazon.com/dms/latest/userguide/instance-profiles-network.html ; https://docs.aws.amazon.com/dms/latest/sbs/dms-sbs.pdf",
-    "sourceWarning": "Original question promises no downtime; AWS DMS CDC reduces cutover downtime but does not guarantee zero interruption. Preserved original answer key and option meanings; repaired punctuation and spacing.",
+    "explanation": "Correct A, C, E. A: Create the RDS PostgreSQL target and use AWS SCT to convert Oracle schema/code; unsupported objects need remediation. C: Cross-account VPC peering, routes, DNS and security-group rules provide private DMS connectivity. E: DMS full load + CDC copies existing data and applies ongoing changes; validate replication lag and switch the Route 53 CNAME during a coordinated cutover. 'No downtime' is an exam simplification: engine differences, open connections, and DNS caching may require a controlled brief write pause. Current AWS also offers DMS Schema Conversion as an alternative to standalone SCT.",
+    "wrongOptionsExplanation": "B: AWS SCT does not provision the target RDS instance and complete ongoing data migration. D: Publicly exposing a private Oracle database is unnecessary; use private connectivity. F: CDC-only does not backfill existing records, unlike full load + CDC.",
+    "plainWords": "Three things are needed: translate the database structure (SCT), connect both accounts privately (VPC peering), and copy old plus new data (DMS full load + CDC). Switch the DNS CNAME when synchronized.",
+    "keyPoints": "Heterogeneous Oracle→PostgreSQL; SCT/DMS Schema Conversion vs DMS data migration; full load + CDC; cross-account VPC peering; DNS cutover; low downtime vs strict zero downtime.",
+    "sourceWarning": "Question says no downtime and identical source/target across heterogeneous engines; in practice plan brief cutover, application SQL compatibility, DNS TTL and connection draining. AWS DMS does not migrate all schema/code objects. https://docs.aws.amazon.com/dms/latest/sbs/chap-rdsoracle2postgresql.html",
     "review": {
-      "reviewedAt": "2026-10-28",
-      "auditStatus": "domain4-reviewed-zero-downtime-claim-qualified",
-      "originalAnswers": [
+      "status": "verified-with-caveat",
+      "originalAnswer": [
         "A",
         "C",
         "E"
       ],
-      "awsDocumentationLinks": [
-        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html",
-        "https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-oracle-postgresql.html"
+      "verifiedAnswer": [
+        "A",
+        "C",
+        "E"
       ],
-      "references": [
-        "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html",
-        "https://docs.aws.amazon.com/dms/latest/sbs/schema-conversion-oracle-postgresql.html"
-      ],
-      "crossVerificationStatus": "aws-docs-checked-external-question-site-match-pending",
-      "auditNote": "Source answer retained; technical caveats documented."
+      "verifiedAt": "2026-11-01",
+      "notes": "Cross-checked AWS DMS Oracle→PostgreSQL walkthrough, AWS VPC peering guidance, and independent exam variants (CertsTopics, ExamsVCE, FreeCram with shuffled answer letters). Full source text reviewed; no exact duplicate found in dataset by question stem; similar migration questions require case-by-case comparison."
     },
-    "answerStatus": "aws-doc-verified-external-question-matched",
+    "answerStatus": "verified-with-caveat",
     "originalQuestionSnapshot": {
       "stem": "A company is planning to migrate an Amazon RDS for Oracle database to an RDS for PostgreSQL DB instance in another AWS account. A solutions architect needs to design a migration strategy that will require no downtime and that will minimize the amount of time necessary to complete the migration. The migration strategy must replicate all existing data and any new data that is created during the migration The target database must be identical to the source database at completion of the migration process All applications currently use an Amazon Route 53 CNAME record as their endpoint for communication with the RDS for Oracle DB instance The RDS for Oracle DB instance is in a private subnet. Which combination of steps should the solutions architect take to meet these requirements? (Select THREE)",
       "options": [
