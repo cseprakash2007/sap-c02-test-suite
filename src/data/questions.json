@@ -10908,13 +10908,32 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historical A,D is the intended exam key: A runs compatible security virtual appliances on EC2 instances in a multi-AZ Auto Scaling group; D names Gateway Load Balancer, which transparently distributes flows to appliances for inline bidirectional packet inspection. However D is imprecisely worded: AWS typically deploys a multi-AZ GWLB with a zonal Gateway Load Balancer endpoint per AZ, not a separate GWLB for every AZ. Set VPC ingress/egress routing symmetrically through zonal endpoints.",
+    "wrongOptionsExplanation": "B: Network Load Balancer distributes TCP/UDP application traffic but cannot alone provide transparent inline inspection of all inbound/outbound VPC packets. C: Application Load Balancer is L7 HTTP(S) routing, not general IP packet inspection. E: Transit Gateway is appropriate for centralized multi-VPC inspection but is unnecessary for the stated single-VPC architecture; it does not substitute for GWLB.",
+    "plainWords": "Keep using the security tool by running compatible virtual appliances on scalable EC2 servers. Put a Gateway Load Balancer in the packet path so inbound and outbound traffic gets inspected. Use an endpoint in each AZ, not one separate load balancer per AZ.",
+    "keyPoints": "Historical A,D. Gateway Load Balancer (GWLB) for transparent inline L3/L4 appliance inspection, GENEVE UDP 6081, health checks and scale. Zonal GWLB endpoints (GWLBe) per AZ; configure symmetric VPC ingress/egress route tables. Deploy security appliance ASG across AZs and confirm GENEVE-capable virtual form of legacy product. NLB/ALB not replacements; TGW for centralized multi-VPC inspection only. Packet inspection always adds some latency; 'no performance impact' is unrealistic.",
+    "sourceWarning": "TECHNICAL DEFECT: D says 'a Gateway Load Balancer for each Availability Zone' whereas AWS best practice is one multi-AZ Gateway Load Balancer with a GWLB endpoint in each AZ. Requirement 'must not affect application's performance' is absolute and technically unrealistic; inspection adds latency. The vendor has no cloud solution; legacy security tool's virtual-appliance/GENEVE compatibility is unproven. Retain historical A,D but mark architecture conditional. Exact external versions https://www.freecram.net/question/Amazon.SAP-C02.v2023-11-04.q183/a-financial-company-is-planning-to-migrate-its-web-application-from-on-premises-to-aws-the-company-uses and https://www.freepdfdumps.com/Amazon.SAP-C02.v2023-09-29.q103.html?p=13. AWS https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html ; https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/getting-started.html",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "position": 9,
+      "totalMultiAnswer": 33,
+      "historicalAnswers": [
+        "A",
+        "D"
+      ],
+      "status": "verified-key-with-technical-defects",
+      "exactDuplicates": [],
+      "related": [
+        360,
+        375
+      ],
+      "relatedDistinctions": "Q360 centralized multi-VPC inspection with TGW; Q375 marketplace firewall shared-services VPC uses appliances, GWLB and GWLB endpoints, unlike single-VPC Q248.",
+      "externalVariants": [
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-11-04.q183/a-financial-company-is-planning-to-migrate-its-web-application-from-on-premises-to-aws-the-company-uses",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2023-09-29.q103.html?p=13"
+      ]
+    },
+    "answerStatus": "verified-with-defect-warning"
   },
   {
     "id": 249,

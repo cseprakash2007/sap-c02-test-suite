@@ -141,3 +141,15 @@ Branch: `answer-audit-2026-10-28`. Total multi-answer questions identified in da
 **674-question duplicate audit:** No exact normalized stem duplicate. Related Q96 (DX/TGW connectivity), Q185 (hybrid network), Q268 (hybrid), Q301 (multi-region), Q308 (single DX resiliency), Q427 (hybrid DX), Q625 (DX networking). Their objectives differ; do not transfer B,C without checking routing-vs-redundancy-vs-encryption requirements.
 
 **Next:** Q248 — 9 of 33.
+
+## 9 of 33 — Q248 — Select TWO — Legacy inline security inspection using Gateway Load Balancer
+
+**Historical exam answer A,D (unchanged), with serious wording caveats.** A: deploy compatible legacy security virtual appliances on EC2 Auto Scaling instances across AZs. D: Gateway Load Balancer is correct technology for transparent inline L3/L4 packet inspection. **DEFECT:** D says provision a separate GWLB *for each AZ*, whereas AWS normally uses **one multi-AZ GWLB plus a zonal Gateway Load Balancer endpoint (GWLBe) per AZ**. Set symmetric ingress/egress routing through endpoints, GWLB targets and appliance ASG. Appliance must support GENEVE UDP 6081 encapsulation; 15-year-old tool with no vendor cloud product might not work on EC2. The claim of no application performance impact is unrealistic because inspection introduces latency.
+
+**Distractors:** B NLB distributes app traffic, not all-IP inline inspection; C ALB is HTTP(S) application routing, not inline packet inspection; E TGW is relevant for centralized *multi-VPC* inspection but unnecessary for this single-VPC architecture.
+
+**External exact variants:** [FreeCram Q88/183](https://www.freecram.net/question/Amazon.SAP-C02.v2023-11-04.q183/a-financial-company-is-planning-to-migrate-its-web-application-from-on-premises-to-aws-the-company-uses) A,D; [FreePDFDumps](https://www.freepdfdumps.com/Amazon.SAP-C02.v2023-09-29.q103.html?p=13) A,D; AWS re:Post discusses ambiguity: https://www.repost.aws/questions/QUC5JQ72irRHSpIpDoAr0HYw/third-party-security-tool-integration . **AWS official:** https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html ; https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/getting-started.html ; https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-load-balancer-endpoints.html ; https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/inspecting-inbound-traffic-fa.html
+
+**674-question comparison:** No exact duplicate. Q360 is centralized multi-VPC inspection where TGW may be necessary; Q375 is shared-services AWS Marketplace firewall with appliances + GWLB + GWLBe, different topology and answer A,C,F. Related Q521 (web app deployment) and Q625 (DX) are not the same inspection scenario. Similar framework can lead to different answers because the number of VPCs and need for centralized routing differ.
+
+**Next:** Q249 — 10 of 33.
