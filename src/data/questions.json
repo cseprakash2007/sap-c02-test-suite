@@ -20805,36 +20805,83 @@
   {
     "id": 498,
     "domain": 4,
-    "stem": "A company is running an application on premises. The application uses a set of web servers that host a static React-based single-page application (SPA), a Node.js API, and a MYSQL database server. The database is read intensive. The company will need to expand the database's storage at an unpredictable rate. The company must migrate the application to AWS. The company also must modernize the architecture to reduce infrastructure management and increase scalability. Which solution will meet these requirements with the LEAST operational overhead?",
+    "stem": "A company is running an application on premises. The application uses a set of web servers that host a static React-based single-page application (SPA), a Node.js API, and a MySQL database server. The database is read intensive. The company will need to expand the database's storage at an unpredictable rate. The company must migrate the application to AWS. The company also must modernize the architecture to reduce infrastructure management and increase scalability. Which solution will meet these requirements with the LEAST operational overhead?",
     "options": [
       {
         "id": "A",
-        "text": "Use AWS Database Migration Service (AWS DMS) to migrate the database to Amazon RDS for MySQL. Use AWS Application Migration Service to migrate theweb application to a fleet of Amazon EC2 instances behind an Elastic Load Balancing (ELB) load balancer. Use a Spot Fleet with a request type of request to host the API."
+        "text": "Use AWS Database Migration Service (AWS DMS) to migrate the database to Amazon RDS for MySQL. Use AWS Application Migration Service to migrate the web application to a fleet of Amazon EC2 instances behind an Elastic Load Balancing (ELB) load balancer. Use a Spot Fleet with a request type of request to host the API."
       },
       {
         "id": "B",
-        "text": "Use AWS Database Migration Service (AWS DMS) to migrate the database to Amazon Aurora MySQL. Copy the web files to an Amazon S3 bucket and set upweb hosting. Copy the API code to AWS Lambda functions. Configure Amazon API Gateway to point to the Lambda functions."
+        "text": "Use AWS Database Migration Service (AWS DMS) to migrate the database to Amazon Aurora MySQL. Copy the web files to an Amazon S3 bucket and set up web hosting. Copy the API code to AWS Lambda functions. Configure Amazon API Gateway to point to the Lambda functions."
       },
       {
         "id": "C",
-        "text": "Use AWS Database Migration Service (AWS DMS) to migrate the database to a MySQL database that runs on Amazon EC2 instances. Use AWS DataSync tomigrate the web files and API files to an Amazon FSx for Windows File Server file system. Set up a fleet of EC2 instances in an Auto Scaling group as web servers. Mount the FSx for Windows File Server file system."
+        "text": "Use AWS Database Migration Service (AWS DMS) to migrate the database to a MySQL database that runs on Amazon EC2 instances. Use AWS DataSync to migrate the web files and API files to an Amazon FSx for Windows File Server file system. Set up a fleet of EC2 instances in an Auto Scaling group as web servers. Mount the FSx for Windows File Server file system."
       },
       {
         "id": "D",
-        "text": "Use AWS Application Migration Service to migrate the database to Amazon EC2 instances. Copy the web files to containers that run on Amazon ElasticKubernetes Service (Amazon EKS). Set up an Elastic Load Balancing (ELB) load balancer for the EC2 instances and EKS containers. Copy the API code to AWS Lambda functions. Configure Amazon API Gateway to point to the Lambda functions."
+        "text": "Use AWS Application Migration Service to migrate the database to Amazon EC2 instances. Copy the web files to containers that run on Amazon Elastic Kubernetes Service (Amazon EKS). Set up an Elastic Load Balancing (ELB) load balancer for the EC2 instances and EKS containers. Copy the API code to AWS Lambda functions. Configure Amazon API Gateway to point to the Lambda functions."
       }
     ],
     "answers": [
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is correct: the React UI is explicitly a static SPA, so its built HTML/CSS/JavaScript assets can be served from S3 (preferably via CloudFront and private S3 origin). API Gateway plus Lambda removes API server management, though Node.js handlers may require adaptation. Aurora MySQL provides managed MySQL compatibility, automatic database storage growth, and Aurora Replicas/reader endpoint for read-intensive queries. DMS supports migration from on-premises MySQL. This yields the least operational overhead among listed options.",
+    "wrongOptionsExplanation": "A: RDS MySQL is managed but EC2 web servers and Spot Fleet API require server/fleet management and risk interruption; not least overhead. B: Correct: S3 static SPA + API Gateway/Lambda + Aurora MySQL. C: MySQL on EC2 plus FSx and EC2 web Auto Scaling introduces substantial patching, file-system and instance operations. D: MySQL on EC2 and EKS for static web files is unnecessarily complex, while Lambda is already used for API.",
+    "plainWords": "Because React is a static SPA, put its build files in S3, run the Node.js API with Lambda/API Gateway, and move MySQL into Aurora so storage and read capacity can grow without managing servers.",
+    "keyPoints": "Static React SPA can run on S3/CloudFront; contrast server-side-rendered JavaScript UI in Q487, which cannot run on static S3. Aurora MySQL storage auto-grows and Aurora Replicas/reader endpoint scale reads. API Gateway+Lambda reduces server administration; Lambda may require Node.js handler adaptation. DMS migrates MySQL. CloudFront + private S3 origin recommended for HTTPS/security; S3 website endpoint lacks HTTPS.",
+    "sourceWarning": "Retain B. OCR/spacing corrected in options: 'theweb', 'upweb', 'tomigrate', 'ElasticKubernetes'; 'MYSQL' standardized; original preserved. External exact-stem FreeCram 2026 choice C has the same architecture as repository B due to reordering. No confirmed Choose TWO/THREE variant. Modernization caveats: Lambda conversion may require API refactoring, CloudFront is absent from B but recommended for secure static hosting, Aurora read scaling requires replicas/reader endpoint rather than storage auto-growth alone. AWS sources disagree on current Aurora maximum storage (older 128 TiB vs newer 256 TiB), so avoid memorizing a fixed ceiling without engine/version context.",
+    "review": {
+      "status": "verified-aws-and-external-with-caveats",
+      "reviewedAt": "2026-10-31",
+      "domain4Position": "107/139",
+      "answer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/deploy-a-react-based-single-page-application-to-amazon-s3-and-cloudfront.html",
+        "https://docs.aws.amazon.com/rds/latest/auroraextendedcontent/aurora-features-scalability.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteEndpoints.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-is-running-an-application-on-premises-the-application-uses-a-set-of-web-servers-that-host",
+        "https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf",
+        "https://www.salesforcexamdumps.com/sap-c02-practice-questions/14.html"
+      ],
+      "variantCheck": "Exact-stem four-choice FreeCram 2026 answer C matches repo B architecture after option reorder; older 2025 PDF and another practice collection match. No confirmed Choose TWO/THREE version.",
+      "defects": [
+        "Spacing/OCR errors in choices and MYSQL case",
+        "No CloudFront/private S3 frontend security in B",
+        "Lambda conversion may require API changes",
+        "Aurora replicas required to scale reads, not just automatic storage growth"
+      ]
+    },
+    "answerStatus": "verified-aws-and-external-with-caveats",
+    "originalQuestionSnapshot": {
+      "stem": "A company is running an application on premises. The application uses a set of web servers that host a static React-based single-page application (SPA), a Node.js API, and a MYSQL database server. The database is read intensive. The company will need to expand the database's storage at an unpredictable rate. The company must migrate the application to AWS. The company also must modernize the architecture to reduce infrastructure management and increase scalability. Which solution will meet these requirements with the LEAST operational overhead?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use AWS Database Migration Service (AWS DMS) to migrate the database to Amazon RDS for MySQL. Use AWS Application Migration Service to migrate theweb application to a fleet of Amazon EC2 instances behind an Elastic Load Balancing (ELB) load balancer. Use a Spot Fleet with a request type of request to host the API."
+        },
+        {
+          "id": "B",
+          "text": "Use AWS Database Migration Service (AWS DMS) to migrate the database to Amazon Aurora MySQL. Copy the web files to an Amazon S3 bucket and set upweb hosting. Copy the API code to AWS Lambda functions. Configure Amazon API Gateway to point to the Lambda functions."
+        },
+        {
+          "id": "C",
+          "text": "Use AWS Database Migration Service (AWS DMS) to migrate the database to a MySQL database that runs on Amazon EC2 instances. Use AWS DataSync tomigrate the web files and API files to an Amazon FSx for Windows File Server file system. Set up a fleet of EC2 instances in an Auto Scaling group as web servers. Mount the FSx for Windows File Server file system."
+        },
+        {
+          "id": "D",
+          "text": "Use AWS Application Migration Service to migrate the database to Amazon EC2 instances. Copy the web files to containers that run on Amazon ElasticKubernetes Service (Amazon EKS). Set up an Elastic Load Balancing (ELB) load balancer for the EC2 instances and EKS containers. Copy the API code to AWS Lambda functions. Configure Amazon API Gateway to point to the Lambda functions."
+        }
+      ],
+      "answers": [
+        "B"
+      ]
+    }
   },
   {
     "id": 499,
