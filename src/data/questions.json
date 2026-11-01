@@ -21348,13 +21348,20 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is correct. Migrate Oracle to managed Amazon RDS for Oracle and use AWS Secrets Manager automatic credential rotation. RDS supports native Secrets Manager management of the master user password, avoiding a custom Lambda rotation function; adjust the rotation schedule to yearly if required. AWS: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html ; https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_managed.html .",
+    "wrongOptionsExplanation": "A: DynamoDB requires a major relational-to-NoSQL redesign, and Parameter Store plus custom CloudWatch/Lambda rotation adds overhead. B: Correct; preserve Oracle compatibility while offloading database maintenance and password rotation. C: Oracle on EC2 retains OS, patching, backup, and database management plus custom password-rotation automation; rotating a connection string alone does not rotate the DB password. D: Neptune is a graph database, not a direct Oracle transactional database replacement; CloudWatch alarms do not constitute a sensible annual scheduler and custom rotation is unnecessary.",
+    "plainWords": "Keep the Oracle database engine but let AWS run it. Store its password in Secrets Manager and configure automatic rotation once a year.",
+    "keyPoints": "Least operations + Oracle -> RDS for Oracle. Password rotation -> Secrets Manager, preferably RDS-managed master credentials. RDS-managed rotation defaults to 7 days but schedule can be modified. Rotation must update both the stored secret and actual database password. EventBridge Scheduler/cron can schedule events, whereas CloudWatch alarm is threshold-based.",
+    "sourceWarning": "Answer B supported by current AWS documentation. Source option A/D wrongly suggests CloudWatch alarm as an annual scheduler; option C rotates connection string rather than necessarily database password; option D has OCR '{AWS SCT)' and C lacks terminal period. Clarify that native RDS-managed Secrets Manager integration applies to master credentials; application users may need a Secrets Manager Lambda rotation strategy. Exact-stem Choose TWO/THREE variant not confirmed; external exact-stem exam copy not independently located in this search, so no external cross-verification claimed. AWS docs: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html ; https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_schedule.html .",
+    "review": {
+      "status": "aws-doc-verified",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "Current AWS docs verified; no exact duplicate in bank; external exact-stem source and multi-answer variant unconfirmed."
+    },
+    "answerStatus": "aws-doc-verified"
   },
   {
     "id": 512,
