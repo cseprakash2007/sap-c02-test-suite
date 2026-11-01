@@ -153,3 +153,37 @@ A keyword co-occurrence scan of all 674 question stems and options found the fol
 3. A service mentioned only as a distractor does not define the question's architecture.
 4. Do not auto-correct answer keys based on similarity alone.
 5. Continue investigating Q510, Q124/Q397 Git reachability, and further cross-framework variants.
+
+## Focused cross-framework review: long-running jobs and SQS vs Kinesis (2026-11-01)
+
+### Q194 / Q222 / Q661
+
+| ID | Workload | Stored key | Finding |
+|---|---|---|---|
+| Q194 | Abbreviated question: infrequent S3 uploads, processing up to 25 minutes | A | **Abbreviated duplicate of Q222**; EventBridge → ECS Fargate task |
+| Q222 | Full S3 survey upload scenario, existing EC2 polling, 25-minute processing | A | Same solution as Q194; S3 events → EventBridge → ECS Fargate task |
+| Q661 | Proprietary unmodifiable Linux binary, CPU-intensive, runs up to 20 minutes every four hours | C | **Related but different**: EventBridge schedule → Fargate task; not S3-event triggered |
+
+**Exam rule:** Lambda's maximum invocation duration is 15 minutes. A Step Functions Task state's timeout of 30 minutes does **not** allow a Lambda function to run for 30 minutes. Fargate can run containerized work longer than 15 minutes. For Q661, a container image can package the binary without modifying its source. AWS Batch is another viable batch framework but the proposed Step Functions schedule is not itself a scheduling mechanism.
+
+### Q23 / Q42 / Q446 / Q565
+
+| ID | Requirement | Stored key | Classification |
+|---|---|---|---|
+| Q23 | Bursty, loosely coupled order jobs to DynamoDB | B | SQS + Lambda worker; distinct scenario |
+| Q42 | Continuous genomic records, parallel near-real-time analytics, Redshift destination | B | Kinesis Data Streams; distinct streaming scenario |
+| Q446 | Bursty REST API with no lost messages | B | HTTP API → SQS → Lambda; duplicate of Q565 |
+| Q565 | Same environmental-data ingestion scenario as Q446 | B (corrected from A) | Confirmed duplicate; same architecture |
+
+**Exam rule:** SQS durably buffers independent asynchronous jobs; Kinesis Data Streams is optimized for continuous ordered-within-shard records, multiple consumers, and replay. API Gateway can integrate with SQS; an ALB cannot target an SQS queue. Reliability also requires retries, DLQ/redrive strategy, and idempotent processing where applicable.
+
+### Reference documentation
+
+- [Lambda timeout limits](https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html)
+- [EventBridge targets and ECS tasks](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html)
+- [S3 to EventBridge events](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ev-events.html)
+- [API Gateway HTTP API integrations](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations.html)
+- [SQS and Lambda](https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html)
+- [Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/introduction.html)
+
+**Dataset status:** No answer-key changes in this focused review; Q194 and Q222 identified as abbreviated/full duplicates, Q661 as related-but-different.
