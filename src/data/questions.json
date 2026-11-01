@@ -22342,16 +22342,26 @@
       }
     ],
     "answers": [
-      "A"
+      "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is the best technically viable choice among these defective options: an AWS Site-to-Site IPsec VPN carried over an INDEPENDENT internet connection can provide lower-cost encrypted backup when the 1 Gbps Direct Connect fails. A statically routed VPN can be configured for backup, but requires careful routing/health/failover configuration; since BGP is already available, a dynamic BGP VPN would be preferred and is conspicuously missing from the options. AWS Direct Connect resiliency guidance recommends VPN backup for <=1 Gbps DX. https://aws.amazon.com/directconnect/resiliency-recommendation/ ; https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-static-dynamic.html ; https://aws.amazon.com/directconnect/faqs/ .",
+    "wrongOptionsExplanation": "A: INVALID despite source key. MACsec is supported only on 10/100/400 Gbps dedicated Direct Connect, not this 1 Gbps link. Private IP VPN runs over Direct Connect transit VIF/Transit Gateway and cannot survive loss of the underlying single DX physical link. B: Second DX can improve physical resilience but costs more, and MACsec is again unsupported on 1 Gbps; no independent end-to-end encryption as specified. C: Multiple private VIFs over one DX share the same physical failure domain and provide no inherent encryption. D: Best remaining option, provided Site-to-Site VPN uses independent public internet transport; static routes must be configured carefully and BGP dynamic VPN would be preferable.",
+    "plainWords": "A VPN over the same Direct Connect wire dies when that wire dies. A VPN over a separate internet connection can keep the application connected. Also, you cannot enable Direct Connect MACsec on a 1 Gbps dedicated link.",
+    "keyPoints": "MACsec dedicated DX supported speeds: 10/100/400 Gbps (not 1 Gbps). Private-IP Site-to-Site VPN over DX needs Transit Gateway and transit VIF, and does not create independent physical redundancy. Internet-based IPsec VPN is a cost-effective backup for <=1 Gbps DX. BGP-based dynamic routing is preferred for automatic failover; static VPN is possible but needs careful routing. Multiple VIFs do not equal multiple physical connections.",
+    "sourceWarning": "DEFECTIVE ORIGINAL ANSWER KEY: Original A is technically impossible as written (MACsec unsupported on 1 Gbps DX), and private IP VPN over the same DX does not survive DX failure. External exact stem P2PExams PDF Q1 keys A and repeats this technical mistake; CertEnsure Q167 exact options, answer not independently confirmed. D is best feasible option if VPN is internet-based, but specifies static rather than recommended BGP routing, and independent internet transport is implicit rather than explicit. Therefore question is flawed; a dynamic public-IP VPN over independent internet is the better absent choice. No confirmed Choose TWO/THREE variant. OCR defects: 'tor' -> 'for', 'win' -> 'will', 'Direct Conned'/'Dried Conned' -> 'Direct Connect'. Sources: https://docs.aws.amazon.com/directconnect/latest/UserGuide/MACsec.html ; https://aws.amazon.com/vpn/faqs/ ; https://aws.amazon.com/directconnect/resiliency-recommendation/ ; https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-static-dynamic.html ; https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-foster-09-08-2024-12qa-vceexamstest.pdf ; https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html .",
+    "review": {
+      "status": "verified-source-key-defective",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "originalAnswer": [
+        "A"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS MACsec prerequisites invalidate A/B on 1 Gbps; private-IP VPN over same DX is not independent resilience. External P2PExams repeats incorrect A. D best of listed options but static routing inferior to missing dynamic internet VPN choice."
+    },
+    "answerStatus": "corrected-source-defect"
   },
   {
     "id": 539,
