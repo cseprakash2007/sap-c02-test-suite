@@ -26027,13 +26027,20 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C verified: ECS on EC2 supports custom AMIs containing pre-pulled Docker/container base image layers, so a very large shared base image need not be downloaded afresh at task startup. Derived custom component images reuse identical base layers; pull only missing layers from ECR. For repeat tasks configure ECS_IMAGE_PULL_BEHAVIOR=once or prefer-cached when appropriate. AWS docs https://docs.aws.amazon.com/AmazonECS/latest/developerguide/pull-behavior.html ; https://repost.aws/knowledge-center/ecs-create-custom-amis ; https://repost.aws/knowledge-center/ecs-images-latency .",
+    "wrongOptionsExplanation": "A: ECS on Fargate cannot use a custom EC2 AMI to prepopulate container image caches, so a huge base image must be fetched for the task. B: App Runner manages hosts and does not permit custom host AMIs to pre-cache tens-of-GB base image layers. C: Correct: ECS EC2 custom AMI with preloaded base layers minimizes container image pull startup time, assuming compatible image layer hashes, adequate local disk and correct cache settings. D: EKS Fargate cannot run pods on customer AMIs; an AMI with the base image cannot be attached to Fargate nodes.",
+    "plainWords": "The base container image is huge. Instead of downloading it every time a container starts, bake its actual image layers into a custom EC2 AMI, launch ECS EC2 worker instances from that AMI, and pull only the small custom changes from ECR. This is option C.",
+    "keyPoints": "ECS on EC2 permits custom AMIs and Docker/containerd local image caching; Fargate/App Runner do not accept custom EC2 host AMIs. ECS_IMAGE_PULL_BEHAVIOR=once or prefer-cached can reduce unnecessary pulls. The AMI must contain the container engine's cached image layers, not just copied application files. Image digests/layers must match the dependent images; maintain AMI freshness, OS/container engine compatibility, and disk capacity. Container startup time vs EC2 cold provisioning time are distinct.",
+    "sourceWarning": "ANSWER C VERIFIED against AWS ECS caching/custom AMI docs and independent exact-stem sites: P2PExams SAP-C02 PDF Q1 C; Exam-Tests Q219 option A maps to repository C; GoShiken Q234 option C same. No verified Choose TWO/THREE variant. Source wording typo 'onAWS' and missing period in C. Practical nuance: cached base layers only help if image layer digests match, image is actually pre-pulled into AMI container runtime and ECS cache behavior permits reuse. https://www.p2pexams.com/free-questions/expert-designed-amazon-sap-c02-exam-study-material-by-goodwin.pdf ; https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=45 ; https://www.goshiken.com/blog/%E7%84%A1%E6%96%99sap-c02%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E5%95%8F%E9%A1%8C%E3%81%A7100-%E3%82%AB%E3%83%90%E3%83%BC%E7%8E%87%E3%81%AE%E3%83%AA%E3%82%A2%E3%83%AB%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C-%E6%9B%B4%E6%96%B0%E3%81%95%E3%82%8C%E3%81%9F485%E5%95%8F%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99-q227-q245/ .",
+    "review": {
+      "status": "verified-with-image-cache-implementation-caveats",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS ECS EC2 cached image/custom AMI confirms C. P2PExams Q1 keys C, Exam-Tests Q219 keys A equivalent to C, GoShiken Q234 has C equivalent. No confirmed Choose TWO/THREE variant."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 639,
