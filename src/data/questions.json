@@ -25522,13 +25522,20 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is the intended least-operational-overhead answer: API Gateway REST API canary deployments can route 10% of API requests to a new deployment and 90% to production, while SageMaker Serverless Inference avoids provisioning and scaling ML inference instances. IMPORTANT implementation caveat: SageMaker Serverless Inference does not support multiple production variants in a single endpoint. Configure separate old/new serverless inference endpoints and use different API Gateway integration backends (for example separate Lambda integrations or stage-variable overrides) for production versus canary; the wording of D omits this integration detail. AWS: https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html ; https://docs.aws.amazon.com/sagemaker/latest/dg/serverless-endpoints.html .",
+    "wrongOptionsExplanation": "A: Incorrect as stated. A multi-model endpoint dynamically hosts multiple model artifacts, but weighted 90/10 traffic splitting uses SageMaker production variants, not automatic per-model weights on a multi-model endpoint. B: Technically feasible: two serverless endpoints and Lambda randomized 90/10 selection, but requires maintaining custom routing logic rather than API Gateway native canary controls. C: Technically feasible: two real-time single-model endpoints and Lambda routing, but adds instance provisioning/scaling plus custom routing and uses imprecise 'endpoint URL' terminology (SageMaker InvokeEndpoint API). D: Best intended: serverless inference plus API Gateway canary percentage. Requires two separately addressable model backends; a single serverless endpoint cannot host weighted production variants.",
+    "plainWords": "Let API Gateway send 90 of every roughly 100 requests to the stable API deployment and 10 to a canary deployment. Configure those deployments to invoke separate old and new SageMaker serverless model endpoints. You avoid managing EC2 inference servers and avoid writing random routing code.",
+    "keyPoints": "API Gateway REST API canary deployment = percent-based split between production and canary deployments, with stage-variable overrides for integrations. SageMaker Serverless Inference = automatic scaling, no managed instances, but NO multiple production variants, NO multi-model endpoints and possible cold starts. SageMaker real-time production variants support model A/B weighted routing, a different feature from multi-model endpoints. Option D requires separate backends/integrations; it is incomplete if interpreted as a single serverless endpoint hosting both models.",
+    "sourceWarning": "SOURCE KEY D MATCHES exact-stem ExamCollection SAP-C02 Q178. Technically intended, but option D omits necessary separation of old/new inference backends; SageMaker Serverless Inference explicitly excludes multiple production variants, so one serverless endpoint cannot itself route 90/10 between model versions. Use two serverless endpoints with API Gateway canary deployment integrations. Option A confuses multi-model endpoint routing with weighted production variants. No confirmed Choose TWO/THREE variant. Sources: https://www.examcollection.us/exam/SAP-C02-question-answer-12.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html ; https://docs.aws.amazon.com/sagemaker/latest/dg/serverless-endpoints.html ; https://docs.aws.amazon.com/sagemaker/latest/dg/model-ab-testing.html ; https://docs.aws.amazon.com/sagemaker/latest/dg/multi-model-endpoints.html .",
+    "review": {
+      "status": "verified-intended-answer-with-incomplete-integration-warning",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "ExamCollection exact stem Q178 keys D. AWS API Gateway REST canary + SageMaker Serverless supports intended design only with distinct old/new backend integrations; serverless endpoints cannot contain multiple production variants. No confirmed multiple-answer variant."
+    },
+    "answerStatus": "verified-with-caveat"
   },
   {
     "id": 625,
