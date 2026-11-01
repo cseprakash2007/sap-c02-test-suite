@@ -283,3 +283,17 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **674-bank comparison:** No exact normalized stem duplicate. Related Q439 (on-prem AD AWS sign-in), Q593 (Organizations SAML federation), Q603 (Entra ID/AD IdP), Q605 (enterprise app authentication), Q226 (GitHub Actions federation, different OIDC flow). Do not confuse IAM SAML role federation with IAM Identity Center, ALB OIDC/SAML authentication, or GitHub Actions OIDC. Source has OCR typos `1AM` for `IAM` and missing punctuation; original preserved in snapshot. Modern IAM Identity Center may be preferred for workforce federation, but IAM SAML federation remains supported.
 
 **Next:** Q401 — 20 of 33.
+
+## 20 of 33 — Q401 — Select THREE — event-driven DataSync manifest and notifications
+
+**Verified A,D,E unchanged.** A create a CSV manifest of analytics-relevant source files and upload to S3. D S3 ObjectCreated -> Lambda -> DataSync `StartTaskExecution` with `ManifestConfig` for immediate selective copy. E DataSync Task Execution State Change SUCCESS/ERROR -> EventBridge -> SNS with confirmed email subscriptions. B DynamoDB manifest copy is unnecessary; C Lambda-based bulk transfer adds custom code/duration limits; F Lambda for SNS notification is unnecessary because EventBridge can directly target SNS.
+
+**AWS sources:** https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html ; https://docs.aws.amazon.com/datasync/latest/apireference/API_StartTaskExecution.html ; https://docs.aws.amazon.com/datasync/latest/userguide/events.html ; https://repost.aws/knowledge-center/datasync-task-execution-notification ; https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html . DataSync manifest uses S3 bucket ARN, manifest object path and access role; caller may need `iam:PassRole`. EventBridge events are best-effort; SNS needs confirmed email subscription. Only one execution per task at once; duplicate S3 events and overlapping uploads require idempotency/queuing. Native include/exclude filters may be simpler than manifest for static path patterns. Current Enhanced mode support includes on-prem NFS/SMB with appropriate agent, so older blanket exclusions are outdated.
+
+**Multiple exact exam variants:** [CertEnsure SAP-C02 Q84](https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html) A,D,E; [FreeCram SAA-C03 Q244](https://www.freecram.net/question/Amazon.SAA-C03.v2026-04-09.q244/a-company-generates-approximately-20-gb-of-data-multiple-times-each-day-the-company-uses-aws-datasync) A,D,E; [Salesforcexamdumps SAA-C03 Q24](https://www.salesforcexamdumps.com/saa-c03-practice-questions/2) A,D,E. Exam mirrors may copy each other; official AWS docs verify technical behavior.
+
+**674-bank audit:** No exact stem duplicate in bank. Related DataSync questions Q3 (on-prem image/NFS ingestion), Q171 (large image dataset), Q211 (hybrid file transfer), Q300 (NFS migration), Q349 (60TB image transfer), Q409 (million CSV files), Q479 (migration), and Q365 (S3 RTC) address different transfer scale, protocol, schedule or SLA. Avoid confusing DataSync manifest with Kubernetes deployment manifests (Q146).
+
+**Wording defects:** A says manifest created 'at end of copy process' when it must exist *before* DataSync transfer; likely means after on-prem data generation. E wording omits SNS email subscription confirmation. EventBridge best-effort means notifications not absolutely guaranteed. No deprecated core service.
+
+**Next:** Q438 — 21 of 33.
