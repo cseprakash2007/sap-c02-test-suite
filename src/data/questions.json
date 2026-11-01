@@ -13941,13 +13941,77 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,D,F is the intended source key. A scales the existing server-rendered PHP/Apache frontend horizontally using ALB and EC2 Auto Scaling with EFS for shared assets. D deploys monolithic Java SE via managed Elastic Beanstalk rather than adding containerization work. F migrates PostgreSQL with AWS DMS to Aurora PostgreSQL and scales read capacity through Aurora Auto Scaling replicas. The application must route read queries to the reader endpoint; Aurora storage scales separately. Aurora supports a 60 TB database at cluster-volume level subject to version, per-table and migration constraints.",
+    "wrongOptionsExplanation": "A correct: PHP requires a server runtime and ALB/ASG provides elastic frontend capacity; EFS can share assets, although S3/CloudFront is another practical asset architecture. B wrong: a server-side PHP frontend is not a static SPA and conversion would require rewriting. C technically viable: Java SE Docker on Fargate, but building, testing and maintaining container packaging adds development effort versus Elastic Beanstalk. D correct: native Java SE deployment platform with managed environment and autoscaling. E wrong: self-managed PostgreSQL on a bigger EC2 instance is vertical scaling and does not independently resolve read scaling. F correct: DMS for data movement plus Aurora PostgreSQL with reader auto scaling, but DMS does not automatically convert every schema/object and read queries must target replicas.",
+    "plainWords": "Move a crashing PHP + Java + huge PostgreSQL application to AWS without rewriting it: scale PHP on EC2/ALB, host Java using Elastic Beanstalk, and move PostgreSQL to Aurora with automatically scaled read replicas.",
+    "keyPoints": "PHP server-side != static SPA. Least development effort: Beanstalk Java SE rather than containerize monolith. 60 TB Aurora PostgreSQL fits supported cluster storage limits, subject to version and table limits. Aurora Auto Scaling changes reader count, not database storage. Use reader endpoint and validate read/write split. DMS migrates data; AWS SCT or native tools may be needed for schema/objects; initial 60 TB load requires sizing, migration method, validation and cutover planning.",
+    "sourceWarning": "Source wording defect: 'database reached capacity because of read operations' conflates storage capacity with read-throughput saturation; read replicas solve read pressure, not storage exhaustion. F says DMS 'replatform' although DMS primarily migrates/replicates data; compatibility and schema need independent validation. Original punctuation 'scalability, Which' retained. External exact match located in SAP-C02 PDF collection; second independent exact variant not confirmed.",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "domain4-multi-answer-aws-verified-with-wording-caveat",
+      "originalAnswers": [
+        "A",
+        "D",
+        "F"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/java-se-platform.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Managing.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_Limits.html",
+        "https://docs.aws.amazon.com/rds/latest/auroraextendedcontent/aurora-features-scalability.html"
+      ],
+      "externalQuestionLinks": [
+        "https://cdnc.heyzine.com/files/uploaded/v3/0e2ddf4c8489bd5762075a3d0f0a9ee2193fc36d.pdf"
+      ],
+      "externalVariantStatus": "one matching published variant found; independent second exact variant not confirmed",
+      "exactDuplicateIDs": [],
+      "similarQuestionIDs": [
+        176,
+        188,
+        230,
+        328,
+        487,
+        525,
+        530,
+        607,
+        667
+      ]
+    },
+    "answerStatus": "aws-docs-verified-wording-caveat",
+    "originalQuestionSnapshot": {
+      "stem": "A company is running a three-tier web application in an on-premises data center. The frontend is a PHP application that is served by an Apache web server. The middle tier is a monolithic Java SE application. The storage tier is a 60 TB PostgreSQL database. The three-tier web application recently crashed and became unresponsive. The database also reached capacity because of read operations. The company wants to migrate to AWS to resolve these issues and improve scalability, Which combination of steps will meet these requirements with the LEAST development effort? (Select THREE.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Configure an Auto Scaling group of Amazon EC2 instances behind an Application Load Balancer to host the web server. Use Amazon EFS for the frontend static assets."
+        },
+        {
+          "id": "B",
+          "text": "Host the static single-page application on Amazon S3. Use an Amazon CloudFront distribution to serve the application."
+        },
+        {
+          "id": "C",
+          "text": "Create a Docker container to run the Java SE application. Use AWS Fargate to host the container."
+        },
+        {
+          "id": "D",
+          "text": "Create an AWS Elastic Beanstalk environment for Java to host the Java SE application."
+        },
+        {
+          "id": "E",
+          "text": "Migrate the PostgreSQL database to an Amazon EC2 instance that is larger than the on- premisesPostgreSQL database."
+        },
+        {
+          "id": "F",
+          "text": "Use AWS DMS to replatform the PostgreSQL database to an Amazon Aurora PostgreSQL database. Use Aurora Auto Scaling for read replicas."
+        }
+      ],
+      "answers": [
+        "A",
+        "D",
+        "F"
+      ]
+    }
   },
   {
     "id": 322,
