@@ -20447,13 +20447,58 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C is correct: Amazon WorkSpaces provides full managed virtual desktops for the 400 Windows/Linux users; AD Connector proxies authentication to existing on-premises Active Directory over VPN; RADIUS integrates MFA with AD Connector. AWS WorkSpaces best practices explicitly describe this hybrid AD Connector and RADIUS setup. Disaster resilience requires highly available connectivity to on-premises AD and RADIUS or a separate DR identity strategy.",
+    "wrongOptionsExplanation": "A: WorkSpaces and AD Connector fit, but merely enabling MFA in a console without configuring reachable RADIUS MFA backend is incomplete. AWS does provide console MFA configuration, so the distinction is omission of RADIUS, not impossibility of using a console. B: AppStream 2.0 Desktop View streams a desktop-like session, but is oriented to application delivery and the option does not explicitly configure MFA. C: Correct: full managed desktops, AD Connector to existing AD, and RADIUS MFA. D: AppStream federation with AD FS/MFA can authenticate users, but is less suited to reproducing full personal Windows/Linux desktop environments.",
+    "plainWords": "Give staff complete WorkSpaces cloud desktops, use AD Connector so their normal company passwords work, and add a RADIUS server for MFA.",
+    "keyPoints": "WorkSpaces = managed full virtual desktop; AppStream 2.0 = primarily application streaming, even with Desktop View. AD Connector proxies on-premises AD and does not cache credentials. MFA with AD Connector uses RADIUS; console is where RADIUS is configured. AD/RADIUS connectivity and network resilience are critical to disaster recovery. Post-2025 AD Connector directories need RADIUS reachable through VPC routing.",
+    "sourceWarning": "Correct original answer C retained. Option A wording is ambiguous: console can enable MFA but only with configured RADIUS infrastructure. Disaster-recovery design is incomplete if the on-premises AD or RADIUS/network fails in the disaster; no fully autonomous DR authentication is described. For AD Connector directories created after Oct 7 2025 RADIUS must be routable through VPC. External exact-stem single-answer ExamTopics Q402 and CertEnsure Q5; no confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-aws-and-external-with-caveats",
+      "reviewedAt": "2026-10-31",
+      "domain4Position": "104/139",
+      "answer": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/whitepapers/latest/best-practices-deploying-amazon-workspaces/ad-connector-role-with-workspaces.html",
+        "https://docs.aws.amazon.com/whitepapers/latest/best-practices-deploying-amazon-workspaces/scenario-1-using-ad-connector-to-proxy-authentication-to-on-premises-active-directory-service.html",
+        "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_connector_mfa.html",
+        "https://repost.aws/knowledge-center/workspaces-mfa-activation",
+        "https://www.examtopics.com/discussions/amazon/view/126961-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-402-discussion/",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html"
+      ],
+      "variantCheck": "Exact-stem four-choice single-answer copies ExamTopics Q402 and CertEnsure Q5 (C); no confirmed Choose TWO/THREE version.",
+      "defects": [
+        "A's MFA wording ambiguous; console configuration requires RADIUS backend",
+        "On-premises AD and RADIUS dependency undermines disaster resilience if network/site lost",
+        "New 2025 RADIUS VPC reachability requirement"
+      ]
+    },
+    "answerStatus": "verified-aws-and-external-with-caveats",
+    "originalQuestionSnapshot": {
+      "stem": "A company is creating a solution that can move 400 employees into a remote working environment in the event of an unexpected disaster. The user desktops have a mix of Windows and Linux operating systems. Multiple types of software, such as web browsers and mail clients, are installed on each desktop. A solutions architect needs to implement a solution that can be integrated with the company's on-premises Active Directory to allow employees to use their existing identity credentials. The solution must provide multi-factor authentication (MFA) and must replicate the user experience from the existing desktops. Which solution will meet these requirements?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use Amazon WorkSpaces for the cloud desktop service. Set up a VPN connection to the on-premises network. Create an AD Connector, and connect to the on-premises Active Directory. Activate MFA for Amazon WorkSpaces by using the AWS Management Console."
+        },
+        {
+          "id": "B",
+          "text": "Use Amazon AppStream 2.0 as an application streaming service. Configure Desktop View for the employees. Set up a VPN connection to the on-premises network. Set up Active Directory Federation Services (AD FS) on premises. Connect the VPC network to AD FS through the VPN connection."
+        },
+        {
+          "id": "C",
+          "text": "Use Amazon WorkSpaces for the cloud desktop service. Set up a VPN connection to the on-premises network. Create an AD Connector, and connect to the on-premises Active Directory. Configure a RADIUS server for MFA."
+        },
+        {
+          "id": "D",
+          "text": "Use Amazon AppStream 2.0 as an application streaming service. Set up Active Directory Federation Services on premises. Configure MFA to grant users access on AppStream 2.0."
+        }
+      ],
+      "answers": [
+        "C"
+      ]
+    }
   },
   {
     "id": 492,
