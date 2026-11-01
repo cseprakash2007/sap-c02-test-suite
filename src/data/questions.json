@@ -8494,9 +8494,17 @@
     "wrongOptionsExplanation": "",
     "plainWords": "",
     "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "AWS callback task tokens cannot be used directly by cross-account principals; B is incomplete without same-account bridge. https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html",
+    "review": {
+      "status": "needs-source-reconciliation",
+      "originalAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": null,
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS Step Functions callback tokens must be returned by principals in same AWS account; separate-account approval requires an authorized bridge in workflow account. B gives callback pattern but omits bridge."
+    },
+    "answerStatus": "flagged-ambiguous"
   },
   {
     "id": 197,
@@ -25886,9 +25894,17 @@
     "wrongOptionsExplanation": "",
     "plainWords": "",
     "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "C lifecycle transition after 6 months does not enforce expiration at 6 months; reliability/replay unclear. https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-expire-general-considerations.html",
+    "review": {
+      "status": "needs-source-reconciliation",
+      "originalAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": null,
+      "verifiedAt": "2026-11-01",
+      "notes": "Stored C transitions to Standard-IA at 6 months rather than expiring at 6 months; does not explicitly satisfy retry/reprocessing of failures. Need compare A/B/D full option texts and external source variants."
+    },
+    "answerStatus": "flagged-ambiguous"
   },
   {
     "id": 634,
