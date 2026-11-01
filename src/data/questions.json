@@ -23566,16 +23566,26 @@
       }
     ],
     "answers": [
-      "D"
+      "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Best current design A, CONDITIONAL: configure the CloudFront Function explicitly on the VIEWER-RESPONSE event (not viewer-request). CloudFront Functions viewer-response event contains both event.request.headers['user-agent'] and event.response.headers, enabling conditional removal of unsupported response headers for legacy clients. CloudFront -> ALB -> Lambda target groups supports existing Lambda functions. AWS explicitly documents using request properties to modify viewer response: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/function-code-choose-purpose.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/functions-event-structure.html . Original A omits event trigger, and D is ambiguous ('in response to viewer requests') so the question is NOT a uniquely valid single-answer item; Lambda@Edge at viewer-response also works.",
+    "wrongOptionsExplanation": "A: best simple supported option when CloudFront Function is configured for viewer-response. The function can read request User-Agent and remove response headers. B: API Gateway REST default gateway responses control API Gateway-generated errors, not all successful Lambda integration responses. C: HTTP API supports response PARAMETER mappings, not VTL response mapping templates; no specified supported User-Agent-based conditional header removal. D: if 'in response to viewer requests' means a Lambda@Edge VIEWER-REQUEST trigger, impossible to modify origin response headers at that stage. If intended as viewer-response triggered for each viewer request, D is ALSO technically valid; ambiguous wording creates a defective question.",
+    "plainWords": "An old TV tells the server its device type using User-Agent. CloudFront checks that User-Agent just before sending the reply and deletes the header the old TV cannot understand. This must happen during a response event.",
+    "keyPoints": "CloudFront Functions viewer-response: event.request and event.response both accessible; inspect User-Agent and delete response.headers['header-name']; lightweight/low latency. Lambda@Edge viewer-response can also read request headers and edit response. Viewer-request cannot edit an origin response not yet generated. API Gateway REST default gateway responses apply gateway-generated errors, not standard integration responses. API Gateway HTTP API response parameter mapping is not VTL mapping template. CloudFront response headers policy is unconditional per behavior, not per User-Agent without extra routing.",
+    "sourceWarning": "AMBIGUOUS/DEFECTIVE ORIGINAL KEY D: Exact-stem FreeCram Q243/305 and source key D. D says 'in response to viewer requests', which could mean viewer-request event (invalid for origin response header editing) or viewer-response invoked for requests (valid). A CloudFront Function on viewer-response is fully supported and directly reads event.request User-Agent and event.response headers, so A is best current simple design; however A does not explicitly name its trigger, and D is also viable if interpreted as viewer-response. Mark as defective/non-unique. No confirmed Choose TWO/THREE variant. AWS: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/function-code-choose-purpose.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/functions-event-structure.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-event-structure.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-parameter-mapping.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2026-08-19.q305/a-company-uses-a-service-to-collect-metadata-from-applications-that-the-company-hosts-on-premises-consumer .",
+    "review": {
+      "status": "source-key-ambiguous-nonunique",
+      "originalAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": [
+        "A"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "CloudFront Functions viewer-response can inspect request User-Agent and delete response headers; source D also possible if viewer-response intended, but viewer-request is wrong. Exact external FreeCram keys D. Question ambiguous; prefer A with explicit viewer-response configuration."
+    },
+    "answerStatus": "corrected-source-defect"
   },
   {
     "id": 572,
