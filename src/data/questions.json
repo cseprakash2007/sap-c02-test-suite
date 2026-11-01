@@ -21935,13 +21935,20 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct D: use Amazon SES to send transactional acknowledgment email and store a reusable template in SES with customer-data placeholders. AWS Lambda supplies recipient and JSON template values to SES SendTemplatedEmail (SES v1), which renders and sends the personalized message without a self-managed SMTP server or custom S3 template merge. For a new application SES v2 SendEmail with Content.Template is the modern equivalent. Sources: https://docs.aws.amazon.com/boto3/latest/reference/services/ses/client/send_templated_email.html ; https://docs.aws.amazon.com/ses/latest/dg/send-personalized-email-api.html .",
+    "wrongOptionsExplanation": "A: EC2-hosted SMTP server creates patching, monitoring and email deliverability operations; S3+Lambda template merging adds unnecessary custom code. B: SES is the right sender but S3-hosted templates and Lambda-side merging add work compared with SES-managed templates. C: SES templates are suitable, but the EC2 SMTP server is redundant and would not automatically integrate with SES template rendering as described. D: Correct; SES-managed templates and SES sending plus Lambda parameters minimize cost and operational overhead.",
+    "plainWords": "Instead of running your own mail server, save an email template in SES, send the customer's name and case number from Lambda, and let SES fill the placeholders and send the email.",
+    "keyPoints": "SES = managed transactional email; SES templates = placeholders and automatic personalization; SES v1 SendTemplatedEmail works but SES v2 SendEmail(Content.Template) is preferred for new implementations. SES verified identities, production access/sandbox status, sending limits, and rendering-failure notifications are practical requirements. S3 templates + Lambda custom merge can work but increase operational effort.",
+    "sourceWarning": "Original stem OCR 'A3 part' should be 'As part'; option C missing space after 'data.'. SendTemplatedEmail is a valid SES v1 API, not removed, but newer SES v2 SendEmail supports templated email. SES API may accept an email yet fail to render missing variables; configure rendering failure event notifications. No exact-stem external exam-site copy or Choose TWO/THREE variant independently confirmed. Sources: https://docs.aws.amazon.com/ses/latest/dg/send-personalized-email-api.html ; https://docs.aws.amazon.com/boto3/latest/reference/services/ses/client/send_templated_email.html .",
+    "review": {
+      "status": "aws-doc-verified",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "Verified with current SES developer guide and boto3 SES v1 API; no bank duplicate; legacy API and OCR defects noted; external exact-stem and multi-answer variant unconfirmed."
+    },
+    "answerStatus": "aws-doc-verified"
   },
   {
     "id": 528,
