@@ -104,3 +104,30 @@ Q9 option E explicitly combines private replication with bandwidth throttling. Q
 - [ ] Do not remove questions or alter uncertain answer keys without independent technical verification.
 
 **Status:** Reference audit only. Corrected keys Q333 and Q565 are already committed; Q510 remains intentionally unresolved.
+
+## Follow-up audit: similar problems with different AWS frameworks and integration patterns (2026-11-01)
+
+| Questions | Shared business problem | Architecture / framework distinction | Classification |
+|---|---|---|---|
+| Q40 / Q303 | Spot instance launch failures | Attribute-based instance type selection via launch template, selected B versus D because option order differs | Equivalent solution; duplicate-like |
+| Q363 / Q492 | Near-real-time network telemetry to Splunk | CloudWatch Logs subscriptions → Kinesis Data Firehose (renamed Amazon Data Firehose) → Splunk | Service rebrand; equivalent |
+| Q306 / Q445 | Managed SFTP ingestion and file transformation | Transfer Family + S3 event + Glue transformation + SQS completion message | Equivalent architecture; Q306 is abbreviated |
+| Q124 / Q397 | Private Git repository access from isolated SageMaker notebook | SageMaker Git repository settings and Secrets Manager credentials | Same scenario, renamed SageMaker AI; **network reachability still needs independent validation** |
+| Q271 vs Q124/Q397 | Package or source access from isolated SageMaker | PyPI dependencies → CodeArtifact with public:pypi upstream and interface endpoint; Git source → repository credentials and network route | Similar setting, different dependency type; **not duplicates** |
+| Q16 / Q342 | Highly variable Lambda/Fargate workload with write-heavy Aurora MySQL | Aurora Serverless v2 + Compute Savings Plans | Equivalent solution; check savings plan applies to Lambda/Fargate compute, not Aurora Serverless capacity |
+| Q143 / Q504 | iSCSI block volumes with local low-latency cache and backup | Storage Gateway **cached volume gateway**, not file/tape gateway | Equivalent solution |
+
+### Framework and integration lessons
+
+- **Git source vs package repository:** Git credentials (Secrets Manager) do not by themselves provide private network connectivity. CodeArtifact can proxy PyPI packages and be accessed via VPC endpoints; it does not replace arbitrary Git source connectivity.
+- **Firehose rebranding:** `Amazon Kinesis Data Firehose` and `Amazon Data Firehose` describe the same managed delivery service; check whether the question also changes transformation, routing or destinations.
+- **Event-driven transfer:** S3 event notifications triggering processing plus Glue and SQS is different from an EFS cron job or EMR cluster, even if the outcome is file transformation.
+- **EC2 scaling:** Attribute-based instance type selection diversifies available Spot capacity; changing answer letter does not change the solution.
+- **Savings Plans:** Compute Savings Plans cover eligible Lambda and Fargate usage; Aurora Serverless v2 charges separately. Avoid reading the selected answer as if Compute Savings Plans discount Aurora.
+- **Storage Gateway:** Cached Volume Gateway supports iSCSI block volumes with local caching; File Gateway and Tape Gateway serve different interfaces and use cases.
+
+### Follow-up items
+
+- [ ] Verify whether Q124/Q397 private Git host is reachable without internet and whether Secrets Manager-only answer is technically sufficient.
+- [ ] Investigate additional *cross-framework* lookalikes beyond lexical matches: ALB vs API Gateway, SQS vs Kinesis, Step Functions vs EventBridge, Glue vs EMR, RDS vs DynamoDB, and ECS/Fargate vs Lambda.
+- [ ] Preserve distinct question IDs and record why a change in requirement changes the recommended service.
