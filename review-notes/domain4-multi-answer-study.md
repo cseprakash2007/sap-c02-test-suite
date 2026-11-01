@@ -235,3 +235,15 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Wording caveat:** A pre-existing multi-architecture image need not be rebuilt; 'most recent generation' and new EC2 Instance Savings Plan are not automatically the mathematically cheapest solution without benchmarking, utilization forecast and commitment sizing. Historical A,C,E is the best intended exam answer.
 
 **Next:** Q346 — 16 of 33 (source metadata Select THREE but only four options and two keyed answers; investigate corruption before treating as genuine multi-answer).
+
+## 16 of 33 — Q346 — Select THREE — UDP matchmaking service, NLB, NACL, Shield Advanced
+
+**CORRUPTED SOURCE RESTORED.** Original GitHub had four truncated options A-D, two keyed answers A,D and a Select THREE stem. Preserved original in originalQuestionSnapshot. Restored original six-option version with E = CloudFront+ELB origin and F = Shield Advanced on all public-facing resources. Corrected intended historical key **A,D,F** in original GitHub ordering. External [FreeCram old SAP Professional Q103/147](https://www.freecram.net/question/Amazon.AWS-Solutions-Architect-Professional.v2021-07-21.q147/a-company-hosts-a-game-player-matching-service-on-a-public-facing-physical-on-premises-instance-that) uses reordered letters A=NACL, B=NLB, E=Shield and reports A,B,E. [QuizPlus SAP-C01 Q662](https://quizplus.com/ar-SA/quiz/181452-exam-10-aws-certified-solutions-architect-professional-sap-c01/questions/13536645-a-company-hosts-a-game-playermatching-service-on-a-p) shows the six choices in GitHub A-F ordering. Historical variants share the same stem; do not treat them as independent AWS authority.
+
+**Options:** A NLB correct for UDP but use Route 53 alias to NLB DNS rather than one zonal EIP. B ALB HTTP(S) cannot serve raw UDP. C AWS WAF protects HTTP(S), not NLB UDP. D NACL can restrict protocols but 'block all non-UDP' can break TCP health checks; allow necessary return/health-check traffic, and consider modern NLB security groups. E CloudFront not raw UDP proxy. F Shield Advanced protects supported public NLBs against DDoS. Additional caveat: old on-premises UDP instance must be migrated to suitable AWS targets; AWS 2026 guidance warns direct NLB UDP on-prem IP targets can have return-path problems.
+
+**AWS docs:** https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html ; https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html ; https://docs.aws.amazon.com/shield/ ; https://aws.amazon.com/blogs/networking-and-content-delivery/routing-udp-to-on-premises-network-load-balancer-targets/ .
+
+**674-bank duplicate audit:** No exact normalized stem duplicate. Closest **Q642** also UDP gaming with NLB, but asks multi-Region global availability and static client IPs, favoring Global Accelerator, not subnet filtering. Q351, Q454 and Q599 use NLB/PrivateLink for different TCP/application connectivity patterns; Q523 uses NLB for EC2 target workload, not game UDP security. Do not borrow option letters.
+
+**Next:** Q350 — 17 of 33.
