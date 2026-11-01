@@ -20239,36 +20239,85 @@
   {
     "id": 487,
     "domain": 4,
-    "stem": "A company plans to migrate a three-tiered web application from an on-premises data center to AWS The company developed the Ui by using server-side JavaScript libraries The business logic and API tier uses a Python-based web framework The data tier runs on a MySQL database The company custom built the application to meet business requirements The company does not want to re-architect the application The company needs a solution to replatform the application to AWS with the least possible amount of development The solution needs to be highly available and must reduce operational overhead Which solution will meet these requirements?",
+    "stem": "A company plans to migrate a three-tiered web application from an on-premises data center to AWS. The company developed the UI by using server-side JavaScript libraries. The business logic and API tier uses a Python-based web framework. The data tier runs on a MySQL database. The company custom built the application to meet business requirements. The company does not want to re-architect the application. The company needs a solution to replatform the application to AWS with the least possible amount of development. The solution needs to be highly available and must reduce operational overhead. Which solution will meet these requirements?",
     "options": [
       {
         "id": "A",
-        "text": "Deploy the UI to a static website on Amazon S3 Use Amazon CloudFront to deliver the website Build the business logic in a Docker image Store the image in AmazonElastic Container Registry (Amazon ECR) Use Amazon Elastic Container Service (Amazon ECS) with the Fargate launch type to host the website with an Application Load Balancer in front Deploy the data layer to an Amazon Aurora MySQL DB cluster"
+        "text": "Deploy the UI to a static website on Amazon S3. Use Amazon CloudFront to deliver the website. Build the business logic in a Docker image. Store the image in Amazon Elastic Container Registry (Amazon ECR). Use Amazon Elastic Container Service (Amazon ECS) with the Fargate launch type to host the website with an Application Load Balancer in front. Deploy the data layer to an Amazon Aurora MySQL DB cluster."
       },
       {
         "id": "B",
-        "text": "Build the UI and business logic in Docker images Store the images in Amazon Elastic Container Registry (Amazon ECR) Use Amazon Elastic Container Service (Amazon ECS) with the Fargate launch type to host the UI and business logic applications with an Application LoadBalancer in front Migrate the database to an Amazon RDS for MySQL Multi-AZ DB instance"
+        "text": "Build the UI and business logic in Docker images. Store the images in Amazon Elastic Container Registry (Amazon ECR). Use Amazon Elastic Container Service (Amazon ECS) with the Fargate launch type to host the UI and business logic applications with an Application Load Balancer in front. Migrate the database to an Amazon RDS for MySQL Multi-AZ DB instance."
       },
       {
         "id": "C",
-        "text": "Deploy the UI to a static website on Amazon S3 Use Amazon CloudFront to deliver the website Convert the business logic to AWS Lambda functions Integrate the functions with Amazon API Gateway Deploy the data layer to an Amazon Aurora MySQL DB cluster"
+        "text": "Deploy the UI to a static website on Amazon S3. Use Amazon CloudFront to deliver the website. Convert the business logic to AWS Lambda functions. Integrate the functions with Amazon API Gateway. Deploy the data layer to an Amazon Aurora MySQL DB cluster."
       },
       {
         "id": "D",
-        "text": "Build the UI and business logic in Docker images Store the images in Amazon Elastic Container Registry (Amazon ECR) Use Amazon Elastic Kubernetes Service(Amazon EKS) with Fargate profiles to host the UI and business logic Use AWS Database Migration Service (AWS DMS) to migrate the data layer to Amazon DynamoDB"
+        "text": "Build the UI and business logic in Docker images. Store the images in Amazon Elastic Container Registry (Amazon ECR). Use Amazon Elastic Kubernetes Service (Amazon EKS) with Fargate profiles to host the UI and business logic. Use AWS Database Migration Service (AWS DMS) to migrate the data layer to Amazon DynamoDB."
       }
     ],
     "answers": [
-      "A"
+      "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is the only option preserving the existing server-side JavaScript UI, Python API framework and MySQL relational database without substantial rearchitecture: package both server-rendered UI and API in Docker images on ECS Fargate behind an ALB, and use RDS MySQL Multi-AZ for managed high availability. AWS S3 static hosting cannot execute server-side JavaScript, so original answer A is technically wrong despite external question-bank copies. ECS Fargate removes server administration; RDS Multi-AZ offers managed synchronous standby and automatic failover.",
+    "wrongOptionsExplanation": "A: Incorrect: S3/CloudFront static hosting cannot execute server-side JavaScript. Converting server-rendered UI to static is rearchitecture; option additionally ambiguously calls the Fargate API service a website. B: Correct: preserve UI, API and MySQL via Fargate and RDS Multi-AZ. C: Incorrect: static S3 cannot execute server-side UI, and converting Python APIs to Lambda adds substantial rewrite. D: Incorrect: MySQL to DynamoDB requires data model/query refactoring; EKS adds operational complexity versus ECS.",
+    "plainWords": "Keep the server-rendered JavaScript website and Python API running as containers on ECS Fargate, and move MySQL to a managed Multi-AZ RDS database.",
+    "keyPoints": "Server-side JavaScript requires server runtime; S3/CloudFront static hosting only serves static/client-side assets. Replatform with least code change = containerize existing UI and Python API on ECS Fargate. Preserve MySQL in RDS MySQL Multi-AZ. MySQL->DynamoDB and API->Lambda are rearchitecture.",
+    "sourceWarning": "ANSWER KEY DEFECT: original A is technically incompatible with server-side JavaScript UI and no-rearchitecture requirement; corrected to B based on AWS S3 hosting and ECS/RDS docs. Original stem/options/answer preserved in originalQuestionSnapshot. External exact-stem question banks found, but independent external answer agreement not established. OCR punctuation/UI/ECR/ALB spacing corrected. No confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "corrected-original-answer-aws-verified-external-stem-matches",
+      "reviewedAt": "2026-10-31",
+      "domain4Position": "103/139",
+      "originalAnswer": [
+        "A"
+      ],
+      "answer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html",
+        "https://aws.amazon.com/rds/features/multi-az/",
+        "https://repost.aws/knowledge-center/ecs-fargate-task-database-connection",
+        "https://www.examsvce.com/sap-c02/a-company-plans-to-migrate-a-threetiered-question-answer.html",
+        "https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-10.html",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-04-22.q355.html?p=25"
+      ],
+      "variantCheck": "Exact-stem single-answer copies found; no confirmed Choose TWO/THREE variant.",
+      "defects": [
+        "Original key A violates server-side JavaScript requirement",
+        "A ambiguously describes ECS hosting website instead of API",
+        "OCR punctuation and spacing",
+        "External answer-key consensus not established"
+      ]
+    },
+    "answerStatus": "corrected-aws-verified",
+    "originalQuestionSnapshot": {
+      "stem": "A company plans to migrate a three-tiered web application from an on-premises data center to AWS The company developed the Ui by using server-side JavaScript libraries The business logic and API tier uses a Python-based web framework The data tier runs on a MySQL database The company custom built the application to meet business requirements The company does not want to re-architect the application The company needs a solution to replatform the application to AWS with the least possible amount of development The solution needs to be highly available and must reduce operational overhead Which solution will meet these requirements?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Deploy the UI to a static website on Amazon S3 Use Amazon CloudFront to deliver the website Build the business logic in a Docker image Store the image in AmazonElastic Container Registry (Amazon ECR) Use Amazon Elastic Container Service (Amazon ECS) with the Fargate launch type to host the website with an Application Load Balancer in front Deploy the data layer to an Amazon Aurora MySQL DB cluster"
+        },
+        {
+          "id": "B",
+          "text": "Build the UI and business logic in Docker images Store the images in Amazon Elastic Container Registry (Amazon ECR) Use Amazon Elastic Container Service (Amazon ECS) with the Fargate launch type to host the UI and business logic applications with an Application LoadBalancer in front Migrate the database to an Amazon RDS for MySQL Multi-AZ DB instance"
+        },
+        {
+          "id": "C",
+          "text": "Deploy the UI to a static website on Amazon S3 Use Amazon CloudFront to deliver the website Convert the business logic to AWS Lambda functions Integrate the functions with Amazon API Gateway Deploy the data layer to an Amazon Aurora MySQL DB cluster"
+        },
+        {
+          "id": "D",
+          "text": "Build the UI and business logic in Docker images Store the images in Amazon Elastic Container Registry (Amazon ECR) Use Amazon Elastic Kubernetes Service(Amazon EKS) with Fargate profiles to host the UI and business logic Use AWS Database Migration Service (AWS DMS) to migrate the data layer to Amazon DynamoDB"
+        }
+      ],
+      "answers": [
+        "A"
+      ]
+    }
   },
   {
     "id": 488,
