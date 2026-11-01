@@ -14712,13 +14712,70 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C,E is the verified historical key. A ensures application container images have Linux/ARM64 compatible binaries/dependencies; C shifts EC2 EKS worker nodes from x86 M6i to compatible Graviton instances; E purchases an EC2 Instance Savings Plan specific to the chosen Graviton family and Region after assessing sustained usage. Graviton price/performance can reduce costs but no exact savings or superiority is guaranteed without benchmarking.",
+    "wrongOptionsExplanation": "A correct for images not already multi-architecture: ARM64 image is needed for Graviton nodes. B wrong: EKS workloads are already containers. C correct intended: compatible Graviton nodes often provide better price/performance. D not chosen: newest x86_64 may help but misses intended Graviton strategy and is not always more expensive. E correct: discounted committed EC2 usage in selected Graviton family/Region; size flexible within family. F wrong for chosen architecture: x86_64 family commitment does not cover Graviton family.",
+    "plainWords": "The existing EKS cluster uses x86 M6i EC2 nodes and its discount commitment is ending. Switch to ARM64-ready application images and Graviton EC2 nodes, then commit the expected stable Graviton usage under a new matching Savings Plan.",
+    "keyPoints": "EKS supports ARM64 Graviton nodes; validate image manifest, native dependencies, DaemonSets, drivers and rollout. EC2 Instance Savings Plans lock to instance family plus Region, not size/AZ; Compute Savings Plans offer more flexibility. Savings Plans cover EC2 worker node usage, not EKS control-plane charges. Existing M6i plan cannot cover Graviton and does not transfer. Benchmark cost per workload and avoid overcommitment. 'Latest' instance generation and rebuilding images are not universally mandatory.",
+    "sourceWarning": "Minor source overstatement: already ARM64-compatible/multi-architecture images need not be rebuilt, and newest Graviton plus a new Savings Plan is not mathematically guaranteed to minimize total cost without benchmark/commitment sizing. Existing EKS containers make B nonsensical. Duplicate Q45 is a near-verbatim compressed restatement of Q337 with identical A,C,E answer, not a separate independent exam concept.",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "domain4-multi-answer-aws-verified-near-duplicate",
+      "originalAnswers": [
+        "A",
+        "C",
+        "E"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/eks/latest/eksctl/arm-support.html",
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html",
+        "https://docs.aws.amazon.com/eks/latest/best-practices/cost-opt-compute.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.p2pexams.com/free-questions/amazon-sap-c02-cheat-sheet-exam-by-deleon.pdf",
+        "https://www.jpntest.com/free/SAP-C02-mondaishu-aws-certified-solutions-architect-professional-sap-c02"
+      ],
+      "exactDuplicateIDs": [],
+      "nearDuplicateIDs": [
+        45
+      ],
+      "externalVariantSummary": "CertEnsure Q156 and P2PExams PDF Q4 identical A,C,E; JPNTest Q1 reordered options (compare concepts not letters). Mirrors may reuse a common source."
+    },
+    "answerStatus": "aws-docs-verified-near-duplicate",
+    "originalQuestionSnapshot": {
+      "stem": "A company runs a simple Linux application on Amazon EKS by using nodes of the M6i (general purpose) instance type. The company has an EC2 Instance Savings Plan for the M6i family that will expire soon. A solutions architect must minimize the EKS compute costs when the Savings Plan expires. Which combination of steps will meet this requirement? (Select THREE.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Rebuild the application container images to support ARM64 architecture."
+        },
+        {
+          "id": "B",
+          "text": "Rebuild the application container images to support containers."
+        },
+        {
+          "id": "C",
+          "text": "Migrate the EKS nodes to the most recent generation of Graviton-based instances."
+        },
+        {
+          "id": "D",
+          "text": "Replace the EKS nodes with the most recent generation of x86_64 instances."
+        },
+        {
+          "id": "E",
+          "text": "Purchase a new EC2 Instance Savings Plan for the newly selected Graviton instance family."
+        },
+        {
+          "id": "F",
+          "text": "Purchase a new EC2 Instance Savings Plan for the newly selected x86_64 instance family."
+        }
+      ],
+      "answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
   },
   {
     "id": 338,
