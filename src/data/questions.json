@@ -26326,13 +26326,20 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is the intended best answer among the choices. AWS SCT converts Oracle schemas and many stored procedures/functions for Aurora PostgreSQL, while AWS DMS performs initial full load and ongoing CDC replication, keeping Oracle operational until cutover. Aurora PostgreSQL is managed and can provide HA. AWS prescriptive guidance explicitly documents Oracle -> Aurora PostgreSQL with DMS + SCT: https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/migrate-an-oracle-database-to-aurora-postgresql-using-aws-dms-and-aws-sct.html . Caveat: Oracle-to-PostgreSQL is heterogeneous; SCT may require manual procedure rewrites and application changes. If fastest migration with fewest changes is paramount and Oracle licensing acceptable, RDS for Oracle may be better than cross-engine migration, but option A's S3 database-file architecture is defective.",
+    "wrongOptionsExplanation": "A: DMS Oracle-to-RDS Oracle can provide low downtime and preserve stored procedures through appropriate homogeneous migration methods, but storing RDS Oracle database files in S3 is not a valid deployment architecture; option omits proper handling of database objects. B: EC2 Oracle cluster is self-managed and backup/restore for large databases can entail extended downtime. C: DynamoDB is NoSQL and cannot directly run Oracle PL/SQL procedures; rewriting them as Lambda functions requires major application redesign. D: Best intended; SCT converts schema and supported procedural code, DMS moves data and CDC, Aurora provides managed HA; conversion and testing still needed.",
+    "plainWords": "Oracle contains both data and PL/SQL procedures. DMS copies and continuously synchronizes the data; SCT translates the Oracle-specific database structure and procedures into PostgreSQL-compatible code. Put the result on managed Aurora PostgreSQL and switch over after validation. Answer D, with manual fixes for procedures SCT cannot convert.",
+    "keyPoints": "DMS = full-load plus CDC data migration, not general stored-procedure translation. SCT = schema and code conversion; unsupported PL/SQL requires manual fixes. DMS Schema Conversion is a managed alternative to desktop SCT. Aurora PostgreSQL managed high availability; heterogeneous migration needs compatibility assessment, application changes, validation and cutover. RDS for Oracle is a valid homogeneous alternative if minimal code change is prioritized, but S3 is not a database-file storage target for RDS Oracle.",
+    "sourceWarning": "ANSWER D verified as intended by AWS official Oracle-to-Aurora DMS/SCT prescriptive guidance and exact-text ExamCollection SAP-C02 Q22. Second independent exact-match exam-site not established; do not claim multiple verified external matches. No confirmed Choose TWO/THREE variant. Defective abbreviated stem lacks explicit final question; many missing spaces ('withstored','usemanaged','behighly','afast','migrationwithminimal','toAmazon','UseAWS','SCTto'). Question does not state Oracle engine replacement is desired, so D's heterogeneous conversion may not be fastest versus a correctly specified homogeneous RDS Oracle option; A invalidly suggests S3 database files. AWS SCT is still documented, and managed DMS Schema Conversion is also available. https://www.examcollection.us/exam/SAP-C02-question-answer-2.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/migrate-an-oracle-database-to-aurora-postgresql-using-aws-dms-and-aws-sct.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_SchemaConversion.html .",
+    "review": {
+      "status": "verified-intended-answer-with-defective-stem-and-heterogeneous-migration-caveat",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS DMS+SCT Oracle->Aurora PostgreSQL official pattern, exact ExamCollection SAP-C02 Q22 answer D. No second confirmed external exact-match; no multi-answer variant. Abbreviated malformed stem and heterogeneity assumptions flagged."
+    },
+    "answerStatus": "verified-with-caveat"
   },
   {
     "id": 647,
