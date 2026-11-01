@@ -4777,7 +4777,7 @@
   {
     "id": 106,
     "domain": 4,
-    "stem": "A company wants to migrate its workloads from on premises to AWS. The workloads run on Linuxand Windows. The company has a large on-premises intra structure that consists of physical machines and VMs that host numerous applications. The company must capture details about the system configuration. system performance. running processure and network coi.net lions of its o. -premises ,on boards. The company also must divide the on-premises applications into groups for AWS migrations. The company needs recommendations for Amazon EC2 instance types so that the company can run its workloads on AWS in the most cost-effective manner. Which combination of steps should a solutions architect take to meet these requirements? (Select THREE.)",
+    "stem": "A company wants to migrate its workloads from on premises to AWS. The workloads run on Linux and Windows. The company has a large on-premises infrastructure that consists of physical machines and VMs that host numerous applications. The company must capture details about the system configuration, system performance, running processes, and network connections of its on-premises workloads. The company also must divide the on-premises applications into groups for AWS migrations. The company needs recommendations for Amazon EC2 instance types so that the company can run its workloads on AWS in the most cost-effective manner. Which combination of steps should a solutions architect take to meet these requirements? (Select THREE.)",
     "options": [
       {
         "id": "A",
@@ -4810,13 +4810,27 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct A, D, E for the historical question. A: AWS Application Discovery Agent on Windows/Linux physical servers and VMs collects configuration, utilization, running processes, and network connections. D: AWS Migration Hub groups discovered servers into applications for migration planning. E: Migration Hub EC2 instance recommendations select cost-effective types using CPU/RAM specs and utilization. AWS stopped accepting new customers for Application Discovery Service and Migration Hub on Nov 7, 2025; AWS Transform is the recommended modern alternative for new projects.",
+    "wrongOptionsExplanation": "B: SSM Agent is for systems management and is not the purpose-built discovery tool for running-process/network dependency mapping. C: Systems Manager Application Manager is not the migration grouping capability specified. F: Trusted Advisor does not ingest on-prem server inventory to rightsize migration targets.",
+    "plainWords": "Discover what each server runs (Discovery Agent), group servers by application (Migration Hub), and choose appropriately sized EC2 instances with cost estimates (Migration Hub). For new projects in 2026, learn AWS Transform.",
+    "keyPoints": "Original key A+D+E; Discovery Agent vs SSM Agent; agent vs agentless process/network visibility; Migration Hub grouping and EC2 right-sizing; AWS Transform successor; AWS ADS/Migration Hub closed to new customers 2025-11-07; near-duplicate Q212.",
+    "sourceWarning": "OUTDATED for new AWS customers: Application Discovery Service and AWS Migration Hub stopped accepting new customers Nov 7 2025. AWS Transform recommended for new migrations. https://docs.aws.amazon.com/application-discovery/latest/userguide/application-discovery-service-availability-change.html https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/migrationhub-availability-change.html",
+    "review": {
+      "status": "verified-outdated-service",
+      "originalAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS docs confirm Discovery Agent captures processes/connections, Migration Hub application grouping and EC2 instance recommendations. Multiple exam variants A,D,E; one SPOTO page B,D,E conflicts with AWS docs. Strong near duplicate Q212, related Q56,Q168,Q142,Q264,Q395,Q266. Original stem OCR repaired."
+    },
+    "answerStatus": "verified-outdated-service"
   },
   {
     "id": 107,
