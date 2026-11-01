@@ -20123,15 +20123,15 @@
   {
     "id": 485,
     "domain": 4,
-    "stem": "A company hosts a web application on AWS in the us-east-1 Region The application servers are distributed across three Availability Zones behind an Application Load Balancer. The database is hosted in a MySQL database on an Amazon EC2 instance A solutions architect needs to design a Cross-Region data recovery solution using AWS services with an RTO of less than 5 minutes and an RPO of less than 1 minute. The solutions architect is deploying application servers in us-west-2, and has configured Amazon Route 53 hearth checks and DNS failover to us-west-2 Which additional step should the solutions architect take?",
+    "stem": "A company hosts a web application on AWS in the us-east-1 Region. The application servers are distributed across three Availability Zones behind an Application Load Balancer. The database is hosted in a MySQL database on an Amazon EC2 instance. A solutions architect needs to design a cross-Region data recovery solution using AWS services with an RTO of less than 5 minutes and an RPO of less than 1 minute. The solutions architect is deploying application servers in us-west-2 and has configured Amazon Route 53 health checks and DNS failover to us-west-2. Which additional step should the solutions architect take?",
     "options": [
       {
         "id": "A",
-        "text": "Migrate the database to an Amazon RDS tor MySQL instance with a cross-Region read replica in us-west-2"
+        "text": "Migrate the database to an Amazon RDS for MySQL instance with a cross-Region read replica in us-west-2."
       },
       {
         "id": "B",
-        "text": "Migrate the database to an Amazon Aurora global database with the primary in us-east- 1 and the secondary in us-west-2"
+        "text": "Migrate the database to an Amazon Aurora global database with the primary in us-east-1 and the secondary in us-west-2."
       },
       {
         "id": "C",
@@ -20139,20 +20139,63 @@
       },
       {
         "id": "D",
-        "text": "Create a MySQL standby database on an Amazon EC2 instance in us-west-2"
+        "text": "Create a MySQL standby database on an Amazon EC2 instance in us-west-2."
       }
     ],
     "answers": [
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is correct: Amazon Aurora Global Database spans Regions with storage-based asynchronous replication, typically less than 1 second of lag, and supports rapid promotion of a secondary Region. This best meets the cross-Region RPO under 1 minute and RTO under 5 minutes targets when combined with the existing Route 53 and application failover setup. AWS docs note database promotion typically occurs within minutes and actual end-to-end application RTO/RPO require failover orchestration, connectivity updates, and testing; neither target is an unconditional SLA.",
+    "wrongOptionsExplanation": "A: RDS for MySQL cross-Region read replica can support DR but asynchronous lag and promotion time vary; less suitable for strict RPO/RTO than Aurora Global Database. B: Correct: purpose-built low-latency cross-Region Aurora replication and fast secondary promotion. C: Standard RDS Multi-AZ is in-Region high availability, not a cross-Region recovery solution. D: Self-managed MySQL standby on EC2 requires replication and failover management and provides no assured strict RPO/RTO.",
+    "plainWords": "Use Aurora Global Database to keep a nearly up-to-date MySQL-compatible copy in us-west-2, then promote it if us-east-1 fails.",
+    "keyPoints": "Aurora Global Database: typical sub-second cross-Region replication, rapid secondary promotion, asynchronous and nonzero RPO in unplanned failover. RTO/RPO are targets, not automatic application-wide guarantees. Route 53 health checks/DNS and application DB writer endpoint failover need orchestration. Standard RDS Multi-AZ is single-Region.",
+    "sourceWarning": "OCR corrected and original preserved: 'hearth checks'->'health checks', 'RDS tor MySQL'->'RDS for MySQL', 'us-east- 1'->'us-east-1', punctuation. Architecture caveat: database failover and application DNS/reconnection require orchestration and testing; <5 minute application RTO and <1 minute RPO are not guaranteed. Exact-stem external single-answer copy Pupuweb B; no confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-aws-and-external-with-caveats",
+      "reviewedAt": "2026-10-31",
+      "domain4Position": "102/139",
+      "answer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html",
+        "https://aws.amazon.com/rds/aurora/global-database/",
+        "https://docs.aws.amazon.com/rds/latest/auroraextendedcontent/aurora-features-availability.html",
+        "https://pupuweb.com/sap-c02-designing-cross-region-data-recovery-solutions-for-aws-applications/"
+      ],
+      "variantCheck": "Exact-stem external Pupuweb has four options and B. No confirmed Choose TWO/THREE variant.",
+      "defects": [
+        "OCR health checks and RDS for MySQL and Region formatting",
+        "End-to-end application failover not specified",
+        "RTO/RPO performance is typical, not guaranteed"
+      ]
+    },
+    "answerStatus": "verified-aws-and-external-with-caveats",
+    "originalQuestionSnapshot": {
+      "stem": "A company hosts a web application on AWS in the us-east-1 Region The application servers are distributed across three Availability Zones behind an Application Load Balancer. The database is hosted in a MySQL database on an Amazon EC2 instance A solutions architect needs to design a Cross-Region data recovery solution using AWS services with an RTO of less than 5 minutes and an RPO of less than 1 minute. The solutions architect is deploying application servers in us-west-2, and has configured Amazon Route 53 hearth checks and DNS failover to us-west-2 Which additional step should the solutions architect take?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Migrate the database to an Amazon RDS tor MySQL instance with a cross-Region read replica in us-west-2"
+        },
+        {
+          "id": "B",
+          "text": "Migrate the database to an Amazon Aurora global database with the primary in us-east- 1 and the secondary in us-west-2"
+        },
+        {
+          "id": "C",
+          "text": "Migrate the database to an Amazon RDS for MySQL instance with a Multi-AZ deployment."
+        },
+        {
+          "id": "D",
+          "text": "Create a MySQL standby database on an Amazon EC2 instance in us-west-2"
+        }
+      ],
+      "answers": [
+        "B"
+      ]
+    }
   },
   {
     "id": 486,
