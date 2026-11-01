@@ -21571,13 +21571,20 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct B: AWS Elastic Disaster Recovery (DRS) continuously replicates source server block data from on-premises VMware Windows VMs to low-cost AWS staging resources, then orchestrates launch of recovery EC2 instances with replicated EBS volumes. AWS DRS supports on-premises failback, including VMware vCenter mass failback automation. Typical RPO is seconds/sub-second when network and staging throughput are adequate, satisfying the 5-minute RPO. Sources: https://docs.aws.amazon.com/drs/latest/userguide/FAQ.html ; https://docs.aws.amazon.com/drs/latest/userguide/failback.html ; https://docs.aws.amazon.com/drs/latest/userguide/failback-failover-drsfa.html .",
+    "wrongOptionsExplanation": "A: AWS DataSync copies file/object data between supported storage endpoints; EBS is not a supported direct DataSync destination, and CloudFormation would not reconstruct the original Windows VMware application environment automatically. B: Correct, purpose-built whole-server continuous replication, recovery launch and on-prem failback. C: File Gateway provides SMB/NFS-backed S3 objects, not whole-machine recovery images; AWS Backup cannot directly restore arbitrary S3 file objects as bootable EBS/EC2 instances. D: FSx for Windows supports SMB file data, not OS/application server image replication, and manually provisioning EC2 from CloudFormation does not ensure 5-minute RPO or simple failback.",
+    "plainWords": "Protect the whole Windows VMware server, not just files. AWS DRS continuously copies disk changes to AWS; during an outage, launch recovered EC2 servers, then fail back to VMware when the data center returns.",
+    "keyPoints": "RPO=maximum acceptable data loss, not recovery time. DRS RPO normally seconds, RTO typically minutes; real RPO depends on replication health and bandwidth. On-prem VMware -> AWS DRS block-level replication to staging EC2/EBS -> EC2 recovery instances -> failback client or vCenter mass failback automation. DRS is not AWS DataSync and does not require rewriting proprietary application data.",
+    "sourceWarning": "Independently verified exact-stem single-answer B: Exam-Tests SAP-C02 Q94 and ExamTopics Q429 reprinted in Scribd, plus PrepBolt Q3; no confirmed Choose TWO/THREE variant. Option B imprecisely says replicate to 'replication Amazon EC2 instances'—DRS uses replication servers with EBS staging volumes and launches separate recovery EC2 instances only on drill/recovery. Source OCR 'Cloud Format ion' -> CloudFormation, missing punctuation. DRS typical sub-second/seconds RPO is conditional, not guaranteed. Failback is a separate configured workflow and traffic cutover is customer-managed. AWS 2026 VMware mass failback client supports automation. Sources: https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=20 ; https://prepbolt.com/paths/amazon/questions/sap-c02 ; https://docs.aws.amazon.com/drs/latest/userguide/CloudEndure-Concepts.html ; https://docs.aws.amazon.com/drs/latest/userguide/failback-failover-drsfa.html .",
+    "review": {
+      "status": "verified",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS documentation and exact-stem external practice sources verified; no duplicate or multi-answer variant; source imprecision and RPO/failback caveats flagged."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 518,
