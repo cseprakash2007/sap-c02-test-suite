@@ -37,3 +37,13 @@ A company has applications in an AWS account that is named Source. The account i
 - https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-applications-in-an-aws-account-that-is-named-source-the-account-is-in-an-organization
 - https://www.p2pexams.com/free-questions/braindumpscollection-amazon-sap-c02-exam-dumps-by-marquez-18-01-2024-6qa.pdf
 - https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/3/
+
+## Additional independent verification (2026-11-01)
+- SpotO 2026 compilation also keys **B** for this exact question: https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part1
+- ExamTopics community-archived copy has **B** and records a large majority vote for B (secondary evidence, not AWS authority): https://ro.scribd.com/document/927890359/AWS-Certified-Solutions-Architect-Professional-SAP-C02-Exam-ExamTopics-51-75
+- FreeCram continues to publish **C** despite describing the B workflow: https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-applications-in-an-aws-account-that-is-named-source-the-account-is-in-an-organization
+- The competing answer keys do **not** establish a Choose TWO/THREE variant; the verified originals show one requested solution with A–D alternatives. A separately repaginated or reordered version may use a different option letter: compare option content rather than letters.
+- AWS verifies that `rds:Cluster` can be shared via RAM for cross-account cloning; Lambda functions are absent from the RAM shareable-resource catalog: https://docs.aws.amazon.com/ram/latest/userguide/shareable.html
+- Clone setup uses `restore-db-cluster-to-point-in-time` with `--restore-type copy-on-write`; create DB instances separately. Cross-account clone is not continuous data synchronization. Default AWS-managed RDS KMS key cannot support cross-account clones: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.Cross-Account.html
+- AWS explicitly requires copying an **automated** Aurora snapshot to a **manual** snapshot before sharing: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-share-snapshot.html
+- **Review result:** Existing Q654 `answers:["B"]`, explanations, status and defect warnings are correct. No question-data edit required; original question and options intentionally preserved for fidelity.
