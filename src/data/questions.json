@@ -21685,13 +21685,20 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is correct. Amazon EKS is managed Kubernetes and supports reusing Kubernetes manifests from the existing cluster, while EKS managed node groups reduce infrastructure management. Amazon ECR provides managed image registry, and Aurora PostgreSQL is PostgreSQL-compatible managed relational storage. Compared with App Runner/ECS conversions or rebuilding Kubernetes and PostgreSQL on EC2, this requires the least replatforming effort among the choices. AWS: https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html ; https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.AuroraPostgreSQL.html .",
+    "wrongOptionsExplanation": "A: App Runner does not deploy Kubernetes manifest files directly; it deploys source code or supported container images, and connecting an arbitrary open-source image repository is not equivalent to an ECR-supported image source. B: Correct; managed EKS retains Kubernetes orchestration and can reuse manifests; Aurora PostgreSQL preserves relational engine compatibility. C: ECS requires translating Kubernetes deployments into ECS task definitions and services, creating more migration work. D: Self-managed Kubernetes, registry, and PostgreSQL on EC2 preserve much of the platform but add operational setup and management compared with EKS and Aurora.",
+    "plainWords": "Already using Kubernetes? Move to managed Kubernetes (EKS), reuse deployment YAML, put images in ECR, and move PostgreSQL to Aurora PostgreSQL.",
+    "keyPoints": "Kubernetes manifests + least migration effort -> EKS; managed node groups reduce EC2 node operations; ECR stores container images; Aurora PostgreSQL offers PostgreSQL-compatible managed database. EKS may still need manifest adjustments for ingress, storage, networking, IAM and secrets. Database migration still requires schema/extension compatibility and data migration planning.",
+    "sourceWarning": "Answer B verified against AWS architecture documentation; Q377 is related but not an exact duplicate. Caveat: Aurora PostgreSQL compatibility is not perfect for all PostgreSQL extensions/versions; Amazon RDS for PostgreSQL might also work but is not paired with EKS in choices. Existing Kubernetes manifests may require modifications for AWS networking/storage. No confirmed exact-stem external exam-site copy or Choose TWO/THREE variant in this verification; do not claim external match. AWS docs: https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html ; https://docs.aws.amazon.com/apprunner/latest/dg/service-source-image.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html .",
+    "review": {
+      "status": "aws-doc-verified",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS docs support EKS manifest reuse and managed node groups; Q377 related, not duplicate; external exact-stem and multi-answer variant unconfirmed."
+    },
+    "answerStatus": "aws-doc-verified"
   },
   {
     "id": 521,
