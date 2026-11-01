@@ -15923,13 +15923,70 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C verified against AWS S3 RTC docs and exact external exam variant. A establishes native S3 Cross-Region Replication rule for eligible objects; both source and destination buckets must have versioning enabled, and IAM replication role/permissions are needed. C enables S3 Replication Time Control, metrics, and S3 event s3:Replication:OperationMissedThreshold sent to SNS when a replicated object misses 15 minutes. RTC is SLA-backed, not absolute per-object guarantee.",
+    "wrongOptionsExplanation": "A correct: replication rule copies new eligible objects to second Region; existing objects need S3 Batch Replication backfill. B wrong: DataSync task is batch/scheduled transfer, no per-object 15-minute RTC threshold event. C correct: S3 RTC plus OperationMissedThreshold event and SNS exactly match threshold alert. D wrong: Transfer Acceleration speeds client uploads, S3 5xxErrors are API/server errors, not replica lag. E wrong: DataSync enhanced mode and FilesFailed report transfer failures, not native continuous S3 replication lag threshold.",
+    "plainWords": "Automatically copy new S3 objects to a bucket in another Region. Turn on S3 Replication Time Control and send an SNS alert when any eligible object misses the 15-minute deadline.",
+    "keyPoints": "CRR rule + S3 RTC + s3:Replication:OperationMissedThreshold -> SNS. RTC targets 15-minute replication with SLA, not absolute 100% per-object guarantee. Versioning required on BOTH buckets. Existing objects need S3 Batch Replication; standard live replication only applies to new/updated eligible objects. SSE-KMS objects need correct replication encryption configuration/KMS permissions. OperationFailedReplication is a separate failure event; optionally monitor it too. Transfer Acceleration/5xxErrors do not measure replication latency.",
+    "sourceWarning": "The stem says data 'must be available' in 15 minutes, but RTC is SLA-backed rather than 100% guarantee. It says source versioning enabled but does not explicitly confirm destination versioning; must enable destination versioning. A says replicate 'all objects', but existing pre-rule objects are not automatically backfilled by live replication; use S3 Batch Replication. SNS threshold notifications may be delayed and require destination policy/subscription setup.",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "domain4-multi-answer-aws-verified-sla-caveat",
+      "originalAnswers": [
+        "A",
+        "C"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-time-control.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-metrics-events.html",
+        "https://aws.amazon.com/s3/features/replication/"
+      ],
+      "externalQuestionLinks": [
+        "https://www.certprep.io/amazon/sap-c02/questions"
+      ],
+      "externalVariantStatus": "one exact SAP-C02 mirror independently located; additional distinct exact exam variants not confirmed",
+      "exactDuplicateIDs": [],
+      "similarQuestionIDs": [
+        11,
+        15,
+        155,
+        200,
+        305,
+        374,
+        390,
+        460,
+        592
+      ]
+    },
+    "answerStatus": "aws-docs-verified-sla-caveat",
+    "originalQuestionSnapshot": {
+      "stem": "A company needs to store sensitive and crucial business data in an Amazon S3 bucket. Because of the criticality of the data, the data must be available in a second AWS Region within 15 minutes. If any object is not available within 15 minutes, an operations team must receive a notification. The company has already enabled S3 Versioning on the S3 bucket, and the company creates a second S3 bucket in the second Region. Which combination of solutions will meet these requirements? (Select TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Create a new S3 replication rule. Configure the rule to replicate all objects to the second S3 bucket."
+        },
+        {
+          "id": "B",
+          "text": "Create an AWS DataSync task. Set the appropriate source and destination S3 buckets for the task."
+        },
+        {
+          "id": "C",
+          "text": "Enable S3 Replication Time Control (S3 RTC), and configure the replication metrics and events. Create an Amazon SNS topic and set it as the target for the OperationMissedThreshold S3 event notification. Use the SNS topic to notify the operations team."
+        },
+        {
+          "id": "D",
+          "text": "Enable S3 Transfer Acceleration on both S3 buckets. Create an Amazon CloudWatch alarm for the S3 5xxErrors metric. Create an Amazon SNS topic and set it as the target for the alarm. Use the SNS topic to notify the operations team."
+        },
+        {
+          "id": "E",
+          "text": "Enable AWS DataSync enhanced transfer mode. Create an Amazon CloudWatch alarm for the DataSync FilesFailed metric. Create an Amazon SNS topic and set it as the target for the alarm. Use the SNS topic to notify the operations team."
+        }
+      ],
+      "answers": [
+        "A",
+        "C"
+      ]
+    }
   },
   {
     "id": 366,
