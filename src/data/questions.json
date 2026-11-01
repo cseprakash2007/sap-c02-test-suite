@@ -7349,13 +7349,27 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B and E. Multi-node Amazon EKS across Availability Zones reduces single-node workload failure risk; managed Prometheus and Grafana lower monitoring operational overhead; ECR enhanced scanning uses Amazon Inspector to scan supported OS and programming-language package vulnerabilities in container images. FSx for NetApp ONTAP provides managed multiprotocol NFS/SMB shared file storage for Windows/Linux workloads, integrated with EKS through NetApp Trident CSI.",
+    "wrongOptionsExplanation": "A: single worker node is a single point of workload failure, with self-managed monitoring. C: multi-node EKS works but Prometheus/Grafana installed on EC2 demand self-management, contrary to least operational overhead. D: FSx for Windows plus EFS can separately satisfy SMB and NFS needs but entails two storage platforms instead of one managed multiprotocol ONTAP platform.",
+    "plainWords": "Move one fragile Kubernetes server to several EKS nodes; outsource Prometheus/Grafana; scan ECR images; use one managed filesystem for Windows SMB and Linux NFS.",
+    "keyPoints": "B = EKS multi-node + managed Prometheus/Grafana + ECR enhanced scanning (Inspector); E = FSx for NetApp ONTAP (NFS/SMB) with Trident CSI persistent volumes. Use Multi-AZ EKS worker nodes and Multi-AZ FSx for availability. Enhanced scanning targets images in ECR, not live running pods; configure image scanning and remediation workflows. Monitoring does not automatically set up logging: add EKS logging/CloudWatch/Fluent Bit or another log pipeline. SMB Trident PVs require Windows nodes and specific driver configuration; the Trident EKS add-on does not support SMB volumes.",
+    "sourceWarning": "Source stem does not explicitly specify Multi-AZ node distribution, Multi-AZ FSx, logging integration, or CSI/SMB constraints. Correct B,E is best offered but those production prerequisites must be implemented. External matching variant found at https://www.solution2pass.com/Amazon-Web-Services/SAP-C02-question-answers.html ; second independent exact exam variant not verified. AWS https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/supported-fsx-clients.html ; https://docs.aws.amazon.com/eks/latest/userguide/fsx-ontap.html ; NetApp https://docs.netapp.com/us-en/trident-2602/trident-use/trident-fsx.html",
+    "review": {
+      "verifiedAt": "2026-11-01",
+      "position": 5,
+      "totalMultiAnswer": 33,
+      "selected": [
+        "B",
+        "E"
+      ],
+      "exactDuplicates": [],
+      "related": [
+        320,
+        482
+      ],
+      "notes": "Reviewed 674 question stems/options. Q320 overlaps FSx ONTAP multiprotocol storage, Q482 overlaps Grafana high availability. No confirmed exact duplicate. External Solution2Pass B,E; official AWS FSx/EKS and NetApp Trident validate architecture. Logging and Windows SMB PV implementation requirements missing from stem."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 170,

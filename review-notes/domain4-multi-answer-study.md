@@ -93,3 +93,17 @@ Branch: `answer-audit-2026-10-28`. Total multi-answer questions identified in da
 **2026 audit verdict:** Original B,C,E is the best available combination, but "fail over in 1 minute" is a technically overconfident claim if based only on DNS TTL; retain exam key and flag caveat. No service in the selected options is obsolete.
 
 **Next:** Continue the next multi-answer Domain 4 question in ascending ID order (5 of 33); confirm its ID directly from the 674-question dataset.
+
+## 5 of 33 — Q169 — Select TWO — EKS multi-node, Inspector scanning and multiprotocol shared storage
+
+**Verified B,E (unchanged).** B: multi-node EKS with managed Prometheus/Grafana and ECR enhanced scanning; E: FSx for NetApp ONTAP supporting NFS and SMB persistent volumes through Trident CSI. A fails HA due to one worker node; C self-hosts monitoring on EC2; D requires two separate storage platforms (EFS + FSx Windows), adding overhead. No core selected service is retired.
+
+**2026 implementation warnings:** Distribute EKS nodes across AZs and deploy FSx ONTAP Multi-AZ. ECR enhanced scanning examines stored images, not all runtime vulnerabilities. Managed Prometheus/Grafana do not automatically satisfy application logging: configure a log pipeline. NetApp Trident SMB PV support requires Windows nodes and ontap-nas; SMB is not supported through the Trident EKS add-on. EKS integration requires appropriate CSI driver setup.
+
+**674-bank duplicate check:** No exact normalized-stem duplicate found. Related Q320 (FSx for NetApp ONTAP multiprotocol storage) and Q482 (Grafana availability/operations), but they test different architectures.
+
+**External exam:** [Solution2Pass exact Q169 wording and B,E](https://www.solution2pass.com/Amazon-Web-Services/SAP-C02-question-answers.html). No independently confirmed second exact variant; do not claim consensus.
+
+**AWS/NetApp:** https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/supported-fsx-clients.html ; https://docs.aws.amazon.com/eks/latest/userguide/fsx-ontap.html ; https://docs.netapp.com/us-en/trident-2602/trident-use/trident-fsx.html ; https://aws.amazon.com/blogs/containers/optimize-log-management-for-amazon-eks-with-amazon-fsx-for-netapp-ontap/
+
+**Next:** Q189 — 6 of 33.
