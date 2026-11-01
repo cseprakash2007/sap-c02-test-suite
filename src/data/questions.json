@@ -15319,13 +15319,66 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B,E independently confirmed by AWS ECS documentation and external exam mirrors. B awsvpc allocates task-specific ENI/IP and enables security groups directly on ECS tasks, allowing per-microservice ingress/egress control. E combines task security groups with IAM task roles for workload-specific temporary AWS credentials. Task role is distinct from ECS task execution role (agent pulls ECR images/writes logs) and EC2 instance profile.",
+    "wrongOptionsExplanation": "A bridge mode is valid for Linux ECS on EC2 but tasks share host networking context and cannot directly attach per-task security groups; it is not the least-privilege network choice. B correct: awsvpc gives task ENI/IP and SG. C EC2 host SG and instance profile permissions apply at host scope and can be shared by multiple tasks, violating granular least privilege. D per-task SG is good but injecting long-lived IAM credentials into containers is insecure and unnecessary; ECS task roles provide temporary credentials. E correct: task SG + IAM task role isolates both network and API permissions.",
+    "plainWords": "Each ECS microservice needs its own network firewall and its own AWS permissions. Use awsvpc networking to attach security groups to each task, and give each task a least-privilege IAM task role instead of using the EC2 host role or hardcoded credentials.",
+    "keyPoints": "awsvpc is only ECS network mode allowing task-level security groups; mandatory for Fargate. Each task gets ENI/IP, SG, and ALB/NLB ip target type. Task IAM role for app API calls; execution role for agent ECR/CloudWatch operations; EC2 instance profile for host/agent. Bridge network mode can still use task IAM roles, but lacks per-task SG. EC2-hosted ECS tasks may need IMDS isolation ECS_AWSVPC_BLOCK_IMDS=true to avoid exposure of host instance profile. Configure networking/roles in task definition and ECS service/task network configuration, generally before launching/redeploying tasks.",
+    "sourceWarning": "Minor chronology ambiguity: stem says app already deployed to ECS, but awsvpc network mode is defined in the task definition and SG is assigned when running tasks/services; changing requires new task definition/service deployment, not a post-deployment in-place toggle. No material AWS deprecation. External mirrors may share common source; AWS docs are authority.",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "domain4-multi-answer-aws-verified",
+      "originalAnswers": [
+        "B",
+        "E"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/security-network.html",
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/security-iam-roles.html",
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html",
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.examsvce.com/sap-c02/a-company-wants-to-migrate-its-website-question-answer.html",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/5/",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=9"
+      ],
+      "exactDuplicateIDs": [],
+      "similarQuestionIDs": [
+        43,
+        655
+      ],
+      "examVariantStatus": "Three exact five-option mirrors; one explicitly keys B,E. Exam mirrors not independent technical authority."
+    },
+    "answerStatus": "aws-docs-verified",
+    "originalQuestionSnapshot": {
+      "stem": "A company wants to migrate its website from an on-premises data center onto AWS. At the same time, it wants to migrate the website to a containerized microservice-based architecture to improve the availability and cost efficiency. The company's security policy states that privileges and network permissions must be configured according to best practice, using least privilege. A Solutions Architect must create a containerized architecture that meets the security requirements and has deployed the application to an Amazon ECS cluster. What steps are required after the deployment to meet the requirements? (Choose two.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Create tasks using the bridge network mode."
+        },
+        {
+          "id": "B",
+          "text": "Create tasks using the awsvpc network mode."
+        },
+        {
+          "id": "C",
+          "text": "Apply security groups to Amazon EC2 instances, and use IAM roles for EC2 instances to access other resources."
+        },
+        {
+          "id": "D",
+          "text": "Apply security groups to the tasks, and pass IAM credentials into the container at launch time to access other resources."
+        },
+        {
+          "id": "E",
+          "text": "Apply security groups to the tasks, and use IAM roles for tasks to access other resources."
+        }
+      ],
+      "answers": [
+        "B",
+        "E"
+      ]
+    }
   },
   {
     "id": 351,
