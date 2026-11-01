@@ -25887,24 +25887,26 @@
       }
     ],
     "answers": [
-      "C"
+      "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "C lifecycle transition after 6 months does not enforce expiration at 6 months; reliability/replay unclear. https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-expire-general-considerations.html",
+    "explanation": "A is the best available option: Step Functions Standard Workflows support retry/redrive of failed image-processing executions; an S3 Lifecycle expiration policy removes objects after six months. Option C transitions objects to Standard-IA only after six months, which does not enforce six-month retention. Configure separate output prefix/bucket or S3 event filtering to prevent Lambda recursion. AWS Step Functions Standard redrive eligibility is limited (typically within 14 days after failed execution).",
+    "wrongOptionsExplanation": "B: EventBridge routing does not by itself provide Step Functions Standard workflow redrive. C: S3 Standard-IA transition after six months does not expire objects and lacks explicit failed-job replay. D: Glacier Deep Archive transition after six months is not expiration and does not explicitly handle reprocessing; retrieval is slow.",
+    "plainWords": "Use Step Functions to track and retry image resizing, and use S3 Lifecycle expiration to delete images after six months. Moving images to a cheaper storage tier is not the same as deleting them.",
+    "keyPoints": "Step Functions Standard redrive; S3 Lifecycle expiration vs transition; S3 event recursion avoidance; Lambda runtime suitability must be checked for large images.",
+    "sourceWarning": "A assumes Step Functions Standard Workflows for redrive; event filtering or distinct output prefix/bucket is needed to avoid S3 recursive triggers. https://docs.aws.amazon.com/step-functions/latest/dg/redrive-executions.html https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html",
     "review": {
-      "status": "needs-source-reconciliation",
+      "status": "corrected-with-caveat",
       "originalAnswer": [
         "C"
       ],
-      "verifiedAnswer": null,
+      "verifiedAnswer": [
+        "A"
+      ],
       "verifiedAt": "2026-11-01",
-      "notes": "Stored C transitions to Standard-IA at 6 months rather than expiring at 6 months; does not explicitly satisfy retry/reprocessing of failures. Need compare A/B/D full option texts and external source variants."
+      "notes": "A best available option based on workflow redrive and six-month expiration; Standard Workflow assumption; avoid same-prefix S3 recursion. Verify source variants independently."
     },
-    "answerStatus": "flagged-ambiguous"
+    "answerStatus": "corrected-with-caveat"
   },
   {
     "id": 634,
