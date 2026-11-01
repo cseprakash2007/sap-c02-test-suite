@@ -8315,13 +8315,13 @@
     ],
     "answerCount": 3,
     "explanation": "A discovers on-premises server configuration, utilization, and dependencies. D assesses cloud adoption readiness and identifies migration gaps. F provides a central migration tracking and discovery view. B (AWS Server Migration Service) is a legacy server migration tool, not the primary assessment tool for this question. C (AWS X-Ray) traces distributed application requests after instrumentation; E (Amazon Inspector) assesses software vulnerabilities rather than mapping migration dependencies and estimating cloud costs. The question does not identify a dedicated cost estimation tool; AWS Pricing Calculator would be needed for a detailed estimate.",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "AWS SMS (Server Migration Service) is a legacy migration option. Source key A,D,F retained. Short options B/C are service names, not necessarily truncated.",
+    "wrongOptionsExplanation": "B: AWS Server Migration Service (SMS) is a legacy VM migration service, not a discovery/readiness/TCO planning tool. C: AWS X-Ray traces instrumented distributed applications and does not automatically discover on-premises SAN/server estates. E: Amazon Inspector assesses vulnerabilities, not migration inventories, dependency maps, or projected AWS costs.",
+    "plainWords": "The company does not know exactly what it owns or how systems connect. First discover servers and dependencies, assess whether the organization is ready, and track the migration. Modern new projects should use AWS Transform.",
+    "keyPoints": "Historical A,D,F. A = Application Discovery Service for server/dependency inventory; D = CART organizational readiness, not dollar-cost estimator; F = Migration Hub tracking and application grouping. Since Nov 7 2025 both ADS and Migration Hub closed to new customers; AWS Transform replaces their discovery/assessment/wave planning and supports cost estimates. For detailed pricing use AWS Pricing Calculator or AWS Transform cost assessment. SMS is legacy, X-Ray traces apps, Inspector scans vulnerabilities.",
+    "sourceWarning": "OUTDATED: AWS Application Discovery Service and Migration Hub stopped accepting new customers Nov 7, 2025; AWS Transform is recommended for new projects. CART addresses organizational readiness rather than quantitative cloud cost estimates. Question's 'estimate cloud resource costs' is not fully answered by its offered services. Exact variants Cloud Study Exams Q10 and dumpscollection Q208 both A,D,F. Official https://docs.aws.amazon.com/application-discovery/latest/userguide/application-discovery-service-availability-change.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/migrationhub-availability-change.html",
     "review": {
-      "reviewedAt": "2026-10-28",
-      "auditStatus": "study-grammar-corrected-answer-provisional",
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "historical-answer-verified-outdated",
       "originalAnswers": [
         "A",
         "D",
@@ -8335,9 +8335,30 @@
       "awsDocumentationLinks": [
         "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html",
         "https://docs.aws.amazon.com/migrationhub/latest/ug/whatishub.html"
-      ]
+      ],
+      "duplicates": {
+        "exact": [],
+        "related": [
+          56,
+          106,
+          142,
+          168,
+          212,
+          264,
+          266,
+          395,
+          478,
+          537,
+          545
+        ]
+      },
+      "externalVariants": [
+        "https://cloudstudyexams.com/aws-certified-solutions-architect-professional-1-10/",
+        "https://www.dumpscollection.net/downloadfile.html?id=14113"
+      ],
+      "note": "Verified entire 674 question bank; no exact stem duplicate. ADS and Migration Hub closed to new customers Nov 7 2025; recommend AWS Transform."
     },
-    "answerStatus": "legacy-service-warning",
+    "answerStatus": "verified-with-outdated-warning",
     "originalQuestionSnapshot": {
       "stem": "A company wants to migrate its on-premises data center to the AWS Cloud. This includes thousands of virtualized Linux and Microsoft Windows servers, SAN storage, Java and PHP applications with MYSQL, and Oracle databases. There are many dependent services hosted either in the same data center or externally. The technical documentation is incomplete and outdated. A solutions architect needs to understand the current environment and estimate the cloud resource costs after the migration. Which tools or services should solutions architect use to plan the cloud migration? (Choose three.)",
       "options": [

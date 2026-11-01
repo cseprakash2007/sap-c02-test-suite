@@ -117,3 +117,15 @@ Branch: `answer-audit-2026-10-28`. Total multi-answer questions identified in da
 **674-question comparison:** No exact stem duplicate. Related Q25, Q33, Q192, Q213, Q282 and Q325 address organization/account migration or account management but have distinct requirements. External exact stem/answers: https://www.examsvce.com/sap-c02/a-company-uses-aws-organizations-to-manage-75551-question-answer.html (B,E,F). Independent second exact exam variant not confirmed. Official: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_account_migration.html ; https://docs.aws.amazon.com/organizations/latest/APIReference/API_RemoveAccountFromOrganization.html ; https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_invites.html
 
 **Next:** Q190 — 7 of 33.
+
+## 7 of 33 — Q190 — Select THREE — Enterprise migration discovery and readiness
+
+**Historical answer A,D,F verified. OUTDATED FOR NEW CUSTOMERS.** A Application Discovery Service inventories servers, configurations, performance and dependencies; D CART assesses organizational adoption readiness; F Migration Hub groups applications and tracks migration progress. B SMS is a legacy migration execution tool; C X-Ray traces instrumented requests; E Inspector finds vulnerabilities.
+
+**2026 critical change:** AWS Application Discovery Service and AWS Migration Hub stopped accepting new customers **November 7, 2025**. AWS Transform is the recommended successor for new discovery, dependency mapping, assessment, cost estimation and wave planning. Existing projects may continue. CART is a readiness assessment, not a precise AWS cost estimator. Source question's cloud resource cost estimation requirement is only partly served by A,D,F; use AWS Transform assessments / AWS Pricing Calculator for detailed costs.
+
+**Independent exam variants:** [Cloud Study Exams Q10](https://cloudstudyexams.com/aws-certified-solutions-architect-professional-1-10/) A,D,F; [SAP-C02 collection Q208](https://www.dumpscollection.net/downloadfile.html?id=14113) A,D,F. **AWS:** https://docs.aws.amazon.com/application-discovery/latest/userguide/application-discovery-service-availability-change.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/migrationhub-availability-change.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/evaluating-migration-readiness/introduction.html
+
+**674 question duplicate/similarity audit:** No exact normalized-stem duplicate. Strong conceptual overlaps Q56, Q106, Q168, Q212, Q142, Q264, Q266, Q395 (discovery, utilization, dependencies and migration planning). Q478/Q537/Q545 address business case, cost, Migration Evaluator and broader VMware inventory. Compare each question's discovery versus assessment versus actual execution requirement; don't equate different answer letters.
+
+**Next:** Determine Q191+ multi-answer sequence from dataset (8 of 33).
