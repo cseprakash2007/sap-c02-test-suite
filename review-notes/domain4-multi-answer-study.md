@@ -47,3 +47,26 @@ Branch: `answer-audit-2026-10-28`. Total multi-answer questions identified in da
 **External:** https://www.certstopics.com/questions/sap-c02-amazon-web-services-exam-lab-questions.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2025-04-03.q227/a-company-wants-to-migrate-its-workloads-from-on-premises-to-aws-the-workloads-run-on-linux-and-windows ; https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-6.html ; https://cciedump.spoto.net/exam-questions/prepare-for-sap-c02-exams-questions--study-materials
 
 **Next:** Q116 (3 of 33) — IoT Core, DocumentDB, and Step Functions reporting architecture.
+
+## 3 of 33 — Q116 — Select THREE — MQTT IoT migration, reporting and MongoDB
+
+**Verified key A, D, E (unchanged).** Scenario: MQTT IoT devices every 5 minutes, on-prem MongoDB, periodic 120–600-second report generation, public report access; minimize operational overhead.
+
+- **A correct:** Step Functions coordinates Lambda report-generation tasks; 120–600 seconds fits Lambda's 15-minute per-invocation maximum. Reports in S3 are served by CloudFront.
+- **B incorrect:** Lambda polling devices is not a substitute for managed MQTT broker; Lambda layers package dependencies, not message storage.
+- **C incorrect:** EKS with EC2 worker nodes and ingress requires more operations than serverless reporting.
+- **D correct:** AWS IoT Core accepts device MQTT publish; rules can invoke Lambda to parse, transform, and persist telemetry.
+- **E correct:** Amazon DocumentDB offers managed MongoDB compatibility; validate unsupported MongoDB features, driver behavior and indexes.
+- **F incorrect:** MongoDB on EC2 leaves OS/DB patching, replication, backups and failover management.
+
+**External variants:** Exact2Pass question #119 matches Q116 with A,D,E. Exact2Pass question #118 and SalesforceXamDumps #31 show same underlying architecture with B,D,E because of option ordering. Compare service content, not letters.
+
+**Duplicate:** **Q438 is a strong near-duplicate**: same MQTT/DocumentDB/Step Functions-S3-CloudFront architecture, answer B,D,E due to reordered options. Similar but distinct: Q228 (IoT Core → Firehose → S3), Q255 (IoT certificates), Q258/Q453 (MongoDB), Q467 (custom MQTT broker overload), Q509 (IoT Core → Kinesis buffering → Fargate), Q583 (vehicle telemetry). **Separate defect candidate:** Q467 stored A uses ALB for raw MQTT; ALB does not directly support raw TCP/MQTT, so re-audit Q467.
+
+**Current-service check:** No confirmed retirement for core correct services. AWS IoT rules can retry and discard on exhausted retries; configure error action/monitoring for production. Ensure IoT rule can invoke Lambda and DocumentDB is compatible with source MongoDB.
+
+**AWS sources:** https://docs.aws.amazon.com/iot/latest/developerguide/iot-create-rule.html ; https://docs.aws.amazon.com/iot/latest/developerguide/lambda-rule-action.html ; https://docs.aws.amazon.com/iot/latest/developerguide/iot-rule-actions.html ; https://aws.amazon.com/lambda/faqs/
+
+**External sources:** https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-8.html ; https://www.salesforcexamdumps.com/sap-c02-practice-questions/3
+
+**Next:** Q119 (4 of 33) — Multi-Region disaster recovery for three-tier applications, Route 53 failover, DynamoDB global tables.
