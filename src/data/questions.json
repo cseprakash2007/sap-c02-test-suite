@@ -21011,13 +21011,20 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct: B. Amazon S3 is a fully managed, highly durable object store suited to large documents. Enforce TLS using an explicit bucket-policy Deny when aws:SecureTransport=false; use SSE-KMS with a customer-managed AWS KMS key and enable periodic key rotation. Require the specific KMS key with bucket-policy conditions where needed. S3's default SSE-S3 encryption alone does not meet the customer-managed-key requirement. AWS docs: https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html and https://docs.aws.amazon.com/securityhub/latest/userguide/s3-controls.html.",
+    "wrongOptionsExplanation": "A: S3 File Gateway adds a gateway and local cache for file-protocol access; EBS encryption of gateway volumes alone does not enforce encryption of all stored S3 objects or HTTPS end-to-end, and is unnecessarily complex. C: DynamoDB is a managed NoSQL database, not the natural place to store large documents (400 KB item limit); KMS encryption does not overcome the unsuitable data model. D: EC2 and EBS require managing compute, storage, durability, and availability; EBS encryption alone does not enforce TLS and is not fully managed object storage.",
+    "plainWords": "Store documents in S3, force HTTPS, encrypt with a company-controlled KMS key, and rotate the key.",
+    "keyPoints": "Fully managed documents -> S3; customer-controlled key -> customer-managed KMS key with rotation; in transit -> bucket-policy deny HTTP (aws:SecureTransport=false); at rest -> SSE-KMS and optionally require the specific key ARN. Key rotation does not automatically re-encrypt existing S3 object data keys.",
+    "sourceWarning": "Verified single-answer B. Same stem found with reordered option letters on FreeCram 2026 (correct D, same S3 text) and PDFDumps (S3 as C); do not import option letters from external sites. No verified Choose TWO/THREE variant located. Original option B is somewhat imprecise: explicitly specify a customer-managed KMS key and rotation; an AWS-managed KMS key does not meet company-managed-key requirement. AWS service-principal exceptions may be needed in SecureTransport deny policies. Sources: https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-is-migrating-an-application-to-aws-it-wants-to-use-fully-managed-services-as-much-as-possible ; https://www.pdfdumps.com/articles/real-amazon-sap-c02-exam-questions-study-guide-q217-q242/ ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html",
+    "review": {
+      "status": "verified",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS docs and independent external practice variants checked; single-answer; external option letters differ; wording requires customer-managed KMS key."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 503,
