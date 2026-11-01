@@ -23157,16 +23157,26 @@
       }
     ],
     "answers": [
-      "B"
+      "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Best answer C: use SQL Server native transactional replication with the source as publisher and Amazon RDS for SQL Server as a push subscriber. After initial synchronization, ongoing changes are applied to RDS; validate, briefly stop writes, let replication catch up and cut over. AWS explicitly recommends transactional replication for minimal-downtime migrations to RDS SQL Server: https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-sql-server/trans-rep.html . This is replatforming to managed RDS, not heterogeneous database engine modernization; stem is ambiguous about 'modern data architecture'.",
+    "wrongOptionsExplanation": "A: AWS Application Migration Service rehosts servers; AWS SCT converts schemas, but an in-place upgrade and post-cutover export to Aurora Serverless do not create near-zero-downtime replication. B: AWS DMS CDC to S3 writes data/change files, not a continuously synchronized RDS SQL Server target; bulk-loading S3 afterward creates lag/downtime and requires replay. Use DMS directly to RDS for full-load+CDC instead. C: correct, native SQL Server transactional replication to RDS subscriber supports continuous sync and brief cutover, subject to edition/permissions/object support. D: Application Migration Service can rehost the VM to EC2, but managed RDS cannot accept detached SQL Server MDF/LDF database files for attachment as proposed.",
+    "plainWords": "Keep the existing SQL Server running, copy its data to Amazon RDS for SQL Server, and continuously send changes using SQL Server transactional replication. Once RDS catches up, briefly stop writes and redirect applications. That avoids a long outage.",
+    "keyPoints": "SQL Server transactional replication: source publisher/distributor, RDS SQL Server push subscriber, continuous changes, validation, drain replication lag, cutover. AWS DMS full load+CDC DIRECT to RDS is another supported near-zero downtime approach, but option B incorrectly uses S3 as intermediate CDC destination. S3 native SQL Server backup/restore is different from DMS S3 CDC CSV/Parquet files. RDS SQL Server is replatform, not conversion to Aurora. DMS Schema Conversion/SCT + DMS full-load+CDC to Aurora PostgreSQL would better represent heterogeneous modernization.",
+    "sourceWarning": "SOURCE KEY DEFECT: original B uses AWS DMS with S3 CDC target then loads S3 data into RDS SQL Server only after sync; target RDS is not continuously synchronized, and S3 DMS CDC files are not SQL Server native backup files. Corrected to C, independently supported by AWS Prescriptive Guidance SQL Server transactional replication. Exact stem on CertifHub Q7 with reordered choices keys C for native replication (dataset C); no confirmed Choose TWO/THREE variant. STEM DEFECT: 'Microsoft SOL Server' OCR should be 'Microsoft SQL Server'; 'modern data architecture' ambiguous because RDS SQL Server is managed replatforming rather than heterogeneous engine modernization. Option C uses vague 'high availability tools'; transactional replication specifically, not generic Always On availability groups, is the supported technique. References: https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-sql-server/trans-rep.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-sql-server/methods.html ; https://blog.certifhub.com/aws/aws-certified-solutions-architect-professional-english/q7/ .",
+    "review": {
+      "status": "verified-source-key-defective",
+      "originalAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": [
+        "C"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "Official AWS Prescriptive Guidance explicitly supports native SQL Server transactional replication into RDS with minimal downtime; external exact-stem CertifHub Q7 independently keys equivalent option C. DMS CDC to S3 followed by RDS load is not synchronized RDS target. Stem modernization ambiguous."
+    },
+    "answerStatus": "corrected-source-defect"
   },
   {
     "id": 561,
