@@ -12096,13 +12096,94 @@
       "C"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historical key A,B,C is the best intended answer, but the item is DEFECTIVE: B and E are materially redundant attachment instructions, while B's 'all' is overbroad when only selected VPCs require connectivity. A central AWS Transit Gateway shared with member accounts by AWS RAM permits cross-account VPC attachments. Attach the desired VPCs; the transit gateway-owning account must own/create Site-to-Site VPN attachments. Segregate traffic with multiple TGW route tables, deliberately assigning associations and route propagations/static routes. Existing VPNs terminating at a VGW or another AWS account cannot simply be reassociated with a TGW; create/replace appropriately. Member accounts must configure subnet route tables toward the TGW and return routing; TGW route tables alone do not make traffic flow. Avoid indiscriminate default associations and propagation where isolation is required. This is routing segmentation, not a substitute for security groups/firewall enforcement.",
+    "wrongOptionsExplanation": "A correct: central shared TGW reduces cross-account management; AWS RAM enables organization sharing. B intended correct: create TGW attachments for VPCs and applicable VPNs, but 'all' is unnecessarily broad and duplicates E. C correct: multiple TGW route tables, per-attachment associations and selectively configured propagation provide isolation; associations alone are insufficient. D incorrect: hundreds of pairwise VPC peering connections add operational overhead, and peering is non-transitive. E technically overlaps B: same attachment operation in less overbroad words; cannot justify distinguishing B from E using AWS architecture. F misleading: VPC subnet route tables are genuinely required for end-to-end routing, but VPNs do not have analogous VPC-style route tables; VPN routing uses TGW tables and static/BGP routes. No uniquely defensible three-option selection with the six-choice source.",
+    "plainWords": "Connect hundreds of VPCs across AWS Organizations to the corporate network using existing VPN connectivity, yet choose which VPCs can talk. Use a shared Transit Gateway hub and separate TGW route tables, not a mesh of peering connections.",
+    "keyPoints": "TGW is regional; share using AWS RAM. Only the TGW owner can create VPN attachments and manage TGW route tables. Cross-account VPC owners can create VPC attachments to the shared TGW. Every attachment associates with exactly one TGW route table; routes can propagate to multiple tables. Control east-west and hybrid traffic with associations plus propagation/static routes, and configure VPC subnet routes/return paths. A VPN already terminated on a VGW is not automatically a TGW attachment. Exact duplicate: none found in 674 stems; close conceptual overlaps Q136, Q191, Q263, Q354, Q369, Q415, Q540. See review notes for comparisons.",
+    "sourceWarning": "DEFECTIVE SELECT THREE: original A,B,C historical key preserved, but B and E duplicate the TGW attachment instruction, B over-specifies all VPCs, F mixes necessary VPC routes with non-existent VPN-style route tables, and the stem does not clarify VPN attachment migration. Five-option external variant omits duplicate B, changing answer letters. Do not treat A,B,C as uniquely proven by AWS docs.",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "domain4-multi-answer-source-defective",
+      "originalAnswers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "historicalKey": [
+        "A",
+        "B",
+        "C"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/working-with-transit-gateways.html",
+        "https://docs.aws.amazon.com/vpc/latest/tgw/how-transit-gateways-work.html",
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html",
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpc-attachments.html",
+        "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpn-attachments.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.examtopics.com/discussions/amazon/view/126768-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-340-discussion/",
+        "https://www.repost.aws/questions/QUvX0QyO3pRQWkBQspwcgVKg/transit-gateway-attachment-configuration",
+        "https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf",
+        "https://www.scribd.com/document/931431704/AWS-Certified-Solutions-Architect-Professional-SAP-C02-Exam-ExamTopics-301-350"
+      ],
+      "externalVariantSummary": "ExamTopics/Scribd/re:Post preserve six options A-F with reported ABC and community ACE challenge. FreeCram 2025 PDF shows five options: A share TGW, B VPC/VPN route tables, C TGW route tables, D peering, E attachments; conceptually A,C,E in that different ordering, reinforcing B/E duplicate in six-option source.",
+      "duplicateComparison": {
+        "exactNormalizedStemDuplicates": [],
+        "conceptualRelated": [
+          136,
+          191,
+          263,
+          354,
+          369,
+          415,
+          540
+        ],
+        "alsoRelated": [
+          108,
+          241,
+          301,
+          360
+        ]
+      },
+      "correctedStudyVersion": false,
+      "sourceKeyNotUniquelyJustifiable": true
+    },
+    "answerStatus": "source-defective-key-ambiguous",
+    "originalQuestionSnapshot": {
+      "stem": "A company operates a fleet of servers on premises and operates a fleet of Amazon EC2 instances in its organization in AWS Organizations. The company's AWS accounts contain hundreds of VPCs. The company wants to connect its AWS accounts to its on-premises network. AWS Site-to-Site VPN connections are already established to a single AWS account. The company wants to control which VPCs can communicate with other VPCs. Which combination of steps will achieve this level of control with the LEAST operational effort? (Choose three.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Create a transit gateway in an AWS account. Share the transit gateway across accounts by using AWS Resource Access Manager (AWS RAM)."
+        },
+        {
+          "id": "B",
+          "text": "Configure attachments to all VPCs and VPNs."
+        },
+        {
+          "id": "C",
+          "text": "Set up transit gateway route tables. Associate the VPCs and VPNs with the route tables."
+        },
+        {
+          "id": "D",
+          "text": "Configure VPC peering between the VPCs."
+        },
+        {
+          "id": "E",
+          "text": "Configure attachments between the VPCs and VPNs."
+        },
+        {
+          "id": "F",
+          "text": "Set up route tables on the VPCs and VPNs."
+        }
+      ],
+      "answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
   },
   {
     "id": 277,
