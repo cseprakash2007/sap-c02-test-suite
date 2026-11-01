@@ -223,3 +223,15 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **674-bank comparison:** No exact normalized stem duplicate. Strong match **Q431** (RDS MySQL Multi-AZ failover) — compare its precise goal and answer; related Q287 (RDS app resilience), Q230 (Aurora PostgreSQL scaling), Q525 (RDS PostgreSQL high load). Distinguish standby failover, reader scale-out, proxy connection management and caches; don't transfer answer letters.
 
 **Next:** Q337 — 15 of 33.
+
+## 15 of 33 — Q337 — Select THREE — EKS M6i to Graviton cost optimization
+
+**Verified historical key A,C,E unchanged.** A ensure ARM64-compatible container images; C migrate x86 M6i EKS EC2 nodes to suitable Graviton instances; E purchase EC2 Instance Savings Plan for selected Graviton instance family and Region, sized to stable demand. B nonsensical because EKS already runs containers; D newer x86 not the intended ARM cost path; F x86 family Savings Plan cannot cover Graviton usage. Test multi-arch manifests, native libs, add-ons/DaemonSets, and rolling migration before removing old nodes. AWS docs: https://docs.aws.amazon.com/eks/latest/eksctl/arm-support.html ; https://docs.aws.amazon.com/eks/latest/best-practices/cost-opt-compute.html ; https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html . Savings Plans cover underlying EC2 nodes, not EKS control-plane fee; family+Region lock-in differs from flexible Compute Savings Plans.
+
+**External exact exam variants:** [CertEnsure Q156 A,C,E](https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html); [P2PExams PDF Q4 A,C,E](https://www.p2pexams.com/free-questions/amazon-sap-c02-cheat-sheet-exam-by-deleon.pdf); [JPNTest Q1 reordered options](https://www.jpntest.com/free/SAP-C02-mondaishu-aws-certified-solutions-architect-professional-sap-c02). These exam mirrors may share source material, not independent AWS evidence.
+
+**674-bank duplicate audit:** **Q45 is a near-verbatim shortened duplicate of Q337** with same EKS M6i expiring Savings Plan, Graviton/ARM64 approach, and A,C,E answer. No exact normalized full-stem duplicate due to rewording. Avoid counting Q45 and Q337 as independent knowledge topics. No other direct Graviton/Savings Plan stem matches found by keyword scan.
+
+**Wording caveat:** A pre-existing multi-architecture image need not be rebuilt; 'most recent generation' and new EC2 Instance Savings Plan are not automatically the mathematically cheapest solution without benchmarking, utilization forecast and commitment sizing. Historical A,C,E is the best intended exam answer.
+
+**Next:** Q346 — 16 of 33 (source metadata Select THREE but only four options and two keyed answers; investigate corruption before treating as genuine multi-answer).
