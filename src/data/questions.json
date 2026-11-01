@@ -24031,13 +24031,23 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is the HISTORICAL source-key intent, but is NOT deployable as written for a new 2026 solution. AWS IoT Core natively ingests MQTT and IoT rules can send messages to Amazon Data Firehose, which buffers/delivers to S3. Legacy Amazon Kinesis Data Analytics for SQL formerly supported Firehose input for established customers, but new Firehose-input SQL applications were restricted after 2023-09-12 and the entire Kinesis Data Analytics for SQL service was discontinued 2026-01-27. Amazon Managed Service for Apache Flink (modern replacement) generally consumes Kinesis Data Streams or MSK, not a Firehose delivery stream as an ordinary streaming source. Correct modern architecture: IoT Core -> Kinesis Data Streams -> Managed Service for Apache Flink for 5-minute windows/anomaly detection, and Data Firehose reading from Kinesis Data Streams -> S3 for archival. AWS references: https://docs.aws.amazon.com/iot/latest/developerguide/iot-rule-actions.html ; https://docs.aws.amazon.com/kinesisanalytics/latest/dev/ ; https://docs.aws.amazon.com/managed-flink/latest/java/how-sources.html .",
+    "wrongOptionsExplanation": "A: IoT Greengrass is edge software, not the lowest-overhead fleet MQTT ingestion service; MSK plus custom Kafka-to-S3 code and SageMaker model development add operational complexity. B: IoT Core MQTT and Firehose-to-S3 are appropriate, but Kinesis Data Analytics SQL was retired in January 2026; its legacy Firehose-as-input arrangement cannot be newly created, and Managed Flink typically reads Kinesis Data Streams/MSK. Historically intended answer, now invalid as written. C: FleetWise is vehicle-focused but closed to new customers April 30 2026; AWS Glue's built-in FindMatches ML transform performs record/entity matching, not telematics time-series anomaly detection. D: RabbitMQ/MQ is unnecessary for native MQTT device connectivity, and Amazon Lookout for Metrics ended support October 10 2025. None is fully correct for a new 2026 deployment.",
+    "plainWords": "The original exam wanted vehicles to publish MQTT to IoT Core, then Firehose to S3, with analytics on the stream. But the named old Kinesis Data Analytics SQL service has been shut down. Today route the same MQTT events into Kinesis Data Streams, run 5-minute anomaly detection with Managed Service for Apache Flink, and deliver a copy to S3 using Firehose.",
+    "keyPoints": "AWS IoT Core supports MQTT and rules to Kinesis Data Streams, Firehose and S3. Firehose is delivery/buffering to destinations, not a general-purpose Kinesis Data Streams replacement. Legacy Kinesis Data Analytics for SQL applications discontinued 2026-01-27; historical Firehose source existed but creation restricted from 2023-09-12. Modern Managed Service for Apache Flink reads Kinesis Data Streams or MSK for windowed processing; Firehose can archive a Kinesis stream to S3. IoT FleetWise stopped accepting new customers 2026-04-30. Amazon Lookout for Metrics ended 2025-10-10. Glue FindMatches identifies duplicate/matching records, not time-series anomalies.",
+    "sourceWarning": "OUTDATED / NO VALID 2026 OPTION. Historical external exact-stem Pupuweb SAP-C02 Q313 keys B, consistent with source. Important historical nuance: Kinesis Data Analytics SQL formerly supported Firehose source, so do NOT claim this was never possible; after 2023-09-12 new Firehose-input SQL apps were restricted, and SQL service ended 2026-01-27. Managed Flink does not directly consume a Firehose delivery stream as a standard streaming source. Option C FleetWise closed to new customers 2026-04-30 and Glue FindMatches is not anomaly detection; D Lookout for Metrics retired 2025-10-10. Preserve B only as HISTORICAL answer, flag as unanswerable under current services. No confirmed Choose TWO/THREE variant. https://docs.aws.amazon.com/kinesisanalytics/latest/dev/ ; https://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works.html ; https://docs.aws.amazon.com/managed-flink/latest/java/how-sources.html ; https://aws.amazon.com/blogs/machine-learning/transitioning-off-amazon-lookout-for-metrics/ ; https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/iotfleetwise-availability-change.html ; https://docs.aws.amazon.com/glue/latest/dg/machine-learning.html ; https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-4/2/ .",
+    "review": {
+      "status": "historical-answer-verified-currently-unanswerable",
+      "originalAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "Exact-stem Pupuweb Q313 keys B. Historical Kinesis Data Analytics SQL Firehose source was possible, but SQL service retired Jan 27 2026. No answer fully valid in 2026. Modern solution IoT Core->Kinesis Data Streams->Managed Flink, Firehose->S3; FleetWise new customers closed and Lookout for Metrics retired."
+    },
+    "answerStatus": "verified-outdated"
   },
   {
     "id": 584,
