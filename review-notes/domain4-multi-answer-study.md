@@ -107,3 +107,13 @@ Branch: `answer-audit-2026-10-28`. Total multi-answer questions identified in da
 **AWS/NetApp:** https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/supported-fsx-clients.html ; https://docs.aws.amazon.com/eks/latest/userguide/fsx-ontap.html ; https://docs.netapp.com/us-en/trident-2602/trident-use/trident-fsx.html ; https://aws.amazon.com/blogs/containers/optimize-log-management-for-amazon-eks-with-amazon-fsx-for-netapp-ontap/
 
 **Next:** Q189 — 6 of 33.
+
+## 6 of 33 — Q189 — Select THREE — 540 accounts moving between AWS Organizations
+
+**Historical key B,E,F retained; CRITICAL OUTDATED SELECT THREE.** B = source management account calls RemoveAccountFromOrganization; E = new management account invites with InviteAccountToOrganization; F = invited member accepts (AcceptHandshake). Current AWS Organizations supports **direct member-account transfer** via E and F without B; no three mandatory options exist. A is not a valid cross-organization MoveAccount API; C wrongly calls management-only RemoveAccountFromOrganization from member account (member-initiated departure uses LeaveOrganization); D placeholder account is unnecessary.
+
+**Migration safeguards:** Destination organization at least 7 days old, newly created source member accounts at least 4 days old, compatible Seller of Record, quotas and permissions; review SCP/RCP/IAM organization ID conditions, delegated admin, root access, historical billing reports, and stale management-account IAM roles. A direct transfer can avoid temporary standalone billing/policy exposure.
+
+**674-question comparison:** No exact stem duplicate. Related Q25, Q33, Q192, Q213, Q282 and Q325 address organization/account migration or account management but have distinct requirements. External exact stem/answers: https://www.examsvce.com/sap-c02/a-company-uses-aws-organizations-to-manage-75551-question-answer.html (B,E,F). Independent second exact exam variant not confirmed. Official: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_account_migration.html ; https://docs.aws.amazon.com/organizations/latest/APIReference/API_RemoveAccountFromOrganization.html ; https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_invites.html
+
+**Next:** Q190 — 7 of 33.

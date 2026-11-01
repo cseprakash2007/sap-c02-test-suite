@@ -8213,7 +8213,7 @@
   {
     "id": 189,
     "domain": 4,
-    "stem": "A company uses AWS Organizations to manage more than 1.000 AWS accounts. The company has created a new developer organization. There are 540 developer member accounts that must be moved to the new developer organization. All accounts are set up with all the required Information so that each account can be operated as a standalone account. Which combination of steps should a solutions architect take to move all of the developer accounts to the new developer organization? (Select THREE.)",
+    "stem": "A company uses AWS Organizations to manage more than 1,000 AWS accounts. The company has created a new developer organization. There are 540 developer member accounts that must be moved to the new developer organization. All accounts are set up with all the required information so that each account can be operated as a standalone account. Which combination of steps should a solutions architect take to move all of the developer accounts to the new developer organization? (Select THREE.)",
     "options": [
       {
         "id": "A",
@@ -8246,13 +8246,37 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historical exam answer B,E,F: source management account calls RemoveAccountFromOrganization for each member, destination management account sends InviteAccountToOrganization, and authorized users in member accounts accept invitations (AcceptHandshake). CRITICAL 2026 CHANGE: AWS Organizations now supports direct account transfers. The destination sends an invitation and the existing member accepts it without first leaving the original organization. Therefore B is optional, not mandatory, and this Select THREE item is outdated; E and F describe the current necessary steps.",
+    "wrongOptionsExplanation": "A: MoveAccount is not a valid cross-organization transfer API (MoveAccount is used within an organization). C: RemoveAccountFromOrganization is callable only from the source management account; a member account uses LeaveOrganization to leave voluntarily. D: A placeholder destination member account is unnecessary. B is historically correct but unnecessary under direct transfer.",
+    "plainWords": "Old process: remove 540 accounts from the first organization, invite them from the second, then accept each invitation. New process: the second organization invites the accounts directly, and the accounts accept; no standalone intermediate stage.",
+    "keyPoints": "Historical B,E,F; current direct transfer E,F. RemoveAccountFromOrganization is management-account-only. LeaveOrganization is member-initiated. InviteAccountToOrganization is destination management account. AcceptHandshake is invited account. Confirm 7-day age of destination organization, 4-day minimum age for newly created accounts, Seller of Record compatibility, quotas, SCP/RCP and IAM dependencies, billing reports, and delegated admin roles.",
+    "sourceWarning": "OUTDATED / DEFECTIVE SELECT THREE: Direct account transfers between AWS Organizations are supported; removal is no longer required. Retain B,E,F for historical practice but do not teach B as mandatory. Corrected OCR punctuation 1.000->1,000 and capitalization. AWS https://docs.aws.amazon.com/organizations/latest/userguide/orgs_account_migration.html ; https://docs.aws.amazon.com/organizations/latest/APIReference/API_RemoveAccountFromOrganization.html ; external exact variant https://www.examsvce.com/sap-c02/a-company-uses-aws-organizations-to-manage-75551-question-answer.html",
+    "review": {
+      "verifiedAt": "2026-11-01",
+      "position": 6,
+      "totalMultiAnswer": 33,
+      "historicalKey": [
+        "B",
+        "E",
+        "F"
+      ],
+      "modernNecessarySteps": [
+        "E",
+        "F"
+      ],
+      "status": "outdated-historical-key",
+      "exactDuplicates": [],
+      "related": [
+        25,
+        33,
+        192,
+        213,
+        282,
+        325
+      ],
+      "notes": "Compared 674 items; related multi-account migration/governance questions but no exact same-stem duplicate. Exact external variant ExamsVCE agrees B,E,F. Direct-transfer feature invalidates mandatory B."
+    },
+    "answerStatus": "verified-with-outdated-warning"
   },
   {
     "id": 190,
