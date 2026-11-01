@@ -17459,13 +17459,79 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,D,E confirmed by AWS docs and multiple exact external variants. A create S3-hosted CSV manifest listing only analytics files. D S3 ObjectCreated event invokes Lambda, which calls DataSync StartTaskExecution with ManifestConfig Source S3 (bucket ARN, object path, access role), triggering transfers when manifest is ready rather than every 6 hours. E EventBridge DataSync Task Execution State Change SUCCESS/ERROR directly targets SNS topic with confirmed email subscription, avoiding custom polling and code.",
+    "wrongOptionsExplanation": "A correct: manifest limits DataSync scanning and transfers to listed source-relative paths. B wrong: DynamoDB intermediary unnecessary because DataSync natively reads S3 manifest. C wrong: Lambda custom file transfer and DynamoDB trigger increase complexity and Lambda duration limits. D correct: S3 event -> Lambda -> StartTaskExecution ManifestConfig; requires iam:PassRole and permission to start task. E correct: EventBridge filters aws.datasync Task Execution State Change status SUCCESS/ERROR, SNS email target. F wrong: extra Lambda notification handler is unnecessary; EventBridge can directly target SNS.",
+    "plainWords": "Write a CSV list of only the files analytics needs, upload it to S3, start the existing DataSync task immediately when the list arrives, and use EventBridge plus SNS to email the team when transfer succeeds or fails.",
+    "keyPoints": "DataSync S3 manifest CSV specifies files, not a DynamoDB table; StartTaskExecution supports ManifestConfig. S3 ObjectCreated -> Lambda -> DataSync for event-driven execution. DataSync -> EventBridge Task Execution State Change SUCCESS/ERROR -> SNS email subscription. EventBridge events best effort; task only one execution active at a time; handle overlap/retries. Manifest IAM access and iam:PassRole; do not mix manifest with include/exclude filters. Enhanced mode now supports on-prem NFS/SMB via Enhanced agent; verify current supported sources and pricing.",
+    "sourceWarning": "Minor ambiguity: A says 'at the end of the copy process' although manifest must be generated at end of source data generation, before DataSync copying; otherwise circular. S3 notification is at-least-once, can duplicate and arrive out of order; add idempotency and task execution concurrency handling. E says SNS topic 'sends an email' but SNS needs an email subscription and confirmation. DataSync EventBridge delivery is best effort; add monitoring if strict notification guarantee. Most cost-effective depends on data selection patterns; native filters may be simpler for fixed prefixes.",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "domain4-multi-answer-aws-verified-minor-wording-defect",
+      "originalAnswers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html",
+        "https://docs.aws.amazon.com/datasync/latest/apireference/API_StartTaskExecution.html",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/events.html",
+        "https://repost.aws/knowledge-center/datasync-task-execution-notification",
+        "https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.freecram.net/question/Amazon.SAA-C03.v2026-04-09.q244/a-company-generates-approximately-20-gb-of-data-multiple-times-each-day-the-company-uses-aws-datasync",
+        "https://www.salesforcexamdumps.com/saa-c03-practice-questions/2"
+      ],
+      "externalVariantStatus": "Exact SAP-C02 CertEnsure Q84 and exact SAA-C03 FreeCram Q244 and Salesforcexamdumps Q24 all key A,D,E; mirrors may share source",
+      "exactDuplicateIDs": [],
+      "similarQuestionIDs": [
+        3,
+        171,
+        211,
+        300,
+        349,
+        365,
+        409,
+        479
+      ]
+    },
+    "answerStatus": "aws-docs-verified-minor-wording-defect",
+    "originalQuestionSnapshot": {
+      "stem": "A company generates approximately 20 GB of data multiple times each day. The company uses AWS DataSync to copy all data from on-premises storage to Amazon S3 every 6 hours for further processing. The analytics team wants to modify the copy process to copy only data relevant to the analytics team and ignore the rest of the data. The team wants to copy data as soon as possible and receive a notification when the copy process is finished. Which combination of steps will meet these requirements MOST cost-effectively? (Select THREE.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Modify the data generation process on premises to create a manifest file at the end of the copy process with the names of the objects to be copied to Amazon S3. Create a custom script to upload the manifest file to an S3 bucket."
+        },
+        {
+          "id": "B",
+          "text": "Modify the data generation process on premises to create a manifest file at the end of the copy process with the names of the objects to be copied to Amazon S3. Create an AWS Lambda function to load the manifest file data into an Amazon DynamoDB table."
+        },
+        {
+          "id": "C",
+          "text": "Create an AWS Lambda function that Amazon EventBridge invokes when the manifest file is loaded into Amazon DynamoDB. Configure the Lambda function to copy the data from on-premises storage to the S3 bucket that uses the manifest file."
+        },
+        {
+          "id": "D",
+          "text": "Create an AWS Lambda function that an S3 Event Notification invokes when the manifest file is uploaded. Configure the Lambda function to invoke the DataSync task by calling the StartTaskExecution API action with a manifest."
+        },
+        {
+          "id": "E",
+          "text": "Create an Amazon SNS topic. Create an Amazon EventBridge rule to send an email notification to the SNS topic when the DataSync task execution status changes to SUCCESS or to ERROR."
+        },
+        {
+          "id": "F",
+          "text": "Create an Amazon SNS topic. Create an AWS Lambda function to send an email notification to the SNS topic when the DataSync task execution status changes to SUCCESS or to ERROR."
+        }
+      ],
+      "answers": [
+        "A",
+        "D",
+        "E"
+      ]
+    }
   },
   {
     "id": 402,
