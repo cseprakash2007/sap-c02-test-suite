@@ -21086,13 +21086,20 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct C: Cached Volume Gateway exposes cloud-backed block volumes as iSCSI targets to on-premises application servers, keeps primary data in Amazon S3, caches frequently accessed blocks locally for low-latency access, and supports AWS Backup point-in-time backups as EBS snapshots. AWS: https://docs.aws.amazon.com/storagegateway/latest/vgw/StorageGatewayConcepts.html ; https://docs.aws.amazon.com/storagegateway/latest/vgw/backing-up-volumes.html .",
+    "wrongOptionsExplanation": "A: Tape Gateway exposes a virtual tape library for backup/archive workflows, not application iSCSI block volumes with cached working data. B: FSx File Gateway and S3 File Gateway provide file protocols (SMB/NFS), not iSCSI block volumes; FSx File Gateway is also unavailable to new customers since 2024-10-28. D: S3 File Gateway provides SMB/NFS file shares, not iSCSI block volumes; its cache does not make it a Volume Gateway.",
+    "plainWords": "Legacy servers need an iSCSI disk, but the company wants most data in AWS and hot data close by. Choose cached Volume Gateway, then protect its volumes using AWS Backup.",
+    "keyPoints": "iSCSI -> Volume Gateway (block); NFS/SMB -> File Gateway; virtual tapes -> Tape Gateway. Cached Volume Gateway: primary data in S3, hot data cached on premises; stored Volume Gateway: primary data on premises. AWS Backup supports cached and stored volumes; snapshots are EBS snapshots stored in S3.",
+    "sourceWarning": "Answer C independently verified. Exact-stem single-answer variants: ExamTopics Q494 (C), Pass4Future Q4 (C), ExamCollection Q20 (C), and JPNTest Q458 (A after reorder). Some syndicated versions retain an explanation saying 'C' even after reordering to A/B; rely on architecture, not option letter. No confirmed Choose TWO/THREE variant found. Option B cites Amazon FSx File Gateway, unavailable to new customers since 2024-10-28 (AWS document history). Minor OCR errors 'anAmazon' and 'on- premises' corrected only in review notes, original stem/options preserved. Sources: https://www.examtopics.com/discussions/amazon/view/142930-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://www.pass4future.com/questions/amazon/sap-c02 ; https://www.jpntest.com/blog/2026%E5%B9%B409%E6%9C%88-%E6%9B%B4%E6%96%B0%E3%81%AEsap-c02%E3%83%96%E3%83%AC%E3%83%BC%E3%83%B3%E5%95%8F%E9%A1%8C%E9%9B%86%E3%81%A7sap-c02%E5%95%8F%E9%A1%8C%E3%81%A7%E6%9C%80%E9%AB%98%E5%BE%97%E7%82%B9%E3%82%92%E7%9B%AE%E6%8C%87%E3%81%99%E3%81%9F%E3%82%81%E4%BB%8A%E3%81%99%E3%81%90%E8%A9%A6%E3%81%9D%E3%81%86-q447-q463/ ; https://docs.aws.amazon.com/filegateway/latest/filefsxw/DocumentHistory.html",
+    "review": {
+      "status": "verified",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS primary documentation and exact-stem independent exam sites verified; outdated FSx File Gateway flagged; no verified multi-answer variant."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 505,
