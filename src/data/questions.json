@@ -21976,13 +21976,20 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct A: Create a new DocumentDB cluster on the target engine version, migrate indexes using the Amazon DocumentDB Index Tool, then use AWS DMS 'Migrate and replicate' (full load plus CDC) from the old cluster. Change streams let DMS capture ongoing writes. Validate data and indexes and cut over Route 53 only after replication catches up. AWS explicitly documents this approach: https://docs.aws.amazon.com/documentdb/latest/devguide/docdb-migration.versions.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.DocumentDB.html .",
+    "wrongOptionsExplanation": "A correct: parallel new cluster supports pre-cutover testing and ongoing replication. B: mongodump/mongorestore-style binary export/import is a static copy, without CDC, so continuous writes can be missed. C: in-place major upgrade is supported, but takes the production cluster offline and cannot provide isolated testing before backend services access the upgrade. D: AWS DataSync does not support Amazon DocumentDB as a database source/target or implement its change-stream CDC.",
+    "plainWords": "Keep the old DocumentDB serving live traffic while AWS DMS copies all documents to a new upgraded cluster and continuously replays changes. Test the new cluster, briefly pause writes to eliminate lag, then switch DNS.",
+    "keyPoints": "DocumentDB change streams + AWS DMS = CDC; 'Migrate and replicate' = full load and ongoing changes. Index Tool transfers index definitions; use target preparation 'Do nothing' to preserve indexes. Monitor CDCLatencyTarget, migration errors and change-stream retention (24h must cover full load). Before cutover pause writes, drain lag, validate, update Route 53 and handle DNS caching/old connections. DocumentDB 8.0 and in-place MVU exist, but in-place upgrade is disruptive and cannot meet independent pre-cutover verification.",
+    "sourceWarning": "Verified exact-stem/options external practice variants: ExamCollection SAP-C02 page 3 and Certstopics SAP-C02; no confirmed Choose TWO/THREE variant. AWS official guide explicitly uses Index Tool plus DMS Migrate and replicate. Source option A omits write-quiesce/CDC catch-up, TTL, reconnection, validation and DMS target preparation safeguards; 24h change stream retention may be insufficient for very long full load. Option C is technically supported in-place upgrade but violates independent testing and availability requirements; AWS supports DocumentDB 8.0. Sources: https://docs.aws.amazon.com/documentdb/latest/devguide/docdb-migration.versions.html ; https://docs.aws.amazon.com/documentdb/latest/devguide/docdb-mvu.html ; https://www.examcollection.us/exam/SAP-C02-question-answer-3.html ; https://www.certstopics.com/questions/sap-c02-vce-exam-download.html .",
+    "review": {
+      "status": "verified",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS DocumentDB migration guide, DMS CDC docs and external exact-option practice sources checked. Single answer; no confirmed multi-answer variant. Cutover caveats documented."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 529,
