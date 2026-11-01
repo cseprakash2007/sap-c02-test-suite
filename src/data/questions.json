@@ -19173,13 +19173,32 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is best: S3 plus CloudFront serves the static frontend without NGINX/EC2 administration; Amazon OpenSearch Service replaces self-managed search; Aurora PostgreSQL replaces self-managed PostgreSQL; AWS App Runner hosts and scales HTTP APIs with minimal infrastructure management. Configure App Runner VPC connector for private database/search connectivity, IAM/security groups, and data migration. The stem incorrectly calls an OpenSearch cluster on EC2 'Amazon OpenSearch Service'; it should say self-managed OpenSearch on EC2.",
+    "wrongOptionsExplanation": "A: ECS Fargate removes EC2 server management but still requires managing OpenSearch, PostgreSQL and NGINX containers, persistence, upgrades, and orchestration. B: Correct, managed services remove most operations. C: EKS managed node groups still require worker node, Kubernetes and stateful application management; not least overhead. D: App Runner is intended for stateless web applications/APIs, not as a direct managed replacement for stateful PostgreSQL and OpenSearch database servers; hosting them as web-service containers is not an appropriate persistence/operations solution.",
+    "plainWords": "Move the static site to S3/CloudFront, search to managed OpenSearch, PostgreSQL to Aurora PostgreSQL, and APIs to App Runner so AWS handles the underlying infrastructure.",
+    "keyPoints": "Static frontend -> S3 + CloudFront; self-managed OpenSearch -> Amazon OpenSearch Service; PostgreSQL on EC2 -> Aurora PostgreSQL; APIs -> App Runner. App Runner supports ECR Public and private ECR images, but it does not turn stateful databases into managed database services. Configure a VPC connector for private database access.",
+    "sourceWarning": "STEM DEFECT: 'Amazon OpenSearch Service cluster that runs on an EC2 instance' conflates managed OpenSearch Service with self-managed OpenSearch on EC2. Interpret as self-managed OpenSearch. B omits data migration details and App Runner VPC connector configuration. One exact-stem external copy (Certstopics Q85) located; independent AWS documentation supports B. No confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-aws-with-external-stem-match",
+      "reviewedAt": "2026-10-31",
+      "domain4Position": "97/139",
+      "answer": [
+        "B"
+      ],
+      "references": [
+        "https://www.certstopics.com/questions/aws-certified-professional-sap-c02-release-date.html",
+        "https://docs.aws.amazon.com/opensearch-service/",
+        "https://docs.aws.amazon.com/apprunner/latest/dg/service-source-image.html",
+        "https://docs.aws.amazon.com/apprunner/latest/dg/network-vpc.html",
+        "https://docs.aws.amazon.com/console/s3/hostingstaticwebsite"
+      ],
+      "variantCheck": "External exact-stem single-answer Q85 found; no confirmed Choose TWO/THREE version.",
+      "defects": [
+        "Managed OpenSearch Service incorrectly described as running on user's EC2 instance",
+        "App Runner VPC connector and migration steps omitted"
+      ]
+    },
+    "answerStatus": "verified-aws-with-external-stem-match"
   },
   {
     "id": 463,
