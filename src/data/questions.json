@@ -24668,13 +24668,20 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C verified. Amazon MemoryDB is a fully managed Redis OSS/Valkey-compatible durable in-memory primary database with microsecond read latency and single-digit-millisecond write latency, a Multi-AZ transaction log, and automatic replica promotion (AWS FAQ says typically <20 seconds for unplanned failures). Its shards scale to terabyte datasets. Writes are durably committed to the transaction log before acknowledgement; primary reads are strongly consistent. For later analytics, export MemoryDB snapshots to S3 or build a separate event/CDC-style data pipeline as needed; merely using MemoryDB does not automatically create an analytics pipeline. https://aws.amazon.com/memorydb/faqs/ ; https://docs.aws.amazon.com/memorydb/latest/devguide/what-is-memorydb.html ; https://docs.aws.amazon.com/memorydb/latest/devguide/autofailover.html .",
+    "wrongOptionsExplanation": "A: ElastiCache Redis OSS with cluster mode is primarily a cache; clustering does not itself configure durable primary storage or automatic Multi-AZ failover. In 2026 ElastiCache for VALKEY has a new optional durability feature, but this option explicitly says Redis OSS and does not enable that feature. B: RDS read replicas are not designed for microsecond reads, and a conventional RDS read replica is not automatically a write-ready primary after failure. C: MemoryDB Multi-AZ combines durable writes, low latency, automatic failover and managed operation. D: self-managed Redis on EC2 requires deployment, replication/failover, patching, monitoring and backup administration; S3 backups alone don't give near-instant write failover.",
+    "plainWords": "A game leaderboard needs Redis-like speed but must not lose scores if a server dies. MemoryDB stores the live scores in memory and also writes changes to a durable log spread across Availability Zones. If the primary fails, a replica takes over in seconds.",
+    "keyPoints": "MemoryDB: Redis OSS/Valkey-compatible durable primary DB, microsecond reads, single-digit-ms writes, Multi-AZ transaction log, automatic failover typically <20 seconds, strong consistency on primary, eventual on replicas, sharding for TB-scale data. MemoryDB snapshots can be exported to S3 for later analytics, but an analytics pipeline is not automatic. RDS read replica != Multi-AZ writer failover. 2026 nuance: ElastiCache for Valkey gained optional durability June 2026, AWS recommends it for new single-Region durable workloads; option A says Redis OSS and no durability configuration, so C remains best.",
+    "sourceWarning": "SOURCE KEY C VERIFIED by official AWS MemoryDB FAQs and exact-stem external FreeCram SAP-C02 Topic 2 Q739 / PracticeCF No.1490. No confirmed Choose TWO/THREE variant. MODERNIZATION NUANCE: June 2026 ElastiCache for Valkey introduced Multi-AZ durable storage and is now an alternative for NEW workloads, but not described by option A (Redis OSS). Original stem says 'data can persist for further analytical processing through a data pipeline'; MemoryDB is durable and supports snapshot export to S3, but an explicit downstream pipeline still must be built. Sources https://aws.amazon.com/memorydb/faqs/ ; https://docs.aws.amazon.com/memorydb/latest/devguide/autofailover.html ; https://docs.aws.amazon.com/memorydb/latest/devguide/related-services-choose-between-memorydb-and-redis.html ; https://aws.amazon.com/blogs/database/announcing-durability-for-amazon-elasticache/ ; https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-2-question-739-discussion-p1330600.html ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-2 .",
+    "review": {
+      "status": "verified-with-2026-elasticache-nuance",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "MemoryDB official docs confirm latency, durable Multi-AZ transaction log and typically under 20s failover. External exact-stem copies verified. ElastiCache Valkey durability launched June 2026, but option A is Redis OSS without durability. Analytics pipeline not automatic."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 602,
