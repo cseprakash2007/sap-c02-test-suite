@@ -19944,7 +19944,7 @@
   {
     "id": 481,
     "domain": 4,
-    "stem": "A solutions architect is reviewing an application's resilience before launch. The application runs on an Amazon EC2 instance that is deployed in a private subnet of a VPC. The EC2 instance is provisioned by an Auto Scaling group that has a minimum capacity of I and a maximum capacity of I. The application stores data on an Amazon RDS for MySQL DB instance. The VPC has subnets configured in three Availability Zones and is configured with a single NAT gateway. The solutions architect needs to recommend a solution to ensure that the application will operate across multiple Availability Zones. Which solution will meet this requirement?",
+    "stem": "A solutions architect is reviewing an application's resilience before launch. The application runs on an Amazon EC2 instance that is deployed in a private subnet of a VPC. The EC2 instance is provisioned by an Auto Scaling group that has a minimum capacity of 1 and a maximum capacity of 1. The application stores data on an Amazon RDS for MySQL DB instance. The VPC has subnets configured in three Availability Zones and is configured with a single NAT gateway. The solutions architect needs to recommend a solution to ensure that the application will operate across multiple Availability Zones. Which solution will meet this requirement?",
     "options": [
       {
         "id": "A",
@@ -19967,13 +19967,56 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A is correct: for zonal NAT gateways, create one per AZ and configure private subnet routes to local NAT; configure EC2 Auto Scaling across all three AZs with desired/min/max capacity 3 to keep one instance in each AZ under normal balancing; enable RDS for MySQL Multi-AZ automatic failover. Together these eliminate single-AZ dependencies in egress, application compute and database. Newer regional NAT gateway mode can also provide multi-AZ egress but is not an option.",
+    "wrongOptionsExplanation": "A: Correct; multi-AZ NAT, compute and RDS. B: Virtual private gateway handles VPN connectivity, not NAT-based internet egress; Aurora and three EC2 instances do not fix that. C: NAT instance requires management and may be a single point of failure; switching to PostgreSQL does not make RDS Multi-AZ; unmanaged extra EC2 instances lack Auto Scaling resilience. D: Automated backups provide recovery but not RDS Multi-AZ automatic failover; ASG capacity fixed at one is insufficient for simultaneous multi-AZ application instances.",
+    "plainWords": "Make the application resilient at every layer: an AZ-local NAT gateway, one Auto Scaling EC2 instance per AZ, and an RDS MySQL Multi-AZ database.",
+    "keyPoints": "NAT gateway is AZ-scoped in zonal mode; deploy one per AZ with local routing. ASG min/max 3 across three AZs provides active multi-AZ compute. RDS Multi-AZ standby provides automatic database failover; automated backups do not. Virtual private gateway != NAT gateway. AWS now offers regional NAT gateway mode as another approach.",
+    "sourceWarning": "OCR: 'minimum capacity of I and maximum capacity of I' should be numeral 1; original preserved. Newer AWS regional NAT gateway mode is an alternative not listed. For real deployments use ALB/health checks, verify subnets and routes, and avoid treating ASG min/max 3 as a guarantee of permanent one-instance-per-AZ placement during failures. Exact-stem single-answer external practice PDF Q50 located; no confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "verified-aws-and-external-with-caveats",
+      "reviewedAt": "2026-10-31",
+      "domain4Position": "101/139",
+      "answer": [
+        "A"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html",
+        "https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf"
+      ],
+      "variantCheck": "Exact stem and options found in external SAP-C02 practice PDF question 50. No confirmed Choose TWO/THREE version.",
+      "defects": [
+        "OCR I vs 1 in Auto Scaling capacities",
+        "Newer regional NAT gateway alternative absent",
+        "ALB and health check implementation details omitted"
+      ]
+    },
+    "answerStatus": "verified-aws-and-external-with-caveats",
+    "originalQuestionSnapshot": {
+      "stem": "A solutions architect is reviewing an application's resilience before launch. The application runs on an Amazon EC2 instance that is deployed in a private subnet of a VPC. The EC2 instance is provisioned by an Auto Scaling group that has a minimum capacity of I and a maximum capacity of I. The application stores data on an Amazon RDS for MySQL DB instance. The VPC has subnets configured in three Availability Zones and is configured with a single NAT gateway. The solutions architect needs to recommend a solution to ensure that the application will operate across multiple Availability Zones. Which solution will meet this requirement?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Deploy an additional NAT gateway in the other Availability Zones. Update the route tables with appropriate routes. Modify the RDS for MySQL DB instance to a Multi-AZ configuration. Configure the Auto Scaling group to launch instances across Availability Zones. Set the minimum capacity and maximum capacity of the Auto Scaling group to 3."
+        },
+        {
+          "id": "B",
+          "text": "Replace the NAT gateway with a virtual private gateway. Replace the RDS for MySQL DB instance with an Amazon Aurora MySQL DB cluster. Configure the Auto Scaling group to launch instances across all subnets in the VPC. Set the minimum capacity and maximum capacity of the Auto Scaling group to 3."
+        },
+        {
+          "id": "C",
+          "text": "Replace the NAT gateway with a NAT instance. Migrate the RDS for MySQL DB instance to an RDS for PostgreSQL DB instance. Launch a new EC2 instance in the other Availability Zones."
+        },
+        {
+          "id": "D",
+          "text": "Deploy an additional NAT gateway in the other Availability Zones. Update the route tables with appropriate routes. Modify the RDS for MySQL DB instance to turn on automatic backups and retain the backups for 7 days. Configure the Auto Scaling group to launch instances across all subnets in the VPC. Keep the minimum capacity and the maximum capacity of the Auto Scaling group at 1."
+        }
+      ],
+      "answers": [
+        "A"
+      ]
+    }
   },
   {
     "id": 482,
