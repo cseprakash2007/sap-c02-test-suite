@@ -23647,13 +23647,20 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D verified. ECS with Fargate runs supported Docker containers without managing EC2 worker nodes; AWS provisions task CPU/memory as tasks are launched and bills for provisioned Fargate resources while tasks run. The ECS RunTask API supports launchType FARGATE, enableECSManagedTags boolean, and user-supplied tags. AWS CLI syntax is `aws ecs run-task --launch-type FARGATE --enable-ecs-managed-tags --tags key=Section,value=North ...`. Section-specific processing configuration should be supplied through task definition or container overrides (e.g. environment variables), NOT through tags alone. References: https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_RunTask.html ; https://docs.aws.amazon.com/cli/latest/reference/ecs/run-task.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-using-tags.html .",
+    "wrongOptionsExplanation": "A: EKS on EC2 requires managing worker node capacity, more operational overhead; Kubernetes pods use labels/annotations, not an Amazon EKS CLI `-tags` option. B: EKS Fargate removes worker node management but is more complex than ECS for a simple Docker batch workload; AWS resource TagResource does not tag individual Kubernetes pods (pod labels are Kubernetes metadata). C: ECS on EC2 requires provisioning/scaling/patching instances; the proposed `run-tasks set to true` is not valid ECS CLI syntax and `- tags` is malformed. D: ECS on Fargate is lowest operational overhead; RunTask supports task tags and managed tags. Managed tags and custom tags are separate; task configuration uses overrides rather than tagging.",
+    "plainWords": "Each delivery area needs some Docker workers. Start only the workers needed for that area as ECS Fargate tasks. AWS manages the servers, you pay for task CPU/memory while running, and you can label tasks by delivery area for tracking. Pass the actual area configuration as environment variables or command overrides.",
+    "keyPoints": "ECS Fargate = serverless container orchestration without EC2 worker nodes. `aws ecs run-task --launch-type FARGATE --enable-ecs-managed-tags --tags key=Section,value=North` (with task definition, cluster, and awsvpc network configuration). `enableECSManagedTags` is API camelCase; CLI uses `--enable-ecs-managed-tags`. `--tags` applies user-defined task tags; managed tags add AWS/ECS metadata; tags do NOT determine container processing behavior. Use `--overrides` for per-section environment variables or commands. EKS pod labels != AWS resource tags. Fargate task cost based on configured vCPU/memory and runtime, not strictly a flat per-container fee.",
+    "sourceWarning": "SOURCE ANSWER D VERIFIED. Minor wording defects: option D mixes API field name `enableECSManagedTags` with CLI; correct CLI flag is `--enable-ecs-managed-tags`. Option C `run-tasks set to true` and `- tags` are invalid syntax; A `-tags` for pods and B `tag-resource` for pods are invalid. Tagging tasks is NOT equivalent to configuring the delivery section: use task overrides. External exact-stem FreeCram 2023 Q121/205 and 2025 PDF Q223 both identify D. No confirmed Choose TWO/THREE variant. No retired/outdated AWS service involved. https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_RunTask.html ; https://docs.aws.amazon.com/cli/latest/reference/ecs/run-task.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-using-tags.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2023-09-16.q205/a-delivery-company-needs-to-migrate-its-third-party-route-planning-application-to-aws-the-third-party ; https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf .",
+    "review": {
+      "status": "verified-with-minor-cli-wording-notes",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS RunTask API and ECS tagging docs confirm D. Clarified camelCase API versus kebab-case CLI and custom task tags versus runtime config. Exact-stem external sources key D; no verified multiple-answer variant."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 574,
