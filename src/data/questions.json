@@ -19753,7 +19753,7 @@
   {
     "id": 478,
     "domain": 4,
-    "stem": "A solutions architect must create a business case for migration of a company's on- premises data center to the AWS Cloud. The solutions architect will use a configuration management database (CMDB) export of all the company's servers to create the case. Which solution will meet these requirements MOST cost-effectively?",
+    "stem": "A solutions architect must create a business case for migration of a company's on-premises data center to the AWS Cloud. The solutions architect will use a configuration management database (CMDB) export of all the company's servers to create the case. Which solution will meet these requirements MOST cost-effectively?",
     "options": [
       {
         "id": "A",
@@ -19776,13 +19776,57 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is correct. AWS Migration Evaluator is designed to create a migration business case and total-cost-of-ownership assessment. It accepts existing server inventory from a CMDB export through a data import template and produces right-sizing, licensing, AWS cost and savings estimates. AWS documents the assessment service as no charge. AWS Transform also offers migration business-case generation from CMDB inventory in 2026 but is not among the choices.",
+    "wrongOptionsExplanation": "A: AWS Well-Architected Tool assesses architecture best practices, not bulk CMDB-based migration TCO business cases. B: Correct: Migration Evaluator imports existing inventory and produces financial assessments without custom development. C: AWS Price List Bulk API provides pricing data but requires custom server matching, right-sizing, licensing and TCO logic, increasing cost and effort. D: Application Discovery Service collects server inventory/dependencies for migration planning but is not itself the requested financial business-case tool.",
+    "plainWords": "Upload the existing CMDB server list to AWS Migration Evaluator and let it estimate what running the servers on AWS would cost compared with on premises.",
+    "keyPoints": "Migration Evaluator = CMDB import + financial business case + TCO + right-sizing + licensing. Well-Architected Tool = architecture best practices. Application Discovery Service = inventory and dependency discovery. Price List API = raw prices, not complete business case. AWS Transform can now generate migration assessments from CMDB exports but is not an offered answer.",
+    "sourceWarning": "MINOR OCR: 'on- premises' repaired to 'on-premises', with original preserved. 2026 CONTEXT: AWS Transform also supports CMDB-based business-case assessments but is not an option. Third-party scraped exact-stem copy at downloadfreepdf.net appears to split option B incorrectly into B/C; source answers B. No independently confirmed Choose TWO/THREE exact-stem variant.",
+    "review": {
+      "status": "verified-aws-and-external-with-caveats",
+      "reviewedAt": "2026-10-31",
+      "domain4Position": "99/139",
+      "answer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-tools/business-case-migration-evaluator.html",
+        "https://aws.amazon.com/migration-evaluator/getting-started/",
+        "https://aws.amazon.com/blogs/architecture/accelerating-your-migration-to-aws/",
+        "https://docs.aws.amazon.com/transform/latest/userguide/transform-app-assessments-quick-start.html",
+        "https://www.downloadfreepdf.net/downloadfile.html?id=16830"
+      ],
+      "variantCheck": "Matching stem found in SAP-C02 PDF scrape, marked answer B; text extraction splits option B. No confirmed Choose TWO/THREE variant.",
+      "defects": [
+        "Minor stem hyphenation OCR error",
+        "External scraped copy has split answer option text",
+        "AWS Transform is a newer alternative not listed in the options"
+      ]
+    },
+    "answerStatus": "verified-aws-and-external-with-caveats",
+    "originalQuestionSnapshot": {
+      "stem": "A solutions architect must create a business case for migration of a company's on- premises data center to the AWS Cloud. The solutions architect will use a configuration management database (CMDB) export of all the company's servers to create the case. Which solution will meet these requirements MOST cost-effectively?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use AWS Well-Architected Tool to import the CMDB data to perform an analysis and generate recommendations."
+        },
+        {
+          "id": "B",
+          "text": "Use Migration Evaluator to perform an analysis. Use the data import template to upload the data from the CMDB export."
+        },
+        {
+          "id": "C",
+          "text": "Implement resource matching rules. Use the CMDB export and the AWS Price List Bulk API to query CMDB data against AWS services in bulk."
+        },
+        {
+          "id": "D",
+          "text": "Use AWS Application Discovery Service to import the CMDB data to perform an analysis."
+        }
+      ],
+      "answers": [
+        "B"
+      ]
+    }
   },
   {
     "id": 479,
