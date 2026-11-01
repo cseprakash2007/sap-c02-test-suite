@@ -211,3 +211,15 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **674-bank comparison:** No exact normalized-stem duplicate. Closely related Q176 (Java/Tomcat and PostgreSQL migration), Q188 (Elastic Beanstalk with Aurora), Q230 (Aurora PostgreSQL capacity), Q328 (three-tier Java), Q487 (server-side JS three-tier migration), Q525 (RDS PostgreSQL peak demand), Q530 (PostgreSQL ingestion scaling), Q607 and Q667 (three-tier migration). Distinguish frontend language, development-effort constraint, database read vs write vs storage bottlenecks, and whether existing containers are present.
 
 **Next:** Q326 — 14 of 33.
+
+## 14 of 33 — Q326 — Select THREE — RDS MySQL Multi-AZ fast failover
+
+**Historical C,D,E retained; strict <20-second SLO NOT GUARANTEED.** C RDS Proxy minimizes DNS/client reconnection delays; D migrate RDS MySQL to Aurora MySQL; E create cross-AZ Aurora Replica for automatic promotion. A Memcached and B Redis cache reads but do not shorten writer failover; F ordinary RDS MySQL read replica is not an automatic Aurora cluster failover target. In-flight transactions can fail even with proxy; clients need retry/backoff and validation.
+
+**AWS docs:** https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.Failover.html (standard Multi-AZ typically 60–120s); https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html (Aurora replicas and proxy); https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy.howitworks.html (connection continuity); https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html (replica promotion). Aurora typically ~30 seconds, and RDS Proxy can improve failover delays by *up to* 66%; neither is a guaranteed maximum. Measure app-level recovery and test under load.
+
+**Multiple external exact variants:** [Certstopics Q188 C,D,E](https://www.certstopics.com/questions/all-sap-c02-test-inside-amazon-web-services-questions.html); [ExamPractice Q10 C,D,E](https://exampractice.org/examtopics/amazon-exams/aws-certified-solutions-architect-professional-sap-c02); [ExamPal reordered technical C,D,E](https://exampal.app/questions/aws-sap-c02-a-company-is-running-a-critical-application-that-uses-an-amazon-rds-for-mysql-database-to-store-data/); **[DumpsCollection conflicting A,B,F](https://www.dumpscollection.net/downloadfile.html?id=15448)**. External keys are not AWS authority; A,B,F is not a credible fast-failover architecture.
+
+**674-bank comparison:** No exact normalized stem duplicate. Strong match **Q431** (RDS MySQL Multi-AZ failover) — compare its precise goal and answer; related Q287 (RDS app resilience), Q230 (Aurora PostgreSQL scaling), Q525 (RDS PostgreSQL high load). Distinguish standby failover, reader scale-out, proxy connection management and caches; don't transfer answer letters.
+
+**Next:** Q337 — 15 of 33.
