@@ -240,3 +240,11 @@ A keyword co-occurrence scan of all 674 question stems and options found the fol
 - AWS sources: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-expire-general-considerations.html
 
 **Repository change:** Added explicit review flags in `src/data/questions.json` for Q196 and Q633. No answer keys changed.
+
+## Q633 full-option adjudication (2026-11-01)
+
+**Corrected stored key: C → A (best available, with caveats).** Option A uses Step Functions to coordinate S3-triggered Lambda image resizing and S3 Lifecycle **expiration** at six months. Step Functions **Standard** workflows allow redrive of eligible failed executions (generally within 14 days of failure), providing a stronger reprocessing story than the other options. Option B has expiration but no explicit workflow-level redrive; C and D use lifecycle **transition** after six months, not expiration. S3 notifications are at least once; writing resized images to the triggering bucket/prefix may cause recursive invocation. Use separate input/output prefixes or buckets and appropriate event filters. All options are imperfect, but A most directly addresses retention and replay. Source-variant verification remains advisable.
+
+AWS: https://docs.aws.amazon.com/step-functions/latest/dg/redrive-executions.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-expire-general-considerations.html
+
+Dataset commit corrected Q633 and added explanations; Q196 remains flagged, answer B retained.
