@@ -25954,13 +25954,18 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "DISPUTED SOURCE KEY A. AWS Migration Evaluator is AWS's documented tool for SNMP/WMI-based agentless discovery and TCO/business case reporting. Option B runs its collector on a Windows EC2 instance across existing Site-to-Site VPN, avoids adding on-prem VMs or installing agents on existing workloads, and generates the TCO report; however, automatic import of this collector's discovery data into Migration Hub is not demonstrated by the cited AWS docs. Option A combines AWS Application Migration Service agentless migration and Migration Hub Strategy Recommendations, which are not the clearly documented Migration Evaluator TCO-reporting workflow. No choice unambiguously meets ALL requirements. Preserve source answer A but mark disputed, and identify B as the best documented TCO choice. AWS: https://aws.amazon.com/migration-evaluator/faqs/ ; https://aws.amazon.com/migration-evaluator/features/ ; https://docs.aws.amazon.com/migrationhub/latest/ug/gs-new-user-discovery.html ; https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-import.html .",
+    "wrongOptionsExplanation": "A (source key, disputed): Application Migration Service is primarily for moving servers; Strategy Recommendations offers migration strategy assessments rather than the specified Migration Evaluator TCO business case. Agentless migration does not itself establish SNMP-based TCO reporting or automatic Migration Hub discovery import. B (best TCO answer, with caveat): Migration Evaluator agentless collector on Windows EC2 can collect on-prem SNMP/WMI metrics over VPN without source agents or new on-prem VMs and produce TCO report. Automatic import into Migration Hub not established. C: Misassigns TCO reporting to Migration Hub instead of Migration Evaluator. D: Migration Readiness Assessment is not the SNMP collector or TCO reporting engine.",
+    "plainWords": "TCO means calculating what your on-premises Microsoft servers would cost on AWS. Migration Evaluator is the AWS tool for that; it can use SNMP without agents on each server. The repository says A, but B matches the TCO requirement better. The question also requires automatic Migration Hub import, which none of these answers clearly proves.",
+    "keyPoints": "Migration Evaluator = agentless SNMP/WMI/vSphere collection, rightsizing and TCO business case. Migration Hub = discovery inventory, migration planning/tracking; it is not the primary TCO generator. Migration Hub import supports data file imports and separate discovery collectors; do not assume Migration Evaluator auto-imports to Migration Hub without verified integration. MGN agentless = migration/replication, not inherently TCO. Existing VPN permits EC2-hosted collector reachability if networking and permissions allow. Strategy Recommendations on-prem offering is in KTLO for existing customers as of AWS docs.",
+    "sourceWarning": "DISPUTED SOURCE ANSWER A; exact stem published with CONFLICTING keys. CertEnsure Q67 keys A (MGN + Strategy Recommendations); DumpsReview Q219 keys D (same MGN design); FreeCram question 217/355 keys A (Migration Evaluator design = repository B). Official AWS Migration Evaluator FAQ/features support B for SNMP agentless TCO, but automatic Migration Hub import not verified. None of four options conclusively satisfies both TCO and auto-import. Preserve A for source traceability and flag defective/ambiguous. No confirmed Choose TWO/THREE variant. Typos 'AWS The', 'VPC A', 'VMs m', missing periods. https://aws.amazon.com/migration-evaluator/faqs/ ; https://aws.amazon.com/migration-evaluator/features/ ; https://docs.aws.amazon.com/migrationhub/latest/ug/gs-new-user-discovery.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-wants-to-migrate-virtual-microsoft-workloads-from-an-on-premises-data-center-to-aws-the-company ; https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html ; https://www.dumpsreview.com/articles/guide-new-2024-actual-amazon-sap-c02-exam-questions-q214-q233/ .",
+    "review": {
+      "status": "disputed-source-key-incomplete-options",
+      "verifiedAnswer": [],
+      "verifiedAt": "2026-11-01",
+      "notes": "Conflicting exact-stem external keys: FreeCram favors repo B (Migration Evaluator), CertEnsure and DumpsReview favor repo A (MGN+Strategy). AWS supports B for TCO, but automatic Migration Hub import not established. Retained A historical key and flagged as disputed/defective. No verified multi-answer variant."
+    },
+    "answerStatus": "source-key-disputed"
   },
   {
     "id": 637,
