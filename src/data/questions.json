@@ -22304,13 +22304,20 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct historical exam answer C. Migration Evaluator inventories on-premises infrastructure and utilization to generate a data-driven AWS migration business case; AWS Migration Hub historically supplied application portfolio visibility; AWS Application Discovery Service discovered infrastructure and application dependencies. Month-end batch jobs require monitoring across the complete monthly cycle, not just a short sample. AWS: https://aws.amazon.com/migration-evaluator/features/ ; https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-tools/discovery-migration-evaluator.html ; https://docs.aws.amazon.com/migrationhub/latest/ug/gs-new-user-discovery.html . NOTE: For new customers in 2026, AWS Application Discovery Service and Migration Hub are closed to new customers; AWS Transform is AWS's recommended alternative.",
+    "wrongOptionsExplanation": "A: AWS SMS is retired (April 1, 2023); DMS migrates database data, not full estate assessment; Service Catalog manages approved products, not on-premises dependency discovery. B: Application Migration Service is for moving servers; Storage Gateway supplies hybrid storage access, not application/database dependency discovery. C: Best historical choice: Migration Evaluator for inventory, utilization and business case, Migration Hub for portfolio, ADS for dependencies. D: Control Tower provisions/governs AWS landing zones, not on-premises application discovery; AWS SMS is retired and not a business-case generator.",
+    "plainWords": "Before moving an acquired company's unknown data center, first discover what servers and databases exist, measure a full monthly business cycle, map which applications talk to each other, and build a cost justification. In the original exam choose C; for new 2026 projects use AWS Transform for discovery instead of ADS/Migration Hub.",
+    "keyPoints": "Discovery/assessment is different from migration execution. Migration Evaluator = business case, cost and right-sizing; ADS = historical dependency mapping; Migration Hub = historical portfolio visibility; AWS Transform = recommended 2026 alternative for new customers. Collect at least one month of utilization to capture end-of-month batch jobs. SMS reached end of support 2023-04-01. ADS and Migration Hub stopped accepting new customers 2025-11-07.",
+    "sourceWarning": "OUTDATED 2026: Option C remains the intended historical answer but is not a fully viable greenfield solution because AWS Application Discovery Service and AWS Migration Hub closed to new customers November 7, 2025. AWS Transform is the recommended modern alternative. AWS SMS in A/D ended support April 1, 2023. Option C OCR typo 'anunderstanding' should be 'an understanding'. External exact-stem: Scribd SAP-C02 question 164 has answer C; scalar.usc.edu SAP-C02 question 208 reorders choices and calls identical solution D. No confirmed Choose TWO/THREE variant. References: https://docs.aws.amazon.com/application-discovery/latest/userguide/application-discovery-service-availability-change.html ; https://aws.amazon.com/about-aws/whats-new/2025/10/aws-service-availability/ ; https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html ; https://aws.amazon.com/migration-evaluator/features/ ; https://www.scribd.com/document/1030319491/SAP-C02-Dg-Re-Vh8uyt ; https://scalar.usc.edu/works/race-and-migration-in-the-united-states-/pass-guaranteed-quiz-useful-amazon---exam-sap-c02-overviews .",
+    "review": {
+      "status": "verified-with-outdated-services-warning",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "Exact stem externally verified in two sources with shuffled answer letters; AWS docs verify historical logic. ADS and Migration Hub closed to new customers in 2025; SMS retired 2023. Modern greenfield discovery: AWS Transform."
+    },
+    "answerStatus": "verified-outdated"
   },
   {
     "id": 538,
