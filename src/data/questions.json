@@ -25187,13 +25187,20 @@
       "E"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "E verified: Amazon S3 File Gateway presents an NFS file share to on-premises clients and stores files as S3 objects. An S3 Lifecycle policy can transition eligible objects after 5 days to S3 Glacier Deep Archive for low-cost long-term DR backups, accepting delayed restore. Glacier Deep Archive has a 180-day minimum storage duration charge (not a minimum age before transition), typically 12-hour standard or up to 48-hour bulk retrieval. Restoring an archived object is required before normal access; File Gateway access to archived objects can return I/O errors. AWS docs: https://aws.amazon.com/storagegateway/faqs/ ; https://docs.aws.amazon.com/filegateway/latest/files3/storage-classes.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html .",
+    "wrongOptionsExplanation": "A: NFS File Gateway is right, but S3 Standard-IA is for infrequently accessed online objects and is not as cost-effective as Deep Archive for long-retained backup files that tolerate delayed restoration. B: Volume Gateway is block storage (iSCSI), not an NFS share, and the described S3 object lifecycle model is wrong for gateway volumes. C: Tape Gateway exposes virtual tapes to backup software rather than an NFS file share; Standard-IA is also not the cheapest long-term archival tier. D: Contradicts itself by deploying File Gateway but moving files to Tape Gateway, and chooses Standard-IA rather than Deep Archive. E: File Gateway supports NFS and maps files to S3 objects; lifecycle after 5 days to Glacier Deep Archive matches low-cost archival and slow disaster recovery.",
+    "plainWords": "Your office file server speaks NFS. Use S3 File Gateway so it can send backups into S3 without changing the file protocol. After five days, automatically move the backup objects to S3 Glacier Deep Archive. If a disaster happens, request a restore and wait hours to a couple of days.",
+    "keyPoints": "S3 File Gateway = NFS/SMB file interface backed by S3 objects; Volume Gateway = iSCSI block volumes; Tape Gateway = virtual tapes for backup software. S3 Lifecycle transition to Glacier Deep Archive can be after 5 days; Deep Archive 180-day MINIMUM BILLING DURATION, not minimum transition age. Glacier Deep Archive restore is asynchronous (standard ~12h, bulk up to 48h); objects cannot be directly read via File Gateway while archived. Since Sept 2024 lifecycle default blocks transitions of objects <128 KB unless appropriate exception configuration; archive transition costs and metadata overhead matter.",
+    "sourceWarning": "SOURCE ANSWER E VERIFIED. Exact-stem external ITDumpsKR SAP-C02 single-answer variant reorders A-D but also keys E: https://www.itdumpskr.com/SAP-C02-practice-test.html . No verified Choose TWO/THREE variant. Source defects: stem 't he' typo; A 'files gateway' inconsistent term; D says File Gateway then 'tape gateway' (internally impossible); B/C incorrectly assume File Gateway-style S3 lifecycle behavior for block/tape gateways. Modern nuance: lifecycle default since Sept 2024 prevents transitions for objects smaller than 128KB unless configured otherwise; Deep Archive 180-day minimum billing; archived objects need restore and File Gateway may show I/O errors. https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html ; https://docs.aws.amazon.com/filegateway/latest/files3/storage-classes.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html ; https://aws.amazon.com/storagegateway/faqs/ .",
+    "review": {
+      "status": "verified-with-lifecycle-small-object-and-archive-caveats",
+      "verifiedAnswer": [
+        "E"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS File Gateway NFS and S3 lifecycle Deep Archive official docs confirm E; external ITDumpsKR same stem single-choice key E, options reordered; no confirmed Choose TWO/THREE. Original wording retained; D contradiction, typo, 128KB transition default and 180-day minimum billing flagged."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 616,
