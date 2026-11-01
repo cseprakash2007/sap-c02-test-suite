@@ -5277,7 +5277,7 @@
   {
     "id": 119,
     "domain": 4,
-    "stem": "A solutions architect needs to define a reference architecture for a solution for three-tier applications with web. application, and NoSQL data layers. The reference architecture must meet the following requirements: •High availability within an AWS Region •Able to fail over in 1 minute to another AWS Region for disaster recovery •Provide the most efficient solution while minimizing the impact on the user experience Which combination of steps will meet these requirements? (Select THREE.)",
+    "stem": "A solutions architect needs to define a reference architecture for a solution for three-tier applications with web, application, and NoSQL data layers. The reference architecture must meet the following requirements: • High availability within an AWS Region • Able to fail over in 1 minute to another AWS Region for disaster recovery • Provide the most efficient solution while minimizing the impact on the user experience Which combination of steps will meet these requirements? (Select THREE.)",
     "options": [
       {
         "id": "A",
@@ -5310,13 +5310,40 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct: B, C, E. Route 53 primary/secondary failover records with a short DNS TTL route new lookups away from an unhealthy Region; DynamoDB global tables replicate the NoSQL data into both Regions; and an already-running multi-AZ web/application hot standby with Auto Scaling provides immediate compute capacity in the DR Region. Zonal Reserved Instances reserve matching baseline EC2 capacity in a specific AZ as well as give a discount; extra instances can run On-Demand. Design health checks, load balancers, readiness, and connection handling carefully: 30-second DNS TTL does NOT guarantee end-to-end failover within 60 seconds.",
+    "wrongOptionsExplanation": "A: Weighted 100/0 is not the best primary/secondary failover design and its 1-hour TTL prolongs stale DNS caches; it cannot satisfy fast recovery. D: Hourly DynamoDB-to-S3 backup plus cross-Region replication and script restore has potential up-to-hour-old data and restoration delay, unlike continuously replicating global tables. F: Spot Instances are interruptible and unsuitable as the required baseline for a one-minute critical DR recovery; Spot can supplement noncritical burst capacity, but not replace reliable hot standby.",
+    "plainWords": "A three-tier website must stay available if an AZ fails and switch to a second Region very quickly. Keep the second Region's servers warm, keep DynamoDB data replicated, and direct users there via failover DNS.",
+    "keyPoints": "• B = Route 53 failover routing + 30-second DNS TTL; configure health checks and test actual RTO. • C = DynamoDB global tables replicate to the second Region; MREC is asynchronous and has nonzero possible RPO; MRSC (launched 2025) offers stronger consistency with more constraints. • E = Multi-AZ Auto Scaling hot standby, zonal RIs for steady-state reservation and On-Demand for additional capacity. • Zonal RI reserves matching AZ capacity; Regional RI discounts only. • Route 53 TTL is not a guaranteed 60-second recovery clock; client caches, health-check failure thresholds, open connections, and application state matter. • Related Q182 is similar multi-Region DynamoDB/Route 53 architecture but uses latency-based routing (growth/performance requirement). Q187/Q79 are active-passive EC2+ALB+Route 53. Q639 uses global tables for low-RPO data-tier resiliency. Q242 deliberately prefers backups for much looser RTO/RPO; Q464 tests CloudFront origin failover when DNS is too slow.",
+    "sourceWarning": "2026 technical caveat: 'Able to fail over in 1 minute' cannot be guaranteed solely by the 30-second DNS TTL in option B. Health-check detection (10/30s check cadence and failure threshold), DNS caching beyond TTL, in-flight connections, and application readiness all affect RTO. Option E's zonal RIs are supported but not universally cheapest/flexible; Savings Plans or On-Demand Capacity Reservations are alternatives for a fresh design. Q119 original OCR punctuation cleaned in stem only; source answer B,C,E retained. No exact duplicate across 674. Sources: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-values-failover.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-determining-health-of-endpoints.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/dynamodb-global-tables/route-53-request-routing.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-global-table-design.html ; https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-limits.html ; https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html ; external stem/options: https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+    "review": {
+      "verifiedAt": "2026-11-01",
+      "topic": "multi-Region three-tier hot standby Route 53 DynamoDB global tables",
+      "selected": [
+        "B",
+        "C",
+        "E"
+      ],
+      "position": 4,
+      "totalMultiAnswer": 33,
+      "verifiedAgainst": "AWS official Route 53, DynamoDB global tables, EC2 capacity/RI, and ARC documentation; external matching stem/options (CertEnsure)",
+      "duplicates": {
+        "exact": [],
+        "related": [
+          182,
+          187,
+          79,
+          639,
+          27,
+          242,
+          341,
+          464,
+          58,
+          650
+        ]
+      },
+      "notes": "Question's 1-minute RTO is an aspirational requirement rather than a guarantee from 30-second DNS TTL; modern alternative ARC routing control if stricter rehearsed traffic switching is needed. Compared full 674-item bank."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 120,

@@ -70,3 +70,26 @@ Branch: `answer-audit-2026-10-28`. Total multi-answer questions identified in da
 **External sources:** https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-8.html ; https://www.salesforcexamdumps.com/sap-c02-practice-questions/3
 
 **Next:** Q119 (4 of 33) — Multi-Region disaster recovery for three-tier applications, Route 53 failover, DynamoDB global tables.
+
+## 4 of 33 — Q119 — Select THREE — Multi-Region three-tier DR with 1-minute RTO
+
+**Verified original answer B, C, E (unchanged).** Original has a minor OCR punctuation defect ("web. application"), corrected to "web, application" in JSON without changing options. The requirement is high availability within each Region, a second-Region hot standby and user-impact-minimizing rapid failover of web, app, and NoSQL tiers.
+
+**Answer-by-answer AWS validation:**
+
+- **A incorrect:** Weighted Route 53 100/0 with 1-hour TTL is not the best primary/secondary automatic failover arrangement; a long TTL can keep stale DNS responses for up to an hour or longer in noncompliant caches.
+- **B correct (with caveat):** Route 53 PRIMARY/SECONDARY failover records plus health checking and 30-second TTL are the best offered traffic-switching mechanism. A 30-second TTL alone does **not** guarantee completed failover in <=60 seconds: endpoint health check detection, retry thresholds, recursive/client DNS caching, existing connections and standby readiness contribute to RTO. Consider ARC routing control and rehearse RTO for production.
+- **C correct:** DynamoDB global tables continuously maintain Regional replicas for local app access and post-Region-failure service. Default multi-Region eventual consistency (MREC) is async, typically replicating within seconds, but nonzero RPO / conflicts remain possible. AWS introduced multi-Region strong consistency (MRSC) in 2025; evaluate its availability and constraints if zero-RPO/global consistency is required.
+- **D incorrect:** 60-minute exports/backups + S3 Cross-Region replication + ad hoc restore suffer stale data and long recovery; unlike global tables, they do not serve as near-live DR replica.
+- **E correct:** Keep baseline application/web servers running in Auto Scaling groups across multiple AZs in both Regions. Zonal Reserved Instances cover reliably running minimum and give the matching-AZ capacity reservation; On-Demand instances handle the nonsteady additional load. Note more flexible Savings Plans/On-Demand Capacity Reservations may be better in other modern architectures, but not choices here.
+- **F incorrect:** Spot Instances alone are interruptible and cannot guarantee reliable hot-standby capacity for critical 1-minute RTO. Use as optional interruptible overflow only.
+
+**Duplicate audit (entire 674-question JSON checked):** No exact normalized-stem duplicate. Strong **conceptual overlap** with Q182 (multi-Region DynamoDB global tables + Route 53, but its active-active/latency routing is preferred for performance and growth), Q187 and Q79 (active/passive EC2+ALB+Auto Scaling+Route 53 failover), and Q639 (multi-Region DynamoDB and Aurora data-tier DR). Distinct scenario variations: Q27 (DynamoDB global tables + Route 53 with Lambda concurrency), Q242 (looser RPO 2h/RTO 4h favors cheap backups vs global tables), Q341 (ASG at zero + cross-Region RDS replica, <15m RTO), Q464 (CloudFront origin failover beats DNS-origin TTL for fastest origin recovery), Q58 (EC2/RDS DR with 30-sec RPO / 10-min RTO) and Q650 (ECS Fargate + RDS warm standby). Beware superficial cross-question answer conflicts: required objectives, stateful database, and traffic-routing needs differ.
+
+**External variant:** Matching stem and the exact A–F option wording confirmed at [CertEnsure](https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html). A second independently verified exact exam variant was **not located**, so do not claim multi-site consensus. The recommendation rests primarily on AWS official documentation, not answer dumps.
+
+**AWS documentation:** [Route 53 failover record values](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-values-failover.html) · [Health check detection](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-determining-health-of-endpoints.html) · [DynamoDB global tables design](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-global-table-design.html) · [DynamoDB + Route 53 RTO considerations](https://docs.aws.amazon.com/prescriptive-guidance/latest/dynamodb-global-tables/route-53-request-routing.html) · [EC2 zonal RI capacity](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-limits.html) · [ARC routing control](https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html).
+
+**2026 audit verdict:** Original B,C,E is the best available combination, but "fail over in 1 minute" is a technically overconfident claim if based only on DNS TTL; retain exam key and flag caveat. No service in the selected options is obsolete.
+
+**Next:** Continue the next multi-answer Domain 4 question in ascending ID order (5 of 33); confirm its ID directly from the 674-question dataset.
