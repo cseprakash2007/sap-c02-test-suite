@@ -15068,15 +15068,15 @@
   {
     "id": 346,
     "domain": 4,
-    "stem": "A company hosts a game player-matching service on a public-facing, physical, on- premises instance that all users are able to access over the instance uses UDP. The company wants to migrate the service to AWS and provide a high level of security. A solutions architect needs to de matching service using AWS. Which combination of steps should the solutions architect take to meet these requirements? (Select THREE.)",
+    "stem": "A company hosts a game player-matching service on a public-facing, physical, on-premises instance that all users are able to access over the internet. All traffic to the instance uses UDP. The company wants to migrate the service to AWS and provide a high level of security. A solutions architect needs to design a solution for the player-matching service using AWS. Which combination of steps should the solutions architect take to meet these requirements? (Select THREE.)",
     "options": [
       {
         "id": "A",
-        "text": "Use a Network Load Balancer (NLB) in front of the player-matching instance. Use a friendly DNS entry in Amazon Route 53-point address."
+        "text": "Use a Network Load Balancer (NLB) in front of the player-matching instance. Use a friendly DNS entry in Amazon Route 53 pointing to the NLB's Elastic IP address."
       },
       {
         "id": "B",
-        "text": "Use an Application Load Balancer (ALB) in front of the player-matching instance. Use a friendly DNS entry in Amazon Route 53 p facing fully qualified domain name (FQDN)."
+        "text": "Use an Application Load Balancer (ALB) in front of the player-matching instance. Use a friendly DNS entry in Amazon Route 53 pointing to the ALB's internet-facing fully qualified domain name (FQDN)."
       },
       {
         "id": "C",
@@ -15084,21 +15084,90 @@
       },
       {
         "id": "D",
-        "text": "Configure a network ACL rule to block all non-UDP traffic. Associate the network ACL with the subnets that hold the load balance"
+        "text": "Configure a network ACL rule to block all non-UDP traffic. Associate the network ACL with the subnets that hold the load balancer instances."
+      },
+      {
+        "id": "E",
+        "text": "Use Amazon CloudFront with an Elastic Load Balancer as an origin."
+      },
+      {
+        "id": "F",
+        "text": "Enable AWS Shield Advanced on all public-facing resources."
       }
     ],
     "answers": [
       "A",
-      "D"
+      "D",
+      "F"
     ],
-    "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "answerCount": 3,
+    "explanation": "Historical source intended A,D,F in the GitHub option order. NLB supports UDP for game matchmaking; subnet network ACL can restrict traffic by protocol; Shield Advanced adds advanced DDoS protection for supported public resources including NLB. Note that NLB DNS should be mapped using a Route 53 alias to its DNS name, not to one Elastic IP, and a blanket non-UDP NACL deny can break health checks. NLB security groups also support UDP restrictions and should be considered in a modern design.",
+    "wrongOptionsExplanation": "A intended correct: UDP capable NLB, but DNS wording pointing to one EIP is fragile; Route 53 alias to NLB DNS preferred. B wrong: ALB cannot carry arbitrary UDP. C wrong: WAF is HTTP(S) L7 and cannot directly filter UDP on NLB. D intended correct: subnet NACL can filter protocols but stateless rules must preserve return traffic, TCP health checks and required operational access; 'all non-UDP' overbroad. E wrong: CloudFront is HTTP(S) delivery, not arbitrary UDP transport. F correct: Shield Advanced protects supported public NLB resources against DDoS; scope to eligible public resources.",
+    "plainWords": "A game server uses UDP. Move it behind an internet-facing NLB, filter unnecessary network traffic with carefully designed network ACL/security group rules, and protect the public endpoint with Shield Advanced.",
+    "keyPoints": "UDP -> NLB, not ALB/CloudFront. WAF -> HTTP(S), not UDP on NLB. Route 53 alias targets NLB DNS, not one EIP. NACLs stateless: allow response ephemeral ports and health checks; modern NLB supports security groups. Shield Advanced can protect supported NLBs. The game service must actually migrate onto suitable AWS targets; an on-prem UDP target is not interchangeable with a normal EC2 target.",
+    "sourceWarning": "RESTORED CORRUPTED SOURCE: original had only A-D and answer A,D despite Select THREE. Restored E CloudFront and F Shield Advanced from two external variants; new historical key A,D,F (corresponds to reordered FreeCram A,B,E). Original snapshot preserved. Older SAP-C01 era item; A's EIP DNS target and D's all-non-UDP ACL are technically overbroad. AWS WAF cannot protect UDP. Do not claim that NLB UDP directly targeting a remote on-prem IP works during migration.",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "domain4-multi-answer-restored-six-options",
+      "originalAnswers": [
+        "A",
+        "D"
+      ],
+      "restoredAnswers": [
+        "A",
+        "D",
+        "F"
+      ],
+      "externalQuestionLinks": [
+        "https://www.freecram.net/question/Amazon.AWS-Solutions-Architect-Professional.v2021-07-21.q147/a-company-hosts-a-game-player-matching-service-on-a-public-facing-physical-on-premises-instance-that",
+        "https://quizplus.com/ar-SA/quiz/181452-exam-10-aws-certified-solutions-architect-professional-sap-c01/questions/13536645-a-company-hosts-a-game-playermatching-service-on-a-p"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html",
+        "https://docs.aws.amazon.com/shield/",
+        "https://aws.amazon.com/blogs/networking-and-content-delivery/routing-udp-to-on-premises-network-load-balancer-targets/"
+      ],
+      "similarQuestionIDs": [
+        642,
+        351,
+        454,
+        523,
+        599
+      ],
+      "exactDuplicateIDs": [],
+      "technicalCaveats": [
+        "Route 53 alias to NLB DNS rather than one EIP",
+        "NACL blanket deny breaks health checks without exceptions",
+        "NLB UDP on-prem target caveats"
+      ]
+    },
+    "answerStatus": "source-restored-aws-verified-caveats",
+    "originalQuestionSnapshot": {
+      "stem": "A company hosts a game player-matching service on a public-facing, physical, on- premises instance that all users are able to access over the instance uses UDP. The company wants to migrate the service to AWS and provide a high level of security. A solutions architect needs to de matching service using AWS. Which combination of steps should the solutions architect take to meet these requirements? (Select THREE.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use a Network Load Balancer (NLB) in front of the player-matching instance. Use a friendly DNS entry in Amazon Route 53-point address."
+        },
+        {
+          "id": "B",
+          "text": "Use an Application Load Balancer (ALB) in front of the player-matching instance. Use a friendly DNS entry in Amazon Route 53 p facing fully qualified domain name (FQDN)."
+        },
+        {
+          "id": "C",
+          "text": "Define an AWS WAF rule to explicitly drop non-UDP traffic, and associate the rule with the load balancer."
+        },
+        {
+          "id": "D",
+          "text": "Configure a network ACL rule to block all non-UDP traffic. Associate the network ACL with the subnets that hold the load balance"
+        }
+      ],
+      "answers": [
+        "A",
+        "D"
+      ]
+    }
   },
   {
     "id": 347,
