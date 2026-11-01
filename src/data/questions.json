@@ -25228,13 +25228,20 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is the correct architecture. AWS SCT converts Oracle schema/code where compatible; AWS DMS migrates data to Amazon RDS for PostgreSQL. PostGIS supports spatial data, pg_cron schedules supported database jobs, and oracle_fdw enables RDS PostgreSQL to query retained on-premises Oracle tables as foreign tables over appropriately configured AWS Direct Connect private connectivity. Direct Connect alone does not implement FDW; configure network routing/security, Oracle user mapping and extension permissions. AWS: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/postgresql-oracle-fdw.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.Extensions.foreign-data-wrappers.html ; https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html .",
+    "wrongOptionsExplanation": "A: DynamoDB, S3/Athena and Lambda do not provide Oracle foreign-table SQL access, PostgreSQL/PostGIS spatial migration or equivalent database cron maintenance. B: Glue crawlers discover schemas/metadata, not live Oracle foreign-table queries from RDS SQL Server; heterogeneous conversion and cron requirements not addressed. C: EC2 Oracle lift-and-shift increases server management and does not provide the specified FDW design; MGN is not bidirectional database CDC, and Step Functions is not itself a database cron replacement. D: RDS PostgreSQL + SCT/DMS + PostGIS + pg_cron + oracle_fdw + private Direct Connect routing meets hybrid migration, spatial, maintenance and remote foreign-table query needs.",
+    "plainWords": "Move only the Oracle databases allowed by compliance into RDS PostgreSQL using SCT for schema and DMS for data. Use PostGIS for maps/spatial data, pg_cron for scheduled database jobs, and oracle_fdw to read tables in Oracle databases still on-premises through Direct Connect. Choose D.",
+    "keyPoints": "AWS SCT = heterogeneous schema/code conversion; AWS DMS = data migration/CDC. RDS PostgreSQL supports PostGIS, pg_cron and oracle_fdw (version/permissions dependent). oracle_fdw, not Direct Connect alone, exposes remote Oracle tables as PostgreSQL foreign tables. Direct Connect provides private network transport; routing, VPC connectivity, security groups and Oracle listener connectivity still required. Original Q616 is heavily abbreviated; external full SAP-C02 question 73 maps the same PostgreSQL solution to C (different option order).",
+    "sourceWarning": "SOURCE KEY D TECHNICALLY VERIFIED; ORIGINAL STEM/OPTIONS SEVERELY ABBREVIATED with missing spaces, omitting PostGIS and pg_cron details. External longer variant SAP-C02 question 73 keys C (equivalent PostgreSQL architecture), but its explanation inconsistently calls it D. No confirmed Choose TWO/THREE variant. Source: https://myportal.utt.edu.tt/ICS/icsfs/d97df75f-867e-411a-ac5f-e13435c2eedc.pdf?target=c53e5228-7ce9-4ef5-a5ec-d932dc3abaad ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/postgresql-oracle-fdw.html ; https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html .",
+    "review": {
+      "status": "verified-with-severe-source-abbreviation-warning",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "External full variant question 73 maps equivalent solution to C; inconsistent external explanation says D. AWS docs confirm oracle_fdw, PostGIS, pg_cron. Original abbreviated source retained. No confirmed multi-answer variant."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 617,
