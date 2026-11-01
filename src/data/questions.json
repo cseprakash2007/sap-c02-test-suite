@@ -25604,13 +25604,18 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "DISPUTED. Published SAP-C02 exam-site answer keys select D: managed AWS Microsoft AD trust plus Remote Desktop Gateway. D provides centralized AD authentication and secure remote RDP through an RD Gateway but incurs managed directory and EC2 gateway infrastructure charges. Given the explicit available Site-to-Site VPN hardware and the 'MOST cost-effectively' criterion, C may be cheaper: use VPN to link the company's on-premises network to the VPC, join Windows EC2 to existing on-premises AD, and restrict RDP to private VPN traffic. However C assumes users connect from the company's network, not arbitrary internet clients. The stem does not clarify this. Therefore retain published key D with disputed-key flag; do NOT present D as conclusively technically optimal. AWS VPN and Windows connectivity docs: https://docs.aws.amazon.com/vpn/latest/s2svpn/customer-gateway-device-windows.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/saas-network-access-options/options-onprem.html .",
+    "wrongOptionsExplanation": "A: Managed AWS Microsoft AD and an EC2 bastion provide AD-integrated RDP but add recurring infrastructure costs; bastion requires hardening/maintenance. B: IAM Identity Center plus AD Connector and Systems Manager Fleet Manager can support browser-based RDP without inbound RDP exposure, but requires managed-node permissions/configuration; not clearly lowest cost and identity-center authentication behavior differs from native on-prem AD Windows logon. C: Potentially MOST cost-effective with existing VPN-capable hardware: join EC2 directly to on-prem AD over Site-to-Site VPN and allow RDP only from corporate network. Caveat: this does not directly serve off-network users. D: Source-key answer on multiple exam sites; secure RD Gateway and AWS Managed Microsoft AD trust, but higher cost than reusing on-prem AD and VPN if corporate-network access suffices.",
+    "plainWords": "Published exam sites say D: set up AWS Managed AD and a Remote Desktop Gateway. But the question asks for cheapest and already has VPN hardware. If employees connect from the office network, C (VPN + existing AD + private RDP) avoids paying for a new managed directory and gateway server. Treat this as a disputed exam question, not a reliable memorization of D.",
+    "keyPoints": "AWS Site-to-Site VPN joins on-premises network and VPC over encrypted IPsec, NOT arbitrary remote user devices. EC2 Windows instances can join existing on-prem AD when network/DNS/AD ports are reachable. RD Gateway centralizes remote RDP over HTTPS but requires infrastructure; managed Microsoft AD incurs charges. Fleet Manager supports browser-based RDP and IAM Identity Center authentication but its authentication may create local admin accounts and has limits. Cost-sensitive questions must distinguish corporate network vs remote internet users.",
+    "sourceWarning": "DISPUTED SOURCE ANSWER D. Exact-stem FreeCram, DumpsTech, JPNTest variants key RD Gateway/Managed AD (option letters differ), but AWS Site-to-Site VPN plus existing on-prem AD (repository C) is arguably more cost-effective given existing hardware and corporate-network users. If users are internet-based outside company network, C alone does not serve them; question ambiguous. Retain D as historical key, mark disputed rather than verified. No confirmed Choose TWO/THREE variant. Wording defects missing spaces after periods and 'MicrosoftActive' and 'toaccess'. Sources https://www.freecram.net/question/Amazon.SAP-C02.v2024-03-21.q171/a-company-s-solutions-architect-needs-to-provide-secure-remote-desktop-connectivity-to-users-for-amazon ; https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-9.html ; https://docs.aws.amazon.com/vpn/latest/s2svpn/customer-gateway-device-windows.html ; https://docs.aws.amazon.com/us_en/systems-manager/latest/userguide/fleet-manager-remote-desktop-connections.html .",
+    "review": {
+      "status": "disputed-source-key-cost-vs-remote-access-ambiguity",
+      "verifiedAnswer": [],
+      "verifiedAt": "2026-11-01",
+      "notes": "External sites key D (RD Gateway) but cost criterion plus preexisting VPN hardware make C plausible/likely cheaper for corporate-network users. Off-network internet access favors RD Gateway; ambiguous stem. Do not silently change answer; source key retained with disputed status. No verified multi-answer variant."
+    },
+    "answerStatus": "source-key-disputed"
   },
   {
     "id": 627,
