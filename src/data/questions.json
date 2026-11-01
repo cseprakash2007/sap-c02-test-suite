@@ -23011,16 +23011,26 @@
       }
     ],
     "answers": [
-      "A"
+      "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Best literal option B, CONDITIONAL/AMBIGUOUS: DynamoDB on-demand automatically scales throughput and a DynamoDB gateway VPC endpoint allows same-VPC private-subnet EC2 clients to use DynamoDB over AWS network without NAT/IGW or endpoint hourly charges. DynamoDB SDK HTTPS/TLS encrypts traffic. But moving a legacy MongoDB app to DynamoDB is NOT API-compatible and requires data-model/code migration; question does not explicitly authorize this. C also technically satisfies privacy/encryption/scaling, but interface endpoint incurs additional charges and is unnecessary for same-VPC EC2. Neither DocumentDB option is valid as written because DocumentDB does not have 'tables with Provisioned IOPS volumes'. AWS: https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-ddb.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html ; https://docs.aws.amazon.com/documentdb/latest/devguide/how-it-works.html .",
+    "wrongOptionsExplanation": "A: DocumentDB provides MongoDB compatibility but does not use 'tables with Provisioned IOPS volumes'; instance endpoint pins a single instance and is not generally recommended for failover. B: best literal answer if MongoDB-to-DynamoDB application/data model conversion is allowed; gateway endpoint has no extra charge and works for same-VPC clients, HTTPS/TLS encrypts, on-demand scales. C: technically also meets the explicit networking and scaling requirements; DynamoDB interface endpoint is supported, but adds cost and requires client endpoint configuration, so B is preferable only if minimizing cost/simplicity is an implicit criterion. D: cluster endpoint is preferable to instance endpoint for DocumentDB failover, and DocumentDB is MongoDB compatible, but 'DocumentDB tables with Provisioned IOPS volumes' is invalid; encryption-in-transit/TLS configuration is omitted.",
+    "plainWords": "If you can rewrite the MongoDB application's data access for DynamoDB, use DynamoDB on-demand and a free gateway endpoint so private EC2 instances can connect securely without internet. If you must keep MongoDB compatibility, use a correctly configured Amazon DocumentDB cluster and TLS, but none of the DocumentDB options describes a valid storage setup.",
+    "keyPoints": "DynamoDB gateway endpoint = free private access from same VPC without NAT/IGW; interface endpoint = supported PrivateLink with endpoint charges, useful for on-premises/peered/transit scenarios. DynamoDB on-demand scales throughput with workload; HTTPS/TLS encrypts API calls. Amazon DocumentDB is MongoDB-compatible, uses collections and managed cluster storage (standard/I/O-optimized), not tables on Provisioned IOPS EBS. DocumentDB cluster endpoint preferred for primary and failover; instance endpoint binds one instance. MongoDB -> DynamoDB requires application/data-model migration. Original answer A technically invalid; C is also feasible, so single-answer question is underspecified.",
+    "sourceWarning": "DEFECTIVE/AMBIGUOUS: Original source key A is incorrect as written: DocumentDB has no 'tables with Provisioned IOPS volumes', and instance endpoint is poor default for HA. Changed answer to B as best literal, but C ALSO meets explicit requirements; B's superiority relies on unstated cost/simplicity preference. Both B/C require rewriting a MongoDB application to DynamoDB; if preserving MongoDB API is required, neither works and a corrected DocumentDB/TLS/cluster-endpoint option would be needed. External exact-stem FreeCram Q19/171, Exam-Tests Q318, ExamTopics Q890, Scribd Q252, Certsmania PDF all found; Certsmania keys A with incorrect claims that DocumentDB supports Provisioned IOPS and that cluster endpoint load balances replicas. No confirmed Choose TWO/THREE variant. Stem missing punctuation after 'database'. Sources: https://docs.aws.amazon.com/documentdb/latest/devguide/endpoints.html ; https://docs.aws.amazon.com/documentdb/latest/devguide/how-it-works.html ; https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-ddb.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/privatelink-interface-endpoints.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2024-03-21.q171/a-company-is-migrating-a-legacy-application-from-an-on-premises-data-center-to-aws-the-application-uses ; https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=65 ; https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf .",
+    "review": {
+      "status": "source-key-defective-ambiguous",
+      "originalAnswer": [
+        "A"
+      ],
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "B best literal if MongoDB migration allowed; C also technically valid, so no uniquely correct answer under explicit requirements. DocumentDB A/D have invalid Provisioned IOPS terminology; external Certsmania repeats A with inaccurate explanation. Recommend rewriting question rather than treating B as unqualified."
+    },
+    "answerStatus": "corrected-source-defect"
   },
   {
     "id": 557,
