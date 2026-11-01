@@ -24879,13 +24879,20 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is the best answer for LEAST operational overhead. Export the trained TensorFlow personalization model, package its model artifacts in S3, and host inference using an Amazon SageMaker AI endpoint with a compatible TensorFlow inference container and proper IAM/VPC network integration. Deploy the Java web application to Elastic Beanstalk (Java SE/Tomcat managed platform). Use AWS DMS for on-premises SQL Server data migration to Amazon RDS for SQL Server, reducing manual database engine administration. Integrate secure profile-data access and inference requests; the answer omits some production integration details. Official AWS references: https://docs.aws.amazon.com/sagemaker/latest/dg/deploy-model-get-started.html ; https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms-inference-code.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Java.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.SQLServer.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.SQLServer.html.",
+    "wrongOptionsExplanation": "A: Incorrect. AWS Server Migration Service (SMS) is a legacy offering and is not an appropriate current strategy to migrate the physical model server; lifting VMs/servers into infrastructure-heavy hosting does not minimize inference operations. B: Correct. SageMaker AI managed inference + Elastic Beanstalk for Java + managed RDS SQL Server is the least-operations three-tier architecture; DMS handles data migration. C: Incorrect. AWS Application Migration Service can lift physical/virtual servers to EC2, but managing the EC2 app/ML servers and self-managed SQL Server on EC2 adds patching, backup, monitoring, scaling and HA responsibilities. D: Incorrect. EKS with managed node groups supports the workloads, but teams must still manage Kubernetes releases, workloads, clusters and nodes; containerizing both applications adds work without a stated Kubernetes requirement. RDS is a good choice in D but does not outweigh EKS overhead.",
+    "plainWords": "Move each existing component to a managed home: Java website to Elastic Beanstalk, TensorFlow recommendation model to a SageMaker AI inference endpoint (model artifacts in S3), and SQL Server data to Amazon RDS using DMS. This reduces server and Kubernetes operations. Choose B.",
+    "keyPoints": "LEAST operational overhead + existing TensorFlow ML model -> SageMaker AI real-time inference endpoint. Java on VMs -> Elastic Beanstalk managed Java/Tomcat environment. On-prem SQL Server -> Amazon RDS for SQL Server via AWS DMS. Migrating VMs to EC2 (MGN) is lift-and-shift, not maximum operational reduction. EKS managed node groups still require Kubernetes operations. SageMaker endpoint needs supported inference image, IAM role, model format and secure connectivity to profile data. S3 stores artifacts, not the production relational user-profile database.",
+    "sourceWarning": "ANSWER B VERIFIED by current official AWS managed model hosting, Elastic Beanstalk Java and AWS DMS SQL Server source/target documentation. Same single-choice stem found on FreeCram SAP-C02 Topic 3 Q889 and ITDumpsKR practice test (different item numbers); no confirmed Choose TWO/THREE variant. Original wording defects: 'onpremises' -> 'on-premises', option B '{AWS DMS)' -> '(AWS DMS)', option D missing punctuation between 'EKS' and 'Host'. Preserve original stem/options for traceability; flag AWS SMS as legacy/outdated. Technical nuance: SageMaker model endpoint requires compatible inference code/container, access permissions and networking. URLs: https://docs.aws.amazon.com/sagemaker/latest/dg/deploy-model-get-started.html ; https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms-inference-code.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Java.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.SQLServer.html ; https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.SQLServer.html ; https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-3-question-889-discussion-p1333148.html ; https://www.itdumpskr.com/AWS-Solutions-Architect-Professional-practice-test.html.",
+    "review": {
+      "status": "verified-with-legacy-sms-warning",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "Official AWS SageMaker AI endpoint, Elastic Beanstalk Java and AWS DMS SQL Server documentation confirm B. External same-stem single-answer copies identified; no verified Choose TWO/THREE variants. Original text retained; AWS SMS legacy wording and OCR/formatting defects flagged."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 608,
