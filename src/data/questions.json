@@ -20526,13 +20526,60 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is correct. VPC Flow Logs capture network flow metadata (source/destination addresses, ports, protocol, accept/reject) for EC2-to-on-premises database connections. Deliver flow logs to CloudWatch Logs, subscribe the log group to Amazon Data Firehose, and deliver to the Splunk HTTP Event Collector (HEC) for near-real-time searches. AWS documentation and an AWS Big Data Blog demonstrate the exact Flow Logs -> CloudWatch Logs subscription -> Firehose -> Splunk architecture. The Lambda preprocessing in the original answer is now often unnecessary: native Firehose CloudWatch Logs decompression/message extraction supports direct delivery to Splunk.",
+    "wrongOptionsExplanation": "A: Periodic CloudWatch Logs export tasks to S3 and Splunk polling are batch oriented, not near real time, and static access keys are unnecessary operational overhead. B: Correct, uses VPC Flow Logs and CloudWatch subscription streaming through Firehose to Splunk; Lambda preprocessing is optional/legacy. C: Adds invasive database/application request logging, S3 export, Athena queries and Lambda instead of network flow telemetry, increasing latency and complexity. D: Uses application logs and an unnecessary anomaly-detection pipeline instead of VPC Flow Logs; its legacy Kinesis Data Analytics SQL anomaly detection template is not an Amazon Managed Service for Apache Flink SQL feature.",
+    "plainWords": "Send VPC Flow Logs to CloudWatch Logs, stream them through Data Firehose, and ingest them in Splunk to see which EC2 IP addresses communicate with database IPs.",
+    "keyPoints": "VPC Flow Logs are connection metadata, not SQL queries or packet payloads. CloudWatch Logs subscription filters provide near-real-time streaming to Amazon Data Firehose. Firehose supports Splunk HEC destination, buffering and S3 backup. Native decompression and message extraction can replace Lambda preprocessing. Splunk HEC endpoint must be reachable and authenticated. Legacy Kinesis Data Analytics for SQL Applications is not equivalent to Managed Service for Apache Flink.",
+    "sourceWarning": "Retain B, but modernization defect: required Lambda preprocessing is no longer necessary in many cases because Data Firehose supports native CloudWatch Logs decompression/message extraction. D conflates retired Kinesis Data Analytics for SQL Applications anomaly detection with modern Apache Flink. On-premises Splunk HEC reachability, authentication, TLS and indexer acknowledgments must be configured. External exact-stem single-answer matches FreeCram 2026 and Pupuweb; older 2025 PDF has legacy product names. No confirmed Choose TWO/THREE variant. Original preserved.",
+    "review": {
+      "status": "verified-aws-and-external-with-modernization-caveats",
+      "reviewedAt": "2026-10-31",
+      "domain4Position": "105/139",
+      "answer": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Subscriptions.html",
+        "https://aws.amazon.com/blogs/big-data/power-data-ingestion-into-splunk-using-amazon-data-firehose/",
+        "https://docs.aws.amazon.com/firehose/latest/dev/writing-with-cloudwatch-logs-decompression.html",
+        "https://aws.amazon.com/blogs/big-data/deliver-decompressed-amazon-cloudwatch-logs-to-amazon-s3-and-splunk-using-amazon-data-firehose/",
+        "https://docs.aws.amazon.com/firehose/latest/dev/create-destination.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-08-19.q305/a-company-has-developed-a-hybrid-solution-between-its-data-center-and-aws-the-company-uses-amazon-vpc",
+        "https://pupuweb.com/sap-c02-real-time-aws-monitoring-with-splunk-using-amazon-kinesis-data-firehose/",
+        "https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf"
+      ],
+      "variantCheck": "2026 FreeCram, Pupuweb and 2025 PDF match four-choice single-answer question B; no confirmed Choose TWO/THREE variant.",
+      "defects": [
+        "B's Lambda preprocessing is often redundant with native Firehose CloudWatch Logs decompression/message extraction",
+        "D uses legacy SQL anomaly detection concept incorrectly with Apache Flink",
+        "On-premises Splunk HEC endpoint connectivity and security are unstated"
+      ]
+    },
+    "answerStatus": "verified-aws-and-external-with-caveats",
+    "originalQuestionSnapshot": {
+      "stem": "A company has developed a hybrid solution between its data center and AWS. The company uses Amazon VPC and Amazon EC2 instances that send application logs to Amazon CloudWatch. The EC2 instances read data from multiple relational databases that are hosted on premises. The company wants to monitor which EC2 instances are connected to the databases in near real time. The company already has a monitoring solution that uses Splunk on premises. A solutions architect needs to determine how to send networking traffic to Splunk. How should the solutions architect meet these requirements?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Enable VPC flow logs and send them to CloudWatch. Create an AWS Lambda function to periodically export the CloudWatch logs to an Amazon S3 bucket by using the predefined export function. Generate ACCESS_KEY and SECRET_KEY AWS credentials. Configure Splunk to pull the logs from the S3 bucket by using those credentials."
+        },
+        {
+          "id": "B",
+          "text": "Create an Amazon Data Firehose delivery stream with Splunk as the destination. Configure a pre-processing AWS Lambda function with a Firehose stream processor that extracts individual log events from records sent by CloudWatch Logs subscription filters. Enable VPC flow logs and send them to CloudWatch. Create a CloudWatch Logs subscription that sends log events to the Firehose delivery stream."
+        },
+        {
+          "id": "C",
+          "text": "Ask the company to log every request that is made to the databases along with the EC2 instance IP address. Export the CloudWatch logs to an Amazon S3 bucket. Use Amazon Athena to query the logs grouped by database name. Export Athena results to another S3 bucket. Invoke an AWS Lambda function to automatically send any new file that is put in the S3 bucket to Splunk."
+        },
+        {
+          "id": "D",
+          "text": "Send the CloudWatch logs to an Amazon Kinesis data stream with Amazon Managed Service for Apache Flink (previously known as Amazon Kinesis Data Analytics). Configure a 1-minute sliding window to collect the events. Create a SQL query that uses the anomaly detection template to monitor any networking traffic anomalies in near real time. Send the result to an Amazon Data Firehose delivery stream with Splunk as the destination."
+        }
+      ],
+      "answers": [
+        "B"
+      ]
+    }
   },
   {
     "id": 493,
