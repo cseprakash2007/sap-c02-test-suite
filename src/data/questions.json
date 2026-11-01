@@ -14054,16 +14054,26 @@
       }
     ],
     "answers": [
-      "D"
+      "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "CloudFormation cannot delete a nonempty S3 bucket; DeletionPolicy Delete does not empty it. Lambda-backed custom resource cleans bucket before deletion.",
+    "wrongOptionsExplanation": "A correct: Lambda custom resource empties bucket. B requires architecture change. C invalid: S3 lifecycle expiration is not 45-minute granularity. D invalid: Delete policy cannot delete nonempty S3 bucket.",
+    "plainWords": "CloudFormation cannot delete a nonempty S3 bucket; DeletionPolicy Delete does not empty it. Lambda-backed custom resource cleans bucket before deletion.",
+    "keyPoints": "CloudFormation S3 buckets must be empty before deletion; DeletionPolicy Delete does not empty buckets.",
+    "sourceWarning": "Corrected source answer D to A; compare duplicate Q82. AWS sources: https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-s3-bucket.html",
+    "review": {
+      "status": "corrected-source-key",
+      "originalAnswer": [
+        "D"
+      ],
+      "verifiedAnswer": [
+        "A"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "CloudFormation cannot delete a nonempty S3 bucket; DeletionPolicy Delete does not empty it. Lambda-backed custom resource cleans bucket before deletion."
+    },
+    "answerStatus": "verified-corrected"
   },
   {
     "id": 334,
@@ -23347,16 +23357,26 @@
       }
     ],
     "answers": [
-      "A"
+      "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "ALB target groups do not support SQS; API Gateway HTTP API SQS integration buffers bursts and Lambda consumes messages.",
+    "wrongOptionsExplanation": "A invalid: SQS cannot be ALB target. B correct: HTTP API to SQS integration and Lambda queue consumer. C invalid: API Gateway has no direct Auto Scaling group proxy integration. D invalid: Kinesis stream is not a CloudFront origin.",
+    "plainWords": "ALB target groups do not support SQS; API Gateway HTTP API SQS integration buffers bursts and Lambda consumes messages.",
+    "keyPoints": "ALB target types are instance, IP and Lambda; API Gateway HTTP API can integrate with SQS.",
+    "sourceWarning": "Corrected source answer A to B; compare duplicate Q446. AWS sources: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html",
+    "review": {
+      "status": "corrected-source-key",
+      "originalAnswer": [
+        "A"
+      ],
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "ALB target groups do not support SQS; API Gateway HTTP API SQS integration buffers bursts and Lambda consumes messages."
+    },
+    "answerStatus": "verified-corrected"
   },
   {
     "id": 566,
