@@ -5184,13 +5184,27 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct A,D,E. A: Step Functions orchestrates Lambda report jobs of 120–600 seconds (under Lambda's 15-minute per-invocation maximum); output to S3 and serve with CloudFront. D: AWS IoT Core accepts MQTT device publishes; an IoT rule invokes Lambda to parse and store data. E: Amazon DocumentDB reduces operational overhead for a MongoDB-compatible document database. Check compatibility before migration.",
+    "wrongOptionsExplanation": "B: Lambda should not replace managed MQTT connectivity by repeatedly polling devices; Lambda layers package code/dependencies and are not durable temporary message storage. C: EKS on EC2 with ingress adds node and Kubernetes management overhead for short periodic jobs. F: Self-managed MongoDB on EC2 retains backup, patching, replication, and failover operations.",
+    "plainWords": "Use AWS IoT Core to receive MQTT data, Lambda to transform it, DocumentDB to store it, and Step Functions plus Lambda to produce reports in S3 served through CloudFront.",
+    "keyPoints": "MQTT publish/subscribe vs Lambda polling; AWS IoT rules Lambda action; Lambda 15-minute maximum (120–600 seconds fits); Step Functions workflow orchestration; S3+CloudFront report delivery; DocumentDB MongoDB compatibility caveats; IoT rule error action; Q438 near-duplicate reordered letters.",
+    "sourceWarning": "Check Amazon DocumentDB feature compatibility with source MongoDB, IAM/resource permissions for IoT rule Lambda action, and rule error action/retries for reliable ingestion. https://docs.aws.amazon.com/iot/latest/developerguide/lambda-rule-action.html https://docs.aws.amazon.com/iot/latest/developerguide/iot-rule-actions.html",
+    "review": {
+      "status": "verified-with-caveats",
+      "originalAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "E"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS IoT Core rule Lambda action and Step Functions/Lambda duration independently checked; external Exact2Pass same wording ADE, SalesforceXamDumps and Exact2Pass alternate variant BDE due to reordered options. Q438 strong near-duplicate, same service combination. Related Q228,Q255,Q258,Q453,Q467,Q509,Q583. Q467 stored A potentially invalid raw MQTT over ALB: audit separately."
+    },
+    "answerStatus": "verified-with-caveats"
   },
   {
     "id": 117,
