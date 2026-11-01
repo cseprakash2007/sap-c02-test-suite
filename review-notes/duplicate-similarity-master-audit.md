@@ -220,3 +220,23 @@ A keyword co-occurrence scan of all 674 question stems and options found the fol
 3. **Q347:** Validate data-model and DAX requirements rather than assuming DynamoDB is universally higher-performance than relational storage.
 
 **Status:** Classification and technical risk notes only. No new answer-key changes.
+
+## Independent AWS documentation verification — Q196 and Q633 (2026-11-01)
+
+### Q196 — callback security across accounts
+
+- Stored key **B**, left unchanged; status `needs-source-reconciliation`.
+- AWS explicitly requires callback task tokens to be returned by principals **in the same account** as the state machine. Direct callback by a separate-account principal fails even if the token is known.
+- A workable design: external account sends signed/authorized approval to a tightly scoped ingress (e.g., EventBridge cross-account event bus or API Gateway) and a same-account Lambda validates correlation/approval and calls `SendTaskSuccess` or `SendTaskFailure`.
+- B captures the correct callback pattern but does not describe that bridge; flag as incomplete rather than choosing another invalid option.
+- AWS source: https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html
+
+### Q633 — S3 six-month retention and retry semantics
+
+- Stored key **C**, left unchanged pending complete source-variant audit; status `needs-source-reconciliation`.
+- Selected C transitions to S3 Standard-IA **after** six months; it does not expire/delete objects at six months. If retention is limited to six months, this fails that requirement.
+- C also does not explicitly provide replay/retry of failed processing. S3 event notifications can be delivered at least once, but failure recovery requires appropriate destination, retry or orchestration controls.
+- Do not automatically replace C without evaluating full A/B/D choices for both expiry and replay and whether the source question itself is defective.
+- AWS sources: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-expire-general-considerations.html
+
+**Repository change:** Added explicit review flags in `src/data/questions.json` for Q196 and Q633. No answer keys changed.
