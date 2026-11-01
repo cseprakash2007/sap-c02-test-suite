@@ -21161,13 +21161,20 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct A: S3 File Gateway presents an SMB share to Windows/SQL Server and asynchronously stores files as objects in an S3 bucket. An EC2-hosted gateway in the VPC can be accessed over Direct Connect. This directly meets the S3 destination requirement without paying for a separate FSx file system and backups. AWS: https://aws.amazon.com/storagegateway/ ; https://docs.aws.amazon.com/filegateway/latest/files3/ec2-gateway-file.html ; https://docs.aws.amazon.com/filegateway/latest/files3/CreatingAnSMBFileShare.html .",
+    "wrongOptionsExplanation": "B: FSx for Windows File Server Single-AZ offers SMB but keeps exports in a managed Windows file system, then takes backups; more layers and expense than direct S3 File Gateway, and does not directly place the nightly export as an ordinary S3 object. C: FSx Multi-AZ adds higher-availability costs for a nightly export destination, with the same S3 destination mismatch. D: Volume Gateway exposes iSCSI block devices, not SMB shares; adding a separate file server and copying to S3 introduces extra steps/cost and is technically invalid as stated.",
+    "plainWords": "Windows SQL Server writes a 200 GB backup file every night. Give it an SMB network folder through S3 File Gateway; the gateway uploads that file to S3 over the existing Direct Connect link.",
+    "keyPoints": "SMB/NFS to S3 -> S3 File Gateway; iSCSI block -> Volume Gateway; managed Windows filesystem -> FSx for Windows; 10 Gbps Direct Connect can carry SMB traffic to EC2 gateway in VPC. File Gateway writes to local cache first and asynchronously uploads to S3; verify upload completion before relying on the cloud copy. Gateway deployment, cache capacity, VPC endpoint routing, and DX charges still matter.",
+    "sourceWarning": "Exact-stem single-answer verified on ExamTopics SAP-C02 topic 1 Q231, Exam-Tests Q124, FreeCram q127/137 and CertEmpire demo Q2 (all A). Reordered variants: Exam4Labs Q172 (B) and ExamsLabs Q63 (C), same S3 File Gateway architecture. No confirmed Choose TWO/THREE variant found. Original stem says 'SOL Server' instead of 'SQL Server'; option A 'Is' capitalization error. Potential architecture ambiguity: EC2-hosted File Gateway requires cache EBS volume and on-prem SMB connectivity to the EC2 gateway over Direct Connect, plus gateway access to S3. Files are asynchronously uploaded; not immediately durable in S3 on local write acknowledgment. External copies include an old SAP-C01 version, but S3 File Gateway remains supported. AWS: https://docs.aws.amazon.com/filegateway/latest/files3/Requirements.html ; https://aws.amazon.com/storagegateway/faqs/ .",
+    "review": {
+      "status": "verified",
+      "verifiedAnswer": [
+        "A"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "Independent AWS docs and multiple exact-stem sources checked; no in-bank exact duplicate or confirmed multi-answer variant; source OCR and asynchronous-upload caveat flagged."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 507,
