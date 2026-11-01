@@ -20675,13 +20675,59 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D is correct: add a higher-priority prefix-filtered S3 replication rule for the critical radar station and enable S3 Replication Time Control (RTC). S3 RTC offers an SLA for 99.9% of objects replicated within 15 minutes and exposes per-rule replication metrics, including ReplicationLatency (maximum time destination lags source), enabling independent monitoring of the important station. For a 30-minute requirement, create a CloudWatch alarm on ReplicationLatency and route alarm notifications through SNS/EventBridge. S3 RTC's own 15-minute event threshold cannot be set to 30 minutes. No service guarantees every object is copied in 30 minutes.",
+    "wrongOptionsExplanation": "A: DataSync task status TRANSFERRING does not establish per-object replication completion times; redundant with S3 replication. B: A separate destination bucket is unnecessary, and the proposed rule does not enable RTC or its 15-minute service-level objective; adds complexity. C: S3 Transfer Acceleration improves uploads to the source bucket, not source-to-destination replication; TotalRequestLatency measures S3 requests, not replication lag. D: Correct: prefix-specific S3 RTC replication rule and per-rule latency monitoring.",
+    "plainWords": "Give the most accurate radar station its own high-priority S3 replication rule with Replication Time Control, then alarm on how long its objects take to reach the other account.",
+    "keyPoints": "S3 RTC: 99.9% of objects within 15 minutes SLA, not 100% or configurable 30-minute RTC threshold. Per-rule CloudWatch ReplicationLatency is maximum lag in seconds; use CloudWatch alarm for 30-minute metric threshold. S3 RTC emits 15-minute missed-threshold event notifications. Prefix-specific rule must take precedence over overlapping all-objects rule. S3 Transfer Acceleration is upload, not replication. EventBridge rules do not directly evaluate CloudWatch metric values.",
+    "sourceWarning": "Answer D correct, but option D's EventBridge rule cannot directly alert on a numeric replication metric; configure a CloudWatch alarm on ReplicationLatency, then send alarm events to EventBridge/SNS. S3 RTC's own 15-minute event threshold is fixed, whereas requirement is 30 minutes. RTC SLA covers 99.9%, not every object. Existing all-object rule overlaps prefix-specific rule; set explicit priority and compatible destination. Exact-stem external variants reorder letters (D/B/C), not Choose TWO/THREE. Original preserved.",
+    "review": {
+      "status": "verified-aws-and-external-with-implementation-defect",
+      "reviewedAt": "2026-10-31",
+      "domain4Position": "106/139",
+      "answer": [
+        "D"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-time-control.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/repl-metrics.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-metrics-events.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-09-16.q205/a-scientific-organization-requires-the-processing-of-text-and-picture-data-stored-in-an-amazon-s3-bucket",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-3/",
+        "https://www.pdfdumps.com/articles/real-amazon-sap-c02-exam-questions-study-guide-q217-q242/"
+      ],
+      "variantCheck": "Exact-stem single-answer variants found; choice letter changes D/B/C due to reordering; no confirmed Choose TWO/THREE variant.",
+      "defects": [
+        "EventBridge cannot directly evaluate numeric ReplicationLatency; CloudWatch alarm required",
+        "RTC event threshold fixed at 15 minutes, not 30",
+        "SLA 99.9%, not per-object guarantee",
+        "Prefix rule must outrank existing overlapping all-object rule"
+      ]
+    },
+    "answerStatus": "verified-aws-and-external-with-caveats",
+    "originalQuestionSnapshot": {
+      "stem": "A scientific company needs to process text and image data from an Amazon S3 bucket. The data is collected from several radar stations during a live, time-critical phase of a deep space mission. The radar stations upload the data to the source S3 bucket. The data is prefixed by radar station identification number. The company created a destination S3 bucket in a second account. Data must be copied from the source S3 bucket to the destination S3 bucket to meet a compliance objective. The replication occurs through the use of an S3 replication rule to cover all objects in the source S3 bucket. One specific radar station is identified as having the most accurate data. Data replication at this radar station must be monitored for completion within 30 minutes after the radar station uploads the objects to the source S3 bucket. What should a solutions architect do to meet these requirements?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Set up an AWS DataSync agent to replicate the prefixed data from the source S3 bucket to the destination S3 bucket. Select to use all available bandwidth on the task, and monitor the task to ensure that it is in the TRANSFERRING status. Create an Amazon EventBridge (Amazon CloudWatch Events) rule to trigger an alert if this status changes."
+        },
+        {
+          "id": "B",
+          "text": "In the second account, create another S3 bucket to receive data from the radar station with the most accurate data. Set up a new replication rule for this new S3 bucket to separate the replication from the other radar stations. Monitor the maximum replication time to the destination. Create an Amazon EventBridge (Amazon CloudWatch Events) rule to trigger an alert when the time exceeds the desired threshold."
+        },
+        {
+          "id": "C",
+          "text": "Enable Amazon S3 Transfer Acceleration on the source S3 bucket, and configure the radar station with the most accurate data to use the new endpoint. Monitor the S3 destination bucket's TotalRequestLatency metric. Create an Amazon EventBridge (Amazon CloudWatch Events) rule to trigger an alert if this status changes."
+        },
+        {
+          "id": "D",
+          "text": "Create a new S3 replication rule on the source S3 bucket that filters for the keys that use the prefix of the radar station with the most accurate data. Enable S3 Replication Time Control (S3 RTC). Monitor the maximum replication time to the destination. Create an Amazon EventBridge (Amazon CloudWatch Events) rule to trigger an alert when the time exceeds the desired threshold."
+        }
+      ],
+      "answers": [
+        "D"
+      ]
+    }
   },
   {
     "id": 496,
