@@ -26367,13 +26367,20 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C verified. Amazon AppStream 2.0 (renamed Amazon WorkSpaces Applications) streams an existing Windows desktop app to Windows and Linux users via supported web browsers, without rewriting it. Package the application using an image builder, deploy an On-Demand fleet with fleet auto scaling, and use built-in user pools for simplified independent authentication. If existing on-premises AD credentials must be reused, choose SAML 2.0 federation instead of user pools; domain-joined WorkSpaces Applications fleets require SAML. AWS: https://aws.amazon.com/workspaces/applications/ ; https://docs.aws.amazon.com/appstream2/latest/developerguide/accessing-as-user.html ; https://docs.aws.amazon.com/appstream2/latest/developerguide/fleet-type.html .",
+    "wrongOptionsExplanation": "A: WorkSpaces full desktops are heavier than streaming one app, and Cognito identity pools are not the native WorkSpaces user login mechanism. B: Windows EC2 Auto Scaling and RDP can host the app but demand custom remote access, security and fleet management; original option is garbled ('Auto Scarlet', 'Ama7on'). C: Correct: managed Windows application streaming, browser access on Linux and Windows, no refactor, built-in user pools and auto scaling. D: Converting a Windows desktop app into a browser-based ECS Fargate app requires major code redesign, not least development effort.",
+    "plainWords": "Employees use Windows and Linux, but the app only runs on Windows. Instead of rewriting it, install it once into a WorkSpaces Applications (formerly AppStream 2.0) image and stream it to everyone in a browser. Built-in user pools provide simple sign-in. Choose C.",
+    "keyPoints": "AppStream 2.0 was renamed Amazon WorkSpaces Applications, not retired. Streams existing Windows desktop apps to HTML5 browser on Linux/Windows without code rewrite. Image builder -> image -> stack -> On-Demand fleet -> auto scaling. User pools are service-local identities; SAML 2.0 federation reuses on-prem AD/IdP and is required for domain-joined fleets. On-Demand may add 1-2 minute session startup versus Always-On. Amazon WorkSpaces Personal delivers whole virtual desktops, distinct from app streaming. Cognito identity pools grant temporary AWS credentials, not normal WorkSpaces desktop authentication.",
+    "sourceWarning": "ANSWER C VERIFIED. Exact-stem CertEnsure keys C; P2PExams PDF keys C; PassTest keys B equivalent to repo C after reordering. No confirmed Choose TWO/THREE variant. AppStream 2.0 renamed Amazon WorkSpaces Applications (current AWS naming). OCR defects: 'lo AWS', '(or all', 'Auto Scarlet', 'Ama7on', 'That', 'starling browse''; preserve original options for traceability. On-prem AD mentioned but C uses separate user pools; if AD sign-in is required, use SAML federation instead, which is not offered in C. Sources https://aws.amazon.com/workspaces/applications/ ; https://docs.aws.amazon.com/appstream2/latest/developerguide/accessing-as-user.html ; https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html ; https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-foster-09-08-2024-12qa-vceexamstest.pdf ; https://www.passtest.jp/articles/%E8%A9%A6%E9%A8%93%E6%BA%96%E5%82%99%E3%81%AB%E3%81%AF%E6%AC%A0%E3%81%8B%E3%81%95%E3%81%AA%E3%81%84-sap-c02%E5%95%8F%E9%A1%8C%E8%A7%A3%E7%AD%94%E3%81%A7sap-c02%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C%E9%9B%86-q22-q38/ .",
+    "review": {
+      "status": "verified-with-service-rename-and-authentication-caveat",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AppStream 2.0 renamed WorkSpaces Applications. AWS image builder, browser access, user pool, on-demand autoscaling verified. CertEnsure/P2PExams key C, PassTest key B equivalent to C. AD integration needs SAML rather than built-in pool. No confirmed multi-answer variant."
+    },
+    "answerStatus": "verified-with-caveat"
   },
   {
     "id": 648,
