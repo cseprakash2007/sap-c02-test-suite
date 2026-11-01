@@ -23834,13 +23834,20 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D verified: Amazon SQS buffers fluctuating one-hour media jobs, EC2 workers in an Auto Scaling group process messages without standard Lambda's 15-minute timeout, and S3 stores processed files without maintaining EFS. Scale using SQS backlog per instance (visible messages / in-service workers) and target tracking; protect workers from scale-in during long tasks. Configure SQS visibility timeout for one-hour jobs, delete messages after success, implement idempotency and DLQ. AWS: https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html ; https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html .",
+    "wrongOptionsExplanation": "A: Standard AWS Lambda max runtime 900 seconds/15 minutes, so cannot finish up-to-one-hour files; SQS+S3 alone cannot fix timeout. B: Amazon MQ and EFS are unnecessary unless broker compatibility/POSIX filesystem is required; starting one new EC2 per message is operationally complex and slow compared with queue-driven Auto Scaling. C: Same standard Lambda 15-minute timeout; EFS doesn't extend function duration and MQ adds cost. D: Correct queue-backed EC2 workers with Auto Scaling and S3; use backlog-per-instance rather than only raw queue length, and manage long-running task scale-in and visibility timeout.",
+    "plainWords": "Some files need a full hour to process. Put each job in an SQS queue and have EC2 workers process them. Add workers when many files arrive during business hours and remove workers after the queue drains. Save results to S3.",
+    "keyPoints": "Standard Lambda 15-minute max, but AWS Lambda Managed Instances now documents up to 90 minutes for eligible asynchronous/event-source-mapping invocations (exception; not specified in A/C). EC2 workers suit long-running queue jobs. Scale EC2 ASG on SQS backlog per instance rather than raw visible count; scale-in protection for in-flight jobs. SQS visibility timeout up to 12h; one-hour tasks require appropriate timeout/heartbeat, idempotency, delete-on-success and DLQ. S3 is object storage; EFS shared POSIX storage only when needed. Amazon MQ useful for existing broker protocol compatibility, otherwise SQS simpler.",
+    "sourceWarning": "SOURCE ANSWER D VERIFIED; OCR defects: B 'Amazon M' and C 'Amazon MO' should be 'Amazon MQ'; D 'Amazon SOS' and 'SOS queue length' should be 'Amazon SQS'/'SQS queue length'. Modern nuance: standard Lambda 15 min, but Lambda Managed Instances supports up to 90 min for eligible asynchronous/event-source mapping calls, so do not claim all Lambda runtimes categorically limited to 15 min. Source D says scale by queue length; AWS recommends backlog per instance. External exact-stem CertLibrary Q12 and FreeCram 2023 Q127/183 key D; iPassleader reletters same solution C. No confirmed Choose TWO/THREE variant. Sources: https://docs.aws.amazon.com/en_en/lambda/latest/dg/configuration-timeout.html ; https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html ; https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2023-11-04.q183/a-solutions-architect-needs-to-advise-a-company-on-how-to-migrate-its-on-premises-data-processing-applicat ; https://www.certlibrary.com/exam/AWS%20Certified%20Solutions%20Architect%20-%20Professional%20SAP-C02 ; https://www.ipassleader.com/Amazon/SAP-C02-practice-exam-dumps.html .",
+    "review": {
+      "status": "verified-with-ocr-and-2026-lambda-nuance",
+      "verifiedAnswer": [
+        "D"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS Auto Scaling SQS backlog-per-instance and standard Lambda 15min confirm D. Lambda Managed Instances eligible invocations up to 90min noted. External exact-stem copies key same architecture; no verified multiple-answer variant."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 579,
