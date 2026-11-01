@@ -187,3 +187,36 @@ A keyword co-occurrence scan of all 674 question stems and options found the fol
 - [Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/introduction.html)
 
 **Dataset status:** No answer-key changes in this focused review; Q194 and Q222 identified as abbreviated/full duplicates, Q661 as related-but-different.
+
+## Focused review: EventBridge vs Step Functions and database patterns (2026-11-01)
+
+### EventBridge versus Step Functions
+
+| Questions | What is actually being tested | Key / status |
+|---|---|---|
+| Q93 / Q196 | Human approval pauses a stateful workflow; Step Functions task-token callback | B / B; **related pattern, different use cases**. Q196 cross-account callback security requires extra scrutiny: callback task tokens have account-bound limitations, so external account should signal a same-account authorized bridge rather than directly call SendTaskSuccess |
+| Q157 | CloudTrail CreateUser event detection, access remediation, security notification | A,D,E; EventBridge routes event, Step Functions executes workflow, SNS notifies |
+| Q413 | Hours-long container processing following S3 upload | C; EventBridge triggers Step Functions, which orchestrates ECS Fargate; distinct from Q194/Q222 direct task triggering |
+| Q569 | ECR vulnerability scan completion, delete bad tags, notify | A; EventBridge detection + Step Functions remediation workflow |
+| Q344 | Third-party synchronous call failures; durable asynchronous buffering | A; SQS queue + Lambda is more appropriate than direct EventBridge-to-Lambda alone |
+| Q61 | CodeCommit push triggers repository backup | C; EventBridge trigger + CodeBuild processing, not a Step Functions snapshot API |
+| Q440 / Q651 | Scheduled ticket-sale scaling and Aurora failover | D / D; same scenario with minor OCR differences |
+
+**Decision rule:** EventBridge is an event router/scheduler; Step Functions is a stateful workflow orchestrator. They frequently complement one another rather than compete. Use a callback Task for approvals, retries, and long-lived state; use EventBridge to initiate workflows from events.
+
+### Database choices: related but different requirements
+
+| Questions | Key / solution | Differentiator |
+|---|---|---|
+| Q22 | C: compute-optimized EC2 On-Demand + ElastiCache Redis OSS | Fast-changing gaming leaderboard, existing Redis semantics |
+| Q347 | C: DynamoDB global tables + DAX | High-performance multi-Region key-value access and caching; **requires scrutiny** whether the product data needs relational queries and whether DAX global-table behavior fits the use case |
+| Q671 | A: Aurora PostgreSQL with Babelfish | SQL Server protocol compatibility and lower licensing cost; not a NoSQL migration |
+| Q218 | D: RDS PostgreSQL migration and on-prem foreign tables | Spatial data and remote relational queries; PostgreSQL extension support and in-DB cron capabilities need checking against specific RDS versions |
+
+### Additional flags requiring technical verification
+
+1. **Q196:** AWS Step Functions callback task tokens are account-bound; a separate account cannot necessarily resume execution by directly returning a token. An authorized bridge in the workflow account may be necessary. Stored answer B remains unchanged pending validation.
+2. **Q633:** Selected answer C moves objects to S3 Standard-IA *after* six months despite a stated retention of *up to* six months, and overwrites resized images in place. This may fail the lifecycle/retention or retry requirements. **Flag for independent AWS and source-variant audit; do not silently change key.**
+3. **Q347:** Validate data-model and DAX requirements rather than assuming DynamoDB is universally higher-performance than relational storage.
+
+**Status:** Classification and technical risk notes only. No new answer-key changes.
