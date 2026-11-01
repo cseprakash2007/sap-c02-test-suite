@@ -131,3 +131,25 @@ Q9 option E explicitly combines private replication with bandwidth throttling. Q
 - [ ] Verify whether Q124/Q397 private Git host is reachable without internet and whether Secrets Manager-only answer is technically sufficient.
 - [ ] Investigate additional *cross-framework* lookalikes beyond lexical matches: ALB vs API Gateway, SQS vs Kinesis, Step Functions vs EventBridge, Glue vs EMR, RDS vs DynamoDB, and ECS/Fargate vs Lambda.
 - [ ] Preserve distinct question IDs and record why a change in requirement changes the recommended service.
+
+## Cross-framework candidate scan — second pass (2026-11-01)
+
+A keyword co-occurrence scan of all 674 question stems and options found the following *study candidates* (not validated duplicate counts): SQS/Kinesis 9; Step Functions/EventBridge 17; Glue/EMR 5; RDS/DynamoDB 29; Fargate/Lambda 29. API Gateway/ALB produced zero in this literal-token scan because the query required the exact hyphenated `api-gateway` string; **this is a search limitation, not evidence that there are no such questions**.
+
+### Cross-framework study groups to inspect
+
+| Questions | Topic | Key decision criteria | Status |
+|---|---|---|---|
+| Q194, Q222, Q661 | Long-running or custom data processing | Lambda 15-minute execution limit; Fargate container support; Step Functions orchestration vs EventBridge triggering | Candidate grouping; inspect full stems before judging equivalence |
+| Q306, Q445, Q524 | Glue versus EMR | Managed ETL and event-driven transformations vs Hadoop/EMR processing | Q306/Q445 equivalent; Q524 distinct scenario |
+| Q22, Q347, Q671 | RDS, DynamoDB and migration | Relational features, licensing, schema compatibility, read/write patterns | Related topics only; not duplicates |
+| Q23, Q42, Q446, Q565 | Queuing and streaming | SQS buffering for asynchronous work vs Kinesis for ordered streaming/replay | Q446/Q565 confirmed duplicate and corrected |
+| Q61, Q183, Q194, Q196 | Event orchestration | EventBridge event routing/schedules vs Step Functions workflow state, retries and callbacks | Requires case-by-case validation |
+
+### Audit safeguards
+
+1. Co-occurrence of two service names in answer options is **not** proof of equivalent questions.
+2. Compare business requirements, latency, runtime, data consistency, operational overhead, and exact correct option text.
+3. A service mentioned only as a distractor does not define the question's architecture.
+4. Do not auto-correct answer keys based on similarity alone.
+5. Continue investigating Q510, Q124/Q397 Git reachability, and further cross-framework variants.
