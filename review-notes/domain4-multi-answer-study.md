@@ -259,3 +259,15 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **674-bank comparison:** No exact full-stem duplicate; keyword scan identifies Q43 (AWS networking/security around CloudFront and ECS-adjacent design) and Q655 (ECS app networking), but different problem constraints. Compare question intent rather than answer letters. No materially outdated ECS service names; stem chronology 'after deployment' is imprecise because task network mode is selected before task launch.
 
 **Next:** Identify 18 of 33 after Q350 from ordered Domain 4 multi-answer dataset.
+
+## 18 of 33 — Q365 — Select TWO — S3 Cross-Region Replication Time Control alerts
+
+**Verified A,C unchanged.** A create S3 CRR replication rule to destination Region. C enable S3 Replication Time Control (RTC), metrics/events, route `s3:Replication:OperationMissedThreshold` to SNS to alert operations when eligible object replication exceeds 15 minutes. B DataSync task is batch/scheduled copy, not native per-object 15-minute replication event; D Transfer Acceleration and S3 5xxErrors concern upload/API performance, not CRR lag; E DataSync enhanced mode FilesFailed concerns DataSync transfers, not RTC threshold. Official AWS https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-time-control.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-metrics-events.html ; https://aws.amazon.com/s3/features/replication/ .
+
+**External exact variant:** [CertPrep SAP-C02 question bank](https://www.certprep.io/amazon/sap-c02/questions) reproduces the five choices and confirms A,C. A second distinct exact exam variant was not independently verified; do not claim multiple independent source consensus. Official AWS confirms event semantics.
+
+**Defects/caveats:** RTC offers 15-minute replication SLA, not absolute 100% guarantee. Enable versioning on both buckets, not merely source. Native replication rule covers eligible newly written objects; use S3 Batch Replication to backfill objects already present. For sensitive SSE-KMS data configure replication KMS permissions and keys. Consider `OperationFailedReplication` alerts in addition to missed threshold. Ensure SNS topic policy permits S3 notifications and subscriptions are active.
+
+**674-bank comparison:** No exact normalized stem duplicate. Closest Q390 (multi-Region S3 application architecture), Q11 and Q15 (S3 replication/secondary bucket), Q155/Q200 (application data replication), Q305 (S3 transfer and acceleration), Q374 (cross-Region data residency), Q460 (DR), Q592 (cross-Region content). Compare *continuous 15-minute SLA plus per-object missed-threshold event* with other questions about availability, failover, data residency, or upload speed.
+
+**Next:** Q381 — 19 of 33.
