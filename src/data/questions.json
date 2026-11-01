@@ -27352,12 +27352,22 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B: API Gateway HTTP API provides a single managed HTTPS endpoint with routes integrating separately with Lambda functions, avoiding EC2 and container infrastructure. AWS: https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations.html and https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-lambda.html .",
+    "wrongOptionsExplanation": "A: Lambda function URLs work and can be simpler for individual functions, but multiple separately managed endpoints are less cohesive than one routed HTTP API; the question is somewhat ambiguous on absolute minimum overhead. B: best intended answer for multiple webhooks and centralized routing. C: ALB target groups support instance, IP, Lambda, not App Runner as a native target. D: Fargate requires containers/task/networking and REST API private integration complexity, higher overhead.",
+    "plainWords": "Use one API Gateway HTTP API to accept multiple Git webhook paths and route each to a Lambda function. No servers, ALB or containers to manage.",
+    "keyPoints": "HTTP API routes can integrate with Lambda. Function URLs are legitimate for simpler one-function endpoints, so compare requirements carefully. ALB does not natively support App Runner targets. Fargate is serverless compute but entails container operations.",
+    "sourceWarning": "No confirmed Choose TWO/THREE variant. Exact-stem external sites CertLibrary, FreeCram Topic 3 Q232, SpotO and SecExams key B; ExamsLabs rearranges options so the same API Gateway answer is letter D. Wording ambiguity: A is also serverless and could minimize overhead if independent endpoints are acceptable; B is the exam-intended centralized routing solution. No obsolete services identified.",
+    "review": {
+      "status": "verified-with-ambiguity",
+      "originalAnswer": [
+        "B"
+      ],
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS docs and multiple exam sites corroborate B. A is technically valid but multiple endpoint management makes B preferable. No confirmed multi-answer variant."
+    },
+    "answerStatus": "verified"
   }
 ]
