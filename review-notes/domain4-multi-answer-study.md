@@ -247,3 +247,15 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **674-bank duplicate audit:** No exact normalized stem duplicate. Closest **Q642** also UDP gaming with NLB, but asks multi-Region global availability and static client IPs, favoring Global Accelerator, not subnet filtering. Q351, Q454 and Q599 use NLB/PrivateLink for different TCP/application connectivity patterns; Q523 uses NLB for EC2 target workload, not game UDP security. Do not borrow option letters.
 
 **Next:** Q350 — 17 of 33.
+
+## 17 of 33 — Q350 — Choose TWO — ECS awsvpc networking and least-privilege task roles
+
+**Verified historical key B,E unchanged.** B use awsvpc mode for per-task ENI/IP and task-specific security groups. E assign SG to tasks and use IAM task roles for least-privilege AWS resource access. A bridge mode can run Linux ECS tasks on EC2 but does not offer direct per-task SG. C instance SG/instance profile scopes privileges to EC2 host, not individual microservice. D passing IAM credentials into containers is an unsafe anti-pattern; ECS task role provides temporary credentials. Separate *task role* (application permissions), *execution role* (ECS agent ECR/logs), and *instance profile* (EC2 host/agent). For EC2-backed tasks, prevent exposure of host IMDS with ECS_AWSVPC_BLOCK_IMDS where applicable. awsvpc task definitions and service SG configuration require a new deployment rather than in-place switching after launch.
+
+**Official AWS docs:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/security-network.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/security-iam-roles.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html . awsvpc is required for ECS Fargate, recommended for EC2 launch type, and task target groups must use ip target type.
+
+**External exact exam variants:** [ExamsVCE B,E](https://www.examsvce.com/sap-c02/a-company-wants-to-migrate-its-website-question-answer.html); [Pupuweb Question 144](https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/5/); [Exam-Tests Question 36](https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=9). Mirrors may copy a shared source; AWS documentation is primary evidence.
+
+**674-bank comparison:** No exact full-stem duplicate; keyword scan identifies Q43 (AWS networking/security around CloudFront and ECS-adjacent design) and Q655 (ECS app networking), but different problem constraints. Compare question intent rather than answer letters. No materially outdated ECS service names; stem chronology 'after deployment' is imprecise because task network mode is selected before task launch.
+
+**Next:** Identify 18 of 33 after Q350 from ordered Domain 4 multi-answer dataset.
