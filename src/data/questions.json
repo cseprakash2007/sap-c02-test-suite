@@ -19034,13 +19034,49 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Correct answers: B, D, E. B: AWS IoT Core is the managed MQTT broker/connectivity endpoint for device-published telemetry, replacing the on-premises MQTT server. D: Amazon DocumentDB (with MongoDB compatibility) provides a managed document database for device metadata, eliminating self-managed MongoDB operations (validate application API and aggregation compatibility before cutover). E: Step Functions orchestrates Lambda-based periodic report generation; S3 stores generated static reports and CloudFront distributes them, avoiding always-on report/web EC2 and EKS infrastructure. Historical 120–600-second jobs fit within the standard Lambda 900-second limit when configured and profiled, assuming no individual execution exceeds 900 seconds. AWS IoT rules and/or integration are additionally needed to route telemetry to processing/storage, and a periodic EventBridge Scheduler schedule may trigger the workflow.",
+    "wrongOptionsExplanation": "A: Incorrect. A Lambda function is not a persistent managed MQTT broker/connection fleet and Lambda layers are not a durable message buffer. B: Correct. AWS IoT Core handles managed MQTT device ingestion; its rules route messages into processing/storage. C: Incorrect. Hosting MongoDB on EC2 leaves patching, backups, availability, upgrades and database operations to the company. D: Correct. DocumentDB reduces database administration, subject to MongoDB API/feature compatibility checks. E: Correct. Step Functions+Lambda prepares reports, while S3+CloudFront replace continuously running report web servers for static reports. F: Incorrect. EC2-backed EKS plus an ingress controller entails cluster, nodes, Kubernetes and networking management unnecessary for these short periodic jobs and static reports.",
+    "plainWords": "Replace the three on-premises components with managed services: IoT devices publish MQTT to IoT Core; metadata moves from MongoDB to DocumentDB; short report jobs use Step Functions/Lambda and reports are served from S3 through CloudFront.",
+    "keyPoints": "Select THREE B,D,E. IoT Core supports MQTT 3.1.1/5.0 with QoS 0/1, not QoS 2. IoT Rules can invoke Lambda/route to S3 etc.; a direct DocumentDB IoT Rules action is not implied. AWS Lambda standard timeout is configurable up to 900 seconds (15 minutes); 120–600 seconds can fit but reserve margin. For scheduled reporting use EventBridge Scheduler to start Step Functions. CloudFront S3 origin with Origin Access Control (OAC) protects private reports; use viewer authorization/signed URLs/cookies if confidential. Amazon DocumentDB does not support every MongoDB feature; test compatibility/migration. Q116 is a scenario-level near-duplicate with reordered A,D,E answers, NOT a disagreement with Q438 B,D,E.",
+    "sourceWarning": "SOURCE OCR/PUNCTUATION: 'loT' vs IoT, 'S3origin', missing sentence boundaries; preserve stem/options for provenance. ARCHITECTURE GAPS: Option B does not describe IoT Rules downstream routing; option E does not state the trigger or authentication and presumes report-viewing site is static. Potential long-tail job durations must fit applicable Lambda timeout. DocumentDB compatibility is not feature-identical to MongoDB. Exact external Q438 mirrors (Exact2Pass/Pupuweb/Pass2Lead) show B,D,E; independently researched reworded Q116 external mirrors (CertsHero/Certstopics/ExamTopics) show A,D,E because of reordered choices plus IoT rule detail, not a conflicting architecture. Exam mirrors may copy shared source, not independent AWS authority. BANK DUPLICATE: Q116 strong conceptual near-duplicate; no other equivalent full-stack duplicate; related Q228/Q255/Q467/Q509/Q583 IoT messaging, Q258/Q453 MongoDB-to-DocumentDB, Q420 and Q434 serverless/reporting. Q467 stored key A is suspicious given managed AWS IoT Core option B; separately audit Q467. AWS sources: https://docs.aws.amazon.com/iot/latest/developerguide/mqtt.html ; https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html ; https://docs.aws.amazon.com/documentdb/latest/devguide/compatibility.html ; https://docs.aws.amazon.com/documentdb/latest/devguide/docdb-migration-runbook.html ; https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html .",
+    "review": {
+      "status": "verified-aws-and-multiple-external-variants",
+      "reviewedAt": "2026-11-01",
+      "answer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/iot/latest/developerguide/mqtt.html",
+        "https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html",
+        "https://docs.aws.amazon.com/documentdb/latest/devguide/compatibility.html",
+        "https://docs.aws.amazon.com/documentdb/latest/devguide/docdb-migration-runbook.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html",
+        "https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-8.html",
+        "https://pupuweb.com/aws-sap-c02-exam-question-answer-move-platform-least-overhead/",
+        "https://www.pass2lead.com/sap-c02/questions.html",
+        "https://www.certshero.com/amazon/sap-c02/practice-test",
+        "https://www.certstopics.com/questions/aws-certified-professional-sap-c02-updated-exam.html"
+      ],
+      "similarQuestionIds": [
+        116,
+        228,
+        255,
+        467,
+        509,
+        583,
+        258,
+        453,
+        420,
+        434
+      ],
+      "duplicateQuestionIds": [
+        116
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 439,
