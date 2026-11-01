@@ -10533,7 +10533,7 @@
       },
       {
         "id": "C",
-        "text": "Adverse the VPC prefixes from the Direct Connect gateway to the on-premises network over the transit VIF."
+        "text": "Advertise the VPC prefixes from the Direct Connect gateway to the on-premises network over the transit VIF."
       },
       {
         "id": "D",
@@ -10549,13 +10549,62 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B and C. Bidirectional BGP reachability over the transit VIF requires the on-premises BGP router to advertise on-prem CIDRs to AWS (B) and the Direct Connect gateway to advertise the allowed AWS/VPC prefixes to on premises (C). For a transit gateway association, the Direct Connect gateway allowed-prefix list controls the prefixes AWS originates, which can include VPC CIDRs or aggregates. Transit VIFs are supported at 1 Gbps; MACsec does not replace routing.",
+    "wrongOptionsExplanation": "A: 1 Gbps is supported for transit VIFs, so upgrading to 10 Gbps is unnecessary. D: MACsec must-encrypt concerns link encryption, not routing; MACsec availability depends on dedicated connection capabilities. E: MACsec CKN/CAK provides encryption keys, not BGP reachability.",
+    "plainWords": "Both sides must know the way back: tell AWS which IP networks live in your data center, and tell your data center which IP networks live in AWS.",
+    "keyPoints": "Transit VIF -> Direct Connect gateway -> Transit Gateway -> multiple VPCs. BGP announces on-prem routes to AWS (B) and DX gateway allowed AWS-side prefixes to on-prem (C). A transit VIF supports 1 Gbps; no 10 Gbps requirement. MACsec is optional encryption, not routing. Check TGW route tables and VPC routes. Transit VIF BGP max 100 advertised routes per session (hard quota).",
+    "sourceWarning": "Original option C typo 'Adverse' corrected to 'Advertise' and original snapshot retained. Stem says 'account VPC' singular while multiple VPCs are intended; topology is otherwise technically valid. Actual configuration also requires Direct Connect gateway association to transit gateway, transit VIF attachment, allowed-prefix list, BGP session, and TGW/VPC routes. External identical variants https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=22 and https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-4.html agree B,C. AWS https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html and https://repost.aws/knowledge-center/direct-connect-fix-connectivity-to-vpc",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "position": 8,
+      "totalMultiAnswer": 33,
+      "verifiedAnswers": [
+        "B",
+        "C"
+      ],
+      "status": "verified-minor-typo-corrected",
+      "exactDuplicates": [],
+      "related": [
+        96,
+        185,
+        268,
+        301,
+        308,
+        427,
+        625
+      ],
+      "notes": "Reviewed 674; no exact stem duplicate; related Direct Connect/VIF/TGW questions test different requirements. Two independent external exam mirrors agree B,C; official AWS confirms 1Gbps and bidirectional BGP."
+    },
+    "answerStatus": "verified",
+    "originalQuestionSnapshot": {
+      "stem": "A company wants to establish a dedicated connection between its on-premises infrastructure and AWS. The company is setting up a 1 Gbps AWS Direct Connect connection to its account VPC. The architecture includes a transit gateway and a Direct Connect gateway to connect multiple VPCs and the on-premises infrastructure. The company must connect to VPC resources over a transit VIF by using the Direct Connect connection. Which combination of steps will meet these requirements? (Select TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Update the 1 Gbps Direct Connect connection to 10 Gbps."
+        },
+        {
+          "id": "B",
+          "text": "Advertise the on-premises network prefixes over the transit VIF."
+        },
+        {
+          "id": "C",
+          "text": "Adverse the VPC prefixes from the Direct Connect gateway to the on-premises network over the transit VIF."
+        },
+        {
+          "id": "D",
+          "text": "Update the Direct Connect connection's MACsec encryption mode attribute to must encrypt."
+        },
+        {
+          "id": "E",
+          "text": "Associate a MACsec Connection Key Name-Connectivity Association Key (CKN/CAK) pair with the Direct Connect connection."
+        }
+      ],
+      "answers": [
+        "B",
+        "C"
+      ]
+    }
   },
   {
     "id": 242,

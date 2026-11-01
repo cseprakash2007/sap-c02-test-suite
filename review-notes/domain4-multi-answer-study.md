@@ -129,3 +129,15 @@ Branch: `answer-audit-2026-10-28`. Total multi-answer questions identified in da
 **674 question duplicate/similarity audit:** No exact normalized-stem duplicate. Strong conceptual overlaps Q56, Q106, Q168, Q212, Q142, Q264, Q266, Q395 (discovery, utilization, dependencies and migration planning). Q478/Q537/Q545 address business case, cost, Migration Evaluator and broader VMware inventory. Compare each question's discovery versus assessment versus actual execution requirement; don't equate different answer letters.
 
 **Next:** Determine Q191+ multi-answer sequence from dataset (8 of 33).
+
+## 8 of 33 — Q241 — Select TWO — Direct Connect transit VIF bidirectional BGP
+
+**Verified B,C (unchanged).** B advertises on-premises CIDRs via BGP over the transit VIF toward AWS. C advertises AWS-side allowed prefixes from the Direct Connect gateway toward on-premises. A is false because a 1 Gbps transit VIF is supported; D/E configure MACsec link encryption, not reachability. Direct Connect gateway allowed-prefix lists control the AWS advertisements on transit gateway associations. Configure the transit VIF, DX gateway-TGW association, TGW/VPC routes and BGP session; AWS re:Post states 100 on-prem routes per transit VIF BGP session is a hard quota.
+
+**Source defect:** Corrected original C typo 'Adverse' -> 'Advertise'; original stem/options/answers preserved in originalQuestionSnapshot. Singular 'account VPC' awkward but not answer-changing. No obsolete service.
+
+**External matching exam variants:** https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=22 (Q102, B,C); https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-4.html (B,C). **AWS official:** https://docs.aws.amazon.com/directconnect/latest/UserGuide/WorkingWithVirtualInterfaces.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html ; https://docs.aws.amazon.com/vpc/latest/tgw/tgw-dcg-attachments.html ; https://repost.aws/knowledge-center/direct-connect-fix-connectivity-to-vpc
+
+**674-question duplicate audit:** No exact normalized stem duplicate. Related Q96 (DX/TGW connectivity), Q185 (hybrid network), Q268 (hybrid), Q301 (multi-region), Q308 (single DX resiliency), Q427 (hybrid DX), Q625 (DX networking). Their objectives differ; do not transfer B,C without checking routing-vs-redundancy-vs-encryption requirements.
+
+**Next:** Q248 — 9 of 33.
