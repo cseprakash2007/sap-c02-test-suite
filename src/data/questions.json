@@ -25563,13 +25563,20 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B verified. Place an internal Network Load Balancer with static private IP address per enabled Availability Zone in front of the existing internal Application Load Balancer. Configure an NLB TCP listener on port 443 and an 'alb'-type target group with the existing ALB as its single target, so TLS continues to terminate on the ALB and existing HTTPS path-based listener rules remain intact. Allow-list all NLB AZ private IPs on the on-premises firewall, ensure Direct Connect routes to the NLB subnets, and update client DNS to the NLB. AWS docs: https://docs.aws.amazon.com/elasticloadbalancing/latest/network/application-load-balancer-target.html ; https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html .",
+    "wrongOptionsExplanation": "A: ALB IPs are not configurable static addresses; its nodes and DNS-resolved addresses may change. B: Correct: NLB supplies static private IPs while forwarding TCP 443 to the ALB, preserving ALB TLS termination and path routing. C: NLB has no HTTP URL path-based routing, so removing the ALB and attaching its target groups cannot preserve the existing behavior; option also contains typos. D: GWLB distributes traffic to network appliances and does not accept ALB-type target groups or replace this NLB-to-ALB pattern.",
+    "plainWords": "The office firewall only allows known IP addresses. Put an internal NLB in front of the ALB, allow-list the NLB's fixed private IP for each Availability Zone, and forward TCP 443 to the ALB. The ALB keeps decrypting HTTPS and routing /api and /app to the right servers.",
+    "keyPoints": "NLB = Layer 4 TCP and static private IP per enabled AZ; internal NLB private IPs are appropriate for Direct Connect. ALB = Layer 7 HTTP/HTTPS host/path rules and TLS termination. NLB target group type 'alb' can register exactly one ALB, in same VPC and account, with matching listener/target group ports; use TCP pass-through to retain ALB TLS termination. NLB does not support ALB path rules. Allow-list all enabled-AZ NLB IPs and use DNS pointing to NLB. GWLB targets network appliances.",
+    "sourceWarning": "SOURCE KEY B VERIFIED by exact-stem FreeCram SAP-C02 Q137 and official AWS NLB ALB-type target group docs. Wording defects: B 'one static IP addresses', 'ALAdd' missing punctuation; C 'LNB', missing punctuation before Add; D incorrect GWLB target-group model. Retain original wording for traceability. No confirmed Choose TWO/THREE variant. https://www.freecram.net/question/Amazon.SAP-C02.v2023-09-11.q137/a-telecommunications-company-is-running-an-application-on-aws-the-company-has-set-up-an-aws-direct-connec ; https://docs.aws.amazon.com/elasticloadbalancing/latest/network/application-load-balancer-target.html ; https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html .",
+    "review": {
+      "status": "verified-with-transcription-defects",
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "Official AWS ALB-as-NLB-target confirms static private IP and path routing; FreeCram exact stem Q137 keys B. No confirmed Choose TWO/THREE variant. Source typos ALAdd/LNB flagged."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 626,
