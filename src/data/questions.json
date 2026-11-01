@@ -19649,13 +19649,33 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historical exam answer A: Amazon Connect is a managed contact center replacing on-premises call center infrastructure; Amazon Pinpoint historically supplied managed customer-engagement SMS journeys and surveys. CRITICAL 2026 UPDATE: Amazon Pinpoint engagement features ended support October 30, 2026; this option is no longer a deployable recommendation for a new customer. For a modern solution, use Amazon Connect and its customer outbound campaign/engagement capabilities, with AWS End User Messaging SMS and reply-handling/orchestration as needed. No listed option fully satisfies current managed two-way survey requirements.",
+    "wrongOptionsExplanation": "A: Historically best for a managed contact center plus interactive SMS engagement; now outdated due to Pinpoint engagement retirement. B: SNS can send SMS, but does not alone provide a managed interactive two-way survey workflow. C: EC2 Auto Scaling leaves application and survey management to the customer, increasing overhead. D: Pinpoint is not a managed inbound contact-center replacement and its engagement features have ended support.",
+    "plainWords": "Replace aging call-center servers with Amazon Connect and use managed customer engagement to send and process SMS surveys. The original Pinpoint answer is historical: Pinpoint engagement ended support October 30, 2026.",
+    "keyPoints": "Amazon Connect = managed contact center. Amazon SNS = basic notification/SMS sending, not turnkey interactive survey orchestration. Amazon Pinpoint engagement (segments, campaigns, journeys, analytics) retired October 30, 2026; its messaging channels are AWS End User Messaging. Modernize with Amazon Connect outbound engagement plus AWS End User Messaging and response handling. Historical A retained for studying old exam keys; no fully current option.",
+    "sourceWarning": "OUTDATED/DEFECTIVE AS OF 2026-10-30: Amazon Pinpoint engagement platform retired; option A is the historical intended answer but no longer a current deployable solution. None of A-D fully meets today's managed two-way SMS survey requirements. One external exact-stem single-answer source (ExamsVCE) confirms historical A; no confirmed Choose TWO/THREE variant.",
+    "review": {
+      "status": "outdated-no-currently-valid-option",
+      "reviewedAt": "2026-10-31",
+      "domain4Position": "98/139",
+      "historicalAnswer": [
+        "A"
+      ],
+      "currentAnswer": null,
+      "references": [
+        "https://docs.aws.amazon.com/pinpoint/latest/userguide/migrate.html",
+        "https://aws.amazon.com/pinpoint/faqs/",
+        "https://docs.aws.amazon.com/solutions/contact-surveys-for-amazon-connect/",
+        "https://www.examsvce.com/sap-c02/a-company-runs-a-customer-service-center-question-answer.html"
+      ],
+      "variantCheck": "Exact-stem ExamsVCE single-answer A; no confirmed Choose TWO/THREE version.",
+      "defects": [
+        "Pinpoint engagement capabilities retired 2026-10-30",
+        "No listed option fully meets current requirements",
+        "Two-way survey requires orchestration/reply handling beyond basic SNS SMS"
+      ]
+    },
+    "answerStatus": "outdated-no-currently-valid-option"
   },
   {
     "id": 476,
