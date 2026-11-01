@@ -22613,13 +22613,20 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historical best answer C: Migration Evaluator's agentless collector inventories and measures large VMware estates without deploying software to each guest VM; identify inactive/underutilized systems and use inventory for cost-effective migration planning. IMPORTANT original wording is technically imprecise: AWS says deploy the Migration Evaluator collector on a separate Windows Server VM and collect from VMware vSphere APIs; do not install it 'to the ESXi hypervisor'. Migration Hub can historically track imported assets, but it stopped accepting new customers 2025-11-07. AWS Transform is the current alternative for new projects. https://aws.amazon.com/migration-evaluator/faqs/ ; https://docs.aws.amazon.com/migrationhub/latest/ug/migrationhub-availability-change.html ; https://docs.aws.amazon.com/transform/latest/userguide/transform-app-assessments.html .",
+    "wrongOptionsExplanation": "A: Patch Manager patches managed nodes; it does not install a Migration Evaluator collector in each guest VM, and removing highly utilized servers is not a valid migration-assessment rule. B: Manual CSV/disk inspection is labor-intensive and incomplete, high utilization is not a reason to remove servers, and AWS SMS ended support April 1, 2023. C: Correct historical intent, agentless VMware estate inventory and utilization; wording should say separate Windows Server collector VM connecting to vCenter/vSphere, not install on ESXi. D: AWS Application Migration Service agent on every VM is for rehosting/replication, and Redshift+QuickSight are unnecessary for inventory assessment.",
+    "plainWords": "There are thousands of unknown VMware servers. Instead of logging into each server or installing agents, deploy one agentless collection appliance/VM, connect it to VMware management, measure which servers actually run, and plan which ones to migrate, right-size, or retire.",
+    "keyPoints": "Migration Evaluator = VMware inventory, utilization, right-sizing and cost case. Agentless collector uses separate Windows Server VM and VMware vSphere APIs; no agent on ESXi or each guest. AWS recommends 2–4 weeks for TCO and 2–6 weeks for migration planning. Inactive VMs are retirement candidates subject to owner verification, not automatic deletion. AWS Migration Hub stopped accepting new customers Nov 7 2025; AWS Transform migration assessments are the modern alternative. AWS SMS ended support Apr 1 2023.",
+    "sourceWarning": "SOURCE WORDING DEFECT: Option C says 'Deploy the Migration Evaluator agentless collector to the ESXi hypervisor'; AWS official FAQ states collector is deployed as a separate Windows Server virtual machine, not installed on the hypervisor or each server. C remains intended and best historical answer, but not fully accurate as written. OUTDATED: AWS Migration Hub stopped accepting new customers 2025-11-07, AWS Transform recommended for new projects; AWS SMS in B retired 2023-04-01. Stem capitalization 'Knowledge' should be 'knowledge'. External exact-stem copies FreeCram question 101/264, Exam-Tests question 343, CertEnsure and Scribd all key C; no confirmed Choose TWO/THREE variant. Sources: https://aws.amazon.com/migration-evaluator/faqs/ ; https://docs.aws.amazon.com/migrationhub/latest/ug/migrationhub-availability-change.html ; https://docs.aws.amazon.com/transform/latest/userguide/transform-app-assessments.html ; https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-wants-to-migrate-to-aws-the-company-is-running-thousands-of-vms-in-a-vmware-esxi-environment ; https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=70 .",
+    "review": {
+      "status": "verified-with-wording-and-lifecycle-defects",
+      "verifiedAnswer": [
+        "C"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "Official Migration Evaluator FAQ confirms separate Windows Server collector, not ESXi installation; Migration Hub new customer cutoff 2025-11-07, SMS end support 2023. External exact-stem sources key C; no confirmed multi-answer variant."
+    },
+    "answerStatus": "verified-outdated"
   },
   {
     "id": 546,
