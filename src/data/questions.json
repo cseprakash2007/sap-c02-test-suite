@@ -14205,13 +14205,75 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C,D,E is the historically intended key: RDS Proxy reduces client DNS/reconnection delay, Aurora MySQL offers faster cluster failover, and an Aurora Replica in another AZ supplies a promotable writer candidate. AWS documents RDS MySQL Multi-AZ typical failover 60–120 seconds and Aurora typical failover about 30 seconds; RDS Proxy can reduce Aurora failover delays by up to 66%. The strict <20-second requirement is NOT guaranteed and must be load-tested.",
+    "wrongOptionsExplanation": "A Memcached can offload reads but cannot shorten MySQL writer failover or restore writes. B Redis similarly provides caching but does not fix underlying writer failover. C RDS Proxy maintains stable client endpoint, bypasses DNS caches, redirects to new writer; in-flight transactions may fail. D Aurora MySQL supports rapid replica promotion with fault-tolerant shared storage. E Aurora Replica in another AZ is an automatic failover target; without it, recovery is slower. F standard RDS MySQL read replica is asynchronously replicated and requires promotion rather than automatically becoming the Multi-AZ writer.",
+    "plainWords": "The app loses database access for 40 seconds during a MySQL failover. Move to Aurora with a promotable replica and put RDS Proxy between the application and database to reduce recovery and reconnection delays.",
+    "keyPoints": "RDS Multi-AZ standby != conventional read replica != Aurora Replica. RDS Proxy hides DNS change and manages connections, but does not guarantee zero downtime or save in-flight transactions. Aurora with cross-AZ replica provides automated failover target. AWS Aurora typical failover ~30s; proxy can reduce delays up to 66%, not guaranteed under 20s. Test actual application outage and retries.",
+    "sourceWarning": "Strict 'less than 20 seconds' is not guaranteed by C,D,E; AWS provides typical and up-to improvement metrics, not hard SLO. External dumpscollection variant reports conflicting A,B,F, unsupported by failover mechanics. Original punctuation error 'application A' retained in original snapshot.",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "domain4-multi-answer-aws-verified-source-slo-defect",
+      "originalAnswers": [
+        "C",
+        "D",
+        "E"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.Failover.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy.howitworks.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.certstopics.com/questions/all-sap-c02-test-inside-amazon-web-services-questions.html",
+        "https://exampractice.org/examtopics/amazon-exams/aws-certified-solutions-architect-professional-sap-c02",
+        "https://www.dumpscollection.net/downloadfile.html?id=15448",
+        "https://exampal.app/questions/aws-sap-c02-a-company-is-running-a-critical-application-that-uses-an-amazon-rds-for-mysql-database-to-store-data/"
+      ],
+      "externalVariantConflict": "DumpsCollection ABF conflicts with AWS-based CDE; mirrors are not authoritative",
+      "exactDuplicateIDs": [],
+      "similarQuestionIDs": [
+        287,
+        431,
+        230,
+        525
+      ]
+    },
+    "answerStatus": "aws-docs-verified-source-slo-defect",
+    "originalQuestionSnapshot": {
+      "stem": "A company is running a critical application that uses an Amazon RDS for MySQL database to store data. The RDS DB instance is deployed in Multi-AZ mode. A recent RDS database failover test caused a 40-second outage to the application A solutions architect needs to design a solution to reduce the outage time to less than 20 seconds. Which combination of steps should the solutions architect take to meet these requirements? (Select THREE.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use Amazon ElastiCache for Memcached in front of the database"
+        },
+        {
+          "id": "B",
+          "text": "Use Amazon ElastiCache for Redis in front of the database."
+        },
+        {
+          "id": "C",
+          "text": "Use RDS Proxy in front of the database"
+        },
+        {
+          "id": "D",
+          "text": "Migrate the database to Amazon Aurora MySQL"
+        },
+        {
+          "id": "E",
+          "text": "Create an Amazon Aurora Replica"
+        },
+        {
+          "id": "F",
+          "text": "Create an RDS for MySQL read replica"
+        }
+      ],
+      "answers": [
+        "C",
+        "D",
+        "E"
+      ]
+    }
   },
   {
     "id": 327,
