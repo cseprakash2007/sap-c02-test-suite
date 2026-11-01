@@ -27230,13 +27230,23 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A: EC2 Auto Scaling behind ALBs scales existing .NET web and application tiers. Aurora PostgreSQL with Babelfish provides T-SQL/TDS compatibility, reducing SQL Server licensing and extensive rewrites. Assess unsupported SQL Server features before migration. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/babelfish-migration.html",
+    "wrongOptionsExplanation": "A correct: scalable tiers plus Babelfish. B incorrect: DMS does not image servers; DynamoDB requires redesign. C incorrect: EKS containerization adds effort and RDS SQL Server retains licensing. D incorrect: Lambda/API Gateway/S3/Athena require extensive rewrite and Athena is not an OLTP database.",
+    "plainWords": "Keep and scale the existing .NET application on EC2 with ALBs, and use Babelfish on Aurora PostgreSQL to reduce SQL Server licensing without a large rewrite.",
+    "keyPoints": "Babelfish supports T-SQL/TDS but not all SQL Server features; run Babelfish Compass compatibility assessment. DMS is database migration, not server imaging. Athena is analytical, not transactional.",
+    "sourceWarning": "Original OCR defects: 'ALBfor' and 'SOL Server'. Exact stem found at https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=10 . No confirmed Choose TWO/THREE variant or independently verified second external answer key.",
+    "review": {
+      "status": "verified",
+      "originalAnswer": [
+        "A"
+      ],
+      "verifiedAnswer": [
+        "A"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS Babelfish docs confirm A; external exact stem located; no confirmed multi-answer variant."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 672,
