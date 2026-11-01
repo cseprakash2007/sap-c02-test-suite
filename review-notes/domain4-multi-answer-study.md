@@ -153,3 +153,17 @@ Branch: `answer-audit-2026-10-28`. Total multi-answer questions identified in da
 **674-question comparison:** No exact duplicate. Q360 is centralized multi-VPC inspection where TGW may be necessary; Q375 is shared-services AWS Marketplace firewall with appliances + GWLB + GWLBe, different topology and answer A,C,F. Related Q521 (web app deployment) and Q625 (DX) are not the same inspection scenario. Similar framework can lead to different answers because the number of VPCs and need for centralized routing differ.
 
 **Next:** Q249 — 10 of 33.
+
+## 10 of 33 — Q249 — Select TWO — VMware application and SQL Server VM low-downtime rehost
+
+**Historical answer A,D; RETIRED SERVICE WARNING.** A and D both select AWS SMS incremental VMware VM replication (SQL Server VM and application VM). SMS was discontinued March 31, 2022; historical SMS snapshot replication ran no more frequently than hourly, so its RPO was not near-zero. **Current 2026:** AWS Transform MGN (formerly AWS Application Migration Service, renamed June 2026) continuously replicates blocks and orchestrates testing and cutover of both VMs. Use Direct Connect private replication networking and validate supported OS, per-disk/per-server limits, SQL crash/application consistency, licensing, EBS target design and synchronized application/database cutover.
+
+**Distractors:** B VM Import/Export is a one-time app VM image import; C Snowball Edge device shipment/offline transfer is not continuous and 10 Gbps DX is available; E DMS replication to RDS can provide low database downtime but changes target architecture and does not itself rehost SQL Server VM. 500 TB at 10 Gbps theoretical minimum ~4.63 days to seed, not 4.63 days application downtime; verify actual sustained bandwidth and per-disk limitations.
+
+**Multiple external exam variants:** [PassTest Q153 reordered](https://www.passtest.jp/articles/2025%E5%B9%B404%E6%9C%88%E5%AE%9F%E9%9A%9B%E3%81%AB%E5%87%BA%E3%82%8Bsap-c02%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C%E9%9B%86%E3%81%AB%E3%81%AF%E6%AD%A3%E7%A2%BA%E3%81%A7%E6%9B%B4%E6%96%B0%E3%81%95%E3%82%8C%E3%81%9F%E5%95%8F%E9%A1%8C-q152-q170/); [FreePDFDumps Q99 reordered](https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=21); [Scribd Q311 original A,D](https://www.scribd.com/document/1030319491/SAP-C02-Dg-Re-Vh8uyt); [Examlex Q297 original A,D](https://theexamlex.work/exams/181452-exams-10-aws-certified-solutions-architect-prof/28). Verify answer by option content, not letters across sites.
+
+**Official AWS:** https://aws.amazon.com/blogs/mt/accelerate-your-migration-with-aws-application-migration-service/ ; https://aws.amazon.com/application-migration-service/ ; https://docs.aws.amazon.com/transform/latest/userguide/transform-vmware-migrate-servers.html ; https://docs.aws.amazon.com/mgn/latest/ug/MGN-service-limits.html ; https://aws.amazon.com/blogs/architecture/field-notes-choosing-a-rehost-migration-tool-cloudendure-or-aws-sms/
+
+**674-question duplicates:** No exact duplicate. Similar Q44/Q324 VMware server rehost; Q92/Q217/Q560 database-only migration and DMS/RDS; Q259 massive bulk data transfer with Snowball; Q190 discovery and planning, not execution; Q536 replication scenario. Different requirements can justify different services/answers.
+
+**Next:** Q268 — 11 of 33.

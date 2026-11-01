@@ -10966,13 +10966,43 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historical exam answer A,D: recurring AWS SMS snapshot/incremental replication jobs migrate both the SQL Server VMware VM and the application VMware VM while sources continue running; final coordinated cutover after latest replication. SMS is discontinued and not viable in 2026. For a new project, use AWS Transform MGN (formerly AWS Application Migration Service) continuous block-level replication and coordinated test/cutover for both servers. Even historical SMS used periodic snapshots, with >=1-hour replication intervals, so it does not guarantee near-zero RPO.",
+    "wrongOptionsExplanation": "B: VM Import/Export is a one-time import, without continuous source changes replicated, so app-server cutover downtime/data drift risk is higher. C: Snowball Edge device shipment and offline VM export do not offer continuous low-downtime cutover, and 10 Gbps Direct Connect is available. E: DMS CDC to RDS may minimize SQL database downtime but changes deployment to managed RDS rather than lift-and-shift of the existing SQL VM; paired with a VM import it still fails to offer the intended synchronized VM cutover.",
+    "plainWords": "Historically copy both VMs repeatedly, then switch traffic when the latest copies are ready. Today use AWS Transform MGN to replicate each VM continuously, test, and cut over the app and SQL Server together.",
+    "keyPoints": "Historical A,D = SMS incremental snapshot replication of BOTH VMware VMs; retired March 2022. 2026 = AWS Transform MGN (formerly Application Migration Service, renamed June 2026), continuous block-level replication, test launch, coordinated cutover. 10 Gbps theoretical 500 TB initial transfer ~4.6 days at line rate (decimal); initial sync duration != application downtime. DMS is database-only and RDS modernization, not full VM rehost. Check 500 TB disk/volume feasibility, per-server EBS and MGN limits, SQL consistency, Direct Connect routing, licensing.",
+    "sourceWarning": "SEVERELY OUTDATED: Both keyed options A,D use AWS SMS, discontinued March 31 2022. New deployments should use AWS Transform MGN, rebranded from AWS Application Migration Service in June 2026. 500 TB 'each server' vs 'VM that consumes' ambiguity; must validate MGN/EBS source-disk constraints and SQL Server consistency. Historical SMS periodic snapshots may produce >=1h RPO and do not guarantee minimum downtime. External variants PassTest Q153 reorders options; FreePDFDumps Q99 reorders; Scribd Q311 A,D; Examlex Q297 A,D. AWS https://aws.amazon.com/application-migration-service/ ; https://aws.amazon.com/blogs/mt/accelerate-your-migration-with-aws-application-migration-service/",
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "position": 10,
+      "totalMultiAnswer": 33,
+      "historicalKey": [
+        "A",
+        "D"
+      ],
+      "status": "obsolete-retired-service",
+      "exactDuplicates": [],
+      "related": [
+        44,
+        56,
+        92,
+        190,
+        208,
+        217,
+        259,
+        324,
+        395,
+        536,
+        545,
+        560
+      ],
+      "relatedNotes": "Q44 and Q324 focus VM rehosting/VMware; Q92/Q217/Q560 focus database-only DMS/RDS; Q259 large data physical transfer; Q190 migration assessment vs execution. No exact duplicate.",
+      "externalVariants": [
+        "https://www.passtest.jp/articles/2025%E5%B9%B404%E6%9C%88%E5%AE%9F%E9%9A%9B%E3%81%AB%E5%87%BA%E3%82%8Bsap-c02%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C%E9%9B%86%E3%81%AB%E3%81%AF%E6%AD%A3%E7%A2%BA%E3%81%A7%E6%9B%B4%E6%96%B0%E3%81%95%E3%82%8C%E3%81%9F%E5%95%8F%E9%A1%8C-q152-q170/",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=21",
+        "https://www.scribd.com/document/1030319491/SAP-C02-Dg-Re-Vh8uyt"
+      ]
+    },
+    "answerStatus": "verified-with-outdated-warning"
   },
   {
     "id": 250,
