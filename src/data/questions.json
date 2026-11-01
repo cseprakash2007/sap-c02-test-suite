@@ -26614,16 +26614,26 @@
       }
     ],
     "answers": [
-      "C"
+      "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is the only valid choice: download/redeploy Lambda deployment packages in Target; share the existing Aurora DB cluster through AWS RAM to Target and authorize cross-account copy-on-write cloning. Aurora cross-account cloning is faster than snapshot restore, minimizing provisioning time. Lambda functions are NOT supported AWS RAM shareable resources; use deployment packages/IaC to recreate functions, IAM roles, triggers and configuration. Automated Aurora cluster snapshots cannot be shared directly: copy to manual snapshot first if snapshot method is chosen. IMPORTANT: an Aurora clone is a point-in-time copy, not continuously replicated; for write-heavy workloads coordinate final write freeze/sync and cutover to prevent divergence. AWS https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.Cross-Account.html ; https://docs.aws.amazon.com/ram/latest/userguide/shareable.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-share-snapshot.html .",
+    "wrongOptionsExplanation": "A: Lambda package redeployment is valid, but automated Aurora DB cluster snapshots cannot be shared directly; first copy to a manual snapshot. B: Correct: recreate Lambda functions in Target and use RAM to share/clone Aurora DB cluster, which is faster than snapshot restore. C: Invalid: AWS RAM does not support sharing Lambda functions; only the Aurora cluster part is valid. D: Invalid for both reasons: Lambda functions cannot be shared through RAM, and automated Aurora snapshots cannot be shared directly.",
+    "plainWords": "To move Lambda to another AWS account, deploy the function code again there. To move Aurora quickly, share its cluster through AWS RAM and clone it in the new account. Do NOT try to share Lambda through RAM or share an automated snapshot directly. Answer B, not the original C.",
+    "keyPoints": "AWS RAM supports Aurora DB cluster cross-account clone, NOT Lambda function sharing. Lambda cross-account invocation permissions are not function migration. Automated Aurora DB cluster snapshots must be copied to MANUAL snapshots before sharing. Aurora clone uses copy-on-write and is faster than snapshot restore, but is a point-in-time independent cluster; ensure write consistency/cutover. For encrypted Aurora source, customer-managed KMS key access required; default RDS KMS key blocks cross-account cloning. Recreate Lambda code, role, event source mappings, environment variables, VPC settings and permissions.",
+    "sourceWarning": "CORRECTED ORIGINAL WRONG KEY C -> B. AWS RAM shareable resources list supports Aurora clusters but not Lambda functions. Exact-stem FreeCram Q264 and P2PExams publish C yet their own explanation describes B, an internal answer/explanation contradiction. Pupuweb exact stem keys B. Automated Aurora snapshots cannot be shared directly. No confirmed Choose TWO/THREE variant. Original typo 'store’s', option B missing period and '{AWS RAM)' malformed. AWS: https://docs.aws.amazon.com/ram/latest/userguide/shareable.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Clone.Cross-Account.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-share-snapshot.html ; https://docs.aws.amazon.com/lambda/latest/dg/permissions-function-cross-account.html . External: https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-applications-in-an-aws-account-that-is-named-source-the-account-is-in-an-organization ; https://www.p2pexams.com/free-questions/braindumpscollection-amazon-sap-c02-exam-dumps-by-marquez-18-01-2024-6qa.pdf ; https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/3/ .",
+    "review": {
+      "status": "corrected-source-key",
+      "originalAnswer": [
+        "C"
+      ],
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-01",
+      "notes": "AWS RAM does not share Lambda functions; Aurora cluster cloning via RAM supported. Automated Aurora snapshots cannot be shared directly. FreeCram/P2PExams key C but explanations describe B; Pupuweb keys B. Corrected answers C to B. No confirmed multi-answer variant."
+    },
+    "answerStatus": "verified-corrected"
   },
   {
     "id": 655,
