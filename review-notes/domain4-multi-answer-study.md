@@ -167,3 +167,17 @@ Branch: `answer-audit-2026-10-28`. Total multi-answer questions identified in da
 **674-question duplicates:** No exact duplicate. Similar Q44/Q324 VMware server rehost; Q92/Q217/Q560 database-only migration and DMS/RDS; Q259 massive bulk data transfer with Snowball; Q190 discovery and planning, not execution; Q536 replication scenario. Different requirements can justify different services/answers.
 
 **Next:** Q268 — 11 of 33.
+
+## 11 of 33 — Q268 — Select TWO — Multi-Region Direct Connect hybrid access and public services
+
+**SOURCE CORRUPTION REPAIRED:** Original JSON incorrectly split external option A into two options A and B, leaving 6 choices and key A,E. Reconstructed original **five-option** source from [FreeCram Q12/355](https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-is-building-a-hybrid-environment-that-includes-servers-in-an-on-premises-data-center-and-in); historical answer now **A,D**. Stored old question/options/answers in originalQuestionSnapshot.
+
+**Historical A,D, but defective architecture.** A Direct Connect gateway connects multiple VPCs in different Regions using **private VIF -> DX gateway -> VGW associations**. D includes a public VIF, which is needed to access public AWS services, but it also requires **Site-to-Site VPN over public VIF to the remote VPCs**, which is unnecessary because the private VIF/DX gateway already provides private routing. Technically clean implementation is one physical DX circuit with private VIF to global DX gateway and each VPC's VGW, plus public VIF for AWS public service IPs. AWS Direct Connect gateway is globally available; not intrinsically located in nearest Region. The private VIF (not the physical DX circuit) associates with the gateway.
+
+**All options:** A best available cross-Region DX gateway; B unnecessary extra circuits/port charges; C VPN over private VIF is not the normal supported AWS-managed Site-to-Site VPN pattern; D public VIF useful but bundled VPN redundant; E inter-Region peering is non-transitive and cannot carry DX-to-peered-VPC traffic. Historical answer A,D should be marked flawed rather than unconditionally correct.
+
+**AWS docs:** https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways-intro.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/ ; https://repost.aws/knowledge-center/public-private-interface-dx ; https://repost.aws/knowledge-center/set-up-direct-connect-gateway ; https://repost.aws/knowledge-center/connect-private-network-dx-vif . External original matching variant: https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-is-building-a-hybrid-environment-that-includes-servers-in-an-on-premises-data-center-and-in . A second independent exact external variant was not confirmed.
+
+**674 duplicate audit:** No exact stem duplicate. Related Q96, Q185, Q241, Q301, Q308, Q427 and Q625 use Direct Connect, multi-Region hybrid routing, resilience or transit VIF. Q241 specifically requires transit VIF/BGP for a TGW, unlike this Q268 private VIF/VGW model. Q308 focuses resilience rather than cost and public service access.
+
+**Next:** Q276 — 12 of 33.
