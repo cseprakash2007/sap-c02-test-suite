@@ -21328,9 +21328,19 @@
     "wrongOptionsExplanation": "",
     "plainWords": "",
     "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "FLAG FOR REVIEW: Stored B,D,E includes public subnets although application must not be internet-accessible. Public staging subnets are not inherently public application access, but private staging subnet with NAT or VPC endpoints is clearer. Source question has no explicit throttle configuration option even though it requires preserving bandwidth; E enables private IP, not throttling. A,D,E may be more defensible than B,D,E but no definitive answer correction without further source verification. Compare Q9, whose requirements explicitly specify 75% throttle. AWS https://docs.aws.amazon.com/drs/latest/userguide/data-routing.html ; https://docs.aws.amazon.com/drs/latest/userguide/Network-Settings-Preparations.html ; https://docs.aws.amazon.com/drs/latest/userguide/Network-Requirements.html",
+    "review": {
+      "status": "needs-source-reconciliation",
+      "originalAnswer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "verifiedAnswer": null,
+      "verifiedAt": "2026-11-01",
+      "notes": "Do not treat Q9 and Q510 as exact duplicates. Q510 lacks a bandwidth throttling choice; public staging subnet may be viable with private replication but private recovery is not specified. Answer key unresolved."
+    },
+    "answerStatus": "flagged-ambiguous"
   },
   {
     "id": 511,
