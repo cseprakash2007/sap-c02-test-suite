@@ -2380,8 +2380,47 @@
     "plainWords": "A Linux app on EKS runs on M6i (x86) nodes under a Savings Plan that is about to expire. Reduce cost afterward.",
     "keyPoints": "• Linux + containers + cost = consider Graviton: rebuild for arm64, move nodes, buy a matching plan. • A Compute Savings Plan\nfollows you across instance families, including Graviton.\nHEADS-UP ON THIS QUESTION\n• The wording of the options in your PDF is garbled in places. The key A, C, E follows the standard Graviton migration steps.\nReference: AWS documentation — https://docs.aws.amazon.com/",
     "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "review": {
+      "reviewedAt": "2026-11-02",
+      "auditStatus": "aws-docs-and-external-variant-verified",
+      "originalAnswers": [
+        "A",
+        "C",
+        "E"
+      ],
+      "recommendedAnswers": [
+        "A",
+        "C",
+        "E"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html",
+        "https://aws.github.io/graviton/containers.html",
+        "https://docs.aws.amazon.com/it_it/prescriptive-guidance/latest/eks-cost-optimization/3-migration-to-graviton.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-9.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html"
+      ],
+      "auditNote": "Original dataset stem/options abridged and B garbled; independently located fuller variant. A ARM64 image compatibility, C Graviton EKS nodes, E EC2 Instance Savings Plan for selected Graviton family. Savings Plans apply to underlying EC2 usage, not EKS cluster fee; multi-arch images may already work without rebuild. Validate performance and commitments.",
+      "wrongOptionsReason": {
+        "A": "Correct: ensure container images and native dependencies support ARM64; rebuild if necessary.",
+        "B": "Incorrect: EKS already uses containers; source text originally garbled.",
+        "C": "Correct: migrate node compute to suitable Graviton instances for improved price-performance.",
+        "D": "Not preferred: newer x86 may improve efficiency but does not implement intended Graviton migration.",
+        "E": "Correct: purchase appropriate family-specific EC2 Instance Savings Plan after validating stable usage.",
+        "F": "Incorrect: x86 family-specific plan does not cover Graviton instance family."
+      },
+      "duplicateAudit": {
+        "reviewedAt": "2026-11-02",
+        "nearDuplicateIds": [
+          337
+        ],
+        "note": "Q337 in Domain 4 has fuller original variant; compare exact answer texts before deduplicating."
+      },
+      "diagramConcept": "EKS M6i x86 nodes -> ARM64-compatible container images -> Graviton EKS nodes -> Graviton-family EC2 Instance Savings Plan; Compute Savings Plans alternative offers family flexibility."
+    },
+    "answerStatus": "aws-docs-and-external-variant-verified"
   },
   {
     "id": 46,
