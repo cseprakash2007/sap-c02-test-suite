@@ -11629,17 +11629,47 @@
       }
     ],
     "answers": [
-      "A",
-      "B"
+      "B",
+      "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B and C. EC2 initiates the connection, so EC2 SG egress to DB SG on the Aurora engine's TCP listener port, and DB SG ingress from EC2 SG on the same port. Security groups are stateful, so return traffic needs no separate rules. Aurora MySQL normally uses 3306 and Aurora PostgreSQL 5432.",
+    "wrongOptionsExplanation": "A reverses ingress direction by permitting Aurora-originated connections into EC2. B correct: EC2 egress to Aurora. C correct: Aurora ingress from EC2. D does not allow the initial EC2-to-DB connection; response egress is statefully allowed. E unnecessary ephemeral-port egress because security groups track connections.",
+    "plainWords": "App connects to database: allow outbound on app security group and inbound on database security group, referencing each other's group on the DB port.",
+    "keyPoints": "Source EC2 SG outbound -> destination Aurora SG inbound; stateful return; MySQL 3306 vs PostgreSQL 5432; least privilege with SG references.",
+    "sourceWarning": "Original key A+B is wrong: A reverses ingress direction. Exam-Tests Q184 repeats A+B while its own explanation says B+C; another reordered external variant confirms corresponding B+C. Wording 'default Aurora port' is ambiguous because Aurora MySQL and PostgreSQL have different default ports. Least privilege assumes EC2 default allow-all egress is removed/restricted; otherwise B may be redundant.",
+    "review": {
+      "status": "verified-corrected-b-c",
+      "reviewedAt": "2026-11-02",
+      "verifiedAnswers": [
+        "B",
+        "C"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html",
+        "https://docs.aws.amazon.com/us_en/AmazonRDS/latest/AuroraUserGuide/Overview.RDSSecurityGroups.html",
+        "https://docs.aws.amazon.com/us_en/AWSEC2/latest/UserGuide/ec2-security-groups.html",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=38",
+        "https://note.com/hip_wolf4336/n/nd8acc510d8b4?hl=en"
+      ],
+      "notes": "Original answer A+B contradicts AWS security-group directions. Exam-Tests key is self-contradictory; independently verified B+C.",
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-duplicate-found-targeted-scan",
+        "relatedIds": [
+          155,
+          200,
+          221,
+          230,
+          257,
+          328,
+          468,
+          516,
+          639
+        ]
+      }
+    },
+    "answerStatus": "verified-corrected-b-c-conflicting-external-key"
   },
   {
     "id": 248,
