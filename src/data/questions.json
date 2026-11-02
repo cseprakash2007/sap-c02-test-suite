@@ -6042,18 +6042,29 @@
     "keyPoints": "Immutable patched AMI + launch template/config update + Auto Scaling instance refresh; ALB health checks. Prefer launch templates over legacy launch configurations.",
     "sourceWarning": "C is supportive rather than necessary to prevent recurrence; D is the essential root-cause fix. 'Launch configuration' is legacy; prefer a launch template. Existing reboot replacement behavior depends on health-check/grace-period settings.",
     "review": {
-      "status": "verified-with-caveat",
-      "reviewedAt": "2026-11-01",
+      "status": "aws-docs-and-external-variant-verified-with-caveat",
+      "reviewedAt": "2026-11-02",
       "verifiedAnswers": [
         "C",
         "D"
       ],
       "sources": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/instance-refresh-overview.html",
         "https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html",
-        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks-overview.html"
-      ]
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks-overview.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/launch-templates.html",
+        "https://www.scribd.com/document/931431704/AWS-Certified-Solutions-Architect-Professional-SAP-C02-Exam-ExamTopics-301-350",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=18"
+      ],
+      "auditNote": "D is essential: build patched AMI, use updated launch template, refresh ASG. C helps availability/health but alone does not prevent unpatched instances. Reboot-related replacement depends on health checks/grace. Source says legacy launch configuration; modernize to launch template. External same-stem copies support C,D; one reordered exam-tests copy keys A,B inconsistent with its option texts. Treat as source defect.",
+      "duplicateAudit": {
+        "status": "No exact duplicate confirmed by shared phrase scan; related scenarios identified for manual review",
+        "relatedIds": [
+          567
+        ]
+      }
     },
-    "answerStatus": "verified-with-caveat"
+    "answerStatus": "aws-docs-and-external-variant-verified-with-caveat"
   },
   {
     "id": 128,
