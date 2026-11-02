@@ -2549,8 +2549,32 @@
     "plainWords": "Teams tag resources by application and team. Finance wants cost per team or application, 12-month comparisons and a 12-month\nforecast.",
     "keyPoints": "• Tags are invisible in billing until activated as cost allocation tags. • Cost Explorer = history and forecast. Cost categories = business\ngroupings.\nHEADS-UP ON THIS QUESTION\n• This is a close call. A and F are clearly needed. For the third, the key picks cost categories (C), but because the teams work as IAM\nusers, enabling IAM access to Billing (D) is also needed in real life. Follow the key (A, C, F) unless the exam wording emphasizes IAM\nusers seeing billing.\nReference: AWS documentation — https://docs.aws.amazon.com/",
     "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "aws-docs-reviewed-external-pending",
+      "originalAnswers": [
+        "A",
+        "C",
+        "F"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/activating-tags.html",
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html",
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-chart.html"
+      ],
+      "externalQuestionLinks": [],
+      "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
+      "auditNote": "A,C,F remain intended. Activate existing user-defined cost allocation tags; Cost Categories organize costs; Cost Explorer provides historical reports and forecasts. Caveat: activation is not automatically retroactive for all past tag-based costs; question's 12-month history assumes data is already available. Original source has numerous OCR/typographical defects ('automaton', 'learns', 'IAH', 'item', 'tor').",
+      "wrongOptionsReason": {
+        "A": "Correct: activate user-defined application and team tags.",
+        "B": "AWS-generated tags do not represent these existing custom application/team tags.",
+        "C": "Correct: Cost Categories can group charges into application views, although tags alone may support some grouping.",
+        "D": "Billing console IAM access is not inherently required to configure the cost reporting dimensions; access may be needed for delegated users.",
+        "E": "Budgets provide thresholds and alerts, not requested reporting/forecast solution.",
+        "F": "Correct: Cost Explorer provides cost history and forecasting."
+      }
+    },
+    "answerStatus": "aws-docs-reviewed-external-pending"
   },
   {
     "id": 52,
