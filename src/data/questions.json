@@ -22367,13 +22367,41 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C and E. A public IPv6 EC2 subnet with ::/0 to an internet gateway allows internet communication including permitted inbound connections. A private IPv6 subnet with ::/0 to an egress-only internet gateway allows outbound-initiated IPv6 sessions and response traffic, not unsolicited inbound. IPv6 address, security groups, NACLs and correct route are required. Direct Connect gateway/VGW association alone (A) is not an IPv6 internet route.",
+    "wrongOptionsExplanation": "A: VGW associated with Direct Connect gateway supports hybrid private connectivity, not general IPv6 internet access to worldwide customers; no ::/0 internet gateway route. B: Historically NAT gateway is not a general IPv6 internet gateway. As of modern AWS NAT gateways support DNS64/NAT64 translation for IPv6-only clients to reach IPv4-only destinations; ::/0 to NAT gateway is not equivalent to native IPv6 internet access. C: Correct public IPv6 internet access via IGW. D: NAT instance is not the supported standard IPv6 internet egress mechanism and no NAT64 setup is described. E: Correct IPv6 outbound-only internet access via egress-only IGW.",
+    "plainWords": "For IPv6 internet: public EC2 + internet gateway (two-way, security permitting); private EC2 + egress-only internet gateway (outbound initiated). Direct Connect is for hybrid private connectivity, not a replacement for internet gateway.",
+    "keyPoints": "IPv6 default route is ::/0, not IPv4 0.0.0.0/0. Internet gateway supports IPv6 inbound/outbound; egress-only internet gateway supports outbound-initiated IPv6 and return traffic. IPv6 global addresses can exist on private-subnet EC2; route/SG control reachability. NAT64/DNS64 with NAT gateway can bridge IPv6 clients to IPv4-only services, not native IPv6 worldwide customer reachability. Direct Connect has IPv6 support but VGW/DXGW association alone is not IPv6 public internet egress.",
+    "sourceWarning": "MINOR AMBIGUITY: E allows outbound IPv6, not inbound customer-initiated access; the stem says 'communicate with more customers' rather than explicitly 'serve inbound IPv6 customers'. B wording is outdated if read as 'NAT gateways cannot process IPv6 at all': AWS NAT64/DNS64 supports IPv6-only clients accessing IPv4-only services, but B's ::/0 route is still not the requested native IPv6 internet path. Exact external exam variants should be reconciled separately.",
+    "review": {
+      "status": "verified-aws-technical",
+      "reviewedAt": "2026-11-01",
+      "originalAnswer": [
+        "C",
+        "E"
+      ],
+      "verifiedAnswer": [
+        "C",
+        "E"
+      ],
+      "similarQuestionIds": [
+        38,
+        96,
+        107,
+        241,
+        268,
+        301,
+        308,
+        318,
+        410,
+        610
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/egress-only-internet-gateway.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-nat64-dns64.html"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 514,
