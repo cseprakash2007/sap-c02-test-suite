@@ -4106,9 +4106,50 @@
     "wrongOptionsExplanation": "A. Requester Pays does not work for anonymous users. B. Transfer Acceleration adds cost. D. Glacier Instant Retrieval after 1 day\ncauses retrieval charges while the data is still hot.",
     "plainWords": "This repeats Question 32: hot data for 180 days, then rare access, with failed multipart uploads.",
     "keyPoints": "• Abort incomplete multipart uploads, and move to IA only when access really drops.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "Near-duplicate Q32; typo spacing in stem and options; Q83 omits explicit anonymous user premise from Q32.",
+    "review": {
+      "reviewedAt": "2026-11-02",
+      "auditStatus": "aws-docs-and-external-variants-verified",
+      "originalAnswers": [
+        "C",
+        "E"
+      ],
+      "recommendedAnswers": [
+        "C",
+        "E"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.examsvce.com/sap-c02/questiona-company-has-an-application-that-stores-question-answer.html",
+        "https://www.certprep.io/amazon/sap-c02/questions"
+      ],
+      "crossVerificationStatus": "AWS official mechanics confirmed; two third-party copies key C,E; exam source copies not authoritative",
+      "auditNote": "C aborts billable incomplete multipart upload parts after 7 days; E transitions completed videos from Standard to Standard-IA at 180 days when access becomes infrequent. Multipart lifecycle abort does not delete completed objects. Standard-IA has retrieval fees and 30-day minimum. Wording defects: 'tooptimize', 'expireincomplete multipart uploadsafter', 'toS3' missing whitespace. Q83 omits Q32 anonymous-requester detail, so A is not logically impossible on that basis, but Requester Pays is still inferior because it shifts request/transfer costs rather than optimizing storage cost. Preserve original stem/options for source fidelity; normalize in display if desired.",
+      "wrongOptionsReason": {
+        "A": "Requester Pays changes cost allocation to requesters instead of reducing underlying storage cost; Q83 omits Q32's explicit anonymous-user constraint.",
+        "B": "Transfer Acceleration may improve upload performance at extra transfer cost but does not directly reduce stored objects or abandoned multipart parts.",
+        "C": "Correct; AbortIncompleteMultipartUpload after 7 days deletes uncompleted upload parts and stops part storage charges.",
+        "D": "Glacier Instant Retrieval at day 1 mismatches frequent reads through day 180; retrieval fees and 90-day minimum.",
+        "E": "Correct; Standard-IA after day 180 aligns with infrequent access; retrieval fees and 30-day minimum remain considerations."
+      },
+      "duplicateAudit": {
+        "reviewedAt": "2026-11-02",
+        "nearDuplicateIds": [
+          32
+        ],
+        "relatedDifferentRequirementIds": [
+          305
+        ],
+        "status": "Near-identical five choices and answer pair C,E to Q32; shorter Q83 drops named/anonymous-access detail. Q305 tests upload latency and uses different answer pair."
+      },
+      "diagramConcept": "Completed multipart upload -> S3 Standard 0-180 days -> S3 Standard-IA at 180 days; incomplete multipart upload -> S3 abort incomplete upload after day 7."
+    },
+    "answerStatus": "aws-docs-and-external-variants-verified"
   },
   {
     "id": 84,
