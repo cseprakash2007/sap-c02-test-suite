@@ -9907,10 +9907,10 @@
     "wrongOptionsExplanation": "A correct: SNS email subscriptions notify team. B correct if Email is a Step Functions SNS publish service-integration Task and IAM permissions are granted. C correct for catchable errors, but not all types as the stem demands. D SES verified address is unnecessary for SNS email. E SES direct task adds complexity and is not the intended SNS integration. F wrong: States.Runtime is terminal and cannot be caught by States.ALL; the error name capitalization in source is malformed.",
     "plainWords": "Use Step Functions Catch to send failure alerts through SNS, plus EventBridge execution-status notifications for terminal errors that cannot be caught.",
     "keyPoints": "Catch only Task/Map/Parallel; States.ALL cannot catch States.Runtime or States.DataLimitExceeded; EventBridge Step Functions execution status change catches overall failed/timed-out/aborted execution events (delivery best effort).",
-    "sourceWarning": "SOURCE DEFECT: claims A,B,C notifies on 'all types of failures', but States.ALL does not catch States.Runtime or States.DataLimitExceeded. EventBridge execution status monitoring is missing from options. OCR errors in options C/F.",
+    "sourceWarning": "DEFECTIVE ALL-ERRORS REQUIREMENT: A,B,C only catch catchable errors. States.ALL does not catch States.Runtime or States.DataLimitExceeded; latter may be caught explicitly per current docs. Need EventBridge Step Functions Execution Status Change FAILED/TIMED_OUT/ABORTED for Standard workflows, delivered best-effort; Express workflows use CloudWatch monitoring. C/F contain malformed OCR and case-sensitive error names.",
     "review": {
       "status": "historical-best-source-defective-all-errors",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
       "verifiedAnswers": [
         "A",
         "B",
@@ -9918,9 +9918,11 @@
       ],
       "sources": [
         "https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html",
-        "https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html"
+        "https://docs.aws.amazon.com/step-functions/latest/dg/eventbridge-integration.html",
+        "https://certempire.com/demo-files/sap-c02-demo-certempire.pdf",
+        "https://actualtests.crampdf.com/articles/amazon-sap-c02-certification-all-in-one-exam-guide-feb-2025-q14-q32/"
       ],
-      "notes": "SOURCE DEFECT: claims A,B,C notifies on 'all types of failures', but States.ALL does not catch States.Runtime or States.DataLimitExceeded. EventBridge execution status monitoring is missing from options. OCR errors in options C/F."
+      "notes": "A,B,C historical exam key confirmed by CertEmpire Q35 and CramPDF reordered variant, but States.ALL excludes States.Runtime and States.DataLimitExceeded. AWS says DataLimitExceeded may be explicitly caught by name; Runtime terminal. EventBridge execution-status monitoring for Standard workflows is missing from options; Express workflows require CloudWatch Logs/metrics. No exact normalized stem duplicate among 674; lexical candidates Q600 Q664 Q353 Q106 Q326 Q346."
     },
     "answerStatus": "historical-best-source-defective-all-errors"
   },
