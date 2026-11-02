@@ -23998,13 +23998,59 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C correct. Aurora MySQL Global Database spans primary write Region and secondary read-only Region with storage-level asynchronous replication, giving regional reads for a 95%+ read workload and cross-Region failover capability. Deploy ALB and EC2 ASG in second Region. Configure Route 53 latency-based alias records (one per ALB/Region) to send clients to the lowest latency healthy Region. The secondary application must route writes to the primary global writer endpoint or use Aurora write forwarding where supported; read replicas do not accept ordinary writes.",
+    "wrongOptionsExplanation": "A correct Aurora Global Database plus second Region compute. B independent RDS MySQL Multi-AZ in new Region does not automatically replicate source data cross-Region; CloudFront does not solve database continuity. C correct Route 53 latency routing with distinct records for regional ALBs. D geolocation routing selects based on configured user geographic location rather than measured latency; not optimal for lowest latency. E Aurora Serverless v2 alone scales within Region and does not imply Global Database cross-Region replication or continuity.",
+    "plainWords": "Run the app in two Regions, replicate its MySQL data using Aurora Global Database, serve reads locally, and use Route 53 latency routing to choose the closest-performing regional ALB.",
+    "keyPoints": "Aurora Global Database: single writable primary Region and read-only secondary Regions, asynchronous cross-Region replication, planned switchover or disaster failover; potential nonzero RPO for unplanned outage. Secondary Region apps must route writes to primary or enable supported write forwarding; monitor replication lag. Route 53 latency routing uses distinct regional alias records; pair with Evaluate Target Health and regional readiness. RDS Multi-AZ is intra-Region HA, not global DR. Route 53 geolocation is geographic rule matching, not latency measurement.",
+    "sourceWarning": "Minor implementation gaps: C says 'a new record that points to both ALBs' but Route 53 latency routing requires separate records for each ALB with Region identifiers, not a single record with two ALB targets. A does not explicitly describe how writes from secondary Region are routed to primary; use global writer endpoint, cross-Region network or write forwarding. Global replication is asynchronous; do not imply zero-RPO automatic failover. No independent exact-stem external exam variant confirmed in this pass.",
+    "review": {
+      "status": "verified-aws-with-implementation-caveats",
+      "reviewedAt": "2026-11-01",
+      "originalAnswer": [
+        "A",
+        "C"
+      ],
+      "verifiedAnswer": [
+        "A",
+        "C"
+      ],
+      "similarQuestionIds": [
+        16,
+        30,
+        34,
+        48,
+        58,
+        123,
+        148,
+        155,
+        160,
+        182,
+        200,
+        242,
+        305,
+        338,
+        341,
+        342,
+        388,
+        417,
+        424,
+        485,
+        488,
+        561,
+        564,
+        596,
+        642,
+        656,
+        663
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-connecting.html"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 556,
