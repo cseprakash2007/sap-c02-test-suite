@@ -361,3 +361,50 @@ Original question in dataset is truncated; preserve it without fabricating full 
 
 # Backfilled pending Domain 3 Q175 (18 of 58) — 2026-11-02
 **B,E**: alternative solutions, not cumulative steps. B: Lambda in private Neptune VPC subnets with NAT for DynamoDB; E: Lambda in private/isolated subnets and DynamoDB gateway endpoint associated with route tables. A fails because Lambda in public subnet lacks public IP; C/D cannot reach Neptune private DB merely through SG or service endpoint. Neptune SG inbound from Lambda SG assumed. Gateway endpoint preferable if only DynamoDB egress. Sources: https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc-internet.html ; https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-ddb.html .
+
+
+---
+# Domain 3 multi-answer Q182 (20 of 58) — 2026-11-02
+
+## Original question
+A company is using a single AWS Region for its ecommerce website. The website includes a web application that runs on several Amazon EC2 instances behind an Application Load Balancer (ALB). The website also includes an Amazon DynamoDB table. A custom domain name in Amazon Route 53 is linked to the ALB. The company created an SSL/TLS certificate in AWS Certificate Manager (ACM) and attached the certificate to the ALB. The company is not using a content delivery network as part of its design. The company wants to replicate its entire application stack in a second Region to provide disaster recovery, plan for future growth, and provide improved access time to users. A solutions architect needs to implement a solution that achieves these goals and minimizes administrative overhead. Which combination of steps should the solutions architect take to meet these requirements? (Select THREE.)
+
+- A. Create an AWS CloudFormation template for the current infrastructure design. Use parameters for important system values, including Region. Use the CloudFormation template to create the new infrastructure in the second Region.
+- B. Use the AWS Management Console to document the existing infrastructure design in the first Region and to create the new infrastructure in the second Region.
+- C. Update the Route 53 hosted zone record for the application to use weighted routing. Send 50% of the traffic to the ALB in each Region.
+- D. Update the Route 53 hosted zone record for the application to use latency-based routing. Send traffic to the ALB in each Region.
+- E. Update the configuration of the existing DynamoDB table by enabling DynamoDB Streams. Add the second Region to create a global table.
+- F. Create a new DynamoDB table. Enable DynamoDB Streams for the new table. Add the second Region to create a global table. Copy the data from the existing DynamoDB table to the new table as a one-time operation.
+
+## Verified answer: A, D, E
+- A correct: repeatable infrastructure-as-code for second Region. Region parameter alone does not choose stack deployment Region; deploy in desired Region or use StackSets.
+- B incorrect: manual console recreation increases effort and drift.
+- C incorrect: 50/50 weighted routing does not optimize latency; suitable for traffic splitting.
+- D correct: latency-based Route 53 alias records for regional ALBs; set Evaluate Target Health/health checks to support DR.
+- E correct for MREC global tables: add replica to existing populated table; DynamoDB Streams used automatically for MREC. Replication eventually consistent.
+- F incorrect: unnecessary new table, bulk copy and cutover for MREC; MRSC has different restrictions.
+
+## Architecture
+```mermaid
+flowchart TD
+  U[Global users] --> R[Route 53 latency aliases + health]
+  R --> ALB1[Region 1 ALB + ACM cert]
+  R --> ALB2[Region 2 ALB + ACM cert]
+  ALB1 --> EC21[Region 1 EC2 web tier]
+  ALB2 --> EC22[Region 2 EC2 web tier]
+  EC21 --> DB1[(DynamoDB replica 1)]
+  EC22 --> DB2[(DynamoDB replica 2)]
+  DB1 <-->|MREC asynchronous replication| DB2
+```
+
+## Defects and caveats
+CloudFormation Region parameter does not select target Region; region-specific ACM cert required on second ALB; Route 53 health evaluation is essential for practical DR; MREC has replication lag and last-writer-wins conflicts; current MREC global tables automatically enable DynamoDB Streams. The absence of CloudFront is not an issue for latency DNS but CDN could further improve static content delivery.
+
+## Duplicate audit
+Normalized full stems compared across 674: no exact duplicate. Top lexical similarity candidates Q346 (0.246), Q451 (0.198), Q155 (0.190), Q123 (0.190), Q460 (0.188), Q326 (0.185). These are similarity leads, not proven duplicates. No reliable exact external exam variant independently verified; do not claim external confirmation.
+
+## AWS references
+- https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html
+- https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables-CoreConcepts.html
+- https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-values-latency-alias.html
+- https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-complex-configs.html
