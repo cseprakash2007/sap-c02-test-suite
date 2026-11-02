@@ -7522,14 +7522,14 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "A,C,E are the historical best options: enable S3 server-side encryption at rest (A); use an S3 bucket policy to deny insecure HTTP requests with aws:SecureTransport=false and, if intended, deny uploads lacking the required encryption headers (C); redirect HTTP viewers to HTTPS in CloudFront (E). Modern S3 encrypts all new uploads with SSE-S3 by default, but explicit policy controls remain useful. Use CloudFront OAC signing and an S3 REST endpoint to secure the origin.",
-    "wrongOptionsExplanation": "A correct for encryption at rest, although SSE-S3 is default. B wrong: S3 ACLs cannot express aws:SecureTransport conditions. C correct only if the vague phrase 'unencrypted operations' means an explicit deny policy for insecure transport or noncompliant uploads; a policy must specify conditions. D wrong: CloudFront is not a customer-configurable SSE-KMS object store. E correct: viewer protocol redirect; HTTPS-only is stronger for write operations. F wrong: S3 presigned URLs have no RequireSSL creation flag; use HTTPS URL and bucket policy.",
-    "plainWords": "Encrypt objects in S3 and require HTTPS for browser-to-CloudFront and CloudFront-to-S3 communication.",
-    "keyPoints": "S3 SSE-S3 default; S3 bucket policy aws:SecureTransport false + Deny; CloudFront Redirect HTTP to HTTPS/HTTPS Only; S3 REST origin + OAC; presigned URLs do not support RequireSSL parameter.",
-    "sourceWarning": "Option C ambiguous: 'deny any unencrypted operations' must be implemented with a specific bucket-policy condition. S3 automatically encrypts new objects at rest. For HTTP write requests, CloudFront redirect behavior depends on HTTP version/method; HTTPS Only is safest. S3 static website endpoints cannot use HTTPS as CloudFront origins.",
+    "explanation": "Verified A, C, E as the intended three exam answers. A: S3 SSE protects stored objects; since 2023-01-05 all new S3 objects are encrypted with SSE-S3 by default, so enabling SSE-S3 is no longer a necessary manual step. C: S3 bucket policy can explicitly Deny requests when aws:SecureTransport is false; this concerns encryption in transit, NOT encryption at rest, and the option is ambiguous without specifying its condition. E: CloudFront viewer protocol policy Redirect HTTP to HTTPS protects supported viewer requests; for upload/write paths, HTTPS Only or direct HTTPS requests are safer than assuming every method will redirect. Configure S3 REST origin and CloudFront OAC for private origin traffic.",
+    "wrongOptionsExplanation": "B incorrect: S3 ACLs cannot carry IAM condition key aws:SecureTransport. D incorrect: CloudFront has no user-configurable SSE-KMS encryption-at-rest setting for its cache; encryption is configured at the S3 origin. F incorrect: S3 presigned URL creation has no RequireSSL parameter; enforce TLS via HTTPS URL and bucket policy. Beware external variants reordering options.",
+    "plainWords": "A protects S3 objects at rest; C denies insecure S3 requests using a bucket policy; E upgrades eligible viewer requests to HTTPS. S3 SSE-S3 is now automatic, and for uploads prefer HTTPS Only/direct HTTPS.",
+    "keyPoints": "A+C+E expected; SSE-S3 default since Jan 2023; aws:SecureTransport=false must be in bucket policy (not ACL); CloudFront viewer protocol redirect vs HTTPS Only; CloudFront OAC + S3 REST origin; no presigned URL RequireSSL option.",
+    "sourceWarning": "Historic/outdated manual S3 encryption premise: all new objects are encrypted automatically since 2023-01-05. C's 'unencrypted operations' is underspecified; Deny aws:SecureTransport=false handles HTTP, separate policies govern required SSE-KMS uploads. CloudFront viewer redirect depends on method/version and docs differ on behavior for write methods; use HTTPS Only for strict write routes. CloudFront S3 website origin cannot use HTTPS to origin. Exact duplicate stem none across 674; related Q115 Q456 Q469 Q390 Q541.",
     "review": {
       "status": "verified-with-policy-wording-caveat",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
       "originalAnswers": [
         "A",
         "C",
@@ -7541,10 +7541,14 @@
         "E"
       ],
       "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-encryption-faq.html",
         "https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html",
-        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html"
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-viewers-to-cloudfront.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html",
+        "https://myportal.utt.edu.tt/ICS/icsfs/d97df75f-867e-411a-ac5f-e13435c2eedc.pdf?target=c53e5228-7ce9-4ef5-a5ec-d932dc3abaad"
       ],
-      "notes": "Option C ambiguous: 'deny any unencrypted operations' must be implemented with a specific bucket-policy condition. S3 automatically encrypts new objects at rest. For HTTP write requests, CloudFront redirect behavior depends on HTTP version/method; HTTPS Only is safest. S3 static website endpoints cannot use HTTPS as CloudFront origins."
+      "notes": "Q159 15/58. Verified A,C,E. Exact stem duplicate none among 674. Similar topic questions Q115, Q456, Q469, Q390, Q541, none exact. External variant identical stem/options reordered A->E B->F C->A D->B E->D F->C; independent answer-key confirmation unavailable. SSE-S3 default since Jan 2023, so A historical. C condition unspecified: use bucket policy Deny aws:SecureTransport=false. E redirect may not apply safely to all writes; HTTPS Only preferred for writes. No RequireSSL presigned URL option."
     },
     "answerStatus": "verified-with-policy-wording-caveat"
   },
