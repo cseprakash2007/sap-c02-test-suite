@@ -28519,13 +28519,35 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C,F. A creates a Route 53 private hosted zone myvpc.example.com and associates it with the VPC. C creates an inbound Route 53 VPC Resolver endpoint reachable over existing Site-to-Site VPN. F configures on-premises conditional forwarding for myvpc.example.com to the inbound endpoint private IP addresses. Resolver uses the associated private hosted zone to answer. Deploy inbound endpoint IPs in two AZs, allow UDP/TCP 53, configure routing and test.",
+    "wrongOptionsExplanation": "B: public hosted zones serve public DNS and cannot be VPC-associated like private hosted zones. D: outbound endpoints forward AWS-originated queries toward on-premises DNS, unnecessary for the requested on-prem-to-AWS direction. E: an outbound rule must target the on-premises DNS resolver IPs for the on-premises domain, not the outbound endpoint's own IPs nor the AWS private hosted zone domain; this could be misrouted or loop.",
+    "plainWords": "Corporate computers must look up private AWS hostnames. Host them in a Route 53 private hosted zone, create an inbound Resolver endpoint, and make corporate DNS forward those names to the inbound IPs over VPN.",
+    "keyPoints": "• On-prem -> AWS private DNS = private hosted zone + inbound Resolver + on-prem conditional forwarder. • AWS -> on-prem DNS = outbound Resolver + Route 53 forwarding rule targeting on-prem DNS servers. • Public hosted zones are not VPC-associated. • Configure two inbound endpoint IPs in separate AZs and permit DNS UDP/TCP 53 over VPN. • Existing onprem.mydc.com does not alone imply reverse AWS-to-onprem resolution is required.",
+    "sourceWarning": "No incorrect source key: A,C,F. Wording 'resolve it to the VPC' is imprecise (DNS resolves host records to IPs, not a VPC). Question mentions on-premises domain but does not require AWS clients to resolve it; adding outbound endpoint would solve a separate bidirectional requirement. Option E incorrectly references outbound endpoint IPs as forwarding targets. Preserve source wording.",
+    "review": {
+      "status": "verified-with-wording-caveats",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "F"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-inbound-queries.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-overview-DSN-queries-to-vpc.html",
+        "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/set-up-dns-resolution-for-hybrid-networks-in-a-single-account-aws-environment.html",
+        "https://docs.aws.amazon.com/whitepapers/latest/hybrid-cloud-dns-options-for-vpc/route-53-resolver-endpoints-and-forwarding-rules.html"
+      ],
+      "relatedQuestions": [
+        430,
+        620,
+        546,
+        535,
+        91
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 673,
