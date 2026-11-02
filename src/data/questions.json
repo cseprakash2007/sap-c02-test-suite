@@ -21687,12 +21687,27 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
+    "explanation": "B is unambiguously correct: S3 static website content (prefer private S3 origin with CloudFront OAC) eliminates two always-on frontend EC2 instances and frontend ALB. E is the technically more defensible second choice for infrequently busy backend with low baseline CPU and lunchtime bursts, provided CPU credit baseline, memory and throughput meet measured peak requirements. Historical source key B,D is disputed because D replaces ALL three availability-sensitive backend instances with interruptible Spot without an On-Demand baseline or Auto Scaling mixed-instance strategy; this cannot assure unchanged availability. Do not silently mark E independently proven from request counts alone.",
+    "wrongOptionsExplanation": "A compute optimized same core count: no CPU-bound evidence and no right-sizing. B correct static frontend to S3. C Elastic Beanstalk same size: still pays for frontend compute. D Spot-only backend: discounted but interruptions and unavailable capacity risk availability; can be viable only with stateless fault-tolerant capacity strategy not specified. E burstable T instances: reasonable for low average load with short peaks, but same core count alone doesn't establish CPU credits/memory/cost suitability.",
+    "plainWords": "Put the static site on S3, and right-size the Python backend for its lunchtime traffic pattern. Don't assume three Spot servers preserve availability.",
+    "keyPoints": "AWS EC2 Spot may be interrupted with about two minutes' notice; Spot capacity isn't guaranteed. T instances earn CPU credits at low load and spend during bursts; Unlimited mode may charge surplus. Compare CloudWatch CPU, credit balance, memory and latency before right-sizing. For production Spot use diversified mixed On-Demand+Spot ASG and Capacity Rebalancing. A static S3 origin behind CloudFront OAC is preferable for private content.",
+    "sourceWarning": "ANSWER-KEY CONFLICT / DEFECT: stored B,D has an availability contradiction because D replaces all backend instances with Spot. Plausible B,E, but E cannot be guaranteed by request frequency alone, and matching vCPU count doesn't guarantee RAM/CPU credit performance. Do not overwrite source answers until external variants independently reconcile. No exact duplicate scan yet. AWS references: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-best-practices.html ; https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-credits-baseline-concepts.html",
+    "review": {
+      "status": "needs-source-reconciliation",
+      "reviewedAt": "2026-11-01",
+      "originalAnswer": [
+        "B",
+        "D"
+      ],
+      "candidateAnswer": [
+        "B",
+        "E"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-best-practices.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-credits-baseline-concepts.html"
+      ]
+    },
     "answerStatus": "source-key-unverified"
   },
   {
