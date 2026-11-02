@@ -5177,13 +5177,25 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C. Aurora PostgreSQL with encryption at rest and TLS provides database confidentiality. Aurora Database Activity Streams audit database activity outside ordinary DBA control, feed a managed Kinesis data stream, and can be consumed by Firehose to deliver S3 audit objects protected with Object Lock compliance mode for 10 years. Configure appropriate audit policy, delivery and retention, and verify region/engine support.",
+    "wrongOptionsExplanation": "A correct: Aurora encrypted and TLS. B not the intended pair: standalone RDS PostgreSQL is not the Aurora cluster required by C; engine-specific RDS activity stream support differs. C correct: independent audit pipeline and immutable compliance retention. D pgAudit to CloudWatch Logs can capture configured activity but lacks the stronger separation from DBA control afforded by Database Activity Streams; logging configuration and audit coverage matter. E governance Object Lock can be bypassed by authorized principals, unlike compliance mode.",
+    "plainWords": "Encrypt the patient database, stream audit activity outside DBA control, and lock audit files against deletion for ten years.",
+    "keyPoints": "Aurora PostgreSQL Database Activity Streams -> Kinesis Data Streams -> Firehose -> S3 Object Lock compliance mode. Encryption at rest plus TLS in transit. Activity stream access controlled by IAM, not DBAs.",
+    "sourceWarning": "C omits explicit Kinesis Data Streams intermediary, and database activity stream must be configured with suitable audit policy. S3 Object Lock compliance mode requires versioning and correct retention configuration. Database activity streams availability varies by engine/version/Region.",
+    "review": {
+      "status": "verified-with-implementation-caveats",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.Enabling.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html"
+      ]
+    },
+    "answerStatus": "verified-with-implementation-caveats"
   },
   {
     "id": 116,
@@ -5724,13 +5736,24 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C,D. D builds a new patched AMI, updates the launch configuration or preferably a launch template, and invokes EC2 Auto Scaling instance refresh so replacements are patched. C adds load-balancer target health monitoring to validate newly launched instances during replacement and preserve service availability; configure health checks and replacement policy carefully.",
+    "wrongOptionsExplanation": "A wrong: 'Update policy' is a CloudFormation mechanism and does not target the oldest launch configuration in the stated manner. B wrong: manually patching two groups still leaves launch images stale and does not ensure replacement instances are patched. C correct for traffic management/health monitoring but alone does not fix stale AMIs. D correct durable golden-image refresh. E wrong: EC2 termination protection does not reliably protect instances from Auto Scaling scale-in and does not patch replacement AMIs.",
+    "plainWords": "Never rely on patching only running instances in an Auto Scaling group. Patch the image used to launch new instances, then refresh the group while monitoring healthy targets.",
+    "keyPoints": "Immutable patched AMI + launch template/config update + Auto Scaling instance refresh; ALB health checks. Prefer launch templates over legacy launch configurations.",
+    "sourceWarning": "C is supportive rather than necessary to prevent recurrence; D is the essential root-cause fix. 'Launch configuration' is legacy; prefer a launch template. Existing reboot replacement behavior depends on health-check/grace-period settings.",
+    "review": {
+      "status": "verified-with-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "C",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks-overview.html"
+      ]
+    },
+    "answerStatus": "verified-with-caveat"
   },
   {
     "id": 128,
@@ -6001,13 +6024,24 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B,D. Enable ALB access logs (traditionally S3) and create an Athena table to query source client IP and request timestamps; Lambda checks the most recent occurrence for each allowed source IP and removes security-group rules only when no qualifying request occurred within 90 days. CloudTrail records AWS API activity, not each web request.",
+    "wrongOptionsExplanation": "A: VPC Flow Logs in CloudWatch can capture flows but incur collection/ingestion/query cost and do not offer ALB application-request context. B correct: ALB access logs and Athena enable economical S3-based analysis. C: flow logs can help but are not the most cost-effective direct access-request record here. D correct: Lambda can query ALB access logs, typically through Athena. E wrong: CloudTrail does not record ordinary ALB HTTP request client IP activity.",
+    "plainWords": "Find which allowlisted customer IPs actually requested the website. Use ALB access logs in S3, Athena SQL and Lambda, not CloudTrail.",
+    "keyPoints": "ALB access logs include client:port and timestamp; Athena query over S3; CloudTrail logs API calls, not web access; ALB logs are best effort and not guaranteed complete accounting.",
+    "sourceWarning": "ALB logs are best-effort, not complete accounting; lack of observed logs is not proof an IP was inactive. Proxies/NAT mean observed client IP may differ from end-user IP. Athena cost depends on data scanned and partitioning; 90-day retention required.",
+    "review": {
+      "status": "verified-with-log-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "B",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/application-load-balancer-logs.html"
+      ]
+    },
+    "answerStatus": "verified-with-log-caveat"
   },
   {
     "id": 136,
@@ -6040,13 +6074,24 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C. AWS RAM can share a central Transit Gateway across AWS Organizations member accounts. CloudFormation StackSets with service-managed permissions and automatic deployment can create a VPC and AWS::EC2::TransitGatewayVpcAttachment in newly added accounts using the shared transit gateway ID. The TGW owner must configure route table associations/propagations; spoke VPCs need subnet routes.",
+    "wrongOptionsExplanation": "A correct: AWS RAM shares TGW. B wrong: SCPs are permission guardrails, not a resource-sharing service. C correct: StackSets can automatically deploy to new member accounts and provision VPC TGW attachments. D wrong: TGW peering attachments join two TGWs, not a VPC to a shared TGW; service-linked role does not replace the correct resource. E wrong: Service Catalog product sharing is not the native way to share a transit gateway.",
+    "plainWords": "Share the network hub once using AWS RAM, then automatically create each new account's VPC and connection to the hub using StackSets.",
+    "keyPoints": "RAM share TGW; StackSets Organizations service-managed permissions + auto-deployment; TransitGatewayVpcAttachment (not TransitGatewayPeeringAttachment); configure TGW and VPC routes.",
+    "sourceWarning": "Stem has OCR typos ('Prom', 'automatical^'). Option C's wording 'associate attachment with transit gateway using ID' is imprecise: VPC attachment refers to TransitGatewayId; separate TGW route table association/propagation may be needed. StackSets auto-deployment must be enabled.",
+    "review": {
+      "status": "verified-with-wording-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/working-with-transit-gateways.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-manage-auto-deployment.html"
+      ]
+    },
+    "answerStatus": "verified-with-wording-caveat"
   },
   {
     "id": 137,
@@ -6152,13 +6197,25 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C,E. Create a central-account Kinesis Data Stream in each required Region (A). Set up cross-account CloudWatch Logs destinations backed by Kinesis, appropriate IAM role and destination resource access policy, and subscription filters per source log group or account-level policy (C). Lambda consumes stream records, normalizes and forwards to security tooling (E). Configure on-demand Kinesis capacity or scaling and preserve source Region. Control Tower is organizational context rather than the delivery mechanism.",
+    "wrongOptionsExplanation": "A correct: Kinesis buffers and scales log ingestion. B wrong: SQS is not the CloudWatch Logs cross-account subscription destination pattern described. C correct with caveat: central CloudWatch Logs destination, IAM trust/permissions and access policy must be created; direct source subscription to a raw cross-account stream is not sufficient. D wrong: SQS unsupported as direct subscription destination and a single filter for all groups is not valid in that formulation. E correct: central Lambda transforms records and sends to security tool. F wrong: processing independently in member accounts contradicts centralized normalization.",
+    "plainWords": "Send CloudWatch Logs from many accounts into a per-Region central Kinesis stream, process centrally with Lambda, and send standardized events to security tools.",
+    "keyPoints": "CloudWatch Logs cross-account subscription destination + IAM role/access policy -> Kinesis Data Streams -> Lambda normalization; per-Region architecture; Kinesis on-demand or autoscaling; account-level subscriptions are also supported.",
+    "sourceWarning": "C omits required central CloudWatch Logs destination and destination access policy; its wording implies direct subscriptions to Kinesis across accounts. Existing account-level subscription policies can simplify setup. One central stream must be deployed per source Region to retain logs in their creation Region.",
+    "review": {
+      "status": "verified-with-architecture-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CrossAccountSubscriptions-Kinesis.html",
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CrossAccountSubscriptions.html"
+      ]
+    },
+    "answerStatus": "verified-with-architecture-caveat"
   },
   {
     "id": 140,
