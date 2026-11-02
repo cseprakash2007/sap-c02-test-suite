@@ -1567,8 +1567,30 @@
     "plainWords": "Many business units have separate accounts. Finance wants central payment with cost visibility, and security wants central IAM\ncontrol, using the least effort.",
     "keyPoints": "• Central bill + central guardrails = Organizations (all features) + SCPs. • Existing accounts can be invited to join.\nReference: AWS documentation — https://docs.aws.amazon.com/",
     "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "technical-review-external-pending",
+      "originalAnswers": [
+        "B",
+        "D"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html",
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
+        "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html"
+      ],
+      "externalQuestionLinks": [],
+      "crossVerificationStatus": "aws-concepts-reviewed-third-party-exam-variants-pending",
+      "auditNote": "B creates organization with consolidated billing and OUs; D requires all features to use SCPs. SCPs are permission guardrails, not grants; IAM policies must separately allow actions. Typographical defects: 'ils' -> 'its', '1AM' -> 'IAM', 'lAM' -> 'IAM'. Original wording preserved.",
+      "wrongOptionsReason": {
+        "A": "Deploying per-account CloudFormation IAM policies requires extra coordination and does not replace organization-wide guardrails.",
+        "B": "Correct: Organizations supports consolidated billing, OUs, account creation and invitations.",
+        "C": "Cost Explorer and tags alone do not provide organization-wide IAM guardrails; account tags do not inherently implement chargebacks.",
+        "D": "Correct: all-features mode supports SCPs that bound permissions in member accounts.",
+        "E": "One account reduces isolation; Access Advisor is not a centralized permission enforcement mechanism."
+      }
+    },
+    "answerStatus": "technical-review-external-pending"
   },
   {
     "id": 26,
