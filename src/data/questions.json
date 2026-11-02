@@ -26125,13 +26125,43 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B, D, F are the intended three steps: associate a centralized AWS Transit Gateway with a Direct Connect gateway and use a transit VIF from the Direct Connect connection to the Direct Connect gateway; share the TGW by AWS RAM and attach workload VPCs; route workload default traffic over the TGW/Direct Connect private path to a reachable on-premises NAT/firewall internet egress. B's 'attach using transit VIF' is imprecise: the TGW-to-DXGW link is an association, while the transit VIF terminates at the DXGW. F omits VPC/TGW route tables, return routes/BGP advertisement, permitted prefixes, and NAT/firewall capacity/HA. Preserve source key B,D,F.",
+    "wrongOptionsExplanation": "A: DXGW-to-individual VGW associations/private VIFs do not give the scalable transitive VPC connectivity requested; C: IGW is VPC-level direct internet exit (and is attached to a VPC, not subnets), contrary to on-prem egress; E: VPC peering is non-transitive and creates excessive per-pair management at hundreds of VPCs.",
+    "plainWords": "Use one shared Transit Gateway hub for hundreds of VPCs, connect that hub to on-premises through Direct Connect gateway plus transit VIF, and force outbound internet traffic through on-premises NAT instead of AWS IGWs.",
+    "keyPoints": "• Direct Connect connection -> transit VIF -> Direct Connect gateway -> associated Transit Gateway -> workload VPC attachments. • AWS RAM shares TGW across accounts; routing tables control reachability. • Force egress via VPC 0.0.0.0/0 -> TGW -> on-prem BGP route -> NAT/firewall -> internet, with return routing. • DXGW transit association allowed prefixes advertise AWS ranges to on premises; avoid confusing with a default route advertised in the opposite direction. • VPC peering is non-transitive; IGW is attached to the VPC, not subnets.",
+    "sourceWarning": "Minor source defects: 'AWS Direct Connection connection' should be 'AWS Direct Connect connection'; option B inaccurately says TGW is attached to DXGW by a transit VIF (it is associated to DXGW; transit VIF connects DX connection to DXGW); option C says attach IGW to subnets (IGW attaches to a VPC); option F uses 'customergateway' without spacing and omits full default-route/BGP, return path and NAT details. Source key B,D,F is correct conceptually. Some exam mirrors copy the same flaws; do not treat them as AWS documentation.",
+    "review": {
+      "status": "verified-with-wording-caveats",
+      "verifiedAnswers": [
+        "B",
+        "D",
+        "F"
+      ],
+      "reviewedAt": "2026-11-01",
+      "sources": [
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html",
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/WorkingWithVirtualInterfaces.html",
+        "https://docs.aws.amazon.com/vpc/latest/tgw/working-with-transit-gateways.html",
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/allowed-to-prefixes.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.validtests.com/discussions/amazon-web-services/view/exam-saa-c03-topic-87-question-866-discussion"
+      ],
+      "relatedQuestions": [
+        20,
+        96,
+        136,
+        185,
+        241,
+        276,
+        301,
+        308,
+        360,
+        370,
+        503,
+        540
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 611,
