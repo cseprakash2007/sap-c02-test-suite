@@ -1,0 +1,26 @@
+name: Build SAP-C02 domain-wise PDFs
+on:
+  push:
+    branches: [answer-audit-2026-10-28]
+    paths:
+      - 'scripts/build_multi_answer_pdfs.py'
+      - 'src/data/questions.json'
+      - '.github/workflows/build-multi-answer-pdfs.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install reportlab
+      - run: python scripts/build_multi_answer_pdfs.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SAP-C02-Domain-Wise-Multi-Answer-PDFs
+          path: study-guides/*.pdf
+          retention-days: 90
