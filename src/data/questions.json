@@ -1840,8 +1840,45 @@
     "plainWords": "Videos are hot for 180 days then rarely read. Users upload large files on poor connections, leaving failed multipart uploads behind.\nCut S3 cost.",
     "keyPoints": "• Abort incomplete multipart uploads lifecycle rule = easy S3 savings. • Match the storage class to when access actually drops.\nReference: AWS documentation — https://docs.aws.amazon.com/",
     "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "review": {
+      "reviewedAt": "2026-11-02",
+      "auditStatus": "aws-docs-verified-external-variant-pending",
+      "originalAnswers": [
+        "C",
+        "E"
+      ],
+      "recommendedAnswers": [
+        "C",
+        "E"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html"
+      ],
+      "externalQuestionLinks": [],
+      "crossVerificationStatus": "official-aws-docs-verified-external-exam-variants-not-checked",
+      "auditNote": "C,E confirmed by AWS docs. AbortIncompleteMultipartUpload after 7 days removes billable orphaned parts; completed videos transition from Standard to Standard-IA after 180 days. Standard-IA incurs retrieval fees and has 30-day minimum storage duration. September 2024 128KB lifecycle default change not material to mostly >100MB videos.",
+      "wrongOptionsReason": {
+        "A": "Requester Pays cannot serve anonymous requester scenario.",
+        "B": "Transfer Acceleration targets upload performance and adds fees, not storage cost savings.",
+        "C": "Correct; lifecycle abort of incomplete multipart uploads after seven days stops orphaned-part charges.",
+        "D": "Glacier Instant Retrieval after one day mismatches first 180 days of frequent access and adds retrieval charges.",
+        "E": "Correct; Standard-IA suits infrequent access after 180 days with millisecond retrieval."
+      },
+      "duplicateAudit": {
+        "reviewedAt": "2026-11-02",
+        "nearDuplicateIds": [
+          83
+        ],
+        "relatedDifferentRequirementIds": [
+          305
+        ],
+        "status": "Q83 same scenario and same C,E answer; Q305 upload performance, not storage-cost objective"
+      },
+      "diagramConcept": "Completed video: S3 Standard days 0-180 -> S3 Standard-IA after day 180; incomplete multipart parts -> abort after 7 days"
+    },
+    "answerStatus": "aws-docs-verified-external-variant-pending"
   },
   {
     "id": 33,
