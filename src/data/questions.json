@@ -23258,13 +23258,43 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historical answer C,D. C: Amazon EFS shared NFS file system mounted by on-premises Linux servers over Site-to-Site VPN and multi-AZ EC2 blog servers; keeps content fresh without weekly copies, with appropriate routing and TCP 2049. D: AWS Snowball Edge Storage Optimized historically supported bulk offline import of 200 TB archive data to S3. CURRENT 2026 CAVEAT: Snowball Edge stopped accepting new customers November 7 2025; AWS Snowball commercial Region support ends December 31 2026. For new customers AWS recommends DataSync, Data Transfer Terminal or partner solutions; D is historical exam key, not currently generally orderable.",
+    "wrongOptionsExplanation": "A weekly EventBridge/Lambda copy cannot meet several-daily updates. B EBS Multi-Attach is not a multi-AZ NFS shared file system; its same-AZ and clustered filesystem constraints and weekly sync fail. C correct shared NFS EFS. D historically correct 200TB bulk offline import but Snowball Edge closed to new customers in 2025. E Snowcone SSD ~14 TB historically, impractical for 200TB, and Snowcone discontinued November 12 2024.",
+    "plainWords": "Keep frequently updated blog files on EFS shared between on-premises authors and EC2 servers. Historically use Snowball Edge for the separate 200TB archive migration, but in 2026 new customers must use current transfer alternatives.",
+    "keyPoints": "EFS NFSv4.1 from on-prem Linux via Site-to-Site VPN or Direct Connect; allow TCP 2049 and configure mount target routing. EBS Multi-Attach is same-AZ and does not replace multi-AZ shared EFS. Snowcone SSD 14TB retired November 2024. Snowball Edge closed to new customers Nov 7 2025; end support in commercial regions Dec 31 2026. AWS DataSync (online) or Data Transfer Terminal (physical) are modern alternatives; measure bandwidth and total elapsed time.",
+    "sourceWarning": "OUTDATED SERVICE AVAILABILITY: Snowball Edge Storage Optimized cannot be ordered by new customers since November 7 2025; commercial Region support ends December 31 2026. Snowcone discontinued November 12 2024. Keep C,D as historical exam key, not a fully executable new-customer 2026 recommendation. Some external exam explanations still claim an 80TB Snowball Edge device, but that old model was retired in 2024; later 210TB model existed. EFS on-prem clients must be Linux. 'As soon as possible' without bandwidth data does not prove physical shipment beats online DataSync.",
+    "review": {
+      "status": "verified-historical-key-outdated-service",
+      "reviewedAt": "2026-11-01",
+      "originalAnswer": [
+        "C",
+        "D"
+      ],
+      "verifiedAnswer": [
+        "C",
+        "D"
+      ],
+      "similarQuestionIds": [
+        3,
+        17,
+        153,
+        205,
+        249,
+        259,
+        349,
+        409,
+        673
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/efs/latest/ug/mounting-fs-mount-helper-direct.html",
+        "https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html",
+        "https://aws.amazon.com/snowball/",
+        "https://aws.amazon.com/blogs/storage/aws-snow-device-updates/",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-07-08.q291/a-company-is-migrating-its-blog-platform-to-aws-the-company-s-on-premises-servers-connect-to-aws-through",
+        "https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-2-question-250-discussion-p1187762.html"
+      ]
+    },
+    "answerStatus": "verified-historical-outdated"
   },
   {
     "id": 537,
