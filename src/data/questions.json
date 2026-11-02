@@ -8378,10 +8378,10 @@
     "wrongOptionsExplanation": "A wrong: m5.8xlarge is dramatically more expensive than t2.micro, and halving instance count is not a reliable cost optimization. B correct: event-driven Lambda from SQS removes idle EC2 capacity. C wrong: Neptune is a graph database, not an economical CSV object store. D wrong: Aurora Serverless is a relational DB, unnecessary for crawl-result files and adds operational cost. E correct: S3 is inexpensive durable object storage for CSV output.",
     "plainWords": "Replace mostly idle EC2 crawlers with SQS-triggered Lambda and save generated CSV files in S3.",
     "keyPoints": "SQS event source mapping Lambda; Lambda timeout and visibility timeout; at-least-once delivery/idempotency; S3 object storage for CSV; avoid always-on EC2/EFS when event-driven.",
-    "sourceWarning": "Lambda SQS event source mapping polls SQS; configure batch size, visibility timeout, partial-batch response and idempotency. If crawler requires long-lived network sessions or heavy binaries, check Lambda runtime constraints.",
+    "sourceWarning": "B says Lambda pulls SQS URLs; technically event source mapping polls SQS. At-least-once processing and retries require idempotency. No confirmed outdated recommendation.",
     "review": {
       "status": "verified",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
       "originalAnswers": [
         "B",
         "E"
@@ -8392,9 +8392,10 @@
       ],
       "sources": [
         "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html",
-        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html"
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-errorhandling.html"
       ],
-      "notes": "Lambda SQS event source mapping polls SQS; configure batch size, visibility timeout, partial-batch response and idempotency. If crawler requires long-lived network sessions or heavy binaries, check Lambda runtime constraints."
+      "notes": "AWS docs independently confirm B,E; no exact stem duplicate across 674. Related Q600 Q442 Q337 Q247 Q326. No independently verified matching external exam variant. SQS event source mapping polls queue; configure idempotency, partial batch responses, visibility timeout, DLQ."
     },
     "answerStatus": "verified"
   },
