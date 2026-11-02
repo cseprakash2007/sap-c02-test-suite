@@ -6248,13 +6248,24 @@
       "B"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,B. A VM-imported custom AMI may lack running SSM Agent; the agent must register with Systems Manager. B an EC2 instance needs appropriate SSM permissions through an IAM instance profile or modern Default Host Management Configuration. Verify outbound HTTPS access to SSM endpoints; public IP alone does not guarantee an internet route.",
+    "wrongOptionsExplanation": "A correct: SSM Agent running. B correct: suitable IAM permissions, though Default Host Management Configuration is an alternative. C not mandatory: interface endpoints are optional when internet egress is available, but can be required for isolated subnets. D Application Discovery Agent is unrelated to SSM registration. E service-linked roles are not the normal per-instance prerequisite.",
+    "plainWords": "A public EC2 IP does not automatically make a server appear in Systems Manager. Check the SSM Agent and permissions, then network connectivity.",
+    "keyPoints": "SSM Agent; IAM instance profile/AmazonSSMManagedInstanceCore or Default Host Management Configuration; outbound HTTPS 443 to SSM endpoints; VPC endpoints optional if internet connectivity exists.",
+    "sourceWarning": "Historical reference to 'EC2 VM Import feature of AWS Import/Export' is dated; current terminology VM Import/Export. B wording overstates instance profile necessity under Default Host Management Configuration.",
+    "review": {
+      "status": "verified-with-modern-permissions-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "B"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-troubleshooting-managed-nodes.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html"
+      ]
+    },
+    "answerStatus": "verified-with-modern-permissions-caveat"
   },
   {
     "id": 141,
@@ -6540,13 +6551,26 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C,F. Keep tightly coupled MPI-style EC2 workers within one AZ for lower inter-node latency and cluster placement options; use EFA-capable instances for high-performance network communication; replace EFS with FSx for Lustre, a parallel file system designed for demanding HPC shared-file I/O. Size FSx throughput and select EFA-compatible clients if using EFA-enabled FSx.",
+    "wrongOptionsExplanation": "A correct single-AZ for tightly coupled jobs. B wrong: adding ENIs in multiples of four is not a general HPC performance rule. C correct: EFA reduces latency and increases throughput for tightly coupled workloads. D wrong: multi-AZ adds inter-AZ latency for synchronous tight coupling. E wrong: EBS RAID is normally attached to an individual instance, not a shared distributed parallel filesystem across 1000 EC2 workers. F correct: FSx for Lustre is purpose-built for parallel HPC storage.",
+    "plainWords": "For a thousand cooperating compute nodes, keep nodes close, use EFA networking, and use a fast parallel file system instead of general-purpose EFS.",
+    "keyPoints": "Tightly coupled HPC: one AZ, cluster placement group, EFA, FSx for Lustre. EBS RAID is not shared cluster storage. Benchmark FSx throughput and metadata performance.",
+    "sourceWarning": "The stem lacks workload I/O profiling; FSx for Lustre is appropriate for HPC but specific gains depend on file size, access pattern and provisioned throughput. Source typo 'AWS tor'.",
+    "review": {
+      "status": "verified-with-performance-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "F"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/pdfs/wellarchitected/latest/high-performance-computing-lens/wellarchitected-high-performance-computing-lens.pdf",
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/performance.html",
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/efa-file-systems.html"
+      ]
+    },
+    "answerStatus": "verified-with-performance-caveat"
   },
   {
     "id": 148,
@@ -6866,13 +6890,26 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,D,E. Request a distinct regional ACM certificate for the second ALB (A). Enable ECR cross-Region replication and re-push or re-tag existing images because replication only applies to images pushed after configuration (D). Aurora Global Database with write forwarding supports regional reads and forwards secondary-region writes to the primary writer (E). Ensure engine/version/Region support and secondary cluster configured.",
+    "wrongOptionsExplanation": "A correct: ACM certificates for ALB are regional. B wrong: ACM certificates cannot be shared across AWS Regions using RAM. C wrong: regional ECR VPC endpoints do not make cross-Region primary ECR image pulls a proper replication strategy. D correct: replication plus re-push/re-tag for existing images, subject to tag immutability. E correct: Aurora Global Database write forwarding, but still a single primary writer. F wrong: Aurora MySQL global database is not multi-writer across Regions in the described configuration.",
+    "plainWords": "Run the second Region using its own TLS certificate, local container images and a global Aurora database that forwards writes to the primary Region.",
+    "keyPoints": "ACM ALB cert Region-local; ECR replication not retroactive; Aurora Global Database write forwarding is not multi-writer. Route 53 geolocation needs sensible default routing.",
+    "sourceWarning": "The term 'active-active' is imprecise for Aurora: both app Regions accept traffic but database writes remain single-primary with forwarding. ECR replication does not backfill pre-existing images; re-pushing with new tag may conflict with immutable tag policy. Write forwarding has supported engine/version/operation limits.",
+    "review": {
+      "status": "verified-with-architecture-caveats",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html",
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/replication.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-write-forwarding.html"
+      ]
+    },
+    "answerStatus": "verified-with-architecture-caveats"
   },
   {
     "id": 156,
@@ -6944,13 +6981,25 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,D,E. EventBridge rule matches CloudTrail IAM CreateUser management events (A). Step Functions orchestrates prompt user lockdown (for example apply explicit-deny permissions boundary or deny policy, remove access keys, deactivate console login, handle group/attached policies) and approval workflow (D). SNS notifies the security team (E). Use defense-in-depth IAM governance because event delivery is best effort and asynchronous.",
+    "wrongOptionsExplanation": "A correct: EventBridge CloudTrail CreateUser event. B wrong: CloudTrail does not directly provide per-event SNS notification with the proposed configuration; EventBridge routes events. C wrong: Fargate could run automation but adds unnecessary operational complexity versus Step Functions orchestration. D correct: Step Functions coordinates access removal and approvals via service integrations or Lambda. E correct: SNS alerts security reviewers. F wrong: Pinpoint is unnecessary for internal security notifications.",
+    "plainWords": "When a user is created, detect the event, immediately block permissions through an automated workflow, and notify security for approval.",
+    "keyPoints": "EventBridge source aws.iam, detail-type AWS API Call via CloudTrail, eventSource iam.amazonaws.com, eventName CreateUser. Step Functions IAM controls and SNS approval notification; CloudTrail events best effort.",
+    "sourceWarning": "CreateUser itself creates an IAM principal with no permissions by default; explicit denial should prevent later grants and race conditions. EventBridge CloudTrail delivery is best-effort and not synchronous; strong preventive controls and periodic reconciliation are needed. Global IAM event Region routing should be checked.",
+    "review": {
+      "status": "verified-with-security-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-iam.html",
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event-cloudtrail.html"
+      ]
+    },
+    "answerStatus": "verified-with-security-caveat"
   },
   {
     "id": 158,
@@ -6983,13 +7032,24 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C. S3 Transfer Acceleration uses CloudFront edge locations to accelerate globally distributed clients uploading documents directly to an S3 bucket with acceleration-aware signed URLs. API Gateway edge-optimized REST endpoints route globally distributed API requests through AWS edge network toward the regional backend. These improve client ingress latency without duplicating all stateful infrastructure.",
+    "wrongOptionsExplanation": "A correct for direct S3 upload URLs with accelerate endpoint; if Lambda itself performs the S3 PutObject after API request, architecture must change to browser direct upload for benefit. B wrong: Global Accelerator cannot attach CloudFront distribution as an accelerator endpoint. C correct for API Gateway REST APIs (not HTTP APIs, which lack edge-optimized endpoint type). D wrong: replicating whole stack and Aurora Serverless global database introduces complexity and may not be supported in all proposed configurations. E wrong: RDS Proxy can help database connection scaling but does not directly optimize worldwide client network latency.",
+    "plainWords": "Use the edge network for large document uploads and API calls instead of deploying the whole application in multiple Regions.",
+    "keyPoints": "S3 Transfer Acceleration endpoint s3-accelerate.amazonaws.com; signed URLs must target accelerate endpoint. Edge-optimized API Gateway REST endpoints use AWS-managed CloudFront. Global Accelerator endpoints cannot be CloudFront distributions.",
+    "sourceWarning": "Source says Lambda functions put documents into S3, while A requires browser uploads via Transfer Acceleration signed URLs; the application flow must change to direct-to-S3 uploads. API Gateway edge-optimized only for REST APIs; question does not explicitly state REST. No guaranteed performance improvement for every geography.",
+    "review": {
+      "status": "verified-with-architecture-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-endpoint-types.html"
+      ]
+    },
+    "answerStatus": "verified-with-architecture-caveat"
   },
   {
     "id": 159,
