@@ -8261,10 +8261,10 @@
     "wrongOptionsExplanation": "A wrong: placing Lambda in public subnets does not assign its execution environment a public IP; IGW alone does not provide internet egress. B correct: private Lambda with NAT can reach DynamoDB and Neptune over VPC. C wrong: Neptune is VPC private and Lambda outside VPC cannot simply be allowed by public Lambda IP ranges. D wrong: a Neptune VPC endpoint is not a substitute for placing Lambda in a network with route to Neptune DB cluster. E correct: private Lambda and DynamoDB gateway endpoint provide both services without NAT.",
     "plainWords": "Put Lambda inside Neptune's VPC. For DynamoDB access, use either NAT internet egress or, better, a DynamoDB gateway endpoint.",
     "keyPoints": "Lambda in VPC private subnets; security groups allow Neptune database port; DynamoDB gateway endpoint via route table; Lambda public subnet does not grant public IP; B/E are alternative solutions.",
-    "sourceWarning": "SELECT TWO is semantically defective: B and E are alternative end-to-end designs (NAT versus gateway endpoint), not additive steps. Option E calls new private subnets 'isolated', which is appropriate with a DynamoDB gateway endpoint; endpoint route-table associations and Neptune SG are unstated.",
+    "sourceWarning": "Select TWO ambiguous: B and E are alternative network architectures, not additive steps. Neptune security group and route-table setup assumed; gateway endpoint usually lower cost for DynamoDB-only external access.",
     "review": {
       "status": "verified-alternative-designs-source-defect",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
       "originalAnswers": [
         "B",
         "E"
@@ -8277,7 +8277,7 @@
         "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc-internet.html",
         "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-ddb.html"
       ],
-      "notes": "SELECT TWO is semantically defective: B and E are alternative end-to-end designs (NAT versus gateway endpoint), not additive steps. Option E calls new private subnets 'isolated', which is appropriate with a DynamoDB gateway endpoint; endpoint route-table associations and Neptune SG are unstated."
+      "notes": "B and E are alternative complete designs: NAT vs DynamoDB gateway endpoint. Neptune VPC-private access requires Lambda VPC attachment and security-group permissions. Public-subnet Lambda not automatically assigned public IP. No exact stem duplicate confirmed."
     },
     "answerStatus": "verified-alternative-designs-source-defect"
   },
