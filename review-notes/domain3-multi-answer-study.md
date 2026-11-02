@@ -353,3 +353,11 @@ B says 'Lambda function pulls URLs' but AWS-managed event source mapping polls S
 - https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html
 - https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-errorhandling.html
 - https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html
+
+
+---
+# Backfilled pending Domain 3 Q174 (17 of 58) — 2026-11-02
+Original question in dataset is truncated; preserve it without fabricating full text. **A,C**: IAM Identity Center ABAC principal tag policy scopes user S3 prefix; CloudTrail S3 object-level data events to Athena for per-user monthly reporting. B lacks required per-user ABAC conditions; D management events insufficient; E S3 Select is not a cross-file reporting engine. Data events opt-in and billed. Sources: https://docs.aws.amazon.com/singlesignon/latest/userguide/attributesforaccesscontrol.html ; https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html . No complete independently verified external variant.
+
+# Backfilled pending Domain 3 Q175 (18 of 58) — 2026-11-02
+**B,E**: alternative solutions, not cumulative steps. B: Lambda in private Neptune VPC subnets with NAT for DynamoDB; E: Lambda in private/isolated subnets and DynamoDB gateway endpoint associated with route tables. A fails because Lambda in public subnet lacks public IP; C/D cannot reach Neptune private DB merely through SG or service endpoint. Neptune SG inbound from Lambda SG assumed. Gateway endpoint preferable if only DynamoDB egress. Sources: https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc-internet.html ; https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-ddb.html .
