@@ -524,8 +524,8 @@
     "keyPoints": "• Cross-account = permission on the caller side (identity policy) and trust on the target side (role trust policy). • SCPs filter, they\nnever grant.\nHEADS-UP ON THIS QUESTION\n• The key says B, C, E. A trust policy is itself the role's resource-based policy, so B and E overlap. In a real design you would also\nconfirm the SCP in Account A does not deny sts:AssumeRole (option A). If this appears on a test, choose C and E for sure and follow\nthe wording for the third.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Trust policy and resource-based policy choices overlap.",
     "sourceWarning": "Select THREE is ambiguous: trust policy (E) is a resource-based policy (B); SCP permission (A) is conditional on policy configuration.",
     "review": {
-      "reviewedAt": "2026-10-28",
-      "auditStatus": "disputed-ambiguous-third-choice",
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "defective-ambiguous-three-independent-actions",
       "originalAnswers": [
         "B",
         "C",
@@ -536,20 +536,28 @@
         "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_update-role-trust-policy.html",
         "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
       ],
-      "auditNote": "AWS docs explicitly call IAM role trust policy a resource-based policy, so B and E are redundant if both are listed. C+E necessary in general, SCP A must not deny but changing SCP depends on its current contents. No unambiguous three-step solution.",
+      "auditNote": "Original B,C,E is ambiguous: IAM role trust policy E is itself a resource-based policy B, so not independent. C identity permission and E role trust are core cross-account AssumeRole requirements; SCP A must not deny and may require allow in allow-list setups. F GetSessionToken cannot pass a session policy. Preserve original source answer but flag defect.",
       "wrongOptionsReason": {
-        "A": "SCP must not block AssumeRole; editing is not necessarily needed.",
-        "B": "Trust policy E is itself the relevant resource-based policy; redundant wording.",
-        "D": "Identity policy on user in destination Account B is irrelevant.",
-        "F": "GetSessionToken is not used to pass an AssumeRole session policy."
+        "A": "SCP must permit action but editing SCP is not universally required; depends on existing SCPs.",
+        "B": "Overlaps E: a role trust policy is a resource-based policy; ambiguous independent selection.",
+        "C": "Required in typical cross-account user-to-role assumption: identity policy allows sts:AssumeRole.",
+        "D": "Irrelevant: user in Account B is not the caller.",
+        "E": "Required: target role trust policy permits Account A principal.",
+        "F": "GetSessionToken does not take session policies; AssumeRole can take session policy."
       },
       "awsDocumentationLinks": [
         "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic-cross-account.html",
         "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html",
         "https://docs.aws.amazon.com/us_en/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html"
-      ]
+      ],
+      "diagramConcept": "Account A IAM user + sts:AssumeRole identity policy -> STS AssumeRole -> Account B role trust policy; SCPs and permissions boundaries limit access.",
+      "duplicateAudit": {
+        "reviewedAt": "2026-11-01",
+        "scope": "all-674",
+        "status": "requires-semantic-comparison"
+      }
     },
-    "answerStatus": "disputed-ambiguous-third-choice",
+    "answerStatus": "defective-ambiguous-original-key-retained",
     "originalQuestionSnapshot": {
       "stem": "A company is using AWS Organizations with a multi-account architecture. The company's current security configuration for the account architecture includes SCPs, resource-based policies, identity-based policies, trust policies, and session policies. A solutions architect needs to allow an IAM user in Account A to assume a role in Account B. Which combination of steps must the solutions architect take to meet this requirement? (Select THREE.)",
       "options": [
