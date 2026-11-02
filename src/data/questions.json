@@ -10616,7 +10616,7 @@
         "https://www.examtopics.com/discussions/amazon/view/142926-exam-aws-certified-solutions-architect-professional-sap-c02/",
         "https://actualtests.crampdf.com/articles/amazon-sap-c02-certification-all-in-one-exam-guide-feb-2025-q14-q32/"
       ],
-      "notes": "AWS documentation independently establishes prerequisites. ExamsVCE reproduces exact Q225 and A+B; ExamTopics publishes longer matching Q140 wording. CramPDF publishes a reordered Q140-like variant with malformed three-item key B,D,E for a Select TWO question; don't adopt the defective published key. DHMC supports no instance profile with IMDSv2 and agent 3.2.582.0+. Older references to AWS Import/Export terminology are dated.",
+      "notes": "AWS documentation independently establishes prerequisites. ExamsVCE reproduces exact Q225 and A+B; ExamTopics publishes longer matching Q140 wording. CramPDF publishes a reordered Q140-like variant with malformed three-item key B,D,E for a Select TWO question; don't adopt the defective published key. DHMC supports no instance profile with IMDSv2 and agent 3.2.582.0+. Older references to AWS Import/Export terminology are dated. Domain 3 question 22/58 study entry added; AWS documentation rechecked 2026-11-02. External exam variants retained from earlier review, not re-fetched in this pass.",
       "duplicateAudit": {
         "scope": 674,
         "status": "near-exact-duplicate",
