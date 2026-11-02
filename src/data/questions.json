@@ -26262,13 +26262,35 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B and D are correct. FSx for Windows File Server hosts managed SMB Windows home directories with Microsoft Active Directory and Windows ACL support. AWS Client VPN provides managed remote-user connectivity directly to AWS VPC resources. Together they offload file-access traffic from the saturated on-premises VPN/data center and avoid operating a new VPN concentrator and Windows file server. Configure Client VPN endpoint, subnet association, authorization rules, routes, authentication, security groups, DNS/AD, SMB TCP 445, and migrate permissions and user drive mappings.",
+    "wrongOptionsExplanation": "A Volume Gateway presents iSCSI block volumes to an on-premises server; keeping home directories on-premises does not remove VPN ingress bottleneck. C FSx for Lustre targets HPC/POSIX workloads, not Windows SMB/AD home directories. E Direct Connect improves hybrid connectivity but does not redirect remote workers from on-premises VPN or remove file-server operating overhead; can be useful separately for AD/migration.",
+    "plainWords": "Employees overload the office VPN while opening their Windows home folders. Move folders to managed FSx for Windows and connect employees straight to AWS with managed Client VPN.",
+    "keyPoints": "• Windows SMB home directories + AD/NTFS ACL -> FSx for Windows File Server. • Remote user-to-AWS VPN -> AWS Client VPN; Site-to-Site VPN is network-to-network. • Volume Gateway iSCSI block storage does not move the SMB file-serving endpoint. • FSx for Lustre is not a drop-in Windows SMB home directory service. • Direct Connect alone does not shift remote access away from the data center. • Client VPN needs endpoint association, authorization, routes, authentication, DNS and security groups; AD dependency may still create some hybrid traffic.",
+    "sourceWarning": "No answer-key defect found. Minor formatting defect: option D lacks terminal period. 'Least operational overhead' is relative; directory service, file migration, access rules and Client VPN configuration are still required. Some exam mirrors reorder options; compare service names rather than answer letters.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "B",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/limit-access-file-folder.html",
+        "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/aws-ad-integration-fsxW.html",
+        "https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/what-is.html",
+        "https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/ad.html",
+        "https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-2.html",
+        "https://jp.fast2test.com/articles/2026%E5%B9%B4%E6%9B%B4%E6%96%B0-sap-c02%E5%9B%9E%E7%AD%94%E7%84%A1%E6%96%99%E3%83%87%E3%83%A2%E3%81%AF%E6%9C%80%E9%81%A9%E3%81%A7%E6%9C%80%E9%AB%98%E3%81%AE%E3%83%AA%E3%82%A2%E3%83%AB%E3%81%AA%E8%A9%A6%E9%A8%93%E5%90%88%E6%A0%BC%E3%81%95%E3%81%9B%E3%81%BE%E3%81%99-q69-q93/"
+      ],
+      "relatedQuestions": [
+        193,
+        354,
+        536,
+        584,
+        626
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 614,
