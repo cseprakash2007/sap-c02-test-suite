@@ -8206,10 +8206,10 @@
     "wrongOptionsExplanation": "A correct in principle: configure Identity Center access control attributes and IAM policy variables, and use separate prefixes or access points. B wrong: an unqualified shared role and bucket policy do not reliably isolate each user; ABAC could make a shared permission-set role safe, but B omits that. C correct: S3 CloudTrail data events with Athena provide user-level object access audit. D wrong: CloudTrail management events omit S3 object-level reads/writes. E wrong: S3 server access logging + S3 Select does not provide a robust per-user audit/reporting architecture; S3 Select is not an Athena replacement.",
     "plainWords": "Use per-user identity attributes to isolate S3 folders and query S3 object-level CloudTrail data events for monthly access reports.",
     "keyPoints": "IAM Identity Center ABAC attributes -> session principal tags; S3 prefix policy; CloudTrail S3 data events (opt-in) -> S3/Athena; management events alone insufficient.",
-    "sourceWarning": "Source question is severely truncated ('Options:' in stem); A uses vague 'userName tag' and must specify identity attribute mapping and principal tag syntax. IAM Identity Center principal/session attribution in CloudTrail requires proper query logic.",
+    "sourceWarning": "Truncated original stem ending 'Options:'; missing spaces. A needs Identity Center ABAC attribute mapping and principal tag based S3 prefix IAM policies; B could be safe if ABAC specified. CloudTrail S3 data events opt-in and charged; audit attribution must identify individual sessions. No independently verified complete external variant.",
     "review": {
       "status": "verified-with-truncated-stem-warning",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
       "originalAnswers": [
         "A",
         "C"
@@ -8222,7 +8222,7 @@
         "https://docs.aws.amazon.com/singlesignon/latest/userguide/attributesforaccesscontrol.html",
         "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html"
       ],
-      "notes": "Source question is severely truncated ('Options:' in stem); A uses vague 'userName tag' and must specify identity attribute mapping and principal tag syntax. IAM Identity Center principal/session attribution in CloudTrail requires proper query logic."
+      "notes": "A,C remain correct, but original question truncated. ABAC Identity Center principal attributes for S3 prefix and CloudTrail S3 object data events queried via Athena. B is incomplete, not inherently insecure. No independently verified complete external variant."
     },
     "answerStatus": "verified-with-truncated-stem-warning"
   },
