@@ -7087,13 +7087,31 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C,E are the historical best options: enable S3 server-side encryption at rest (A); use an S3 bucket policy to deny insecure HTTP requests with aws:SecureTransport=false and, if intended, deny uploads lacking the required encryption headers (C); redirect HTTP viewers to HTTPS in CloudFront (E). Modern S3 encrypts all new uploads with SSE-S3 by default, but explicit policy controls remain useful. Use CloudFront OAC signing and an S3 REST endpoint to secure the origin.",
+    "wrongOptionsExplanation": "A correct for encryption at rest, although SSE-S3 is default. B wrong: S3 ACLs cannot express aws:SecureTransport conditions. C correct only if the vague phrase 'unencrypted operations' means an explicit deny policy for insecure transport or noncompliant uploads; a policy must specify conditions. D wrong: CloudFront is not a customer-configurable SSE-KMS object store. E correct: viewer protocol redirect; HTTPS-only is stronger for write operations. F wrong: S3 presigned URLs have no RequireSSL creation flag; use HTTPS URL and bucket policy.",
+    "plainWords": "Encrypt objects in S3 and require HTTPS for browser-to-CloudFront and CloudFront-to-S3 communication.",
+    "keyPoints": "S3 SSE-S3 default; S3 bucket policy aws:SecureTransport false + Deny; CloudFront Redirect HTTP to HTTPS/HTTPS Only; S3 REST origin + OAC; presigned URLs do not support RequireSSL parameter.",
+    "sourceWarning": "Option C ambiguous: 'deny any unencrypted operations' must be implemented with a specific bucket-policy condition. S3 automatically encrypts new objects at rest. For HTTP write requests, CloudFront redirect behavior depends on HTTP version/method; HTTPS Only is safest. S3 static website endpoints cannot use HTTPS as CloudFront origins.",
+    "review": {
+      "status": "verified-with-policy-wording-caveat",
+      "reviewedAt": "2026-11-01",
+      "originalAnswers": [
+        "A",
+        "C",
+        "E"
+      ],
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html"
+      ],
+      "notes": "Option C ambiguous: 'deny any unencrypted operations' must be implemented with a specific bucket-policy condition. S3 automatically encrypts new objects at rest. For HTTP write requests, CloudFront redirect behavior depends on HTTP version/method; HTTPS Only is safest. S3 static website endpoints cannot use HTTPS as CloudFront origins."
+    },
+    "answerStatus": "verified-with-policy-wording-caveat"
   },
   {
     "id": 160,
@@ -7648,16 +7666,34 @@
     "answers": [
       "A",
       "D",
-      "F"
+      "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,D,E is the current technically correct answer, replacing historical A,D,F. A opts the organization into Compute Optimizer with trusted access; D supplies OS-level memory utilization to CloudWatch using the CloudWatch agent; E enables enhanced infrastructure metrics for a lookback of up to 93 days, covering the requested last 90 days. Systems Manager does not forward metrics to Trusted Advisor to provide these recommendations.",
+    "wrongOptionsExplanation": "A correct: organization-wide Compute Optimizer enrollment/trusted access. B wrong: Systems Manager delegated administration is not needed for Compute Optimizer. C wrong: detailed EC2 monitoring gives 1-minute CPU granularity but not OS memory metrics and not 90-day lookback. D correct: install CloudWatch agent and publish memory metrics (or supported external metric source). E correct: paid enhanced infrastructure metrics extends lookback from 14 to 93 days. F wrong: no Systems Manager-to-Trusted Advisor rightsizing metric pipeline as described.",
+    "plainWords": "Use Compute Optimizer, send EC2 memory metrics with CloudWatch Agent, and turn on enhanced metrics to analyze about three months of usage.",
+    "keyPoints": "Compute Optimizer default 14-day analysis; enhanced infrastructure metrics up to 93 days and may incur cost; EC2 memory is not a default CloudWatch hypervisor metric; use CloudWatch agent.",
+    "sourceWarning": "INCORRECT HISTORICAL KEY A,D,F. Replaced with A,D,E. F describes unsupported Systems Manager-to-Trusted Advisor metrics mechanism; E is explicitly needed for 90-day lookback.",
+    "review": {
+      "status": "corrected-answer-aws-docs",
+      "reviewedAt": "2026-11-01",
+      "originalAnswers": [
+        "A",
+        "D",
+        "F"
+      ],
+      "verifiedAnswers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/enhanced-infrastructure-metrics.html",
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/metrics.html"
+      ],
+      "notes": "INCORRECT HISTORICAL KEY A,D,F. Replaced with A,D,E. F describes unsupported Systems Manager-to-Trusted Advisor metrics mechanism; E is explicitly needed for 90-day lookback."
+    },
+    "answerStatus": "corrected-answer-aws-docs"
   },
   {
     "id": 173,
@@ -7724,13 +7760,29 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C. IAM Identity Center permission sets can scope S3 actions to each user's prefix using ABAC principal attributes/tags and policy variables, with Identity Center attributes correctly mapped into the AWS session. C CloudTrail S3 data events (not just management events) can capture per-object API activity; deliver to S3 and use Athena queries grouped by principal and month. Ensure reporting identifies the individual session rather than only a shared role.",
+    "wrongOptionsExplanation": "A correct in principle: configure Identity Center access control attributes and IAM policy variables, and use separate prefixes or access points. B wrong: an unqualified shared role and bucket policy do not reliably isolate each user; ABAC could make a shared permission-set role safe, but B omits that. C correct: S3 CloudTrail data events with Athena provide user-level object access audit. D wrong: CloudTrail management events omit S3 object-level reads/writes. E wrong: S3 server access logging + S3 Select does not provide a robust per-user audit/reporting architecture; S3 Select is not an Athena replacement.",
+    "plainWords": "Use per-user identity attributes to isolate S3 folders and query S3 object-level CloudTrail data events for monthly access reports.",
+    "keyPoints": "IAM Identity Center ABAC attributes -> session principal tags; S3 prefix policy; CloudTrail S3 data events (opt-in) -> S3/Athena; management events alone insufficient.",
+    "sourceWarning": "Source question is severely truncated ('Options:' in stem); A uses vague 'userName tag' and must specify identity attribute mapping and principal tag syntax. IAM Identity Center principal/session attribution in CloudTrail requires proper query logic.",
+    "review": {
+      "status": "verified-with-truncated-stem-warning",
+      "reviewedAt": "2026-11-01",
+      "originalAnswers": [
+        "A",
+        "C"
+      ],
+      "verifiedAnswers": [
+        "A",
+        "C"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/singlesignon/latest/userguide/attributesforaccesscontrol.html",
+        "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html"
+      ],
+      "notes": "Source question is severely truncated ('Options:' in stem); A uses vague 'userName tag' and must specify identity attribute mapping and principal tag syntax. IAM Identity Center principal/session attribution in CloudTrail requires proper query logic."
+    },
+    "answerStatus": "verified-with-truncated-stem-warning"
   },
   {
     "id": 175,
@@ -7763,13 +7815,29 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B,E are two alternative viable architectures, not two steps that should be implemented simultaneously. Both put Lambda in VPC private subnets with security-group access to the private Neptune endpoint. B uses NAT gateway outbound internet to reach public DynamoDB service endpoints. E instead uses a DynamoDB gateway VPC endpoint and route-table association, avoiding NAT for DynamoDB. E is normally preferable for cost/security when DynamoDB is the only additional external service.",
+    "wrongOptionsExplanation": "A wrong: placing Lambda in public subnets does not assign its execution environment a public IP; IGW alone does not provide internet egress. B correct: private Lambda with NAT can reach DynamoDB and Neptune over VPC. C wrong: Neptune is VPC private and Lambda outside VPC cannot simply be allowed by public Lambda IP ranges. D wrong: a Neptune VPC endpoint is not a substitute for placing Lambda in a network with route to Neptune DB cluster. E correct: private Lambda and DynamoDB gateway endpoint provide both services without NAT.",
+    "plainWords": "Put Lambda inside Neptune's VPC. For DynamoDB access, use either NAT internet egress or, better, a DynamoDB gateway endpoint.",
+    "keyPoints": "Lambda in VPC private subnets; security groups allow Neptune database port; DynamoDB gateway endpoint via route table; Lambda public subnet does not grant public IP; B/E are alternative solutions.",
+    "sourceWarning": "SELECT TWO is semantically defective: B and E are alternative end-to-end designs (NAT versus gateway endpoint), not additive steps. Option E calls new private subnets 'isolated', which is appropriate with a DynamoDB gateway endpoint; endpoint route-table associations and Neptune SG are unstated.",
+    "review": {
+      "status": "verified-alternative-designs-source-defect",
+      "reviewedAt": "2026-11-01",
+      "originalAnswers": [
+        "B",
+        "E"
+      ],
+      "verifiedAnswers": [
+        "B",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc-internet.html",
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-ddb.html"
+      ],
+      "notes": "SELECT TWO is semantically defective: B and E are alternative end-to-end designs (NAT versus gateway endpoint), not additive steps. Option E calls new private subnets 'isolated', which is appropriate with a DynamoDB gateway endpoint; endpoint route-table associations and Neptune SG are unstated."
+    },
+    "answerStatus": "verified-alternative-designs-source-defect"
   },
   {
     "id": 176,
@@ -7864,13 +7932,29 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B,E. SQS-triggered Lambda functions scale processing with queue demand and do not incur idle EC2 cost. A crawl of <=10 seconds is well within Lambda invocation limits; configure timeout, SQS visibility timeout and idempotency. Write generated CSV objects to S3 rather than keeping an always-mounted EFS shared filesystem, paying for object storage and requests rather than filesystem capacity/throughput. Consider crawl egress and robots/security restrictions.",
+    "wrongOptionsExplanation": "A wrong: m5.8xlarge is dramatically more expensive than t2.micro, and halving instance count is not a reliable cost optimization. B correct: event-driven Lambda from SQS removes idle EC2 capacity. C wrong: Neptune is a graph database, not an economical CSV object store. D wrong: Aurora Serverless is a relational DB, unnecessary for crawl-result files and adds operational cost. E correct: S3 is inexpensive durable object storage for CSV output.",
+    "plainWords": "Replace mostly idle EC2 crawlers with SQS-triggered Lambda and save generated CSV files in S3.",
+    "keyPoints": "SQS event source mapping Lambda; Lambda timeout and visibility timeout; at-least-once delivery/idempotency; S3 object storage for CSV; avoid always-on EC2/EFS when event-driven.",
+    "sourceWarning": "Lambda SQS event source mapping polls SQS; configure batch size, visibility timeout, partial-batch response and idempotency. If crawler requires long-lived network sessions or heavy binaries, check Lambda runtime constraints.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-11-01",
+      "originalAnswers": [
+        "B",
+        "E"
+      ],
+      "verifiedAnswers": [
+        "B",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html"
+      ],
+      "notes": "Lambda SQS event source mapping polls SQS; configure batch size, visibility timeout, partial-batch response and idempotency. If crawler requires long-lived network sessions or heavy binaries, check Lambda runtime constraints."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 178,
