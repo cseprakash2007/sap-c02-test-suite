@@ -371,3 +371,21 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Bank-wide related:** Q174 IAM Identity Center scientist-specific S3 access (different identity framework); Q331 S3 object activity compliance logging. No exact full-stem duplicate identified in matching scan. Independent external exam-site variants not confirmed in this pass; source A,B independently supported by AWS docs.
 
 **Next:** Q536 — 26 of 33.
+
+## 26 of 33 — Q536 — Select TWO — EFS shared blog content and 200 TB archive transfer
+
+**Historical answer C,D VERIFIED for original-era services; D OUTDATED for new customers in 2026.** C: migrate live NAS blog content to Amazon EFS, mount from on-prem Linux authors via Site-to-Site VPN and from EC2 fleet across AZs. EFS provides shared NFSv4.1; route to mount target and allow TCP 2049; coordinate initial copy and cutover. D: historically Snowball Edge Storage Optimized was appropriate offline migration appliance for 200 TB archives to S3, independent of live EFS content.
+
+**All options:** A weekly EventBridge/Lambda copies delay several-daily updates. B EBS Multi-Attach is not cross-AZ shared NFS and weekly sync also fails. C correct. D historical correct but new orders restricted. E Snowcone SSD (historically 14 TB) impractical for 200 TB, discontinued 2024.
+
+**CRITICAL AWS lifecycle:** Snowcone discontinued Nov 12 2024. Older 80TB Snowball Edge model retired Nov 2024; later 210TB Storage Optimized existed. AWS Snowball Edge closed to NEW customers effective Nov 7 2025. AWS Snowball device support in commercial Regions scheduled to end Dec 31 2026. For new projects, compare AWS DataSync (online), AWS Data Transfer Terminal (secure physical), and partner solutions. 'As soon as possible' is underdetermined without network throughput and logistics, so offline shipping is not automatically fastest.
+
+**AWS docs:** https://docs.aws.amazon.com/efs/latest/ug/mounting-fs-mount-helper-direct.html ; https://docs.aws.amazon.com/en_en/efs/latest/ug/how-it-works.html ; https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html ; https://docs.aws.amazon.com/snowball/latest/developer-guide/doc-history.html ; https://aws.amazon.com/snowball/ ; https://aws.amazon.com/blogs/storage/aws-snow-device-updates/ .
+
+**External exact stem:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-07-08.q291/a-company-is-migrating-its-blog-platform-to-aws-the-company-s-on-premises-servers-connect-to-aws-through = C,D; https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-2-question-250-discussion-p1187762.html = A,C in reordered version, same EFS + Snowball services. https://www.certsmania.com/pdf/amazon-web-services-test-prep-material-pack-sap-c02-passing-score-by-binod.pdf also gives C,D. These mirrors reproduce historical key, not current service orderability.
+
+**Related bank questions:** Q3, Q17, Q153, Q205, Q249, Q259, Q349, Q409, Q673 cover EFS/NFS, Snow devices, bulk transfers or migration. No exact stem duplicate found in targeted scan. Check especially Q259 and Q349 for offline-vs-online decision and outdated Snow hardware, and Q153 for NFS compatibility.
+
+**Exam memory:** frequently changing shared NAS → EFS; bulk archival offline migration (historical) → Snowball Edge; modern 2026 replacement → DataSync/Data Transfer Terminal, subject to bandwidth and physical logistics.
+
+**Next:** Determine 27 of 33 from sorted Domain 4 multi-answer bank after Q536.
