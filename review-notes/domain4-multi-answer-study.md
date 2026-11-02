@@ -487,3 +487,17 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Defects:** OCR corruption '(he' and missing punctuation in stem, A/F; F underspecified unless ALB/ASG deploy to both AZs; C should specify different AZ. Preserve original question/options and record warning.
 
 **Next:** Q672 — 33 of 33.
+
+## 33 of 33 — Q672 — Hybrid DNS — Select THREE
+
+**Verified A,C,F.** A: Route 53 private hosted zone myvpc.example.com associated with VPC. C: Route 53 Resolver inbound endpoint in VPC reachable over existing Site-to-Site VPN. F: on-premises DNS conditional forwarding for myvpc.example.com to inbound endpoint private IPs.
+
+**Options:** B incorrect: public hosted zone is not VPC-associated private DNS. D unnecessary: outbound Resolver handles AWS-to-on-prem DNS, the opposite direction. E incorrect: outbound rule for an on-premises domain must point to on-premises DNS server IPs, not outbound endpoint IPs for AWS private zone.
+
+**AWS references:** https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-inbound-queries.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-overview-DSN-queries-to-vpc.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/set-up-dns-resolution-for-hybrid-networks-in-a-single-account-aws-environment.html .
+
+**Related 674-bank questions:** Q430 is closest hybrid DNS near-duplicate; Q620 uses VPN and private intranet DNS; Q546 covers Resolver, Q535 private endpoint DNS, Q91 on-prem DNS/AD. No exact full-stem duplicate identified. Independent exact-stem exam-site mirror not established; official AWS docs confirm architecture.
+
+**Wording defects:** 'resolve it to the VPC' should say resolve resource DNS records to private IPs. onprem.mydc.com is context, not an explicit requirement for AWS to resolve on-prem names. Option E confuses endpoint IPs and rule targets. For reverse AWS-to-on-prem lookup, add outbound endpoint plus forwarding rule to on-premises resolver IPs. Deploy redundant inbound endpoint IPs across AZs and allow UDP/TCP 53 over VPN.
+
+**Domain 4 multi-answer study completed: 33 of 33.**
