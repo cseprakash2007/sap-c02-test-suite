@@ -3378,8 +3378,30 @@
     "plainWords": "An IAM user has read-only S3 permissions but gets access denied and sees no buckets in an organization.",
     "keyPoints": "• Identity policy allows but access is denied? Check SCPs and permissions boundaries. • ListAllMyBuckets is not controlled by bucket\npolicies.\nReference: AWS documentation — https://docs.aws.amazon.com/",
     "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "aws-docs-reviewed-external-pending",
+      "originalAnswers": [
+        "C",
+        "D"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_s3_home-directory-console.html"
+      ],
+      "externalQuestionLinks": [],
+      "crossVerificationStatus": "aws-docs-checked-external-variants-pending",
+      "auditNote": "C,D are intended. S3 console bucket listing additionally requires s3:ListAllMyBuckets; the stem does not prove that permission is granted. SCPs and permissions boundaries can reduce IAM grants. A bucket policy explicit deny can also affect specific buckets, but does not typically explain absence of every bucket in the account-wide list.",
+      "wrongOptionsReason": {
+        "A": "Bucket policy can deny bucket access, but is less directly related to account-wide bucket listing.",
+        "B": "Object/bucket ACLs do not explain account-wide console list failure.",
+        "C": "Correct: an OU SCP can block the operation despite IAM allow.",
+        "D": "Correct: a user permissions boundary can cap granted actions.",
+        "E": "IAM roles are assumed, not attached to IAM users."
+      },
+      "diagramConcept": "IAM user -> identity policy + permissions boundary + SCP -> S3 ListAllMyBuckets -> console"
+    },
+    "answerStatus": "aws-docs-reviewed-external-pending"
   },
   {
     "id": 70,
@@ -3451,8 +3473,30 @@
     "plainWords": "All accounts must use only ap-northeast-1, and the DataOps OU may use only approved EC2 instance types, with the least ongoing\nmaintenance.",
     "keyPoints": "• Org-wide Region restriction = SCP with aws:RequestedRegion. • Instance type restriction = ec2:InstanceType condition.\nReference: AWS documentation — https://docs.aws.amazon.com/",
     "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "aws-docs-reviewed-external-pending",
+      "originalAnswers": [
+        "C",
+        "E"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html",
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_syntax.html"
+      ],
+      "externalQuestionLinks": [],
+      "crossVerificationStatus": "aws-docs-checked-external-variants-pending",
+      "auditNote": "C,E intended. aws:RequestedRegion restricts API endpoint Region, not always the physical location of every affected resource. Region-deny SCP must exempt necessary global services such as IAM; a blanket deny can break them. ec2:InstanceType is valid condition key for ec2:RunInstances. Original question has multiple OCR errors.",
+      "wrongOptionsReason": {
+        "A": "One role in one account does not enforce controls throughout DataOps OU.",
+        "B": "Per-user inline policies require excessive maintenance and do not cover all principals.",
+        "C": "Correct intended: root SCP Region guardrail, with global-service exceptions.",
+        "D": "Incorrect condition key and redundant OU attachments.",
+        "E": "Correct intended: ec2:InstanceType condition in DataOps OU SCP."
+      },
+      "diagramConcept": "Organizations root -> Region-deny SCP -> Research OU / DataOps OU -> instance-type SCP -> accounts"
+    },
+    "answerStatus": "aws-docs-reviewed-external-pending"
   },
   {
     "id": 72,
