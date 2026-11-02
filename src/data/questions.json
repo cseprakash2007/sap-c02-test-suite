@@ -7441,20 +7441,50 @@
     "wrongOptionsExplanation": "A correct for direct S3 upload URLs with accelerate endpoint; if Lambda itself performs the S3 PutObject after API request, architecture must change to browser direct upload for benefit. B wrong: Global Accelerator cannot attach CloudFront distribution as an accelerator endpoint. C correct for API Gateway REST APIs (not HTTP APIs, which lack edge-optimized endpoint type). D wrong: replicating whole stack and Aurora Serverless global database introduces complexity and may not be supported in all proposed configurations. E wrong: RDS Proxy can help database connection scaling but does not directly optimize worldwide client network latency.",
     "plainWords": "Use the edge network for large document uploads and API calls instead of deploying the whole application in multiple Regions.",
     "keyPoints": "S3 Transfer Acceleration endpoint s3-accelerate.amazonaws.com; signed URLs must target accelerate endpoint. Edge-optimized API Gateway REST endpoints use AWS-managed CloudFront. Global Accelerator endpoints cannot be CloudFront distributions.",
-    "sourceWarning": "Source says Lambda functions put documents into S3, while A requires browser uploads via Transfer Acceleration signed URLs; the application flow must change to direct-to-S3 uploads. API Gateway edge-optimized only for REST APIs; question does not explicitly state REST. No guaranteed performance improvement for every geography.",
+    "sourceWarning": "Defective implicit architecture: source says Lambda puts documents in S3 but A requires browser direct-to-S3 accelerated signed URLs; must redesign upload flow. C only supported for REST API, stem does not specify REST. No guaranteed speedup, benchmark latency and transfer costs. External discussion has dissent though official AWS features favor A+C.",
     "review": {
-      "status": "verified-with-architecture-caveat",
-      "reviewedAt": "2026-11-01",
+      "status": "verified-with-architecture-defects-and-external-conflicts",
+      "reviewedAt": "2026-11-02",
       "verifiedAnswers": [
         "A",
         "C"
       ],
       "sources": [
-        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html",
-        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-endpoint-types.html"
-      ]
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration-examples.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-endpoint-types.html",
+        "https://docs.aws.amazon.com/global-accelerator/latest/dg/about-endpoints.html",
+        "https://aws.amazon.com/blogs/networking-and-content-delivery/implementing-secure-file-uploads-to-amazon-s3-at-the-edge-choosing-the-right-pattern/",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=43",
+        "https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-2-question-284-discussion-p1298270.html",
+        "https://www.examtopics.com/discussions/amazon/view/95309-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-81-discussion/"
+      ],
+      "auditNote": "A+C intended and official AWS mechanics supported. A presumes changing current Lambda-to-S3 upload path to browser direct upload via acceleration-aware presigned URLs. C requires REST API; HTTP API has no edge-optimized type. Existing CloudFront website distribution does not automatically accelerate separate API requests. B impossible CloudFront Global Accelerator endpoint. D costly multi-Region rearchitecture, Aurora Serverless compatibility/version matters. E addresses DB connections not client latency. External exam sites mostly A+C but discussion has dissent A+D or B+C; AWS service capabilities settle B as impossible.",
+      "duplicateAudit": {
+        "relatedIds": [
+          18,
+          32,
+          83,
+          149,
+          170,
+          273,
+          285,
+          305,
+          323,
+          349,
+          365,
+          495,
+          496,
+          516,
+          570,
+          592,
+          596,
+          648,
+          656
+        ],
+        "status": "Related feature mentions, no exact stem duplicate found in 674"
+      }
     },
-    "answerStatus": "verified-with-architecture-caveat"
+    "answerStatus": "verified-with-architecture-defects-and-external-conflicts"
   },
   {
     "id": 159,
