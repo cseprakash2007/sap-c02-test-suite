@@ -389,3 +389,17 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Exam memory:** frequently changing shared NAS → EFS; bulk archival offline migration (historical) → Snowball Edge; modern 2026 replacement → DataSync/Data Transfer Terminal, subject to bandwidth and physical logistics.
 
 **Next:** Determine 27 of 33 from sorted Domain 4 multi-answer bank after Q536.
+
+## 27 of 33 — Q555 — Select TWO — Aurora Global Database + Route 53 latency routing
+
+**Verified A,C** from AWS docs. A: migrate Multi-AZ RDS MySQL to Aurora MySQL Global Database (primary writer Region and read-only secondary Region with async storage-based replication), deploy ALB + EC2 ASG in the new Region. This serves >95% reads locally and permits cross-Region DR. C: Route 53 latency-based alias routing across the two regional ALBs. Set **separate latency records per Region**, not one record with two targets as option C casually states; enable health evaluation and ensure second Region is ready.
+
+**Options:** A correct. B independent new-Region RDS Multi-AZ lacks automatic cross-Region data replication; CloudFront alone does not give database continuity. C correct. D geolocation routing chooses based on geography rules, not latency. E Aurora Serverless v2 scales capacity but does not by itself establish global replication.
+
+**Nuances:** Aurora secondary Region is read-only; write requests from Region B must reach primary writer endpoint or use supported Aurora write forwarding; application routing and network paths need configuration. Replication is asynchronous, so unplanned failover may lose unreplicated writes (RPO > 0). Planned switchover can be zero RPO after sync. A Region-local database read may lag slightly. RDS Multi-AZ protects against AZ failures inside one Region, not Region-wide outages. Route 53 DNS failover/health checks do not themselves promote database writer.
+
+**AWS official:** https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-connecting.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html .
+
+**Bank-wide related questions:** Q388 (multi-Region web application routing), Q564 (Aurora Global Database + Route 53 + CloudFront), Q34, Q58, Q123, Q182, Q485. These are related scenarios; no exact stem duplicate confirmed. External exam-site exact-stem variants not independently confirmed this pass. Key A,C independently established using AWS docs.
+
+**Next:** Q564 — 28 of 33.
