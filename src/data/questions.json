@@ -7382,10 +7382,10 @@
     "wrongOptionsExplanation": "A correct: EventBridge CloudTrail CreateUser event. B wrong: CloudTrail does not directly provide per-event SNS notification with the proposed configuration; EventBridge routes events. C wrong: Fargate could run automation but adds unnecessary operational complexity versus Step Functions orchestration. D correct: Step Functions coordinates access removal and approvals via service integrations or Lambda. E correct: SNS alerts security reviewers. F wrong: Pinpoint is unnecessary for internal security notifications.",
     "plainWords": "When a user is created, detect the event, immediately block permissions through an automated workflow, and notify security for approval.",
     "keyPoints": "EventBridge source aws.iam, detail-type AWS API Call via CloudTrail, eventSource iam.amazonaws.com, eventName CreateUser. Step Functions IAM controls and SNS approval notification; CloudTrail events best effort.",
-    "sourceWarning": "CreateUser itself creates an IAM principal with no permissions by default; explicit denial should prevent later grants and race conditions. EventBridge CloudTrail delivery is best-effort and not synchronous; strong preventive controls and periodic reconciliation are needed. Global IAM event Region routing should be checked.",
+    "sourceWarning": "Reactive CloudTrail/EventBridge delivery is best-effort and asynchronous; cannot guarantee immediate zero access. New IAM user has no permissions by default, but subsequent grants may occur. Use preventive guardrails and periodic reconciliation; IAM events should be matched in us-east-1. Legacy CloudWatch Events terminology in A.",
     "review": {
-      "status": "verified-with-security-caveat",
-      "reviewedAt": "2026-11-01",
+      "status": "verified-aws-docs-and-external-variants-with-reactive-security-caveat",
+      "reviewedAt": "2026-11-02",
       "verifiedAnswers": [
         "A",
         "D",
@@ -7393,10 +7393,18 @@
       ],
       "sources": [
         "https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-iam.html",
-        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event-cloudtrail.html"
-      ]
+        "https://docs.aws.amazon.com/step-functions/latest/dg/connect-sns.html",
+        "https://repost.aws/knowledge-center/iam-eventbridge-sns-rule",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=23",
+        "https://www.examcollection.us/exam/SAP-C02-question-answer-3.html"
+      ],
+      "auditNote": "EventBridge matches IAM CreateUser management event, Step Functions orchestrates access lockdown and approval, SNS notifies. IAM global events routed through us-east-1 for EventBridge notification pattern. Event delivery best-effort and asynchronous; prevent access before approval with IAM governance and reconciliation. CreateUser alone creates no permissions by default. Old CloudWatch Events label is legacy. C Fargate possible but unnecessary; B CloudTrail SNS log delivery is not per-event CreateUser notification; F Pinpoint not appropriate.",
+      "duplicateAudit": {
+        "status": "No exact or near duplicate identified by CreateUser/approval text scan across 674",
+        "relatedIds": []
+      }
     },
-    "answerStatus": "verified-with-security-caveat"
+    "answerStatus": "verified-aws-docs-and-external-variants-with-reactive-security-caveat"
   },
   {
     "id": 158,
