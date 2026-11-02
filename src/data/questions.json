@@ -3228,7 +3228,7 @@
     "sourceWarning": "DEFECTIVE SOURCE ANSWER: stored A,E includes A's non-existent standard RDS MySQL single reader endpoint and ignores B's crucial health-check decoupling. Best technically supported B,E, but no independent exact variant confirmation. C's ALB TCP check is invalid. OCR errors: 'toad', 'Ama7on', 'CtoudWatch', 'Elastic ache'.",
     "review": {
       "status": "disputed",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
       "historicalAnswers": [
         "A",
         "E"
@@ -3242,9 +3242,30 @@
         "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html",
         "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html"
       ],
-      "note": "Do not silently change historical answer until independent exam variants and current RDS docs verified."
+      "note": "Do not silently change historical answer until independent exam variants and current RDS docs verified.",
+      "auditStatus": "disputed-source-key-aws-docs-confirm-B-E",
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/monitoring-health-checks.html"
+      ],
+      "auditNote": "B,E best technically supported. B separates simple web-tier ALB HTTP health check from Route53 full-stack check and alarm; E caches repeated DB reads. A incorrectly states a single reader endpoint for ordinary RDS MySQL read replicas; Aurora provides cluster reader endpoint. C ALB cannot use TCP health check. Historical A,E retained pending independent exact third-party variant comparison.",
+      "wrongOptionsReason": {
+        "A": "Invalid as written: standard RDS MySQL replicas have individual endpoints; Aurora has single cluster reader endpoint.",
+        "B": "Correct: lightweight ALB HTTP health check and separate Route53 end-to-end monitor/CloudWatch alarm.",
+        "C": "Incorrect: ALB target group health checks are HTTP or HTTPS, not TCP.",
+        "D": "Incorrect: RDS high-load recovery CloudWatch action not supported as described.",
+        "E": "Correct: ElastiCache reduces repeated cacheable database reads, assuming appropriate invalidation."
+      },
+      "duplicateAudit": {
+        "reviewedAt": "2026-11-02",
+        "exactDuplicateIds": [],
+        "note": "No exact matching scenario found in dataset stem scan; related RDS/ALB scenarios require separate review."
+      },
+      "diagramConcept": "ALB -> healthy EC2 -> overloaded RDS; catalog-dependent health check triggers replacement churn. Fix: ALB /health static, Route53 full-stack monitor, ElastiCache read cache before RDS."
     },
-    "answerStatus": "disputed-source-key"
+    "answerStatus": "disputed-source-key-technical-recommendation-B-E"
   },
   {
     "id": 64,
