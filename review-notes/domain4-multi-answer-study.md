@@ -471,3 +471,19 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Wording defects:** Option D lacks final period; otherwise original is coherent. Operational dependencies omitted but do not invalidate key. Do not confuse Client VPN remote users with Site-to-Site VPN hybrid networks, or FSx Windows SMB with FSx Lustre.
 
 **Next:** Q669 — 32 of 33.
+
+## 32 of 33 — Q669 — Choose THREE — Tomcat web HA and Aurora database failover
+
+**Verified A,C,F.** A: ALB plus Auto Scaling replaces single Tomcat EC2 web server with elastic healthy targets. C: Aurora MySQL with at least one Aurora Replica in another AZ adds managed database failover (brief interruption). F: second public subnet in distinct AZ permits ALB two-AZ deployment and web Auto Scaling spread. F alone does not increase HA until ALB/ASG are actually deployed across AZs.
+
+**Options:** A correct, web tier scaling and health. B wrong, second peering does not fix single-instance website outages. C correct, Aurora managed HA/replica promotion. D wrong, NAT gateways are for outbound private-subnet access, not website scale. E wrong, same single server remains single point of failure. F correct with A, second AZ public subnet is ALB prerequisite.
+
+**AWS official:** https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html ; https://docs.aws.amazon.com/autoscaling/ec2/userguide/tutorial-ec2-auto-scaling-load-balancer.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html ; https://docs.aws.amazon.com/en_en/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html .
+
+**External exact-stem:** https://www.p2pexams.com/free-questions/sample-questions-for-amazon-sap-c02-exam-by-boyle.pdf (Question 6 reproduces original options). Treat exam mirror as wording corroboration, not AWS authority. No independently confirmed second answer-key mirror; official AWS supports A,C,F.
+
+**Bank similarity:** Q416 (ALB app behavior), Q485 (multi-AZ web and availability), Q514 (stateless single-instance app), Q555 (Aurora global database plus ALB, but regional latency/DR), Q564 (Aurora global plus CDN), Q497 (static website and multi-AZ), Q350 (container migration). Similar service combinations but different goals; no exact full-stem duplicate identified across 674.
+
+**Defects:** OCR corruption '(he' and missing punctuation in stem, A/F; F underspecified unless ALB/ASG deploy to both AZs; C should specify different AZ. Preserve original question/options and record warning.
+
+**Next:** Q672 — 33 of 33.
