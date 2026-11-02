@@ -7282,10 +7282,10 @@
     "wrongOptionsExplanation": "A correct: ACM certificates for ALB are regional. B wrong: ACM certificates cannot be shared across AWS Regions using RAM. C wrong: regional ECR VPC endpoints do not make cross-Region primary ECR image pulls a proper replication strategy. D correct: replication plus re-push/re-tag for existing images, subject to tag immutability. E correct: Aurora Global Database write forwarding, but still a single primary writer. F wrong: Aurora MySQL global database is not multi-writer across Regions in the described configuration.",
     "plainWords": "Run the second Region using its own TLS certificate, local container images and a global Aurora database that forwards writes to the primary Region.",
     "keyPoints": "ACM ALB cert Region-local; ECR replication not retroactive; Aurora Global Database write forwarding is not multi-writer. Route 53 geolocation needs sensible default routing.",
-    "sourceWarning": "The term 'active-active' is imprecise for Aurora: both app Regions accept traffic but database writes remain single-primary with forwarding. ECR replication does not backfill pre-existing images; re-pushing with new tag may conflict with immutable tag policy. Write forwarding has supported engine/version/operation limits.",
+    "sourceWarning": "OUTDATED OPTION D: Amazon ECR now offers replication backfill for preexisting images; re-push/re-tag is not the least-overhead approach. Suggested D: Configure ECR cross-Region replication and start replication backfill for existing images. 'Active-active' applies to application Regions only: Aurora Global Database has one primary writer; secondary write forwarding requires supported Aurora MySQL version, aurora_replica_read_consistency, and compatible SQL.",
     "review": {
-      "status": "verified-with-architecture-caveats",
-      "reviewedAt": "2026-11-01",
+      "status": "verified-intended-answer-with-outdated-option-D",
+      "reviewedAt": "2026-11-02",
       "verifiedAnswers": [
         "A",
         "D",
@@ -7293,11 +7293,22 @@
       ],
       "sources": [
         "https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html",
-        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/replication.html",
-        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-write-forwarding.html"
-      ]
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry-settings-configure.html",
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/replication-backfill.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-write-forwarding-ams.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html"
+      ],
+      "auditNote": "A regional ACM cert required for secondary ALB. D ECR cross-Region replication correct but manual re-push of existing images is OBSOLETE for least operational overhead because ECR replication backfill supports preexisting images (current AWS docs). E Aurora Global Database write forwarding routes secondary DML to single primary writer; active-active only at application tier, not DB writer tier. For Aurora MySQL configure aurora_replica_read_consistency and check SQL restrictions. External matching stem located on CertEnsure Q163; no independent validation of its exact keyed answer in fetched snippet. Keep A,D,E as original intended; flag D defective/outdated and propose rewrite. Related Q200 shares ECS/ALB/ECR/Aurora multi-Region scenario but different DR objective.",
+      "duplicateAudit": {
+        "status": "Q200 near-duplicate architecture with different DR objective; Q123 and Q242 similar multi-Region patterns, not exact duplicates",
+        "relatedIds": [
+          200,
+          123,
+          242
+        ]
+      }
     },
-    "answerStatus": "verified-with-architecture-caveats"
+    "answerStatus": "verified-intended-answer-with-outdated-option-D"
   },
   {
     "id": 156,
