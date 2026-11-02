@@ -408,3 +408,44 @@ Normalized full stems compared across 674: no exact duplicate. Top lexical simil
 - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables-CoreConcepts.html
 - https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-values-latency-alias.html
 - https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-complex-configs.html
+
+
+---
+# Domain 3 multi-answer Q210 (21 of 58) — 2026-11-02
+
+## Original source (verbatim, malformed punctuation retained)
+A company has automated the nightly retraining of its machine learning models by using AWS Step Functions. The workflow consists of multiple steps that use AWS Lambda Each step can fail for various reasons and any failure causes a failure of the overall workflow A review reveals that the retraining has failed multiple nights in a row without the company noticing the failure A solutions architect needs to improve the workflow so that notifications are sent for all types of failures in the retraining process Which combination of steps should the solutions architect take to meet these requirements? (Select THREE)
+
+- A. Create an Amazon Simple Notification Service (Amazon SNS) topic with a subscription of type "Email" that targets the team's mailing list.
+- B. Create a task named "Email" that forwards the input arguments to the SNS topic
+- C. Add a Catch field all Task Map. and Parallel states that have a statement of "Error Equals": [ “States. ALL”] and "Next": "Email".
+- D. Add a new email address to Amazon Simple Email Service (Amazon SES). Verify the email address.
+- E. Create a task named "Email" that forwards the input arguments to the SES email address
+- F. Add a Catch field to all Task Map, and Parallel states that have a statement of "Error Equals": [ "states. Runtime”] and "Next": "Email".
+
+## Exam key A,B,C; SOURCE DEFECT
+A correct SNS email subscription; B correct SNS Publish service-integration Task (requires IAM publish permission); C best available catch-all on Task/Map/Parallel but **States.ALL cannot catch States.Runtime** and cannot catch States.DataLimitExceeded via wildcard. AWS documentation says DataLimitExceeded may be explicitly caught by name, but Runtime cannot. D SES address verification unnecessary; E SES direct integration not best fit; F incorrect: States.Runtime terminal and malformed casing, cannot be caught normally. Source overclaims notification for *all* failures. Add EventBridge Step Functions Execution Status Change rule FAILED, TIMED_OUT, ABORTED targeting SNS for Standard Workflows, best-effort delivery; Express needs CloudWatch Logs/metrics monitoring. Consider notification Task errors and avoiding duplicate notifications; don't claim exactly-once delivery.
+
+## Diagram
+```mermaid
+flowchart TD
+  S[Scheduled nightly run] --> SF[Step Functions workflow / Lambda Tasks]
+  SF -->|Catch States.ALL catchable failures| P[SNS Publish Task]
+  SF -->|Execution FAILED/TIMED_OUT/ABORTED| EB[EventBridge rule - Standard workflows]
+  EB --> SNS[SNS email topic]
+  P --> SNS
+  SNS --> Team[Team mailing list]
+```
+
+## External variants
+Exact stem/options verified in CertEmpire SAP-C02 demo PDF Q35, published key A,B,C; its claim that States.ALL catches any type is contradicted by AWS documentation. CramPDF Feb 2025 Q20 includes reordered variant with same stem and choices; do not rely on third-party keys for error semantics.
+
+## Duplicates
+No exact normalized stem duplicate among 674. Top lexical candidates Q600 (0.200), Q664 (0.191), Q353 (0.188), Q106 (0.177), Q326 (0.176), Q346 (0.170). These are not established semantic duplicates.
+
+## Sources
+- https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html
+- https://docs.aws.amazon.com/step-functions/latest/dg/eventbridge-integration.html
+- https://docs.aws.amazon.com/step-functions/latest/dg/connect-sns.html
+- https://certempire.com/demo-files/sap-c02-demo-certempire.pdf
+- https://actualtests.crampdf.com/articles/amazon-sap-c02-certification-all-in-one-exam-guide-feb-2025-q14-q32/
