@@ -387,8 +387,32 @@
     "plainWords": "Replicate an on-prem app to AWS with Elastic Disaster Recovery over a private dedicated connection, no public exposure, and use no\nmore than 75 percent of the bandwidth.",
     "keyPoints": "• Elastic DR bandwidth limit = replication throttling setting; private path = Direct Connect plus private IP replication. • Dedicated +\nprivate = Direct Connect, not VPN.\nReference: AWS documentation — https://docs.aws.amazon.com/",
     "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "review": {
+      "reviewedAt": "2026-11-01",
+      "auditStatus": "provisional-aws-technical-review-external-pending",
+      "originalAnswers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/drs/latest/userguide/Network-Requirements.html",
+        "https://docs.aws.amazon.com/drs/latest/userguide/replication-settings.html",
+        "https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html"
+      ],
+      "externalQuestionLinks": [],
+      "crossVerificationStatus": "technical-review-external-variants-pending",
+      "auditNote": "A,D,E are the intended choices. A is over-specified: two NAT gateways are not intrinsically required for private replication; private subnet connectivity to necessary AWS service endpoints must be designed. D supplies a dedicated Direct Connect path; E describes private-IP replication and throttling. Per-source-server throttling does not by itself guarantee aggregate replication traffic remains below 75% of shared link capacity.",
+      "wrongOptionsReason": {
+        "A": "Intended answer, but two NAT gateways are not inherently required.",
+        "B": "Public subnets and IGW do not meet private dedicated replication intent.",
+        "C": "Site-to-Site VPN is encrypted but not a dedicated private circuit.",
+        "D": "Direct Connect meets dedicated connectivity requirement.",
+        "E": "Private replication and throttling meet requirements, subject to aggregate link planning.",
+        "F": "Recovery instance IP and throttling do not control source replication traffic."
+      }
+    },
+    "answerStatus": "provisional-aws-review-external-pending"
   },
   {
     "id": 10,
