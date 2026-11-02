@@ -559,3 +559,34 @@ flowchart TD
 **AWS documentation:** https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html ; https://docs.aws.amazon.com/us_en/AmazonRDS/latest/AuroraUserGuide/Overview.RDSSecurityGroups.html ; https://docs.aws.amazon.com/us_en/AWSEC2/latest/UserGuide/ec2-security-groups.html
 
 **External:** https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=38 ; https://note.com/hip_wolf4336/n/nd8acc510d8b4?hl=en
+
+
+## Q283 — Domain 3 multi-answer 24/58 — Firewall Manager WAF across CloudFront
+
+**Original:** A company is using an organization in AWS Organizations to manage hundreds of AWS accounts. A solutions architect is working on a solution to provide baseline protection for the Open Web Application Security Project (OWASP) top 10 web application vulnerabilities. The solutions architect is using AWS WAF for all existing and new Amazon CloudFront distributions that are deployed within the organization. Which combination of steps should the solutions architect take to provide the baseline protection? (Select THREE.)
+
+- **A.** Enable AWS Config in all accounts.
+- **B.** Enable Amazon GuardDuty in all accounts.
+- **C.** Enable all features for the organization.
+- **D.** Use AWS Firewall Manager to deploy AWS WAF rules in all accounts for all CloudFront distributions.
+- **E.** Use AWS Shield Advanced to deploy AWS WAF rules in all accounts for all CloudFront distributions.
+- **F.** Use AWS Security Hub to deploy AWS WAF rules in all accounts for all CloudFront distributions.
+
+**Corrected answer: A+C+D (original C+D+E is wrong).**
+
+- A **Correct** — AWS Config continuously records required protected resource types in member accounts; CloudFront requires us-east-1 Config setup.
+- B **Wrong** — GuardDuty detects threats, does not deploy WAF policies.
+- C **Correct** — AWS Organizations all features is required for Firewall Manager.
+- D **Correct** — Firewall Manager WAF policies centrally apply managed/custom rule groups to existing and new CloudFront distributions across the organization.
+- E **Wrong** — Shield Advanced is DDoS protection, not the organization-wide WAF policy deployment mechanism.
+- F **Wrong** — Security Hub aggregates findings, not WAF policy deployment.
+
+**Architecture:** Organizations [all features] → Firewall Manager delegated administrator [WAF policy and managed rules] → member accounts [CloudFront distributions + WAF web ACLs]; AWS Config in accounts continuously records protected resources for compliance monitoring.
+
+**Defects:** Original key CDE swaps AWS Config for Shield Advanced. Firewall Manager administrator designation is also mandatory but omitted from choices. OWASP Top 10 mitigation depends on suitable WAF rule groups and tuning, not an absolute protection guarantee.
+
+**Duplicates/similarity (674 records):** No exact match found in targeted phrase scan. Related WAF/Firewall Manager concepts in Q465, Q655; looser related hits Q316, Q532, not verified duplicates.
+
+**Official AWS:** https://docs.aws.amazon.com/waf/latest/developerguide/fms-prereq.html ; https://docs.aws.amazon.com/waf/latest/developerguide/join-aws-orgs.html ; https://docs.aws.amazon.com/waf/latest/developerguide/enable-config.html ; https://aws.amazon.com/documentation-overview/firewall-manager/
+
+**External variants with defective keys:** https://www.allfreedumps.com/downloadfile.html?id=20649 ; https://www.examsreviews.com/articles/best-preparations-of-sap-c02-exam-2025-aws-certified-solutions-architect-unlimited-510-questions-q190-q208/ ; https://www.dumpsking.com/articles/get-the-important-preparation-guide-with-sap-c02-dumps-q117-q141/
