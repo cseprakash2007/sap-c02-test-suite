@@ -14047,13 +14047,38 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Intended exam key A+E (qualified). A: S3 gateway endpoint provides private network path from the data scientists' VPC. E: bucket policy can allow GetObject via approved access point ARN. But neither by itself enforces 'only authorized networks'; the existing access point must be VPC-origin restricted and bucket/endpoint/access point policies must enforce authorized VPC/VPCE and cross-account principals.",
+    "wrongOptionsExplanation": "A correct private path; B insufficient: Block Public Access is not equivalent to VPC network origin, and existing access-point settings cannot be changed in place; C incorrect explicit Deny for GetObject through access point; D incorrect routing to access point rather than gateway endpoint; E intended correct, but a broadly valid ARN condition is insufficient without network restrictions and explicit resource/principal permissions.",
+    "plainWords": "EC2 in another account reaches the S3 data lake privately through a gateway endpoint. The bucket allows an approved access point, whose VPC-origin restriction and policies must also be verified.",
+    "keyPoints": "S3 gateway VPC endpoint + bucket policy permitting approved access point; VPC-origin access point is immutable after creation; s3:DataAccessPointArn does not itself prove authorized network; cross-account IAM, bucket, access point, endpoint policies all matter.",
+    "sourceWarning": "Under-specified security scenario: A+E is common exam key but does not alone ensure only authorized networks. Existing access point's VPC network origin unspecified; cannot modify existing network origin or block public access settings. Option E says 'a valid ARN', not approved ARN and does not enforce aws:SourceVpce or s3:AccessPointNetworkOrigin. ExamTopics older variant has different B (create access point), and cross-account access points are now supported.",
+    "review": {
+      "status": "verified-intended-a-e-with-defect",
+      "reviewedAt": "2026-11-02",
+      "verifiedAnswers": [
+        "A",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html",
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html",
+        "https://repost.aws/knowledge-center/s3-access-bucket-restricted-to-vpc",
+        "https://www.examtopics.com/discussions/amazon/view/143132-exam-aws-certified-solutions-architect-professional-sap-c02/",
+        "https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-1"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-duplicate-in-targeted-scan",
+        "relatedIds": [
+          99,
+          463,
+          557
+        ]
+      },
+      "notes": "Exam variants favor A+E; however access-point ARN allow alone is not a network restriction. Require VPC-origin AP and policy enforcement. Original B differs from external variant."
+    },
+    "answerStatus": "verified-intended-a-e-security-conditions-missing"
   },
   {
     "id": 303,
