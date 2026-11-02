@@ -5479,8 +5479,8 @@
     "keyPoints": "Aurora PostgreSQL Database Activity Streams -> Kinesis Data Streams -> Firehose -> S3 Object Lock compliance mode. Encryption at rest plus TLS in transit. Activity stream access controlled by IAM, not DBAs.",
     "sourceWarning": "C omits explicit Kinesis Data Streams intermediary, and database activity stream must be configured with suitable audit policy. S3 Object Lock compliance mode requires versioning and correct retention configuration. Database activity streams availability varies by engine/version/Region.",
     "review": {
-      "status": "verified-with-implementation-caveats",
-      "reviewedAt": "2026-11-01",
+      "status": "aws-docs-verified-external-variant-unconfirmed",
+      "reviewedAt": "2026-11-02",
       "verifiedAnswers": [
         "A",
         "C"
@@ -5489,9 +5489,13 @@
         "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.html",
         "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.Enabling.html",
         "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html"
-      ]
+      ],
+      "auditNote": "A+C intended. Aurora Database Activity Streams emits to an Aurora-managed Kinesis Data Stream; Data Firehose can consume it. Audit policies and stream reliability need validation. C omits intermediary. Compliance mode 10-year lock requires Object Lock and versioning. B also meets encryption/TLS independently, but does not establish intended Aurora architecture; question wording underdetermines uniqueness of A vs B. D pgAudit logging may be viable with strong controls but does not offer same built-in audit separation. External exact question variant not confirmed.",
+      "duplicateAudit": {
+        "status": "No exact duplicate confirmed; related audit/security scenarios require separate verification."
+      }
     },
-    "answerStatus": "verified-with-implementation-caveats"
+    "answerStatus": "aws-docs-verified-external-variant-unconfirmed"
   },
   {
     "id": 116,
