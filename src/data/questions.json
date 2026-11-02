@@ -3031,13 +3031,30 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "A. RDS MySQL read replicas each have their own endpoint. A single \"reader endpoint\" is an Aurora feature, and the application must\nbe changed to use replicas. C. A TCP check only proves the port is open and says nothing about the application working. D.\nCloudWatch alarm recovery actions exist for EC2 instances, not for RDS.",
-    "plainWords": "The ALB health check hits the product catalog page, which needs the database. When the database was overloaded, health checks\nfailed and Auto Scaling kept replacing healthy web servers, making the outage worse. Why my answer (B, E) works Two fixes are\nneeded. First, reduce the database load with an ElastiCache layer so common reads do not reach MySQL (E). Second, point the target\ngroup health check at a simple static page so web servers are only replaced when they are truly unhealthy, and use a Route 53\nhealth check on the full product page plus CloudWatch alarms to monitor end-to-end functionality (B).",
-    "keyPoints": "• Do not let backend problems make the ALB health check fail and trigger instance replacement. • Cache to protect the database;\nuse Route 53 health checks for full-stack monitoring.\nHEADS-UP ON THIS QUESTION\n• The bank key is A and E. A relies on a \"single reader endpoint\" that RDS MySQL does not have, and it does not address the\ninstance-replacement loop. B and E fix both the cause and the monitoring.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historical A,E is NOT independently verified. E ElastiCache can reduce repeated read traffic to MySQL, but A asserts a single reader endpoint for ordinary RDS MySQL read replicas; RDS MySQL replicas have individual endpoints, unlike Aurora's managed reader endpoint. Furthermore, the scenario emphasizes Auto Scaling churn because an ALB health check calls a database-dependent product page. B is the strongest remediation: simple web-tier HTTP health check plus independent Route 53 full-stack check and CloudWatch alarm. E is a reasonable second choice if queries are cacheable. The most defensible offered pair is B,E, but preserve historical A,E pending variant comparison.",
+    "wrongOptionsExplanation": "A: Standard RDS MySQL read replicas do not supply a single managed reader endpoint; Aurora does. B: correct web health vs end-to-end monitoring separation. C: ALB target group health checks do not support TCP (only HTTP/HTTPS), despite similar functionality in NLB. D: CloudWatch alarm action cannot directly recover an overloaded RDS instance as described. E: ElastiCache can relieve cacheable database reads, with cache-invalidation requirements.",
+    "plainWords": "A database slowdown makes the product-page health check fail, so Auto Scaling keeps replacing healthy web servers. Check the web server using a lightweight page, monitor the complete product path separately, and cache repeated reads.",
+    "keyPoints": "ALB HTTP/HTTPS health checks; don't couple instance health to a slow database. Route 53 health check + CloudWatch alarm for end-to-end functionality. RDS MySQL replicas have distinct endpoints; Aurora offers a managed reader endpoint. ElastiCache helps repeated cacheable reads.",
+    "sourceWarning": "DEFECTIVE SOURCE ANSWER: stored A,E includes A's non-existent standard RDS MySQL single reader endpoint and ignores B's crucial health-check decoupling. Best technically supported B,E, but no independent exact variant confirmation. C's ALB TCP check is invalid. OCR errors: 'toad', 'Ama7on', 'CtoudWatch', 'Elastic ache'.",
+    "review": {
+      "status": "disputed",
+      "reviewedAt": "2026-11-01",
+      "historicalAnswers": [
+        "A",
+        "E"
+      ],
+      "recommendedAnswers": [
+        "B",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html"
+      ],
+      "note": "Do not silently change historical answer until independent exam variants and current RDS docs verified."
+    },
+    "answerStatus": "disputed-source-key"
   },
   {
     "id": 64,
@@ -4724,17 +4741,26 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
+    "explanation": "B,D,E is the historical best offered combination. B AWS Service Catalog portfolios with CloudFormation products can be shared across AWS Organizations. D grants users Service Catalog end-user privileges and uses launch constraints for least-privilege provisioning, but incorrectly implies Organizations-shared portfolios must be imported by script: direct Organizations sharing does not require import. E TagOptions provide governed allowed tagging values for products and portfolios.",
+    "wrongOptionsExplanation": "A: S3 template distribution lacks Service Catalog product governance, launch constraints and organization portfolio sharing. C: broad CloudFormation permission and root-level SCP wording violate least privilege; SCPs do not grant rights. F: CloudFormation resource Tags are not a universal enforced template property; TagOptions/Organizations tag policies offer governance.",
+    "plainWords": "Build approved CloudFormation products in Service Catalog, share portfolios through Organizations, use controlled launch roles, and apply TagOptions.",
+    "keyPoints": "Service Catalog portfolio sharing across AWS Organizations; launch constraints specify provisioning IAM roles; TagOptions standardize tags; Organizations-shared portfolios need no manual import; SCPs limit but do not grant.",
+    "sourceWarning": "D is partly outdated/misleading: AWS Organizations-shared Service Catalog portfolios do not need manual import. For TagOption propagation explicitly enable TagOption sharing; launch constraints must be correctly configured.",
     "review": {
-      "status": "Supported with caveat",
-      "note": "Service Catalog portfolio sharing, launch constraints and TagOptions support the design; option D simplifies administrator responsibilities.",
-      "reference": "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/catalogs_portfolios_sharing.html"
+      "status": "verified-with-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "B",
+        "D",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/catalogs_portfolios_sharing_how-to-share.html",
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/tagoption-policies.html",
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/catalogs_portfolios_sharing.html"
+      ]
     },
-    "answerStatus": "source-key-unverified"
+    "answerStatus": "verified-with-option-wording-defect"
   },
   {
     "id": 105,
@@ -5067,13 +5093,24 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C,D are the historical best troubleshooting choices because AWS Organizations SCPs and IAM permissions boundaries can cap permissions despite identity-based S3 read grants. However the symptom 'no buckets listed' specifically requires s3:ListAllMyBuckets, which is not guaranteed by generic object read-only access; check effective permission and explicit denies before concluding SCP or boundary caused it.",
+    "wrongOptionsExplanation": "A: bucket policies can explicitly deny access to individual buckets, but do not generally explain an account-wide ListBuckets denial before bucket listing. B: bucket ACLs do not control account-wide ListBuckets. E: an IAM role is not attached to an IAM user; users can assume roles with permission and trust.",
+    "plainWords": "Read-only object permissions alone may not list buckets. Check the required list-buckets action, then policy ceilings imposed by SCPs and permissions boundaries.",
+    "keyPoints": "S3 console bucket listing requires s3:ListAllMyBuckets. SCPs and permissions boundaries limit effective permissions; explicit deny wins. Bucket ACL and bucket policies are not the first place to diagnose account-wide ListBuckets denial.",
+    "sourceWarning": "Question omits explicit check of s3:ListAllMyBuckets, a direct cause of empty console bucket listing. C,D are reasonable among options, but not sufficient to rule out missing identity permission.",
+    "review": {
+      "status": "verified-with-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "C",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/list-buckets.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html"
+      ]
+    },
+    "answerStatus": "verified-with-omission-caveat"
   },
   {
     "id": 114,
