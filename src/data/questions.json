@@ -6937,20 +6937,28 @@
     "keyPoints": "Tightly coupled HPC: one AZ, cluster placement group, EFA, FSx for Lustre. EBS RAID is not shared cluster storage. Benchmark FSx throughput and metadata performance.",
     "sourceWarning": "The stem lacks workload I/O profiling; FSx for Lustre is appropriate for HPC but specific gains depend on file size, access pattern and provisioned throughput. Source typo 'AWS tor'.",
     "review": {
-      "status": "verified-with-performance-caveat",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
+      "status": "aws-docs-and-external-variants-verified",
       "verifiedAnswers": [
         "A",
         "C",
         "F"
       ],
       "sources": [
-        "https://docs.aws.amazon.com/pdfs/wellarchitected/latest/high-performance-computing-lens/wellarchitected-high-performance-computing-lens.pdf",
+        "https://docs.aws.amazon.com/wellarchitected/latest/high-performance-computing-lens/tightly-coupled-scenarios.html",
+        "https://docs.aws.amazon.com/wellarchitected/latest/high-performance-computing-lens/workload-architecture.html",
         "https://docs.aws.amazon.com/fsx/latest/LustreGuide/performance.html",
-        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/efa-file-systems.html"
-      ]
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/efa-file-systems.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-built-a-high-performance-computing-hpc-cluster-in-aws-tor-a-tightly-coupled-workload",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=63"
+      ],
+      "auditNote": "A single AZ (ideally cluster placement group), C EFA-capable compute, F FSx for Lustre are best. B no ENI multiples-of-four performance rule; D multiple AZ raises inter-node latency for tightly coupled work; E EBS RAID lacks shared parallel filesystem semantics. EFA-enabled FSx for Lustre is available for supported configurations; size metadata IOPS/throughput, client/instance compatibility. EFS not inherently bad, but may bottleneck this workload. Typo 'AWS tor'.",
+      "duplicateAudit": {
+        "status": "No exact same-stem duplicate in dataset; related HPC/Lustre stem IDs listed",
+        "relatedIds": []
+      }
     },
-    "answerStatus": "verified-with-performance-caveat"
+    "answerStatus": "aws-docs-and-external-variants-verified"
   },
   {
     "id": 148,
