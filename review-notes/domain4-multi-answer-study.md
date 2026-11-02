@@ -313,3 +313,17 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Defects/caveats:** OCR `loT` should read IoT; `S3origin` and missing sentence punctuation. Original full wording and options remain unchanged to preserve provenance; notes and per-question sourceWarning document corrections. Q438 B omits downstream AWS IoT Rules and delivery to storage/DocumentDB. E assumes static reports and does not describe the periodic trigger, authorization, or dynamic web app. Lambda task runtime must be bounded by its actual timeout; consider errors, retries, cold-start and processing margin. Security-sensitive private reports may need CloudFront signed URLs/cookies and OAC to S3. DocumentDB migration must test unsupported MongoDB functionality and chosen driver. This is not an outdated core-service question.
 
 **Next:** Identify question 22 of 33 from the ordered Domain 4 multi-answer question list after Q438.
+
+## 22 of 33 — Q497 — Choose TWO — static frontend and bursty Python backend cost
+
+**HISTORICAL B,D — DISPUTED, retained pending reconciliation.** B removes two static frontend EC2 instances and their ALB by using S3 (CloudFront/OAC recommended). D swaps all three backend On-Demand instances for Spot; multiple exact-stem exam mirrors give B,D, but AWS explicitly warns Spot capacity may disappear and is unsuitable for workloads intolerant of temporary target-capacity loss. No ASG/mixed On-Demand baseline, interruption handling, or fault-tolerance guarantees are specified. E (burstable EC2) is a plausible more availability-preserving second choice for short daily traffic spikes, but needs CPU-credit baseline, memory, latency and peak measurements; same vCPU count is insufficient proof. This is a **defective/underspecified question**, not a verified B,E correction.
+
+**Options:** A compute-optimized same vCPU count unsupported without CPU-bound measurements; B correct; C Beanstalk with same nodes retains compute cost; D discounted Spot-only introduces interruption risk; E T family earns credits during quiet hours and bursts at lunch but credits/Unlimited surplus costs must be validated.
+
+**Official AWS:** https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-best-practices.html ; https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html ; https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-credits-baseline-concepts.html .
+
+**External exact-stem versions:** https://www.freecram.net/question/Amazon.SAP-C02.v2023-09-11.q137/a-company-has-migrated-an-application-from-on-premises-to-aws-the-application-frontend-is-a-static-websit (B,D); https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-3/10/ (Q296 B,D); https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf (B,D); https://www.certstest.com/test/SAP-C02/ (same stem). Mirrors may share the same faulty explanation. No verified differently worded Select THREE variant.
+
+**674-bank related stem scan:** Q40, Q165, Q233, Q303, Q312, Q461, Q469. No exact full-stem duplicate identified from this scan; those IDs involve static sites, Spot or burstable cost themes and require per-question comparison before assuming equivalence.
+
+**Next:** Q510 — 23 of 33 (previously flagged as defective/unresolved for private Elastic Disaster Recovery connectivity).
