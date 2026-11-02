@@ -343,3 +343,17 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Exam memory:** Direct Connect = private dedicated path; DRS Use private IP = route replication across that path; DRS Throttle network bandwidth = enforce Mbps cap; recovery subnet/public-IP/security groups = intranet accessibility. Historical Q510 B,D,E is not fully sufficient. Keep source answer unchanged and mark as defective.
 
 **Next:** Q513 — 24 of 33.
+
+## 24 of 33 — Q513 — Select TWO — IPv6 Internet Gateway versus egress-only IGW
+
+**Verified C,E** (source answer retained). A VPC with an IPv6 CIDR and IPv6-addressed EC2 needs route tables, SG/NACL and appropriate gateway to reach the IPv6 internet. **C** public subnet `::/0 → internet gateway` supports IPv6 outbound and permitted inbound traffic. **E** private subnet `::/0 → egress-only internet gateway` supports IPv6 outbound-initiated sessions and responses, not unsolicited inbound. For an application serving new inbound requests from worldwide IPv6 customers, E alone is not sufficient; 'communicate' is ambiguous, not a key-breaking error.
+
+**Options:** A DX gateway/VGW hybrid association is not public IPv6 internet routing. B NAT gateway can do NAT64/DNS64 for IPv6-only clients reaching IPv4-only destinations, but is not a native IPv6 default internet gateway. C correct. D NAT instance not the documented managed IPv6 internet egress design, no NAT64 configuration. E correct outbound-only IPv6.
+
+**Official AWS:** https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html ; https://docs.aws.amazon.com/vpc/latest/userguide/egress-only-internet-gateway.html ; https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-nat64-dns64.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/WorkingWithVirtualInterfaces.html .
+
+**Exam distinctions:** IPv6 `::/0` versus IPv4 `0.0.0.0/0`; IPv6 private subnet addresses may be globally unique but are not internet-reachable without the right route; security groups and NACLs still apply; DX supports hybrid private paths but is not an IGW. Modern NAT64 capability means avoid the obsolete blanket claim 'NAT gateways never support IPv6'.
+
+**Bank-wide related question IDs:** Q38, Q96, Q107, Q241, Q268, Q301, Q308, Q318, Q410, Q610. These are conceptually related networking questions, not confirmed exact stem duplicates. External exam-site variant reconciliation was not completed in this audit; do not claim independent mirror confirmation.
+
+**Next:** Q526 — 25 of 33.
