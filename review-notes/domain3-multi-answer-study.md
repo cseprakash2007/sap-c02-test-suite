@@ -590,3 +590,28 @@ flowchart TD
 **Official AWS:** https://docs.aws.amazon.com/waf/latest/developerguide/fms-prereq.html ; https://docs.aws.amazon.com/waf/latest/developerguide/join-aws-orgs.html ; https://docs.aws.amazon.com/waf/latest/developerguide/enable-config.html ; https://aws.amazon.com/documentation-overview/firewall-manager/
 
 **External variants with defective keys:** https://www.allfreedumps.com/downloadfile.html?id=20649 ; https://www.examsreviews.com/articles/best-preparations-of-sap-c02-exam-2025-aws-certified-solutions-architect-unlimited-510-questions-q190-q208/ ; https://www.dumpsking.com/articles/get-the-important-preparation-guide-with-sap-c02-dumps-q117-q141/
+
+
+## Q302 — Domain 3 multi-answer 25/58 — Cross-account S3 data lake and authorized VPC access
+
+**Original question:** A company has an IoT data lake that is stored in Amazon S3. Data scientists in a separate AWS account need to analyze the data on Amazon EC2 instances in a VPC. Company policy requires that only authorized networks access the IoT data. The EC2 instances already have an IAM role that allows access to Amazon S3. An S3 access point exists on the data lake S3 bucket. The company needs to provide secure access to the S3 data lake for the EC2 instances while complying with the policy that requires access from only authorized networks. Which combination of steps will meet these requirements? (Select TWO.)
+
+- **A.** Create a gateway VPC endpoint for Amazon S3 in the data scientists’ VPC.
+- **B.** Update the S3 access point settings to block public access.
+- **C.** Update the EC2 instance role. Add a policy with a condition that denies the s3:GetObject action when the value for the s3:DataAccessPointArn condition key is a valid access point ARN.
+- **D.** Update the VPC route table to route S3 traffic to the S3 access point.
+- **E.** Add an S3 bucket policy with a condition that allows the s3:GetObject action when the value for the s3:DataAccessPointArn condition key is a valid access point ARN.
+
+**Exam-intended key A+E, with security defect.** A: S3 gateway VPC endpoint privately connects the data scientists' VPC to S3. E: bucket policy can delegate/permit GetObject through an approved S3 access point ARN, but merely checking a 'valid' access point ARN does not enforce authorized network origin.
+
+**Option analysis:** A correct network path; B Block Public Access does not restrict access to authorized VPCs and cannot be edited on an existing access point; C explicit deny blocks desired GetObject; D route tables target gateway VPC endpoints rather than S3 access points; E intended correct bucket permission but incomplete without VPC network-origin controls.
+
+**Architecture:** Account B EC2 [IAM role] -> S3 gateway endpoint [endpoint policy + route tables] -> Account A S3 access point [VPC network origin + AP policy] -> S3 bucket [approved AP ARN, cross-account principal and VPC/VPCE restrictions].
+
+**Defects/outdated:** Existing access point VPC origin is unspecified and immutable after creation; creating gateway endpoint and an Allow bucket policy do not prohibit alternate access paths. Restrict bucket with explicit deny on unapproved access-point/VPC endpoint paths as appropriate, confirm VPC-origin AP, and configure all IAM/AP/bucket/endpoint policies. External older variant's option B differs and cross-account access points are supported today.
+
+**Duplicate scan (674):** no exact duplicate established; conceptually related S3 access-point questions Q99, Q463, Q557. Q99/Q557 are similar to each other; do not mark as exact duplicate of Q302.
+
+**Official AWS:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html ; https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html ; https://repost.aws/knowledge-center/s3-access-bucket-restricted-to-vpc
+
+**External variants:** https://www.examtopics.com/discussions/amazon/view/143132-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-1
