@@ -528,3 +528,34 @@ flowchart TD
 **AWS sources:** https://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-troubleshooting-managed-nodes.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/troubleshooting-ssm-agent.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-default-host-management-configuration.html
 
 **External variants recorded in dataset (not freshly re-fetched):** https://www.examsvce.com/sap-c02/questiona-solutions-architect-is-importing-a-vm-question-answer.html ; https://www.examtopics.com/discussions/amazon/view/142926-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://actualtests.crampdf.com/articles/amazon-sap-c02-certification-all-in-one-exam-guide-feb-2025-q14-q32/
+
+
+## Q247 — Domain 3 multi-answer 23/58 — EC2 to Aurora security groups
+
+**Original question:** A company has an application that runs on Amazon EC2 instances. A solutions architect is designing VPC infrastructure in an AWS Region where the application needs to access an Amazon Aurora DB cluster. The EC2 instances are all associated with the same security group. The DB cluster is associated with its own security group. The solutions architect needs to add rules to the security groups to provide the application with least privilege access to the DB cluster. Which combination of steps will meet these requirements? (Select TWO.)
+
+- **A.** Add an inbound rule to the EC2 instances' security group. Specify the DB cluster's security group as the source over the default Aurora port.
+- **B.** Add an outbound rule to the EC2 instances' security group. Specify the DB cluster's security group as the destination over the default Aurora port.
+- **C.** Add an inbound rule to the DB cluster's security group. Specify the EC2 instances' security group as the source over the default Aurora port.
+- **D.** Add an outbound rule to the DB cluster's security group. Specify the EC2 instances' security group as the destination over the default Aurora port.
+- **E.** Add an outbound rule to the DB cluster's security group. Specify the EC2 instances' security group as the destination over the ephemeral ports.
+
+**Corrected answer: B and C (original key A+B was incorrect).**
+
+- A: Incorrect; EC2 ingress from Aurora reverses the connection direction.
+- B: Correct; EC2 security group egress to Aurora security group on DB listener port.
+- C: Correct; Aurora security group ingress from EC2 security group on DB listener port.
+- D: Incorrect; Aurora egress to EC2 does not allow initial inbound DB connection; stateful return traffic needs no explicit egress rule.
+- E: Incorrect; ephemeral-port egress on Aurora is unnecessary for stateful return packets.
+
+**Diagram:** EC2 [SG-App outbound: TCP DB port to SG-DB] --> Aurora [SG-DB inbound: TCP DB port from SG-App]. Return packets <-- automatically allowed by stateful SG connection tracking.
+
+**Ambiguities:** 'default Aurora port' is engine-dependent: Aurora MySQL 3306; Aurora PostgreSQL 5432. EC2 default allow-all egress may already permit the traffic; least-privilege egress assumes tightening that default rule.
+
+**External key conflict:** Exam-Tests Q184 prints A+B but its own rationale identifies B+C. Reordered external variant prints B+D, equivalent to original B+C. Follow AWS docs, not inconsistent third-party key.
+
+**Duplicate scan (674):** No exact duplicate established by targeted keyword scan; related IDs: 155, 200, 221, 230, 257, 328, 468, 516, 639. These are conceptual similarities, not confirmed duplicate questions.
+
+**AWS documentation:** https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html ; https://docs.aws.amazon.com/us_en/AmazonRDS/latest/AuroraUserGuide/Overview.RDSSecurityGroups.html ; https://docs.aws.amazon.com/us_en/AWSEC2/latest/UserGuide/ec2-security-groups.html
+
+**External:** https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=38 ; https://note.com/hip_wolf4336/n/nd8acc510d8b4?hl=en
