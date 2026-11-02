@@ -6580,18 +6580,72 @@
     "keyPoints": "SSM Agent; IAM instance profile/AmazonSSMManagedInstanceCore or Default Host Management Configuration; outbound HTTPS 443 to SSM endpoints; VPC endpoints optional if internet connectivity exists.",
     "sourceWarning": "Historical reference to 'EC2 VM Import feature of AWS Import/Export' is dated; current terminology VM Import/Export. B wording overstates instance profile necessity under Default Host Management Configuration.",
     "review": {
-      "status": "verified-with-modern-permissions-caveat",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
+      "status": "aws-docs-verified-external-exact-variant-not-confirmed",
       "verifiedAnswers": [
         "A",
         "B"
       ],
       "sources": [
         "https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-troubleshooting-managed-nodes.html",
-        "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html"
-      ]
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/troubleshooting-managed-nodes-using-ssm-cli.html"
+      ],
+      "auditNote": "A+B intended. Agent running, permissions via instance profile or Default Host Management Configuration, and HTTPS endpoint reachability needed. Public IP alone does not guarantee internet route. C VPC endpoints optional with working public endpoint access. D Application Discovery Agent unrelated. E service-linked roles not normal EC2 registration prerequisite. Original AWS Import/Export terminology outdated. No exact external question variant verified; don't claim independent external agreement.",
+      "duplicateAudit": {
+        "status": "No exact duplicate confirmed; keyword-related questions only",
+        "relatedIds": [
+          14,
+          31,
+          35,
+          44,
+          57,
+          60,
+          106,
+          110,
+          111,
+          117,
+          121,
+          125,
+          144,
+          164,
+          172,
+          212,
+          213,
+          224,
+          225,
+          229,
+          245,
+          250,
+          267,
+          309,
+          316,
+          322,
+          336,
+          371,
+          389,
+          443,
+          465,
+          466,
+          470,
+          473,
+          507,
+          511,
+          514,
+          545,
+          567,
+          581,
+          609,
+          618,
+          620,
+          626,
+          637,
+          644,
+          653
+        ]
+      }
     },
-    "answerStatus": "verified-with-modern-permissions-caveat"
+    "answerStatus": "aws-docs-verified-external-exact-variant-not-confirmed"
   },
   {
     "id": 141,
