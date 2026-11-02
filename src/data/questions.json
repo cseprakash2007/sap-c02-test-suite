@@ -3031,13 +3031,30 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "A. RDS MySQL read replicas each have their own endpoint. A single \"reader endpoint\" is an Aurora feature, and the application must\nbe changed to use replicas. C. A TCP check only proves the port is open and says nothing about the application working. D.\nCloudWatch alarm recovery actions exist for EC2 instances, not for RDS.",
-    "plainWords": "The ALB health check hits the product catalog page, which needs the database. When the database was overloaded, health checks\nfailed and Auto Scaling kept replacing healthy web servers, making the outage worse. Why my answer (B, E) works Two fixes are\nneeded. First, reduce the database load with an ElastiCache layer so common reads do not reach MySQL (E). Second, point the target\ngroup health check at a simple static page so web servers are only replaced when they are truly unhealthy, and use a Route 53\nhealth check on the full product page plus CloudWatch alarms to monitor end-to-end functionality (B).",
-    "keyPoints": "• Do not let backend problems make the ALB health check fail and trigger instance replacement. • Cache to protect the database;\nuse Route 53 health checks for full-stack monitoring.\nHEADS-UP ON THIS QUESTION\n• The bank key is A and E. A relies on a \"single reader endpoint\" that RDS MySQL does not have, and it does not address the\ninstance-replacement loop. B and E fix both the cause and the monitoring.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historical A,E is NOT independently verified. E ElastiCache can reduce repeated read traffic to MySQL, but A asserts a single reader endpoint for ordinary RDS MySQL read replicas; RDS MySQL replicas have individual endpoints, unlike Aurora's managed reader endpoint. Furthermore, the scenario emphasizes Auto Scaling churn because an ALB health check calls a database-dependent product page. B is the strongest remediation: simple web-tier HTTP health check plus independent Route 53 full-stack check and CloudWatch alarm. E is a reasonable second choice if queries are cacheable. The most defensible offered pair is B,E, but preserve historical A,E pending variant comparison.",
+    "wrongOptionsExplanation": "A: Standard RDS MySQL read replicas do not supply a single managed reader endpoint; Aurora does. B: correct web health vs end-to-end monitoring separation. C: ALB target group health checks do not support TCP (only HTTP/HTTPS), despite similar functionality in NLB. D: CloudWatch alarm action cannot directly recover an overloaded RDS instance as described. E: ElastiCache can relieve cacheable database reads, with cache-invalidation requirements.",
+    "plainWords": "A database slowdown makes the product-page health check fail, so Auto Scaling keeps replacing healthy web servers. Check the web server using a lightweight page, monitor the complete product path separately, and cache repeated reads.",
+    "keyPoints": "ALB HTTP/HTTPS health checks; don't couple instance health to a slow database. Route 53 health check + CloudWatch alarm for end-to-end functionality. RDS MySQL replicas have distinct endpoints; Aurora offers a managed reader endpoint. ElastiCache helps repeated cacheable reads.",
+    "sourceWarning": "DEFECTIVE SOURCE ANSWER: stored A,E includes A's non-existent standard RDS MySQL single reader endpoint and ignores B's crucial health-check decoupling. Best technically supported B,E, but no independent exact variant confirmation. C's ALB TCP check is invalid. OCR errors: 'toad', 'Ama7on', 'CtoudWatch', 'Elastic ache'.",
+    "review": {
+      "status": "disputed",
+      "reviewedAt": "2026-11-01",
+      "historicalAnswers": [
+        "A",
+        "E"
+      ],
+      "recommendedAnswers": [
+        "B",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html"
+      ],
+      "note": "Do not silently change historical answer until independent exam variants and current RDS docs verified."
+    },
+    "answerStatus": "disputed-source-key"
   },
   {
     "id": 64,
@@ -4724,17 +4741,26 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
+    "explanation": "B,D,E is the historical best offered combination. B AWS Service Catalog portfolios with CloudFormation products can be shared across AWS Organizations. D grants users Service Catalog end-user privileges and uses launch constraints for least-privilege provisioning, but incorrectly implies Organizations-shared portfolios must be imported by script: direct Organizations sharing does not require import. E TagOptions provide governed allowed tagging values for products and portfolios.",
+    "wrongOptionsExplanation": "A: S3 template distribution lacks Service Catalog product governance, launch constraints and organization portfolio sharing. C: broad CloudFormation permission and root-level SCP wording violate least privilege; SCPs do not grant rights. F: CloudFormation resource Tags are not a universal enforced template property; TagOptions/Organizations tag policies offer governance.",
+    "plainWords": "Build approved CloudFormation products in Service Catalog, share portfolios through Organizations, use controlled launch roles, and apply TagOptions.",
+    "keyPoints": "Service Catalog portfolio sharing across AWS Organizations; launch constraints specify provisioning IAM roles; TagOptions standardize tags; Organizations-shared portfolios need no manual import; SCPs limit but do not grant.",
+    "sourceWarning": "D is partly outdated/misleading: AWS Organizations-shared Service Catalog portfolios do not need manual import. For TagOption propagation explicitly enable TagOption sharing; launch constraints must be correctly configured.",
     "review": {
-      "status": "Supported with caveat",
-      "note": "Service Catalog portfolio sharing, launch constraints and TagOptions support the design; option D simplifies administrator responsibilities.",
-      "reference": "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/catalogs_portfolios_sharing.html"
+      "status": "verified-with-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "B",
+        "D",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/catalogs_portfolios_sharing_how-to-share.html",
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/tagoption-policies.html",
+        "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/catalogs_portfolios_sharing.html"
+      ]
     },
-    "answerStatus": "source-key-unverified"
+    "answerStatus": "verified-with-option-wording-defect"
   },
   {
     "id": 105,
@@ -5067,13 +5093,24 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C,D are the historical best troubleshooting choices because AWS Organizations SCPs and IAM permissions boundaries can cap permissions despite identity-based S3 read grants. However the symptom 'no buckets listed' specifically requires s3:ListAllMyBuckets, which is not guaranteed by generic object read-only access; check effective permission and explicit denies before concluding SCP or boundary caused it.",
+    "wrongOptionsExplanation": "A: bucket policies can explicitly deny access to individual buckets, but do not generally explain an account-wide ListBuckets denial before bucket listing. B: bucket ACLs do not control account-wide ListBuckets. E: an IAM role is not attached to an IAM user; users can assume roles with permission and trust.",
+    "plainWords": "Read-only object permissions alone may not list buckets. Check the required list-buckets action, then policy ceilings imposed by SCPs and permissions boundaries.",
+    "keyPoints": "S3 console bucket listing requires s3:ListAllMyBuckets. SCPs and permissions boundaries limit effective permissions; explicit deny wins. Bucket ACL and bucket policies are not the first place to diagnose account-wide ListBuckets denial.",
+    "sourceWarning": "Question omits explicit check of s3:ListAllMyBuckets, a direct cause of empty console bucket listing. C,D are reasonable among options, but not sufficient to rule out missing identity permission.",
+    "review": {
+      "status": "verified-with-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "C",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/list-buckets.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html"
+      ]
+    },
+    "answerStatus": "verified-with-omission-caveat"
   },
   {
     "id": 114,
@@ -5140,13 +5177,25 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C. Aurora PostgreSQL with encryption at rest and TLS provides database confidentiality. Aurora Database Activity Streams audit database activity outside ordinary DBA control, feed a managed Kinesis data stream, and can be consumed by Firehose to deliver S3 audit objects protected with Object Lock compliance mode for 10 years. Configure appropriate audit policy, delivery and retention, and verify region/engine support.",
+    "wrongOptionsExplanation": "A correct: Aurora encrypted and TLS. B not the intended pair: standalone RDS PostgreSQL is not the Aurora cluster required by C; engine-specific RDS activity stream support differs. C correct: independent audit pipeline and immutable compliance retention. D pgAudit to CloudWatch Logs can capture configured activity but lacks the stronger separation from DBA control afforded by Database Activity Streams; logging configuration and audit coverage matter. E governance Object Lock can be bypassed by authorized principals, unlike compliance mode.",
+    "plainWords": "Encrypt the patient database, stream audit activity outside DBA control, and lock audit files against deletion for ten years.",
+    "keyPoints": "Aurora PostgreSQL Database Activity Streams -> Kinesis Data Streams -> Firehose -> S3 Object Lock compliance mode. Encryption at rest plus TLS in transit. Activity stream access controlled by IAM, not DBAs.",
+    "sourceWarning": "C omits explicit Kinesis Data Streams intermediary, and database activity stream must be configured with suitable audit policy. S3 Object Lock compliance mode requires versioning and correct retention configuration. Database activity streams availability varies by engine/version/Region.",
+    "review": {
+      "status": "verified-with-implementation-caveats",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.Enabling.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html"
+      ]
+    },
+    "answerStatus": "verified-with-implementation-caveats"
   },
   {
     "id": 116,
@@ -5687,13 +5736,24 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C,D. D builds a new patched AMI, updates the launch configuration or preferably a launch template, and invokes EC2 Auto Scaling instance refresh so replacements are patched. C adds load-balancer target health monitoring to validate newly launched instances during replacement and preserve service availability; configure health checks and replacement policy carefully.",
+    "wrongOptionsExplanation": "A wrong: 'Update policy' is a CloudFormation mechanism and does not target the oldest launch configuration in the stated manner. B wrong: manually patching two groups still leaves launch images stale and does not ensure replacement instances are patched. C correct for traffic management/health monitoring but alone does not fix stale AMIs. D correct durable golden-image refresh. E wrong: EC2 termination protection does not reliably protect instances from Auto Scaling scale-in and does not patch replacement AMIs.",
+    "plainWords": "Never rely on patching only running instances in an Auto Scaling group. Patch the image used to launch new instances, then refresh the group while monitoring healthy targets.",
+    "keyPoints": "Immutable patched AMI + launch template/config update + Auto Scaling instance refresh; ALB health checks. Prefer launch templates over legacy launch configurations.",
+    "sourceWarning": "C is supportive rather than necessary to prevent recurrence; D is the essential root-cause fix. 'Launch configuration' is legacy; prefer a launch template. Existing reboot replacement behavior depends on health-check/grace-period settings.",
+    "review": {
+      "status": "verified-with-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "C",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks-overview.html"
+      ]
+    },
+    "answerStatus": "verified-with-caveat"
   },
   {
     "id": 128,
@@ -5964,13 +6024,24 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B,D. Enable ALB access logs (traditionally S3) and create an Athena table to query source client IP and request timestamps; Lambda checks the most recent occurrence for each allowed source IP and removes security-group rules only when no qualifying request occurred within 90 days. CloudTrail records AWS API activity, not each web request.",
+    "wrongOptionsExplanation": "A: VPC Flow Logs in CloudWatch can capture flows but incur collection/ingestion/query cost and do not offer ALB application-request context. B correct: ALB access logs and Athena enable economical S3-based analysis. C: flow logs can help but are not the most cost-effective direct access-request record here. D correct: Lambda can query ALB access logs, typically through Athena. E wrong: CloudTrail does not record ordinary ALB HTTP request client IP activity.",
+    "plainWords": "Find which allowlisted customer IPs actually requested the website. Use ALB access logs in S3, Athena SQL and Lambda, not CloudTrail.",
+    "keyPoints": "ALB access logs include client:port and timestamp; Athena query over S3; CloudTrail logs API calls, not web access; ALB logs are best effort and not guaranteed complete accounting.",
+    "sourceWarning": "ALB logs are best-effort, not complete accounting; lack of observed logs is not proof an IP was inactive. Proxies/NAT mean observed client IP may differ from end-user IP. Athena cost depends on data scanned and partitioning; 90-day retention required.",
+    "review": {
+      "status": "verified-with-log-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "B",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/application-load-balancer-logs.html"
+      ]
+    },
+    "answerStatus": "verified-with-log-caveat"
   },
   {
     "id": 136,
@@ -6003,13 +6074,24 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C. AWS RAM can share a central Transit Gateway across AWS Organizations member accounts. CloudFormation StackSets with service-managed permissions and automatic deployment can create a VPC and AWS::EC2::TransitGatewayVpcAttachment in newly added accounts using the shared transit gateway ID. The TGW owner must configure route table associations/propagations; spoke VPCs need subnet routes.",
+    "wrongOptionsExplanation": "A correct: AWS RAM shares TGW. B wrong: SCPs are permission guardrails, not a resource-sharing service. C correct: StackSets can automatically deploy to new member accounts and provision VPC TGW attachments. D wrong: TGW peering attachments join two TGWs, not a VPC to a shared TGW; service-linked role does not replace the correct resource. E wrong: Service Catalog product sharing is not the native way to share a transit gateway.",
+    "plainWords": "Share the network hub once using AWS RAM, then automatically create each new account's VPC and connection to the hub using StackSets.",
+    "keyPoints": "RAM share TGW; StackSets Organizations service-managed permissions + auto-deployment; TransitGatewayVpcAttachment (not TransitGatewayPeeringAttachment); configure TGW and VPC routes.",
+    "sourceWarning": "Stem has OCR typos ('Prom', 'automatical^'). Option C's wording 'associate attachment with transit gateway using ID' is imprecise: VPC attachment refers to TransitGatewayId; separate TGW route table association/propagation may be needed. StackSets auto-deployment must be enabled.",
+    "review": {
+      "status": "verified-with-wording-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/vpc/latest/tgw/working-with-transit-gateways.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-manage-auto-deployment.html"
+      ]
+    },
+    "answerStatus": "verified-with-wording-caveat"
   },
   {
     "id": 137,
@@ -6115,13 +6197,25 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C,E. Create a central-account Kinesis Data Stream in each required Region (A). Set up cross-account CloudWatch Logs destinations backed by Kinesis, appropriate IAM role and destination resource access policy, and subscription filters per source log group or account-level policy (C). Lambda consumes stream records, normalizes and forwards to security tooling (E). Configure on-demand Kinesis capacity or scaling and preserve source Region. Control Tower is organizational context rather than the delivery mechanism.",
+    "wrongOptionsExplanation": "A correct: Kinesis buffers and scales log ingestion. B wrong: SQS is not the CloudWatch Logs cross-account subscription destination pattern described. C correct with caveat: central CloudWatch Logs destination, IAM trust/permissions and access policy must be created; direct source subscription to a raw cross-account stream is not sufficient. D wrong: SQS unsupported as direct subscription destination and a single filter for all groups is not valid in that formulation. E correct: central Lambda transforms records and sends to security tool. F wrong: processing independently in member accounts contradicts centralized normalization.",
+    "plainWords": "Send CloudWatch Logs from many accounts into a per-Region central Kinesis stream, process centrally with Lambda, and send standardized events to security tools.",
+    "keyPoints": "CloudWatch Logs cross-account subscription destination + IAM role/access policy -> Kinesis Data Streams -> Lambda normalization; per-Region architecture; Kinesis on-demand or autoscaling; account-level subscriptions are also supported.",
+    "sourceWarning": "C omits required central CloudWatch Logs destination and destination access policy; its wording implies direct subscriptions to Kinesis across accounts. Existing account-level subscription policies can simplify setup. One central stream must be deployed per source Region to retain logs in their creation Region.",
+    "review": {
+      "status": "verified-with-architecture-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CrossAccountSubscriptions-Kinesis.html",
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CrossAccountSubscriptions.html"
+      ]
+    },
+    "answerStatus": "verified-with-architecture-caveat"
   },
   {
     "id": 140,
@@ -6154,13 +6248,24 @@
       "B"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,B. A VM-imported custom AMI may lack running SSM Agent; the agent must register with Systems Manager. B an EC2 instance needs appropriate SSM permissions through an IAM instance profile or modern Default Host Management Configuration. Verify outbound HTTPS access to SSM endpoints; public IP alone does not guarantee an internet route.",
+    "wrongOptionsExplanation": "A correct: SSM Agent running. B correct: suitable IAM permissions, though Default Host Management Configuration is an alternative. C not mandatory: interface endpoints are optional when internet egress is available, but can be required for isolated subnets. D Application Discovery Agent is unrelated to SSM registration. E service-linked roles are not the normal per-instance prerequisite.",
+    "plainWords": "A public EC2 IP does not automatically make a server appear in Systems Manager. Check the SSM Agent and permissions, then network connectivity.",
+    "keyPoints": "SSM Agent; IAM instance profile/AmazonSSMManagedInstanceCore or Default Host Management Configuration; outbound HTTPS 443 to SSM endpoints; VPC endpoints optional if internet connectivity exists.",
+    "sourceWarning": "Historical reference to 'EC2 VM Import feature of AWS Import/Export' is dated; current terminology VM Import/Export. B wording overstates instance profile necessity under Default Host Management Configuration.",
+    "review": {
+      "status": "verified-with-modern-permissions-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "B"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-troubleshooting-managed-nodes.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html"
+      ]
+    },
+    "answerStatus": "verified-with-modern-permissions-caveat"
   },
   {
     "id": 141,
@@ -6446,13 +6551,26 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C,F. Keep tightly coupled MPI-style EC2 workers within one AZ for lower inter-node latency and cluster placement options; use EFA-capable instances for high-performance network communication; replace EFS with FSx for Lustre, a parallel file system designed for demanding HPC shared-file I/O. Size FSx throughput and select EFA-compatible clients if using EFA-enabled FSx.",
+    "wrongOptionsExplanation": "A correct single-AZ for tightly coupled jobs. B wrong: adding ENIs in multiples of four is not a general HPC performance rule. C correct: EFA reduces latency and increases throughput for tightly coupled workloads. D wrong: multi-AZ adds inter-AZ latency for synchronous tight coupling. E wrong: EBS RAID is normally attached to an individual instance, not a shared distributed parallel filesystem across 1000 EC2 workers. F correct: FSx for Lustre is purpose-built for parallel HPC storage.",
+    "plainWords": "For a thousand cooperating compute nodes, keep nodes close, use EFA networking, and use a fast parallel file system instead of general-purpose EFS.",
+    "keyPoints": "Tightly coupled HPC: one AZ, cluster placement group, EFA, FSx for Lustre. EBS RAID is not shared cluster storage. Benchmark FSx throughput and metadata performance.",
+    "sourceWarning": "The stem lacks workload I/O profiling; FSx for Lustre is appropriate for HPC but specific gains depend on file size, access pattern and provisioned throughput. Source typo 'AWS tor'.",
+    "review": {
+      "status": "verified-with-performance-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "F"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/pdfs/wellarchitected/latest/high-performance-computing-lens/wellarchitected-high-performance-computing-lens.pdf",
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/performance.html",
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/efa-file-systems.html"
+      ]
+    },
+    "answerStatus": "verified-with-performance-caveat"
   },
   {
     "id": 148,
@@ -6772,13 +6890,26 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,D,E. Request a distinct regional ACM certificate for the second ALB (A). Enable ECR cross-Region replication and re-push or re-tag existing images because replication only applies to images pushed after configuration (D). Aurora Global Database with write forwarding supports regional reads and forwards secondary-region writes to the primary writer (E). Ensure engine/version/Region support and secondary cluster configured.",
+    "wrongOptionsExplanation": "A correct: ACM certificates for ALB are regional. B wrong: ACM certificates cannot be shared across AWS Regions using RAM. C wrong: regional ECR VPC endpoints do not make cross-Region primary ECR image pulls a proper replication strategy. D correct: replication plus re-push/re-tag for existing images, subject to tag immutability. E correct: Aurora Global Database write forwarding, but still a single primary writer. F wrong: Aurora MySQL global database is not multi-writer across Regions in the described configuration.",
+    "plainWords": "Run the second Region using its own TLS certificate, local container images and a global Aurora database that forwards writes to the primary Region.",
+    "keyPoints": "ACM ALB cert Region-local; ECR replication not retroactive; Aurora Global Database write forwarding is not multi-writer. Route 53 geolocation needs sensible default routing.",
+    "sourceWarning": "The term 'active-active' is imprecise for Aurora: both app Regions accept traffic but database writes remain single-primary with forwarding. ECR replication does not backfill pre-existing images; re-pushing with new tag may conflict with immutable tag policy. Write forwarding has supported engine/version/operation limits.",
+    "review": {
+      "status": "verified-with-architecture-caveats",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html",
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/replication.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-write-forwarding.html"
+      ]
+    },
+    "answerStatus": "verified-with-architecture-caveats"
   },
   {
     "id": 156,
@@ -6850,13 +6981,25 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,D,E. EventBridge rule matches CloudTrail IAM CreateUser management events (A). Step Functions orchestrates prompt user lockdown (for example apply explicit-deny permissions boundary or deny policy, remove access keys, deactivate console login, handle group/attached policies) and approval workflow (D). SNS notifies the security team (E). Use defense-in-depth IAM governance because event delivery is best effort and asynchronous.",
+    "wrongOptionsExplanation": "A correct: EventBridge CloudTrail CreateUser event. B wrong: CloudTrail does not directly provide per-event SNS notification with the proposed configuration; EventBridge routes events. C wrong: Fargate could run automation but adds unnecessary operational complexity versus Step Functions orchestration. D correct: Step Functions coordinates access removal and approvals via service integrations or Lambda. E correct: SNS alerts security reviewers. F wrong: Pinpoint is unnecessary for internal security notifications.",
+    "plainWords": "When a user is created, detect the event, immediately block permissions through an automated workflow, and notify security for approval.",
+    "keyPoints": "EventBridge source aws.iam, detail-type AWS API Call via CloudTrail, eventSource iam.amazonaws.com, eventName CreateUser. Step Functions IAM controls and SNS approval notification; CloudTrail events best effort.",
+    "sourceWarning": "CreateUser itself creates an IAM principal with no permissions by default; explicit denial should prevent later grants and race conditions. EventBridge CloudTrail delivery is best-effort and not synchronous; strong preventive controls and periodic reconciliation are needed. Global IAM event Region routing should be checked.",
+    "review": {
+      "status": "verified-with-security-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-iam.html",
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event-cloudtrail.html"
+      ]
+    },
+    "answerStatus": "verified-with-security-caveat"
   },
   {
     "id": 158,
@@ -6889,13 +7032,24 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C. S3 Transfer Acceleration uses CloudFront edge locations to accelerate globally distributed clients uploading documents directly to an S3 bucket with acceleration-aware signed URLs. API Gateway edge-optimized REST endpoints route globally distributed API requests through AWS edge network toward the regional backend. These improve client ingress latency without duplicating all stateful infrastructure.",
+    "wrongOptionsExplanation": "A correct for direct S3 upload URLs with accelerate endpoint; if Lambda itself performs the S3 PutObject after API request, architecture must change to browser direct upload for benefit. B wrong: Global Accelerator cannot attach CloudFront distribution as an accelerator endpoint. C correct for API Gateway REST APIs (not HTTP APIs, which lack edge-optimized endpoint type). D wrong: replicating whole stack and Aurora Serverless global database introduces complexity and may not be supported in all proposed configurations. E wrong: RDS Proxy can help database connection scaling but does not directly optimize worldwide client network latency.",
+    "plainWords": "Use the edge network for large document uploads and API calls instead of deploying the whole application in multiple Regions.",
+    "keyPoints": "S3 Transfer Acceleration endpoint s3-accelerate.amazonaws.com; signed URLs must target accelerate endpoint. Edge-optimized API Gateway REST endpoints use AWS-managed CloudFront. Global Accelerator endpoints cannot be CloudFront distributions.",
+    "sourceWarning": "Source says Lambda functions put documents into S3, while A requires browser uploads via Transfer Acceleration signed URLs; the application flow must change to direct-to-S3 uploads. API Gateway edge-optimized only for REST APIs; question does not explicitly state REST. No guaranteed performance improvement for every geography.",
+    "review": {
+      "status": "verified-with-architecture-caveat",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-endpoint-types.html"
+      ]
+    },
+    "answerStatus": "verified-with-architecture-caveat"
   },
   {
     "id": 159,
