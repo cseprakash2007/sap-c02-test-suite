@@ -3013,8 +3013,44 @@
     "plainWords": "Inspection software runs on Auto Scaling instances. When the app dies, the group replaces the instance, but the network routes still\npoint at the old one.",
     "keyPoints": "• Application-level health needs custom/process metrics via the CloudWatch agent. • Automation chain: metric -> alarm -> SNS ->\nLambda action.\nHEADS-UP ON THIS QUESTION\n• Today you would usually put a Gateway Load Balancer in front of inspection appliances so routes never change when instances are\nreplaced.\nReference: AWS documentation — https://docs.aws.amazon.com/",
     "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "review": {
+      "reviewedAt": "2026-11-02",
+      "auditStatus": "aws-architecture-reviewed-external-variant-pending",
+      "originalAnswers": [
+        "B",
+        "D",
+        "E"
+      ],
+      "recommendedAnswers": [
+        "B",
+        "D",
+        "E"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Agent-procstat-process-metrics.html",
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks-overview.html",
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html"
+      ],
+      "externalQuestionLinks": [],
+      "crossVerificationStatus": "aws-docs-aligned-external-exam-variants-not-verified",
+      "auditNote": "Intended B,D,E: procstat process metrics -> CloudWatch alarm -> SNS -> Lambda coordinating ASG instance replacement and route update. Existing stem says ASG already replaces instance on app failure; this is internally inconsistent with explanation that process health is not detected. Lambda must wait for replacement readiness; use lifecycle hooks/EventBridge as appropriate. Modern architecture: GWLB with endpoints and target groups avoids direct instance route changes. Keep source answer with defect flag.",
+      "wrongOptionsReason": {
+        "A": "EC2 status checks are infrastructure health and may miss stopped app processes.",
+        "B": "Correct: CloudWatch agent procstat reports process metrics.",
+        "C": "SSM Agent is not the native CloudWatch procstat collector.",
+        "D": "Correct: CloudWatch custom metric alarm sends SNS notification.",
+        "E": "Correct intended: Lambda orchestrates recovery and route updates; requires asynchronous replacement-readiness coordination.",
+        "F": "CloudFormation Conditions are stack deployment decisions, not Auto Scaling replacement callbacks."
+      },
+      "duplicateAudit": {
+        "reviewedAt": "2026-11-02",
+        "exactDuplicateIds": [],
+        "note": "No exact or strongly matching duplicate found using stem keyword scan; broader semantic comparison pending."
+      },
+      "diagramConcept": "EC2 inspection process -> CloudWatch agent procstat -> CloudWatch alarm -> SNS -> Lambda -> ASG replacement and route repair; modern alternative VPC route -> GWLB endpoint -> GWLB -> inspection targets."
+    },
+    "answerStatus": "aws-docs-aligned-with-source-wording-defect"
   },
   {
     "id": 61,
