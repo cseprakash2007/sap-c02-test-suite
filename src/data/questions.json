@@ -25053,13 +25053,40 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,D. ENIs retain a MAC address independent of the EC2 instance; pre-create ENIs, obtain corresponding license files before failover, store licenses securely in S3, and bootstrap new EC2 with the matching licensed ENI and license file. Store the database server's current IPv4 address in Systems Manager Parameter Store and inject it into legacy config at startup; update parameter when database IP changes.",
+    "wrongOptionsExplanation": "A correct prelicensed ENI pool plus S3 and bootstrap; implement AZ-specific pools and match MAC to license. B AMI copies license files but does not guarantee launched instances have the matching ENI MAC. C vendor's 12-hour turnaround blocks timely recovery. D correct centralized IP config without DNS support; refresh value on change. E AMI with hardcoded database IP becomes stale and requires rebuilds for changes.",
+    "plainWords": "A prelicensed ENI keeps the MAC address the vendor recognizes, and Parameter Store keeps the latest database IP available to new application instances.",
+    "keyPoints": "An ENI has persistent MAC and belongs to a specific subnet/AZ; secondary ENIs can detach and reattach to other instances in SAME AZ, primary ENI cannot detach. Provision licensed pools per AZ and coordinate exclusive ENI assignment. Software must bind to licensed interface; ensure EC2 instance type ENI limit and OS networking configuration. Secure license files in S3 and IAM; bootstrap role needs S3 GetObject, EC2 AttachNetworkInterface (if used) and ssm:GetParameter. Update Parameter Store on DB failover and reload config; parameter value alone does not track changes automatically.",
+    "sourceWarning": "SOURCE DEFECTS: 'bad balancer' should be 'load balancer'; 'Amazon $3' should be 'Amazon S3'; 'anAmazon' spacing; missing punctuation and truncated option B ('all future EC2'). External corrected ExamTopics SAP-C02 #314 agrees A,D; older C01 Q139 variant adds master-master database and Lambda parameter maintenance. DESIGN CAVEAT: ENI is AZ-bound; A does not describe multi-AZ licensed pool management or exclusive allocation, so A,D are best two steps, not a complete HA deployment blueprint.",
+    "review": {
+      "status": "verified-aws-and-external-variants",
+      "reviewedAt": "2026-11-01",
+      "originalAnswer": [
+        "A",
+        "D"
+      ],
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "similarQuestionIds": [
+        57,
+        107,
+        164,
+        267,
+        371,
+        507
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network-interface-attachments.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html",
+        "https://www.examtopics.com/discussions/amazon/view/124998-exam-aws-certified-solutions-architect-professional-sap-c02/",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://itpracticetest.online/wp-content/uploads/AWS-Certified-Solutions-Architect-Professional-SOP-C01-Exam-2-Questions.pdf"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 582,
