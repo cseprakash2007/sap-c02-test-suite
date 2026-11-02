@@ -28351,13 +28351,59 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C,F: A adds Tomcat EC2 Auto Scaling and ALB to distribute traffic and replace unhealthy web instances; C moves single EC2-hosted MySQL to managed Aurora with a reader in another AZ that can be promoted on writer failure; F adds a second public subnet in a different AZ, necessary for an internet-facing regional ALB and multi-AZ web targets. Deploy ASG and ALB across both subnets, use health checks, ensure Tomcat session state is externalized, and ensure Aurora writer/replica AZ separation.",
+    "wrongOptionsExplanation": "B: extra VPC peering does not resolve a web capacity/single-instance failure; peering is not an HA load balancer. D: NAT gateways support private-subnet outbound internet, not public web server load balancing or MySQL database failover; no relevant outbound bottleneck is stated. E: moving Tomcat into the DB VPC does not remove its single-instance failure or add scaling.",
+    "plainWords": "A single Tomcat server crashes when traffic spikes. Add multiple web servers behind an ALB across two AZs and use Aurora with a failover replica instead of one EC2 MySQL instance.",
+    "keyPoints": "• Web scale/HA: ALB + Auto Scaling, multiple AZs. • ALB requires at least two AZ subnets; merely creating a subnet without enabling/deploying there does not make it highly available. • Aurora reader can be promoted to writer on failure; replica in separate AZ. • Existing VPC peering may remain; additional peering not needed. • NAT gateways are outbound network egress, not web-tier HA. • Stateful Tomcat sessions may need externalization; Aurora failover causes brief interruption.",
+    "sourceWarning": "Original stem has OCR defects '(he' for 'the', missing punctuation; option A/F missing periods. F is necessary to make multi-AZ ALB possible but by itself does not improve availability; combine A+F and explicitly configure AZs. C replica should be in different AZ for resilience. Source A,C,F is technically sound as a combination.",
+    "review": {
+      "status": "verified-with-wording-caveats",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "F"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/tutorial-ec2-auto-scaling-load-balancer.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html",
+        "https://www.p2pexams.com/free-questions/sample-questions-for-amazon-sap-c02-exam-by-boyle.pdf"
+      ],
+      "relatedQuestions": [
+        10,
+        16,
+        24,
+        34,
+        39,
+        47,
+        48,
+        57,
+        58,
+        59,
+        63,
+        64,
+        72,
+        86,
+        98,
+        100,
+        112,
+        130,
+        155,
+        158,
+        160,
+        188,
+        193,
+        200,
+        214,
+        230,
+        231,
+        242,
+        247,
+        248
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 670,
