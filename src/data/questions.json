@@ -8599,10 +8599,10 @@
     "wrongOptionsExplanation": "A correct: IaC repeatable cross-Region deployment. B wrong: console recreation is manual and error-prone. C wrong: 50/50 weighted routing ignores client latency and isn't best for access time. D correct: latency routing across regional ALBs; health configuration needed for DR. E correct for MREC global tables: add a regional replica to existing table; stream support may be enabled/managed. F wrong: creating a new table and copying existing data is unnecessary for MREC global tables.",
     "plainWords": "Duplicate the infrastructure with CloudFormation, use latency-based DNS routing, and replicate DynamoDB with a global table.",
     "keyPoints": "CloudFormation regional stacks; Route 53 latency alias + health; DynamoDB MREC global tables add replicas to populated tables; ACM certificates are regional.",
-    "sourceWarning": "Global tables MREC can convert populated table; MRSC conversion has different empty-table restrictions. Route 53 latency routing alone doesn't guarantee disaster recovery; health checks needed. Option E assumes MREC mode. ACM regional cert missing from options.",
+    "sourceWarning": "Option A mentions Region parameter but CloudFormation stack deployment Region must be selected separately. Option E implies manual enabling of Streams; modern MREC global tables manage Streams automatically. MRSC conversion restrictions differ. DR requires Route 53 alias health evaluation and separate regional ACM certificate, omitted from options. MREC eventual replication can lag.",
     "review": {
       "status": "verified-with-dr-caveats",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
       "verifiedAnswers": [
         "A",
         "D",
@@ -8610,9 +8610,11 @@
       ],
       "sources": [
         "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html",
-        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html"
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables-CoreConcepts.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-values-latency-alias.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-complex-configs.html"
       ],
-      "notes": "Global tables MREC can convert populated table; MRSC conversion has different empty-table restrictions. Route 53 latency routing alone doesn't guarantee disaster recovery; health checks needed. Option E assumes MREC mode. ACM regional cert missing from options."
+      "notes": "A,D,E independently supported by AWS documentation. CloudFormation regional deployment, Route 53 latency alias with health evaluation, MREC DynamoDB global tables add replicas to populated tables. No exact duplicate among 674 stems; closest lexical candidates Q346 Q451 Q155 Q123 Q460 Q326. No reliably matching external exam variant independently confirmed."
     },
     "answerStatus": "verified-with-dr-caveats"
   },
