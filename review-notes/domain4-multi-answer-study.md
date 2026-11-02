@@ -455,3 +455,19 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Exam memory:** Direct Connect = private hybrid line; DXGW = aggregating gateway; transit VIF = Direct Connect to DXGW for TGW; Transit Gateway + RAM = hundreds of VPCs, multiaccount, transitive routing; on-prem NAT = corporate-controlled internet breakout, unlike IGW or central egress VPC NAT.
 
 **Next:** Q613 — 31 of 33.
+
+## 31 of 33 — Q613 — Select TWO — Remote workforce Windows home directories and AWS Client VPN
+
+**Verified B,D**: B migrate Windows SMB/AD home directories to managed Amazon FSx for Windows File Server; D move remote users from saturated on-prem VPN to managed AWS Client VPN connecting to VPC-hosted FSx. Windows ACLs and AD identities remain supported. Configure Client VPN associations/routes/authorization/authentication and FSx security group TCP 445, DNS/AD and file migration. Residual on-prem AD connectivity may remain depending on design.
+
+**Options:** A wrong: Volume Gateway presents iSCSI block volumes to on-prem file server, retaining on-prem VPN and server bottleneck. B correct: managed SMB Windows shares. C wrong: Lustre HPC/POSIX workload rather than Windows SMB home directories. D correct: scalable managed remote-user VPN directly into AWS. E wrong: DX alone is hybrid network connectivity, not remote-user endpoint migration or file server offload.
+
+**AWS docs:** https://docs.aws.amazon.com/fsx/latest/WindowsGuide/limit-access-file-folder.html ; https://docs.aws.amazon.com/fsx/latest/WindowsGuide/aws-ad-integration-fsxW.html ; https://docs.aws.amazon.com/fsx/latest/WindowsGuide/supported-fsx-clients.html ; https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/ad.html .
+
+**External exact-stem variants:** https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-2.html (Q18 B,D); https://jp.fast2test.com/articles/2026%E5%B9%B4%E6%9B%B4%E6%96%B0-sap-c02%E5%9B%9E%E7%AD%94%E7%84%A1%E6%96%99%E3%83%87%E3%83%A2%E3%81%AF%E6%9C%80%E9%81%A9%E3%81%A7%E6%9C%80%E9%AB%98%E3%81%AE%E3%83%AA%E3%82%A2%E3%83%AB%E3%81%AA%E8%A9%A6%E9%A8%93%E5%90%88%E6%A0%BC%E3%81%95%E3%81%9B%E3%81%BE%E3%81%99-q69-q93/ (reordered A,B same services); https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=27 (reordered A,B same services). Mirrors may share source text; official docs independently support the key.
+
+**Bank-wide similarity:** Q193 remote employees connecting to AWS-hosted private app (Client VPN) without Windows home directory migration; Q354 scalable multiaccount remote access using Client VPN + TGW; Q584 remote engineers with AD DS (different goal); Q626 Windows RDP access (different protocol); Q536 EFS shared NFS for Linux blog authors and Snowball archive (not SMB Windows home folders). No exact stem duplicate identified among 674 questions.
+
+**Wording defects:** Option D lacks final period; otherwise original is coherent. Operational dependencies omitted but do not invalidate key. Do not confuse Client VPN remote users with Site-to-Site VPN hybrid networks, or FSx Windows SMB with FSx Lustre.
+
+**Next:** Q669 — 32 of 33.
