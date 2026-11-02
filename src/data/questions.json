@@ -22225,23 +22225,41 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "FLAG FOR REVIEW: Stored B,D,E includes public subnets although application must not be internet-accessible. Public staging subnets are not inherently public application access, but private staging subnet with NAT or VPC endpoints is clearer. Source question has no explicit throttle configuration option even though it requires preserving bandwidth; E enables private IP, not throttling. A,D,E may be more defensible than B,D,E but no definitive answer correction without further source verification. Compare Q9, whose requirements explicitly specify 75% throttle. AWS https://docs.aws.amazon.com/drs/latest/userguide/data-routing.html ; https://docs.aws.amazon.com/drs/latest/userguide/Network-Settings-Preparations.html ; https://docs.aws.amazon.com/drs/latest/userguide/Network-Requirements.html",
+    "explanation": "Historical exam key B,D,E is reproduced by several mirrors (including FreeCram and ExamsLabs reordered C,D,E). D creates a private dedicated Direct Connect transport (proper private VIF, gateway association and routing required). E sets DRS replication data plane to private IP over that established route. B is an exam-intended staging VPC layout, but public subnets and IGW are NOT mandatory for private-IP replication and do not by themselves expose or protect recovered application instances. The stem's requirement to avoid consuming all bandwidth requires separate DRS 'Throttle network bandwidth' setting, missing from all choices. Therefore no three choices fully satisfy all stated requirements; retain historical B,D,E with defect flag.",
+    "wrongOptionsExplanation": "A: Private staging subnets with NAT for outbound AWS service calls can work and may be more appropriate for strict private application requirements, but two NAT gateways and a virtual private gateway are not mandatory and NAT egress may use internet; endpoints can replace NAT. B: Historical exam intended, viable staging network with public subnets but not required for private replication; recovered app must separately launch into private subnet without public IP and restrictive SG. C: Site-to-Site VPN uses encrypted tunnels commonly over public internet; violates literal no-public-internet path; VPN over Direct Connect is a different design. D: Correct dedicated private DX transport, plus private VIF and correct route associations. E: Correct choose private IP for DRS data replication; does not throttle bandwidth or configure recovery app exposure. F: Recovery instance private IP matching source is about address continuity, not isolation or traffic routing; overlap may be problematic.",
+    "plainWords": "Direct Connect supplies a private network path; DRS 'Use private IP' makes replication use it. Separately throttle DRS replication and launch recovered intranet servers privately. Public staging subnets are not a security requirement.",
+    "keyPoints": "DRS source agent -> staging replication servers TCP 1500 encrypted; DRS control plane/service endpoints TCP 443. DX private VIF + DX gateway/private VGW route is distinct from an internet-routed VPN. Use private IP in DRS data routing. Set DRS Throttle network bandwidth Mbps per source server; by default DRS can use all available bandwidth. A public subnet only means a route to IGW, not automatically an internet-accessible application. Recovery subnet/public IP/security group settings are separate from staging replication. DRS recovery is not a conventional scheduled backup.",
+    "sourceWarning": "DEFECTIVE THREE-ANSWER ITEM: historical B,D,E mirrors agree but B is optional for private-IP DRS and none of A-F specifies DRS bandwidth throttling despite explicit requirement. E protects replication data path only, not recovered intranet app. FreeCram explanation incorrectly asserts private replication IP alone prevents recovered app internet access. ExamsLabs reordered C,D,E = GitHub E,D,B. Q9 is a strong near-duplicate with a distinct 75% bandwidth throttle choice, not an exact duplicate. Official AWS: https://docs.aws.amazon.com/drs/latest/userguide/data-routing.html ; https://docs.aws.amazon.com/drs/latest/userguide/Network-Requirements.html ; https://docs.aws.amazon.com/drs/latest/userguide/Network-Settings-Preparations.html ; https://aws.amazon.com/blogs/storage/establish-private-connectivity-for-aws-elastic-disaster-recovery-using-aws-direct-connect/ . External: https://www.freecram.net/question/Amazon.SAP-C02.v2023-12-13.q142/a-company-runs-an-intranet-application-on-premises-the-company-wants-to-configure-a-cloud-backup-of ; https://www.examslabs.com/articles/new-2024-download-free-sap-c02-pdf-for-amazon-practice-tests-q166-q188/ ; https://www.examtopics.com/discussions/amazon/view/126838-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-375-discussion/ .",
     "review": {
-      "status": "needs-source-reconciliation",
+      "status": "verified-historical-key-but-technically-defective",
+      "reviewedAt": "2026-11-01",
       "originalAnswer": [
         "B",
         "D",
         "E"
       ],
       "verifiedAnswer": null,
-      "verifiedAt": "2026-11-01",
-      "notes": "Do not treat Q9 and Q510 as exact duplicates. Q510 lacks a bandwidth throttling choice; public staging subnet may be viable with private replication but private recovery is not specified. Answer key unresolved."
+      "sourceConsensusAnswer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "duplicateQuestionIds": [],
+      "similarQuestionIds": [
+        9,
+        8,
+        138,
+        517
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/drs/latest/userguide/data-routing.html",
+        "https://docs.aws.amazon.com/drs/latest/userguide/Network-Requirements.html",
+        "https://aws.amazon.com/blogs/storage/establish-private-connectivity-for-aws-elastic-disaster-recovery-using-aws-direct-connect/",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-12-13.q142/a-company-runs-an-intranet-application-on-premises-the-company-wants-to-configure-a-cloud-backup-of",
+        "https://www.examslabs.com/articles/new-2024-download-free-sap-c02-pdf-for-amazon-practice-tests-q166-q188/"
+      ]
     },
-    "answerStatus": "flagged-ambiguous"
+    "answerStatus": "flagged-defective"
   },
   {
     "id": 511,
