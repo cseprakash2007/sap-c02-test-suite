@@ -6341,18 +6341,33 @@
     "keyPoints": "ALB access logs include client:port and timestamp; Athena query over S3; CloudTrail logs API calls, not web access; ALB logs are best effort and not guaranteed complete accounting.",
     "sourceWarning": "ALB logs are best-effort, not complete accounting; lack of observed logs is not proof an IP was inactive. Proxies/NAT mean observed client IP may differ from end-user IP. Athena cost depends on data scanned and partitioning; 90-day retention required.",
     "review": {
-      "status": "verified-with-log-caveat",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
+      "status": "aws-docs-verified-external-variant-found",
       "verifiedAnswers": [
         "B",
         "D"
       ],
       "sources": [
         "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html",
-        "https://docs.aws.amazon.com/athena/latest/ug/application-load-balancer-logs.html"
-      ]
+        "https://docs.aws.amazon.com/athena/latest/ug/application-load-balancer-logs.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/query-alb-access-logs-examples.html",
+        "https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf"
+      ],
+      "auditNote": "B+D correct. ALB request access logs contain client IP and timestamps; S3/Athena query is cost-effective; Lambda can inspect last observed request. CloudTrail records AWS API actions, not HTTP requests. VPC flow logs capture network metadata but less direct and CloudWatch ingestion cost. AWS warns ALB access logs best-effort, eventual delivery, and proxy IP differences: never treat absent log as proof of inactivity for critical access. ALB now supports enhanced logging through CloudWatch Logs in addition to legacy S3 access logs. External variant reorders choices: compare answer text, not letters. Typo 'IPaddresses'.",
+      "duplicateAudit": {
+        "status": "No exact duplicate identified by scenario prefix; related logging questions flagged",
+        "relatedIds": [
+          24,
+          90,
+          232,
+          492,
+          496,
+          508,
+          591
+        ]
+      }
     },
-    "answerStatus": "verified-with-log-caveat"
+    "answerStatus": "aws-docs-verified-external-variant-found"
   },
   {
     "id": 136,
