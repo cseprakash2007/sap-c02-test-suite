@@ -8152,13 +8152,26 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,D,E. CloudFormation makes second-Region EC2/ALB infrastructure reproducible with parameters. Route 53 latency routing can direct clients toward a low-latency healthy regional ALB (configure health checks/evaluate target health and fallback). DynamoDB global tables multi-Region eventual consistency can add a replica to an existing table without manual data migration. A regional ACM certificate must also be provisioned for the second ALB, though absent from options.",
+    "wrongOptionsExplanation": "A correct: IaC repeatable cross-Region deployment. B wrong: console recreation is manual and error-prone. C wrong: 50/50 weighted routing ignores client latency and isn't best for access time. D correct: latency routing across regional ALBs; health configuration needed for DR. E correct for MREC global tables: add a regional replica to existing table; stream support may be enabled/managed. F wrong: creating a new table and copying existing data is unnecessary for MREC global tables.",
+    "plainWords": "Duplicate the infrastructure with CloudFormation, use latency-based DNS routing, and replicate DynamoDB with a global table.",
+    "keyPoints": "CloudFormation regional stacks; Route 53 latency alias + health; DynamoDB MREC global tables add replicas to populated tables; ACM certificates are regional.",
+    "sourceWarning": "Global tables MREC can convert populated table; MRSC conversion has different empty-table restrictions. Route 53 latency routing alone doesn't guarantee disaster recovery; health checks needed. Option E assumes MREC mode. ACM regional cert missing from options.",
+    "review": {
+      "status": "verified-with-dr-caveats",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "D",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html"
+      ],
+      "notes": "Global tables MREC can convert populated table; MRSC conversion has different empty-table restrictions. Route 53 latency routing alone doesn't guarantee disaster recovery; health checks needed. Option E assumes MREC mode. ACM regional cert missing from options."
+    },
+    "answerStatus": "verified-with-dr-caveats"
   },
   {
     "id": 183,
@@ -8440,13 +8453,26 @@
       "D"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,C,D is the historical best choice. Upload a static maintenance page to S3 (A), add that S3 bucket as another origin of the existing CloudFront distribution and grant private origin access (C), then change the default cache behavior's target origin to S3 during the maintenance window and revert afterward (D). Modern implementation should use CloudFront Origin Access Control (OAC), not legacy OAI, and allow deployment propagation and cache invalidation/short TTL.",
+    "wrongOptionsExplanation": "A correct: static maintenance message content. B wrong: second CloudFront distribution unnecessarily complicates alternate domain and certificate. C historically correct: S3 as second origin; OAI is legacy, OAC preferred. D correct: switch existing default behavior origin for scheduled maintenance; changes take time to propagate. E wrong: invalid/ineffective proposed path pattern and unnecessary new distribution; default behavior handles all paths. F wrong: Elastic Beanstalk does not simply redirect CloudFront's origin to an S3 bucket.",
+    "plainWords": "Serve a static maintenance page through the same CloudFront domain by temporarily changing the origin to S3.",
+    "keyPoints": "CloudFront distribution multiple origins; default cache behavior TargetOriginId; private S3 OAC preferred; cache TTL and invalidations; propagation time.",
+    "sourceWarning": "Option C uses legacy OAI; AWS recommends OAC. Switching origin is not instantaneous; cached pages may persist and deployment propagates globally. The question's 'each week' manual origin switching may be less robust than controlled maintenance routing or CloudFront custom error responses.",
+    "review": {
+      "status": "verified-historical-legacy-oai",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html",
+        "https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DefaultCacheBehavior.html"
+      ],
+      "notes": "Option C uses legacy OAI; AWS recommends OAC. Switching origin is not instantaneous; cached pages may persist and deployment propagates globally. The question's 'each week' manual origin switching may be less robust than controlled maintenance routing or CloudFront custom error responses."
+    },
+    "answerStatus": "verified-historical-legacy-oai"
   },
   {
     "id": 189,
@@ -8702,13 +8728,26 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B,C,F is the closest historical combination but NOT a guaranteed hard monthly spending cap. B creates an AWS Budget per developer account. C applies Organizations SCPs denying high-cost services/actions, which restricts available services but cannot cap spending by dollar amount. F uses AWS Budgets threshold notification through SNS to invoke automation that selectively stops or terminates supported resources. Automation cannot safely or universally terminate all AWS services, and costs may exceed threshold before notification/cleanup.",
+    "wrongOptionsExplanation": "A wrong: SCP cannot express a dollar spend limit. B correct: monthly account budget and alerts. C correct: SCP deny rules restrict costly actions across developer accounts, subject to management-account exceptions. D wrong: IAM policies aren't attached to an account and can be bypassed by other principals; SCP is account-wide guardrail. E wrong: AWS Budgets Actions cannot directly terminate all AWS services; supported actions are limited, such as IAM policy/SCP changes and selected EC2/RDS controls. F historically best for SNS-driven Lambda cleanup, but 'terminate all services' is technically impossible as a generic AWS operation.",
+    "plainWords": "Give each sandbox account a budget, block risky services using SCPs, and alert/automate cleanup when spend approaches the threshold; this is not a hard cost ceiling.",
+    "keyPoints": "Budgets alerts are delayed and do not enforce hard caps; SCP denies service actions not dollar amounts; Budgets Actions limited; Lambda cleanup must be service-specific and handle dependencies.",
+    "sourceWarning": "DEFECTIVE hard-limit claim: neither AWS Budgets nor SCPs guarantees a fixed monthly maximum bill. Option F overclaims Lambda can 'terminate all services'. Preserve B,C,F as best offered historical answer, with severe source caveat.",
+    "review": {
+      "status": "historical-best-source-defective-hard-cap",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "B",
+        "C",
+        "F"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-controls.html",
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+      ],
+      "notes": "DEFECTIVE hard-limit claim: neither AWS Budgets nor SCPs guarantees a fixed monthly maximum bill. Option F overclaims Lambda can 'terminate all services'. Preserve B,C,F as best offered historical answer, with severe source caveat."
+    },
+    "answerStatus": "historical-best-source-defective-hard-cap"
   },
   {
     "id": 193,
@@ -9419,13 +9458,26 @@
       "C"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,B,C is the best offered design for common catchable task failures: SNS topic email subscription (A), Step Functions task integrated with SNS Publish (B), and States.ALL Catch on Task, Map, and Parallel states transitioning to notification (C). But States.ALL explicitly cannot catch States.Runtime or States.DataLimitExceeded, and a top-level state-machine failure may not be catchable internally. To notify on ALL execution failures, also add an EventBridge Step Functions Execution Status Change rule for FAILED/TIMED_OUT/ABORTED and target SNS.",
+    "wrongOptionsExplanation": "A correct: SNS email subscriptions notify team. B correct if Email is a Step Functions SNS publish service-integration Task and IAM permissions are granted. C correct for catchable errors, but not all types as the stem demands. D SES verified address is unnecessary for SNS email. E SES direct task adds complexity and is not the intended SNS integration. F wrong: States.Runtime is terminal and cannot be caught by States.ALL; the error name capitalization in source is malformed.",
+    "plainWords": "Use Step Functions Catch to send failure alerts through SNS, plus EventBridge execution-status notifications for terminal errors that cannot be caught.",
+    "keyPoints": "Catch only Task/Map/Parallel; States.ALL cannot catch States.Runtime or States.DataLimitExceeded; EventBridge Step Functions execution status change catches overall failed/timed-out/aborted execution events (delivery best effort).",
+    "sourceWarning": "SOURCE DEFECT: claims A,B,C notifies on 'all types of failures', but States.ALL does not catch States.Runtime or States.DataLimitExceeded. EventBridge execution status monitoring is missing from options. OCR errors in options C/F.",
+    "review": {
+      "status": "historical-best-source-defective-all-errors",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html",
+        "https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html"
+      ],
+      "notes": "SOURCE DEFECT: claims A,B,C notifies on 'all types of failures', but States.ALL does not catch States.Runtime or States.DataLimitExceeded. EventBridge execution status monitoring is missing from options. OCR errors in options C/F."
+    },
+    "answerStatus": "historical-best-source-defective-all-errors"
   },
   {
     "id": 211,
@@ -10096,13 +10148,25 @@
       "B"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A,B. A VM-imported AMI may not include a running SSM Agent; install/verify it. B verify SSM managed-node IAM permissions, normally via instance profile AmazonSSMManagedInstanceCore or supported Default Host Management Configuration. Also test outbound HTTPS connectivity to SSM service endpoints; a public IP alone doesn't prove working egress.",
+    "wrongOptionsExplanation": "A correct: SSM Agent installed/running. B correct: managed node needs IAM permissions; Default Host Management Configuration may provide permissions without instance profile. C wrong as a universal requirement: VPC endpoints are optional when the instance can reach SSM public endpoints over internet/NAT. D wrong: Application Discovery Agent unrelated. E wrong: Systems Manager service-linked roles aren't the primary per-instance registration prerequisite.",
+    "plainWords": "Imported EC2 VM missing from Systems Manager? Check agent, IAM permissions, then connectivity. Public IP alone is not enough.",
+    "keyPoints": "SSM Agent + IAM instance profile or Default Host Management Configuration + HTTPS 443 connectivity. SSM endpoints not mandatory with internet access.",
+    "sourceWarning": "Near-exact duplicate of Q140 with same five options and A,B key. Modern SSM Default Host Management Configuration can replace an instance profile; source overstates IAM-role attachment as universally required.",
+    "review": {
+      "status": "verified-near-exact-duplicate-q140",
+      "reviewedAt": "2026-11-01",
+      "verifiedAnswers": [
+        "A",
+        "B"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-troubleshooting-managed-nodes.html"
+      ],
+      "notes": "Near-exact duplicate of Q140 with same five options and A,B key. Modern SSM Default Host Management Configuration can replace an instance profile; source overstates IAM-role attachment as universally required."
+    },
+    "answerStatus": "verified-near-exact-duplicate-q140"
   },
   {
     "id": 226,
