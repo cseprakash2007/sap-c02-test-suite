@@ -313,3 +313,43 @@ Enhanced infrastructure metrics incurs charges and extends analysis to up to 93 
 - https://docs.aws.amazon.com/compute-optimizer/latest/ug/enhanced-infrastructure-metrics.html
 - https://docs.aws.amazon.com/compute-optimizer/latest/ug/rightsizing-preferences-process.html
 - https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-many-aws-accounts-in-an-organization-in-aws-organizations-the-accounts-contain-many-amazon
+
+
+---
+# Domain 3 multi-answer Q177 (19 of 58) — 2026-11-02
+
+## Original
+A company runs a web-crawling process on a list of target URLs to obtain training documents for machine learning (ML) training algorithms. A fleet of Amazon EC2 t2.micro instances pulls the target URLs from an Amazon SQS queue. The instances write the result of the crawling algorithm as a CSV file to an Amazon EFS volume. The EFS volume is mounted on all instances in the fleet. A second system occasionally adds the URLs to the SQS queue. The EC2 instances crawl each new URL in 10 seconds or less. Metrics indicate that some instances are idle when no URLs are in the SQS queue. A solutions architect needs to redesign the architecture to optimize costs. Which combination of steps will meet these requirements MOST cost-effectively? (Select TWO.)
+- **A.** Use m5.8xlarge instances instead of t2.micro instances for the web-crawling process. Reduce the number of instances in the fleet by 50%.
+- **B.** Use an AWS Lambda function to run the web-crawling process. Configure the Lambda function to pull URLs from the SQS queue.
+- **C.** Modify the web-crawling process to store results in Amazon Neptune.
+- **D.** Modify the web-crawling process to store results in an Amazon Aurora Serverless MySQL instance.
+- **E.** Modify the web-crawling process to store results in Amazon S3.
+
+## Verified answer: B, E
+- A wrong: m5.8xlarge replacement with half the instance count is not economical for intermittent 10-second jobs.
+- B correct: Lambda SQS event source mapping polls messages and invokes functions only when jobs arrive; removes idle EC2 cost. The application function itself need not poll SQS.
+- C wrong: Neptune graph DB is not appropriate CSV object storage.
+- D wrong: Aurora Serverless relational database adds unnecessary infrastructure for files.
+- E correct: S3 is durable low-ops object storage for CSV output; no shared EFS volume necessary.
+
+## Architecture
+```mermaid
+flowchart TD
+  Producer[Occasional URL producer] --> SQS[Amazon SQS]
+  SQS -->|Lambda event source mapping| Lambda[AWS Lambda crawler]
+  Lambda -->|CSV objects| S3[Amazon S3]
+  Lambda -->|failed records retry| DLQ[Dead-letter queue after retries]
+```
+
+## Duplicate/variant review
+Compared all 674 stems: no exact normalized duplicate. Closest lexical candidates Q600, Q442, Q337, Q247, Q326; not confirmed semantic duplicates. No matching independent external exam variant verified; do not claim external corroboration.
+
+## Outdated/defect warnings
+B says 'Lambda function pulls URLs' but AWS-managed event source mapping polls SQS. Configure timeout and visibility timeout (AWS recommends >=6x Lambda timeout, plus batching window), partial batch failure reporting, DLQ and idempotency because at-least-once delivery may duplicate work. Confirm crawl egress and robots rules. No outdated service requirement identified.
+
+## AWS sources
+- https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html
+- https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html
+- https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-errorhandling.html
+- https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html
