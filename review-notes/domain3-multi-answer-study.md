@@ -449,3 +449,59 @@ No exact normalized stem duplicate among 674. Top lexical candidates Q600 (0.200
 - https://docs.aws.amazon.com/step-functions/latest/dg/connect-sns.html
 - https://certempire.com/demo-files/sap-c02-demo-certempire.pdf
 - https://actualtests.crampdf.com/articles/amazon-sap-c02-certification-all-in-one-exam-guide-feb-2025-q14-q32/
+
+
+---
+# Domain 3 multi-answer Q225 (22 of 58) — 2026-11-02
+
+## Original (verbatim)
+A solutions architect is importing a VM from an on-premises environment by using the Amazon EC2 VM Import feature. The imported instance has a public IP and runs in a public subnet in a VPC. However, the instance doesnot appearin the AWS Systems Manager (SSM) console as a managed instance. Which combination of steps should the architect take to resolve the issue? (Select TWO.)
+- **A.** Verify that Systems Manager Agent is installed on the instance and is running.
+- **B.** Verify that the instance is assigned an appropriate IAM role for Systems Manager.
+- **C.** Verify the existence of a VPC endpoint on the VPC.
+- **D.** Verify that the AWS Application Discovery Agent is configured.
+- **E.** Verify the correct configuration of service-linked roles for Systems Manager.
+
+## Verified answer: A, B (Select TWO)
+A: **Correct.** SSM Agent must exist and run inside the imported AMI instance. Verify its service status, version, logs and connectivity.
+B: **Correct intended exam answer.** The instance needs SSM permissions. Historically an EC2 IAM instance profile with `AmazonSSMManagedInstanceCore`; today Default Host Management Configuration can provide account-level permissions if IMDSv2 and SSM Agent >=3.2.582.0 are used. Thus attaching an IAM instance role is *not universally necessary*.
+C: **Incorrect as a universal requirement.** SSM interface VPC endpoints are optional if HTTPS access to the public service endpoints works; if isolated or no internet egress, configure/check appropriate interface endpoints. A public IP and public subnet do not guarantee working internet egress: inspect route table Internet Gateway, security groups, NACLs and DNS.
+D: **Incorrect.** AWS Application Discovery Agent collects migration discovery data, not SSM managed node registration.
+E: **Incorrect.** Service-linked roles don't replace the per-node agent, permissions and network connectivity requirements.
+
+## Architecture
+```mermaid
+flowchart TD
+  VM[On-prem VM] --> Imp[EC2 VM Import/Export]
+  Imp --> EC2[Imported EC2 instance, public subnet]
+  Agent[SSM Agent installed and running] --> EC2
+  Perm[IAM instance profile or eligible DHMC] --> EC2
+  EC2 --> Net{Outbound HTTPS 443 available?}
+  Net -->|Internet gateway and public endpoints| SSM[SSM and ssmmessages endpoints]
+  Net -->|VPC interface endpoints| SSM
+  SSM --> Managed[Systems Manager managed node]
+```
+
+## Duplicate/similarity audit across all 674
+- Q140: **near-exact duplicate**, same five option texts in identical A–E order, same key A,B. Stems differ in length, but core scenario is the same.
+- No identical fully normalized stem; avoid double-counting Q140/Q225 in distinct-concept study coverage.
+
+## External variants
+- ExamsVCE: exact Q225 with A,B published, which agrees with independently checked AWS docs.
+- ExamTopics topic 1 Q492: longer version like Q140.
+- CramPDF Feb 2025 Q14: reordered longer version, but published B,D,E is three options for a Select TWO question; invalid/defective key. Remap and validate against AWS, not the third-party key.
+
+## Outdated/defective warnings
+- Q225 stem has 'doesnot appearin' typo; preserve original. Q140 uses older 'AWS Import/Export' wording.
+- Treat 'appropriate IAM role on the instance' as the *conventional* solution, not universal after Default Host Management Configuration.
+- Public subnet/public IP alone does not guarantee HTTPS connectivity. If networking fails, check Internet Gateway route, SG/NACL egress, DNS, and optional PrivateLink interface endpoints.
+- For modern Regions, `ssmmessages` is central; `ec2messages` may be relevant only for earlier-Region/legacy agent behavior.
+
+## AWS and variant references
+- https://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent.html
+- https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html
+- https://docs.aws.amazon.com/systems-manager/latest/userguide/troubleshooting-ssm-agent.html
+- https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-default-host-management-configuration.html
+- https://www.examsvce.com/sap-c02/questiona-solutions-architect-is-importing-a-vm-question-answer.html
+- https://www.examtopics.com/discussions/amazon/view/142926-exam-aws-certified-solutions-architect-professional-sap-c02/
+- https://actualtests.crampdf.com/articles/amazon-sap-c02-certification-all-in-one-exam-guide-feb-2025-q14-q32/

@@ -10595,25 +10595,40 @@
       "B"
     ],
     "answerCount": 2,
-    "explanation": "A,B. A VM-imported AMI may not include a running SSM Agent; install/verify it. B verify SSM managed-node IAM permissions, normally via instance profile AmazonSSMManagedInstanceCore or supported Default Host Management Configuration. Also test outbound HTTPS connectivity to SSM service endpoints; a public IP alone doesn't prove working egress.",
-    "wrongOptionsExplanation": "A correct: SSM Agent installed/running. B correct: managed node needs IAM permissions; Default Host Management Configuration may provide permissions without instance profile. C wrong as a universal requirement: VPC endpoints are optional when the instance can reach SSM public endpoints over internet/NAT. D wrong: Application Discovery Agent unrelated. E wrong: Systems Manager service-linked roles aren't the primary per-instance registration prerequisite.",
-    "plainWords": "Imported EC2 VM missing from Systems Manager? Check agent, IAM permissions, then connectivity. Public IP alone is not enough.",
-    "keyPoints": "SSM Agent + IAM instance profile or Default Host Management Configuration + HTTPS 443 connectivity. SSM endpoints not mandatory with internet access.",
-    "sourceWarning": "Near-exact duplicate of Q140 with same five options and A,B key. Modern SSM Default Host Management Configuration can replace an instance profile; source overstates IAM-role attachment as universally required.",
+    "explanation": "A,B (Select TWO). SSM Agent must be installed and running, and SSM permissions must be available via an instance profile with AmazonSSMManagedInstanceCore or eligible Default Host Management Configuration (DHMC); also confirm outbound HTTPS 443 access to ssm and ssmmessages endpoints. The public IP/public subnet alone does not prove an internet gateway route, working SG/NACL or DNS.",
+    "wrongOptionsExplanation": "A correct—agent mandatory. B intended correct—permissions mandatory, although modern DHMC (IMDSv2 and SSM Agent >=3.2.582.0) removes the universal need to attach an instance IAM role. C not universally required; PrivateLink/interface endpoints are an alternative to internet egress, but verify them when there is no public endpoint reachability. D Application Discovery Agent serves migration discovery, not SSM managed-node registration. E Systems Manager service-linked roles do not substitute for agent/instance credentials.",
+    "plainWords": "Imported VM doesn't show up in Systems Manager? Check SSM Agent, permissions and outbound HTTPS connectivity. A public IP alone isn't enough.",
+    "keyPoints": "Agent + permissions (instance profile or eligible DHMC) + HTTPS 443 to Systems Manager. Interface VPC endpoints are optional with valid internet egress. DHMC requires IMDSv2 and current agent. Duplicate Q140: same options.",
+    "sourceWarning": "Exact same five option texts and answer A,B as Q140 of 674 (near-exact question duplicate). Original stem has malformed 'doesnot appearin'. B is dated as a blanket requirement because DHMC supports account-level permissions; public subnet/IP do not guarantee connectivity. Legacy AWS Import/Export labeling on Q140 is dated. Third-party older reordered variant publishes THREE answers to a Select TWO stem (invalid).",
     "review": {
-      "status": "verified-near-exact-duplicate-q140",
-      "reviewedAt": "2026-11-01",
+      "status": "verified-duplicate-q140-external-variants-reviewed",
+      "reviewedAt": "2026-11-02",
       "verifiedAnswers": [
         "A",
         "B"
       ],
       "sources": [
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent.html",
         "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html",
-        "https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-troubleshooting-managed-nodes.html"
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/troubleshooting-ssm-agent.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-default-host-management-configuration.html",
+        "https://www.examsvce.com/sap-c02/questiona-solutions-architect-is-importing-a-vm-question-answer.html",
+        "https://www.examtopics.com/discussions/amazon/view/142926-exam-aws-certified-solutions-architect-professional-sap-c02/",
+        "https://actualtests.crampdf.com/articles/amazon-sap-c02-certification-all-in-one-exam-guide-feb-2025-q14-q32/"
       ],
-      "notes": "Near-exact duplicate of Q140 with same five options and A,B key. Modern SSM Default Host Management Configuration can replace an instance profile; source overstates IAM-role attachment as universally required."
+      "notes": "AWS documentation independently establishes prerequisites. ExamsVCE reproduces exact Q225 and A+B; ExamTopics publishes longer matching Q140 wording. CramPDF publishes a reordered Q140-like variant with malformed three-item key B,D,E for a Select TWO question; don't adopt the defective published key. DHMC supports no instance profile with IMDSv2 and agent 3.2.582.0+. Older references to AWS Import/Export terminology are dated.",
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "near-exact-duplicate",
+        "relatedIds": [
+          140
+        ],
+        "identicalOptionTexts": true,
+        "identicalAnswerKey": true,
+        "identicalStem": false
+      }
     },
-    "answerStatus": "verified-near-exact-duplicate-q140"
+    "answerStatus": "verified-duplicate-q140-external-variants-reviewed"
   },
   {
     "id": 226,
