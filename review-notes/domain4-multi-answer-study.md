@@ -419,3 +419,21 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Bank-wide similar:** Q555 is strongest near-duplicate in service framework (Aurora Global Database + Route 53) but Q555 tests read-heavy multi-Region DR, while Q564 tests global content delivery + traffic surge. Q388, Q417, Q494, Q576, Q587, Q592 share related multi-Region/caching concepts. No exact duplicate established. Independent exact external exam-site variants not confirmed in this pass; do not present source-mirror consensus as verified.
 
 **Next:** Q581 — 29 of 33.
+
+## 29 of 33 — Q581 — Select TWO — ENI MAC-address licensing and database IP config
+
+**Verified A,D** using AWS docs and external corrected question variants. A: precreate an AZ-specific pool of Elastic Network Interfaces (each has a persistent MAC address), obtain vendor licenses for those MACs in advance, store matching license files securely in S3, and bootstrap a replacement EC2 instance with an available licensed ENI + its corresponding file. D: store current database IPv4 address in AWS Systems Manager Parameter Store; bootstrap retrieves with `ssm:GetParameter` and inserts into legacy config. This avoids 12-hour license provisioning and AMI rebuilds on database address changes.
+
+**All options:** A correct. B AMI-baked license file cannot guarantee the EC2 instance's MAC matches the licensed ENI. C waiting 12 hours for new vendor license breaks HA. D correct. E baking database IP into AMI goes stale and requires rebuild.
+
+**Operational constraints:** ENIs are subnet/AZ-bound; a secondary ENI can be detached and attached only to another instance in SAME AZ, and primary ENI cannot detach. Build licensed pools per AZ, ensure exclusive assignment and instance-type ENI capacity, configure guest OS to expose licensed MAC. Protect S3 license files and restrict bootstrap IAM. Parameter Store does not automatically discover database IP changes; failover automation or operations must update the parameter and applications need reload/restart as required.
+
+**Source defects:** 'bad balancer' → load balancer; 'Amazon $3' → S3; 'anAmazon' spacing; malformed punctuation and option B truncated. Preserve original options in JSON for traceability, explain corrected intent here.
+
+**External variants:** https://www.examtopics.com/discussions/amazon/view/124998-exam-aws-certified-solutions-architect-professional-sap-c02/ (SAP-C02 Q314, corrected text, A,D). https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (same corrupted variant A,D, likely copied). https://itpracticetest.online/wp-content/uploads/AWS-Certified-Solutions-Architect-Professional-SOP-C01-Exam-2-Questions.pdf (older Q139, two master-master database servers and Lambda parameter updater; same ENI pool and central IP concept but not exact wording).
+
+**AWS official:** https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html ; https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network-interface-attachments.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-setting-up.html .
+
+**Related bank:** Q57, Q107, Q164, Q267, Q371, Q507 contain ENI/Parameter Store/credential configuration themes but no confirmed exact stem duplicate. Key conceptual contrasts: MAC follows ENI not AMI; IP config belongs in centrally updated Parameter Store, not hardcoded AMI.
+
+**Next:** Determine 30 of 33 from sorted Domain 4 multi-answer questions.
