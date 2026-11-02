@@ -8112,10 +8112,10 @@
     "wrongOptionsExplanation": "A correct: organization-wide Compute Optimizer enrollment/trusted access. B wrong: Systems Manager delegated administration is not needed for Compute Optimizer. C wrong: detailed EC2 monitoring gives 1-minute CPU granularity but not OS memory metrics and not 90-day lookback. D correct: install CloudWatch agent and publish memory metrics (or supported external metric source). E correct: paid enhanced infrastructure metrics extends lookback from 14 to 93 days. F wrong: no Systems Manager-to-Trusted Advisor rightsizing metric pipeline as described.",
     "plainWords": "Use Compute Optimizer, send EC2 memory metrics with CloudWatch Agent, and turn on enhanced metrics to analyze about three months of usage.",
     "keyPoints": "Compute Optimizer default 14-day analysis; enhanced infrastructure metrics up to 93 days and may incur cost; EC2 memory is not a default CloudWatch hypervisor metric; use CloudWatch agent.",
-    "sourceWarning": "INCORRECT HISTORICAL KEY A,D,F. Replaced with A,D,E. F describes unsupported Systems Manager-to-Trusted Advisor metrics mechanism; E is explicitly needed for 90-day lookback.",
+    "sourceWarning": "Historical A,D,F incorrect; corrected A,D,E. External variant also carries defective C,D,E key (variant mapping to dataset A,F,D), missing E 93-day enhanced metrics. Enhanced infrastructure metrics is paid; 93-day analysis requires historical CloudWatch data, not retroactive memory data collection. Newer Compute Optimizer rightsizing preference can offer 32-day lookback but not 90-day without paid enhanced metrics.",
     "review": {
       "status": "corrected-answer-aws-docs",
-      "reviewedAt": "2026-11-01",
+      "reviewedAt": "2026-11-02",
       "originalAnswers": [
         "A",
         "D",
@@ -8127,10 +8127,13 @@
         "E"
       ],
       "sources": [
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/account-opt-in.html",
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/ec2-metrics-analyzed.html",
         "https://docs.aws.amazon.com/compute-optimizer/latest/ug/enhanced-infrastructure-metrics.html",
-        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/metrics.html"
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/rightsizing-preferences-process.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-many-aws-accounts-in-an-organization-in-aws-organizations-the-accounts-contain-many-amazon"
       ],
-      "notes": "INCORRECT HISTORICAL KEY A,D,F. Replaced with A,D,E. F describes unsupported Systems Manager-to-Trusted Advisor metrics mechanism; E is explicitly needed for 90-day lookback."
+      "notes": "Verified A,D,E against current AWS documentation. External FreeCram variant reorders A->C, B->B, C->A, D->E, E->F, F->D and reports C,D,E, which is internally defective: it includes unsupported Systems Manager-to-Trusted Advisor F and omits 93-day enhanced metrics E. Default lookback 14 days; enhanced 93 days paid. Memory via CloudWatch agent; organization enrollment and trusted access. Similarity audit completed across 674; no exact stem duplicate."
     },
     "answerStatus": "corrected-answer-aws-docs"
   },

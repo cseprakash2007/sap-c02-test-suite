@@ -261,3 +261,55 @@ flowchart TD
 - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
 - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html
 - https://myportal.utt.edu.tt/ICS/icsfs/d97df75f-867e-411a-ac5f-e13435c2eedc.pdf?target=c53e5228-7ce9-4ef5-a5ec-d932dc3abaad
+
+
+---
+# Domain 3 multi-answer Q172 (16 of 58) — independently rechecked 2026-11-02
+
+## Original
+A company has many AWS accounts in an organization in AWS Organizations. The accounts contain many Amazon EC2 instances that run different types of workloads. The workloads have different usage patterns. The company needs recommendations for how to rightsize the EC2 instances based on CPU and memory usage during the last 90 days. Which combination of steps will provide these recommendations? (Select THREE.)
+- **A.** Opt in to AWS Compute Optimizer and enable trusted access for Compute Optimizer for the organization.
+- **B.** Configure a delegated administrator account for AWS Systems Manager for the organization.
+- **C.** Use an AWS CloudFormation stack set to enable detailed monitoring for all the EC2 instances.
+- **D.** Install and configure the Amazon CloudWatch agent on all the EC2 instances to send memory utilization metrics to CloudWatch.
+- **E.** Activate enhanced metrics in AWS Compute Optimizer.
+- **F.** Configure AWS Systems Manager to pass metrics to AWS Trusted Advisor.
+
+## Answer
+**A, D, E**. Historical answer **A,D,F** is wrong.
+
+## Every option
+- A **correct**: opt organization into Compute Optimizer; trusted access permits analyzing member accounts.
+- B **incorrect**: Systems Manager delegated administrator is not required; Compute Optimizer has its own optional delegated administration.
+- C **incorrect**: EC2 detailed monitoring gives 1-minute basic hypervisor metrics, not guest OS memory utilization or a 90-day analysis preference.
+- D **correct**: CloudWatch agent supplies EC2 memory usage to CloudWatch; Compute Optimizer recognizes Linux CWAgent mem_used_percent and supported Windows memory metrics.
+- E **correct**: enhanced infrastructure metrics (paid) extends 14-day lookback to **up to 93 days**; sufficient for 90-day request if history exists.
+- F **incorrect**: Systems Manager cannot pass metrics to Trusted Advisor as described; Trusted Advisor may show Compute Optimizer findings, but is not the rightsizing engine described.
+
+## Diagram
+```mermaid
+flowchart TD
+  O[AWS Organizations] --> A[Account A EC2 + CloudWatch Agent]
+  O --> B[Account B EC2 + CloudWatch Agent]
+  A --> CW[CloudWatch CPU and memory metrics]
+  B --> CW
+  CW --> CO[Compute Optimizer - org opt in/trusted access]
+  CO --> E[Enhanced infrastructure metrics: up to 93 days]
+  E --> R[EC2 rightsizing recommendations]
+```
+
+## External variants and defects
+FreeCram SAP-C02 v2026-03-31 q264 contains same scenario and reordered options (dataset A→variant C, B→B, C→A, D→E, E→F, F→D). Published key C,D,E maps to dataset A,F,D and is **incorrect**: variant D (dataset F) is unsupported and variant F (dataset E) is essential for 90 days. Treat third-party answer keys as unverified. AWS docs support A,D,E.
+
+## Duplicate audit
+Compared against all 674 stems. No exact duplicate. Top lexical matches: Q473 (0.24), Q189 (0.21), Q283 (0.21), Q12 (0.19), Q136 (0.18), Q276 (0.17), Q644 (0.17), Q106 (0.16). These are similarity candidates, not established duplicates.
+
+## Caveats
+Enhanced infrastructure metrics incurs charges and extends analysis to up to 93 days; historical memory observations must already exist. Compute Optimizer rightsizing preferences now include a 32-day option, which still does not satisfy 90 days. For organization-wide recommendations use trusted access and org opt-in, not Systems Manager delegated admin.
+
+## Sources
+- https://docs.aws.amazon.com/compute-optimizer/latest/ug/account-opt-in.html
+- https://docs.aws.amazon.com/compute-optimizer/latest/ug/ec2-metrics-analyzed.html
+- https://docs.aws.amazon.com/compute-optimizer/latest/ug/enhanced-infrastructure-metrics.html
+- https://docs.aws.amazon.com/compute-optimizer/latest/ug/rightsizing-preferences-process.html
+- https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-many-aws-accounts-in-an-organization-in-aws-organizations-the-accounts-contain-many-amazon
