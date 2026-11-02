@@ -22868,13 +22868,34 @@
       "B"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A and B. Use a reusable IAM group policy with the ${aws:username} variable in object Resource ARN and s3:prefix condition on ListBucket, so each IAM user is limited to their own key prefix; ensure no other broad allow. Enable CloudTrail S3 object-level DATA events for the research bucket, deliver trail logs to a separate S3 bucket, and query via Athena to identify principal, action, object and timestamp. AWS explicitly documents both patterns.",
+    "wrongOptionsExplanation": "A correct for IAM users (not assumed roles) when implemented with scoped object ARNs and separately scoped ListBucket. B correct, CloudTrail data events plus S3 and Athena are supported and appropriate for object-level compliance audit. C S3 server access logging provides access records but is best-effort, not guaranteed complete or timely; CloudTrail data events are preferable for principal-centric audit. D broad group bucket policy allows scientists to read each other's objects and fails isolation. E CloudTrail-to-CloudWatch Logs plus Athena CloudWatch connector is a more complex nonstandard architecture, not the ready-to-use minimal-operations choice; CloudTrail normally delivers S3 data-event trail files directly to S3.",
+    "plainWords": "Give each scientist a personal S3 prefix using one shared IAM group policy, then log object API calls with CloudTrail data events and report using Athena.",
+    "keyPoints": "IAM policy variable ${aws:username} is available for IAM users but not assumed roles; use principal tags or Identity Center user IDs for federated users. Restrict object ARNs and bucket ListBucket separately; s3:prefix does not constrain GetObject/PutObject by itself. CloudTrail management events are enabled by default but S3 object data events must be explicitly enabled. Athena can query gzipped CloudTrail JSON logs in S3. S3 server access logging is best-effort. IAM usernames can be reused, so stable user IDs may be safer for long-lived sensitive records.",
+    "sourceWarning": "MINOR IMPLEMENTATION CAVEAT: A's wording 'Add a condition that specifies that the S3 paths must be prefixed with ${aws:username}' is imprecise: s3:prefix applies to ListBucket, while object access must be restricted via resource ARN. Group policy alone cannot enforce isolation against separate broad allows. 'Ready-to-use' reporting still requires CloudTrail data-event selectors and Athena table/query setup. IAM user group wording implies IAM users, so aws:username is appropriate; not valid for assumed IAM roles.",
+    "review": {
+      "status": "verified-aws",
+      "reviewedAt": "2026-11-01",
+      "originalAnswer": [
+        "A",
+        "B"
+      ],
+      "verifiedAnswer": [
+        "A",
+        "B"
+      ],
+      "similarQuestionIds": [
+        174,
+        331
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_s3_home-directory-console.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/enable-cloudtrail-logging-for-s3.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/cloudtrail-logs.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/cloudtrail-request-identification.html"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 527,
