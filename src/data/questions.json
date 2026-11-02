@@ -24380,13 +24380,39 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D,E are the best answers. D Aurora Global Database uses storage-level physical cross-Region replication for low-latency reads in secondary Regions, plus regional web/app tiers and S3 cross-Region replication for static assets. E CloudFront caches eligible static and cacheable dynamic content at edge locations; Route 53 latency-based records direct regional origin/app traffic; Auto Scaling handles launch spike. These mechanisms complement each other but require appropriate origin and DNS design.",
+    "wrongOptionsExplanation": "A Aurora logical replication may be possible but is less suitable than Aurora Global Database's managed storage-level cross-Region replication; replacing all dynamic web servers with S3 breaks dynamic features. B Direct Connect links private on-prem networks to AWS and does not accelerate worldwide public web traffic; Auto Scaling and regions alone incomplete. C downgrading Aurora to RDS MySQL and placing web tier privately do not optimize global performance. D correct combined Aurora Global Database, regional app and replicated S3 static content. E correct CloudFront, latency routing and tier Auto Scaling.",
+    "plainWords": "Put web/app servers and read replicas closer to global users, replicate static assets, cache content at CloudFront edges, and use Route 53 latency routing plus Auto Scaling to handle the launch spike.",
+    "keyPoints": "Aurora Global Database uses storage-level cross-Region physical replication, single writable primary, secondary read-only; writes must route to primary or supported write forwarding. S3 CRR is asynchronous, needs replication configuration and proper CloudFront origins/cache invalidation. CloudFront uses its own global DNS/edge selection; Route 53 latency routing is meaningful for multiple regional ALB origins/endpoints and should not be confused with routing CloudFront viewers among edges. CloudFront can cache static and selected dynamic responses subject to cache policy; dynamic uncached requests still reach origin. Auto Scaling protects capacity during spike.",
+    "sourceWarning": "SOURCE TYPO: option C contains mojibake 'tiers€\" web' and missing punctuation; correct in review notes but retain original source option verbatim. DESIGN CAVEAT: Route 53 latency-based routing does not independently select CloudFront edge locations; a single CloudFront distribution is already globally anycast/DNS routed. For multi-Region origins, consider CloudFront origin routing or distinct regional DNS records; ensure origin selection is actually wired. S3 CRR is not a prerequisite for a global CloudFront distribution with a single S3 origin, but is an acceptable component of D. No independently confirmed exact external exam variants in this pass.",
+    "review": {
+      "status": "verified-aws-with-design-caveats",
+      "reviewedAt": "2026-11-01",
+      "originalAnswer": [
+        "D",
+        "E"
+      ],
+      "verifiedAnswer": [
+        "D",
+        "E"
+      ],
+      "similarQuestionIds": [
+        555,
+        388,
+        417,
+        494,
+        576,
+        587,
+        592
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 565,
