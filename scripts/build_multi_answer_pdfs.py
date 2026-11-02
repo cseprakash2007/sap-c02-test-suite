@@ -8,7 +8,7 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import letter
-from reportlab.graphics.shapes import Drawing, RoundRect, String, Line
+from reportlab.graphics.shapes import Drawing, Rect, String, Line
 DATA="src/data/questions.json"
 OUT="study-guides"
 os.makedirs(OUT,exist_ok=True)
@@ -45,7 +45,7 @@ def diagram(q):
  w=153
  for i,(a,b) in enumerate(n):
   x=i*176
-  d.add(RoundRect(x,20,w,53,7,strokeColor=colors.HexColor("#6688AE"),fillColor=colors.HexColor("#E9F2FA")))
+  d.add(Rect(x,20,w,53,rx=7,ry=7,strokeColor=colors.HexColor("#6688AE"),fillColor=colors.HexColor("#E9F2FA")))
   d.add(String(x+w/2,52,a,fontName="Helvetica-Bold",fontSize=9,textAnchor="middle"))
   d.add(String(x+w/2,36,b,fontSize=7,textAnchor="middle"))
   if i<2:d.add(Line(x+w+3,46,x+w+19,46,strokeColor=colors.HexColor("#4C688D"),strokeWidth=2))
