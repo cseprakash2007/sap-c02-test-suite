@@ -357,3 +357,17 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Bank-wide related question IDs:** Q38, Q96, Q107, Q241, Q268, Q301, Q308, Q318, Q410, Q610. These are conceptually related networking questions, not confirmed exact stem duplicates. External exam-site variant reconciliation was not completed in this audit; do not claim independent mirror confirmation.
 
 **Next:** Q526 — 25 of 33.
+
+## 25 of 33 — Q526 — Select TWO — S3 per-scientist access and audit
+
+**Verified A,B against AWS official docs.** A: one IAM user group policy can use `${aws:username}` to limit each scientist to their own S3 key prefix. Restrict `s3:ListBucket` with `s3:prefix` on bucket ARN AND `s3:GetObject`/`s3:PutObject` with object Resource ARNs ending `/${aws:username}/*`. An `s3:prefix` condition by itself does NOT limit object API calls; check other identity/bucket policies for broad grants. B: enable **CloudTrail S3 object-level data events** (not default management events) for the bucket, deliver CloudTrail files to a separate S3 bucket, use Athena SQL to query principal, object, API, and timestamp.
+
+**Options:** A correct (IAM users; `aws:username` is absent for assumed IAM roles); B correct and low operations; C S3 server access logging is best-effort/not a strong compliance audit substitute; D broad group bucket policy fails isolation; E CloudTrail→CloudWatch Logs→Athena CloudWatch connector is unnecessary complexity versus native CloudTrail S3 delivery plus Athena.
+
+**AWS sources:** https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_s3_home-directory-console.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-policies-s3.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/enable-cloudtrail-logging-for-s3.html ; https://docs.aws.amazon.com/athena/latest/ug/cloudtrail-logs.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/cloudtrail-request-identification.html .
+
+**Nuances:** IAM user names can be reused; stable identity IDs are safer for long-lived sensitive storage. CloudTrail S3 data events require explicit enablement and incur cost; configure selectors, log bucket access and retention. Athena requires table and query setup, so 'ready-to-use' is relative, not zero configuration. For IAM Identity Center users, prefer `${identitystore:UserId}` or a trusted principal tag; `aws:username` is not available for assumed roles.
+
+**Bank-wide related:** Q174 IAM Identity Center scientist-specific S3 access (different identity framework); Q331 S3 object activity compliance logging. No exact full-stem duplicate identified in matching scan. Independent external exam-site variants not confirmed in this pass; source A,B independently supported by AWS docs.
+
+**Next:** Q536 — 26 of 33.
