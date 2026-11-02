@@ -436,4 +436,22 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 
 **Related bank:** Q57, Q107, Q164, Q267, Q371, Q507 contain ENI/Parameter Store/credential configuration themes but no confirmed exact stem duplicate. Key conceptual contrasts: MAC follows ENI not AMI; IP config belongs in centrally updated Parameter Store, not hardcoded AMI.
 
-**Next:** Determine 30 of 33 from sorted Domain 4 multi-answer questions.
+**Next:** Q610 — 30 of 33.
+
+## 30 of 33 — Q610 — Choose THREE — Central Direct Connect + shared Transit Gateway + on-prem internet egress
+
+**Verified source B,D,F** against AWS official architecture. **B** central TGW + Direct Connect gateway with a transit VIF for private hybrid connectivity; **D** AWS RAM-share TGW with workload accounts and attach VPCs; **F** route internet-bound private-subnet traffic from workload VPCs through TGW/Direct Connect to NAT/firewall in the data center. Detailed configuration requires VPC and TGW default routes, correct BGP/default route advertisements, return routing, security rules and resilient on-prem NAT; the listed steps alone are not a complete runnable topology.
+
+**All options:** A incorrect for desired transitive hub because individual VGWs cannot replace TGW VPC-to-VPC routing and per-VGW association scales poorly; B correct concept (wording flawed: TGW is **associated with** DXGW, and transit VIF attaches DX connection to DXGW); C incorrect because direct IGW internet access bypasses corporate egress (IGW attaches to VPC, not subnet); D correct RAM shared TGW enables cross-account VPC attachments; E incorrect because VPC peering is nontransitive and burdensome for hundreds of VPCs; F correct intended egress via on-premises NAT, provided routing/BGP and return path exist.
+
+**AWS docs:** https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-transit-gateways.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/WorkingWithVirtualInterfaces.html ; https://docs.aws.amazon.com/vpc/latest/tgw/working-with-transit-gateways.html ; https://docs.aws.amazon.com/directconnect/latest/UserGuide/allowed-to-prefixes.html ; https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpc-attachments.html . Note DXGW association allowed prefixes announce AWS side to on-premises, whereas BGP-announced on-premises default route is a different direction; do not conflate.
+
+**External mirrors:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (exact option text, B,D,F), https://www.validtests.com/discussions/amazon-web-services/view/exam-saa-c03-topic-87-question-866-discussion (SAA-C03 cross-exam exact question); https://www.peopledumps.com/courses/sap-c02-aws-certified-solutions-architect-professional/lessons/sap-c02_part8/ (rewritten exam variant, same hub concept). Mirrors may share copied wording; independent architecture verification based on AWS docs.
+
+**674-question related/duplicate audit:** Q241 most directly overlaps transit VIF + DXGW + TGW (asks initial provisioning, not corporate internet egress). Q276 shares hundreds of VPCs + centralized hybrid connectivity but starts with Site-to-Site VPN and asks segment control. Q301 adds multi-Region redundant DX and TGW peering. Q308 adds DX redundancy. Q20 and Q360 use **AWS-side centralized NAT/security egress**, unlike Q610 **on-premises NAT**. Q136 uses AWS RAM automated TGW onboarding; Q503 and Q540 emphasize routing segmentation. Q96, Q185, Q370 have related hybrid/cross-account connectivity. No exact full-stem duplicate observed in bank; similar scenarios demand different architectures and answer letters.
+
+**Defects preserved in original:** 'AWS Direct Connection connection'; B transit VIF terminology; C IGW-to-subnet terminology; F 'customergateway' and omitted route/BGP/NAT details. Key still B,D,F; retain stem/options and record caveats in review fields and notes.
+
+**Exam memory:** Direct Connect = private hybrid line; DXGW = aggregating gateway; transit VIF = Direct Connect to DXGW for TGW; Transit Gateway + RAM = hundreds of VPCs, multiaccount, transitive routing; on-prem NAT = corporate-controlled internet breakout, unlike IGW or central egress VPC NAT.
+
+**Next:** Q613 — 31 of 33.
