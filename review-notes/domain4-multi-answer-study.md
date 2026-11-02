@@ -403,3 +403,19 @@ Multiple independent external mirrors confirmed: [FreeCram 2025 five-option A,D]
 **Bank-wide related questions:** Q388 (multi-Region web application routing), Q564 (Aurora Global Database + Route 53 + CloudFront), Q34, Q58, Q123, Q182, Q485. These are related scenarios; no exact stem duplicate confirmed. External exam-site exact-stem variants not independently confirmed this pass. Key A,C independently established using AWS docs.
 
 **Next:** Q564 — 28 of 33.
+
+## 28 of 33 — Q564 — Select TWO — Global magazine launch: Aurora, CloudFront, Route 53
+
+**Verified D,E** against AWS architecture docs. D: Aurora Global Database uses storage-level physical cross-Region replication for read-only secondary Regions; S3 CRR distributes static resources; deploy web and app tiers in several Regions to shorten origin latency. E: CloudFront caches eligible static and dynamic responses near viewers; Route 53 latency records choose regional ALBs/endpoints; Auto Scaling web and application tiers absorb the post-launch spike.
+
+**All options:** A logical replication plus replacing dynamic web servers with S3 is unsuitable; S3 cannot serve the dynamic server logic. B Direct Connect is private hybrid connectivity, not a public global website accelerator. C moving Aurora to RDS MySQL and putting all tiers in private subnets does not reduce global latency. D and E together address DB reads, app origin location, caching, and scaling.
+
+**Important distinctions:** Aurora global secondary is read-only; writes must route to primary or use supported write forwarding. S3 CRR asynchronous and optional when CloudFront has a single S3 origin. CloudFront already chooses nearby edge locations; Route 53 latency routing is for regional application/origin DNS and is not the mechanism choosing CloudFront edges. Need correct DNS/origin routing implementation and caching policy for dynamic content; health checks, replication lag and invalidation matter.
+
+**Source defect:** Option C has corrupted text `tiers€" web` (mojibake). Keep source stem/options unchanged for audit traceability. Source answer D,E remains technically sound, but architecture descriptions are abbreviated and not a complete deployment blueprint.
+
+**Official AWS:** https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html .
+
+**Bank-wide similar:** Q555 is strongest near-duplicate in service framework (Aurora Global Database + Route 53) but Q555 tests read-heavy multi-Region DR, while Q564 tests global content delivery + traffic surge. Q388, Q417, Q494, Q576, Q587, Q592 share related multi-Region/caching concepts. No exact duplicate established. Independent exact external exam-site variants not confirmed in this pass; do not present source-mirror consensus as verified.
+
+**Next:** Q581 — 29 of 33.
