@@ -505,3 +505,26 @@ flowchart TD
 - https://www.examsvce.com/sap-c02/questiona-solutions-architect-is-importing-a-vm-question-answer.html
 - https://www.examtopics.com/discussions/amazon/view/142926-exam-aws-certified-solutions-architect-professional-sap-c02/
 - https://actualtests.crampdf.com/articles/amazon-sap-c02-certification-all-in-one-exam-guide-feb-2025-q14-q32/
+
+
+## Q225 — Domain 3 multi-answer 22/58 — EC2 VM Import and SSM registration
+
+**Original stem:** A solutions architect is importing a VM from an on-premises environment by using the Amazon EC2 VM Import feature. The imported instance has a public IP and runs in a public subnet in a VPC. However, the instance doesnot appearin the AWS Systems Manager (SSM) console as a managed instance. Which combination of steps should the architect take to resolve the issue? (Select TWO.)
+
+- **A.** Verify that Systems Manager Agent is installed on the instance and is running.
+- **B.** Verify that the instance is assigned an appropriate IAM role for Systems Manager.
+- **C.** Verify the existence of a VPC endpoint on the VPC.
+- **D.** Verify that the AWS Application Discovery Agent is configured.
+- **E.** Verify the correct configuration of service-linked roles for Systems Manager.
+
+**Verified intended answer: A and B.** A: SSM Agent must be installed/running. B: instance requires SSM permissions, normally through an IAM instance profile (AmazonSSMManagedInstanceCore); Default Host Management Configuration is an alternative when its prerequisites (IMDSv2 and SSM Agent >= 3.2.582.0) are met. C: VPC interface endpoints are optional with working outbound HTTPS internet connectivity, but necessary as an alternative if there is no internet egress. D: Application Discovery Agent is unrelated to SSM managed-node registration. E: service-linked roles cannot replace the agent, its credentials, or connectivity.
+
+**Architecture:** on-premises VM → EC2 VM Import/Export → EC2 instance [SSM Agent + SSM IAM permissions] → HTTPS 443 [internet egress OR interface VPC endpoints for ssm and ssmmessages] → Systems Manager managed node.
+
+**Duplicate audit (674 records):** Q140 is a near-exact duplicate, with identical five options and A+B key; preserve both IDs and mark relationship. No other VM Import/SSM matching stems were found by targeted phrase scan.
+
+**Defects/modernization:** Original typo 'doesnot appearin'; public IP and subnet do not guarantee outbound connectivity; B is not an unconditional instance-profile requirement under DHMC. For 2024+ Regions, ec2messages endpoints are not supported. Do not adopt external variant's invalid three-answer key for Select TWO.
+
+**AWS sources:** https://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-troubleshooting-managed-nodes.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/troubleshooting-ssm-agent.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/fleet-manager-default-host-management-configuration.html
+
+**External variants recorded in dataset (not freshly re-fetched):** https://www.examsvce.com/sap-c02/questiona-solutions-architect-is-importing-a-vm-question-answer.html ; https://www.examtopics.com/discussions/amazon/view/142926-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://actualtests.crampdf.com/articles/amazon-sap-c02-certification-all-in-one-exam-guide-feb-2025-q14-q32/
