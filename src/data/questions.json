@@ -13238,18 +13238,46 @@
       }
     ],
     "answers": [
+      "A",
       "C",
-      "D",
-      "E"
+      "D"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A+C+D. AWS Firewall Manager organization-wide WAF policies require AWS Config in member accounts (with continuous recording of relevant resources, CloudFront in us-east-1), AWS Organizations all features, and a Firewall Manager WAF policy targeting CloudFront. A designated Firewall Manager administrator is another required prerequisite not offered.",
+    "wrongOptionsExplanation": "A correct: Config tracks resources and compliance. B incorrect: GuardDuty detects threats, not WAF rule deployment. C correct: Organizations all features required. D correct: Firewall Manager centrally deploys WAF policies to current and new CloudFront distributions. E incorrect: Shield Advanced focuses on advanced DDoS protections, not centrally distributing WAF policies. F incorrect: Security Hub aggregates findings and posture, not WAF policy deployment.",
+    "plainWords": "To apply the same WAF protections across hundreds of accounts: Organizations all features + AWS Config + Firewall Manager WAF policy. Shield Advanced is not the deployment mechanism.",
+    "keyPoints": "Firewall Manager prerequisites: Organizations all features; Firewall Manager administrator; AWS Config in accounts and required regions; WAF policy scoped to CloudFront. For CloudFront AWS Config recording use us-east-1.",
+    "sourceWarning": "Original C+D+E answer key incorrectly substitutes Shield Advanced for mandatory AWS Config. Multiple third-party dumps repeat this defective key with reordered options. Firewall Manager administrator setup is missing from options. OWASP Top 10 coverage depends on selected managed rules, not a blanket guarantee.",
+    "review": {
+      "status": "verified-corrected-a-c-d",
+      "reviewedAt": "2026-11-02",
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/fms-prereq.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/join-aws-orgs.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/enable-config.html",
+        "https://aws.amazon.com/documentation-overview/firewall-manager/",
+        "https://www.allfreedumps.com/downloadfile.html?id=20649",
+        "https://www.examsreviews.com/articles/best-preparations-of-sap-c02-exam-2025-aws-certified-solutions-architect-unlimited-510-questions-q190-q208/",
+        "https://www.dumpsking.com/articles/get-the-important-preparation-guide-with-sap-c02-dumps-q117-q141/"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-duplicate-in-targeted-phrase-scan",
+        "relatedIds": [
+          465,
+          655,
+          316,
+          532
+        ]
+      },
+      "notes": "AWS official prerequisites override repeated incorrect third-party CDE key."
+    },
+    "answerStatus": "verified-corrected-a-c-d-external-key-defect"
   },
   {
     "id": 284,
