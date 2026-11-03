@@ -26978,13 +26978,25 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified B+D. Replicate frequently updated weather-map objects from S3 eu-west-1 to S3 us-east-1 using CRR, then use Lambda@Edge on CloudFront origin-request events to select the us-east-1 bucket for North American viewers. AWS has an explicit example of changing S3 origin Region using CloudFront-Viewer-Country. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html ; https://aws.amazon.com/blogs/networking-and-content-delivery/using-amazon-cloudfront-and-amazon-s3-to-build-multi-region-active-active-geo-proximity-applications/",
+    "wrongOptionsExplanation": "A wrong: Global Accelerator standard endpoints cannot be S3 buckets; supported endpoints are ALB, NLB, EC2, Elastic IP. B correct: S3 CRR provides a local us-east-1 copy, subject to asynchronous replication delay. C wrong: S3 Transfer Acceleration speeds S3 upload/download, not selecting CloudFront origin near viewer; it does not magically create an us-east-1 bucket. D correct: Lambda@Edge origin-request event can change S3 origin based on CloudFront-Viewer-Country. E wrong: Global Accelerator is not a direct S3 origin and is unnecessary for this CloudFront architecture.",
+    "plainWords": "CloudFront cache misses for US viewers travel back to Ireland. Replicate maps to Virginia and tell CloudFront to use the Virginia bucket for North American origin requests.",
+    "keyPoints": "B+D. CRR copies S3 objects asynchronously between Regions; CloudFront Lambda@Edge origin-request function selects nearer origin on cache miss. CloudFront-Viewer-Country available at origin request. Global Accelerator does not support S3 bucket as standard endpoint. Transfer Acceleration != regional replication or origin selection. CloudFront Functions now also support dynamic origin selection, but Lambda@Edge remains valid.",
+    "sourceWarning": "No exact normalized stem or identical option-set duplicate among 674; related Q469, Q159, Q596, Q312, Q621. External mirrors ExamsVCE, CertsMania, DumpSolutions corroborate B+D but may share same source. Production nuance: CRR asynchronous, cache TTL and origin access controls needed. CloudFront Functions supports newer origin modification, so Lambda@Edge is valid but not exclusive modern solution. External exam variant explanation references S3 Transfer Acceleration 2016 announcement, which is irrelevant/misleading to B+D.",
+    "review": {
+      "status": "verified",
+      "originalAnswer": [
+        "B",
+        "D"
+      ],
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "AWS Lambda@Edge docs explicitly support geography-based S3 origin change. CRR provides US copy; GA S3 endpoint invalid. 674 duplicate scan: no exact; related Q469 Q159 Q596 Q312 Q621. Modern CloudFront Functions also support dynamic origins."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 593,

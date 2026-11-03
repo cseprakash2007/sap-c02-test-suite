@@ -1353,3 +1353,22 @@ Architecture: On-premises File Gateway -> Direct Connect -> VPC PrivateLink inte
 AWS: https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPoints.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointsPrivateLink.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointBucketReplication.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/multi-region-access-point-buckets.html
 
 External: https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-operates-a-static-content-distribution-platform-that-serves-customers-globally-the-customers ; https://www.certstopics.com/questions/sap-c02-exam-results.html ; https://www.examtopics.com/discussions/amazon/view/143031-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-514-discussion/ ; https://www.itdumpskr.com/SAP-C02-practice-test.html
+
+
+---
+
+# Q592 (49/58): CloudFront multi-Region S3 origin for weather maps
+
+**Verified B+D.** Original question and options remain unchanged in questions.json. Weather maps in eu-west-1 are frequently updated and CloudFront cache misses cause slow US origin fetches.
+
+A WRONG: Global Accelerator cannot target S3 buckets directly; standard endpoints support ALB, NLB, EC2, Elastic IP. B CORRECT: create us-east-1 S3 bucket and configure Cross-Region Replication from eu-west-1 to us-east-1. C WRONG: S3 Transfer Acceleration does not select regional CloudFront origins. D CORRECT: Lambda@Edge origin-request trigger routes North American cache misses to us-east-1 S3 origin using CloudFront-Viewer-Country. E WRONG: unsupported direct S3 Global Accelerator endpoint and unnecessary complexity.
+
+Architecture: Global users -> CloudFront -> Lambda@Edge (origin request, viewer-country) -> S3 eu-west-1 for Europe / S3 us-east-1 for North America; CRR asynchronously replicates eu-west-1 -> us-east-1.
+
+Caveats: S3 CRR asynchronous, so map updates may lag. Set appropriate cache TTLs, origin access policies, and correct S3 Region/signing. AWS now supports CloudFront Functions dynamic origin selection as another option, but Lambda@Edge remains supported. The exam mirrors cite an irrelevant S3 Transfer Acceleration announcement; disregard that explanation.
+
+674-question audit: no exact normalized stem or identical option set. Similar but distinct Q469, Q159, Q596, Q312, Q621.
+
+AWS: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/helper-functions-origin-modification.html ; https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-how-it-works.html ; https://aws.amazon.com/blogs/networking-and-content-delivery/using-amazon-cloudfront-and-amazon-s3-to-build-multi-region-active-active-geo-proximity-applications/
+
+External variants B+D: https://www.examsvce.com/sap-c02/a-weather-service-provides-highresolution-weather-maps-question-answer.html ; https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf ; https://www.dumpsolutions.com/downloadfile.html?id=7636
