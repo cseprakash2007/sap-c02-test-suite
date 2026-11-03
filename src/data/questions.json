@@ -16429,13 +16429,40 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified A+C. SES configuration set publishes send/delivery/bounce/complaint/delay events to Amazon Data Firehose, which delivers JSON records to S3. Athena queries S3 records for recipient (mail.destination), subject (mail.headers when present), and send time (mail.timestamp). Configure the sending application to specify the configuration set; create Firehose delivery stream and IAM permissions.",
+    "wrongOptionsExplanation": "A correct: detailed SES event records via Firehose to S3. B incorrect: CloudTrail audits API actions, not detailed per-message delivery outcomes/subject. C correct: Athena SQL queries S3 JSON records. D incorrect: SES CloudWatch event destination publishes metrics, not direct detailed logs to arbitrary CloudWatch Logs group as stated. E incorrect: Athena does not directly query CloudWatch Logs as an S3 data source; use CloudWatch Logs Insights for logs.",
+    "plainWords": "SES tracks email delivery events; Firehose stores the event JSON in S3; Athena lets support staff search the records.",
+    "keyPoints": "SES configuration set + event destination; Amazon Data Firehose to S3; Athena SQL; mail.destination, mail.headers Subject, mail.timestamp; SES delivery vs Send; CloudTrail API auditing vs delivery events; CloudWatch metrics vs Logs.",
+    "sourceWarning": "SES event publishing is not enabled merely by creating a configuration set: the application must use it for sends. Subject header may be absent/truncated in some records; validate captured fields and consider explicit custom tags or app-side correlation. Existing stem/options use current Amazon Data Firehose name.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-11-02",
+      "verifiedAnswers": [
+        "A",
+        "C"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/ses/latest/dg/event-publishing-add-event-destination-firehose.html",
+        "https://docs.aws.amazon.com/ses/latest/dg/event-publishing-retrieving-firehose-contents.html",
+        "https://docs.aws.amazon.com/ses/latest/dg/event-publishing-send-email.html",
+        "https://docs.aws.amazon.com/ses/latest/dg/event-publishing-retrieving-cloudwatch.html",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=59",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-8/2/",
+        "https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-2"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-stem-duplicate",
+        "relatedIds": [
+          42,
+          174,
+          331,
+          444
+        ]
+      },
+      "notes": "External variants reorder options; map answers by wording rather than letters. Some variants use legacy Kinesis Data Firehose branding."
+    },
+    "answerStatus": "verified-a-c"
   },
   {
     "id": 354,
