@@ -615,3 +615,32 @@ flowchart TD
 **Official AWS:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html ; https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html ; https://repost.aws/knowledge-center/s3-access-bucket-restricted-to-vpc
 
 **External variants:** https://www.examtopics.com/discussions/amazon/view/143132-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-1
+
+
+## Q305 — Domain 3 multi-answer 26/58 — Australia-to-us-east-1 S3 video upload acceleration
+
+**Original question:** A video streaming company recently launched a mobile app for video sharing. The app uploads various files to an Amazon S3 bucket in the us-east-1 Region. The files range in size from 1 GB to 10 GB. Users who access the app from Australia have experienced uploads that take long periods of time Sometimes the files fail to completely upload for these users . A solutions architect must improve the app' performance for these uploads Which solutions will meet these requirements? (Select TWO.)
+
+- **A.** Enable S3 Transfer Acceleration on the S3 bucket Configure the app to use the Transfer Acceleration endpoint for uploads
+- **B.** Configure an S3 bucket in each Region to receive the uploads. Use S3 Cross-Region Replication to copy the files to the distribution S3 bucket.
+- **C.** Set up Amazon Route 53 with latency-based routing to route the uploads to the nearest S3 bucket Region.
+- **D.** Configure the app to break the video files into chunks Use a multipart upload to transfer files to Amazon S3.
+- **E.** Modify the app to add random prefixes to the files before uploading
+
+**Verified answer A+D (unchanged).**
+
+- **A correct:** S3 Transfer Acceleration uses nearby CloudFront edge locations and optimized AWS transport to the centralized us-east-1 S3 bucket. Configure bucket acceleration and use bucket-name.s3-accelerate.amazonaws.com.
+- **B incorrect for stated requirement:** regional upload buckets + CRR is a more complex alternative with asynchronous replication and cost, not necessary to speed direct centralized uploads.
+- **C incorrect:** Route 53 latency-based routing alone neither provisions buckets nor accelerates S3 uploads.
+- **D correct:** multipart upload of 1–10 GB objects allows parallel parts and individual retries on flaky links. AWS recommends multipart >=100 MB.
+- **E incorrect:** random prefixes can help request-rate partition scaling, not the geographic latency or failed large-file transfers in this stem.
+
+**Architecture:** Australia mobile app [multipart parts + per-part retry] → nearby AWS edge [S3 Transfer Acceleration] → optimized AWS network → S3 bucket us-east-1 [CompleteMultipartUpload].
+
+**Outdated/defective wording:** source has punctuation/spacing defects. Random-prefix advice is workload-specific rather than universally required. Transfer Acceleration requires DNS-compatible bucket name without dots and may incur charges; test benefit using AWS speed comparison tool. Multipart uploads should be completed or aborted to avoid orphaned-part charges.
+
+**Duplicate scan of 674:** no exact Q305 duplicate found in targeted stem/option phrase scan. Related Q32 and Q83 are near-duplicates of each other but focus on video storage lifecycle; other related S3 upload/performance IDs Q149, Q158, Q170, Q323, Q349, Q592. Do not label these as exact Q305 duplicates.
+
+**AWS sources:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance-design-patterns.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html
+
+**External variants:** Exam-Tests Q201 https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=42 (A+D); CertsTopics Q69 https://www.certstopics.com/questions/free-access-amazon-web-services-sap-c02-new-release.html (A+D); ExamsReviews reordered https://www.examsreviews.com/articles/best-preparations-of-sap-c02-exam-2025-aws-certified-solutions-architect-unlimited-510-questions-q190-q208/ (A+E maps to original D+A).
