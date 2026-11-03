@@ -1372,3 +1372,88 @@ Caveats: S3 CRR asynchronous, so map updates may lag. Set appropriate cache TTLs
 AWS: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/helper-functions-origin-modification.html ; https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-how-it-works.html ; https://aws.amazon.com/blogs/networking-and-content-delivery/using-amazon-cloudfront-and-amazon-s3-to-build-multi-region-active-active-geo-proximity-applications/
 
 External variants B+D: https://www.examsvce.com/sap-c02/a-weather-service-provides-highresolution-weather-maps-question-answer.html ; https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf ; https://www.dumpsolutions.com/downloadfile.html?id=7636
+
+
+---
+
+# Q600 (50/58): Shared multi-account VPC with low-bandwidth on-premises VPN
+
+**Verdict: B + D independently verified (2026-11-03).** Preserve original stem and all five option texts in \`src/data/questions.json\`. The source key was B,D and remains B,D. The dataset is now marked \`verified-with-caveats\`.
+
+## Original question
+
+A solutions architect is designing an AWS account structure for a company that consists of multiple teams. All the teams will work in the same AWS Region. The company needs a VPC that is connected to the on-premises network. The company expects less than 50 Mbps of total traffic to and from the on-premises network. Which combination of steps will meet these requirements MOST cost-effectively? (Select TWO.)
+
+A. Create an AWS Cloud Formation template that provisions a VPC and the required subnets. Deploy the template to each AWS account.
+
+B. Create an AWS Cloud Formation template that provisions a VPC and the required subnets. Deploy the template to a shared services account Share the subnets by using AWS Resource Access Manager.
+
+C. Use AWS Transit Gateway along with an AWS Site-to-Site VPN for connectivity to the on-premises network. Share the transit gateway by using AWS Resource Access Manager.
+
+D. Use AWS Site-to-Site VPN for connectivity to the on-premises network.
+
+E. Use AWS Direct Connect for connectivity to the on-premises network.
+
+## Explained option by option
+
+- **A — Wrong for MOST cost-effective:** separate VPC per team increases networking and hybrid-connectivity management. Additional inter-VPC connectivity, or more than one VPN, would be necessary for common on-prem reachability.
+- **B — Correct:** deploy ONE VPC in a centrally managed networking/shared-services account via CloudFormation. Use AWS RAM to share its *subnets* with multiple AWS Organizations accounts. Each participant deploys its own compute in shared subnets while ownership, routes, NACLs and VPC networking remain centralized.
+- **C — Wrong for this requirement, but viable for a different topology:** Transit Gateway (TGW) + VPN + RAM-shared TGW is suited to many independently owned VPCs needing transitive routing. Here it adds attachment and processing costs and does not simplify a single shared VPC.
+- **D — Correct:** connect the owner VPC to on premises by standard AWS Site-to-Site VPN with a virtual private gateway (VGW), customer gateway, IPsec tunnels, routes and security controls. Standard tunnel bandwidth can reach 1.25 Gbps, though observed throughput depends on network and device characteristics; less than 50 Mbps is a reasonable low-bandwidth use case.
+- **E — Wrong on requested cost optimum:** Direct Connect may offer more predictable private networking but involves dedicated/hosted connection charges and infrastructure. **Important:** modern hosted connections can be 50 Mbps; do not claim Direct Connect always starts at 1 Gbps or is technically impossible.
+
+## Architecture diagram
+
+\`\`\`mermaid
+flowchart TB
+  O["On-premises network"] --> CG["Customer Gateway"]
+  CG <-->|"IPsec Site-to-Site VPN (two tunnels)"| VGW["Virtual Private Gateway"]
+  subgraph ORG["AWS Organizations / one AWS Region"]
+    subgraph NW["Shared services account (VPC owner)"]
+      VGW --> VPC["Shared VPC"]
+      VPC --> S1["Subnet A"]
+      VPC --> S2["Subnet B"]
+    end
+    RAM["AWS RAM resource share"] -.-> S1
+    RAM -.-> S2
+    A["Team A AWS account workloads"] --> S1
+    B["Team B AWS account workloads"] --> S2
+  end
+\`\`\`
+
+**Why the combination works:** multi-account governance is independent of the number of VPCs. Team accounts can remain separate for IAM, billing, and workload isolation, while workloads use one common set of VPC routes and the VPC owner's single VPN attachment. Create appropriate security groups, subnet NACLs, CIDR routing and on-prem firewalls.
+
+## 674-question duplicate and similar-framework audit
+
+Scanned all 674 stems and full option texts. **No exact normalized-stem duplicate and no identical complete option set** for Q600 among the other 673. Related, but not duplicates:
+- **Q415 (Domain 3, single answer, D)** is a **close conceptual variant**: central AWS Organizations VPC already connected via Site-to-Site VPN; answer is RAM subnet sharing. Distinction: Q600 asks **two choices** and adds lowest-cost network connection.
+- **Q268 (Domain 4)**: multi-Region Direct Connect gateway/public-services connectivity; a different Direct Connect-centric architecture.
+- **Q538 (Domain 4)**: 1-Gbps Direct Connect already exists, add VPN for cost-effective fault tolerance/security; different goal from building cheapest new connection.
+- **Q360 (Domain 1)**: Transit Gateway centralized inspection and egress; TGW already exists and is justified by several VPCs, unlike Q600.
+- **Q247 (Domain 3)** surfaced as a lexical match but is about application-to-database security groups, not hybrid connectivity; **not a semantic duplicate**.
+
+## Defects / qualification
+
+1. The original answer text writes “AWS Cloud Formation” instead of **AWS CloudFormation** and lacks punctuation in B. Retain original user-visible question/options for fidelity; explain the typo in notes.
+2. The stem does not explicitly state AWS Organizations or shared-trust network boundaries. AWS RAM subnet sharing requires common AWS Organizations membership and organization resource sharing enabled; cross-team subnet segmentation and account isolation must be designed properly.
+3. “Less than 50 Mbps” does not guarantee any particular observed VPN performance, availability, or a universal cost comparison; Site-to-Site VPN is the exam-intended cost-effective choice for the scenario.
+4. Current Direct Connect supports **50-Mbps hosted connections**; it is incorrect to assert a 1-Gbps minimum. The choice is less cost-optimal in the generic scenario, not impossible.
+5. External copies may descend from a shared exam-question bank; three matching keys do not independently validate AWS architecture.
+
+## AWS primary documentation
+
+- Shared VPC and organizational requirements: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html
+- RAM/Organizations prerequisites: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-share-prerequisites.html
+- Owner and participant controls: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-share-limitations.html
+- AWS prescriptive network architecture / VPC sharing: https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/amazon-vpc-sharing.html
+- AWS Site-to-Site VPN: https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html
+- VPN tunnel performance limits: https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-limits.html
+- TGW VPN incurs both TGW and VPN charges: https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/vpn.html
+- Direct Connect hosted 50-Mbps options: https://docs.aws.amazon.com/directconnect/latest/UserGuide/hosted_connection.html
+
+## External exam variants and comparison
+
+- CertsMania Q24 (exact five-option structure, **B+D**): https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf
+- Killexams PDF Q91 (exact five-option structure, **B+D**): https://killexams.com/demo-download/SAP-C02.pdf
+- TestMayor Q152 (five-option structure, consistent B+D): https://www.testmayor.com/SAP-C02-Practice-Test/13
+- DummyExams 2026 question #4 (paraphrased five-option variant, same architectural choices; answer is behind a reveal control): https://dummyexams.com/en/free-practice/sap-c02
