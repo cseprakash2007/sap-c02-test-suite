@@ -24511,13 +24511,90 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "INTENDED C+D, WITH DEFECTS. Cross-account S3 access using the IAM user in Account B requires a resource-based S3 bucket policy in Account A naming the Account B IAM user principal (C), plus an identity-based IAM policy in Account B allowing that user S3 actions on Account A bucket/objects (D). AWS S3 and IAM documentation confirms the two-sided pattern. IMPORTANT: original question dataset omits all JSON policy bodies for B,C,D,E; recovered external variants reveal C and D specify s3:ListBucket but only arn:aws:s3:::AccountABucketName/*, which is an object ARN. ListBucket requires arn:aws:s3:::AccountABucketName (no /*). Thus source C+D is conceptually intended, but ListBucket permissions as shown do not work; GetObject for known keys can work.",
+    "wrongOptionsExplanation": "A WRONG: S3 CORS handles browser cross-origin requests, not cross-account IAM access. B WRONG (external recovered JSON): bucket policy has no Principal field, so does not identify an allowed external requester. C INTENDED CORRECT: Account A bucket resource policy allows arn:aws:iam::AccountB:user/User_DataProcessor, but recovered source's ListBucket action lacks required bucket-level ARN. D INTENDED CORRECT: Account B identity-based policy grants GetObject/ListBucket, but recovered source's ListBucket action lacks required bucket-level ARN. E WRONG: an IAM identity-based policy includes Principal, which is not allowed in identity-based IAM policy statements.",
+    "plainWords": "To share a private S3 bucket across accounts, the bucket owner grants the external identity access in its bucket policy, and the external account grants its user matching IAM permissions. C+D is the intended answer, but source JSON is missing from the GitHub question and has a ListBucket ARN bug in external copies.",
+    "keyPoints": "S3 bucket policy (resource-based) contains Principal, Action, Resource; IAM user identity-based policy contains Action, Resource but NOT Principal. Cross-account access needs permissions from bucket-owner and requester accounts. CORS does not grant IAM permissions. s3:ListBucket resource is arn:aws:s3:::bucket; s3:GetObject resource is arn:aws:s3:::bucket/*. Source JSON omitted from all four options in dataset. Prefer temporary-role credentials over long-lived IAM users; S3 Bucket owner enforced disables ACLs by default. SSE-KMS adds KMS key-policy/identity requirements.",
+    "sourceWarning": "SEVERE CORRUPTION: original B,C,D,E option text has no JSON policy blocks, making the question unanswerable as stored. External variants ExamGuru, Cert-Ready and FreeCram PDF recover intended C+D. EXTERNAL SOURCE DEFECT: recovered C+D JSON grants s3:ListBucket only against object ARN arn:aws:s3:::AccountABucketName/*; must include bucket ARN without /*. Thus the two policies permit GetObject for known object keys, not listing. A text is truncated ('in Account'); stem has OCR '1AM' and punctuation. Retain historical C+D with qualified status, restore corrected example in notes, do not silently present source policies as fully correct.",
+    "review": {
+      "status": "intended-c-d-missing-option-json-and-listbucket-arn-defect",
+      "reviewedAt": "2026-11-03",
+      "sourceAnswers": [
+        "C",
+        "D"
+      ],
+      "intendedAnswers": [
+        "C",
+        "D"
+      ],
+      "verifiedAnswers": null,
+      "duplicateAudit": {
+        "scope": 674,
+        "exactNormalizedStemDuplicates": [],
+        "identicalNormalizedOptionSets": [],
+        "relatedIds": [
+          456,
+          302,
+          664,
+          463
+        ]
+      },
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-walkthroughs-managing-access-example2.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_policy-examples.html",
+        "https://repost.aws/knowledge-center/cross-account-access-s3",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-policies.html",
+        "https://cert-ready.net/practice/aws/SAP-C02/page-2.html",
+        "https://examguru.io/exams/sap-c02/review",
+        "https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf"
+      ],
+      "recoveredOptionPolicies": {
+        "B": {
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject",
+            "s3:ListBucket"
+          ],
+          "Resource": "arn:aws:s3:::AccountABucketName/*"
+        },
+        "C": {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::AccountB:user/User_DataProcessor"
+          },
+          "Action": [
+            "s3:GetObject",
+            "s3:ListBucket"
+          ],
+          "Resource": [
+            "arn:aws:s3:::AccountABucketName/*"
+          ]
+        },
+        "D": {
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject",
+            "s3:ListBucket"
+          ],
+          "Resource": "arn:aws:s3:::AccountABucketName/*"
+        },
+        "E": {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::AccountB:user/User_DataProcessor"
+          },
+          "Action": [
+            "s3:GetObject",
+            "s3:ListBucket"
+          ],
+          "Resource": [
+            "arn:aws:s3:::AccountABucketName/*"
+          ]
+        }
+      },
+      "recommendedCorrection": "Restore missing policy blocks with provenance; add arn:aws:s3:::AccountABucketName bucket ARN separately for s3:ListBucket in C and D; retain object ARN for s3:GetObject."
+    },
+    "answerStatus": "defective-missing-policy-json-intended-c-d"
   },
   {
     "id": 534,
