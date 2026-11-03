@@ -24374,13 +24374,43 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED A+D (historical names). A: Amazon Data Firehose (formerly Kinesis Data Firehose) is fully managed, automatically scales ingestion/delivery, buffers events and optionally invokes Lambda to transform records before delivery. D: Amazon OpenSearch Service (formerly Amazon Elasticsearch Service) indexes semi-structured JSON with dynamic mappings and provides near-real-time dashboards through OpenSearch Dashboards (formerly Kibana). Configure Firehose destination as OpenSearch Service, with optional S3 backup and appropriate VPN/network connectivity.",
+    "wrongOptionsExplanation": "A CORRECT: Firehose auto-scales with no shard management, buffers and delivers events; Lambda transformation optional. B LESS SUITABLE: Kinesis Data Streams is a valid durable buffer and supports on-demand capacity, but requires separate consumers/delivery configuration and more operational choices than Firehose; modern on-demand mode reduces shard administration. C WRONG: Aurora PostgreSQL supports JSON/JSONB but is not the best fit for this high-volume near-real-time event search and dashboards; QuickSight is BI rather than the native OpenSearch visualization experience. D CORRECT but historical names: use OpenSearch Service plus OpenSearch Dashboards for JSON indexing, dynamic mappings and near-real-time visualization. E WRONG: Neptune is a graph database, not a general-purpose event log analytics solution.",
+    "plainWords": "Events from on-premises travel to AWS, Firehose automatically buffers and delivers them, Lambda optionally cleans JSON, OpenSearch stores/searches events, and OpenSearch Dashboards displays near-real-time charts.",
+    "keyPoints": "Amazon Kinesis Data Firehose renamed Amazon Data Firehose; Amazon Elasticsearch Service renamed Amazon OpenSearch Service; Kibana renamed OpenSearch Dashboards. Firehose auto-scales and can deliver to OpenSearch Service with Lambda transform and S3 backup. Kinesis Data Streams on-demand mode exists but adds consumer orchestration. OpenSearch dynamic mapping supports JSON but needs mapping controls to avoid field explosion and type conflicts. VPN alone does not automatically make AWS public Firehose API private; plan endpoint and routing.",
+    "sourceWarning": "OCR defects in original stem/options: 'visualization toot', 'semi -structured', 'enabled©', 'function 10', 'evens', 'Neptune 0', malformed punctuation. Outdated names: Kinesis Data Firehose -> Amazon Data Firehose; Amazon ES -> Amazon OpenSearch Service; Kibana -> OpenSearch Dashboards. External ExamTopics Q114 supports AD, while Fast2test Q200 reordered options and displays erroneous AE (Kinesis Streams + Neptune). B becomes more plausible with Kinesis Data Streams on-demand mode but A remains stronger for no administration. Preserve original question and answer.",
+    "review": {
+      "status": "verified-a-d-outdated-names-ocr",
+      "reviewedAt": "2026-11-03",
+      "sourceAnswers": [
+        "A",
+        "D"
+      ],
+      "verifiedAnswers": [
+        "A",
+        "D"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "exactNormalizedStemDuplicates": [],
+        "identicalNormalizedOptionSets": [],
+        "relatedIds": [
+          372,
+          482,
+          363,
+          492
+        ]
+      },
+      "sources": [
+        "https://aws.amazon.com/firehose/faqs/",
+        "https://docs.aws.amazon.com/en_en/opensearch-service/latest/developerguide/integrations-fh.html",
+        "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/rename.html",
+        "https://docs.opensearch.org/latest/mappings/",
+        "https://www.examtopics.com/discussions/amazon/view/95454-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-114-discussion/",
+        "https://jp.fast2test.com/articles/%E6%9B%B4%E6%96%B0%E3%81%95%E3%82%8C%E3%81%9Fpdf-2024%E5%B9%B4%E6%9C%80%E6%96%B0-%E5%AE%9F%E9%9A%9B%E3%81%AB%E3%81%82%E3%82%8Bamazon-aws-solutions-architect-professional%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C-q190-q209/"
+      ]
+    },
+    "answerStatus": "verified-a-d-outdated-service-names"
   },
   {
     "id": 531,
