@@ -986,3 +986,37 @@ A company stores a static website on Amazon S3. AWS Lambda functions retrieve co
 **AWS docs:** https://repost.aws/knowledge-center/lambda-function-assume-iam-role ; https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_update-role-trust-policy.html ; https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic-cross-account.html ; https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html
 
 **External matching variants:** SPOTO Q50 https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 ; FreePDFDumps Q165 https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=34 ; FreeCram Q116 https://www.freecram.net/question/Amazon.SAP-C02.v2023-09-11.q137/a-company-has-several-aws-accounts-a-development-team-is-building-an-automation-framework-for-cloud ; CertsMania Q42 https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf . These may share a common exam source; AWS official guidance is primary verification.
+
+
+## Q519 — Domain 3 multi-answer 41/58 — DynamoDB public serverless HTTPS API (2026-11-03)
+
+**Verified A+C; no source-key change.** Original question-bank SHA `515da636f0f60f7b07d95084b4da672e7614e096`.
+
+**Complete original question:** A company is storing data in several Amazon DynamoDB tables. A solutions architect must use a serverless architecture to make the data accessible publicly through a simple API over HTTPS. The solution must scale automatically in response to demand. Which solutions meet these requirements? (Choose two.)
+
+- **A.** Create an Amazon API Gateway REST API. Configure this API with direct integrations to DynamoDB by using API Gateway’s AWS integration type.
+- **B.** Create an Amazon API Gateway HTTP API. Configure this API with direct integrations to Dynamo DB by using API Gateway’s AWS integration type.
+- **C.** Create an Amazon API Gateway HTTP API. Configure this API with integrations to AWS Lambda functions that return data from the DynamoDB tables.
+- **D.** Create an accelerator in AWS Global Accelerator. Configure this accelerator with AWS Lambda@Edge function integrations that return data from the DynamoDB tables.
+- **E.** Create a Network Load Balancer. Configure listener rules to forward requests to the appropriate AWS Lambda functions
+
+**All options:**
+- **A CORRECT:** API Gateway REST API AWS service integration invokes DynamoDB actions directly using integration credentials (IAM role) and mapping templates. No Lambda needed; public HTTPS, serverless scaling.
+- **B WRONG:** API Gateway HTTP API has selected first-class AWS service integration subtypes, but DynamoDB is absent from supported list. Do NOT incorrectly say HTTP APIs have no AWS service integrations at all; they support SQS, EventBridge, Step Functions and others.
+- **C CORRECT:** API Gateway HTTP API Lambda integration invokes Lambda which reads DynamoDB using SDK and IAM role. AWS publishes an exact CRUD HTTP API + Lambda + DynamoDB tutorial.
+- **D WRONG:** AWS Global Accelerator endpoints cannot integrate Lambda@Edge; Lambda@Edge belongs to CloudFront request/response triggers.
+- **E WRONG:** NLB does not support Lambda target groups; ALB can integrate with Lambda, but NLB cannot.
+
+**Architecture diagram (two alternatives):**
+```text
+A: Public HTTPS client --> API Gateway REST API --AWS service integration / IAM--> DynamoDB
+C: Public HTTPS client --> API Gateway HTTP API --Lambda integration--> Lambda --SDK / IAM--> DynamoDB
+```
+
+**Duplicates:** 674 stems and normalized option sets compared; no exact normalized stem duplicates, no identical normalized option sets. Related but distinct Q343 (API Gateway/Lambda), Q274 (DynamoDB performance), Q474 (microservices). No conflicting framework duplicate found.
+
+**Defects and modern recommendations:** No obsolete AWS service or source-key issue. Option B says 'Dynamo DB' (typo). Important nuance: HTTP API supports a restricted set of direct AWS service integrations, just not DynamoDB (see current subtype list). Public HTTPS endpoint should have appropriate authorization, IAM, throttling, and quotas. Automatic scaling is not unlimited.
+
+**Official AWS:** https://docs.aws.amazon.com/en_en/apigateway/latest/developerguide/how-to-integration-settings.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services-reference.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-dynamo-db.html
+
+**External variants (all A+C):** https://www.examsvce.com/sap-c02/a-company-is-storing-data-in-several-question-answer.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2024-05-06.q201/a-company-is-storing-data-in-several-amazon-dynamodb-tables-a-solutions-architect-must-use-a-serverless ; https://www.freepdfdumps.com/Amazon.SAP-C02.v2023-09-29.q103.html?p=22 ; https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/3 ; https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 . Third-party variants may share source material; AWS docs are authoritative.
