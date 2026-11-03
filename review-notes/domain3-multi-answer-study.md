@@ -765,3 +765,18 @@ flowchart TD
 **AWS references:** https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-complex-configs.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/health-checks-how-route-53-chooses-records.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-simple-configs.html
 
 **External variants:** https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=13 (D/E); https://www.examtopics.com/discussions/amazon/view/132993-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-442-discussion/ (same stem); https://www.jpntest.com/blog/2024%E5%B9%B405%E6%9C%88-%E7%84%A1%E6%96%99aws-solutions-architect-professional%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C%E9%9B%86%E8%A9%A6%E9%A8%93%E7%82%B9%E6%95%B0%E3%82%92%E4%BC%B8%E3%81%B0%E3%81%9D%E3%81%86-q10-q29/ (conflicting defective key).
+
+
+## Q390 — Domain 3 multi-answer 32/58 — S3 Multi-Region Access Point and two-way CRR (2026-11-03)
+
+**Verified A + B + E.** Two simultaneously active AWS Regions: application → S3 Multi-Region Access Point global endpoint → Region A S3 bucket (versioning enabled) ⇄ two-way Cross-Region Replication ⇄ Region B S3 bucket (versioning enabled). MRAP handles routing, not replication. CRR is asynchronous and requires versioning in both buckets.
+
+**Option explanations:** A correct: one global endpoint routes requests to nearby regional buckets. B correct: managed two-way replication keeps new/changed objects asynchronously synchronized. C wrong: application dual writes add custom reconciliation and retry overhead. D wrong: S3 Lifecycle cannot copy objects between buckets. E correct: versioning mandatory for S3 replication. F wrong: Lambda event-driven copy adds custom operational burden.
+
+**Nuances:** MRAP routes GET without checking object existence, so 404 can occur before replication completes. Live replication does not backfill preexisting objects: use S3 Batch Replication. S3 Replication Time Control can offer a predictable replication window at added cost; configure delete marker replication, replica modification sync and metrics where required. Simultaneous same-key updates need conflict handling; not strongly consistent across Regions. Typographical defects: missing punctuation and 'AVVS Lambda'.
+
+**Duplicate audit:** 674 stems scanned; no exact or punctuation-normalized duplicate. Related S3/CRR scenarios Q15, Q156, Q495, but different requirements and answers.
+
+**AWS documentation:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointRequestRouting.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/mrap-create-two-way-replication-rules.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-requirements.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
+
+**External exam variants:** https://www.examtopics.com/discussions/amazon/view/110403-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-186-discussion/ (same question, A+B+E); https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-3.html (question 33, A+B+E).
