@@ -20404,13 +20404,51 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED A+C+F: Activate user-defined cost allocation tags for application/team (A), organize business groupings with AWS Cost Categories (C), and use AWS Cost Explorer for historical cost comparisons and future forecasts (F). Cost Explorer supports at least 12 months of history and 12 months of forecasting. IMPORTANT: Q442 is a truncated near-duplicate of Q51, which explicitly states that resources already have application/team tags; Q442 omits this prerequisite. Cost allocation tags must be applied and activated; historical attribution is not automatically retroactive.",
+    "wrongOptionsExplanation": "A CORRECT: activate custom application/team resource tags for cost allocation; tags must also be applied. B WRONG: AWS-generated tags (for example createdBy) are not arbitrary user-defined application/team tags. C CORRECT: Cost Categories map billing line items into application/team groupings; recommended pattern is one Application category with values per app, rather than a separate category for each app. D WRONG for reporting objective: IAM billing access grants permissions and may be needed for delegated users, but doesn't create cost classification/reports. E WRONG: Budgets provides targets and alerts, not the requested comparative reporting experience. F CORRECT: Cost Explorer analyzes history and forecasts costs.",
+    "plainWords": "Put app/team labels on AWS resources, activate those tags for billing, group them into business cost categories, and use Cost Explorer to compare past costs and forecast future spending.",
+    "keyPoints": "Cost allocation tags = identify resource ownership; Cost Categories = business grouping rules; Cost Explorer = cost reports and forecasts; Budgets = targets/alerts; IAM billing access = permissions. Current Cost Explorer docs describe at least 13 months of historical data and 12 or 18 months forecast depending on experience. Q51 has the same six options and full opening scenario, making Q442 a truncated near-duplicate.",
+    "sourceWarning": "NEAR-DUPLICATE / TRUNCATED STEM: Q442 repeats Q51's cost-reporting requirements and six matching options but drops the first scenario paragraph establishing that team/application resource tags already exist. A assumes tags were applied; activation does not backfill all prior history. Option C imprecisely says 'a cost category for each application'; better model is a single Application category with values per app. External SAP-C02 variants consistently key ACF; a historical SAP-C01 copy has conflicting keyed choices, so prioritize current AWS docs. Preserve original text and answers.",
+    "review": {
+      "status": "verified-a-c-f-near-duplicate-q51",
+      "reviewedAt": "2026-11-03",
+      "sourceAnswers": [
+        "A",
+        "C",
+        "F"
+      ],
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "F"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "exactNormalizedStemDuplicates": [],
+        "identicalNormalizedOptions": [
+          51
+        ],
+        "relatedIds": [
+          51,
+          666,
+          203,
+          382
+        ],
+        "classification": "truncated-near-duplicate",
+        "notes": "Q51 is same core requirement plus missing setup about pre-existing tags; all six options match after punctuation normalization."
+      },
+      "sources": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html",
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/bcm-lite-cost-explorer.html",
+        "https://docs.aws.amazon.com/us_en/awsaccountbilling/latest/aboutv2/custom-tags.html",
+        "https://docs.aws.amazon.com/us_en/awsaccountbilling/latest/aboutv2/manage-cost-categories.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-s-factory-and-automaton-applications-are-running-in-a-single-vpc-more-than-23-applications",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=96",
+        "https://www.testpassed.com/articles/2023-realistic-testpassed-sap-c02-dumps-pdf-100-passing-guarantee-q147-q171/",
+        "https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2"
+      ]
+    },
+    "answerStatus": "verified-a-c-f-duplicate-q51"
   },
   {
     "id": 443,
