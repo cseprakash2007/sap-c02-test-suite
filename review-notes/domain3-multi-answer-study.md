@@ -1129,3 +1129,88 @@ Use two statements per policy: `s3:ListBucket` with `arn:aws:s3:::AccountABucket
 **Official AWS sources:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-walkthroughs-managing-access-example2.html ; https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_policy-examples.html ; https://repost.aws/knowledge-center/cross-account-access-s3 ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-policies.html
 
 **External variants:** Cert-Ready Q6 https://cert-ready.net/practice/aws/SAP-C02/page-2.html (policy JSON displayed), ExamGuru Q6 https://examguru.io/exams/sap-c02/review (policy image placeholders, C+D), FreeCram PDF https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf (policy images). Multiple variants likely reuse source material, and none fixes the ListBucket ARN defect.
+
+
+---
+
+# Domain 3 multi-answer — Q548 (44 of 58) — 2026-11-03
+
+## Verdict
+**B + C + E verified.** Original dataset answer retained. This is the single-Region, multi-VPC outbound hybrid-DNS forwarding pattern. Source stem and option spacing is corrupted; one external answer key is incomplete and another explanation misstates SYSTEM rules. Preserve the original stem/options for traceability.
+
+## Complete original dataset text
+
+> A company runs workloads on EC2 inmultiple VPCsin a single Region. They also have anon-premises DNS server(via Direct Connect). All EC2 instances must resolve internal.company.com usingprivate communication. What should a solutions architect do? (Select THREE.) Options:
+
+- **A.** Create an Amazon Route 53inbound endpointin all workload VPCs.
+- **B.** Create a Route 53outbound endpointin one VPC.
+- **C.** Create a Route 53forwarding ruleto forward internal.company.com to the on-prem DNS.
+- **D.** Create a Route 53 rule with theSystemtype.
+- **E.** Associate the rule with all VPCs.
+- **F.** Associate the rule only with the VPC that has the outbound endpoint.
+
+**Original selected:** B, C, E. **Independently verified:** B, C, E.
+
+## Explanation of every option
+
+- **A — Incorrect.** Route 53 Resolver *inbound* endpoints are for DNS queries arriving from on-premises/other networks into AWS. They are not needed in every VPC for EC2-to-on-premises name resolution.
+- **B — Correct.** One *outbound* Resolver endpoint in a privately connected VPC can serve several workload VPCs in the same Region. Choose at least two AZs/IP addresses for availability and enable reachability to on-premises DNS through Direct Connect.
+- **C — Correct.** A Resolver rule with type **FORWARD** matching `internal.company.com` sends queries to the on-premises DNS server IP addresses through the outbound endpoint. This is conditional DNS forwarding.
+- **D — Incorrect.** **SYSTEM is an actual Route 53 Resolver rule type** (the CertsMania explanation is wrong on this point), but it lets the AWS VPC Resolver resolve certain subdomains locally instead of forwarding them under a broader rule. It does not forward queries to the on-premises target.
+- **E — Correct.** The FORWARD rule must be associated with **all** workload VPCs that need to resolve `internal.company.com`. Rule association, not VPC peering, is what makes this resolution pattern work across those VPCs.
+- **F — Incorrect.** Association only with the VPC hosting the outbound endpoint would not apply the rule to all other workload VPCs.
+
+## Architecture and flow
+
+```text
+Region: multiple workload VPCs
+EC2 in VPC-A --> VPC-A Resolver --\
+EC2 in VPC-B --> VPC-B Resolver ----+--> shared FORWARD rule for internal.company.com
+EC2 in VPC-C --> VPC-C Resolver --/                 |
+              (associate rule with every VPC)      v
+                                        Outbound Resolver endpoint
+                                        (one VPC, 2+ AZs/IPs)
+                                                  |
+                                   private routing / Direct Connect
+                                                  |
+                                   On-premises authoritative DNS
+                                   for internal.company.com
+                                                  |
+                                    DNS replies return to EC2
+```
+
+Implement with target DNS IPs, TCP+UDP 53 security group/firewall permissions, routing to on-premises via Direct Connect, and proper response paths. An outbound endpoint in every workload VPC is not required. For cross-account workloads use AWS RAM to share rules. 
+
+## Duplicate and similarity audit — all 674 questions
+
+- Exact normalized stem duplicate: **none**; identical normalized option-set duplicate: **none**.
+- **Q91 (Domain 1):** Direct Connect + EC2 resolves on-premises AD domain; inbound/outbound conditional forwarding, one-VPC variant.
+- **Q620 (Domain 3):** VPN + AWS-hosted intranet resolves on-premises names; outbound endpoint + forward rule (same direction, single-VPC variant).
+- **Q430 (Domain 1):** on-premises must resolve AWS private hosted-zone name; inbound endpoint, *opposite* direction.
+- **Q672 (Domain 4):** private hosted zone inside AWS, on-premises clients; inbound endpoint + on-premises forwarding, *opposite* direction.
+
+Key exam discriminator: **AWS EC2 queries on-prem DNS → outbound + FORWARD + VPC associations. On-prem queries AWS private zone → inbound + private hosted zone association + on-prem forwarder.**
+
+## Independent primary documentation
+
+1. AWS outbound forwarding: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-outbound-queries.html
+2. AWS how endpoint forwards from VPC: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-overview-forward-vpc-to-network.html
+3. AWS managing Resolver rule associations: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-rules-managing.html
+4. AWS SYSTEM vs FORWARD rule types: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-overview-forward-vpc-to-network-using-rules.html
+5. AWS central endpoint and sharing: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-choose-vpc.html
+6. AWS re:Post DNS connectivity and port 53: https://repost.aws/knowledge-center/route-53-fix-dns-resolution-resolver
+
+## Multiple external exam variants (independent of primary verification)
+
+- **CertsMania / Jagjit PDF, Q6:** https://www.certsmania.com/pdf/revision-materials-effective-amazon-web-services-sap-c02-questions-answers-by-jagjit.pdf — same condensed OCR wording, key **B,C,E**. Its commentary falsely states SYSTEM rule type does not exist. **Explanation defective.**
+- **P2PExams / Vargas PDF, Q6:** https://www.p2pexams.com/free-questions/free-amazon-sap-c02-exam-questions-by-vargas.pdf — complete uncondensed stem, same option semantics and letters; prints **C,E only** despite **Select THREE**. **Incomplete key**, missing B; not an alternative technically correct pair.
+- **FreeCram PDF, question 38:** https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf — full scenario, options permuted: B=outbound, E=all VPCs, F=Forward. Key hidden, so not used as answer corroboration.
+
+These sources may derive from shared exam-dump material; AWS technical documentation governs the verified answer, not vote counting.
+
+## Defects / dated guidance
+
+- Missing spaces in stem and options and repeated 'Options:' marker. Do not silently substitute a different variant for original text.
+- P2P/Vargas source key has only two answers for a three-answer question.
+- CertsMania's claim that SYSTEM doesn't exist is *incorrect*; SYSTEM is a documented real type with a different purpose.
+- No service deprecation found affecting **outbound endpoint + FORWARD rule + VPC associations**. Modern environments may use Route 53 Profiles/RAM for distribution at scale, but that does not invalidate the answer.

@@ -25187,13 +25187,27 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified B, C, E. Create one Route 53 Resolver outbound endpoint in a VPC with private routing to the on-premises DNS servers over Direct Connect. Create a FORWARD rule for internal.company.com with on-premises DNS target IP addresses and the outbound endpoint. Associate this rule with every workload VPC, so queries using their VPC Resolvers are forwarded via the shared outbound endpoint. Route 53 Resolver rules can use the same outbound endpoint for multiple VPCs in a Region. See https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-outbound-queries.html and https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-overview-forward-vpc-to-network.html",
+    "wrongOptionsExplanation": "A: Inbound endpoints serve queries coming from on premises toward AWS, not AWS-to-on-premises lookups; one inbound endpoint in every VPC is unnecessary. D: SYSTEM is a real Resolver rule type, but overrides a broader forwarding rule to make VPC Resolver resolve selected subdomains itself; it does not forward to on-premises DNS. F: Associating the rule only with the endpoint VPC leaves other workload VPCs without the forwarding behavior. B: one outbound endpoint suffices for several VPCs in one Region. C: FORWARD rule selects domain and on-premises target resolver IPs. E: associate the rule with every workload VPC.",
+    "plainWords": "AWS EC2 asks an on-premises DNS server: use outbound, choose the on-premises domain with a Forward rule, and attach that rule to every VPC that needs it. Inbound means on-premises asks AWS.",
+    "keyPoints": "Outbound endpoint + FORWARD Resolver rule + associate every workload VPC (B+C+E). DNS from VPC Resolver to outbound endpoint reaches on-prem DNS via Direct Connect. Deploy outbound endpoint IPs across at least two AZs; allow TCP/UDP 53 and return traffic; route through private connectivity. In multi-account setups, share the rule using AWS RAM. SYSTEM is a valid rule type but not appropriate here. Related Q91/Q620 AWS-to-on-premises versus Q430/Q672 on-premises-to-AWS.",
+    "sourceWarning": "Original stem/options have missing spaces and redundant 'Options:'. External Vargas/P2P exam PDF prints only C,E despite 'Select THREE' (defective answer key); CertsMania/Jagjit PDF prints B,C,E, corroborated by current AWS docs. CertsMania explanation falsely says SYSTEM rule type does not exist; AWS explicitly documents SYSTEM. Third external FreeCram PDF reproduces full original scenario with permuted answer letters but masks the answer. All 674 checked: no identical normalized stem/option set; conceptually similar Q91, Q430, Q620, Q672. Original phrasing retained; exam guidance is B,C,E.",
+    "review": {
+      "status": "verified-with-source-defects",
+      "originalAnswer": [
+        "B",
+        "C",
+        "E"
+      ],
+      "verifiedAnswer": [
+        "B",
+        "C",
+        "E"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "AWS docs confirm B+C+E. P2P/Vargas PDF has incomplete C+E key despite Select THREE; CertsMania has correct key but falsely claims SYSTEM does not exist. Related Q91/Q430/Q620/Q672; no exact duplicate among 674."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 549,
