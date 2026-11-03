@@ -21564,13 +21564,51 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "DEFECTIVE SELECT THREE SOURCE KEY D+E+F: Official CloudFront documentation establishes that HTTPS Only (E) and Redirect HTTP to HTTPS (F) are mutually exclusive values of ViewerProtocolPolicy for a single cache behavior. HTTPS Only returns 403 to HTTP viewers, violating 'HTTP users must not receive an error'. The technically required combination is D+F: OriginProtocolPolicy HTTPS Only for CloudFront -> ALB, and ViewerProtocolPolicy Redirect HTTP to HTTPS for browser -> CloudFront. B is a valid additional S3 transport-security control but is neither a viewer redirect nor required by the stated viewer-to-ALB objective. No unambiguously correct three-option solution exists as written; preserve historical source key for provenance and mark defective.",
+    "wrongOptionsExplanation": "A WRONG: Application Load Balancers support HTTP/HTTPS listeners, not TCP passthrough (NLB feature). B OPTIONAL: an S3 bucket policy denying aws:SecureTransport=false enforces TLS for direct S3 requests, not the CloudFront viewer redirect; valid defense in depth but not a required third step. C WRONG: S3 static website endpoints do not support HTTPS; an S3 redirect cannot enforce HTTPS for this ALB-origin request path. D CORRECT: custom ALB origin protocol policy HTTPS Only secures CloudFront-to-ALB communication. E WRONG: viewer HTTPS Only rejects HTTP viewers with 403, and conflicts with F on the same behavior. F CORRECT: viewer Redirect HTTP to HTTPS returns 301 for GET/HEAD and redirects supported other methods under HTTP/1.1+; HTTP/1.0 non-GET/HEAD may still receive 403.",
+    "plainWords": "Set CloudFront to redirect HTTP website visitors to HTTPS (F), and require HTTPS between CloudFront and the ALB (D). The question wrongly asks for a third selection: HTTPS Only for viewers (E) would reject HTTP users, not redirect them.",
+    "keyPoints": "ViewerProtocolPolicy is one of allow-all / https-only / redirect-to-https per cache behavior. HTTPS only returns 403 on HTTP; redirect returns 301 for GET/HEAD and 307 for certain methods on HTTP/1.1+. OriginProtocolPolicy HTTPS Only applies to custom origins such as ALB. ALB supports HTTP/HTTPS, not TCP. S3 website endpoints do not support HTTPS. For custom CloudFront domain, use ACM viewer certificate in us-east-1; ALB origin certificate may be regional and must match origin hostname. SecureTransport bucket policy applies to S3 API access, not viewer redirects.",
+    "sourceWarning": "DEFECTIVE MULTI-ANSWER QUESTION: historical key D+E+F repeated by DumpsTech Q95, ExamCollection Q58, and P2PExams Q1, but contradicts official AWS CloudFront viewer policy semantics. D+F are the only required choices. B is optional valid defense-in-depth but not required; if question is rewritten to require HTTPS for Lambda-to-S3 access, B+D+F could be intended, but that requirement is missing. Rewrite prompt as Select TWO with D+F, or explicitly add a separate S3 TLS requirement and make B+D+F intended. Original absolute 'HTTP users must not receive an error' is too broad for unsupported HTTP/1.0 write methods. Keep sourceAnswers for provenance.",
+    "review": {
+      "status": "defective-source-key-d-e-f-disputed",
+      "reviewedAt": "2026-11-03",
+      "sourceAnswers": [
+        "D",
+        "E",
+        "F"
+      ],
+      "verifiedAnswers": [
+        "D",
+        "F"
+      ],
+      "recommendedCorrection": "Change Select THREE to Select TWO (D,F). Alternative: add explicit Lambda-to-S3 HTTPS enforcement requirement to justify B+D+F; never retain E+F together for the same behavior.",
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-viewers-to-cloudfront.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesOrigin.html",
+        "https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DefaultCacheBehavior.html",
+        "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteEndpoints.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-requirements.html",
+        "https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-7.html",
+        "https://www.examcollection.us/exam/SAP-C02-question-answer-4.html",
+        "https://www.p2pexams.com/free-questions/amazon-sap-c02-cheat-sheet-exam-by-deleon.pdf"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "exactNormalizedStemDuplicates": [],
+        "identicalNormalizedOptionSets": [],
+        "relatedIds": [
+          159,
+          621,
+          47,
+          582
+        ],
+        "note": "Similar CloudFront/S3/ALB HTTPS concepts but no duplicate scenario. External sites reproduce same flawed D+E+F key."
+      },
+      "notes": "CloudFront origin is ALB; S3 accessed by Lambda, not directly as CloudFront origin. Preserve source answers for audit. No three answers are required by stated scenario."
+    },
+    "answerStatus": "defective-source-key-d-e-f-disputed"
   },
   {
     "id": 470,
