@@ -19454,13 +19454,44 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified A+C+E. A increases shard count and total read throughput if records are distributed across shards. C uses enhanced fan-out for dedicated 2 MiB/s per shard per registered consumer rather than sharing standard 2 MiB/s per shard. E retries transient ReadProvisionedThroughputExceeded / ProvisionedThroughputExceededException with exponential backoff and jitter. AWS docs recommend all three.",
+    "wrongOptionsExplanation": "A correct: split shards to increase aggregate throughput, check hot partition keys. B incorrect: KPL is producer-side; consumer polling is KCL and excessive GetRecords calls can cause throttling. C correct: enhanced fan-out gives dedicated read throughput to each registered consumer. D incorrect: reducing shard count decreases capacity. E correct: backoff/retry reduces bursts during transient throttling. F incorrect: dynamic partitioning belongs to Amazon Data Firehose, not a Kinesis Data Streams consumer throttle setting.",
+    "plainWords": "Many apps compete to read from the same Kinesis shards. Add shards for capacity, give each app its own enhanced fan-out reading lane, and back off and retry if throttled.",
+    "keyPoints": "Standard GetRecords read 2 MiB/s per shard shared across consumers; max 5 GetRecords TPS per shard; enhanced fan-out dedicated 2 MiB/s per shard per registered consumer using SubscribeToShard; resharding increases capacity but hot keys can still throttle; retry with exponential backoff and jitter; KCL for consumers vs KPL for producers; monitor ReadProvisionedThroughputExceeded and IteratorAgeMilliseconds; on-demand capacity mode modern alternative.",
+    "sourceWarning": "Original has transcription defects: 'loT', duplicated 'are periodically', 'RealProvisioned Throughput Exceeded' (should be ReadProvisionedThroughputExceeded metric or ProvisionedThroughputExceededException), 'shards s', 'KPL)' and ambiguous 'dynamic partitioning'. Shard scaling does not fix a single hot partition key automatically. On-demand mode may scale stream capacity but does not eliminate per-shard hot keys or shared consumer read contention; enhanced fan-out has additional charges.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-11-03",
+      "verifiedAnswers": [
+        "A",
+        "C",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/streams/latest/dev/kinesis-fis-provisioned-throughput.html",
+        "https://docs.aws.amazon.com/streams/latest/dev/enhanced-consumers.html",
+        "https://docs.aws.amazon.com/streams/latest/dev/troubleshooting-consumers.html",
+        "https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html",
+        "https://www.repost.aws/knowledge-center/kinesis-readprovisionedthroughputexceeded",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.dumps-files.com/downloadfile.html?id=7391"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-or-normalized-stem-duplicate",
+        "relatedIds": [
+          114,
+          288,
+          372,
+          399,
+          435,
+          446,
+          565
+        ]
+      },
+      "notes": "CertEnsure Q126 and Dumps-Files Exam Topic 2 Q119 show matching stem and ACE; official AWS docs corroborate."
+    },
+    "answerStatus": "verified-a-c-e"
   },
   {
     "id": 423,
