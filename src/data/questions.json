@@ -20057,17 +20057,52 @@
       }
     ],
     "answers": [
-      "B",
+      "C",
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED C+E: Kinesis Data Streams plus Lambda decouples sensor ingestion from overloaded EC2 Node.js API servers, buffering and processing telemetry elastically. DynamoDB replaces write-latency-constrained RDS MySQL with a horizontally scalable managed key-value/document store suitable for a telemetry access pattern. These two changes address independent ingestion and database-write bottlenecks. Requires appropriate DynamoDB partition-key design, capacity/quota planning, ingestion integration, and data-model migration; cost efficiency is workload-dependent.",
+    "wrongOptionsExplanation": "A. Increasing General Purpose SSD volume from 4 TB to 6 TB may increase size-based gp2 IOPS but is costly, finite and does not resolve overloaded API servers; gp3 IOPS can be configured independently. B. Aurora readers scale SELECT/read queries, not write throughput; the question reports high write latency and API overload. C. CORRECT: Kinesis Data Streams absorbs ingestion spikes, and Lambda processes records without maintaining EC2 ingestion workers. D. AWS X-Ray helps trace issues, and adding EC2 instances is a reactive capacity workaround that does not solve write-side database bottlenecks. E. CORRECT: DynamoDB supports horizontally scalable low-latency writes for appropriately modeled sensor telemetry and on-demand/provisioned capacity modes.",
+    "plainWords": "Sensors are overwhelming both the API servers and MySQL writes. C changes incoming sensor traffic into a scalable streaming pipeline; E moves sensor records into a scalable DynamoDB table. Aurora read replicas would only increase read capacity.",
+    "keyPoints": "Kinesis streams buffer and decouple high-rate device events; Lambda batch consumption is at-least-once, so use idempotent writes and monitor IteratorAge/retries. DynamoDB on-demand scales write throughput but partition keys, hot partitions, account/table quotas and costs matter. Aurora read replicas perform read-only workload scaling, not write scaling. Aurora and DynamoDB are alternatives, not a meaningful B+E combination.",
+    "sourceWarning": "CORRECTED SOURCE KEY B+E -> C+E. B+E combines mutually alternative database migrations and fails to remedy overloaded APIs. Matching external exam variants (ExamTopics #80, SPOTO #9/#150, Pupuweb #97, Brainscape) give C+E; official AWS architecture guidance supports streaming+serverless ingestion and DynamoDB, while Aurora docs explicitly limit replicas to read scaling. Original question has OCR/transcription defects: 'loT', missing punctuation, 'Node js', 'andadd', '{Select TWO.)'. Cost-efficiency and DynamoDB suitability are conditional on access patterns, partition design, throughput and migration effort. Source key preserved in review history.",
+    "review": {
+      "status": "verified-c-e-source-key-corrected",
+      "reviewedAt": "2026-11-03",
+      "sourceAnswers": [
+        "B",
+        "E"
+      ],
+      "verifiedAnswers": [
+        "C",
+        "E"
+      ],
+      "evidence": "AWS IoT Lens ingestion decoupling, Lambda/Kinesis streams, DynamoDB on-demand throughput and Aurora read-only replicas; 4 matching external copies.",
+      "sources": [
+        "https://docs.aws.amazon.com/wellarchitected/latest/iot-lens/workload-architecture.html",
+        "https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/streaming-processing.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html",
+        "https://www.examtopics.com/discussions/amazon/view/95308-exam-aws-certified-solutions-architect-professional-sap-c02/",
+        "https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part4",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/10/",
+        "https://www.brainscape.com/flashcards/solutions-architect-professional-deck-03-15140147/packs/21889491"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "exactStemDuplicates": [],
+        "sameOrderedOptionsDuplicates": [],
+        "similarRelatedIds": [
+          155,
+          116,
+          326
+        ],
+        "note": "Related items share generic IoT or AWS architecture/database themes; no close semantic duplicate of the same scenario found."
+      },
+      "notes": "Preserve original source answers B+E in sourceAnswers. Correct actual answers to C+E."
+    },
+    "answerStatus": "verified-source-key-corrected-c-e"
   },
   {
     "id": 436,
