@@ -14956,13 +14956,37 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B+D verified. B: evaluate and increase DynamoDB write capacity units (WCUs) for provisioned tables where write throttling occurs; on-demand tables instead need write throughput/peak/hot-partition analysis. D: insert SQS between S3 ObjectCreated notifications and Lambda to buffer spikes, control processing concurrency, retry failures and use DLQ.",
+    "wrongOptionsExplanation": "A RCUs address read throughput, not state-save write bottlenecks. B correct WCUs for write-heavy DynamoDB provisioned tables. C ElastiCache cannot fix Lambda concurrency or DynamoDB write throughput. D correct SQS buffers event bursts and supports retries. E Transfer Acceleration optimizes uploading to S3, not downstream Lambda/DynamoDB processing.",
+    "plainWords": "Too many photos arrive at once. Queue the work with SQS and ensure DynamoDB can write the resulting state fast enough.",
+    "keyPoints": "S3 ObjectCreated -> SQS -> Lambda event source mapping -> DynamoDB. Set SQS maximum concurrency, visibility timeout, DLQ, idempotent processing; monitor DynamoDB throttles, provisioned WCUs or on-demand scaling and hot partitions.",
+    "sourceWarning": "Typo 'DynamoOB'. WCUs specifically apply to provisioned mode; on-demand uses write request units, peak scaling and max throughput. SQS does not raise Lambda account concurrency limits; it buffers/retries and can control concurrency. Lambda/SQS at-least-once delivery demands idempotency.",
+    "review": {
+      "status": "verified-b-d",
+      "reviewedAt": "2026-11-02",
+      "verifiedAnswers": [
+        "B",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-scaling.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Constraints.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html",
+        "https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice.html",
+        "https://www.examdiscuss.com/Amazon/discussions/1281529-exam-sap-c02-topic-1-question-397-discussion/"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-duplicate-targeted-scan",
+        "relatedIds": [
+          27
+        ]
+      },
+      "notes": "DumpsTech same key B+D; ExamDiscuss reordered B+E maps to original B+D."
+    },
+    "answerStatus": "verified-b-d-aws-and-external"
   },
   {
     "id": 324,
