@@ -835,3 +835,24 @@ flowchart TD
 **AWS documentation:** https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zone-private-associate-vpcs-different-accounts.html ; https://repost.aws/knowledge-center/route53-private-hosted-zone ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zone-private-considerations.html ; https://docs.aws.amazon.com/Route53/latest/APIReference/API_CreateVPCAssociationAuthorization.html ; https://docs.aws.amazon.com/Route53/latest/APIReference/API_AssociateVPCWithHostedZone.html
 
 **External exam variants:** https://www.examtopics.com/discussions/amazon/view/91008-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-15-discussion/ (Q15 C+E); https://certempire.com/demo-files/aws-sap-c02-demo-file.pdf (Q10 C+E); https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q19 C+E).
+
+
+## Q428 — Domain 3 multi-answer 36/58 — CloudFront and S3 cost optimization: DEFECTIVE SOURCE KEY (2026-11-03)
+
+**Historical source key B+E, NOT independently verified.** Original question: CloudFront + App Runner + S3 static and user uploads, user uploads infrequently accessed after 30 days, European-only users. Options A expire S3 after 30 days, B transition to Glacier Deep Archive after 30 days, C App Runner Spot, D Aurora read replica auto scaling, E CloudFront Price Class 200 ('Europe and U.S. only').
+
+**AWS evidence contradicts E:** Price Class 100 is the lowest-cost tier appropriate for Europe-only users and covers US, Canada, Europe and Israel. Price Class 200 adds regions across Asia, Africa and Middle East. The text of E is objectively wrong. **B conditional:** Glacier Deep Archive has 180-day minimum duration and retrieval hours (12-48h), suitable for long-term archival rather than unspecified interactive user uploads; choose Standard-IA, Intelligent-Tiering or Glacier Instant Retrieval when immediate access required.
+
+**Every option:** A wrong because deletes retained data; B conditional archival option, not guaranteed; C wrong because App Runner does not offer Spot; D wrong because no Aurora architecture in stem; E wrong as written and suboptimal vs Price Class 100. No fully correct two-option answer is present. Preserve original `answers: ['B','E']` for source provenance and mark `answerStatus: defective-source-key-b-e-disputed`.
+
+**Architecture:** European viewers → CloudFront [Price Class 100] → S3 static asset bucket and App Runner application → S3 user upload bucket [S3 lifecycle transitions selected by actual access/retention/retrieval needs].
+
+**Modernization:** AWS App Runner stopped accepting new customers April 30, 2026; existing services remain accessible and AWS recommends ECS Express Mode for new applications.
+
+**Duplicate audit:** 674 stems scanned, no exact or punctuation-normalized duplicate. Related CloudFront/storage architecture Q15, Q78, Q159, Q233, Q280, Q312, Q592 and Q621; none is an exact duplicate.
+
+**External exam variants:** https://www.certstopics.com/questions/free-sap-c02-questions-attempt.html (Q144 B+E); https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html (Q145 B+E). Both repeat the same defective E explanation; external agreement is not independent AWS verification.
+
+**AWS documentation:** https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_cloudfront/PriceClass.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html ; https://aws.amazon.com/apprunner/
+
+**Recommended correction:** Change E to 'Use CloudFront Price Class 100' and add requirement that older uploads are long-term archives and delayed restoration is acceptable, or substitute an appropriate instantly accessible S3 tier.
