@@ -856,3 +856,35 @@ flowchart TD
 **AWS documentation:** https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_cloudfront/PriceClass.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html ; https://aws.amazon.com/apprunner/
 
 **Recommended correction:** Change E to 'Use CloudFront Price Class 100' and add requirement that older uploads are long-term archives and delayed restoration is acceptable, or substitute an appropriate instantly accessible S3 tier.
+
+
+## Q435 — Domain 3 multi-answer 37/58 — IoT streaming ingestion and write scaling (2026-11-03)
+
+**Verified answer: C+E. CORRECTED historical source key B+E.** Source answer B+E is wrong because Aurora read replicas solve reads, not excessive database writes, and B plus E proposes two competing replacements for one RDS DB. Multiple external copies explicitly confirm C+E. Original source questions.json blob: `7bff046cdd39b18d0fcf0532d47aa628f5f1974b`.
+
+**Complete original question (verbatim):**
+
+A company runs an loT platform on AWS loT sensors in various locations send data to the company's Node js API servers on Amazon EC2 instances running behind an Application Load Balancer The data is stored in an Amazon RDS MySQL DB instance that uses a 4 TB General Purpose SSD volume The number of sensors the company has deployed in the field has increased over time and is expected to grow significantly The API servers are consistently overloaded and RDS metrics show high write latency Which of the following steps together will resolve the issues permanently and enable growth as new sensors are provisioned, while keeping this platform cost-efficient? {Select TWO.)
+
+- **A.** Resize the MySQL General Purpose SSD storage to 6 TB to improve the volume's IOPS
+- **B.** Re-architect the database tier to use Amazon Aurora instead of an RDS MySQL DB instance andadd read replicas
+- **C.** Leverage Amazon Kinesis Data Streams and AWS Lambda to ingest and process the raw data
+- **D.** Use AWS X-Ray to analyze and debug application issues and add more API servers to match the load
+- **E.** Re-architect the database tier to use Amazon DynamoDB instead of an RDS MySQL DB instance
+
+**Option-by-option assessment:**
+- **A — Incorrect:** Increasing gp2 volume 4TB to 6TB may raise size-dependent baseline IOPS but increases cost and doesn't fix EC2 API overload; gp3 has configurable performance without size increase. Capacity-based scaling is finite.
+- **B — Incorrect:** Aurora replicas process read-only SELECT traffic. They do not scale the primary's write throughput. Also the proposed Aurora migration conflicts with E's DynamoDB replacement.
+- **C — Correct:** Use Kinesis Data Streams as resilient streaming ingestion buffer and Lambda event-source mapping to batch/process telemetry elastically; removes much of the hot ingestion workload from overloaded Node.js servers.
+- **D — Incorrect:** X-Ray is for tracing/diagnostics; increasing EC2 servers could reduce API saturation temporarily but leaves write-latency root cause and operational overhead.
+- **E — Correct:** DynamoDB supports low-latency horizontally partitioned writes and pay-per-request on-demand capacity, well suited to sensor events with suitable keys and access patterns, instead of a single RDS MySQL write bottleneck.
+
+**Proposed architecture:** IoT sensors → Kinesis Data Streams → Lambda (batching, retries, idempotency) → DynamoDB [key: sensorId plus time-oriented sort key or write-sharded design]. Optional AWS IoT Core rules → Kinesis for device connectivity. Observe Kinesis IteratorAge, throttling, Lambda failures, DynamoDB hot partitions/throughput and quotas.
+
+**Defects/modernization:** Source is transcription damaged ('loT', 'Node js', 'andadd', '{Select TWO.)'). It doesn't describe query patterns, relational requirements, write distribution, device protocol or target cost, so the DynamoDB redesign assumes telemetry key-value compatibility. With Kinesis/Lambda event source mapping, processing is at least once; implement deduplication/idempotency. Modern DynamoDB on-demand scales automatically but is not infinite: partitions and table quotas matter. Cost savings require comparison of actual workloads. AWS Aurora read replicas are valid for read pressure, not the write bottleneck here.
+
+**Duplicate audit across all 674 questions:** No exact normalized stem duplicate, no identical ordered five-option set. Related but distinct: Q116 (IoT platform migration), Q155 (container ALB bottleneck), Q326 (RDS MySQL architecture/availability); none duplicates Q435's two simultaneous bottlenecks and C+E resolution. External question duplication: SPOTO lists it repeatedly (#9, #150, #152) and ExamTopics lists it as #80; this doesn't indicate duplicates within the user's 674.
+
+**AWS docs:** https://docs.aws.amazon.com/wellarchitected/latest/iot-lens/workload-architecture.html ; https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/streaming-processing.html ; https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html
+
+**External variants:** https://www.examtopics.com/discussions/amazon/view/95308-exam-aws-certified-solutions-architect-professional-sap-c02/ (Q80); https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part4 (Q9 and Q150, keyed CE); https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/10/ (Q97 keyed CE); https://www.brainscape.com/flashcards/solutions-architect-professional-deck-03-15140147/packs/21889491 (CE).
