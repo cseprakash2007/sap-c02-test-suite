@@ -797,3 +797,22 @@ flowchart TD
 **AWS references:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/edge-functions-choosing.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html ; https://www.repost.aws/knowledge-center/multiple-domains-https-cloudfront
 
 **External variants and conflict:** https://passitexams.com/articles/quizzes/sap-c02-question-19/ (CEF); https://meatsby.github.io/05.-infrastructure/01.-aws/02.-certification/03.-aws-sap-c02/01.-aws-sap-c02-practice-questions (CEF); https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/ (BCF contradictory to Lambda@Edge reference); https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/3 (BCF). Retain CEF historical intended key, note BCF alternate and modern better architecture.
+
+
+## Q422 — Domain 3 multi-answer 34/58 — Kinesis consumer throttling (2026-11-03)
+
+**Verified A+C+E**. IoT sensors → Kinesis Data Streams with increased shards (A) → multiple enhanced fan-out consumers each with dedicated 2 MiB/s/shard (C) → retry throttling exceptions with exponential backoff and jitter (E).
+
+**Every option:** A correct, add shards to increase aggregate read capacity (but distribute partition keys). B wrong, KPL is producer library, KCL controls consumer polling. C correct, EFO avoids shared read limits. D wrong, fewer shards reduces capacity. E correct, exponential backoff/retry handles transient throughput errors. F wrong, dynamic partitioning is Data Firehose, not a Kinesis Data Streams read throttling option.
+
+**Architecture:** IoT city sensors → Kinesis stream [shard 1 | shard 2 | shard 3 | shard 4] → enhanced fan-out consumer A (traffic analytics), enhanced fan-out consumer B (aggregation), enhanced fan-out consumer C (alerts); each independent 2 MiB/s/shard read budget; backoff/retry on transient throttles.
+
+**Exam basics:** standard GetRecords consumers share 2 MiB/s/shard and 5 GetRecords TPS/shard; enhanced fan-out delivers dedicated 2 MiB/s/shard per registered consumer using SubscribeToShard. KPL is producer, KCL is consumer. Resharding helps aggregate throughput, not necessarily a hot partition key. CloudWatch ReadProvisionedThroughputExceeded and GetRecords.IteratorAgeMilliseconds diagnose issues. On-demand stream mode is a modern alternative for changing throughput, but EFO still addresses multiple competing consumers.
+
+**Duplicate audit:** scanned all 674 question stems; no exact or normalized duplicate. Related but different sensor/stream processing questions Q114, Q288, Q372, Q399, Q435, Q446, Q565.
+
+**Defects:** original 'loT', repeated 'are periodically', 'RealProvisioned Throughput Exceeded' (wrong metric/exception name), 'shards s', malformed 'KPL)' and imprecise 'dynamic partitioning'. Enhanced fan-out incurs extra costs.
+
+**AWS sources:** https://docs.aws.amazon.com/streams/latest/dev/kinesis-fis-provisioned-throughput.html ; https://docs.aws.amazon.com/streams/latest/dev/enhanced-consumers.html ; https://docs.aws.amazon.com/streams/latest/dev/troubleshooting-consumers.html ; https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html ; https://www.repost.aws/knowledge-center/kinesis-readprovisionedthroughputexceeded
+
+**External variants:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q126, A+C+E); https://www.dumps-files.com/downloadfile.html?id=7391 (Exam Topic 2 Q119, A+C+E).
