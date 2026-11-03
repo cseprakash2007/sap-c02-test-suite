@@ -920,3 +920,37 @@ A company runs an loT platform on AWS loT sensors in various locations send data
 **AWS sources:** https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html ; https://docs.aws.amazon.com/cost-management/latest/userguide/bcm-lite-cost-explorer.html ; https://docs.aws.amazon.com/us_en/awsaccountbilling/latest/aboutv2/custom-tags.html ; https://docs.aws.amazon.com/us_en/awsaccountbilling/latest/aboutv2/manage-cost-categories.html
 
 **External variants:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-s-factory-and-automaton-applications-are-running-in-a-single-vpc-more-than-23-applications (longer stem, ACF); https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=96 (shorter stem, ACF); https://www.testpassed.com/articles/2023-realistic-testpassed-sap-c02-dumps-pdf-100-passing-guarantee-q147-q171/ (reordered ADF equivalent to ACF); https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 (ACF). External agreement may stem from copied question banks; AWS docs are authority.
+
+
+## Q469 — Domain 3 multi-answer 39/58 — CloudFront HTTPS viewer/origin policies: DEFECTIVE SOURCE KEY (2026-11-03)
+
+**Original key D+E+F is contradictory. Technically required D+F only; no valid third option.** Original question bank SHA `fa1d83a1863d4fcc40033d9b17f5f320e08f75ec`. Retain historical sourceAnswers D,E,F in review; do not label verified.
+
+**Complete original stem:**
+
+A company stores a static website on Amazon S3. AWS Lambda functions retrieve content from an S3 bucket and serve the content as a website. An Application Load Balancer (ALB) directs incoming traffic to the Lambda functions. An Amazon CloudFront distribution routes requests to the ALB. The company has set up an AWS Certificate Manager (ACM) certificate on the HTTPS listener of the ALB. The company needs all users to communicate with the website through HTTPS. HTTP users must not receive an error. Which combination of steps will meet these requirements? (Select THREE.)
+
+- **A.** Configure the ALB with a TCP listener on port 443 for passthrough to backend systems.
+- **B.** Create an S3 bucket policy that denies access to the S3 bucket if the aws:SecureTransport request is false.
+- **C.** Configure HTTP to HTTPS redirection on the S3 bucket.
+- **D.** Set the origin protocol policy to HTTPS Only for CloudFront.
+- **E.** Set the viewer protocol policy to HTTPS Only for CloudFront.
+- **F.** Set the viewer protocol policy to Redirect HTTP to HTTPS for CloudFront.
+
+**Every option:**
+- **A WRONG:** ALB listeners support HTTP and HTTPS, not TCP passthrough. NLB provides TCP listener functionality.
+- **B OPTIONAL SECURITY HARDENING, NOT REQUIRED:** S3 bucket policy denying `aws:SecureTransport=false` prevents insecure S3 API access, but does not redirect browser traffic. Valid if an additional requirement explicitly covers Lambda-to-S3 TLS enforcement; do not select as required solely for viewer HTTPS.
+- **C WRONG:** S3 static website endpoints do not support HTTPS; bucket redirects do not implement viewer HTTP-to-HTTPS on the ALB-origin path.
+- **D CORRECT:** CloudFront custom origin (ALB) Origin Protocol Policy HTTPS Only secures CloudFront-to-ALB communication; ACM cert already configured on ALB.
+- **E WRONG:** Viewer HTTPS Only rejects HTTP viewer requests with 403, contrary to the no-error requirement, and cannot coexist with F on the same CloudFront cache behavior.
+- **F CORRECT:** Viewer Redirect HTTP to HTTPS sends 301 for HTTP GET/HEAD, and 307 for supported HTTP/1.1+ non-GET/HEAD methods. Certain older HTTP/1.0 methods can still get 403, so absolute 'all HTTP users no error' wording needs qualification.
+
+**Architecture:** Browser HTTP GET → CloudFront viewer policy Redirect HTTP to HTTPS [301] → browser HTTPS → CloudFront → HTTPS-only custom origin connection → ALB HTTPS listener with ACM certificate → Lambda target → S3 bucket via HTTPS. For a custom viewer hostname, CloudFront requires its own certificate in ACM us-east-1; the ALB origin cert can be in its regional ACM but must match origin hostname. ALB's ACM certificate alone does not provision a custom CloudFront viewer certificate.
+
+**Defects and correction:** Source asks Select THREE while only D+F are needed. E and F are mutually exclusive viewer policies; E explicitly returns an HTTP 403. Recommended edit: Select TWO and key D+F. Alternative: explicitly require S3 bucket requests to be HTTPS and use B+D+F, with separate justification. Do not silently change original options or key; mark defective. Note CloudFront cache behavior policies are scoped per behavior; contrived different behaviors do not meet all-users redirect requirement.
+
+**Duplicate audit across 674:** No exact punctuation-normalized stem duplicates or identical normalized option sets. Related but distinct Q159 (S3/CloudFront encryption), Q621 (CloudFront/ALB), Q47 (ALB origin security), Q582 (static assets). External identical variants repeat defective key: DumpsTech Q95, ExamCollection Q58, P2PExams Q1.
+
+**AWS docs:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-viewers-to-cloudfront.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesOrigin.html ; https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DefaultCacheBehavior.html ; https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteEndpoints.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-requirements.html
+
+**External variants (all D+E+F, independently refuted by AWS docs):** https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-7.html ; https://www.examcollection.us/exam/SAP-C02-question-answer-4.html ; https://www.p2pexams.com/free-questions/amazon-sap-c02-cheat-sheet-exam-by-deleon.pdf
