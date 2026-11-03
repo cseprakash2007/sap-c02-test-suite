@@ -17949,13 +17949,43 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified D+E against AWS Route 53 documentation on complex health-check trees. Latency alias records may point to weighted record groups. Evaluate Target Health=Yes on the latency alias propagates the child health assessment; missing checks on weighted non-alias leaf records cause Route 53 to treat those records as healthy. Either misconfiguration can keep routing into a failed Region.",
+    "wrongOptionsExplanation": "A wrong: weighted leaf records distribute among servers in a Region; weights do not supersede latency-region selection or health checks. B wrong as stated: one unhealthy secondary server is insufficient to prevent regional failover if another healthy server remains; if all secondary endpoints fail, behavior differs. C wrong: Route 53 explicitly supports latency alias to weighted records, documented as a complex routing configuration. D correct: Evaluate Target Health off on latency alias prevents proper cross-region branch failover. E correct: missing weighted record health checks causes false-healthy leaf selection.",
+    "plainWords": "Route 53 can only avoid a dead Region when it can see that the Region is unhealthy. Turn on Evaluate Target Health on latency aliases and attach health checks to every weighted server record.",
+    "keyPoints": "Route 53 latency alias → weighted non-alias records; Evaluate Target Health Yes; HTTP health checks for all leaf endpoints; unchecked leaves treated healthy; regional failover vs weighted intra-region selection; DNS TTL/cache delay; all-unhealthy fallback.",
+    "sourceWarning": "Original text has spacing/typos ('Regionsunder', 'issue1'). Some third-party answer sites incorrectly claim latency and weighted routing cannot be combined (C); AWS explicitly documents the combination. DNS failover is not instantaneous because health-check detection and resolver TTL/cache delay apply.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-11-02",
+      "verifiedAnswers": [
+        "D",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-complex-configs.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/health-checks-how-route-53-chooses-records.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-simple-configs.html",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=13",
+        "https://www.examtopics.com/discussions/amazon/view/132993-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-442-discussion/",
+        "https://www.jpntest.com/blog/2024%E5%B9%B405%E6%9C%88-%E7%84%A1%E6%96%99aws-solutions-architect-professional%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C%E9%9B%86%E8%A9%A6%E9%A8%93%E7%82%B9%E6%95%B0%E3%82%92%E4%BC%B8%E3%81%B0%E3%81%9D%E3%81%86-q10-q29/"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-or-normalized-stem-duplicate",
+        "relatedIds": [
+          148,
+          155,
+          387,
+          402,
+          464,
+          485,
+          499,
+          555
+        ]
+      },
+      "notes": "Exam-Tests D/E matches AWS. JPNTest variant claims C/E (option reordered), but C asserts unsupported combination and contradicts AWS docs; mark external key defective."
+    },
+    "answerStatus": "verified-d-e-external-variant-conflict"
   },
   {
     "id": 389,
