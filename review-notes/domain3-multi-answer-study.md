@@ -1298,3 +1298,22 @@ No exact normalized stem match and no identical normalized option set for Q563. 
 - ExamTopics community discussion, many commenters **A+D** (community, not authoritative): https://www.examtopics.com/discussions/amazon/view/142920-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-485-discussion/
 
 **Defects:** GitHub stem abridges original pilot-duration details; insufficient data to rule out B; source keys conflict. Do not present A+D as indisputably unique. No deprecated service recommendation detected; modern Lambda and Kinesis event-source batching remains supported. An actual production solution should measure duration, memory/CPU, concurrency limits, WCU and partition throttling before deciding, and may combine A+B+D.
+
+
+---
+
+# Q570 (46/58): Aurora RDS Proxy and Lambda reuse
+
+Verified answer **B, D**. The full original question and options are preserved in questions.json.
+
+A incorrect: Aurora cluster endpoint points to writer, not readers. B correct: create RDS Proxy READ_ONLY endpoint for connection pooling and reader distribution. C incorrect: provisioned concurrency reduces Lambda cold starts but not Aurora connection pressure. D correct: initialize connection outside handler for reuse within warm Lambda environment. E incorrect: edge-optimized API is unnecessary for nearby clients and does not fix database connections.
+
+Architecture: Nearby users -> Regional API Gateway -> Lambda (reused DB connection) -> RDS Proxy READ_ONLY endpoint -> Aurora reader replicas 1, 2, 3.
+
+Caveats: default RDS Proxy endpoint routes to writer; create additional READ_ONLY endpoint. Session pinning can limit multiplexing. Warm Lambda connections can become stale. No deprecated service.
+
+674-question duplicate audit: no identical normalized stem or option set; related Q609, Q230, Q431, Q326, Q148.
+
+AWS docs: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy-endpoints.html ; https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy-pinning.html
+
+External variants: Pupuweb B+D, FreeCram B+D, CertsMania B+D, ExamTopics B+D; ValidBraindumps reordered A+E semantically same.
