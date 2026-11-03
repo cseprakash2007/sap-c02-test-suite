@@ -780,3 +780,20 @@ flowchart TD
 **AWS documentation:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointRequestRouting.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/mrap-create-two-way-replication-rules.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-requirements.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
 
 **External exam variants:** https://www.examtopics.com/discussions/amazon/view/110403-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-186-discussion/ (same question, A+B+E); https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-3.html (question 33, A+B+E).
+
+
+## Q396 — Domain 3 multi-answer 33/58 — Marketing-domain HTTPS redirects (2026-11-03)
+
+**Historical expected answer C+E+F, with modernization warning.** Ten marketing domains managed in Route 53 need hostname-specific redirects from JSON, over HTTP and HTTPS. Use Route 53 alias records → CloudFront distribution with all alternate domain names and ACM multi-SAN certificate in us-east-1 → Lambda@Edge viewer-request code (Lambda version) reads Host header, maps domain to target, returns HTTP 301/302 with Location. CloudFront need not contact origin for a viewer-request redirect.
+
+**Every option:** A wrong: EC2 hosting adds maintenance. B alternative but not preferred: ALB redirect listener rules support redirects but introduce load balancer and rule management, no built-in arbitrary JSON map. C historical correct: Lambda function implements mapping; needs Lambda@Edge deployment in E. D possible but extra API Gateway/custom-domain overhead. E historical correct: CloudFront + Lambda@Edge executes redirect at edge. F correct: ACM certificate covers all ten domains; CloudFront ACM certificate must reside in us-east-1.
+
+**Diagram:** Ten marketing domain viewers → Route 53 aliases → CloudFront (alternate domain names; ACM SAN TLS) → viewer-request Lambda@Edge (Host → JSON lookup) → 301/302 Location: target URL.
+
+**Current recommendation:** AWS recommends CloudFront Functions for lightweight redirects and rewrites; optional CloudFront KeyValueStore supports mappings. Lambda@Edge is heavier and useful when networking, libraries or more compute is necessary. Option C and E partially duplicate deployment steps. Question is outdated as a least-operations assessment because CloudFront Functions is missing.
+
+**Duplicates:** 674 stems checked, no exact or normalized-stem duplicate. Related but distinct Q388 (Route 53 DNS failover) and Q604 (application reliability).
+
+**AWS references:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/edge-functions-choosing.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html ; https://www.repost.aws/knowledge-center/multiple-domains-https-cloudfront
+
+**External variants and conflict:** https://passitexams.com/articles/quizzes/sap-c02-question-19/ (CEF); https://meatsby.github.io/05.-infrastructure/01.-aws/02.-certification/03.-aws-sap-c02/01.-aws-sap-c02-practice-questions (CEF); https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/ (BCF contradictory to Lambda@Edge reference); https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/3 (BCF). Retain CEF historical intended key, note BCF alternate and modern better architecture.
