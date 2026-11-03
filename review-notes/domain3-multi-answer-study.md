@@ -954,3 +954,35 @@ A company stores a static website on Amazon S3. AWS Lambda functions retrieve co
 **AWS docs:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-viewers-to-cloudfront.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesOrigin.html ; https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DefaultCacheBehavior.html ; https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteEndpoints.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-requirements.html
 
 **External variants (all D+E+F, independently refuted by AWS docs):** https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-7.html ; https://www.examcollection.us/exam/SAP-C02-question-answer-4.html ; https://www.p2pexams.com/free-questions/amazon-sap-c02-cheat-sheet-exam-by-deleon.pdf
+
+
+## Q486 — Domain 3 multi-answer 40/58 — Central Lambda cross-account remediation via STS AssumeRole (2026-11-03)
+
+**Verified A+B; original source key correct.** Original question-bank blob `eb996f050ff3fecf3c19675a1743c1ebf5cfaa0d`.
+
+**Original question:** A company has several AWS accounts. A development team is building an automation framework for cloud governance and remediation processes. The automation framework uses AWS Lambda functions in a centralized account. A solutions architect must implement a least privilege permissions policy that allows the Lambda functions to run in each of the company's AWS accounts. Which combination of steps will meet these requirements? (Choose two.)
+
+- **A.** In the centralized account, create an IAM role that has the Lambda service as a trusted entity. Add an inline policy to assume the roles of the other AWS accounts.
+- **B.** In the other AWS accounts, create an IAM role that has minimal permissions. Add the centralized account's Lambda IAM role as a trusted entity.
+- **C.** In the centralized account, create an IAM role that has roles of the other accounts as trusted entities. Provide minimal permissions.
+- **D.** In the other AWS accounts, create an IAM role that has permissions to assume the role of the centralized account. Add the Lambda service as a trusted entity.
+- **E.** In the other AWS accounts, create an IAM role that has minimal permissions. Add the Lambda service as a trusted entity.
+
+**Detailed options:**
+- **A CORRECT:** In centralized account create Lambda execution IAM role whose trust policy permits `lambda.amazonaws.com`, and identity policy allows `sts:AssumeRole` only on intended target role ARNs. Inline policy works; managed identity policy is also possible.
+- **B CORRECT:** In each target account create narrowly scoped remediation role with trust policy naming the central Lambda execution role ARN; attach minimum target-account action permissions.
+- **C WRONG:** Central role trusts target roles instead of Lambda, reversing the trust direction and failing to grant Lambda correct cross-account access.
+- **D WRONG:** Target roles assume central role, reversing the actual call direction; service trust for Lambda in each target is not appropriate for centrally running functions.
+- **E WRONG:** Target account trusting Lambda service principal alone does not authorize the centralized execution role as cross-account principal.
+
+**Architecture:** Central account [Lambda function → execution role trusted by lambda.amazonaws.com, allowed sts:AssumeRole on explicit target ARNs] → AWS STS AssumeRole → temporary credentials → target account B/C roles [trust central role ARN, scoped EC2/Config/etc remediation permissions] → target resources. Lambda remains physically in central account; does not deploy/run in target accounts. Both source identity permission and target role trust policy are required; permissions boundaries, SCPs and explicit denies may further restrict.
+
+**Example central identity policy:** `{"Effect":"Allow","Action":"sts:AssumeRole","Resource":"arn:aws:iam::222222222222:role/RemediationRole"}`. **Target trust:** `{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::111111111111:role/CentralLambdaRole"},"Action":"sts:AssumeRole"}`. Example IDs only. Use STS in Lambda handler or refresh cached credentials to avoid ExpiredToken.
+
+**Duplicate audit across 674:** No exact normalized stem duplicates; no identical normalized option sets. Related but different Q456 (cross-account S3 copy), Q226 (GitHub Actions access), Q645 (AWS Organizations governance), Q299 (Organizations); none repeats this Lambda trust-role pattern. Several external variants repeat same question, which is not evidence of internal duplicates.
+
+**Defects/modernization:** Source wording 'Lambda functions to run in each account' is imprecise: central functions execute in central account and perform authorized cross-account API operations. No outdated services. AWS recommends least privilege, explicit role ARNs and scoped permissions; inline policy not mandatory in production.
+
+**AWS docs:** https://repost.aws/knowledge-center/lambda-function-assume-iam-role ; https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_update-role-trust-policy.html ; https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic-cross-account.html ; https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html
+
+**External matching variants:** SPOTO Q50 https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 ; FreePDFDumps Q165 https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=34 ; FreeCram Q116 https://www.freecram.net/question/Amazon.SAP-C02.v2023-09-11.q137/a-company-has-several-aws-accounts-a-development-team-is-building-an-automation-framework-for-cloud ; CertsMania Q42 https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf . These may share a common exam source; AWS official guidance is primary verification.
