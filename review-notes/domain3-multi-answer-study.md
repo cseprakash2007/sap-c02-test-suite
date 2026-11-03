@@ -704,3 +704,32 @@ flowchart TD
 **AWS:** https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Integrating.CloudWatch.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-mysql-troubleshooting-logging.html ; https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-java-sqlclients.html ; https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-java.html
 
 **External variants:** https://www.realexamfree.com/articles/download-sap-c02-dumps-2023-free-pdf-exam-demo-q45-q60/ ; https://www.scribd.com/document/931432252/AWS-Certified-Solutions-Architect-Professional-SAP-C02-Exam-ExamTopics-351-400
+
+
+## Q331 — Domain 3 multi-answer 29/58 — S3 CloudTrail audit, deletion alert, five-year archive
+
+**Original:** A company is storing sensitive data in an Amazon S3 bucket. The company must log all activities for objects in the S3 bucket and must keep the logs for 5 years. The company's security team also must receive an email notification every time there is an attempt to delete data in the S3 bucket. Which combination of steps will meet these requirements MOST cost-effectively? (Select THREE.)
+
+- **A.** Configure AWS CloudTrail to log S3 data events.
+- **B.** Configure S3 server access logging for the S3 bucket.
+- **C.** Configure Amazon S3 to send object deletion events to Amazon Simple Email Service (Amazon SES).
+- **D.** Configure Amazon S3 to send object deletion events to an Amazon EventBridge event bus that publishes to an Amazon Simple Notification Service (Amazon SNS) topic.
+- **E.** Configure Amazon S3 to send the logs to Amazon Timestream with data storage tiering.
+- **F.** Configure a new S3 bucket to store the logs with an S3 Lifecycle policy.
+
+**Intended exam answer A+D+F, with critical 'attempt' versus 'successful deletion' defect.**
+
+- A correct: CloudTrail S3 object data events provide identity-aware API auditing including read/write/delete and unsuccessful API requests; data event logging must be enabled explicitly and incurs charges.
+- B not selected: server access logs are an alternative but not preferred for this identity-aware API audit solution; do not duplicate unnecessarily.
+- C wrong: S3 does not natively send object deletion notifications to SES.
+- D intended correct: S3 Object Deleted -> EventBridge rule -> SNS email subscription. **But direct Object Deleted events do not capture failed/denied DeleteObject attempts.** To satisfy literal 'every attempt', use CloudTrail S3 data events and EventBridge 'AWS API Call via CloudTrail' matching DeleteObject/DeleteObjects, including errors. Event delivery is not a synchronous guarantee; design alert reliability accordingly.
+- E wrong: Timestream is not a suitable native CloudTrail audit log storage target.
+- F correct: dedicated S3 CloudTrail log bucket and S3 Lifecycle policy for cost-effective five-year storage. For immutable retention, enable Object Lock and proper permissions/retention.
+
+**Architecture:** S3 sensitive bucket → CloudTrail S3 data events → S3 log archive [lifecycle 5 years]; S3 Object Deleted → EventBridge → SNS email (successful deletes); for *attempts*, CloudTrail DeleteObject/DeleteObjects → EventBridge → SNS email (including AccessDenied).
+
+**Duplicates:** Targeted search over 674 questions found no exact Q331 duplicate; loose related security/S3 questions Q174, Q444, Q508 are not the same scenario.
+
+**Official AWS:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/cloudtrail-logging-s3-info.html ; https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-s3.html ; https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-log-s3-data-events.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/ev-events.html
+
+**External exam variants:** https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-3-question-128-discussion-p1338480.html (A+D+F); https://pupuweb.com/aws-sap-c02-exam-question-answer-steps-keep-logs-notification/ (same scenario); https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (A+D+F).
