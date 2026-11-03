@@ -23915,13 +23915,46 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED A+C. (A) API Gateway REST API AWS service integration can invoke DynamoDB actions directly with an IAM integration role and request/response mapping; HTTPS public API, serverless and scalable. (C) API Gateway HTTP API with Lambda proxy integration invokes a Lambda function that reads/writes DynamoDB; fully serverless with automatic scaling subject to quotas. AWS official docs document REST AWS integrations, HTTP API Lambda+DynamoDB tutorial, and the restricted HTTP API first-class integration subtype list that omits DynamoDB.",
+    "wrongOptionsExplanation": "A CORRECT: REST API AWS integration can directly invoke DynamoDB without Lambda; configure integration credentials and mappings. B WRONG: HTTP API supports a restricted list of first-class AWS service integration subtypes, but DynamoDB is NOT one of them; cannot use the same general REST AWS integration type. C CORRECT: HTTP API integrates with Lambda, which accesses DynamoDB through AWS SDK and least-privilege IAM. D WRONG: Global Accelerator endpoints do not integrate with Lambda@Edge; Lambda@Edge is triggered by CloudFront. E WRONG: Network Load Balancer does not support Lambda target groups; Application Load Balancer does, but is not specified.",
+    "plainWords": "Two valid serverless HTTPS API patterns: REST API → DynamoDB directly, or HTTP API → Lambda → DynamoDB. HTTP APIs do support selected AWS service integrations, but DynamoDB is not one of the listed subtypes.",
+    "keyPoints": "REST API AWS service integration supports direct DynamoDB actions with mapping templates and IAM role. HTTP API supports Lambda proxy integration and selected first-class AWS service integrations (SQS, EventBridge, Step Functions, etc.) but not direct DynamoDB subtype as documented. Lambda@Edge belongs to CloudFront, not Global Accelerator. ALB can target Lambda; NLB cannot. Public API requires auth/security, throttling, IAM and quota planning.",
+    "sourceWarning": "SOURCE KEY A+C VERIFIED. No deprecated AWS service. Important nuance: it is inaccurate to claim HTTP APIs have no direct AWS service integrations; the currently supported subtype list does not include DynamoDB. Source option B has typo 'Dynamo DB'. Public HTTPS does not imply unauthenticated API. Serverless scaling is subject to service quotas and DynamoDB throttling.",
+    "review": {
+      "status": "verified-a-c",
+      "reviewedAt": "2026-11-03",
+      "sourceAnswers": [
+        "A",
+        "C"
+      ],
+      "verifiedAnswers": [
+        "A",
+        "C"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "exactNormalizedStemDuplicates": [],
+        "identicalNormalizedOptionSets": [],
+        "relatedIds": [
+          343,
+          274,
+          474
+        ],
+        "note": "Similar serverless API or DynamoDB concepts, no matching stem or identical option set."
+      },
+      "sources": [
+        "https://docs.aws.amazon.com/en_en/apigateway/latest/developerguide/how-to-integration-settings.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services-reference.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-dynamo-db.html",
+        "https://www.examsvce.com/sap-c02/a-company-is-storing-data-in-several-question-answer.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2024-05-06.q201/a-company-is-storing-data-in-several-amazon-dynamodb-tables-a-solutions-architect-must-use-a-serverless",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2023-09-29.q103.html?p=22",
+        "https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/3",
+        "https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2"
+      ]
+    },
+    "answerStatus": "verified-a-c"
   },
   {
     "id": 520,
