@@ -19765,13 +19765,45 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "SOURCE KEY B+E IS DEFECTIVE AS WRITTEN. B can reduce storage expense ONLY if user uploads are long-lived and can tolerate asynchronous Deep Archive restores (typically 12-48 hours; 180-day minimum duration), none of which is specified. E is factually misdescribed: CloudFront Price Class 100 includes Europe, USA, Canada and Israel and is the cheaper geographic price tier for Europe-only viewers; Price Class 200 additionally covers many regions in Asia, Africa and the Middle East. Source-key B+E repeated by external exam sites but cannot be independently endorsed as best cost optimization. Preserve source answers for audit provenance; flag as disputed and recommend correcting E to Price Class 100 and clarifying archival access requirements.",
+    "wrongOptionsExplanation": "A incorrect: expire deletes data without retention requirement. B conditional, not universally correct: Deep Archive saves storage costs for very infrequently accessed, long-retained data with slow restore acceptable, not ordinary on-demand user uploads. C incorrect: AWS App Runner does not provide Spot Instances configuration. D incorrect: Aurora read replicas not mentioned; scaling not directly relevant. E incorrect as written: Price Class 200 is not 'Europe and U.S. only'; Price Class 100 is lower-cost tier suited to European audience.",
+    "plainWords": "The exam's B+E key has errors. Deep Archive makes sense only for long-term cold files; Europe-only CloudFront traffic should normally use Price Class 100, not 200.",
+    "keyPoints": "CloudFront Price Class 100: US/Canada/Europe/Israel; Price Class 200 adds other global regions; S3 Deep Archive 180-day minimum and hours-long restores; S3 Standard-IA 30-day minimum; S3 Intelligent-Tiering for unpredictable access; S3 Glacier Instant Retrieval for rare immediate-access retrieval; App Runner no Spot instances; App Runner closed to new customers April 30 2026, ECS Express Mode recommended.",
+    "sourceWarning": "DEFECTIVE QUESTION. Original source key B+E repeated by Certstopics and DumpsPedia, but E incorrectly labels Price Class 200 as Europe and US only (this is closer to Price Class 100; actual class 100 includes Canada/Israel too). Deep Archive requires archival tolerance not given. No fully correct two-option combination as written. App Runner stopped accepting new customers April 30, 2026; existing services remain operational. Preserve original options and historical answers; do not mark as verified.",
+    "review": {
+      "status": "defective-source-key-disputed",
+      "reviewedAt": "2026-11-03",
+      "sourceAnswers": [
+        "B",
+        "E"
+      ],
+      "verifiedAnswers": [],
+      "recommendedCorrection": "Change E to CloudFront Price Class 100 (US, Canada, Europe, Israel) and specify user uploads need long-term archival with slow restores, otherwise replace B with an appropriate infrequent-access tier.",
+      "sources": [
+        "https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_cloudfront/PriceClass.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html",
+        "https://aws.amazon.com/apprunner/",
+        "https://www.certstopics.com/questions/free-sap-c02-questions-attempt.html",
+        "https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-or-normalized-stem-duplicate",
+        "relatedIds": [
+          15,
+          78,
+          159,
+          233,
+          280,
+          312,
+          592,
+          621
+        ]
+      },
+      "notes": "Two external copies repeat B+E but share defective Price Class 200 explanation. Independent official AWS documentation contradicts E and places conditions on B."
+    },
+    "answerStatus": "defective-source-key-b-e-disputed"
   },
   {
     "id": 429,
