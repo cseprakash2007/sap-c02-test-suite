@@ -644,3 +644,32 @@ flowchart TD
 **AWS sources:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance-design-patterns.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html
 
 **External variants:** Exam-Tests Q201 https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=42 (A+D); CertsTopics Q69 https://www.certstopics.com/questions/free-access-amazon-web-services-sap-c02-new-release.html (A+D); ExamsReviews reordered https://www.examsreviews.com/articles/best-preparations-of-sap-c02-exam-2025-aws-certified-solutions-architect-unlimited-510-questions-q190-q208/ (A+E maps to original D+A).
+
+
+## Q323 — Domain 3 multi-answer 27/58 — S3 photo burst, Lambda concurrency and DynamoDB writes
+
+**Original question:** A media storage application uploads user photos to Amazon S3 for processing by AWS Lambda functions. Application state is stored in Amazon DynamoOB tables. Users are reporting that some uploaded photos are not being processed properly. The application developers trace the logs and find that Lambda is experiencing photo processing issues when thousands of users upload photos simultaneously. The issues are the result of Lambda concurrency limits and the performance of DynamoDB when data is saved. Which combination of actions should a solutions architect take to increase the performance and reliability of the application? (Select TWO.)
+
+- **A.** Evaluate and adjust the RCUs for the DynamoDB tables.
+- **B.** Evaluate and adjust the WCUs for the DynamoDB tables.
+- **C.** Add an Amazon ElastiCache layer to increase the performance of Lambda functions.
+- **D.** Add an Amazon Simple Queue Service (Amazon SQS) queue and reprocessing logic between Amazon S3 and the Lambda functions.
+- **E.** Use S3 Transfer Acceleration to provide lower latency to users.
+
+**Verified answer B+D (unchanged).**
+
+- A wrong: RCUs are for reads, while the failure is writing state.
+- B correct: evaluate/increase provisioned DynamoDB WCUs; on-demand tables require throughput, throttling and hot-partition analysis instead.
+- C wrong: ElastiCache does not fix concurrency throttling or state writes.
+- D correct: SQS buffers S3 upload notifications for Lambda, with retry/reprocessing and DLQ.
+- E wrong: S3 Transfer Acceleration improves client-to-S3 upload latency, not Lambda processing or DynamoDB saves.
+
+**Architecture:** S3 ObjectCreated → SQS [durable backlog, DLQ] → Lambda [event source mapping, concurrency control, idempotent processing] → DynamoDB [sufficient write capacity].
+
+**Modernization/defects:** 'DynamoOB' typo. WCUs only for provisioned tables; on-demand scaling and partition hot spots matter. SQS does not increase the Lambda account concurrency quota, but buffers and retries; at-least-once deliveries require idempotency. Configure visibility timeout, batch failure responses, event-source maximum concurrency and DLQ. Do not set event source max concurrency above function reserved concurrency.
+
+**Duplicate audit:** targeted scan of all 674 questions found no exact duplicate; Q27 has related Lambda/DynamoDB concepts but a different scenario.
+
+**AWS:** https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html ; https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-scaling.html ; https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Constraints.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html
+
+**External variants:** https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice.html (B+D); https://www.examdiscuss.com/Amazon/discussions/1281529-exam-sap-c02-topic-1-question-397-discussion/ (reordered B+E equivalent to original B+D).
