@@ -1214,3 +1214,87 @@ These sources may derive from shared exam-dump material; AWS technical documenta
 - P2P/Vargas source key has only two answers for a three-answer question.
 - CertsMania's claim that SYSTEM doesn't exist is *incorrect*; SYSTEM is a documented real type with a different purpose.
 - No service deprecation found affecting **outbound endpoint + FORWARD rule + VPC associations**. Modern environments may use Route 53 Profiles/RAM for distribution at scale, but that does not invalidate the answer.
+
+
+---
+
+# Domain 3 multi-answer — Q563 (45 of 58) — 2026-11-03
+
+## Verdict
+**Preferred A+D, but not uniquely provable.** Original GitHub key A+D retained, marked `verified-with-ambiguity`. Several external exam keys give A+B. The missing performance constraints and workload metrics make B plausible, while D is a stronger decoupling/batch-ingestion design.
+
+## Complete original GitHub question
+
+> A utility company collects usage data from smart meters every 5 minutes. Data is sent to API Gateway, processed by Lambda, and stored in DynamoDB. As usage increased, Lambda durations increased and DynamoDB PUTs failed with ProvisionedThroughputExceededException. Lambda also experiences TooManyRequestsException errors. Which combination of changes will resolve these issues? (Select TWO.)
+
+- **A.** Increase the write capacity units to the DynamoDB table.
+- **B.** Increase the memory available to the Lambda functions.
+- **C.** Increase the payload size from the smart meters.
+- **D.** Stream the data into an Amazon Kinesis data stream from API Gateway and process the data in batches.
+- **E.** Collect data in an Amazon SQS FIFO queue, which triggers a Lambda function to process each message.
+
+Original answer: **A + D**. Preferred architecture answer: **A+D**. Alternative technically defensible pair: **A+B**.
+
+## Basics and errors
+
+- **DynamoDB ProvisionedThroughputExceededException on PUT:** Write capacity or per-partition capacity exceeded; examine provisioned WCU, consumed write capacity, throttled requests, partition-key distribution, item sizes, retries and backoff. Simply increasing WCU will not always fix a hot partition.
+- **Lambda TooManyRequestsException:** Lambda throttling at function reserved concurrency, account concurrency, or scaling limits. Monitor `Throttles`, `ConcurrentExecutions`, `Duration`, and memory use. Higher memory increases CPU allocation and may shorten processing time; concurrency roughly follows requests per second times duration for synchronous invocations.
+- **Kinesis:** Durable stream buffer between ingestion and Lambda consumer; Lambda polls and processes records in configurable batches. Batching can reduce per-record Lambda invocation overhead, but does not magically eliminate DynamoDB writes or all concurrency throttling. Configure batch size/window, stream capacity, retries, idempotency and monitoring.
+
+## Every option
+
+- **A — Correct.** Increase DynamoDB provisioned write capacity if table capacity is the bottleneck. Check hot keys/partition distribution; monitor `WriteThrottleEvents`, `ConsumedWriteCapacityUnits` and capacity before deciding the new WCU.
+- **B — Plausible alternative, not preferred in the GitHub key.** Increasing Lambda memory also increases CPU, potentially cutting long function duration and therefore concurrency pressure. Multiple external answer keys select A+B. It cannot directly resolve DynamoDB throttling and does not buffer sudden ingestion bursts.
+- **C — Incorrect.** Larger smart-meter payloads can increase Lambda processing duration, Kinesis/API throughput needs, and DynamoDB write costs.
+- **D — Preferred correct.** API Gateway -> Kinesis Data Streams -> Lambda event-source mapping in batches -> DynamoDB. Decouples ingestion and compute and can reduce Lambda invocation count. Must still scale write capacity and stream consumers to handle sustained load.
+- **E — Not preferred.** FIFO queues impose message-group ordering/throughput considerations and the proposed one-message-at-a-time pattern misses batching. A well-configured standard SQS queue plus batched Lambda could be a viable alternative, but that is not what this option states.
+
+## Architecture diagram
+
+```text
+Smart meters (every 5 min)
+          |
+          v
+     API Gateway
+          |
+          v
+  Kinesis Data Streams  <-- absorbs bursts; tune stream capacity
+          |
+          v
+  Lambda event-source mapping
+  (batch size/window, retry, idempotency)
+          |
+          v
+ DynamoDB (adequate WCU + balanced partition keys)
+
+Monitor: Lambda Throttles / ConcurrentExecutions / Duration,
+         Kinesis IteratorAge, DynamoDB write throttles / consumed WCUs.
+```
+
+## Similarity audit: all 674 questions
+
+No exact normalized stem match and no identical normalized option set for Q563. Related:
+- **Q552** API Gateway + Lambda + DynamoDB PUT errors, but concentrated API-key client traffic; throttling/usage-plan remedy differs.
+- **Q566** API Gateway + Lambda + DynamoDB performance under increased demand; different bottleneck and optimization.
+- **Q338** API Gateway + Lambda + DynamoDB on-demand throughput; partition/scale issue rather than this paired error case.
+- **Q323** S3 -> Lambda -> DynamoDB with dropped/failed processing; event reliability concern.
+- **Q446 / Q565** environmental-data ingestion architecture, near-duplicate of each other, not exact duplicates of Q563.
+
+## Independent AWS references
+
+1. Lambda with Kinesis batching: https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html
+2. Lambda stream/queue batching: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html
+3. Lambda memory and CPU: https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html
+4. Lambda throttling troubleshooting: https://repost.aws/knowledge-center/lambda-troubleshoot-throttling
+5. API Gateway Lambda concurrency issues: https://repost.aws/knowledge-center/api-gateway-lambda-integration-errors
+6. DynamoDB throttling: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TroubleshootingThrottling.html
+
+## Multiple external variants — conflicting keys
+
+- FreeCram, original longer wording, **A+B**: https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-utility-company-wants-to-collect-usage-data-every-5-minutes-from-its-smart-meters-to-facilitate-time-of
+- Pupuweb, original longer wording, **A+B**: https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-5/2/
+- VCEplus mirrored version, **A+B**: https://learn.exam-files.com/amazon/sap-c02/AWS%20Certified%20Solutions%20Architect%20-%20Professional.SAP-C02.VCEplus.2024-11-07.159q.vcex
+- JPNShiken Japanese translation, **A+D**: https://www.jpnshiken.com/qa/Amazon.SAP-C02-JPN.v2025-08-08.q269/
+- ExamTopics community discussion, many commenters **A+D** (community, not authoritative): https://www.examtopics.com/discussions/amazon/view/142920-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-485-discussion/
+
+**Defects:** GitHub stem abridges original pilot-duration details; insufficient data to rule out B; source keys conflict. Do not present A+D as indisputably unique. No deprecated service recommendation detected; modern Lambda and Kinesis event-source batching remains supported. An actual production solution should measure duration, memory/CPU, concurrency limits, WCU and partition throttling before deciding, and may combine A+B+D.

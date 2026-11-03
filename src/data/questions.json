@@ -25792,13 +25792,25 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Preferred architecture answer A+D: DynamoDB ProvisionedThroughputExceededException on PutItem indicates provisioned write capacity or hot-partition limits; increase WCU when capacity constrained (and check partition-key distribution). API Gateway can send records to Kinesis Data Streams, and Lambda event-source mappings process stream records in batches, buffering bursty requests and reducing invocation count. This may mitigate Lambda TooManyRequestsException caused by high concurrency, but does not guarantee resolution if batch processing remains slow or Lambda quotas remain insufficient. Alternative A+B is defensible: more Lambda memory allocates more CPU, potentially shortening execution and reducing concurrency. The question is under-specified and published exam keys conflict. Sources: https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html ; https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html ; https://repost.aws/knowledge-center/lambda-troubleshoot-throttling",
+    "wrongOptionsExplanation": "A correct: increase DynamoDB provisioned WCUs if capacity exhausted; also examine hot partitions. B conditionally valid: Lambda memory increases CPU and can shorten duration and lower concurrency, but does not decouple bursts or directly fix DynamoDB throughput. C incorrect: larger smart-meter payloads increase processing and write pressure. D preferred correct: Kinesis stream buffers incoming meter records; batch Lambda consumer decouples API traffic and reduces invocation frequency, though DynamoDB write volume and Lambda concurrency still need sizing. E less suitable: FIFO imposes ordering/group throughput constraints and processing each message individually misses batching benefits; SQS standard with batching might also work but is not the option.",
+    "plainWords": "Two separate bottlenecks: DynamoDB is rejecting writes because of capacity or hot keys; Lambda is rejecting invocations because it is overloaded. Increase write capacity and buffer meter events in Kinesis so Lambda handles batches instead of a burst of one-by-one calls. Increasing Lambda memory may help slow functions too.",
+    "keyPoints": "A+D preferred for scalable architecture; A+B alternative supported by several external exam keys and technically plausible. ProvisionedThroughputExceededException: investigate WCU and partition key hot spots. TooManyRequestsException: check Lambda Throttles, ConcurrentExecutions, reserved/account concurrency and duration. Kinesis batches via Lambda event-source mapping, with retry, idempotency, backpressure, shard sizing and IteratorAge. Lambda memory increases CPU; use Power Tuning/CloudWatch to determine benefit.",
+    "sourceWarning": "Answer-key conflict: GitHub A+D, JPNShiken A+D, ExamTopics community A+D; FreeCram, Pupuweb and VCEplus list A+B. Both can be justified depending on intended optimization. Question truncates the longer source scenario (pilot 3-5 sec, later 1-2 min) and lacks WCU, partition-key, concurrency quota, batching and latency constraints, so A+D is not uniquely established. Kinesis batches do not by themselves reduce total DynamoDB writes or guarantee zero Lambda throttles. No exact normalized stem or option-set duplicate among 674; related Q552, Q566, Q338, Q323, Q446/Q565 (near duplicate pair).",
+    "review": {
+      "status": "verified-with-ambiguity",
+      "originalAnswer": [
+        "A",
+        "D"
+      ],
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "Retain A+D as preferred scalable design; A+B also defensible and appears as key in several exam variants. Under-specified. No exact duplicate among 674. Closely related Q552/Q566/Q338/Q323 and near-duplicate Q446/Q565."
+    },
+    "answerStatus": "verified-with-ambiguity"
   },
   {
     "id": 564,
