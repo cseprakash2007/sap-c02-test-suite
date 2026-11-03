@@ -27272,13 +27272,25 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified B+D (2026-11-03). Create one centrally owned VPC in a shared-services/network account, share its subnets with team accounts through AWS RAM (requiring AWS Organizations), and connect that one VPC to the on-premises network using a Site-to-Site VPN attached to a virtual private gateway (VGW). This avoids multiple VPCs, multiple VPN connections, and unnecessary Transit Gateway or Direct Connect costs for less than 50 Mbps. AWS VPC sharing and Site-to-Site VPN documentation support this design. https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html ; https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html",
+    "wrongOptionsExplanation": "A: Incorrect for cost optimization—per-account VPCs add network management and require extra inter-VPC connectivity or multiple VPN paths to reach on premises. B: Correct—CloudFormation in the shared-services account plus AWS RAM shared subnets gives teams separate AWS accounts but common centrally managed networking. C: Technically functional if each team must own an isolated VPC, but a Transit Gateway adds attachment/data-processing and VPN charges and is unnecessary for the stated single-VPC architecture. D: Correct—a standard AWS Site-to-Site VPN to the centrally owned VPC through a VGW handles the stated low bandwidth without purchasing a dedicated circuit. E: Not cheapest for this small traffic requirement—Direct Connect is a private, more predictable connection but incurs dedicated/hosted connectivity charges; 50-Mbps hosted connections exist, so avoid claiming a hard 1-Gbps minimum.",
+    "plainWords": "Multiple teams need separate accounts, not necessarily separate VPCs. Build one shared network, let the teams place their workloads into shared subnets, and connect that VPC to the office with an encrypted VPN.",
+    "keyPoints": "B+D. AWS Organizations + RAM share subnets, not VPC ownership or a VPN connection. VPC owner controls subnet routes, NACLs and VGW; participants own their workloads and security groups. VPN uses IPsec over internet; site-to-site standard tunnels support up to 1.25 Gbps (actual throughput varies). TGW useful for multiple isolated VPCs but adds cost. Direct Connect offers hosted 50 Mbps options but is not automatically more cost-effective. Design assumes teams can share network trust boundaries, use proper segmentation and suitable on-prem device.",
+    "sourceWarning": "Original typos: 'Cloud Formation' should be 'CloudFormation'; B is missing punctuation after 'account'. Only editorial defects; original stem/options preserved. 'Less than 50 Mbps' alone does not guarantee VPN end-to-end throughput/availability. Shared-subnet accounts must belong to AWS Organizations and RAM organization sharing must be enabled. Modern Direct Connect hosted connections can start at 50 Mbps; do not claim minimum 1 Gbps or that DX never works. Exact normalized stem and identical complete option set: none of the other 673. Closest semantic Q415 (same shared-VPC+VPN design, single-answer); Q268/Q538 compare Direct Connect and VPN with different requirements; Q360 concerns TGW traffic inspection. Third-party mirrors may reuse an underlying exam bank; agreement does not constitute independent architectural proof.",
+    "review": {
+      "status": "verified-with-caveats",
+      "originalAnswer": [
+        "B",
+        "D"
+      ],
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "AWS VPC sharing, RAM prerequisites, Site-to-Site VPN quotas, TGW price considerations independently support B+D; external CertsMania, Killexams and TestMayor mirrors agree. Q415 analogous but no exact duplicate across 674. Direct Connect hosted 50 Mbps exists; only cost preference, not technical impossibility."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 601,
