@@ -15262,13 +15262,35 @@
       "D"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A+B+D verified for the historical exam. A: Aurora MySQL slow query/error logs to CloudWatch Logs, enabling slow logging and suitable long_query_time. B: distributed Java HTTP and SQL/JDBC tracing using AWS X-Ray SDK (legacy; new deployments use OpenTelemetry). D: centralize Apache access/error logs from ephemeral Auto Scaling EC2 instances using CloudWatch Agent to CloudWatch Logs.",
+    "wrongOptionsExplanation": "A correct native Aurora CloudWatch Logs export. B correct historical X-Ray Java instrumentation, now legacy SDK. C incorrect: Aurora does not directly export these DB logs to Kinesis as specified. D correct: ship EC2 Apache logs before instance termination. E incorrect: CloudTrail is API activity auditing, not request/SQL application performance tracing. F incorrect: no Aurora performance benchmarking stream to X-Ray.",
+    "plainWords": "Keep logs from disappearing when EC2 scales in, collect slow SQL and DB errors, and trace each shopping-cart request across Java and the database.",
+    "keyPoints": "Aurora MySQL slowquery/error log export; CloudWatch unified agent for Apache logs; distributed tracing with OpenTelemetry for new deployments, AWS X-Ray SDK for historical exam; CloudTrail != application tracing.",
+    "sourceWarning": "AWS X-Ray SDK and daemon entered maintenance mode February 25 2026; AWS recommends OpenTelemetry/ADOT. Original 'CloudWatch Logs agent' is legacy terminology; unified CloudWatch Agent preferred. Aurora slow query logging must be enabled and configured. Option F invents an unsupported Aurora benchmarking stream.",
+    "review": {
+      "status": "verified-a-b-d",
+      "reviewedAt": "2026-11-02",
+      "verifiedAnswers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Integrating.CloudWatch.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-mysql-troubleshooting-logging.html",
+        "https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-java-sqlclients.html",
+        "https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-java.html",
+        "https://www.realexamfree.com/articles/download-sap-c02-dumps-2023-free-pdf-exam-demo-q45-q60/",
+        "https://www.scribd.com/document/931432252/AWS-Certified-Solutions-Architect-Professional-SAP-C02-Exam-ExamTopics-351-400"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-duplicate-targeted-phrase-scan",
+        "relatedIds": []
+      },
+      "notes": "X-Ray SDK legacy as of Feb 2026; OpenTelemetry recommended. RealExamFree variant reordered options; compare option text."
+    },
+    "answerStatus": "verified-a-b-d-with-xray-sdk-maintenance-warning"
   },
   {
     "id": 329,
