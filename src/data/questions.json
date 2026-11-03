@@ -26353,13 +26353,25 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Preferred exam key A+E verified by AWS S3 Multi-Region Access Points and PrivateLink documentation. MRAP offers a single global endpoint with proximity-based routing; AWS Direct Connect plus AWS PrivateLink interface endpoint com.amazonaws.s3-global.accesspoint provides private on-premises access. IMPORTANT DEFECT: MRAP does not replicate data; to serve the same objects in all regions, configure S3 Cross-Region Replication as well (option B is essential in a production architecture). AWS docs: https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPoints.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointsPrivateLink.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointBucketReplication.html",
+    "wrongOptionsExplanation": "A correct: managed global S3 endpoint routes requests to nearby active Regional buckets. B important production prerequisite: CRR synchronizes Regional bucket contents but alone does not implement proximity-based global routing or private ingress; the source question only permits two answers and omits explicit replication setup. C incorrect: custom Lambda routing unnecessary operational overhead. D incorrect: Site-to-Site VPN normally uses public internet transport, unlike dedicated Direct Connect; not preferred for no public internet exposure. E correct: Direct Connect plus PrivateLink interface VPC endpoint for S3 MRAP enables private hybrid access; configure endpoint service com.amazonaws.s3-global.accesspoint.",
+    "plainWords": "Use S3 Multi-Region Access Points for one global address that routes to nearby buckets; use Direct Connect and PrivateLink to access it privately from on premises. Also replicate the objects across buckets using CRR, otherwise nearby buckets might not contain the content.",
+    "keyPoints": "Exam A+E. MRAP routing != data replication. S3 CRR required to keep identical content available in Regional buckets. MRAP PrivateLink service com.amazonaws.s3-global.accesspoint. Direct Connect private VIF/VPC connectivity plus interface endpoint for on-premises. S3 gateway endpoint cannot be accessed from on premises. Global routing and replication are separate concerns.",
+    "sourceWarning": "Defective/incomplete question: A+E are the intended two options and corroborated by multiple external variants, but an MRAP does not automatically replicate objects. For consistent global static content, B (CRR) is also operationally required; otherwise a request may route to a bucket missing the object and return 404. Clarify CRR as a prerequisite/part of MRAP setup, not an alternative to A or E. S3 File Gateway's ability to target an MRAP directly should not be assumed; confirm supported gateway endpoint configuration and use a supported S3 target or replication flow. No exact stem or identical option set across 674; related Q390, Q664, Q268, Q241.",
+    "review": {
+      "status": "verified-with-source-defect",
+      "originalAnswer": [
+        "A",
+        "E"
+      ],
+      "verifiedAnswer": [
+        "A",
+        "E"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "AWS docs and multiple external variants confirm A+E as intended. Missing CRR prerequisite B for identical Regional objects; MRAP routing does not replicate. 674 duplicate scan: no exact; related Q390 Q664 Q268 Q241."
+    },
+    "answerStatus": "verified-with-source-defect"
   },
   {
     "id": 577,

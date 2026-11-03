@@ -1334,3 +1334,22 @@ AWS documentation: https://docs.aws.amazon.com/compute-optimizer/latest/ug/ec2-m
 External exam variants FreePDFDumps and DumpSolutions repeat B+D, but fail to address memory collection. https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=22 ; https://www.dumpsolutions.com/downloadfile.html?id=7636
 
 All 674 checked: no identical normalized stem or option set. Related Q31 and Q172, which also test Compute Optimizer and memory metrics. No obsolete AWS services; source answer key defective for explicit memory requirement. Original key preserved in review.originalAnswer.
+
+
+---
+
+# Q576 (48/58): S3 Multi-Region Access Points and private hybrid ingress
+
+**Preferred exam answer: A + E.** Original question and options preserved in questions.json. Verified with current AWS docs and FreeCram, Certstopics, ExamTopics, and ITDumpsKR variants.
+
+A CORRECT: S3 Multi-Region Access Points (MRAP) provides one global endpoint and proximity-based routing to Regional buckets. B REQUIRED IN PRACTICE: S3 Cross-Region Replication synchronizes content but alone does not provide MRAP global routing or private ingress. C WRONG: Lambda routing increases overhead. D WRONG: Site-to-Site VPN typically traverses public internet, unlike dedicated Direct Connect. E CORRECT: AWS Direct Connect plus AWS PrivateLink interface VPC endpoint com.amazonaws.s3-global.accesspoint provides private connectivity from on premises to MRAP.
+
+Architecture: On-premises File Gateway -> Direct Connect -> VPC PrivateLink interface endpoint -> S3 MRAP -> nearest active Regional S3 bucket. Regional buckets must also be synchronized by S3 CRR for identical global content; customers access MRAP global endpoint.
+
+**Question defect:** MRAP does not automatically replicate objects. AWS warns that GET may return 404 if routed to a Regional bucket missing the object. CRR (B) is a production prerequisite for consistent global content; the choose-two stem omits this dependency. Confirm S3 File Gateway supported S3 target/endpoint; do not assume direct MRAP mount support. No deprecated services.
+
+674-question audit: no exact normalized stem or identical normalized option set. Related Q390 (MRAP+CRR synchronization), Q664 (on-premises S3 multiple accounts), Q268 and Q241 (Direct Connect hybrid networking).
+
+AWS: https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPoints.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointsPrivateLink.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointBucketReplication.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/multi-region-access-point-buckets.html
+
+External: https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-operates-a-static-content-distribution-platform-that-serves-customers-globally-the-customers ; https://www.certstopics.com/questions/sap-c02-exam-results.html ; https://www.examtopics.com/discussions/amazon/view/143031-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-514-discussion/ ; https://www.itdumpskr.com/SAP-C02-practice-test.html
