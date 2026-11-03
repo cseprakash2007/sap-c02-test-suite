@@ -26098,13 +26098,25 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified B,D. RDS Proxy READ_ONLY endpoint pools database connections and distributes read-only connections among Aurora replicas. Lambda database connection initialized outside handler can be reused in warm execution environments. AWS sources: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy-endpoints.html ; https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html",
+    "wrongOptionsExplanation": "A: cluster endpoint uses writer, not replicas. B: correct, use RDS Proxy READ_ONLY endpoint to pool connections and distribute across replicas. C: provisioned concurrency addresses cold starts, not database connection overload. D: correct, outside-handler initialization allows warm connection reuse. E: edge-optimized endpoint is for geographically distributed clients, not near-Region clients.",
+    "plainWords": "Too many Lambda connections overload Aurora. Put RDS Proxy's read-only endpoint between Lambda and the three readers, and reuse a database connection in each warm Lambda environment.",
+    "keyPoints": "B+D. Cluster endpoint=writer; Aurora reader endpoint=reader connection distribution; RDS Proxy READ_ONLY endpoint=reader distribution plus pooling/multiplexing. Default RDS Proxy endpoint goes to writer. Warm Lambda connections can expire; reconnect when stale. Watch session pinning.",
+    "sourceWarning": "External variants Pupuweb, FreeCram, CertsMania, ExamTopics, and reordered ValidBraindumps agree B+D. No exact stem/option duplicate across 674; similar Q609, Q230, Q431, Q326, Q148. Source option B loosely says pool to reader endpoint; specifically use RDS Proxy READ_ONLY endpoint. Session pinning can limit reuse; no deprecated service.",
+    "review": {
+      "status": "verified",
+      "originalAnswer": [
+        "B",
+        "D"
+      ],
+      "verifiedAnswer": [
+        "B",
+        "D"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "AWS docs confirm RDS Proxy READ_ONLY endpoint and Lambda connection reuse. No exact duplicates in 674; related Q609/Q230/Q431/Q326/Q148."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 571,
