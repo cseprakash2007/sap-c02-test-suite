@@ -1050,3 +1050,82 @@ C: Public HTTPS client --> API Gateway HTTP API --Lambda integration--> Lambda -
 **AWS sources:** https://aws.amazon.com/firehose/faqs/ ; https://docs.aws.amazon.com/en_en/opensearch-service/latest/developerguide/integrations-fh.html ; https://docs.aws.amazon.com/opensearch-service/latest/developerguide/rename.html ; https://docs.opensearch.org/latest/mappings/
 
 **External variants:** ExamTopics SAP-C02 Q114 (same ordering A+D, discussion including B+D dissent) https://www.examtopics.com/discussions/amazon/view/95454-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-114-discussion/ ; Fast2test Q200 reordered options and defective displayed A+E key (Kinesis Streams + Neptune) https://jp.fast2test.com/articles/%E6%9B%B4%E6%96%B0%E3%81%95%E3%82%8C%E3%81%9Fpdf-2024%E5%B9%B4%E6%9C%80%E6%96%B0-%E5%AE%9F%E9%9A%9B%E3%81%AB%E3%81%82%E3%82%8Bamazon-aws-solutions-architect-professional%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C-q190-q209/ . Official AWS documentation takes precedence over third-party keys.
+
+
+## Q533 — Domain 3 multi-answer 43/58 — Cross-account S3 IAM user access (2026-11-03)
+
+**INTENDED ANSWER C+D; DO NOT MARK FULLY VERIFIED.** Original question-bank SHA `a92c8d80bf2e0b8be4d3cf960b8eefcebbc2ef3e`. GitHub dataset has lost every JSON policy body for B/C/D/E; external copies confirm intended C+D but their policies contain a bucket-ARN error affecting ListBucket.
+
+**Complete original GitHub stem:** A retail company needs to provide a series of data files to another company, which is its business partner These files are saved in an Amazon S3 bucket under Account A. which belongs to the retail company. The business partner company wants one of its 1AM users. User_DataProcessor. to access the files from its own AWS account (Account B). Which combination of steps must the companies take so that User_DataProcessor can access the S3 bucket successfully? (Select TWO.)
+
+- **A.** Turn on the cross-origin resource sharing (CORS) feature for the S3 bucket in Account
+- **B.** In Account A. set the S3 bucket policy to the following:
+- **C.** In Account A. set the S3 bucket policy to the following:
+- **D.** In Account B. set the permissions of User_DataProcessor to the following:
+- **E.** In Account Bt set the permissions of User_DataProcessor to the following:
+
+**Recovered policy fragments from external variants (NOT in original GitHub):**
+```json
+{
+  "B": {
+    "Effect": "Allow",
+    "Action": [
+      "s3:GetObject",
+      "s3:ListBucket"
+    ],
+    "Resource": "arn:aws:s3:::AccountABucketName/*"
+  },
+  "C": {
+    "Effect": "Allow",
+    "Principal": {
+      "AWS": "arn:aws:iam::AccountB:user/User_DataProcessor"
+    },
+    "Action": [
+      "s3:GetObject",
+      "s3:ListBucket"
+    ],
+    "Resource": [
+      "arn:aws:s3:::AccountABucketName/*"
+    ]
+  },
+  "D": {
+    "Effect": "Allow",
+    "Action": [
+      "s3:GetObject",
+      "s3:ListBucket"
+    ],
+    "Resource": "arn:aws:s3:::AccountABucketName/*"
+  },
+  "E": {
+    "Effect": "Allow",
+    "Principal": {
+      "AWS": "arn:aws:iam::AccountB:user/User_DataProcessor"
+    },
+    "Action": [
+      "s3:GetObject",
+      "s3:ListBucket"
+    ],
+    "Resource": [
+      "arn:aws:s3:::AccountABucketName/*"
+    ]
+  }
+}
+```
+These are policy statement fragments with placeholders; NOT fully working policies for both ListBucket and GetObject. B lacks Principal; E wrongly includes Principal in an identity-based policy. C names external user in Account A bucket policy; D grants corresponding IAM user permissions in Account B.
+
+**Option-by-option:** A WRONG, CORS is browser-origin mechanism, not IAM cross-account grant. B WRONG, missing Principal in resource-based bucket policy. C INTENDED CORRECT, bucket policy in Account A grants exact Account B user; however ListBucket resource is invalid for that action. D INTENDED CORRECT, IAM identity policy in Account B allows S3 actions; same ListBucket ARN defect. E WRONG, identity-based IAM policy cannot include Principal. Source C+D permits GetObject for known keys but NOT ListBucket because only object ARN used.
+
+**Corrected implementation:**
+```text
+Account B: IAM User_DataProcessor --identity policy Allow s3:GetObject on bucket/*; Allow s3:ListBucket on bucket ARN-->
+S3 bucket Account A: resource bucket policy Principal=arn:aws:iam::222222222222:user/User_DataProcessor; matching actions and respective bucket/object ARNs
+```
+Use two statements per policy: `s3:ListBucket` with `arn:aws:s3:::AccountABucketName` and `s3:GetObject` with `arn:aws:s3:::AccountABucketName/*`. In bucket policy, each statement includes external Principal; in Account B IAM policy, no Principal. Example IAM account number 222222222222 is illustrative only. AWS docs explicitly require the resource owner and requesting account permissions. For SSE-KMS, KMS key access is additionally required.
+
+**Defects:** Original option policies missing entirely, option A truncated, stem OCR ('1AM') and punctuation corrupted. External C+D policies incorrectly scope ListBucket to object ARN. Mark as defective rather than simply verified; preserve original answers and original text. Production guidance prefers roles over long-lived IAM users, Bucket owner enforced disables ACLs by default.
+
+**Duplicate audit (674 questions):** No identical normalized stem or same normalized option set. Related but different Q456 cross-account S3 copy, Q302 cross-account S3 data lake, Q664 S3 ingestion, Q463 cross-account data sharing.
+
+**Official AWS sources:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-walkthroughs-managing-access-example2.html ; https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_policy-examples.html ; https://repost.aws/knowledge-center/cross-account-access-s3 ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-policies.html
+
+**External variants:** Cert-Ready Q6 https://cert-ready.net/practice/aws/SAP-C02/page-2.html (policy JSON displayed), ExamGuru Q6 https://examguru.io/exams/sap-c02/review (policy image placeholders, C+D), FreeCram PDF https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf (policy images). Multiple variants likely reuse source material, and none fixes the ListBucket ARN defect.
