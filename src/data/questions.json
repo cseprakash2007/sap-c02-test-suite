@@ -18312,13 +18312,40 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Historical exam key C+E+F. C implements JSON hostname-to-target mapping in Lambda code; E deploys the function as a Lambda@Edge version on a CloudFront viewer-request trigger to return HTTP 301/302 Location responses; F supplies ACM certificate SANs for all 10 custom domains. Route 53 alias records and CloudFront alternate domain names are also required. Current AWS guidance prefers CloudFront Functions (with optional KeyValueStore) for lightweight URL redirects, making this question partly outdated.",
+    "wrongOptionsExplanation": "A incorrect: EC2 web server needs maintenance and scaling. B alternative but not least overhead: ALB listener redirect actions can work, but add load balancer configuration/cost and limited dynamic JSON lookup. C historical correct: Lambda implements mapping, must be deployed as Lambda@Edge with CloudFront. D alternative: API Gateway custom domain + Lambda can redirect, but adds API infrastructure and custom domain setup. E historical correct: CloudFront with Lambda@Edge runs redirects at edge without origin. F correct: ACM multi-SAN certificate covers HTTPS marketing domains; for CloudFront certificate must be in us-east-1.",
+    "plainWords": "Point all 10 marketing domains at CloudFront, give CloudFront an HTTPS certificate covering all 10, and use edge code to return the right destination URL for each hostname. Modern AWS guidance uses CloudFront Functions for simple redirects.",
+    "keyPoints": "Route 53 DNS aliases; CloudFront alternate domain names; ACM certificate us-east-1 SAN; viewer-request redirect 301/302 Location; Lambda@Edge function must be versioned and in us-east-1; CloudFront Functions + KeyValueStore modern alternative; ALB listener redirects vs edge code; no origin fetch needed for redirects.",
+    "sourceWarning": "Historically keyed C+E+F, but C and E overlap unless C specifically means Lambda code published as Lambda@Edge. Modern best practice for lightweight redirects is CloudFront Functions, absent from options. Third-party answer keys conflict: Pupuweb and SecExams list B+C+F despite referencing Lambda@Edge, while PassITExams/Meatsby/FreeCram list C+E+F. Certificate must be issued/imported in us-east-1 for CloudFront; Route 53 records and CloudFront alternate domain names are implied but omitted.",
+    "review": {
+      "status": "verified-historical-key-with-modernization-warning",
+      "reviewedAt": "2026-11-03",
+      "verifiedAnswers": [
+        "C",
+        "E",
+        "F"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/edge-functions-choosing.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html",
+        "https://www.repost.aws/knowledge-center/multiple-domains-https-cloudfront",
+        "https://passitexams.com/articles/quizzes/sap-c02-question-19/",
+        "https://meatsby.github.io/05.-infrastructure/01.-aws/02.-certification/03.-aws-sap-c02/01.-aws-sap-c02-practice-questions",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/",
+        "https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/3"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-or-normalized-stem-duplicate",
+        "relatedIds": [
+          388,
+          604
+        ]
+      },
+      "notes": "Modern recommendation CloudFront Functions; conflicting external BCF keys flagged, CEF retained as historical intended key."
+    },
+    "answerStatus": "verified-historical-c-e-f-outdated-cloudfront-functions"
   },
   {
     "id": 397,
