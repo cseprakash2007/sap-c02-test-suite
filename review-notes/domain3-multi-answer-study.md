@@ -748,3 +748,20 @@ flowchart TD
 **AWS docs:** https://docs.aws.amazon.com/ses/latest/dg/event-publishing-add-event-destination-firehose.html ; https://docs.aws.amazon.com/ses/latest/dg/event-publishing-retrieving-firehose-contents.html ; https://docs.aws.amazon.com/ses/latest/dg/event-publishing-send-email.html ; https://docs.aws.amazon.com/ses/latest/dg/event-publishing-retrieving-cloudwatch.html
 
 **External variants:** https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=59 (A+C); https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-8/2/ (reordered choices); https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-2 (same stem).
+
+
+## Q388 — Domain 3 multi-answer 31/58 — Route 53 latency + weighted failover (2026-11-02)
+
+**Verified answers D + E.** Latency alias records can point to weighted record groups; AWS documents this exact complex routing tree. A latency alias with Evaluate Target Health disabled cannot back out of a failed regional branch based on child health. A weighted leaf without an HTTP health check is assumed healthy, even when its EC2 web server has stopped.
+
+**Option-by-option:** A wrong: weight affects within-region server selection, not region choice. B wrong: one unhealthy secondary server is not enough if another is healthy. C wrong: combining latency aliases and weighted records is explicitly supported. D correct: Evaluate Target Health missing. E correct: weighted leaf health check missing.
+
+**Diagram:** Client DNS → Route 53 latency alias Region A [Evaluate Target Health Yes] → weighted record EC2 A1 [HTTP check], EC2 A2 [HTTP check]; alternate latency alias Region B [Evaluate Target Health Yes] → weighted record EC2 B1 [HTTP check], EC2 B2 [HTTP check]. If both Region A checks fail, select Region B. Without parent health propagation or leaf checks, failover can fail.
+
+**Duplicate audit:** Scanned all 674 stems (including punctuation-normalized text), no exact duplicate. Related Route 53 health/failover questions Q148, Q155, Q387, Q402, Q464, Q485, Q499, Q555; not equivalent stems.
+
+**Defects/outdated:** Original question contains typographical errors. Some external exam sites (JPNTest) assert the unsupported claim that latency and weighted records cannot be combined; AWS's own complex configuration documentation directly contradicts that external key. DNS cache/TTL and health-check intervals also prevent instantaneous failover.
+
+**AWS references:** https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-complex-configs.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/health-checks-how-route-53-chooses-records.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-simple-configs.html
+
+**External variants:** https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=13 (D/E); https://www.examtopics.com/discussions/amazon/view/132993-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-442-discussion/ (same stem); https://www.jpntest.com/blog/2024%E5%B9%B405%E6%9C%88-%E7%84%A1%E6%96%99aws-solutions-architect-professional%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C%E9%9B%86%E8%A9%A6%E9%A8%93%E7%82%B9%E6%95%B0%E3%82%92%E4%BC%B8%E3%81%B0%E3%81%9D%E3%81%86-q10-q29/ (conflicting defective key).
