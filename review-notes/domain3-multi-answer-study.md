@@ -733,3 +733,18 @@ flowchart TD
 **Official AWS:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/cloudtrail-logging-s3-info.html ; https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-s3.html ; https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-log-s3-data-events.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/ev-events.html
 
 **External exam variants:** https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-3-question-128-discussion-p1338480.html (A+D+F); https://pupuweb.com/aws-sap-c02-exam-question-answer-steps-keep-logs-notification/ (same scenario); https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (A+D+F).
+
+
+## Q353 — Domain 3 multi-answer 30/58 — SES email delivery event search (2026-11-02)
+
+**Correct: A + C.** SES configuration set → Data Firehose event destination → S3 JSON event records → Athena SQL. Choose send, delivery, bounce, complaint, reject and delay events as needed. The sending application must specify the configuration set. SES `mail.destination`, `mail.timestamp`, and `mail.headers` (Subject when included) enable requested searches. Headers can be truncated or absent; add application-side correlation or custom tags when required.
+
+**Options:** A correct: Firehose delivers detailed SES event JSON to S3. B wrong: CloudTrail tracks API activity, not complete email delivery outcomes. C correct: Athena queries S3 records. D wrong: SES CloudWatch event destination provides metrics rather than direct delivery into an arbitrary CloudWatch Logs log group. E wrong: Athena does not directly query CloudWatch Logs; Logs Insights is for CloudWatch Logs.
+
+**Diagram:** Application → SES [configuration set] → Data Firehose → S3 JSON → Athena → Support search (recipient / subject / timestamp).
+
+**Duplicates:** All 674 stems compared; no exact duplicate of Q353. Related observability/S3 and event-processing themes include Q42, Q174, Q331, Q444; not equivalent questions. External variants reorder option letters and use older Kinesis Data Firehose name.
+
+**AWS docs:** https://docs.aws.amazon.com/ses/latest/dg/event-publishing-add-event-destination-firehose.html ; https://docs.aws.amazon.com/ses/latest/dg/event-publishing-retrieving-firehose-contents.html ; https://docs.aws.amazon.com/ses/latest/dg/event-publishing-send-email.html ; https://docs.aws.amazon.com/ses/latest/dg/event-publishing-retrieving-cloudwatch.html
+
+**External variants:** https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=59 (A+C); https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-8/2/ (reordered choices); https://www.examtopics.cn/exam-aws-certified-solutions-architect-professional-2 (same stem).
