@@ -888,3 +888,35 @@ A company runs an loT platform on AWS loT sensors in various locations send data
 **AWS docs:** https://docs.aws.amazon.com/wellarchitected/latest/iot-lens/workload-architecture.html ; https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/streaming-processing.html ; https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html
 
 **External variants:** https://www.examtopics.com/discussions/amazon/view/95308-exam-aws-certified-solutions-architect-professional-sap-c02/ (Q80); https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part4 (Q9 and Q150, keyed CE); https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/10/ (Q97 keyed CE); https://www.brainscape.com/flashcards/solutions-architect-professional-deck-03-15140147/packs/21889491 (CE).
+
+
+## Q442 — Domain 3 multi-answer 38/58 — AWS cost attribution, reporting, forecasting (2026-11-03)
+
+**VERIFIED A+C+F; no answer correction. DUPLICATE ALERT: truncated variant of Q51 (Domain 1).** Original question-bank blob: `d31794ec66141437ec6ab80498936132fef3b31d`.
+
+**Original question:** The company needs to determine which costs on the monthly AWS bill are attributable to each application or team. The company also must be able to create reports to compare costs from the last 12 months and to help forecast costs for the next 12 months. A solutions architect must recommend an AWS Billing and Cost Management solution that provides these cost reports. Which combination of actions will meet these requirements? (Select THREE.)
+
+- **A.** Activate the user-defined cost allocation tags that represent the application and the team.
+- **B.** Activate the AWS generated cost allocation tags that represent the application and the team.
+- **C.** Create a cost category for each application in Billing and Cost Management.
+- **D.** Activate IAM access to Billing and Cost Management.
+- **E.** Create a cost budget.
+- **F.** Enable Cost Explorer.
+
+**Option analysis:**
+- **A CORRECT:** Activate user-defined tags representing application/team in AWS Billing; resources must already be tagged for attribution. Activating now does not automatically backfill all historical tagging.
+- **B INCORRECT:** AWS-generated cost allocation tags (e.g. createdBy) do not represent arbitrary application/team labels supplied by the organization.
+- **C CORRECT (imprecise wording):** AWS Cost Categories provide rules to map accounts/tags/services into meaningful business groups. Prefer one `Application` category with values for each app, not a separate cost category for every app.
+- **D INCORRECT for the reporting requirement:** IAM billing access is a permissions prerequisite when applicable to delegated users, not the reporting solution. Q51's longer source scenario mentions IAM users, so D is a tempting distractor.
+- **E INCORRECT:** AWS Budgets sets cost/usage targets and alerts; it does not replace Cost Explorer for historical comparison and forecasting reports.
+- **F CORRECT:** Cost Explorer displays and compares historical cost and forecasts future costs; the requested 12+12-month horizon is supported. AWS docs differ by experience (12 vs 18 months forecast), both sufficient.
+
+**Architecture:** EC2/ECS/RDS and other billable AWS resources → user-defined tags `Application`/`Team` applied and activated → billing cost allocation dataset → Cost Categories (`Application` category with per-application values) → Cost Explorer (12-month history, 12-month forecast, group/filter reports).
+
+**Duplicate audit of 674:** Q51 (Domain 1) contains a longer factory/automation, 23+ applications, 3 teams, already-tagged resources scenario plus Q442's entire reporting requirement and all six options (identical after punctuation normalization). Q442's stem is truncated; Q51 is the fuller variant. No exact normalized stem duplicate; one identical normalized option-set duplicate (Q51). Other related but nonduplicate: Q666 (team/account spending), Q203 (application cost optimization), Q382 (consolidated billing).
+
+**Defects/modernization:** Q442 omits the crucial precondition that tags already exist and have been applied; recommend restoring opening scenario from Q51 after comparing source variants, without silently changing original stem. C uses suboptimal terminology ('category for each application'). Cost Explorer is not a guarantee that new tags retrospectively allocate 12 months of costs; verify tagging history and backfill features if needed. No obsolete AWS service in the intended answer.
+
+**AWS sources:** https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html ; https://docs.aws.amazon.com/cost-management/latest/userguide/bcm-lite-cost-explorer.html ; https://docs.aws.amazon.com/us_en/awsaccountbilling/latest/aboutv2/custom-tags.html ; https://docs.aws.amazon.com/us_en/awsaccountbilling/latest/aboutv2/manage-cost-categories.html
+
+**External variants:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-s-factory-and-automaton-applications-are-running-in-a-single-vpc-more-than-23-applications (longer stem, ACF); https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=96 (shorter stem, ACF); https://www.testpassed.com/articles/2023-realistic-testpassed-sap-c02-dumps-pdf-100-passing-guarantee-q147-q171/ (reordered ADF equivalent to ACF); https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 (ACF). External agreement may stem from copied question banks; AWS docs are authority.
