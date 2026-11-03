@@ -22385,13 +22385,46 @@
       "B"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "VERIFIED A+B. Central account: create a Lambda execution role trusting lambda.amazonaws.com, and grant sts:AssumeRole for the specific cross-account remediation role ARNs (A). Each target account: create a role with only the permissions required for remediation and a trust policy allowing the exact centralized Lambda execution role to assume it (B). Lambda calls STS AssumeRole, receives temporary credentials and makes target-account API calls. Official AWS re:Post guidance explicitly documents both steps; multiple SAP-C02 external variants independently list A+B.",
+    "wrongOptionsExplanation": "A CORRECT: the central Lambda execution role needs service trust and sts:AssumeRole permission to exact target role ARNs. B CORRECT: each target role grants minimal remediation actions and trusts the central Lambda role. C WRONG: reverses the trust direction; central role would trust target roles rather than Lambda service. D WRONG: target roles would assume central role, reversing access direction, and needlessly trust Lambda service. E WRONG: trusting lambda.amazonaws.com in target roles does not authorize the central execution-role principal; target role must trust the central role ARN.",
+    "plainWords": "The Lambda stays in the central account. Give its execution role permission to assume a narrowly scoped role in each target account, and make those target roles trust that execution role. STS provides temporary credentials for each remediation.",
+    "keyPoints": "Cross-account AssumeRole requires two-sided permission: identity policy in calling account allows sts:AssumeRole on target ARN; target role trust policy allows central role principal. Target role permission policy limits actions on target resources. Lambda execution role trusts lambda.amazonaws.com. Role assumption does not deploy Lambda into target accounts. Restrict role ARNs, avoid wildcards, monitor CloudTrail, consider SCPs and permission boundaries. Refresh assumed-role credentials rather than caching indefinitely.",
+    "sourceWarning": "SOURCE ANSWER A+B VERIFIED; no correction required. Minor wording ambiguity: 'allows Lambda functions to run in each AWS account' should say 'allows centrally running Lambda functions to perform authorized remediation in each account by assuming roles'. A's inline policy is valid though a customer-managed identity policy would also work. No deprecated AWS mechanism. External copies may derive from common question bank; official AWS documentation is decisive.",
+    "review": {
+      "status": "verified-a-b",
+      "reviewedAt": "2026-11-03",
+      "sourceAnswers": [
+        "A",
+        "B"
+      ],
+      "verifiedAnswers": [
+        "A",
+        "B"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "exactNormalizedStemDuplicates": [],
+        "identicalNormalizedOptionSets": [],
+        "relatedIds": [
+          456,
+          226,
+          645,
+          299
+        ],
+        "note": "Related questions address other cross-account security and governance patterns; no exact or same-option duplicate."
+      },
+      "sources": [
+        "https://repost.aws/knowledge-center/lambda-function-assume-iam-role",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_update-role-trust-policy.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic-cross-account.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html",
+        "https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=34",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-09-11.q137/a-company-has-several-aws-accounts-a-development-team-is-building-an-automation-framework-for-cloud",
+        "https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf"
+      ]
+    },
+    "answerStatus": "verified-a-b"
   },
   {
     "id": 487,
