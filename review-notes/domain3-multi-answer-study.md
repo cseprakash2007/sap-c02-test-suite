@@ -816,3 +816,22 @@ flowchart TD
 **AWS sources:** https://docs.aws.amazon.com/streams/latest/dev/kinesis-fis-provisioned-throughput.html ; https://docs.aws.amazon.com/streams/latest/dev/enhanced-consumers.html ; https://docs.aws.amazon.com/streams/latest/dev/troubleshooting-consumers.html ; https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html ; https://www.repost.aws/knowledge-center/kinesis-readprovisionedthroughputexceeded
 
 **External variants:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q126, A+C+E); https://www.dumps-files.com/downloadfile.html?id=7391 (Exam Topic 2 Q119, A+C+E).
+
+
+## Q425 — Domain 3 multi-answer 35/58 — Cross-account Route 53 private hosted zone association (2026-11-03)
+
+**Verified C+E.** Account A owns Route 53 private hosted zone `example.com` with `db.example.com` CNAME → RDS endpoint. Account B owns application EC2 instance in a new VPC. The EC2 instance cannot resolve the CNAME because its VPC is not associated with the private hosted zone.
+
+**Architecture:** Account A [Route 53 private hosted zone `example.com`; `db.example.com` CNAME → RDS endpoint] — Step 1: `CreateVPCAssociationAuthorization` (Account A) → Step 2: `AssociateVPCWithHostedZone` (Account B VPC) → Step 3: `DeleteVPCAssociationAuthorization` (Account A, optional recommended cleanup) → Account B VPC [Route 53 Resolver → `db.example.com` resolution → RDS endpoint]. The final delete removes permission, NOT the association.
+
+**Option-by-option:** A wrong: no need to replace managed RDS with EC2 database. B wrong: `/etc/resolv.conf` specifies DNS servers, not fixed hostname mappings; RDS IP can change. C correct: zone-owning Account A authorizes the VPC. D wrong: Route 53 has no native private hosted zone replication across accounts. E correct: Account B associates its VPC with Account A's zone; Account A may delete association authorization afterward.
+
+**Key concepts:** Private hosted zones answer queries only from associated VPCs (or configured hybrid inbound resolver endpoints). Cross-account association uses Route 53 CLI/API rather than console. VPC `enableDnsSupport` and `enableDnsHostnames` must be true. DNS resolution and VPC-to-RDS network connectivity are separate concerns. Do not confuse deletion of authorization with disassociation of VPC.
+
+**Duplicate audit:** All 674 stems scanned, no exact or punctuation-normalized duplicate. Related but distinct DNS questions Q70, Q91, Q430, Q535, Q546 and Q672; especially Q430/Q672 address hybrid DNS rather than cross-account VPC association.
+
+**Defects:** Original has transcription errors 'win', 'two-net', 'tor', '/eto/resolv.conf', 'domain m', etc. Option E includes recommended optional authorization cleanup with required association. No outdated AWS solution; modern Route 53 Profiles can also manage DNS associations at scale but do not invalidate C+E.
+
+**AWS documentation:** https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zone-private-associate-vpcs-different-accounts.html ; https://repost.aws/knowledge-center/route53-private-hosted-zone ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zone-private-considerations.html ; https://docs.aws.amazon.com/Route53/latest/APIReference/API_CreateVPCAssociationAuthorization.html ; https://docs.aws.amazon.com/Route53/latest/APIReference/API_AssociateVPCWithHostedZone.html
+
+**External exam variants:** https://www.examtopics.com/discussions/amazon/view/91008-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-15-discussion/ (Q15 C+E); https://certempire.com/demo-files/aws-sap-c02-demo-file.pdf (Q10 C+E); https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q19 C+E).
