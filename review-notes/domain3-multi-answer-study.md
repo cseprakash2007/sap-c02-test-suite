@@ -1020,3 +1020,33 @@ C: Public HTTPS client --> API Gateway HTTP API --Lambda integration--> Lambda -
 **Official AWS:** https://docs.aws.amazon.com/en_en/apigateway/latest/developerguide/how-to-integration-settings.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services-reference.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-dynamo-db.html
 
 **External variants (all A+C):** https://www.examsvce.com/sap-c02/a-company-is-storing-data-in-several-question-answer.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2024-05-06.q201/a-company-is-storing-data-in-several-amazon-dynamodb-tables-a-solutions-architect-must-use-a-serverless ; https://www.freepdfdumps.com/Amazon.SAP-C02.v2023-09-29.q103.html?p=22 ; https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/3 ; https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2 . Third-party variants may share source material; AWS docs are authoritative.
+
+
+## Q530 — Domain 3 multi-answer 42/58 — Hybrid streaming monitoring with Firehose and OpenSearch (2026-11-03)
+
+**Verified A+D; source answer unchanged.** Source question blob `c4070649e54cf6a8d3a486da5635a3f8cde51106`.
+
+**Complete original stem:** A company has an on-premises monitoring solution using a PostgreSQL database for persistence of events. The database is unable to scale due to heavy ingestion and it frequently runs out of storage. The company wants to create a hybrid solution and has already set up a VPN connection between its network and AWS. The solution should include the following attributes: • Managed AWS services to minimize operational complexity • A buffer that automatically scales to match the throughput of data and requires no on- going administration. • A visualization toot to create dashboards to observe events in near-real time. • Support for semi -structured JSON data and dynamic schemas. Which combination of components will enabled© company to create a monitoring solution that will satisfy these requirements'' (Select TWO.)
+
+- **A.** Use Amazon Kinesis Data Firehose to buffer events Create an AWS Lambda function 10 process and transform events
+- **B.** Create an Amazon Kinesis data stream to buffer events Create an AWS Lambda function to process and transform evens
+- **C.** Configure an Amazon Aurora PostgreSQL DB cluster to receive events Use Amazon Quick Sight to read from the database and create near-real-time visualizations and dashboards
+- **D.** Configure Amazon Elasticsearch Service (Amazon ES) to receive events Use the Kibana endpoint deployed with Amazon ES to create near-real-time visualizations and dashboards.
+- **E.** Configure an Amazon Neptune 0 DB instance to receive events Use Amazon QuickSight to read from the database and create near-real-time visualizations and dashboards
+
+**Detailed options:**
+- **A CORRECT:** Amazon Data Firehose (formerly Kinesis Data Firehose) automatically scales throughput, buffers events, and can invoke AWS Lambda to transform records before delivering to OpenSearch. No shard provisioning; Lambda optional.
+- **B LESS SUITABLE:** Kinesis Data Streams + Lambda works as a streaming processing architecture, and on-demand capacity reduces shard management, but requires consumer/delivery setup and more administration than Firehose; 'requires no ongoing administration' favors A.
+- **C WRONG:** Aurora PostgreSQL can store JSON/JSONB (do not claim it cannot), but is a less appropriate high-volume event search/observability solution. QuickSight is BI rather than the native OpenSearch near-real-time dashboard tool.
+- **D CORRECT (OLD NAMES):** Amazon Elasticsearch Service is now Amazon OpenSearch Service, and Kibana is now OpenSearch Dashboards. OpenSearch supports JSON documents, dynamic mapping and near-real-time search and dashboards.
+- **E WRONG:** Neptune is optimized for graph relationships/queries, not general monitoring event logs and native dashboarding.
+
+**Architecture:** On-prem event producer --VPN/connectivity and AWS ingestion API--> Amazon Data Firehose (automatic buffer, delivery scaling) --optional Lambda transformation--> Amazon OpenSearch Service (JSON indexing, dynamic mappings) --> OpenSearch Dashboards. Configure S3 backup for failures, IAM access, VPC endpoints/routing as appropriate; VPN existence alone does not automatically route public Firehose API traffic privately.
+
+**Duplicate audit across 674:** No exact normalized stem duplicate or identical normalized option set. Related but distinct Q372 (streaming environmental data), Q482 (Grafana dashboard), Q363 and Q492 (hybrid AWS architecture).
+
+**Defects and modernization:** OCR issues ('visualization toot', 'enabled©', 'function 10', 'evens', 'Neptune 0'). Kinesis Data Firehose renamed Amazon Data Firehose; Amazon Elasticsearch Service renamed OpenSearch Service; Kibana renamed OpenSearch Dashboards. OpenSearch dynamic mapping needs explicit templates/limits to prevent mapping explosion. Firehose delivery is buffered near-real-time, not necessarily sub-second. Kinesis Streams on-demand mode makes B plausible, but A better meets fully managed/no admin wording.
+
+**AWS sources:** https://aws.amazon.com/firehose/faqs/ ; https://docs.aws.amazon.com/en_en/opensearch-service/latest/developerguide/integrations-fh.html ; https://docs.aws.amazon.com/opensearch-service/latest/developerguide/rename.html ; https://docs.opensearch.org/latest/mappings/
+
+**External variants:** ExamTopics SAP-C02 Q114 (same ordering A+D, discussion including B+D dissent) https://www.examtopics.com/discussions/amazon/view/95454-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-114-discussion/ ; Fast2test Q200 reordered options and defective displayed A+E key (Kinesis Streams + Neptune) https://jp.fast2test.com/articles/%E6%9B%B4%E6%96%B0%E3%81%95%E3%82%8C%E3%81%9Fpdf-2024%E5%B9%B4%E6%9C%80%E6%96%B0-%E5%AE%9F%E9%9A%9B%E3%81%AB%E3%81%82%E3%82%8Bamazon-aws-solutions-architect-professional%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C-q190-q209/ . Official AWS documentation takes precedence over third-party keys.
