@@ -19612,13 +19612,43 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified C+E. Account A owns Route 53 private hosted zone example.com with db.example.com CNAME pointing to RDS endpoint; Account B's new VPC cannot resolve it until cross-account VPC association. First create VPC association authorization in Account A (C), then associate Account B VPC to Account A zone in Account B (E), optionally delete the authorization in Account A after success; deleting authorization does not disassociate the VPC. Enable VPC DNS support and hostnames.",
+    "wrongOptionsExplanation": "A incorrect: replacing managed RDS with EC2 database is unnecessary and worsens operations. B incorrect: /etc/resolv.conf (misspelled /eto/resolv.conf in source) configures DNS resolvers, not mapping a hostname to IP; RDS IP may change. C correct: hosted zone owner must authorize cross-account association. D incorrect: no built-in Route 53 private hosted zone replication between accounts; duplicate zones are unnecessary. E correct: VPC owner performs AssociateVPCWithHostedZone then hosted zone owner may delete authorization as cleanup; this does not remove association.",
+    "plainWords": "The DNS record exists but the new VPC cannot see the private zone. Account A grants permission, Account B associates its VPC, and Account A removes the temporary permission.",
+    "keyPoints": "Private hosted zone DNS visibility depends on VPC association; cross-account steps authorize in hosted-zone owner → associate in VPC owner → delete authorization (recommended cleanup); VPC enableDnsSupport and enableDnsHostnames true; Route 53 Resolver; RDS CNAME keeps endpoint stable even if IP changes; deleting authorization != disassociating VPC; private DNS resolution does not itself establish network connectivity.",
+    "sourceWarning": "Original has multiple OCR/transcription defects: 'win deploy', 'two-net' (two-tier), 'tor', 'loT' not relevant, '/eto/resolv.conf' vs /etc/resolv.conf, 'domain m', 'In' and missing punctuation. Option E combines required association with optional recommended authorization deletion. Cross-account association via Route 53 API/CLI, not the Route 53 console. Check VPC DNS support/hostnames and actual network connectivity separately.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-11-03",
+      "verifiedAnswers": [
+        "C",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zone-private-associate-vpcs-different-accounts.html",
+        "https://repost.aws/knowledge-center/route53-private-hosted-zone",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zone-private-considerations.html",
+        "https://docs.aws.amazon.com/Route53/latest/APIReference/API_CreateVPCAssociationAuthorization.html",
+        "https://docs.aws.amazon.com/Route53/latest/APIReference/API_AssociateVPCWithHostedZone.html",
+        "https://www.examtopics.com/discussions/amazon/view/91008-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-15-discussion/",
+        "https://certempire.com/demo-files/aws-sap-c02-demo-file.pdf",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-or-punctuation-normalized-stem-duplicate",
+        "relatedIds": [
+          70,
+          91,
+          430,
+          535,
+          546,
+          672
+        ]
+      },
+      "notes": "External ExamTopics question 15, CertEmpire demo question 10 and CertEnsure question 19 all show C+E. AWS docs explicitly require cross-account authorization then association; cleanup optional."
+    },
+    "answerStatus": "verified-c-e"
   },
   {
     "id": 426,
