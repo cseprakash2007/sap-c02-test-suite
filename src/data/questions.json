@@ -18057,13 +18057,39 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified A+B+E against AWS S3 documentation. A Multi-Region Access Point supplies one global endpoint and routes requests to a nearby regional bucket, but does not replicate objects. B configures bidirectional S3 Cross-Region Replication to asynchronously synchronize new/changed objects. E enables versioning on both buckets, a mandatory S3 replication prerequisite.",
+    "wrongOptionsExplanation": "A correct: global endpoint and latency/proximity routing. B correct: native two-way replication between buckets. C incorrect: application dual writes require custom retry and reconciliation logic. D incorrect: S3 Lifecycle rules transition or expire objects, not cross-bucket copy. E correct: source and destination versioning required. F incorrect: S3 notifications and Lambda can custom-copy but increase operational overhead and need idempotency/error handling.",
+    "plainWords": "Use one global S3 endpoint for the application, enable versioning on both buckets, and configure replication in both directions so S3 copies new changes automatically.",
+    "keyPoints": "MRAP routing != replication; MRAP may route GET to bucket missing object (404); two-way CRR; both buckets versioned; asynchronous eventual cross-Region convergence; S3 Batch Replication for pre-existing objects; S3 RTC optional 15-minute SLA; replica modification sync and delete marker replication optional; concurrent writes need conflict policy.",
+    "sourceWarning": "Stem punctuation and option F 'AVVS' typo. 'Remain synchronized' is asynchronous, not instant cross-Region strong consistency. MRAP alone does not synchronize data; newly written objects may be temporarily unavailable in other Region. Live CRR excludes preexisting objects; use Batch Replication if needed. Deletion and metadata replication need specific configuration; concurrent same-key writes need conflict strategy.",
+    "review": {
+      "status": "verified",
+      "reviewedAt": "2026-11-03",
+      "verifiedAnswers": [
+        "A",
+        "B",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointRequestRouting.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mrap-create-two-way-replication-rules.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-requirements.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html",
+        "https://www.examtopics.com/discussions/amazon/view/110403-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-186-discussion/",
+        "https://www.exact2pass.com/sap-c02-aws-certified-solutions-architect-professional-question-3.html"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-or-normalized-stem-duplicate",
+        "relatedIds": [
+          15,
+          156,
+          495
+        ]
+      },
+      "notes": "ExamTopics topic 1 question 186 and Exact2Pass question 33 show same scenario and A+B+E. Related questions involve S3 cross-Region scenarios but different design constraints."
+    },
+    "answerStatus": "verified-a-b-e"
   },
   {
     "id": 391,
