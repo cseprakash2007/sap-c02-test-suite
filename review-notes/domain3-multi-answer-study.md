@@ -1317,3 +1317,20 @@ Caveats: default RDS Proxy endpoint routes to writer; create additional READ_ONL
 AWS docs: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy-endpoints.html ; https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy-pinning.html
 
 External variants: Pupuweb B+D, FreeCram B+D, CertsMania B+D, ExamTopics B+D; ValidBraindumps reordered A+E semantically same.
+
+
+---
+
+# Q575 (47/58): EC2 right-sizing CPU, memory, network
+
+Original GitHub answer B+D; AWS-supported corrected answer **C+D**. Source-key conflict flagged. Full original stem/options remain unchanged in questions.json.
+
+A incorrect: Support plan not necessary. B insufficient: Trusted Advisor low utilization check lacks full memory-aware sizing. C correct: CloudWatch Agent publishes memory metrics. D correct: Compute Optimizer uses CPU/network metrics and agent memory data to recommend EC2 sizes. E incorrect: Savings Plans discount prices but do not size instances.
+
+Architecture: EC2 -> standard CloudWatch CPU/network metrics + CloudWatch Agent memory metrics -> AWS Compute Optimizer -> right-sizing recommendations.
+
+AWS documentation: https://docs.aws.amazon.com/compute-optimizer/latest/ug/ec2-metrics-analyzed.html ; https://docs.aws.amazon.com/compute-optimizer/latest/ug/rightsizing-preferences.html ; https://aws.amazon.com/blogs/compute/optimize-ec2-costs-with-aws-compute-optimizer-right-sizing/
+
+External exam variants FreePDFDumps and DumpSolutions repeat B+D, but fail to address memory collection. https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=22 ; https://www.dumpsolutions.com/downloadfile.html?id=7636
+
+All 674 checked: no identical normalized stem or option set. Related Q31 and Q172, which also test Compute Optimizer and memory metrics. No obsolete AWS services; source answer key defective for explicit memory requirement. Original key preserved in review.originalAnswer.

@@ -26298,17 +26298,29 @@
       }
     ],
     "answers": [
-      "B",
+      "C",
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Current AWS documentation supports C+D to rightsize EC2 based on CPU, memory AND network: CloudWatch Agent must collect memory utilization, while Compute Optimizer uses standard CPU/network metrics and agent memory metrics to recommend instance types. Original published exam key B+D does not adequately cover memory. https://docs.aws.amazon.com/compute-optimizer/latest/ug/ec2-metrics-analyzed.html ; https://docs.aws.amazon.com/compute-optimizer/latest/ug/rightsizing-preferences.html",
+    "wrongOptionsExplanation": "A: support plan not required for Compute Optimizer. B: Trusted Advisor Low Utilization EC2 Instances is a useful supplemental check but does not provide the specified memory-aware sizing. C: correct, CloudWatch Agent publishes EC2 memory utilization. D: correct, Compute Optimizer provides CPU/network/memory-informed recommendations. E: Savings Plans provide discounts but not utilization-based instance sizing.",
+    "plainWords": "EC2 publishes CPU and network metrics, but not memory by default. Install CloudWatch Agent for memory, then use Compute Optimizer for size recommendations.",
+    "keyPoints": "Verified AWS-supported C+D; original source key B+D retained in originalAnswer and flagged. Trusted Advisor checks are not a replacement for memory-aware Compute Optimizer. Compute Optimizer requires 30 hours of metrics for EC2 recommendations. Related Q31 and Q172; no exact duplicates across 674.",
+    "sourceWarning": "Defective/ambiguous source key: original B+D repeated in FreePDFDumps and DumpSolutions, but current AWS docs explicitly require memory data from CloudWatch Agent for memory-aware rightsizing. Preferred C+D. No deprecated services; AWS Compute Optimizer can alternatively ingest supported external memory metrics, not among options. Exact stem/option duplicates: none; similar Q31 and Q172.",
+    "review": {
+      "status": "verified-source-key-conflict",
+      "originalAnswer": [
+        "B",
+        "D"
+      ],
+      "verifiedAnswer": [
+        "C",
+        "D"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "AWS official documentation requires memory metric ingestion (CloudWatch Agent) for CPU/memory/network rightsizing; external mirrors repeat B+D. Q31/Q172 similar; no exact duplicates."
+    },
+    "answerStatus": "verified-with-source-defect"
   },
   {
     "id": 576,
