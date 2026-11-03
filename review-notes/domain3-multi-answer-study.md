@@ -673,3 +673,34 @@ flowchart TD
 **AWS:** https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-configure.html ; https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-scaling.html ; https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Constraints.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html
 
 **External variants:** https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice.html (B+D); https://www.examdiscuss.com/Amazon/discussions/1281529-exam-sap-c02-topic-1-question-397-discussion/ (reordered B+E equivalent to original B+D).
+
+
+## Q328 — Domain 3 multi-answer 28/58 — EC2 Apache and Aurora performance observability
+
+**Original:** A company built an ecommerce website on AWS using a three-tier web architecture. The application is Java-based and composed of an Amazon CloudFront distribution, an Apache web server layer of Amazon EC2 instances in an Auto Scaling group, and a backend Amazon Aurora MySQL database. Last month, during a promotional sales event, users reported errors and timeouts while adding items to their shopping carts. The operations team recovered the logs created by the web servers and reviewed Aurora DB cluster performance metrics. Some of the web servers were terminated before logs could be collected and the Aurora metrics were not sufficient for query performance analysis. Which combination of steps must the solutions architect take to improve application performance visibility during peak traffic events? (Choose three.)
+
+- **A.** Configure the Aurora MySQL DB cluster to publish slow query and error logs to Amazon CloudWatch Logs.
+- **B.** Implement the AWS X-Ray SDK to trace incoming HTTP requests on the EC2 instances and implement tracing of SQL queries with the X-Ray SDK for Java.
+- **C.** Configure the Aurora MySQL DB cluster to stream slow query and error logs to Amazon Kinesis
+- **D.** Install and configure an Amazon CloudWatch Logs agent on the EC2 instances to send the Apache logs to CloudWatch Logs.
+- **E.** Enable and configure AWS CloudTrail to collect and analyze application activity from Amazon EC2 and Aurora.
+- **F.** Enable Aurora MySQL DB cluster performance benchmarking and publish the stream to AWS X-Ray.
+
+**Verified exam answer A+B+D (unchanged).**
+
+- A correct: Aurora MySQL supports publishing slow query and error logs to CloudWatch Logs. Enable slow query logging, set appropriate long_query_time, and enable log exports.
+- B correct for historical exam: X-Ray SDK for Java can trace incoming HTTP and JDBC SQL calls. **2026 warning:** X-Ray SDK/daemon maintenance mode began Feb 25, 2026; use OpenTelemetry or ADOT for new implementations.
+- C wrong: native Aurora MySQL log exports target CloudWatch Logs, not the proposed direct Kinesis log stream.
+- D correct: ship Apache access/error logs from EC2 Auto Scaling instances to durable CloudWatch Logs before termination. Use unified CloudWatch Agent rather than legacy Logs agent for new setups.
+- E wrong: CloudTrail is AWS API auditing, not application HTTP/SQL performance monitoring.
+- F wrong: no described Aurora 'performance benchmarking' stream to AWS X-Ray.
+
+**Architecture:** Customers → CloudFront → Apache/Java EC2 Auto Scaling → Aurora MySQL; EC2 Apache logs → CloudWatch Logs (D); Aurora slow/error logs → CloudWatch Logs (A); HTTP and JDBC traces → X-Ray/OTel backend (B).
+
+**Duplicate check (all 674):** no exact duplicate in targeted scenario/option phrase scan; no high-confidence identical question found. Related topics occur elsewhere but not established duplicates.
+
+**Modernization:** AWS X-Ray Java SDK/daemon entered maintenance mode on 2026-02-25; use OpenTelemetry. Unified CloudWatch Agent replaces legacy CloudWatch Logs agent terminology. Tune Aurora slow-query thresholds; be mindful of logging overhead and retention.
+
+**AWS:** https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Integrating.CloudWatch.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-mysql-troubleshooting-logging.html ; https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-java-sqlclients.html ; https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-java.html
+
+**External variants:** https://www.realexamfree.com/articles/download-sap-c02-dumps-2023-free-pdf-exam-demo-q45-q60/ ; https://www.scribd.com/document/931432252/AWS-Certified-Solutions-Architect-Professional-SAP-C02-Exam-ExamTopics-351-400
