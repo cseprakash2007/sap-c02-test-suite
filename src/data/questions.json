@@ -15396,13 +15396,39 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A+D+F is the intended exam key, with a material caveat. A enables CloudTrail S3 object data events including API requests and failed attempts. D S3 direct Object Deleted -> EventBridge -> SNS email alerts for actual deletion events, but not denied delete attempts; to meet literal 'every attempt', match CloudTrail DeleteObject/DeleteObjects data API calls (including AccessDenied) via EventBridge instead. F stores CloudTrail logs in dedicated S3 bucket with lifecycle tiering and five-year retention.",
+    "wrongOptionsExplanation": "A correct identity-aware object API audit. B S3 server access logging is an alternative but less suited to CloudTrail API/identity audit and adds logging overhead. C S3 cannot directly send native deletion notifications to SES. D intended correct S3 EventBridge -> SNS email; direct Object Deleted events exclude failed deletion attempts. E Timestream not a CloudTrail log archive destination. F correct S3 log archive with lifecycle and five-year retention; Object Lock if immutability required.",
+    "plainWords": "Use CloudTrail to audit object actions, EventBridge plus SNS to email deletion alerts, and a dedicated S3 log bucket with lifecycle storage for five years. For failed deletion attempts, alert on CloudTrail API calls, not only S3 Object Deleted events.",
+    "keyPoints": "S3 CloudTrail data events (explicit opt-in; billed), GetObject/PutObject/DeleteObject; direct S3 Object Deleted event vs CloudTrail DeleteObject attempted API; EventBridge -> SNS email; S3 lifecycle + retention/Object Lock; avoid duplicate DeleteObjects alerts.",
+    "sourceWarning": "Question says 'every attempt' but direct S3 Object Deleted events (D) cover successful deletion events, not denied attempts. For literal requirement use CloudTrail API Call via CloudTrail EventBridge rule on DeleteObject/DeleteObjects including AccessDenied; consider S3 Object Lock for tamper-resistant 5-year logs. A+D+F is expected historical exam key but not sufficient as literally worded.",
+    "review": {
+      "status": "verified-a-d-f-with-defect",
+      "reviewedAt": "2026-11-02",
+      "verifiedAnswers": [
+        "A",
+        "D",
+        "F"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/cloudtrail-logging-s3-info.html",
+        "https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-s3.html",
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-log-s3-data-events.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/ev-events.html",
+        "https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-3-question-128-discussion-p1338480.html",
+        "https://pupuweb.com/aws-sap-c02-exam-question-answer-steps-keep-logs-notification/"
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "status": "no-exact-duplicate-targeted-scan",
+        "relatedIds": [
+          174,
+          444,
+          508
+        ]
+      },
+      "notes": "Critical nuance: S3 direct Object Deleted does not capture failed delete attempts. Use CloudTrail EventBridge DeleteObject API for literal requirement."
+    },
+    "answerStatus": "verified-intended-a-d-f-attempt-vs-deletion-defect"
   },
   {
     "id": 332,
