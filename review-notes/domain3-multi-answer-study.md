@@ -1681,3 +1681,82 @@ These mirrors corroborate the keyed choice but may reuse the same exam-question 
 6. Redshift is not invalid or obsolete; it simply adds complexity not warranted by these stated requirements.
 
 **Exam memory cue:** Spiky weekly input + low operations = API Gateway/Lambda; periodic SQL reports on S3 = Athena + QuickSight.
+
+
+---
+
+# Q639 (55/58): Cross-Region Aurora MySQL and DynamoDB disaster recovery
+
+**Verified A + D (2026-11-03).** Existing dataset answer retained. Original stem and options preserved in questions.json.
+
+## Original question
+
+A company has a critical application in which the data tier is deployed in a single AWS Region. The data tier uses an Amazon DynamoDB table and an Amazon Aurora MySQL DB cluster. The current Aurora MySQL engine version supports a global database. The application tier is already deployed in two Regions. Company policy states that critical applications must have application tier components and data tier components deployed across two Regions. The RTO and RPO must be no more than a few minutes each. A solutions architect must recommend a solution to make the data tier compliant with company policy. Which combination of steps will meet these requirements? (Choose two.)
+
+**Original options**
+
+- **A.** Add another Region to the Aurora MySQL DB cluster
+- **B.** Add another Region to each table in the Aurora MySQL DB cluster
+- **C.** Set up scheduled cross-Region backups for the DynamoDB table and the Aurora MySQL DB cluster
+- **D.** Convert the existing DynamoDB table to a global table by adding another Region to its configuration
+- **E.** Use Amazon Route 53 Application Recovery Controller to automate database backup and recovery to the secondary Region
+
+## Detailed option-by-option verification
+
+- **A CORRECT:** Convert/attach existing Aurora MySQL cluster to Aurora Global Database by adding a secondary Regional Aurora DB cluster. Physical storage-based async replication typically under one second, cross-Region RTO on order of minutes, RPO usually seconds. Must plan and initiate managed failover/switchover.
+- **B WRONG:** Aurora Global Database replicates cluster storage; it does not create per-table cross-Region replication settings for individual MySQL tables.
+- **C WRONG:** Scheduled backups are not an always-present secondary data tier; snapshot/backup recovery time and intervals can violate minute-level RTO/RPO.
+- **D CORRECT:** DynamoDB global tables with MREC can add replica Region to existing Regional table; supports multi-active reads/writes, managed async replication, regional endpoints.
+- **E WRONG:** Route 53 ARC routing controls reroute application traffic, not database backups/restores; it can complement but cannot replace Aurora/DynamoDB multi-Region data replication.
+
+## Architecture diagram
+
+\`\`\`mermaid
+flowchart LR
+  subgraph R1["Region 1"]
+    APP1["Existing application tier"] --> A1["Aurora primary / writer"]
+    APP1 --> D1["DynamoDB global table replica"]
+  end
+  subgraph R2["Region 2"]
+    APP2["Existing application tier"] --> A2["Aurora read-only secondary / promoted on failover"]
+    APP2 --> D2["DynamoDB global table replica"]
+  end
+  A1 -->|"Aurora Global Database async replication"| A2
+  D1 <-->|"DynamoDB MREC global table replication"| D2
+\`\`\`
+
+## Current AWS official documentation
+
+- Add Region to existing Aurora cluster: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-attaching.html
+- Aurora Global Database RTO/RPO and managed failover: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html
+- Aurora global database feature and topology: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html
+- DynamoDB global tables MREC/MRSC, replication and conversion: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-global-table-design.html
+- DynamoDB global tables architecture: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html
+- ARC routing controls, not backup: https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html
+
+## Multiple external variants
+
+- DumpsTech exact A+D: https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-4.html
+- FreeCram Q203/264 exact A+D: https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-a-critical-application-in-which-the-data-tier-is-deployed-in-a-single-aws-region-the-data
+- PassTest reordered options B+E correspond to Aurora Region + DynamoDB global table: https://www.passtest.jp/articles/2024%E5%B9%B407%E6%9C%88-%E5%90%88%E6%A0%BC-amazon-sap-c02-%E3%83%86%E3%82%B9%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3pdf-%E5%AE%8C%E5%85%A8%E7%89%88%E7%84%A1%E6%96%99%E5%95%8F%E9%A1%8C%E9%9B%86-q157-q172/
+- ExamTopics Q160 variant: https://www.examtopics.com/discussions/amazon/view/97684-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-160-discussion/
+
+External mirrors may share question banks; AWS docs provide independent technical verification.
+
+## Duplicate/similar audit across all 674 questions
+
+- Exact normalized stem matches: **none**.
+- Identical complete option sets: **none**.
+- Similar disaster-recovery themes: Q326 (RDS MySQL Multi-AZ and failover behavior) and Q499 (stateful web app recovery), but different design decisions and services.
+
+## Defects and current caveats
+
+1. A is abbreviated: one adds a secondary *Aurora DB cluster* in another Region to create an Aurora Global Database; a single cluster itself is Regional.
+2. Aurora async replication means nonzero potential data loss. RTO and RPO of a few minutes are design targets, not unconditional service guarantees; plan, monitor lag, test failover, route traffic and handle reconnection.
+3. DynamoDB global tables now support both MREC and MRSC. Adding a Region to an existing populated table is MREC; MRSC has distinct empty-table/replica/witness requirements and cannot simply be switched on later.
+4. DynamoDB has Regional endpoints, no single global endpoint. Default MREC uses last-writer-wins for cross-Region concurrent updates.
+5. Aurora current docs support up to 10 secondary Regions; older guides may say five.
+6. ARC option E is misleading about backup/recovery; ARC is for routing controls/readiness and traffic recovery, not copying database state.
+7. No obsolete service choice, but the distinction between Aurora Global Database and DynamoDB global tables is fundamental.
+
+**Memory cue:** RTO/RPO minutes and pre-existing two-Region app => replicate both data stores continuously, not restore backups after disaster.
