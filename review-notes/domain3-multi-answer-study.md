@@ -1921,3 +1921,42 @@ flowchart TD
 **Official AWS:** https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.EndpointAndPort.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html
 
 **Exact external variants:** https://www.examsvce.com/sap-c02/a-public-retail-web-application-uses-an-question-answer.html (A+E); https://www.examtopics.com/discussions/amazon/view/136548-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-444-discussion/ (community B+E and dissent). Original source answer preserved in question.review.sourceAnswers; dataset answers updated B+E.
+
+
+# Four pending Domain 3 external audits — 2026-11-03
+
+## Q18 — ECS ticketing costs — A+B, with availability caveat
+**Full original options:** A gateway S3 VPC endpoint; B second Spot ECS ASG capacity provider with equal weight; C On-Demand Capacity Reservations; D S3 Transfer Acceleration; E replace predictive with scheduled scaling.
+- **A correct:** Gateway endpoint avoids NAT gateway processing charges for same-Region S3; configure route tables and policies.
+- **B intended correct:** Spot capacity provider reduces EC2 costs, but equal weight alone does NOT guarantee availability; retain On-Demand baseline, interruption handling and capacity provider managed scaling.
+- **C wrong:** On-Demand Capacity Reservations reserve capacity, not a direct discount.
+- **D wrong:** Transfer Acceleration is for remote transfers and adds charges; not relevant to in-Region ECS downloads.
+- **E plausible alternative, not guaranteed cost reduction:** scheduled scaling may align with known event dates but is not inherently cheaper than predictive scaling; some reordered external dumps choose it.
+**Diagram:** Users → ECS service → On-Demand ASG + Spot ASG; ECS → S3 Gateway Endpoint → S3 (bypass NAT). **External:** ExamTopics Q529 https://www.examtopics.com/discussions/amazon/view/143123-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-529-discussion/ ; P2PCerts https://www.p2pcerts.com/amazon/sap-c02.html ; conflicting reordered ExamsReviews Q203 https://www.examsreviews.com/articles/best-preparations-of-sap-c02-exam-2025-aws-certified-solutions-architect-unlimited-510-questions-q190-q208/ . **AWS:** https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/asg-capacity-providers.html . No exact duplicate established.
+
+## Q32 — S3 video lifecycle — C+E
+**Full original options:** A Requester Pays; B Transfer Acceleration; C abort incomplete multipart uploads after 7 days; D Glacier Instant Retrieval after 1 day; E Standard-IA after 180 days.
+- **A wrong:** Requester Pays cannot handle anonymous requests.
+- **B wrong:** Transfer Acceleration improves distant upload performance but adds fees, not a direct S3 storage optimization.
+- **C correct:** abort orphaned multipart uploads and stop billing for uploaded incomplete parts.
+- **D wrong:** Glacier Instant Retrieval after day 1 conflicts with frequent reads during days 1–180 and incurs retrieval charges.
+- **E correct:** Standard-IA after 180 days fits rare reads; minimum duration and retrieval charges apply.
+**Diagram:** Upload → S3 Standard (0–180 days) → S3 Standard-IA; incomplete multipart uploads → abort after 7 days. **Duplicate:** Q83 near-identical scenario and C+E. **External:** Certstopics Q58 https://www.certstopics.com/questions/legit-sap-c02-exam-download.html ; reordered PassLeaderVCE https://itexambus.passleadervce.com/articles/nov-2025-sap-c02-dumps-with-100-verified-q-as-pass-guarantee-or-full-refund-q168-q183/ . **AWS:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/RequesterPaysBuckets.html .
+
+## Q115 — Aurora PostgreSQL immutable audit — intended A+C, one exact external match
+**Full original options:** A encrypted Aurora PostgreSQL with TLS; B encrypted RDS PostgreSQL with TLS; C database activity stream → Firehose → S3 Object Lock compliance 10 years; D pgAudit → CloudWatch → Firehose → Object Lock compliance; E same as D but governance mode.
+- **A correct:** Aurora PostgreSQL encryption at rest and TLS in transit.
+- **B not selected:** Encryption/TLS alone are feasible but the chosen cluster activity stream architecture is specifically Aurora. Wording does not make B inherently invalid for confidentiality.
+- **C intended correct:** Aurora Database Activity Streams sends activity to managed Kinesis stream; Firehose consumer can deliver to Object Lock compliance S3; ensure audit policies, KMS and retention.
+- **D weaker alternative:** pgAudit logs can be forwarded and locked, but DBA-controlled audit setup does not provide the same separation of duties; not the intended tamper-resistant stream.
+- **E wrong:** Object Lock governance mode may be bypassed by sufficiently privileged users, so not immutable against authorized bypass.
+**Diagram:** Patient portal → Aurora PostgreSQL (KMS + TLS) → Database Activity Streams → Kinesis Data Streams → Firehose → S3 Object Lock compliance (10 years). **External:** SPOTO exact A+C https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part1 . Second independent exact external variant not established. **AWS:** https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html . No exact duplicate established.
+
+## Q140 — imported EC2 missing in Systems Manager — A+B
+**Full original options:** A check SSM Agent running; B appropriate Systems Manager IAM role; C VPC endpoint; D Application Discovery Agent; E Systems Manager service-linked roles.
+- **A correct:** VM-imported image might not have active SSM Agent.
+- **B correct:** instance profile with AmazonSSMManagedInstanceCore or account-level Default Host Management Configuration grants needed permissions.
+- **C not universally required:** private VPC endpoints optional with working outbound internet connectivity; public IP by itself does not guarantee egress.
+- **D wrong:** Application Discovery Agent is for migration discovery, not SSM registration.
+- **E wrong:** service-linked role configuration is not the main EC2 managed-instance registration prerequisite.
+**Diagram:** Imported EC2 → SSM Agent + IAM permissions → outbound HTTPS 443 → Systems Manager endpoints. **Duplicate:** Q225 is a near-duplicate of Q140, same five options and answer A+B. **External:** ExamTopics Q492 https://www.examtopics.com/discussions/amazon/view/142926-exam-aws-certified-solutions-architect-professional-sap-c02/ ; ExamsVCE https://www.examsvce.com/sap-c02/questiona-solutions-architect-is-importing-a-vm-question-answer.html . **AWS:** https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/troubleshooting-ssm-agent.html . Outdated AWS Import/Export wording.
