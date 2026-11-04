@@ -321,9 +321,70 @@
     "wrongOptionsExplanation": "B. Adds NAT gateways but does not point the private subnets at them, so nothing changes. C. You attach only one internet gateway\nper VPC, and it is already there. Private subnets need NAT, not more IGWs. D. Same problem as C: extra internet gateways are not\npossible and do not give private instances outbound-only access.",
     "plainWords": "A VPC has three AZs but only one NAT gateway. Private instances in all AZs depend on it.",
     "keyPoints": "• One NAT gateway per AZ, each private route table points to the NAT in the same AZ. • NAT gateways are zonal; the internet\ngateway is regional and redundant by design.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "Question omits explicit resiliency objective. Existing zonal NAT can serve other AZs; A adds resilience, not necessary merely for connectivity. New AWS Regional NAT gateways provide automated multi-AZ alternative absent from choices.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "status": "verified-a-modern-regional-nat-caveat",
+      "originalAnswers": [
+        "A"
+      ],
+      "verifiedAnswers": [
+        "A"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-example-private-subnets-nat.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.certstopics.com/questions/last-attempt-sap-c02-questions.html",
+        "https://www.examcollection.us/exam/SAP-C02-question-answer-4.html"
+      ],
+      "wrongOptionsReason": {
+        "A": "A zonal NAT gateway per AZ and local private subnet routing isolates AZ failures and avoids cross-AZ NAT traffic.",
+        "B": "Public subnets should route to IGW; private subnets should route to NAT gateway.",
+        "C": "Internet gateway is VPC-level, not per-AZ; direct IGW route does not provide IPv4 internet access to private instances without public IPv4.",
+        "D": "Additional IGWs per AZ are unsupported and public subnet routing doesn't solve private EC2 egress."
+      },
+      "duplicateAudit": {
+        "scope": "674",
+        "exactDuplicates": [],
+        "relatedIds": [
+          18,
+          20,
+          21,
+          24,
+          53,
+          57,
+          74,
+          90,
+          108,
+          112,
+          193,
+          195,
+          209,
+          250,
+          309,
+          316,
+          318,
+          351,
+          356,
+          378,
+          410,
+          429,
+          447,
+          481,
+          556,
+          562,
+          591,
+          669
+        ],
+        "note": "Normalized exact stem comparison and keyword-related stem candidates; related IDs are not confirmed duplicates."
+      },
+      "auditNote": "Stem lacks explicit high-availability requirement: one NAT gateway already provides multi-AZ connectivity if its AZ is healthy. A best for resilient zonal architecture. AWS now supports regional NAT gateways with automatic multi-AZ expansion, not offered among answers."
+    },
+    "answerStatus": "verified-a-modern-regional-nat-caveat"
   },
   {
     "id": 6,
