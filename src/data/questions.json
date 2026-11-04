@@ -2795,12 +2795,27 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "RDS Proxy pools database connections so Lambda scale-out does not overwhelm MySQL, and Secrets Manager holds the credentials\nthe proxy uses. Java Lambda functions also have slow cold starts, so provisioned concurrency keeps warm execution environments\nready. Together they address both symptoms.",
-    "wrongOptionsExplanation": "A. Opening the connection outside the handler helps per environment but cannot control total connections, and it skips RDS Proxy. C.\nRaising max_connections needs a reboot and just lets the database fall over later. Reserved concurrency does not reduce cold starts.\nD. RDS Proxy is right, but reserved concurrency only caps or guarantees concurrency, it does not pre-warm Java environments.",
-    "plainWords": "During a sale, a Java Lambda function behind API Gateway is slow and the MySQL database refuses connections. Fix it with the least\napplication change.",
-    "keyPoints": "• Connection failures from Lambda = RDS Proxy. Slow Java cold starts = provisioned concurrency (or SnapStart). • Reserved\nconcurrency limits and guarantees; provisioned concurrency pre-warms.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
+    "explanation": "B. RDS Proxy pools/reuses backend connections for highly concurrent Lambda invocations, preventing MySQL connection exhaustion. Store credentials in Secrets Manager for proxy authentication and point Lambda at the proxy endpoint with required networking and IAM permissions. Provisioned concurrency pre-initializes Java Lambda execution environments to reduce cold-start latency. Both observed symptoms are addressed with limited application code changes.",
+    "wrongOptionsExplanation": "A. Reusing connections outside handler is good practice but does not pool connections across Lambda execution environments; DB connections can still be exhausted. C. Raising MySQL max_connections can increase memory pressure, and reserved concurrency does not pre-initialize execution environments. D. RDS Proxy helps connection exhaustion, but reserved concurrency does not address Java cold-start latency; provisioned concurrency does.",
+    "plainWords": "An ecommerce Java Lambda API slows during a sale and too many concurrent Lambda database connections overwhelm MySQL. Use RDS Proxy for connection pooling and provisioned concurrency for warm Java runtimes.",
+    "keyPoints": "RDS Proxy = pooled/reused DB connections and reduced connection exhaustion. Secrets Manager = managed DB credentials for proxy auth (IAM end-to-end authentication is also possible). Provisioned concurrency = pre-initialized Lambda environments, additional charges. Reserved concurrency = concurrency cap/guarantee, not warm environments. SnapStart = alternative cold-start optimization for supported runtimes, incompatible with provisioned concurrency on same version.",
+    "sourceWarning": "Verified exact short variant on CertsMania Q56 and FreePDFDumps Q67; longer exact-scenario four-option variant on Exam-Files Q4, keyed B. No exact normalized duplicate among all 674. Defect/nuance: 'LEAST application change' still requires proxy endpoint and permission/network changes; provisioning concurrency adds cost; SnapStart is a current alternative not offered. Provisioned concurrency may spill over under bursts and does not solve database query bottlenecks; RDS Proxy connection pinning can reduce pooling efficiency.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "aws-docs-and-multiple-external-variants-verified",
+      "originalAnswers": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-rds.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html",
+        "https://learn.exam-files.com/amazon/sap-c02/AWS%20Certified%20Solutions%20Architect%20-%20Professional.SAP-C02.VCEplus.2024-11-07.159q.vcex",
+        "https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=15"
+      ],
+      "auditNote": "Q41 14/239: B verified; proxy connection pooling plus provisioned concurrency addresses two symptoms. Exact normalized duplicates: 0. Related topic candidates: 2, 27, 49, 158, 160, 203, 230, 233, 287, 297, 312, 326, 338, 420, 429, 431, 552, 570, 609, 662. Current nuance: SnapStart alternative; proxy connection pinning and capacity planning; provisioned concurrency charges."
+    },
     "answerStatus": "source-key-unverified"
   },
   {
