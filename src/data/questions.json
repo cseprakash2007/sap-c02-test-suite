@@ -1071,28 +1071,79 @@
     "wrongOptionsExplanation": "A. Read replicas help reads, not a write-heavy load, and Instance Savings Plans plus reserved instances commit you to capacity you\noften do not use. B. Multi-master clusters are not designed for unpredictable scaling and commitments do not fit an irregular load. C.\nAurora Global Database is for cross-Region DR and low-latency reads, not for absorbing bursts.",
     "plainWords": "Usage is idle for long periods, then spikes suddenly. The write-heavy Aurora MySQL instance cannot cope. Find the most\ncost-effective way to handle the swings.",
     "keyPoints": "• Unpredictable or intermittent database load = Aurora Serverless. • Commitments (RI/Savings Plans) suit steady usage, not spiky\nusage.\nHEADS-UP ON THIS QUESTION\n• Aurora Serverless v1 has been retired or scheduled for retirement. Today the modern answer for this pattern is Aurora Serverless v2\n(which can also scale down to very low capacity). The reasoning is the same.\nReference: AWS documentation — https://docs.aws.amazon.com/\nSOURCE WARNING: Aurora Serverless v1 is obsolete; consult current Aurora Serverless v2 guidance.",
-    "sourceWarning": "Aurora Serverless v1 is retired; D is historically intended but no longer deployable as written. Aurora Serverless v2 is the modern alternative; none of the offered answers states it.",
+    "sourceWarning": "Original D refers to Aurora Serverless v1, end of life March 31, 2025; modern study D uses v2. Savings Plans must target predictable baseline. Current Database Savings Plans may cover eligible Aurora Serverless v2. Auto-pause to zero has engine/version/connection restrictions.",
     "review": {
-      "reviewedAt": "2026-10-28",
-      "auditStatus": "study-wording-corrected-original-outdated",
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "verified-historical-d-outdated-v1-modern-v2",
       "originalAnswers": [
         "D"
       ],
       "references": [
         "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html"
       ],
-      "auditNote": "Aurora Serverless v1 is retired; D is historically intended but no longer deployable as written. Aurora Serverless v2 is the modern alternative; none of the offered answers states it.",
-      "externalQuestionLinks": [],
+      "auditNote": "Original snapshot v1 preserved, study option D already v2. Multiple exact variants confirm historical D with reordered A. Aurora v1 EOL March 31 2025; v2 can scale to zero for supported engines, with auto-pause restrictions. New Database Savings Plans can cover eligible Aurora serverless; Compute Savings Plans cover Lambda/Fargate but not Aurora. Commit only baseline spend.",
+      "externalQuestionLinks": [
+        "https://www.certstopics.com/questions/pass-sap-c02-exam-guide.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2024-03-21.q171/a-company-is-running-an-application-in-the-aws-cloud-the-application-uses-aws-lambda-functions-and-amazon",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=33"
+      ],
       "externalSiteAnswers": [],
       "awsDocumentationLinks": [
-        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html"
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/WhatsNew.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.how-it-works.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html",
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html"
       ],
       "crossVerificationStatus": "aws-service-retired-external-match-pending",
       "answerReason": "AWS re:Post confirms Aurora Serverless v1 end of support March 31, 2025. No exact question-site match established in this batch; D remains historically intended but outdated.",
       "correctedStudyVersion": true,
-      "correctionType": "modernized-option-not-original-exam-text"
+      "correctionType": "modernized-option-not-original-exam-text",
+      "status": "verified-historical-d-outdated-v1-modern-v2",
+      "verifiedAnswers": [
+        "D"
+      ],
+      "wrongOptionsReason": {
+        "A": "Read replicas don't improve write throughput and fixed commitments poorly suit unpredictable peaks.",
+        "B": "Legacy Aurora multi-master is not automatic elastic scaling; EC2 Instance Savings Plans do not apply to Lambda/Fargate.",
+        "C": "Global database provides cross-region read/DR rather than elastic single-writer capacity; reserved capacity unsuitable.",
+        "D": "Historically v1 and Compute Savings Plans is the keyed answer; v1 is retired, v2 is modern supported substitute."
+      },
+      "duplicateAudit": {
+        "scope": "674",
+        "exactDuplicates": [],
+        "relatedIds": [
+          58,
+          77,
+          88,
+          103,
+          155,
+          158,
+          160,
+          167,
+          177,
+          200,
+          233,
+          242,
+          312,
+          342,
+          368,
+          385,
+          417,
+          431,
+          437,
+          485,
+          516,
+          547,
+          555,
+          560,
+          564,
+          663
+        ],
+        "note": "Exact normalized stem check; related candidates are not necessarily duplicates."
+      }
     },
-    "answerStatus": "outdated",
+    "answerStatus": "verified-historical-d-outdated-v1-modern-v2",
     "originalQuestionSnapshot": {
       "stem": "A company is running an application in the AWS Cloud. The application uses AWS Lambda functions and Amazon Elastic Container Service (Amazon ECS) containers that run with AWS Fargate technology as its primary compute. The load on the application is irregular. The application experiences long periods of no usage, followed by sudden and significant increases and decreases in traffic. The application is write-heavy and stores data in an Amazon Aurora MySQL database. The database runs on an Amazon RDS memory optimized DB instance that is not able to handle the load. What is the MOST cost-effective way for the company to handle the sudden and significant changes in traffic?",
       "options": [
