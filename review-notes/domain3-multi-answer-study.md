@@ -1781,3 +1781,26 @@ External mirrors may share question banks; AWS docs provide independent technica
 **Official AWS:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html ; https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html ; https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-integrations.html
 
 **External variants:** Certstopics Question 141 (A,E): https://www.certstopics.com/questions/free-sap-c02-questions-attempt.html ; Certsmania Question 3 (same stem/options): https://www.certsmania.com/pdf/amazon-web-services-test-prep-material-pack-sap-c02-passing-score-by-binod.pdf . External answer explanations are not authoritative.
+
+
+## Q649 — Domain 3 multi-answer 57/58 (2026-11-03)
+
+**Original question:** A retail company is operating its ecommerce application on AWS. The application runs on Amazon EC2 instances behind an Application Load Balancer (ALB). The company uses an Amazon RDS DB instance as the database backend. Amazon CloudFront is configured with one origin that points to the ALB. Static content is cached. Amazon Route 53 is used to host all public zones. After an update of the application, the ALB occasionally returns a 502 status code (Bad Gateway) error. The root cause is malformed HTTP headers that are returned to the ALB. The webpage returns successfully when a solutions architect reloads the webpage immediately after the error occurs. While the company is working on the problem, the solutions architect needs to provide a custom error page instead of the standard ALB error page to visitors. Which combination of steps will meet this requirement with the LEAST amount of operational overhead? (Choose two.)
+
+- **A:** Create an Amazon S3 bucket. Configure the S3 bucket to host a static webpage. Upload the custom error pages to Amazon S3.
+- **B:** Create an Amazon CloudWatch alarm to invoke an AWS Lambda function if the ALB health check response Target.FailedHealthChecks is greater than 0. Configure the Lambda function to modify the forwarding rule at the ALB to point to a publicly accessible web server.
+- **C:** Modify the existing Amazon Route 53 records by adding health checks. Configure a fallback target if the health check fails. Modify DNS records to point to a publicly accessible webpage.
+- **D:** Create an Amazon CloudWatch alarm to invoke an AWS Lambda function if the ALB health check response Elb.InternalError is greater than 0. Configure the Lambda function to modify the forwarding rule at the ALB to point to a public accessible web server.
+- **E:** Add a custom error response by configuring a CloudFront custom error page. Modify DNS records to point to a publicly accessible web page.
+
+**Original source key C+E → corrected intended answer A+E (defective option wording).** A provides an independently available S3 error HTML object; E uses CloudFront custom error response for HTTP 502. Option E's DNS-change clause is not required and should not be implemented. Option A's S3 website hosting is also unnecessary when using a private S3 REST origin with CloudFront OAC. Strictly, the options do not offer a fully clean pair; retain a source-warning flag rather than presenting E as unqualified.
+
+**Why not B:** Target.FailedHealthChecks detects unhealthy targets, not reliably intermittent malformed headers; CloudWatch-Lambda-ALB listener changes are operationally expensive. **Why not C:** Route 53 DNS health checks/failover do not provide request-level intermittent HTTP 502 error handling. **Why not D:** Elb.InternalError is not a reliable proxy for malformed backend HTTP headers and listener rewrites add overhead.
+
+**Architecture:** Viewer → CloudFront → ALB → EC2 → RDS; when ALB responds 502, CloudFront CustomErrorResponse → second S3 origin containing /502.html → viewer. Keep error caching TTL low for transient faults. Fix malformed headers at the application separately.
+
+**Duplicate audit:** normalized stem exact-match check across all 674: none. Related topics (not confirmed duplicates): Q621, Q356, Q155, Q160, Q284.
+
+**Official AWS:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/creating-custom-error-pages.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/custom-error-pages-procedure.html ; https://repost.aws/knowledge-center/cloudfront-custom-error-page
+
+**External variants:** ExamGuru Q10 https://examguru.io/exams/sap-c02/review ; ExamDiscuss Topic 1 Q45 (suggested A+E) https://www.examdiscuss.com/Amazon/discussions/1341156-exam-sap-c02-topic-1-question-45-discussion/ . External answer keys are secondary to AWS documentation.
