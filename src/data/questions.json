@@ -1009,9 +1009,9 @@
     "wrongOptionsExplanation": "C. Capacity Reservations add commitment cost rather than reduce it. D. Transfer Acceleration is for long-distance uploads and adds\ncost. The cluster and bucket are in the same Region. E. Replacing predictive scaling with scheduled scaling does not make compute\ncheaper and may reduce flexibility.",
     "plainWords": "An ECS cluster on On-Demand EC2 downloads lots of S3 assets through a NAT gateway. Cut cost without lowering availability.",
     "keyPoints": "• NAT gateway charges for S3 or DynamoDB traffic = use a gateway endpoint. • Mix On-Demand and Spot with ECS capacity\nproviders to cut cost safely.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
+    "sourceWarning": "Exact external ExamTopics Q529 and P2PCerts variants found; reordered ExamsReviews Q203 keys scheduled scaling plus gateway endpoint (maps to E+A). AWS technically supports A+B for cost savings but equal Spot weight alone cannot guarantee availability during interruption. Scheduled scaling can be reasonable given known events; source disagreement retained.",
     "review": {
-      "reviewedAt": "2026-10-28",
+      "reviewedAt": "2026-11-03",
       "auditStatus": "aws-docs-reviewed-external-pending",
       "originalAnswers": [
         "A",
@@ -1025,12 +1025,17 @@
         "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html",
         "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/asg-capacity-providers.html"
       ],
-      "externalQuestionLinks": [],
-      "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
+      "externalQuestionLinks": [
+        "https://www.examtopics.com/discussions/amazon/view/143123-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-529-discussion/",
+        "https://www.p2pcerts.com/amazon/sap-c02.html",
+        "https://www.examsreviews.com/articles/best-preparations-of-sap-c02-exam-2025-aws-certified-solutions-architect-unlimited-510-questions-q190-q208/"
+      ],
+      "crossVerificationStatus": "exact-external-variants-checked",
       "correctedStudyVersion": true,
-      "auditNote": "Original question retained in snapshot. Source answer unchanged; technical caveats documented."
+      "auditNote": "Exact external ExamTopics Q529 and P2PCerts variants found; reordered ExamsReviews Q203 keys scheduled scaling plus gateway endpoint (maps to E+A). AWS technically supports A+B for cost savings but equal Spot weight alone cannot guarantee availability during interruption. Scheduled scaling can be reasonable given known events; source disagreement retained.",
+      "status": "verified-external-variants-conflicting-scheduled-scaling"
     },
-    "answerStatus": "aws-docs-reviewed-external-pending",
+    "answerStatus": "verified-external-variants-conflicting-scheduled-scaling",
     "originalQuestionSnapshot": {
       "stem": "An events company runs a ticketing platform on AWS. The company's customers configure and schedule their events on the platform The events result in large increases of traffic to the platform The company knows the date and time of each customer's events The company runs the platform on an Amazon Elastic Container Service (Amazon ECS) cluster The ECS cluster consists of Amazon EC2 On-Demand Instances that are in an Auto Scaling group. The Auto Scaling group uses a predictive scaling policy The ECS cluster makes frequent requests to an Amazon S3 bucket to download ticket assets The ECS cluster and the S3 bucket are in the same AWS Region and the same AWS account Traffic between the ECS cluster and the S3 bucket flows across a NAT gateway The company needs to optimize the cost of the platform without decreasing the platform's availability Which combination of steps will meet these requirements? (Select TWO)",
       "options": [
@@ -1839,9 +1844,9 @@
     "wrongOptionsExplanation": "A. Requester Pays only works for authenticated requesters. Anonymous users cannot use it. B. Transfer Acceleration improves upload\nspeed but adds charges, so it does not optimize cost. D. Moving to Glacier Instant Retrieval after 1 day is wrong. Videos are accessed\noften in the first 180 days, so you would pay retrieval fees and a 90-day minimum.",
     "plainWords": "Videos are hot for 180 days then rarely read. Users upload large files on poor connections, leaving failed multipart uploads behind.\nCut S3 cost.",
     "keyPoints": "• Abort incomplete multipart uploads lifecycle rule = easy S3 savings. • Match the storage class to when access actually drops.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
+    "sourceWarning": "Exact Certstopics Q58 and reordered PassLeaderVCE match C+E. Q83 near-duplicate; Requester Pays incompatible with anonymous access; Standard-IA 30-day minimum and retrieval charges.",
     "review": {
-      "reviewedAt": "2026-11-02",
+      "reviewedAt": "2026-11-03",
       "auditStatus": "aws-docs-verified-external-variant-pending",
       "originalAnswers": [
         "C",
@@ -1856,9 +1861,13 @@
         "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html",
         "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html"
       ],
-      "externalQuestionLinks": [],
-      "crossVerificationStatus": "official-aws-docs-verified-external-exam-variants-not-checked",
-      "auditNote": "C,E confirmed by AWS docs. AbortIncompleteMultipartUpload after 7 days removes billable orphaned parts; completed videos transition from Standard to Standard-IA after 180 days. Standard-IA incurs retrieval fees and has 30-day minimum storage duration. September 2024 128KB lifecycle default change not material to mostly >100MB videos.",
+      "externalQuestionLinks": [
+        "https://www.certstopics.com/questions/legit-sap-c02-exam-download.html",
+        "https://itexambus.passleadervce.com/articles/nov-2025-sap-c02-dumps-with-100-verified-q-as-pass-guarantee-or-full-refund-q168-q183/",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html"
+      ],
+      "crossVerificationStatus": "exact-external-variants-checked",
+      "auditNote": "Exact Certstopics Q58 and reordered PassLeaderVCE match C+E. Q83 near-duplicate; Requester Pays incompatible with anonymous access; Standard-IA 30-day minimum and retrieval charges.",
       "wrongOptionsReason": {
         "A": "Requester Pays cannot serve anonymous requester scenario.",
         "B": "Transfer Acceleration targets upload performance and adds fees, not storage cost savings.",
@@ -1876,9 +1885,10 @@
         ],
         "status": "Q83 same scenario and same C,E answer; Q305 upload performance, not storage-cost objective"
       },
-      "diagramConcept": "Completed video: S3 Standard days 0-180 -> S3 Standard-IA after day 180; incomplete multipart parts -> abort after 7 days"
+      "diagramConcept": "Completed video: S3 Standard days 0-180 -> S3 Standard-IA after day 180; incomplete multipart parts -> abort after 7 days",
+      "status": "verified-aws-and-multiple-external-variants"
     },
-    "answerStatus": "aws-docs-verified-external-variant-pending"
+    "answerStatus": "verified-aws-and-multiple-external-variants"
   },
   {
     "id": 33,
@@ -5508,10 +5518,10 @@
     "wrongOptionsExplanation": "A correct: Aurora encrypted and TLS. B not the intended pair: standalone RDS PostgreSQL is not the Aurora cluster required by C; engine-specific RDS activity stream support differs. C correct: independent audit pipeline and immutable compliance retention. D pgAudit to CloudWatch Logs can capture configured activity but lacks the stronger separation from DBA control afforded by Database Activity Streams; logging configuration and audit coverage matter. E governance Object Lock can be bypassed by authorized principals, unlike compliance mode.",
     "plainWords": "Encrypt the patient database, stream audit activity outside DBA control, and lock audit files against deletion for ten years.",
     "keyPoints": "Aurora PostgreSQL Database Activity Streams -> Kinesis Data Streams -> Firehose -> S3 Object Lock compliance mode. Encryption at rest plus TLS in transit. Activity stream access controlled by IAM, not DBAs.",
-    "sourceWarning": "C omits explicit Kinesis Data Streams intermediary, and database activity stream must be configured with suitable audit policy. S3 Object Lock compliance mode requires versioning and correct retention configuration. Database activity streams availability varies by engine/version/Region.",
+    "sourceWarning": "C omits explicit Kinesis Data Streams intermediary, and database activity stream must be configured with suitable audit policy. S3 Object Lock compliance mode requires versioning and correct retention configuration. Database activity streams availability varies by engine/version/Region. Exact SPOTO variant A+C found; a second independently checked exact external variant remains unconfirmed. Database Activity Streams emit through Kinesis Data Streams before Firehose; ensure audit coverage, encryption, versioning and S3 Object Lock compliance 10-year retention. Aurora DAS engine/region support matters.",
     "review": {
-      "status": "aws-docs-verified-external-variant-unconfirmed",
-      "reviewedAt": "2026-11-02",
+      "status": "aws-verified-one-external-exact-variant-found",
+      "reviewedAt": "2026-11-03",
       "verifiedAnswers": [
         "A",
         "C"
@@ -5521,12 +5531,18 @@
         "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.Enabling.html",
         "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html"
       ],
-      "auditNote": "A+C intended. Aurora Database Activity Streams emits to an Aurora-managed Kinesis Data Stream; Data Firehose can consume it. Audit policies and stream reliability need validation. C omits intermediary. Compliance mode 10-year lock requires Object Lock and versioning. B also meets encryption/TLS independently, but does not establish intended Aurora architecture; question wording underdetermines uniqueness of A vs B. D pgAudit logging may be viable with strong controls but does not offer same built-in audit separation. External exact question variant not confirmed.",
+      "auditNote": "Exact SPOTO variant A+C found; a second independently checked exact external variant remains unconfirmed. Database Activity Streams emit through Kinesis Data Streams before Firehose; ensure audit coverage, encryption, versioning and S3 Object Lock compliance 10-year retention. Aurora DAS engine/region support matters.",
       "duplicateAudit": {
         "status": "No exact duplicate confirmed; related audit/security scenarios require separate verification."
-      }
+      },
+      "externalQuestionLinks": [
+        "https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part1",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html"
+      ],
+      "crossVerificationStatus": "one-exact-external-variant-found-second-unconfirmed"
     },
-    "answerStatus": "aws-docs-verified-external-variant-unconfirmed"
+    "answerStatus": "aws-verified-one-external-exact-variant-found"
   },
   {
     "id": 116,
@@ -6609,10 +6625,10 @@
     "wrongOptionsExplanation": "A correct: SSM Agent running. B correct: suitable IAM permissions, though Default Host Management Configuration is an alternative. C not mandatory: interface endpoints are optional when internet egress is available, but can be required for isolated subnets. D Application Discovery Agent is unrelated to SSM registration. E service-linked roles are not the normal per-instance prerequisite.",
     "plainWords": "A public EC2 IP does not automatically make a server appear in Systems Manager. Check the SSM Agent and permissions, then network connectivity.",
     "keyPoints": "SSM Agent; IAM instance profile/AmazonSSMManagedInstanceCore or Default Host Management Configuration; outbound HTTPS 443 to SSM endpoints; VPC endpoints optional if internet connectivity exists.",
-    "sourceWarning": "Historical reference to 'EC2 VM Import feature of AWS Import/Export' is dated; current terminology VM Import/Export. B wording overstates instance profile necessity under Default Host Management Configuration.",
+    "sourceWarning": "Historical reference to 'EC2 VM Import feature of AWS Import/Export' is dated; current terminology VM Import/Export. B wording overstates instance profile necessity under Default Host Management Configuration. Exact ExamTopics Q492 and ExamsVCE agree A+B. Modern Default Host Management Configuration may replace instance-profile permission path; verify agent, permissions and outbound HTTPS connectivity. VM Import/Export terminology updated.",
     "review": {
-      "reviewedAt": "2026-11-02",
-      "status": "aws-docs-verified-external-exact-variant-not-confirmed",
+      "reviewedAt": "2026-11-03",
+      "status": "verified-aws-and-multiple-exact-external-variants",
       "verifiedAnswers": [
         "A",
         "B"
@@ -6622,7 +6638,7 @@
         "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html",
         "https://docs.aws.amazon.com/systems-manager/latest/userguide/troubleshooting-managed-nodes-using-ssm-cli.html"
       ],
-      "auditNote": "A+B intended. Agent running, permissions via instance profile or Default Host Management Configuration, and HTTPS endpoint reachability needed. Public IP alone does not guarantee internet route. C VPC endpoints optional with working public endpoint access. D Application Discovery Agent unrelated. E service-linked roles not normal EC2 registration prerequisite. Original AWS Import/Export terminology outdated. No exact external question variant verified; don't claim independent external agreement.",
+      "auditNote": "Exact ExamTopics Q492 and ExamsVCE agree A+B. Modern Default Host Management Configuration may replace instance-profile permission path; verify agent, permissions and outbound HTTPS connectivity. VM Import/Export terminology updated.",
       "duplicateAudit": {
         "status": "No exact duplicate confirmed; keyword-related questions only",
         "relatedIds": [
@@ -6674,9 +6690,15 @@
           644,
           653
         ]
-      }
+      },
+      "externalQuestionLinks": [
+        "https://www.examtopics.com/discussions/amazon/view/142926-exam-aws-certified-solutions-architect-professional-sap-c02/",
+        "https://www.examsvce.com/sap-c02/questiona-solutions-architect-is-importing-a-vm-question-answer.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-instance-permissions.html"
+      ],
+      "crossVerificationStatus": "exact-external-variants-checked"
     },
-    "answerStatus": "aws-docs-verified-external-exact-variant-not-confirmed"
+    "answerStatus": "verified-aws-and-multiple-exact-external-variants"
   },
   {
     "id": 141,
