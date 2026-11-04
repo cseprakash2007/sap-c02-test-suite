@@ -2517,22 +2517,24 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
+    "explanation": "B is the only feasible supplied low-operations answer: AWS Shield Advanced protects ALBs and works with AWS WAF for application-layer DDoS mitigation. For automatic per-attack WAF rule deployment, automatic application-layer mitigation must be explicitly configured; adding the ALB alone does not enable that feature. As of March 26, 2026, AWS recommends the AWS WAF Anti-DDoS Managed Rule Group as the default for HTTP request floods, superseding legacy Shield Advanced L7 Auto Mitigation. That modern choice is not offered in this question.",
     "wrongOptionsExplanation": "A. A CloudWatch alarm cannot directly add an IP to a web ACL, and constantly changing IPs make manual lists useless. C. Route\ntables do not support deny rules. Only network ACLs and security groups filter traffic, so this design is not possible as written. D.\nBlocking whole countries by guessing is crude and Route 53 geolocation routing does not block traffic.",
     "plainWords": "Application-layer attacks come from many different IP addresses and cause traffic spikes. A WAF web ACL already protects the ALB.\nYou want the least operational work. Why my answer (B) works AWS Shield Advanced adds automatic application-layer DDoS\ndetection and mitigation on top of AWS WAF. It can create and apply WAF rules automatically in response to an attack, so you do not\nchase IP addresses by hand. You enable it and add the ALB as a protected resource.",
     "keyPoints": "• Layer 7 DDoS with minimal effort = Shield Advanced + WAF (automatic mitigation). • A WAF rate-based rule is the other common\ntool for request floods.\nHEADS-UP ON THIS QUESTION\n• The bank key says C, but a route table cannot hold a deny rule, so that option cannot work as written. B is the answer widely\naccepted for this scenario. If you see this on the real exam, look for Shield Advanced or a WAF rate-based rule.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "Source key C invalid: VPC subnet route tables cannot deny traffic by source IP. B is feasible; WAF rate-based rules would be preferable but are not offered.",
+    "sourceWarning": "EXAM ANSWER DISPUTE: ExamTopics/FreeCram display suggested C, but subnet route tables cannot add source-IP deny rules. B is the defensible choice among options. Wording is incomplete: Shield Advanced protected-resource enrollment alone does not guarantee automatic L7 response. OUTDATED 2026: AWS WAF Anti-DDoS Managed Rule Group is the new default HTTP flood mitigation solution, superseding legacy Shield Advanced L7AM. Exact external variants located at ExamTopics SAP-C02 topic 1 Q159 and FreeCram topic 3 Q465; original bank duplicate check found no other exact stem in 674.",
     "review": {
-      "reviewedAt": "2026-10-28",
-      "auditStatus": "aws-docs-verified-correction",
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "aws-docs-and-external-variants-verified-2026",
       "originalAnswers": [
         "C"
       ],
       "references": [
-        "https://docs.aws.amazon.com/waf/latest/developerguide/ddos-app-layer-web-ACL-and-rbr.html",
-        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html"
+        "https://docs.aws.amazon.com/waf/latest/developerguide/ddos-automatic-app-layer-response.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/waf-anti-ddos.html",
+        "https://www.examtopics.com/discussions/amazon/view/97671-exam-aws-certified-solutions-architect-professional-sap-c02/",
+        "https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-3-question-465-discussion-p1282174.html"
       ],
-      "auditNote": "C invalid: subnet route tables do not implement source-IP deny rules. B is the only feasible supplied managed mitigation, although WAF rate-based rules are a better low-overhead recommendation not offered."
+      "auditNote": "Q34 (11/239): keep B; source key C is technically impossible (route table deny rule). New AWS 2026 Anti-DDoS AMR recommendation means historical answer requires an outdated-guidance flag. No exact stem duplicate across 674."
     },
     "answerStatus": "corrected-aws-docs"
   },
