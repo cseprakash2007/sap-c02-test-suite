@@ -28837,13 +28837,25 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified A+D. A: extend existing compatible Aurora MySQL DB cluster into an Aurora Global Database by adding a secondary Aurora DB cluster in another AWS Region; storage-level asynchronous replication typically under a second, cross-Region recovery RTO in minutes and RPO typically seconds. D: convert DynamoDB Regional table to multi-Region eventual-consistency global table by adding a second Region; managed replication and local endpoints support multi-Region resilience. Official: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-attaching.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database-disaster-recovery.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-global-table-design.html",
+    "wrongOptionsExplanation": "A correct: add secondary Aurora cluster Region using Aurora Global Database. B incorrect: Aurora replicates the entire DB cluster/storage volume, not each individual MySQL table as separate Region. C incorrect: scheduled backups are not live cross-Region data tiers and backup frequency/restore time may violate minutes-level RPO/RTO. D correct: add Region to DynamoDB global table for cross-Region replication and multi-active access. E incorrect: Route 53 Application Recovery Controller manages recovery readiness/routing, not database backup and restore.",
+    "plainWords": "Keep Aurora and DynamoDB running in both Regions before a disaster. Aurora Global Database continuously replicates its cluster to a standby Region; DynamoDB global tables continuously replicate table items between Regions. Backups alone would take too long to restore.",
+    "keyPoints": "A+D; Aurora Global Database: one writer Region and read-only secondary, async replication, managed failover/switchover promotion. DynamoDB MREC global tables: active-active reads/writes, asynchronous last-writer-wins replication. RTO=duration to restore service; RPO=potential data loss in time. Backups alone do not deliver a live multi-Region data tier. Route 53 ARC is not database backup.",
+    "sourceWarning": "A is colloquial: adding a Region means creating/attaching a secondary Aurora DB cluster in an Aurora Global Database, not simply extending a single Regional cluster. Aurora async replication and failover do not strictly guarantee a few-minute RTO/RPO in every outage; a tested failover and traffic routing plan are needed. DynamoDB global tables default to MREC; AWS also supports MRSC with distinct creation constraints, and an existing populated MREC table cannot simply switch to MRSC. DynamoDB has no global endpoint; app should use Region-local endpoint. AWS docs now allow up to 10 Aurora secondary Regions, whereas older sources say five. Option E mischaracterizes ARC's purpose.",
+    "review": {
+      "status": "verified-with-caveats",
+      "originalAnswer": [
+        "A",
+        "D"
+      ],
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "AWS Aurora Global Database add-region and failover docs plus DynamoDB global tables and Route 53 ARC docs verified. External exact-key mirrors DumpsTech, FreeCram 2026 and PassTest reordered choices. All 674 stems and complete option sets scanned: no exact duplicate. Similar recovery themes Q326/Q499, not equivalent."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 640,
