@@ -97,9 +97,54 @@
     "wrongOptionsExplanation": "A. More Lambda memory does not reduce connections. Closing connections after each call can make the churn worse and increases\nconnection setup cost. B. ElastiCache helps repeated reads but does not fix the connection explosion for writes and uncached\nqueries. It also needs application changes. D. Opening the connection outside the handler reuses it only inside one warm execution\nenvironment. During a big spike there are many environments, so connections still multiply.",
     "plainWords": "A flash sale makes Lambda scale out. Each concurrent Lambda opens its own database connection, so the PostgreSQL instance runs\nout of connections and CPU.",
     "keyPoints": "• Lambda + relational database + \"too many connections\" = RDS Proxy. • RDS Proxy also shortens failover time and can use IAM\nauthentication and Secrets Manager.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "RDS Proxy controls connection pressure, but is not a general solution to high CPU from expensive SQL. Session pinning can limit multiplexing; monitor proxy borrow latency and database CPU.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "status": "verified",
+      "originalAnswers": [
+        "C"
+      ],
+      "verifiedAnswers": [
+        "C"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-rds.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy-best-practices.usage-scenarios.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.howitworks.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=31",
+        "https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf",
+        "https://www.salesforcexamdumps.com/sap-c02-practice-questions/6"
+      ],
+      "wrongOptionsReason": {
+        "A": "Lambda memory does not control DB connection count; repeated closing causes churn.",
+        "B": "Caching helps cacheable reads but does not directly control DB connection growth for uncached queries or writes.",
+        "C": "RDS Proxy pools and multiplexes connections, limiting backend database connection overhead during Lambda concurrency spikes.",
+        "D": "Warm-environment connection reuse is local to each environment; concurrency can still exhaust database connections."
+      },
+      "duplicateAudit": {
+        "scope": "674",
+        "exactDuplicates": [],
+        "relatedIds": [
+          41,
+          49,
+          158,
+          160,
+          230,
+          287,
+          326,
+          420,
+          429,
+          431,
+          570,
+          609
+        ],
+        "note": "Keyword-related questions require separate scenario comparison; not necessarily duplicates."
+      },
+      "auditNote": "RDS Proxy is best for connection surge; does not inherently cure expensive queries or CPU-intensive SQL. PostgreSQL session pinning may limit multiplexing."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 3,
