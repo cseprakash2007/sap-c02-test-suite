@@ -251,9 +251,45 @@
     "wrongOptionsExplanation": "A. A spread placement group has a different purpose (separate hardware) and supports at most 7 running instances per AZ. It does\nnot solve a capacity error. C. You cannot merge placement groups. D. Dedicated Hosts cannot be launched into a placement group,\nand they do not fix capacity.",
     "plainWords": "Instances live in a cluster placement group in one Availability Zone. Adding more fails with an insufficient capacity error.",
     "keyPoints": "• Capacity error in a cluster placement group: stop and start all instances (or relaunch them together) and retry. • Cluster = low\nlatency (one AZ). Spread = isolation. Partition = large distributed systems.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "Question omits explicit 'cluster' placement group strategy; stop/start all instances causes downtime, may lose instance-store data, and may still fail for lack of capacity. Reordered external variants use D for the same answer.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "status": "verified-b-with-cluster-strategy-implicit-and-downtime-caveat",
+      "originalAnswers": [
+        "B"
+      ],
+      "verifiedAnswers": [
+        "B"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-strategies.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/how-ec2-instance-stop-start-works.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cr-cpg.html"
+      ],
+      "externalQuestionLinks": [
+        "https://certempire.com/practice-tests/free-sap-c02-practice-questions/",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=30",
+        "https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf"
+      ],
+      "wrongOptionsReason": {
+        "A": "Spread placement group is for fault isolation and rack-level spread has maximum seven running instances per AZ, not minimum eight.",
+        "B": "AWS explicitly advises stopping and starting all existing cluster placement group instances then retrying launch; may relocate to suitable hardware.",
+        "C": "AWS does not support merging placement groups.",
+        "D": "Dedicated Hosts cannot be launched in placement groups."
+      },
+      "duplicateAudit": {
+        "scope": "674",
+        "exactDuplicates": [],
+        "relatedIds": [
+          40,
+          303
+        ],
+        "note": "Related placement/capacity scenarios require distinction; exact normalized stem match none."
+      },
+      "auditNote": "Cluster strategy is implied, not stated explicitly. Stop/start causes downtime and is not guaranteed to fix capacity. Prefer coordinated initial launch and consider cluster placement group On-Demand Capacity Reservations where supported."
+    },
+    "answerStatus": "verified-b-with-cluster-strategy-implicit-and-downtime-caveat"
   },
   {
     "id": 5,
