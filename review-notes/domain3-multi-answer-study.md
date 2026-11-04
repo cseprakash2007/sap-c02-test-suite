@@ -1457,3 +1457,82 @@ Scanned all 674 stems and full option texts. **No exact normalized-stem duplicat
 - Killexams PDF Q91 (exact five-option structure, **B+D**): https://killexams.com/demo-download/SAP-C02.pdf
 - TestMayor Q152 (five-option structure, consistent B+D): https://www.testmayor.com/SAP-C02-Practice-Test/13
 - DummyExams 2026 question #4 (paraphrased five-option variant, same architectural choices; answer is behind a reveal control): https://dummyexams.com/en/free-practice/sap-c02
+
+
+---
+
+# Q614 (51/58): DynamoDB unused-table cost optimization
+
+**Verified B + D + E (2026-11-03).** The original six option texts and question stem remain unchanged in \`questions.json\`; answerStatus updated from \`source-key-unverified\` to \`verified\` with caveats. Official AWS DynamoDB documentation directly recommends the same combination.
+
+## Original question
+
+A company has several Amazon DynamoDB tables in an AWS Region. Each table has more than 100,000 records and was created with default table settings. To reduce costs, the company needs to identify unused tables. However, the company must maintain the availability and current performance capability of the tables in case the company must use the tables in the future. Which combination of steps will meet these requirements? (Select THREE.)
+
+A. In Amazon CloudWatch, graph the sum of the ReadThrottleEvents metric and the sum of the WriteThrottleEvents metric for each table over a period of 1 month.
+
+B. In Amazon CloudWatch, graph the sum of the ConsumedReadCapacityUnits metric and the sum of the ConsumedWriteCapacityUnits metric for each table over a period of 1 month.
+
+C. Change the provisioned RCUs to 1 for the unused tables. Change the provisioned WCUs to 1 for the unused tables.
+
+D. Change the capacity mode of the unused tables to on-demand mode.
+
+E. Change the table class of the unused tables to DynamoDB Standard-Infrequent Access (DynamoDB Standard-IA).
+
+F. Purchase a reserved capacity of 1 RCU and 1 WCU for each unused table.
+
+## Explanation of all options
+
+- **A WRONG**: ReadThrottleEvents and WriteThrottleEvents measure throttling, not the presence or absence of traffic. Zero throttles can coexist with high use.
+- **B CORRECT**: use CloudWatch Sum of ConsumedReadCapacityUnits and ConsumedWriteCapacityUnits over a month (~30 days). Both zero implies no table read/write traffic in the observed period. Check global secondary indexes separately, and consider seasonal/periodic workloads.
+- **C WRONG**: 1 RCU/1 WCU still incurs provisioned charges, and would throttle sudden resumed demand; this fails the current-performance-capability requirement.
+- **D CORRECT**: on-demand capacity charges actual read/write requests, not idle provisioned throughput. The table remains online and can scale, subject to on-demand previous-peak scaling rules. Storage and backup costs persist.
+- **E CORRECT**: DynamoDB Standard-IA is cost-effective for storage-dominant infrequently accessed data; lower storage rates, higher request rates, same API, performance, availability, durability and scaling. Evaluate actual item size and request costs.
+- **F WRONG**: reserved capacity creates a term commitment to provisioned capacity and is not appropriate for idle tables with potentially variable future use.
+
+## Architecture
+
+\`\`\`mermaid
+flowchart TB
+  T["Existing DynamoDB tables"] --> CW["CloudWatch: 30 days of ConsumedReadCapacityUnits + ConsumedWriteCapacityUnits (Sum)"]
+  CW --> I{"Both read and write near zero?"}
+  I -->|No| ACTIVE["Active tables: review actual traffic and choose cost-effective capacity"]
+  I -->|Yes| OD["Switch idle table to on-demand capacity mode"]
+  OD --> IA["Switch to Standard-IA if storage dominates total cost"]
+  IA --> RESULT["Keep table available; pay storage + requests when used"]
+\`\`\`
+
+## 674-question duplicate and similar-framework check
+
+Compared all 674 question stems and option texts. **No exact normalized stem or identical complete option set** among the other 673. The top raw lexical matches were unrelated, so distinguish *semantic* relationships:
+- **Q145 (Domain 3):** weekly peaks; optimize provisioned capacity for an intermittently busy workload.
+- **Q197 (Domain 3):** bulk write activity once daily; on-demand capacity performance planning.
+- **Q274 (Domain 3):** latency-sensitive DynamoDB trading; optimize performance rather than unused storage.
+- **Q338 (Domain 3):** on-demand DynamoDB request scaling/throttling.
+- **Q563 (Domain 3):** provisioned-throughput exceeded on writes under increasing traffic.
+- **Q572 (Domain 3):** predictable daily peaks, a distinct capacity-planning case.
+
+## Defects, currency, and caveats
+
+1. **Default capacity ambiguity**: "created with default table settings" does not necessarily imply provisioned mode in every modern console or creation path; check actual BillingMode. The intended solution remains B+D+E.
+2. **Storage threshold**: 100,000 items alone does not prove Standard-IA wins. Compare GB stored and read/write request costs; AWS recommends IA specifically when storage dominates.
+3. **On-demand scaling nuance**: no idle throughput charge, but instant scaling is bounded by prior observed peak and growth/doubling behavior. Do not promise unlimited burst performance.
+4. **Monitoring nuance**: table-level consumed-capacity metrics exclude GSI-specific consumption. Check GSIs and longer seasonal activity windows.
+5. **Table-class changes**: DynamoDB allows changes between Standard and Standard-IA twice in 30 days. This is not a lifecycle tier with retrieval delay.
+6. **No obsolete AWS services** among options. Reserved capacity is valid for sustained provisioned workloads, not this use case.
+
+## Official AWS verification
+
+- AWS explicit unused-resource playbook (B, D and E): https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CostOptimization_UnusedResources.html
+- CloudWatch metrics and Sum semantics: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html
+- DynamoDB table classes: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.TableClasses.html
+- AWS DynamoDB FAQ (table class tradeoffs and on-demand): https://aws.amazon.com/dynamodb/faqs/
+- DynamoDB features (scaling and Standard-IA): https://aws.amazon.com/dynamodb/features/
+
+## External exam mirrors (independent cross-check of published key, not necessarily independent source banks)
+
+- CertEnsure Q81, BDE: https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html
+- ExamCollection Q77, same question/options, answer hidden: https://www.examcollection.us/exam/SAP-C02-question-answer-6.html
+- SPOTO Q39, BDE: https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2
+- Pass4Success Topic 4 Q69, BDE: https://www.pass4success.com/amazon/discussions/exam-sap-c02-topic-4-question-69-discussion
+- CertsMania Q19, BDE: https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf
