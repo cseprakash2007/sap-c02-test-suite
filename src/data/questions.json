@@ -29770,13 +29770,23 @@
       "C"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified A+C: AWS Direct Connect private VIF connects on premises privately to a networking VPC (with appropriate VGW/DXGW), and S3 interface endpoint (AWS PrivateLink) provides private-IP S3 access across accounts with authorization. https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html",
+    "wrongOptionsExplanation": "B public VIF targets public AWS service endpoints rather than private VPC interface endpoint. D S3 gateway endpoint cannot be used from on premises over Direct Connect. E VPC peering between bucket-owner accounts is unnecessary because S3 buckets are not inside VPCs.",
+    "plainWords": "Direct Connect private VIF gets on-premises traffic into the VPC; S3 interface endpoint privately connects the VPC to S3 buckets in multiple accounts.",
+    "keyPoints": "A+C; S3 interface endpoint works over Direct Connect or VPN; S3 gateway endpoint does not extend to on-premises; cross-account bucket permissions required; configure DNS, endpoint SG, policies; VIF alone requires appropriate gateway attachment.",
+    "sourceWarning": "Question punctuation/spacing defective; option A omits private VIF gateway attachment detail. External CertEmpire Q26 and FreeCram Q37 give A+C; Exam-Tests Q55 incorrectly gives A+D, contradicting AWS gateway endpoint limitations. Exact normalized stem duplicate not found among 674; related Q463, Q44, Q346, Q9, Q106, Q189, Q268.",
+    "review": {
+      "status": "verified",
+      "verifiedAt": "2026-11-03",
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html",
+        "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html",
+        "https://certempire.com/demo-files/sap-c02-demo-certempire.pdf",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-wants-to-send-data-from-its-on-premises-systems-to-amazon-s3-buckets-the-company-created-the",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2024-12-04.q106.html?p=12"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 665,
