@@ -220,3 +220,27 @@ flowchart LR
 **External exact/related variants:** [CertEnsure Q201 exact key C](https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html); [Pass2Lead similar question and conflicting A preference; full page blocked](https://www.pass2lead.com/sap-c02/questions.html). Source conflict remains unresolved; not two independently confirmed matching keys.
 
 **Duplicate audit:** Exact normalized stem duplicates across 674: none. Related candidates: 30, 41, 58, 79, 119, 123, 187, 200, 203, 228, 233, 242, 297, 312, 338, 387, 402, 464, 494, 552, 570, 587, 621, 659, 662; keyword matches are not verified duplicates.
+
+## Q31 — 10 of 239 — Compute Optimizer for EC2 and EBS rightsizing
+
+**Original stem:** A solutions architect must analyze a company's Amazon EC2 Instances and Amazon Elastic Block Store (Amazon EBS) volumes to determine whether the company is using resources efficiently The company is running several large, high-memory EC2 instances lo host database dusters that are deployed in active/passive configurations The utilization of these EC2 instances varies by the applications that use the databases, and the company has not identified a pattern The solutions architect must analyze the environment and take action based on the findings. Which solution meets these requirements MOST cost-effectively?
+
+**Original options:**
+- **A.** Create a dashboard by using AWS Systems Manager OpsConter Configure visualizations tor Amazon CloudWatch metrics that are associated with the EC2 instances and their EBS volumes Review the dashboard periodically and identify usage patterns Right size the EC2 instances based on the peaks in the metrics
+- **B.** Turn on Amazon CloudWatch detailed monitoring for the EC2 instances and their EBS volumes Create and review a dashboard that is based on the metrics Identify usage patterns Right size the FC? instances based on the peaks In the metrics
+- **C.** Install the Amazon CloudWatch agent on each of the EC2 Instances Turn on AWS Compute Optimizer, and let it run for at least 12 hours Review the recommendations from Compute Optimizer, and right size the EC2 instances as directed
+- **D.** Sign up for the AWS Enterprise Support plan Turn on AWS Trusted Advisor Wait 12 hours Review the recommendations from Trusted Advisor, and rightsize the EC2 instances as directed
+
+**Verified answer C.** Install CloudWatch agent on high-memory EC2 database hosts to collect guest memory utilization, opt in to AWS Compute Optimizer, analyze historical usage and review EC2/EBS rightsizing recommendations. Three exact independent exam publications agree: ExamTopics Q130, ExamsVCE and CertsMania Q49.
+
+**Option review:** A OpsCenter manual dashboards and peak sizing are subjective and labor-intensive; B detailed monitoring adds frequency and cost but not guest memory metrics or automated rightsizing; C memory-aware Compute Optimizer is best; D Enterprise Support costs unnecessarily and Trusted Advisor isn't as granular for memory-aware instance/EBS recommendations.
+
+**Architecture:** EC2 active/passive database hosts + attached EBS → EC2 standard metrics + CloudWatch agent guest memory and EBS I/O → CloudWatch → Compute Optimizer → review recommendations/performance risk → test and safely rightsize EC2 and EBS.
+
+**Defects/current caveats:** Original OCR typos: 'OpsConter', 'lo host database dusters', 'FC?'. 'Wait at least 12 hours' is misleading: >=30 hours EC2 metrics in past 14 days and EBS attached to running instance >=30 consecutive hours; analysis may take up to 24 hours. Default 14-day lookback, optional free 32-day or paid 93-day enhanced metrics; default Compute Optimizer recommendations no extra charge but CloudWatch custom metrics can incur fees. Do not size passive database nodes only on low standby utilization; must support failover and peaks. Enable Cost Explorer for cost savings estimates and consider existing RIs/Savings Plans.
+
+**AWS sources:** [requirements](https://docs.aws.amazon.com/compute-optimizer/latest/ug/requirements.html); [memory metrics](https://docs.aws.amazon.com/compute-optimizer/latest/ug/ec2-metrics-analyzed.html); [EC2 recommendations](https://docs.aws.amazon.com/compute-optimizer/latest/ug/view-ec2-recommendations.html); [EBS recommendations](https://docs.aws.amazon.com/compute-optimizer/latest/ug/view-ebs-recommendations.html); [pricing](https://aws.amazon.com/compute-optimizer/pricing/).
+
+**Exact external variants:** [ExamTopics Q130](https://www.examtopics.com/discussions/amazon/view/95543-exam-aws-certified-solutions-architect-professional-sap-c02/) key C; [ExamsVCE](https://www.examsvce.com/sap-c02/a-solutions-architect-must-analyze-a-companys-question-answer.html) key C; [CertsMania Q49 p61](https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf) exact options.
+
+**Duplicate audit:** Exact normalized stem matches across all 674: none. Related candidates: 27, 56, 60, 106, 130, 144, 167, 168, 172, 212, 216, 254, 262, 264, 265, 266, 295, 313, 316, 364, 450, 458, 461, 473, 480, 575, 644, 645; keyword matches not established duplicates.
