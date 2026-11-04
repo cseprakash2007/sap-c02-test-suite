@@ -1536,3 +1536,72 @@ Compared all 674 question stems and option texts. **No exact normalized stem or 
 - SPOTO Q39, BDE: https://cciedump.spoto.net/exam-questions/free-aws-sap-c02-practice-questions-answers-2026-part2
 - Pass4Success Topic 4 Q69, BDE: https://www.pass4success.com/amazon/discussions/exam-sap-c02-topic-4-question-69-discussion
 - CertsMania Q19, BDE: https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf
+
+
+---
+
+# Q619 (52/58): Lambda timeout -> EventBridge ECS Fargate
+
+**Verified A + D (2026-11-03); original question/options preserved.**
+
+**Original stem:** A video processing company uses an AWS Lambda function to handle image processing tasks. An Amazon EventBridge rule that matches the event pattern when a new image is uploaded to an Amazon S3 bucket invokes the Lambda function. The processing task initially operated without errors. The Lambda function now encounters frequent timeout errors. The Lambda function is configured with the maximum timeout value. A solutions architect must refactor the application’s architecture to mitigate invocation failures. Which combination of steps will meet these requirements with the LEAST operational overhead? Select TWO.
+
+**Original options**
+- A. Build a Docker container image with the application code for deployment. Store the container image in Amazon ECR.
+- B. Build a Docker container image with the application code for deployment. Store the container image in an S3 bucket with S3 Versioning enabled.
+- C. Create a new Amazon ECS deployment with the Amazon EC2 launch type. Configure the ECS task definition to use the new Docker container image. Configure the Lambda function to invoke an ECS task by using the ECS task definition when a new file arrives in Amazon S3.
+- D. Create a new Amazon ECS deployment with the Fargate launch type. Configure the ECS task definition to use the new Docker container image. Configure EventBridge to invoke an ECS task by using the ECS task definition.
+- E. Create a new AWS Step Functions state machine. Configure the state machine to use the new Docker container image. Configure the Lambda function to invoke the state machine when a new file arrives in Amazon S3.
+
+**Option analysis:** A correct: ECR hosts ECS images. B wrong: S3 object versioning is not an ECS container registry. C wrong: EC2 host management and unnecessary Lambda. D correct: EventBridge can directly invoke ECS RunTask on Fargate, bypassing Lambda's 15-minute limit. E wrong: Step Functions orchestrates tasks, does not execute a Docker image by itself; proposed Lambda is unnecessary.
+
+\`\`\`mermaid
+flowchart LR
+  S3["S3 object created"] --> EB["EventBridge rule"]
+  EB --> ECS["ECS RunTask / Fargate"]
+  ECR["ECR container image"] --> ECS
+  ECS --> OUT["Long-running image/video processing"]
+\`\`\`
+
+**Nuances:** Lambda maximum timeout is 900 seconds; Fargate avoids host management but requires task failure monitoring and idempotent processing. EventBridge target invocation success does not mean container processing succeeded. "Video processing" versus "new image" is minor imprecise wording. Compare Q323 (image processing but different failure mode); no exact duplicate found.
+
+**Official AWS docs:** https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html ; https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-eventbridge.html
+
+**External variants:** https://www.examcollection.us/exam/SAP-C02-question-answer-6.html ; external exam mirrors corroborate A+D, but are not independently authoritative.
+
+---
+
+# Q622 (53/58): Automatic high availability for EC2, RDS MariaDB, Redis
+
+**Verified A + D + F (2026-11-03); original question/options preserved.**
+
+**Original stem:** A company is hosting a critical application on a single Amazon EC2 instance. The application uses an Amazon ElastiCache for Redis single-node cluster for an in-memory data store. The application uses an Amazon RDS for MariaDB DB instance for a relational database. For the application to function, each piece of the infrastructure must be healthy and must be in an active state. A solutions architect needs to improve the application's architecture so that the infrastructure can automatically recover from failure with the least possible downtime. Which combination of steps will meet these requirements? (Select THREE.)
+
+**Original options**
+- A. Use an Elastic Load Balancer to distribute traffic across multiple EC2 instances. Ensure that the EC2 instances are part of an Auto Scaling group that has a minimum capacity of two instances.
+- B. Use an Elastic Load Balancer to distribute traffic across multiple EC2 instances Ensure that the EC2 instances are configured in unlimited mode.
+- C. Modify the DB instance to create a read replica in the same Availability Zone. Promote the read replica to be the primary DB instance in failure scenarios.
+- D. Modify the DB instance to create a Multi-AZ deployment that extends across two Availability Zones.
+- E. Create a replication group for the ElastiCache for Redis cluster. Configure the cluster to use an Auto Scaling group that has a minimum capacity of two instances.
+- F. Create a replication group for the ElastiCache for Redis cluster. Enable Multi-AZ on the cluster.
+
+**Option analysis:** A correct: ELB with EC2 ASG minimum two gives redundant compute; place across AZs. B wrong: EC2 unlimited is CPU credit billing, not failover. C wrong: same-AZ read replica with manual promotion is not Multi-AZ automatic failover. D correct: RDS MariaDB Multi-AZ maintains a cross-AZ standby and automatically fails over. E wrong: ElastiCache replication group nodes are not EC2 ASG instances. F correct: Redis replication group with cross-AZ replicas and Multi-AZ automatic failover promotes a replica after primary failure.
+
+\`\`\`mermaid
+flowchart TD
+  U["Users"] --> LB["Elastic Load Balancer"]
+  LB --> EC2A["EC2 instance in AZ A"]
+  LB --> EC2B["EC2 instance in AZ B"]
+  EC2A & EC2B --> RDS["RDS MariaDB Multi-AZ"]
+  EC2A & EC2B --> REDIS["ElastiCache Redis replication group Multi-AZ"]
+  RDS --> STANDBY["Cross-AZ standby: automatic failover"]
+  REDIS --> REPLICA["Cross-AZ replica: automatic promotion"]
+\`\`\`
+
+**Nuances:** A should explicitly distribute across multiple AZs. F assumes one or more replicas in other AZs and automatic failover enabled. Redis asynchronous replication can lose latest unreplicated writes. Redis branding now also includes Redis OSS/Valkey. No original answer change needed.
+
+**Official AWS docs:** https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-benefits.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZSingleStandby.html ; https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html
+
+**External variants:** https://www.examsvce.com/sap-c02/a-company-is-hosting-a-critical-application-question-answer.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2024-05-06.q201/a-company-is-hosting-a-critical-application-on-a-single-amazon-ec2-instance-the-application-uses-an
+
+**Duplicate audit:** Neither Q619 nor Q622 has an exact normalized stem or identical full option set in the 674-question dataset. Related Q323 has a distinct image-processing failure mode.
