@@ -1829,3 +1829,69 @@ External mirrors may share question banks; AWS docs provide independent technica
 **External variants:** CertEmpire Q26 https://certempire.com/demo-files/sap-c02-demo-certempire.pdf ; FreeCram Q37 https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-wants-to-send-data-from-its-on-premises-systems-to-amazon-s3-buckets-the-company-created-the ; conflicting Exam-Tests Q55 https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2024-12-04.q106.html?p=12
 
 **Domain 3 multi-answer sequence complete: 58/58.**
+
+
+# Consolidation remediation — Q63, Q210, Q428, Q469, Q533 (2026-11-03)
+
+**Evidence boundary:** Current AWS documentation was checked for technical semantics. The existing review records contain multiple external exam variants, but their exact live content was not independently re-fetched for every question in this pass. Do not mark the five as universally verified. Historical keys remain in the question dataset except for added, explicitly reconstructed Q533 option JSON.
+
+## Q63 — ALB health check coupled to overloaded RDS MySQL
+Original **A+E**, technical recommendation **B+E**, external exact variant unresolved.
+- A invalid as worded: standard RDS MySQL read replicas have individual endpoints; no single managed reader endpoint (Aurora has one).
+- B recommended: lightweight ALB HTTP health endpoint, separate Route 53 full-stack health check, CloudWatch alert.
+- C invalid: ALB health checks use HTTP/HTTPS, not TCP.
+- D invalid: CloudWatch high-load RDS recovery action is not available as stated.
+- E recommended for cacheable repeated reads: ElastiCache reduces RDS read load; invalidation and TTL are application responsibilities.
+Architecture: Users → ALB → EC2 → ElastiCache → RDS; ALB /health checks web tier; Route53 product page health check → CloudWatch alarm.
+Official: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html .
+
+## Q210 — Step Functions all-failure notification
+Original and historical intended **A+B+C**, but cannot guarantee notification for ALL error types.
+- A SNS email subscription is valid.
+- B Step Functions SNS Publish integration Task is valid when properly configured.
+- C States.ALL Catch is valid for catchable Task/Map/Parallel errors; cannot catch States.Runtime.
+- D SES address verification is unnecessary for SNS.
+- E SES task is not the selected SNS design.
+- F States.Runtime is terminal and source uses incorrect lowercase error prefix; not a universal Catch.
+Architecture: Step Functions Task/Map/Parallel → Catch States.ALL → SNS Publish → email; separately Standard execution FAILED/TIMED_OUT/ABORTED → EventBridge → SNS (best effort).
+Official: https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html ; https://docs.aws.amazon.com/step-functions/latest/dg/eventbridge-integration.html . External recorded variants: CertEmpire Q35 and CramPDF reordered variant; live match not re-fetched.
+
+## Q428 — CloudFront cost / App Runner / S3 archival
+Historical **B+E**, **no fully valid pair**.
+- A expires content without retention justification.
+- B Deep Archive may save money only with long retention and slow restoration acceptable; not justified merely by infrequent access after 30 days.
+- C App Runner does not expose Spot Instances.
+- D Aurora read-replica scaling is unrelated to the given App Runner and S3 architecture.
+- E incorrectly says CloudFront Price Class 200 is Europe/US only; Price Class 100 is the cheaper Europe-suitable class.
+Architecture: Europe viewers → CloudFront Price Class 100 → App Runner/static S3; uploads → lifecycle to suitable infrequent-access tier depending on retrieval/retention.
+Official: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/PriceClass.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html . Existing records cite Certstopics/DumpsPedia B+E, but both repeat defective semantics.
+
+## Q469 — CloudFront HTTPS redirect
+Historical **D+E+F**, correct repaired **Select TWO D+F**.
+- A ALB has HTTP/HTTPS listeners, not TCP passthrough.
+- B S3 aws:SecureTransport deny policy is useful defense-in-depth but does not implement viewer redirect; optional.
+- C S3 website endpoint cannot provide HTTPS redirect for this ALB-origin architecture.
+- D correct: CloudFront origin protocol HTTPS Only to ALB.
+- E wrong: viewer HTTPS Only returns 403 for HTTP, and conflicts with F for same cache behavior.
+- F correct: viewer Redirect HTTP to HTTPS; 301 for GET/HEAD, 307 for supported HTTP/1.1+ other methods; older HTTP versions may get 403.
+Architecture: HTTP viewer → CloudFront redirect → HTTPS viewer → CloudFront → HTTPS ALB → Lambda → S3.
+Official: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-viewers-to-cloudfront.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesOrigin.html . Existing external copies DumpsTech, ExamCollection and P2PExams repeat flawed D+E+F.
+
+## Q533 — Cross-account S3 access; recovered policy JSON
+Original **C+D** conceptually intended, **not fully functional for ListBucket**. Dataset option JSON was absent; B–E now contain reconstructed policy text labeled as such from previously stored external variant extraction, NOT byte-exact source.
+- A CORS is browser cross-origin behavior, not cross-account IAM permission.
+- B recovered bucket policy lacks Principal, so cannot grant external principal as intended.
+- C recovered bucket policy names Account B IAM user but puts s3:ListBucket against object ARN; add bucket ARN for ListBucket.
+- D recovered IAM user identity policy has correct structure (no Principal), but similarly lacks bucket ARN for ListBucket.
+- E recovered identity policy incorrectly contains Principal.
+Corrected minimal **Account A bucket policy**: 
+```json
+{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::ACCOUNT_B_ID:user/User_DataProcessor"},"Action":"s3:ListBucket","Resource":"arn:aws:s3:::AccountABucketName"},{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::ACCOUNT_B_ID:user/User_DataProcessor"},"Action":"s3:GetObject","Resource":"arn:aws:s3:::AccountABucketName/*"}]}
+```
+Corrected minimal **Account B identity policy**:
+```json
+{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"s3:ListBucket","Resource":"arn:aws:s3:::AccountABucketName"},{"Effect":"Allow","Action":"s3:GetObject","Resource":"arn:aws:s3:::AccountABucketName/*"}]}
+```
+Replace ACCOUNT_B_ID and bucket placeholder; additional KMS permissions may be required for SSE-KMS. Architecture: Account B IAM user → identity policy + Account A bucket resource policy → Account A S3 objects. Official: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-policy-language-overview.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/security_iam_service-with-iam.html . Existing external variants: ExamGuru, Cert-Ready, FreeCram; source JSON recovery remains uncertain.
+
+**Remaining open:** exact external variant confirmation for Q63; source reconstruction provenance for Q533; Q210/Q428/Q469 require rewritten question wording to become technically unambiguous. No automatic answer-key replacement performed for disputed historical keys.
