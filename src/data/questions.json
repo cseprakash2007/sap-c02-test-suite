@@ -28424,13 +28424,25 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified C+E. C: CloudFront/S3 static frontend with API Gateway Lambda proxy backend is serverless, highly available, scales to Friday timesheet peaks without EC2/container management. E: store timesheet records in S3, query structured data using Athena SQL, and visualize monthly reports using QuickSight's Athena connector. AWS documentation: https://docs.aws.amazon.com/pdfs/whitepapers/latest/serverless-multi-tier-architectures-api-gateway-lambda/serverless-multi-tier-architectures-api-gateway-lambda.pdf ; https://aws.amazon.com/documentation-overview/athena/ ; https://docs.aws.amazon.com/quick/latest/userguide/athena.html ; https://repost.aws/knowledge-center/cloudfront-serve-static-website",
+    "wrongOptionsExplanation": "A incorrect: multi-AZ EC2 and scheduled Auto Scaling work but need server management, patching and scaling schedules. B incorrect: ECS with scheduled service scaling is viable but introduces container/service management and scheduling compared with serverless. C correct: S3/CloudFront frontend plus API Gateway/Lambda backend scales without managing servers. D incorrect: Redshift/QuickSight is technically valid for large warehouse analytics but unnecessarily heavyweight for periodic timesheet reports. E correct: S3 durable storage, Athena serverless SQL queries, QuickSight reporting via Athena minimize operations.",
+    "plainWords": "Host the mobile web interface as static files, submit timesheets through API Gateway and Lambda, store records in S3, then use Athena SQL and QuickSight to produce monthly payroll reports. No servers or container clusters to manage.",
+    "keyPoints": "C+E. Spiky Friday ingestion favors serverless API Gateway/Lambda. S3+CloudFront frontend. S3+Athena+QuickSight for periodic analytics. QuickSight connects to Athena, not directly to raw S3 as a SQL source. Athena needs schema and queryable formats; protect payroll PII with IAM and encryption.",
+    "sourceWarning": "Original has formatting errors: '(Select TWO}' mismatched bracket, 'AWSLambda', missing punctuation. E is imprecise: QuickSight uses Athena as the data source while Athena queries S3. S3 data must be queryable (e.g. CSV/JSON/Parquet, Glue Data Catalog). The question assumes a mobile web frontend; native mobile applications need not use S3/CloudFront for UI. Serverless still has concurrency, quota, security and reporting configuration considerations. Redshift is a valid service but not minimum overhead here.",
+    "review": {
+      "status": "verified-with-caveats",
+      "originalAnswer": [
+        "C",
+        "E"
+      ],
+      "verifiedAnswer": [
+        "C",
+        "E"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "AWS serverless multi-tier, Athena and QuickSight docs verified. CertEnsure Q121 and CertEmpire Q25 matching variants (CertEmpire key C,E). No exact stem or full option set duplicate in 674. Related Q166 financial reporting, Q403 S3 analytics, Q496 Athena logs, Q524 ORC data, Q658 Athena analysis; different scenarios."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 629,
