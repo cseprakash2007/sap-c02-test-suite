@@ -172,3 +172,27 @@ flowchart LR
 **Exact external variants:** [SecExams Q23, keyed A](https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/3); [meatsby Q23](https://meatsby.github.io/05.-infrastructure/01.-aws/02.-certification/03.-aws-sap-c02/01.-aws-sap-c02-practice-questions); [Exact2Pass Q8](https://www.exact2pass.com/main/questions.html?url=sap-c02-aws-certified-solutions-architect-professional); [FreeCram Q30](https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf).
 
 **Duplicate audit:** Exact normalized original/current stem matches across all 674: none. Related technology question IDs: 3, 8, 66, 97, 102, 128, 134, 143, 147, 153, 211, 259, 281, 314, 320, 324, 345, 405, 477, 479, 502, 504, 506, 517, 536, 576, 613, 615, 635, 673; keyword matches do not establish duplicates.
+
+## Q24 — 8 of 239 — NAT egress visibility and website blocking
+
+**Original stem:** A company has multiple applications that run on Amazon EC2 instances in private subnets in a VPC. The company has deployed multiple NAT gateways in multiple Availability Zones for internet access. The company wants to block certain websites from being accessed through the NAT gateways. The company also wants to identify the internet destinations that the EC2 instances access. The company has already created VPC flow logs for the NAT gateways' elastic network interfaces. Which solution will meet these requirements?
+
+**Original options:**
+- **A.** Use Amazon CloudWatch Logs Insights to query the logs and determine the internet destinations that the EC2 instances communicate with. Use AWS Network Firewall to blockthe websites.
+- **B.** Use Amazon CloudWatch Logs Insights to query the logs and determine the internet destinations that the EC2 instances communicate with. Use AWS WAF to block the websites.
+- **C.** Use the BytesInFromSource and BytesInFromDestination Amazon CloudWatch metrics to determine the internet destinations that the EC2 instances communicate with. Use AWS Network Firewall to block the websites.
+- **D.** Use the BytesInFromSource and BytesInFromDestination Amazon CloudWatch metrics to determine the internet destinations that the EC2 instances communicate with. Use AWS WAF to block the websites.
+
+**Verified answer A.** CloudWatch Logs Insights queries VPC Flow Logs for NAT gateway ENIs to identify destination IP addresses. AWS Network Firewall with correctly routed AZ-aware firewall endpoints can deny outbound domains using HTTP Host/TLS SNI rules and now Route 53 resolved-domain validation.
+
+**Option review:** A correct for IP destination discovery and egress filtering. B AWS WAF protects supported web applications, not arbitrary NAT outbound connections. C NAT BytesInFromSource/BytesInFromDestination metrics show aggregate bytes, not destination identity. D combines both wrong mechanisms.
+
+**Architecture:** EC2 private subnets (multiple AZs) → zonal NAT gateway → Network Firewall endpoints (stateful domain deny list) → IGW → Internet; NAT ENI VPC Flow Logs → CloudWatch Logs → Logs Insights. Maintain symmetric firewall return paths and proper AZ route tables.
+
+**Defects and modern caveats:** VPC Flow Logs record IPs/ports, not hostnames or full URLs; additional Network Firewall TLS SNI/HTTP Host logs, Route 53 Resolver query logs, or application-layer telemetry needed to identify websites by name. Domain rules alone may be bypassed by protocol behavior; consider resolved IP validation and appropriate DNS policies. Original A contains typo 'blockthe'.
+
+**Official AWS:** [VPC traffic requirements](https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-outbound-network-traffic/vpc-security-requirements.html); [Network Firewall domain rules](https://docs.aws.amazon.com/network-firewall/latest/developerguide/stateful-rule-groups-domain-names.html); [outbound egress design](https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-outbound-network-traffic/restricting-outbound-traffic.html); [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html); [resolved IP validation](https://docs.aws.amazon.com/network-firewall/latest/developerguide/route53-resolved-ip-validation.html).
+
+**Exact external variant:** [CertsMania Q43 page 52, keys A](https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf). A second independently verified exact external publication was not established; do not claim two-source exact external verification.
+
+**Duplicate audit:** Exact normalized original stem duplicates across all 674: none. Related IDs: 5, 9, 18, 20, 21, 28, 34, 37, 39, 47, 49, 53, 57, 90, 107, 108, 112, 124, 135, 162, 165, 175, 195, 209, 219, 232, 233, 271, 283, 284, 309, 312, 316, 318, 346, 348, 356, 360, 378, 392, 397, 410, 427, 429, 447, 449, 465, 481, 492, 496, 508, 510, 513, 591, 631, 641, 655, 658, 662, 669. Keyword candidates do not establish duplicates.
