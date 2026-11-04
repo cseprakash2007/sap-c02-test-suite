@@ -2292,9 +2292,89 @@
     "wrongOptionsExplanation": "A. Building and reviewing a dashboard by hand and sizing \"to the peaks\" is manual, subjective and misses memory metrics. B.\nDetailed monitoring costs money and still gives only raw metrics with no recommendations and no memory data. D. Enterprise\nSupport is very expensive just to get checks, and Trusted Advisor does not look at memory.",
     "plainWords": "Large high-memory EC2 database hosts have unpredictable utilization. You must find out whether they are over-sized and act, in the\nmost cost-effective way.",
     "keyPoints": "• Rightsizing recommendations = Compute Optimizer (+ CloudWatch agent for memory). • Default EC2 metrics exclude memory and\ndisk usage.\nHEADS-UP ON THIS QUESTION\n• The option says to wait 12 hours. In practice Compute Optimizer needs about 30 hours of metric history before it gives\nrecommendations. The reasoning and the answer are unaffected.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "Original OCR errors in stem/options; option C's 'at least 12 hours' does not ensure recommendations: AWS requires >=30h EC2 metrics (and EBS 30 consecutive hours), with up to 24h processing. Memory metrics via CloudWatch agent may incur charges; active/passive standby must retain failover capacity.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "status": "verified-c-12-hour-timing-defect",
+      "originalAnswers": [
+        "C"
+      ],
+      "verifiedAnswers": [
+        "C"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/requirements.html",
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/ec2-metrics-analyzed.html",
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/view-ec2-recommendations.html",
+        "https://aws.amazon.com/compute-optimizer/pricing/",
+        "https://docs.aws.amazon.com/compute-optimizer/latest/ug/view-ebs-recommendations.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.examtopics.com/discussions/amazon/view/95543-exam-aws-certified-solutions-architect-professional-sap-c02/",
+        "https://www.examsvce.com/sap-c02/a-solutions-architect-must-analyze-a-companys-question-answer.html",
+        "https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf"
+      ],
+      "externalSiteAnswers": [
+        {
+          "site": "ExamTopics Q130",
+          "answer": "C",
+          "match": "exact normalized stem/options, cleaned typos"
+        },
+        {
+          "site": "ExamsVCE",
+          "answer": "C",
+          "match": "exact OCR-corrupted stem/options"
+        },
+        {
+          "site": "CertsMania Q49 page 61",
+          "answer": "C",
+          "match": "exact variant, cleaner stem"
+        }
+      ],
+      "wrongOptionsReason": {
+        "A": "OpsCenter dashboard and manual peaks-based right sizing are labor intensive; no automatic memory-aware sizing recommendations.",
+        "B": "Detailed monitoring increases standard metric frequency but does not capture guest memory, nor generate optimized instance/EBS recommendations.",
+        "C": "CloudWatch agent supplies guest memory metrics; Compute Optimizer uses historical CPU, memory, EBS, network data to recommend rightsizing. However 12 hours is not sufficient guarantee; at least 30h metrics required.",
+        "D": "Enterprise Support is unnecessary additional expense; Trusted Advisor checks are less granular and not direct memory-aware recommendations."
+      },
+      "duplicateAudit": {
+        "scope": "674",
+        "exactDuplicates": [],
+        "relatedIds": [
+          27,
+          56,
+          60,
+          106,
+          130,
+          144,
+          167,
+          168,
+          172,
+          212,
+          216,
+          254,
+          262,
+          264,
+          265,
+          266,
+          295,
+          313,
+          316,
+          364,
+          450,
+          458,
+          461,
+          473,
+          480,
+          575,
+          644,
+          645
+        ],
+        "note": "Normalized exact stem match and related technology keyword candidates, not confirmed semantic duplicates."
+      },
+      "auditNote": "Original stem/options contain OCR corruption (OpsConter, database dusters, FC?, lo). Compute Optimizer needs >=30h EC2 CloudWatch data in past 14 days; EBS attached to running instance >=30 consecutive hours; recommendations may take up to 24h to process. Default 14-day lookback; optional 32-day no extra charge or paid 93-day enhanced infrastructure metrics. Default recommendations free, CloudWatch agent metrics may incur CloudWatch charges. For active/passive DB clusters, ensure failover performance headroom and avoid right-sizing passive nodes from low historical utilization alone. Cost Explorer required for savings calculations; opt in Compute Optimizer."
+    },
+    "answerStatus": "verified-c-timing-defect"
   },
   {
     "id": 32,
