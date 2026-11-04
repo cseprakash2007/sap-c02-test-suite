@@ -2645,12 +2645,26 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "A WAF allow rule for only the six partners' IP addresses blocks the botnet at the edge of API Gateway. A usage plan with an API key\nadds a per-key request limit and quota (throttling), so even allowed callers cannot flood the API. All of it is attached directly to the API.",
-    "wrongOptionsExplanation": "A. Origin Access Identity is for S3, not for API Gateway, and a WAF rule cannot count \"five requests per day\" (rate-based rules use\nshort windows). B. Adds CloudFront cost and an unworkable per-day WAF rule. C. A resource policy controls who can call (IP, VPC,\naccount) but has no request limit. Usage plans provide limits.",
-    "plainWords": "Six US partners call an API once a day. A botnet from 500 global IPs sends 1,000 requests per second. Secure the API and keep cost\nlow.",
-    "keyPoints": "• Throttle callers = usage plan + API key. Block unknown IPs = WAF or resource policy. • Known, small set of partners = IP allow list.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
+    "explanation": "D. Associate a REGIONAL AWS WAFv2 web ACL with the Regional API Gateway REST API stage, default-blocking all requests except the six partners' stable public source IP ranges. Configure an API Gateway usage plan with request-rate/burst throttles and daily quotas, associate the API stage and six separate API keys, and require API keys on POST. This avoids unnecessary CloudFront infrastructure. IMPORTANT: AWS warns API keys are not authentication and usage-plan quotas are best-effort, not hard cost limits; use IAM/Lambda authorizer for strong authentication.",
+    "wrongOptionsExplanation": "A. CloudFront origin access identity (OAI) is an S3-origin mechanism, not a way to authorize API Gateway POST. WAF rate-based rules cannot enforce a five-requests-per-day quota. B. CloudFront is unnecessary; a single custom origin header/API key is not per-partner authentication, and WAF rate-based rules do not implement daily quotas. C. API Gateway resource policies support access restrictions, including source IP conditions, but not request-rate limits or quotas. D. WAF IP allowlist plus API Gateway usage plan/key is the only viable offered combination.",
+    "plainWords": "Six known US partners each post daily sales data, but 500 untrusted global IP addresses are sending about 1,000 requests/second. Restrict the API to partner IPs and use usage plans/API keys to throttle approved clients without adding CloudFront.",
+    "keyPoints": "Regional REST API + WAFv2 regional web ACL associated to API stage; IPSet allow rule plus default block. API Gateway usage plans enforce per-key rate/burst and daily/weekly/monthly quotas on a best-effort basis. API keys must be required on POST and distributed per partner; keys are NOT authorization/authentication. Resource policies have no rate quota. CloudFront OAI is for S3, not API Gateway. Partner IPs must be stable; allowlist otherwise requires updates.",
+    "sourceWarning": "Exact variants found: ExamsVCE SAP-C02 (answer D) and CertsMania SAP-C02 PDF Q1 (answer D); Scribd copy SAP-C02 Q251 also contains matching stem. Original bank contains typographical errors '1.000', 'lo', 'thai', 'fiverequests', 'distnbution'. D omits explicit requirement to set POST apiKeyRequired=true, associate the API stage with the usage plan, and use distinct keys; API keys are NOT authentication and usage quotas are best effort, not hard cost limits. WAF allowlist assumes six partners have stable known public IPs. No exact normalized duplicate among all 674.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "aws-docs-and-multiple-exact-external-variants-verified",
+      "originalAnswers": [
+        "D"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/en_en/apigateway/latest/developerguide/apigateway-control-access-aws-waf.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html",
+        "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-setup-api-keys.html",
+        "https://www.examsvce.com/sap-c02/a-company-is-creating-a-rest-api-question-answer.html",
+        "https://www.certsmania.com/pdf/practice-session-solution-download-full-version-sap-c02-exam-by-enrique.pdf"
+      ],
+      "auditNote": "Q37 13/239: retain D, corroborated by two exact independent published exam copies and AWS docs. WAF stage allowlist, usage plan throttling/quota, API key method requirement. Note API key security and best-effort limits, stable IP prerequisite, typo defects. Exact duplicates: 0. Related candidates: 34, 39, 47, 57, 59, 198, 219, 273, 284, 348, 356, 385, 392, 552, 641, 655, 662"
+    },
     "answerStatus": "source-key-unverified"
   },
   {
