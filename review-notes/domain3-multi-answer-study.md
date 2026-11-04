@@ -1605,3 +1605,79 @@ flowchart TD
 **External variants:** https://www.examsvce.com/sap-c02/a-company-is-hosting-a-critical-application-question-answer.html ; https://www.freecram.net/question/Amazon.SAP-C02.v2024-05-06.q201/a-company-is-hosting-a-critical-application-on-a-single-amazon-ec2-instance-the-application-uses-an
 
 **Duplicate audit:** Neither Q619 nor Q622 has an exact normalized stem or identical full option set in the 674-question dataset. Related Q323 has a distinct image-processing failure mode.
+
+
+---
+
+# Q628 (54/58): Serverless weekly timesheet submission and monthly payroll reporting
+
+**Verified answer: C + E (2026-11-03).** Original question and all five options preserved verbatim in questions.json. Status verified-with-caveats.
+
+## Complete original question
+
+A solutions architect is designing an application to accept timesheet entries from employees on their mobile devices. Timesheets will be submitted weekly, with most of the submissions occurring on Friday. The data must be stored in a format that allows payroll administrators to run monthly reports The infrastructure must be highly available and scale to match the rate of incoming data and reporting requests. Which combination of steps meets these requirements while minimizing operational overhead? (Select TWO}
+
+**Original options**
+
+- **A.** Deploy the application to Amazon EC2 On-Demand Instances with load balancing across multiple Availability Zones. Use scheduled Amazon EC2 Auto Scaling to add capacity before the high volume of submissions on Fridays
+- **B.** Deploy the application in a container using Amazon Elastic Container Service (Amazon ECS) with load balancing across multiple Availability Zones Use scheduled Service Auto Scaling to add capacity before the high volume of submissions on Fridays
+- **C.** Deploy the application front end to an Amazon S3 bucket served by Amazon CloudFront Deploy the application backend using Amazon API Gateway with an AWSLambda proxy integration
+- **D.** Store the timesheet submission data in Amazon Redshift Use Amazon QuickSight to generate the reports using Amazon Redshift as the data source
+- **E.** Store the timesheet submission data in Amazon S3. Use Amazon Athena and Amazon QuickSight to generate the reports using Amazon S3 as the data source.
+
+## Explain every option
+
+- **A wrong**: Multi-AZ EC2 with scheduled Auto Scaling is feasible but incurs server maintenance, patching, instance management, and forecast/schedule maintenance. Not least operational overhead.
+- **B wrong**: ECS containers and scheduled service Auto Scaling are also feasible but require container/service management and scaling schedules; serverless API wins for bursty Friday submissions.
+- **C correct**: S3 + CloudFront static web UI, API Gateway + Lambda proxy integration for submission requests. Highly available managed services and elastic serverless backend.
+- **D wrong**: Redshift + QuickSight works for warehouse reporting but is unnecessary overhead for modest monthly timesheet reporting; the question does not require a data warehouse.
+- **E correct**: S3 stores queryable records, Athena performs serverless SQL over S3, and QuickSight uses an Athena data source to render monthly payroll dashboards.
+
+## Architecture
+
+\`\`\`mermaid
+flowchart TD
+    U["Employees using mobile web app"] --> CF["CloudFront"]
+    CF --> FE["S3 static frontend"]
+    U --> API["API Gateway"]
+    API --> L["Lambda: validate timesheets"]
+    L --> S3["S3: timesheet data, partitioned and cataloged"]
+    S3 --> ATH["Athena: monthly SQL reports"]
+    ATH --> QS["QuickSight dashboards"]
+    QS --> P["Payroll administrators"]
+\`\`\`
+
+## AWS docs verification
+
+- AWS serverless multi-tier architectures and Lambda proxy: https://docs.aws.amazon.com/pdfs/whitepapers/latest/serverless-multi-tier-architectures-api-gateway-lambda/serverless-multi-tier-architectures-api-gateway-lambda.pdf
+- AWS CloudFront + S3 static website and OAC: https://repost.aws/knowledge-center/cloudfront-serve-static-website
+- Athena is serverless SQL over S3: https://aws.amazon.com/documentation-overview/athena/
+- QuickSight connects to Athena and requires Athena/S3 permissions: https://docs.aws.amazon.com/quick/latest/userguide/athena.html
+
+## External exam variants
+
+- CertEnsure Q121, exact stem/options: https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html
+- CertEmpire demo PDF Q25, exact stem/options and answer C,E: https://certempire.com/demo-files/sap-c02-demo-certempire.pdf
+
+These mirrors corroborate the keyed choice but may reuse the same exam-question source.
+
+## Duplicate and similar-framework audit (674 total)
+
+- Exact normalized question stem matches: **none**.
+- Exact complete ordered option-set matches: **none**.
+- **Q166**: financial reporting via web interface, different low-latency data requirement.
+- **Q403**: S3 unstructured-data cost/analysis, not weekly timesheet submission.
+- **Q496**: query centralized VPC flow logs with Athena, distinct data retention/use case.
+- **Q524**: Hadoop/ORC analytics migration, distinct ingestion and SQL architecture.
+- **Q658**: daily Athena analysis of WAF logs, distinct reporting schedule and data source.
+
+## Defective or imprecise wording
+
+1. Malformed '(Select TWO}' and concatenated 'AWSLambda'; missing sentence punctuation; preserve original source text.
+2. E says QuickSight generates reports using S3 as a data source. Strictly, QuickSight queries Athena (Athena queries S3). Flag imprecision but the intended answer remains correct.
+3. Athena requires supported structured/queryable formats, schema/catalog, and access to S3, not arbitrary files.
+4. Assumes mobile users access a static web frontend; native mobile clients would not necessarily require S3/CloudFront.
+5. Payroll data requires IAM access controls, encryption, audit logging, and retention policies; managed services still have limits/quotas.
+6. Redshift is not invalid or obsolete; it simply adds complexity not warranted by these stated requirements.
+
+**Exam memory cue:** Spiky weekly input + low operations = API Gateway/Lambda; periodic SQL reports on S3 = Athena + QuickSight.
