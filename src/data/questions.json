@@ -28058,13 +28058,25 @@
       "D"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A+D: Lambda's maximum invocation timeout is 900 seconds (15 minutes). Package longer-running image processing as a Docker image in Amazon ECR and use EventBridge's ECS RunTask target to launch AWS Fargate tasks directly. Fargate removes EC2 host management and the intermediate Lambda invocation. AWS docs: https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html ; https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-eventbridge.html",
+    "wrongOptionsExplanation": "A correct: ECR is an ECS-compatible container registry. B wrong: versioned S3 bucket is not an ECS image registry. C wrong: ECS EC2 launch type adds host management, and routing via Lambda is unnecessary. D correct: EventBridge can directly start ECS tasks using Fargate. E wrong: Step Functions orchestrates work but cannot directly run a Docker image as a state machine; a task integration would be needed, and this design retains Lambda.",
+    "plainWords": "Move a task that outlasts Lambda's 15-minute limit into a Fargate container. Upload its image to ECR and let EventBridge start the task.",
+    "keyPoints": "A+D; Lambda max 900 seconds; ECR hosts container image; EventBridge RunTask ECS target; Fargate no EC2 management. Add task-failure observability, idempotency, and retries/DLQ as needed.",
+    "sourceWarning": "The source says video processing but describes new image uploads; wording mismatch is cosmetic. ECS Fargate tasks are not infinite-duration guarantees; task health, quotas and failure monitoring matter. EventBridge target invocation success does not mean processing task success. No original answer change required.",
+    "review": {
+      "status": "verified-with-caveats",
+      "originalAnswer": [
+        "A",
+        "D"
+      ],
+      "verifiedAnswer": [
+        "A",
+        "D"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "Related image-processing Lambda question Q323; different failure mechanisms. No exact stem or complete options duplicate. The source says video processing but describes new image uploads; wording mismatch is cosmetic. ECS Fargate tasks are not infinite-duration guarantees; task health, quotas and failure monitoring matter. EventBridge target invocation success does not mean processing task success. No original answer change required."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 620,
@@ -28170,13 +28182,27 @@
       "F"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A+D+F eliminate single points of failure across all three tiers. A: ELB plus EC2 Auto Scaling minimum two instances (preferably in distinct AZs) gives redundant compute and instance replacement. D: RDS for MariaDB Multi-AZ uses a standby in a second AZ with automatic failover. F: ElastiCache Redis replication group with Multi-AZ automatic failover promotes a replica if the primary fails. AWS docs: https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-benefits.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZSingleStandby.html ; https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html",
+    "wrongOptionsExplanation": "A correct: multiple load-balanced EC2 instances in Auto Scaling group avoid single EC2 failure. B wrong: unlimited mode concerns CPU credits, not availability. C wrong: same-AZ read replica plus manual promotion is not automatic cross-AZ failover. D correct: RDS Multi-AZ automatically fails over. E wrong: Redis replication groups do not use EC2 Auto Scaling groups for node redundancy. F correct: Multi-AZ replication group with replicas enables Redis automatic failover.",
+    "plainWords": "Three critical tiers need three redundancy mechanisms: load-balanced EC2 Auto Scaling, RDS Multi-AZ standby, and Redis Multi-AZ replica failover.",
+    "keyPoints": "A+D+F; EC2 ASG min 2 across AZs; RDS MariaDB Multi-AZ automatic standby failover; Redis replication group with replica and Multi-AZ automatic failover. Read replica promotion != RDS Multi-AZ.",
+    "sourceWarning": "A does not explicitly require the two EC2 instances to be placed in different AZs; configure ASG across multiple AZs for AZ resilience. F requires replicas and supported Multi-AZ/automatic failover configuration; replication can lose the newest unreplicated writes. Redis naming now also appears as Valkey/Redis OSS. No answer change required.",
+    "review": {
+      "status": "verified-with-caveats",
+      "originalAnswer": [
+        "A",
+        "D",
+        "F"
+      ],
+      "verifiedAnswer": [
+        "A",
+        "D",
+        "F"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "No exact stem or complete options duplicate. A does not explicitly require the two EC2 instances to be placed in different AZs; configure ASG across multiple AZs for AZ resilience. F requires replicas and supported Multi-AZ/automatic failover configuration; replication can lose the newest unreplicated writes. Redis naming now also appears as Valkey/Redis OSS. No answer change required."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 623,
