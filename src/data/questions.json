@@ -1199,27 +1199,82 @@
     "wrongOptionsExplanation": "B. EBS Multi-Attach supports only a limited number of instances in a single AZ, far fewer than hundreds, and is not a shared file\nsystem. C. Batch loading all 200 TB into Lustre wastes time and money when only a subset of files is needed. D. A File Gateway is for\nhybrid access and does not provide the high-performance parallel throughput the job needs.",
     "plainWords": "200 TB on always-on EC2 file servers, used only for a 72-hour monthly job that reads a subset of files. Replace it to cut cost while\nkeeping high performance during the job.",
     "keyPoints": "• Temporary HPC file system on S3 data = FSx for Lustre (scratch) linked to S3. • Lazy loading fetches only the files you read.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
+    "sourceWarning": "Option A omits mandatory persistence of modified files: configure supported FSx data repository association auto-export or run and confirm export task before deleting FSx; Scratch 1 lacks DRA. Optional S3 Intelligent-Tiering asynchronous archive tiers require restore. 'Largest' cost reduction depends on actual access pattern and pricing.",
     "review": {
-      "reviewedAt": "2026-10-28",
-      "auditStatus": "aws-docs-reviewed-external-pending",
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "verified-a-exact-variants-export-required",
       "originalAnswers": [
         "A"
       ],
       "awsDocumentationLinks": [
-        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files-dra.html",
-        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/overview-dra-data-repo.html"
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/overview-dra-data-repo.html",
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoexport-data-repo-dra.html",
+        "https://docs.aws.amazon.com/fsx/latest/LustreGuide/export-data-repo-task-dra.html",
+        "https://docs.aws.amazon.com/en_en/ebs/latest/userguide/ebs-volumes-multi.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
       ],
       "references": [
         "https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files-dra.html",
         "https://docs.aws.amazon.com/fsx/latest/LustreGuide/overview-dra-data-repo.html"
       ],
-      "externalQuestionLinks": [],
+      "externalQuestionLinks": [
+        "https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/3",
+        "https://meatsby.github.io/05.-infrastructure/01.-aws/02.-certification/03.-aws-sap-c02/01.-aws-sap-c02-practice-questions",
+        "https://www.exact2pass.com/main/questions.html?url=sap-c02-aws-certified-solutions-architect-professional",
+        "https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf"
+      ],
       "crossVerificationStatus": "aws-docs-checked-third-party-match-pending",
       "correctedStudyVersion": true,
-      "auditNote": "Original question retained in snapshot. Source answer unchanged; technical caveats documented."
+      "auditNote": "Original question preserved in originalQuestionSnapshot; current stem is shortened. The question omits exporting modified data back to S3 before FSx deletion; automatic export completion (AgeOfOldestQueuedMessage zero) or completed export task required. S3 Intelligent-Tiering optional archive tiers require restore; avoid for latency-sensitive lazy reads. FSx Lustre Scratch 1 lacks DRA/autoexport. S3 Intelligent-Tiering differs from FSx Intelligent-Tiering file system storage class (latter cannot link S3 DRA). Largest cost savings not mathematically established without usage and prices.",
+      "status": "verified-a-exact-variants-export-required",
+      "verifiedAnswers": [
+        "A"
+      ],
+      "wrongOptionsReason": {
+        "A": "S3 Intelligent-Tiering stores long-lived 200 TB; temporary S3-linked FSx for Lustre presents parallel POSIX file access and lazy loads only accessed file contents. Export modified files before deletion.",
+        "B": "EBS Multi-Attach is limited to 16 Nitro instances in one AZ, not hundreds, and needs a clustered filesystem for safe shared writes.",
+        "C": "Eager/batch loading all 200 TB and using S3 Standard may incur higher transfer/startup and storage costs when only a subset is needed.",
+        "D": "S3 File Gateway serves hybrid NFS/SMB object access, not comparable parallel HPC filesystem performance."
+      },
+      "duplicateAudit": {
+        "scope": "674",
+        "exactDuplicates": [],
+        "relatedIds": [
+          3,
+          8,
+          66,
+          97,
+          102,
+          128,
+          134,
+          143,
+          147,
+          153,
+          211,
+          259,
+          281,
+          314,
+          320,
+          324,
+          345,
+          405,
+          477,
+          479,
+          502,
+          504,
+          506,
+          517,
+          536,
+          576,
+          613,
+          615,
+          635,
+          673
+        ],
+        "note": "Exact normalized stem check plus technology-related options/stems; candidates not necessarily duplicates."
+      }
     },
-    "answerStatus": "aws-docs-reviewed-external-pending",
+    "answerStatus": "verified-a-exact-variants-export-required",
     "originalQuestionSnapshot": {
       "stem": "A company is running a data-intensive application on AWS. The application runs on a cluster of hundreds of Amazon EC2 instances. A shared file system also runs on several EC2 instances that store 200 TB of data. The application reads and modifies the data on the shared file system and generates a report. The job runs once monthly, reads a subset of the files from the shared file system, and takes about 72 hours to complete. The compute instances scale in an Auto Scaling group, but the instances that host the shared file system run continuously. The compute and storage instances are all in the same AWS Region. A solutions architect needs to reduce costs by replacing the shared file system instances. The file system must provide high performance access to the needed data for the duration of the 72-hour run. Which solution will provide the LARGEST overall cost reduction while meeting these requirements?",
       "options": [
