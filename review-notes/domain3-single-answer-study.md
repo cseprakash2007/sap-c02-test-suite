@@ -277,3 +277,18 @@ flowchart LR
 **Exact external variants:** [ExamsVCE](https://www.examsvce.com/sap-c02/a-company-is-creating-a-rest-api-question-answer.html) (D); [CertsMania SAP-C02 PDF Q1](https://www.certsmania.com/pdf/practice-session-solution-download-full-version-sap-c02-exam-by-enrique.pdf) (D); Scribd SAP-C02 Q251 matches stem. **Duplicates:** no exact normalized stem duplicate among all 674. Related candidates: 34, 39, 47, 57, 59, 198, 219, 273, 284, 348, 356, 385, 392, 552, 641, 655, 662.
 
 **Official AWS:** https://docs.aws.amazon.com/en_en/apigateway/latest/developerguide/apigateway-control-access-aws-waf.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-setup-api-keys.html
+
+
+## Domain 3 single-answer 14/239 — Q41 (2026-11-04)
+
+**Answer B — verified.** Sale traffic spikes create Java Lambda cold-start latency and RDS MySQL connection exhaustion. RDS Proxy reuses/pools DB connections; Secrets Manager stores proxy DB credentials; Lambda connects to proxy endpoint with correct VPC/security-group/IAM configuration; provisioned concurrency pre-initializes execution environments. Minimal application change versus redesign.
+
+**Options:** A outside-handler DB connection reuse is per execution environment only and cannot prevent aggregate connection exhaustion. B addresses both connection pooling and initialization latency. C raising max_connections and reboot can increase DB memory pressure; reserved concurrency is not warm capacity. D proxy helps connections, but reserved concurrency does not eliminate Java cold starts.
+
+**Architecture:** Client -> API Gateway -> Java Lambda (provisioned concurrency) -> RDS Proxy (Secrets Manager credential integration) -> RDS MySQL.
+
+**Current AWS nuance:** SnapStart is an alternative for supported Java runtimes and cannot be used with provisioned concurrency on the same version. Provisioned concurrency incurs cost and excess demand may spill to on-demand cold starts. RDS Proxy can experience connection pinning; pooling does not solve slow SQL queries. Credentials can alternatively use supported end-to-end IAM auth.
+
+**Exact external variants:** [Exam-Files Q4 longer variant](https://learn.exam-files.com/amazon/sap-c02/AWS%20Certified%20Solutions%20Architect%20-%20Professional.SAP-C02.VCEplus.2024-11-07.159q.vcex) (B); [CertsMania Q56](https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf) (exact short stem/options); [FreePDFDumps Q67](https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=15) (exact short stem/options). **Duplicate audit:** no exact normalized stem match across 674; related topic IDs 2, 27, 49, 158, 160, 203, 230, 233, 287, 297, 312, 326, 338, 420, 429, 431, 552, 570, 609, 662.
+
+**Official docs:** https://docs.aws.amazon.com/lambda/latest/dg/services-rds.html ; https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html ; https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html
