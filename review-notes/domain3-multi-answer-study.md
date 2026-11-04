@@ -1760,3 +1760,24 @@ External mirrors may share question banks; AWS docs provide independent technica
 7. No obsolete service choice, but the distinction between Aurora Global Database and DynamoDB global tables is fundamental.
 
 **Memory cue:** RTO/RPO minutes and pre-existing two-Region app => replicate both data stores continuously, not restore backups after disaster.
+
+
+## Q641 — Domain 3 multi-answer 56/58 (verified 2026-11-03)
+
+**Original stem:** A company is updating an application that customers use to make online orders. The number of attacks on the application by bad actors has increased recently. The company will host the updated application on an Amazon Elastic Container Service (Amazon ECS) cluster. The company will use Amazon DynamoDB to store application data. A public Application Load Balancer (ALB) will provide end users with access to the application. The company must prevent prevent attacks and ensure business continuity with minimal service interruptions during an ongoing attack. Which combination of steps will meet these requirements MOST cost-effectively? (Select TWO.)
+
+- **A:** Create an Amazon CloudFront distribution with the ALB as the origin. Add a custom header and random value on the CloudFront domain. Configure the ALB to conditionally forward traffic if the header and value match.
+- **B:** Deploy the application in two AWS Regions. Configure Amazon Route 53 to route to both Regions with equal weight.
+- **C:** Configure auto scaling for Amazon ECS tasks. Create a DynamoDB Accelerator (DAX) cluster.
+- **D:** Configure Amazon ElastiCache to reduce overhead on DynamoDB.
+- **E:** Deploy an AWS WAF web ACL that includes an appropriate rule group. Associate the web ACL with the Amazon CloudFront distribution.
+
+**Verified answer: A + E.** A uses CloudFront origin custom secret header and ALB conditional listener forwarding, with default fixed 403 for unmatched requests. E uses AWS WAF on CloudFront to block malicious HTTP(S) requests before the origin. B is expensive multi-Region weighted DNS without attack mitigation; C is capacity/DynamoDB read caching, not request filtering; D is application caching, not attack filtering or native DAX replacement.
+
+**Architecture:** Customers → CloudFront + AWS WAF → (secret origin header) → public ALB listener conditional forward → ECS tasks → DynamoDB. Direct requests lacking the header → ALB 403.
+
+**Defects/modern guidance:** repeated 'prevent'; option A should say CloudFront *origin* custom headers, not 'CloudFront domain'; a third-party explanation incorrectly invokes S3 OAI for ALB. Protect/rotate header and use HTTPS; optionally restrict ALB security group to CloudFront origin-facing managed prefix list. CloudFront VPC origins/internal ALB are a newer alternative not among choices. No obvious exact-stem duplicate in all 674 questions; thematically related Q200, Q135, Q206, Q242, Q247, without verified equivalence.
+
+**Official AWS:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html ; https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html ; https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-integrations.html
+
+**External variants:** Certstopics Question 141 (A,E): https://www.certstopics.com/questions/free-sap-c02-questions-attempt.html ; Certsmania Question 3 (same stem/options): https://www.certsmania.com/pdf/amazon-web-services-test-prep-material-pack-sap-c02-passing-score-by-binod.pdf . External answer explanations are not authoritative.
