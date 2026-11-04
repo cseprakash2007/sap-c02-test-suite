@@ -1804,3 +1804,28 @@ External mirrors may share question banks; AWS docs provide independent technica
 **Official AWS:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/creating-custom-error-pages.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/custom-error-pages-procedure.html ; https://repost.aws/knowledge-center/cloudfront-custom-error-page
 
 **External variants:** ExamGuru Q10 https://examguru.io/exams/sap-c02/review ; ExamDiscuss Topic 1 Q45 (suggested A+E) https://www.examdiscuss.com/Amazon/discussions/1341156-exam-sap-c02-topic-1-question-45-discussion/ . External answer keys are secondary to AWS documentation.
+
+
+## Q664 — Domain 3 multi-answer 58/58 (2026-11-03)
+
+**Original stem:** A company wants to send data from its on-premises systems to Amazon S3 buckets. The company created the S3 buckets in three different accounts. The company must send the data privately without the data traveling across the internet The company has no existing dedicated connectivity to AWS Which combination of steps should a solutions architect take to meet these requirements? (Select TWO.)
+
+- **A:** Establish a networking account in the AWS Cloud Create a private VPC in the networking account. Set up an AWS Direct Connect connection with a private VIF between the on-premises environment and the private VPC.
+- **B:** Establish a networking account in the AWS Cloud Create a private VPC in the networking account. Set up an AWS Direct Connect connection with a public VlF between the on-premises environment and the private VPC.
+- **C:** Create an Amazon S3 interface endpoint in the networking account.
+- **D:** Create an Amazon S3 gateway endpoint in the networking account.
+- **E:** Establish a networking account in the AWS Cloud Create a private VPC in the networking account. Peer VPCs from the accounts that host the S3 buckets with the VPC in the network account.
+
+**Verified A+C.** A: Direct Connect private VIF establishes private network connectivity to networking VPC via appropriate virtual private gateway/Direct Connect gateway configuration. C: S3 interface endpoint (PrivateLink) supports private-IP on-premises access over Direct Connect and authorized cross-account buckets. B: public VIF targets AWS public endpoints, not private interface endpoint addresses. D: S3 gateway endpoint cannot be extended to on-premises over Direct Connect. E: bucket accounts need no VPC peering; S3 buckets are not inside VPCs.
+
+**Architecture:** On-premises → Direct Connect private VIF → networking VPC → S3 interface endpoint ENIs (private IP) → AWS PrivateLink → S3 bucket in account 1 / 2 / 3. Configure routing, DNS, security groups, endpoint policy, cross-account IAM/bucket policies. Plan regional endpoints if buckets are in different Regions.
+
+**Source defects:** missing punctuation and spaces; option A omits gateway attachment details. Exam-Tests Q55 gives wrong A+D, contradicted by AWS explicit gateway-endpoint limitation. CertEmpire Q26 and FreeCram Q37 give A+C.
+
+**Duplicate audit:** no exact normalized stem duplicate in 674. Thematically related, not verified duplicates: Q463, Q44, Q346, Q9, Q106, Q189, Q268.
+
+**AWS documentation:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html ; https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html
+
+**External variants:** CertEmpire Q26 https://certempire.com/demo-files/sap-c02-demo-certempire.pdf ; FreeCram Q37 https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-wants-to-send-data-from-its-on-premises-systems-to-amazon-s3-buckets-the-company-created-the ; conflicting Exam-Tests Q55 https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2024-12-04.q106.html?p=12
+
+**Domain 3 multi-answer sequence complete: 58/58.**
