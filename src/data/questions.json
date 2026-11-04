@@ -27851,13 +27851,27 @@
       "E"
     ],
     "answerCount": 3,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified B,D,E against AWS DynamoDB 'Identify your unused resources' guide: use CloudWatch Sum of ConsumedReadCapacityUnits and ConsumedWriteCapacityUnits over ~30 days to identify idle tables; switch idle provisioned tables to on-demand so idle throughput is not billed; switch to Standard-IA when storage dominates costs. Both capacity mode and table class preserve availability and performance capabilities; on-demand's rapid scaling remains subject to documented prior-peak/doubling behavior. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CostOptimization_UnusedResources.html ; https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.TableClasses.html",
+    "wrongOptionsExplanation": "A incorrect: ReadThrottleEvents/WriteThrottleEvents measure throttling, not absence of reads/writes; zero throttles may mean busy healthy table. B correct: consumed RCU/WCU Sum for a month reveals actual use; also inspect GSIs separately. C incorrect: 1 provisioned RCU/WCU still bills for capacity and severely limits burst readiness, potentially throttling. D correct: on-demand bills throughput per actual requests and has no idle throughput charge, though storage/backup charges persist. E correct for storage-dominant idle tables: Standard-IA cuts storage rate, maintains DynamoDB API, durability, latency and availability; reads/writes cost more than Standard. F incorrect: reserved provisioned capacity creates a term commitment, does not remove idle provisioned cost, and does not preserve immediate capacity; reserve capacity constraints apply.",
+    "plainWords": "First check actual reads and writes, not throttling. Keep idle tables online but stop paying for provisioned throughput using on-demand; pay a lower storage rate using Standard-IA if data is rarely accessed.",
+    "keyPoints": "B+D+E. CloudWatch ConsumedReadCapacityUnits and ConsumedWriteCapacityUnits with Sum for 30 days identify idle tables. On-demand = pay for requests, no provisioned throughput bill when idle, but storage and ancillary costs remain. Standard-IA = lower storage, higher read/write rates; no performance/durability/availability penalty. Provisioned 1 RCU/1 WCU restricts future throughput. ReadThrottleEvents=0 does not prove no traffic. '100,000 items' alone does not prove storage dominates; compare GB stored, item sizes, request charges. AWS docs explicitly recommend B,D,E.",
+    "sourceWarning": "Exam question assumes tables created with 'default table settings' were provisioned, but modern AWS console/creation defaults can vary by workflow/time; inspect actual BillingMode before switching. Standard-IA saves only when storage is dominant, not automatically for every table with 100,000+ items. On-demand scales instantly to prior observed peak, and can double prior peak within 30 minutes; greater sudden jumps may throttle. Table-class changes allowed at most twice per 30 days. CloudWatch table metrics do not automatically include GSIs; inspect them separately. No exact normalized-stem duplicate or identical complete option set across 674; conceptual contrasts Q145 (weekly peak), Q197 (daily batch), Q274 (latency), Q338 (on-demand throttling), Q563 (provisioned write throttle), Q572 (predictable daily peaks). External CertEnsure Q81, ExamCollection Q77, SPOTO Q39, Pass4Success Topic 4 Q69, CertsMania Q19 show matching BDE; mirrors may share a common question bank.",
+    "review": {
+      "status": "verified-with-caveats",
+      "originalAnswer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "verifiedAnswer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "verifiedAt": "2026-11-03",
+      "notes": "AWS official unused-resources guidance directly supports all three; verified third-party exam mirrors. Flag ambiguous 'default' billing mode, Standard-IA cost break-even and on-demand previous-peak scaling. 674-question exact duplicate scan negative; related Q145/Q197/Q274/Q338/Q563/Q572."
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 615,
