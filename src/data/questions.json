@@ -2564,13 +2564,26 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "Write a Systems Manager Command document that installs and configures the agent, then create a State Manager association that\napplies it to the instances on a schedule. State Manager enforces the desired state continuously and re-applies the configuration if it\ndrifts.",
-    "wrongOptionsExplanation": "A. A Lambda that logs in to thousands of machines needs credentials, networking and custom code. B. A Config rule with a custom\nLambda remediation still means writing and running your own installer code. D. Editing user data and rebooting 10,000 instances is\ndisruptive and does not keep the configuration enforced.",
-    "plainWords": "Only a small share of 10,000 EC2 instances report to a new antivirus SaaS. You must ensure every instance runs the latest agent with\nthe right configuration, with minimal admin work.",
-    "keyPoints": "• Keep software/config in a desired state on many instances = Systems Manager State Manager. • Run ad hoc commands = Run\nCommand. Patch = Patch Manager.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C. AWS Systems Manager State Manager associations apply an SSM Command document to managed EC2 nodes on a daily schedule. The document should idempotently install/upgrade the SaaS antivirus agent, enforce the expected configuration and running service, and report execution/compliance results. Target the fleet by tags/resource groups, with concurrency/error controls. This requires healthy SSM Agent, appropriate IAM permissions, connectivity, and accessible vendor installer. AWS documentation explicitly uses antivirus software as an example of a State Manager association.",
+    "wrongOptionsExplanation": "A. A custom scheduled Lambda maintaining a static S3 inventory and remotely logging into 10,000 instances creates significant custom code, access, timeout, and retry overhead. B. AWS Config plus custom Lambda is more complex for guest-OS agent installation and configuration; AWS Config focuses on AWS resource configuration, whereas State Manager is designed for node desired-state enforcement. D. Session Manager interactive access and EC2 user data with reboots are not reliable continuous enforcement; user data normally executes at launch, not automatically on every reboot.",
+    "plainWords": "Only a small percentage of 10,000 EC2 instances report to a newly migrated antivirus SaaS. Keep the latest antivirus agent installed, running, and configured on every machine without manually logging in.",
+    "keyPoints": "Desired configuration on many EC2 instances -> Systems Manager State Manager + SSM document + scheduled association. Run Command -> execute a command; Session Manager -> interactive session; Patch Manager -> OS patching; AWS Config -> AWS resource configuration. Ensure managed-node prerequisites and idempotent scripts; use tags, concurrency and error thresholds.",
+    "sourceWarning": "AWS docs independently confirm C. No exact external exam variant with matching full stem/options could be reliably located after searches for distinctive 10,000 EC2 / SaaS antivirus / fewer than 5% wording; do not claim multiple external variants verified. No exact normalized stem duplicate among all 674. No service deprecation identified. The word 'consistently' means enforcement at scheduled intervals, not real-time continuous guarantee; the document must actually check version, configuration and service status.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "aws-docs-verified-external-exact-variants-not-found",
+      "originalAnswers": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/us_en/systems-manager/latest/userguide/systems-manager-state.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-about.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-state-manager-targets-and-rate-controls.html",
+        "https://docs.aws.amazon.com/cli/latest/reference/ssm/create-association.html"
+      ],
+      "auditNote": "Q35, Domain 3 single answer 12/239. C verified from current AWS docs. Exact normalized duplicate count 0 across 674; related topic candidates 224. Exact external variants not independently verified; retain limitation. Prerequisites: SSM managed nodes, IAM, network; idempotent vendor installer; scheduled compliance is not instantaneous."
+    },
+    "answerStatus": "aws-docs-verified"
   },
   {
     "id": 36,
