@@ -29228,17 +29228,30 @@
       }
     ],
     "answers": [
-      "C",
+      "A",
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Intended A+E: host custom 502 error HTML separately in S3 and configure CloudFront CustomErrorResponse for 502 with S3 as a separate origin. AWS supports custom error responses for 502 and recommends a separate S3 error origin. E is partly defective: changing Route 53 DNS is unnecessary; S3 website hosting in A is also unnecessary with a private S3 REST origin and OAC. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/creating-custom-error-pages.html https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/custom-error-pages-procedure.html",
+    "wrongOptionsExplanation": "B: failed target health checks do not reliably detect transient malformed response headers; ALB rewrites via Lambda add overhead. C: Route 53 DNS health check/failover is not per-request error handling, and transient 502 disappears on refresh. D: Elb.InternalError is not a reliable trigger for malformed target headers and adds operational overhead.",
+    "plainWords": "If an ALB occasionally returns 502, CloudFront can show an HTML page stored independently in S3 without changing DNS.",
+    "keyPoints": "CloudFront custom error response for 502; separate S3 origin for 502.html; private S3 REST origin with OAC preferred; low error caching TTL for transient failures; fix malformed backend headers separately.",
+    "sourceWarning": "Original key C+E corrected to intended A+E. E includes defective instruction to modify DNS; A's S3 static website hosting is not necessary. No fully correct literal pair because E contains irrelevant DNS action. External ExamDiscuss Q45 suggests A+E; ExamGuru Q10 matching stem. No exact duplicate across 674; related Q621, Q356, Q155, Q160, Q284.",
+    "review": {
+      "status": "verified-with-defective-options",
+      "verifiedAt": "2026-11-03",
+      "originalAnswers": [
+        "C",
+        "E"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/creating-custom-error-pages.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/custom-error-pages-procedure.html",
+        "https://www.examdiscuss.com/Amazon/discussions/1341156-exam-sap-c02-topic-1-question-45-discussion/",
+        "https://examguru.io/exams/sap-c02/review"
+      ]
+    },
+    "answerStatus": "verified-with-source-defect"
   },
   {
     "id": 650,
