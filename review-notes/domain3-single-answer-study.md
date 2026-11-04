@@ -244,3 +244,12 @@ flowchart LR
 **Exact external variants:** [ExamTopics Q130](https://www.examtopics.com/discussions/amazon/view/95543-exam-aws-certified-solutions-architect-professional-sap-c02/) key C; [ExamsVCE](https://www.examsvce.com/sap-c02/a-solutions-architect-must-analyze-a-companys-question-answer.html) key C; [CertsMania Q49 p61](https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf) exact options.
 
 **Duplicate audit:** Exact normalized stem matches across all 674: none. Related candidates: 27, 56, 60, 106, 130, 144, 167, 168, 172, 212, 216, 254, 262, 264, 265, 266, 295, 313, 316, 364, 450, 458, 461, 473, 480, 575, 644, 645; keyword matches not established duplicates.
+
+
+## Domain 3 single-answer 11/239 — Q34 (2026-11-04)
+
+**Key: B (retained).** ALB + WAF + EC2 Auto Scaling, application-layer traffic floods with varying source IPs. A: CloudWatch alarm does not directly maintain WAF deny list. B: Shield Advanced can protect ALB and integrate with WAF; automatic L7 mitigation requires explicit configuration. C: subnet route tables cannot implement source-IP deny rules. D: Route 53 geolocation routing does not block requests by country.
+
+**Current AWS guidance / defect:** Since March 26, 2026, AWS WAF Anti-DDoS Managed Rule Group is the default HTTP flood protection solution, superseding legacy Shield Advanced L7 automatic mitigation. B remains the only viable offered choice but is not a fully specified modern recommendation. ExamTopics topic 1 Q159 and FreeCram topic 3 Q465 show exact variants; suggested C conflicts with AWS routing capabilities. No exact-stem duplicate among 674 questions.
+
+**References:** https://docs.aws.amazon.com/waf/latest/developerguide/ddos-automatic-app-layer-response.html ; https://docs.aws.amazon.com/waf/latest/developerguide/waf-anti-ddos.html ; https://www.examtopics.com/discussions/amazon/view/97671-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-3-question-465-discussion-p1282174.html
