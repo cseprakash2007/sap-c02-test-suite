@@ -28922,13 +28922,22 @@
       "E"
     ],
     "answerCount": 2,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified A and E against AWS CloudFront ALB origin restriction and AWS WAF documentation. A: configure CloudFront origin custom secret header and ALB listener rule to forward matching requests; default fixed 403. E: AWS WAF web ACL on CloudFront blocks malicious HTTP(S) traffic before origin. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html ; https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html",
+    "wrongOptionsExplanation": "B: equal-weight multi-Region DNS does not filter attacks and adds cost. C: ECS auto scaling and DAX improve capacity/read latency, not request security. D: ElastiCache is not a WAF or DynamoDB-specific caching replacement.",
+    "plainWords": "CloudFront and WAF stop bad web traffic at the edge; a secret origin header stops ordinary direct ALB bypass.",
+    "keyPoints": "A+E; origin header must be secret and configured on CloudFront origin, not viewer domain; ALB unmatched requests return 403; HTTPS and rotation recommended; CloudFront VPC origins/internal ALB are newer alternatives.",
+    "sourceWarning": "Stem repeats 'prevent'. Option A imprecisely says header on CloudFront domain rather than origin configuration. Third-party explanation incorrectly calls ALB header restriction OAI. Header leakage permits bypass. Exact stem duplicate not found in 674; related Q200, Q135, Q206, Q242, Q247. External variants Certstopics Q141 and Certsmania Q3.",
+    "review": {
+      "status": "verified",
+      "verifiedAt": "2026-11-03",
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html",
+        "https://www.certstopics.com/questions/free-sap-c02-questions-attempt.html",
+        "https://www.certsmania.com/pdf/amazon-web-services-test-prep-material-pack-sap-c02-passing-score-by-binod.pdf"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 642,
