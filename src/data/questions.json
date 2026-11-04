@@ -2084,9 +2084,81 @@
     "wrongOptionsExplanation": "A. The Trusted Advisor metric is a more roundabout way to alarm on a limit than the Lambda metric itself. B. Latency records are for\nperformance routing, not active-passive failover. D. Geolocation routing is not failover, and ProvisionedConcurrencyInvocations does\nnot measure account concurrency usage.",
     "plainWords": "An analytics Lambda uses about 90 percent of the account concurrency quota. A traffic surge throttles the web app functions.\nFailover to the second Region is manual. You want an alarm and better reliability with little overhead.",
     "keyPoints": "• Lambda account concurrency alarm = ConcurrentExecutions metric. • Active-passive DNS failover = Route 53 failover routing with\nhealth checks.\nHEADS-UP ON THIS QUESTION\n• Reserved concurrency for the web functions would also protect them from the analytics function. The key chooses provisioned\nconcurrency; the main reasoning (failover record plus the ConcurrentExecutions alarm) is what separates C from the others.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "Conflicting external keys (CertEnsure C, Pass2Lead A in search excerpt; full Pass2Lead option mapping inaccessible). AWS reserved concurrency directly prevents starvation; provisioned concurrency is paid cold-start optimization. ClaimedAccountConcurrency is now preferred for account quota alarms over ConcurrentExecutions. Do not treat C as unqualified uniquely correct.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "status": "source-key-c-external-conflict-a-modern-metric-warning",
+      "originalAnswers": [
+        "C"
+      ],
+      "verifiedAnswers": [
+        "C"
+      ],
+      "verificationQualification": "C is the original keyed answer and supported by one exact external variant, but A is technically plausible and another external publication favors reserved concurrency. AWS now recommends ClaimedAccountConcurrency for quota utilization, not ConcurrentExecutions when allocated concurrency is significant.",
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/monitoring-concurrency.html",
+        "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-failover.html",
+        "https://docs.aws.amazon.com/awssupport/latest/user/cloudwatch-metrics-ta.html",
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Best_Practice_Recommended_Alarms_AWS_Services.html"
+      ],
+      "externalQuestionLinks": [
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.pass2lead.com/sap-c02/questions.html"
+      ],
+      "externalSiteAnswers": [
+        {
+          "site": "CertEnsure Q201",
+          "answer": "C",
+          "match": "exact full stem and options"
+        },
+        {
+          "site": "Pass2Lead",
+          "answer": "A",
+          "match": "same scenario and answer explanation seen in search; full option-order crosscheck blocked"
+        }
+      ],
+      "wrongOptionsReason": {
+        "A": "Reserved concurrency directly protects web functions and Route 53 failover is correct. Trusted Advisor ServiceLimitUsage is valid but refresh-driven and less direct; plausible alternative; cannot dismiss as technically wrong.",
+        "B": "Latency records do not implement active-passive failover.",
+        "C": "Published source key; provisioned concurrency preinitializes environments and consumes account allocation; failover records correct; ConcurrentExecutions reports active invocations but not all claimed quota.",
+        "D": "Geolocation not health-based failover; ProvisionedConcurrencyInvocations measures invocation count, not account quota usage."
+      },
+      "duplicateAudit": {
+        "scope": "674",
+        "exactDuplicates": [],
+        "relatedIds": [
+          30,
+          41,
+          58,
+          79,
+          119,
+          123,
+          187,
+          200,
+          203,
+          228,
+          233,
+          242,
+          297,
+          312,
+          338,
+          387,
+          402,
+          464,
+          494,
+          552,
+          570,
+          587,
+          621,
+          659,
+          662
+        ],
+        "note": "Exact normalized stems and keyword-related candidates only; no semantic duplicate adjudication."
+      },
+      "auditNote": "Critical ambiguity: AWS recommends reserved concurrency for isolating critical Lambda functions from analytics workload; provisioned concurrency reduces cold starts and costs extra. AWS recommends ClaimedAccountConcurrency/SERVICE_QUOTA for quota alarms with allocated capacity; ConcurrentExecutions can understate claimed usage. Trusted Advisor ServiceLimitUsage is valid but check-refresh dependent. External exam keys conflict C vs A; Pass2Lead option order not fully verified. Route53 health checks require meaningful app health, TTL affects RTO, and per-Region deployments must use local DynamoDB global table endpoints."
+    },
+    "answerStatus": "source-key-c-ambiguous-a-plausible"
   },
   {
     "id": 28,
