@@ -1824,10 +1824,10 @@
     "wrongOptionsExplanation": "B. AWS WAF protects HTTP traffic to CloudFront, ALB or API Gateway. It does not filter outbound traffic from a NAT gateway. C.\nCloudWatch NAT metrics show byte totals, not the destinations. D. Same metrics problem, and WAF is the wrong place to block\negress.",
     "plainWords": "You need to identify which internet destinations EC2 instances contact through NAT gateways and block specific sites. VPC Flow Logs\nalready exist.",
     "keyPoints": "• Outbound domain filtering = Network Firewall (or DNS Firewall for DNS lookups). • WAF = inbound web requests. Flow Logs = who\ntalked to whom.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
+    "sourceWarning": "Original A typo 'blockthe'. VPC Flow Logs identify destination IPs, not domain names or URLs; additional SNI/HTTP Host or DNS logs required for website identification. Network Firewall must be deployed and routed symmetrically in relevant AZs. Only one independently located exact external variant (CertsMania Q43).",
     "review": {
-      "reviewedAt": "2026-10-28",
-      "auditStatus": "aws-docs-reviewed-external-pending",
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "verified-a-one-exact-external-variant-website-name-caveat",
       "originalAnswers": [
         "A"
       ],
@@ -1837,14 +1837,103 @@
       ],
       "awsDocumentationLinks": [
         "https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-outbound-network-traffic/vpc-security-requirements.html",
-        "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/use-network-firewall-to-capture-the-dns-domain-names-from-the-server-name-indication-sni-for-outbound-traffic.html"
+        "https://docs.aws.amazon.com/network-firewall/latest/developerguide/stateful-rule-groups-domain-names.html",
+        "https://docs.aws.amazon.com/prescriptive-guidance/latest/secure-outbound-network-traffic/restricting-outbound-traffic.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html",
+        "https://docs.aws.amazon.com/network-firewall/latest/developerguide/route53-resolved-ip-validation.html"
       ],
-      "externalQuestionLinks": [],
-      "crossVerificationStatus": "aws-docs-checked-third-party-question-match-pending",
+      "externalQuestionLinks": [
+        "https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf"
+      ],
+      "crossVerificationStatus": "aws-docs-verified-one-exact-external-variant-second-not-established",
       "correctedStudyVersion": true,
-      "auditNote": "Original text retained in snapshot. Answer unchanged; added AWS evidence and alternatives analysis."
+      "auditNote": "VPC Flow Logs identify IP destinations, not website names/URLs. For hostname visibility use AWS Network Firewall SNI/HTTP Host logging or DNS Resolver query logs; DNS/domain rules require route table steering, symmetric AZ-aware routing, and may be evaded by encrypted SNI/other mechanisms. AWS now supports Route 53 resolved-domain validation. Source option A typo 'blockthe'. Second exact external publication not confirmed.",
+      "status": "verified-a-one-exact-external-variant-website-name-caveat",
+      "verifiedAnswers": [
+        "A"
+      ],
+      "externalSiteAnswers": [
+        {
+          "site": "CertsMania Q43 page 52",
+          "answer": "A",
+          "match": "exact original stem and options"
+        }
+      ],
+      "wrongOptionsReason": {
+        "A": "CloudWatch Logs Insights can query NAT ENI flow logs for destination IPs; Network Firewall supports outbound domain blocking with route steering.",
+        "B": "AWS WAF is not a general-purpose NAT egress filtering solution.",
+        "C": "BytesInFromSource and BytesInFromDestination NAT CloudWatch metrics are aggregate byte counts and cannot reveal destination IPs or hostnames.",
+        "D": "Both destination-discovery metrics and WAF outbound filtering are unsuitable."
+      },
+      "duplicateAudit": {
+        "scope": "674",
+        "exactDuplicates": [],
+        "relatedIds": [
+          5,
+          9,
+          18,
+          20,
+          21,
+          28,
+          34,
+          37,
+          39,
+          47,
+          49,
+          53,
+          57,
+          90,
+          107,
+          108,
+          112,
+          124,
+          135,
+          162,
+          165,
+          175,
+          195,
+          209,
+          219,
+          232,
+          233,
+          271,
+          283,
+          284,
+          309,
+          312,
+          316,
+          318,
+          346,
+          348,
+          356,
+          360,
+          378,
+          392,
+          397,
+          410,
+          427,
+          429,
+          447,
+          449,
+          465,
+          481,
+          492,
+          496,
+          508,
+          510,
+          513,
+          591,
+          631,
+          641,
+          655,
+          658,
+          662,
+          669
+        ],
+        "note": "Normalized original stem match and related term candidates; candidates not verified duplicates."
+      }
     },
-    "answerStatus": "aws-docs-reviewed-external-pending",
+    "answerStatus": "verified-a-one-exact-external-variant",
     "originalQuestionSnapshot": {
       "stem": "A company has multiple applications that run on Amazon EC2 instances in private subnets in a VPC. The company has deployed multiple NAT gateways in multiple Availability Zones for internet access. The company wants to block certain websites from being accessed through the NAT gateways. The company also wants to identify the internet destinations that the EC2 instances access. The company has already created VPC flow logs for the NAT gateways' elastic network interfaces. Which solution will meet these requirements?",
       "options": [
