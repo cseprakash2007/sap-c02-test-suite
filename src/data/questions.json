@@ -3225,10 +3225,10 @@
     "wrongOptionsExplanation": "A: Standard RDS MySQL read replicas do not supply a single managed reader endpoint; Aurora does. B: correct web health vs end-to-end monitoring separation. C: ALB target group health checks do not support TCP (only HTTP/HTTPS), despite similar functionality in NLB. D: CloudWatch alarm action cannot directly recover an overloaded RDS instance as described. E: ElastiCache can relieve cacheable database reads, with cache-invalidation requirements.",
     "plainWords": "A database slowdown makes the product-page health check fail, so Auto Scaling keeps replacing healthy web servers. Check the web server using a lightweight page, monitor the complete product path separately, and cache repeated reads.",
     "keyPoints": "ALB HTTP/HTTPS health checks; don't couple instance health to a slow database. Route 53 health check + CloudWatch alarm for end-to-end functionality. RDS MySQL replicas have distinct endpoints; Aurora offers a managed reader endpoint. ElastiCache helps repeated cacheable reads.",
-    "sourceWarning": "DEFECTIVE SOURCE ANSWER: stored A,E includes A's non-existent standard RDS MySQL single reader endpoint and ignores B's crucial health-check decoupling. Best technically supported B,E, but no independent exact variant confirmation. C's ALB TCP check is invalid. OCR errors: 'toad', 'Ama7on', 'CtoudWatch', 'Elastic ache'.",
+    "sourceWarning": "DEFECTIVE SOURCE ANSWER: stored A,E includes A's non-existent standard RDS MySQL single reader endpoint and ignores B's crucial health-check decoupling. Best technically supported B,E, but no independent exact variant confirmation. C's ALB TCP check is invalid. OCR errors: 'toad', 'Ama7on', 'CtoudWatch', 'Elastic ache'. Re-review 2026-11-03: preserve A+E as source key pending exact external variant; B+E recommended technical answer.",
     "review": {
-      "status": "disputed",
-      "reviewedAt": "2026-11-02",
+      "status": "technical-correction-B-E-external-exact-variant-unconfirmed",
+      "reviewedAt": "2026-11-03",
       "historicalAnswers": [
         "A",
         "E"
@@ -3242,7 +3242,7 @@
         "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html",
         "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html"
       ],
-      "note": "Do not silently change historical answer until independent exam variants and current RDS docs verified.",
+      "note": "A cannot work as written: ordinary RDS MySQL replicas have distinct endpoints; B separates lightweight ALB HTTP health checks from Route53 application monitoring; E caches database reads. Exact external source matching not independently confirmed in this pass.",
       "auditStatus": "disputed-source-key-aws-docs-confirm-B-E",
       "awsDocumentationLinks": [
         "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html",
@@ -3263,9 +3263,13 @@
         "exactDuplicateIds": [],
         "note": "No exact matching scenario found in dataset stem scan; related RDS/ALB scenarios require separate review."
       },
-      "diagramConcept": "ALB -> healthy EC2 -> overloaded RDS; catalog-dependent health check triggers replacement churn. Fix: ALB /health static, Route53 full-stack monitor, ElastiCache read cache before RDS."
+      "diagramConcept": "ALB -> healthy EC2 -> overloaded RDS; catalog-dependent health check triggers replacement churn. Fix: ALB /health static, Route53 full-stack monitor, ElastiCache read cache before RDS.",
+      "sourceAnswers": [
+        "A",
+        "E"
+      ]
     },
-    "answerStatus": "disputed-source-key-technical-recommendation-B-E"
+    "answerStatus": "disputed-source-key-recommended-b-e-external-pending"
   },
   {
     "id": 64,
@@ -9909,8 +9913,8 @@
     "keyPoints": "Catch only Task/Map/Parallel; States.ALL cannot catch States.Runtime or States.DataLimitExceeded; EventBridge Step Functions execution status change catches overall failed/timed-out/aborted execution events (delivery best effort).",
     "sourceWarning": "DEFECTIVE ALL-ERRORS REQUIREMENT: A,B,C only catch catchable errors. States.ALL does not catch States.Runtime or States.DataLimitExceeded; latter may be caught explicitly per current docs. Need EventBridge Step Functions Execution Status Change FAILED/TIMED_OUT/ABORTED for Standard workflows, delivered best-effort; Express workflows use CloudWatch monitoring. C/F contain malformed OCR and case-sensitive error names.",
     "review": {
-      "status": "historical-best-source-defective-all-errors",
-      "reviewedAt": "2026-11-02",
+      "status": "historical-key-verified-but-all-errors-unachievable",
+      "reviewedAt": "2026-11-03",
       "verifiedAnswers": [
         "A",
         "B",
@@ -9922,7 +9926,8 @@
         "https://certempire.com/demo-files/sap-c02-demo-certempire.pdf",
         "https://actualtests.crampdf.com/articles/amazon-sap-c02-certification-all-in-one-exam-guide-feb-2025-q14-q32/"
       ],
-      "notes": "A,B,C historical exam key confirmed by CertEmpire Q35 and CramPDF reordered variant, but States.ALL excludes States.Runtime and States.DataLimitExceeded. AWS says DataLimitExceeded may be explicitly caught by name; Runtime terminal. EventBridge execution-status monitoring for Standard workflows is missing from options; Express workflows require CloudWatch Logs/metrics. No exact normalized stem duplicate among 674; lexical candidates Q600 Q664 Q353 Q106 Q326 Q346."
+      "notes": "A,B,C historical exam key confirmed by CertEmpire Q35 and CramPDF reordered variant, but States.ALL excludes States.Runtime and States.DataLimitExceeded. AWS says DataLimitExceeded may be explicitly caught by name; Runtime terminal. EventBridge execution-status monitoring for Standard workflows is missing from options; Express workflows require CloudWatch Logs/metrics. No exact normalized stem duplicate among 674; lexical candidates Q600 Q664 Q353 Q106 Q326 Q346.",
+      "note": "A+B+C is the historical intended key; AWS States.ALL does not catch States.Runtime. A state machine execution status event on EventBridge is needed for overall failure alerting, but this is not an offered option. Preserve defective requirement."
     },
     "answerStatus": "historical-best-source-defective-all-errors"
   },
@@ -19771,7 +19776,7 @@
     "keyPoints": "CloudFront Price Class 100: US/Canada/Europe/Israel; Price Class 200 adds other global regions; S3 Deep Archive 180-day minimum and hours-long restores; S3 Standard-IA 30-day minimum; S3 Intelligent-Tiering for unpredictable access; S3 Glacier Instant Retrieval for rare immediate-access retrieval; App Runner no Spot instances; App Runner closed to new customers April 30 2026, ECS Express Mode recommended.",
     "sourceWarning": "DEFECTIVE QUESTION. Original source key B+E repeated by Certstopics and DumpsPedia, but E incorrectly labels Price Class 200 as Europe and US only (this is closer to Price Class 100; actual class 100 includes Canada/Israel too). Deep Archive requires archival tolerance not given. No fully correct two-option combination as written. App Runner stopped accepting new customers April 30, 2026; existing services remain operational. Preserve original options and historical answers; do not mark as verified.",
     "review": {
-      "status": "defective-source-key-disputed",
+      "status": "unanswerable-as-written-source-key-preserved",
       "reviewedAt": "2026-11-03",
       "sourceAnswers": [
         "B",
@@ -19801,7 +19806,8 @@
           621
         ]
       },
-      "notes": "Two external copies repeat B+E but share defective Price Class 200 explanation. Independent official AWS documentation contradicts E and places conditions on B."
+      "notes": "Two external copies repeat B+E but share defective Price Class 200 explanation. Independent official AWS documentation contradicts E and places conditions on B.",
+      "note": "B+E is historical key only; CloudFront Price Class 200 label is incorrect and Deep Archive retrieval/retention not specified. No valid pair as written."
     },
     "answerStatus": "defective-source-key-b-e-disputed"
   },
@@ -21570,7 +21576,7 @@
     "keyPoints": "ViewerProtocolPolicy is one of allow-all / https-only / redirect-to-https per cache behavior. HTTPS only returns 403 on HTTP; redirect returns 301 for GET/HEAD and 307 for certain methods on HTTP/1.1+. OriginProtocolPolicy HTTPS Only applies to custom origins such as ALB. ALB supports HTTP/HTTPS, not TCP. S3 website endpoints do not support HTTPS. For custom CloudFront domain, use ACM viewer certificate in us-east-1; ALB origin certificate may be regional and must match origin hostname. SecureTransport bucket policy applies to S3 API access, not viewer redirects.",
     "sourceWarning": "DEFECTIVE MULTI-ANSWER QUESTION: historical key D+E+F repeated by DumpsTech Q95, ExamCollection Q58, and P2PExams Q1, but contradicts official AWS CloudFront viewer policy semantics. D+F are the only required choices. B is optional valid defense-in-depth but not required; if question is rewritten to require HTTPS for Lambda-to-S3 access, B+D+F could be intended, but that requirement is missing. Rewrite prompt as Select TWO with D+F, or explicitly add a separate S3 TLS requirement and make B+D+F intended. Original absolute 'HTTP users must not receive an error' is too broad for unsupported HTTP/1.0 write methods. Keep sourceAnswers for provenance.",
     "review": {
-      "status": "defective-source-key-d-e-f-disputed",
+      "status": "select-three-defective-two-correct",
       "reviewedAt": "2026-11-03",
       "sourceAnswers": [
         "D",
@@ -21606,7 +21612,8 @@
         ],
         "note": "Similar CloudFront/S3/ALB HTTPS concepts but no duplicate scenario. External sites reproduce same flawed D+E+F key."
       },
-      "notes": "CloudFront origin is ALB; S3 accessed by Lambda, not directly as CloudFront origin. Preserve source answers for audit. No three answers are required by stated scenario."
+      "notes": "CloudFront origin is ALB; S3 accessed by Lambda, not directly as CloudFront origin. Preserve source answers for audit. No three answers are required by stated scenario.",
+      "note": "D+F required. E HTTPS Only and F Redirect HTTP to HTTPS are mutually exclusive within a cache behavior; E gives HTTP users 403. Preserve historical D+E+F in answers; recommended repaired question Select TWO D+F."
     },
     "answerStatus": "defective-source-key-d-e-f-disputed"
   },
@@ -24491,19 +24498,19 @@
       },
       {
         "id": "B",
-        "text": "In Account A. set the S3 bucket policy to the following:"
+        "text": "In Account A. set the S3 bucket policy to the following:\n\n[RECONSTRUCTED FROM EXTERNAL EXAM VARIANT; ORIGINAL JSON MISSING; NOT VERIFIED AS BYTE-EXACT]\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"s3:GetObject\",\n        \"s3:ListBucket\"\n      ],\n      \"Resource\": \"arn:aws:s3:::AccountABucketName/*\"\n    }\n  ]\n}"
       },
       {
         "id": "C",
-        "text": "In Account A. set the S3 bucket policy to the following:"
+        "text": "In Account A. set the S3 bucket policy to the following:\n\n[RECONSTRUCTED FROM EXTERNAL EXAM VARIANT; ORIGINAL JSON MISSING; NOT VERIFIED AS BYTE-EXACT]\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::AccountB:user/User_DataProcessor\"\n      },\n      \"Action\": [\n        \"s3:GetObject\",\n        \"s3:ListBucket\"\n      ],\n      \"Resource\": [\n        \"arn:aws:s3:::AccountABucketName/*\"\n      ]\n    }\n  ]\n}"
       },
       {
         "id": "D",
-        "text": "In Account B. set the permissions of User_DataProcessor to the following:"
+        "text": "In Account B. set the permissions of User_DataProcessor to the following:\n\n[RECONSTRUCTED FROM EXTERNAL EXAM VARIANT; ORIGINAL JSON MISSING; NOT VERIFIED AS BYTE-EXACT]\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"s3:GetObject\",\n        \"s3:ListBucket\"\n      ],\n      \"Resource\": \"arn:aws:s3:::AccountABucketName/*\"\n    }\n  ]\n}"
       },
       {
         "id": "E",
-        "text": "In Account Bt set the permissions of User_DataProcessor to the following:"
+        "text": "In Account Bt set the permissions of User_DataProcessor to the following:\n\n[RECONSTRUCTED FROM EXTERNAL EXAM VARIANT; ORIGINAL JSON MISSING; NOT VERIFIED AS BYTE-EXACT]\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::AccountB:user/User_DataProcessor\"\n      },\n      \"Action\": [\n        \"s3:GetObject\",\n        \"s3:ListBucket\"\n      ],\n      \"Resource\": [\n        \"arn:aws:s3:::AccountABucketName/*\"\n      ]\n    }\n  ]\n}"
       }
     ],
     "answers": [
@@ -24515,9 +24522,9 @@
     "wrongOptionsExplanation": "A WRONG: S3 CORS handles browser cross-origin requests, not cross-account IAM access. B WRONG (external recovered JSON): bucket policy has no Principal field, so does not identify an allowed external requester. C INTENDED CORRECT: Account A bucket resource policy allows arn:aws:iam::AccountB:user/User_DataProcessor, but recovered source's ListBucket action lacks required bucket-level ARN. D INTENDED CORRECT: Account B identity-based policy grants GetObject/ListBucket, but recovered source's ListBucket action lacks required bucket-level ARN. E WRONG: an IAM identity-based policy includes Principal, which is not allowed in identity-based IAM policy statements.",
     "plainWords": "To share a private S3 bucket across accounts, the bucket owner grants the external identity access in its bucket policy, and the external account grants its user matching IAM permissions. C+D is the intended answer, but source JSON is missing from the GitHub question and has a ListBucket ARN bug in external copies.",
     "keyPoints": "S3 bucket policy (resource-based) contains Principal, Action, Resource; IAM user identity-based policy contains Action, Resource but NOT Principal. Cross-account access needs permissions from bucket-owner and requester accounts. CORS does not grant IAM permissions. s3:ListBucket resource is arn:aws:s3:::bucket; s3:GetObject resource is arn:aws:s3:::bucket/*. Source JSON omitted from all four options in dataset. Prefer temporary-role credentials over long-lived IAM users; S3 Bucket owner enforced disables ACLs by default. SSE-KMS adds KMS key-policy/identity requirements.",
-    "sourceWarning": "SEVERE CORRUPTION: original B,C,D,E option text has no JSON policy blocks, making the question unanswerable as stored. External variants ExamGuru, Cert-Ready and FreeCram PDF recover intended C+D. EXTERNAL SOURCE DEFECT: recovered C+D JSON grants s3:ListBucket only against object ARN arn:aws:s3:::AccountABucketName/*; must include bucket ARN without /*. Thus the two policies permit GetObject for known object keys, not listing. A text is truncated ('in Account'); stem has OCR '1AM' and punctuation. Retain historical C+D with qualified status, restore corrected example in notes, do not silently present source policies as fully correct.",
+    "sourceWarning": "SEVERE CORRUPTION: original B,C,D,E option text has no JSON policy blocks, making the question unanswerable as stored. External variants ExamGuru, Cert-Ready and FreeCram PDF recover intended C+D. EXTERNAL SOURCE DEFECT: recovered C+D JSON grants s3:ListBucket only against object ARN arn:aws:s3:::AccountABucketName/*; must include bucket ARN without /*. Thus the two policies permit GetObject for known object keys, not listing. A text is truncated ('in Account'); stem has OCR '1AM' and punctuation. Retain historical C+D with qualified status, restore corrected example in notes, do not silently present source policies as fully correct. Reconstructed policies now appended to option text with explicit provenance; JSON is not byte-exact original and ListBucket ARN remains defective.",
     "review": {
-      "status": "intended-c-d-missing-option-json-and-listbucket-arn-defect",
+      "status": "reconstructed-option-policies-defective-listbucket-resource",
       "reviewedAt": "2026-11-03",
       "sourceAnswers": [
         "C",
@@ -24592,9 +24599,16 @@
           ]
         }
       },
-      "recommendedCorrection": "Restore missing policy blocks with provenance; add arn:aws:s3:::AccountABucketName bucket ARN separately for s3:ListBucket in C and D; retain object ARN for s3:GetObject."
+      "recommendedCorrection": "Restore missing policy blocks with provenance; add arn:aws:s3:::AccountABucketName bucket ARN separately for s3:ListBucket in C and D; retain object ARN for s3:GetObject.",
+      "originalOptionText": {
+        "B": "In Account A. set the S3 bucket policy to the following:",
+        "C": "In Account A. set the S3 bucket policy to the following:",
+        "D": "In Account B. set the permissions of User_DataProcessor to the following:",
+        "E": "In Account Bt set the permissions of User_DataProcessor to the following:"
+      },
+      "note": "Reconstructed B-E from previously stored external recoveredOptionPolicies; not byte-exact original. All original JSON missing. Intended C+D but ListBucket references only object ARN; add bucket ARN separately for actual working permissions."
     },
-    "answerStatus": "defective-missing-policy-json-intended-c-d"
+    "answerStatus": "reconstructed-external-policies-intended-c-d-not-fully-functional"
   },
   {
     "id": 534,
