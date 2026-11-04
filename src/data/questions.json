@@ -620,9 +620,53 @@
     "wrongOptionsExplanation": "A. A custom Lambda to associate instances is extra code to build and maintain when CodeDeploy already integrates with Auto\nScaling. B. Suspending scaling and manually creating AMIs is risky and manual. C. Building a new AMI on every release with instance\nrefresh is a valid immutable pattern but a bigger change than needed in 24 hours.",
     "plainWords": "Instances in an Auto Scaling group change constantly. Someone must keep installing the CodeDeploy agent and attaching new\ninstances to the deployment group. Go live in 24 hours with the least effort.",
     "keyPoints": "• CodeDeploy + Auto Scaling = associate the deployment group with the ASG, agent in the AMI. • Associating with individual\ninstances breaks when instances are replaced.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "Custom AMI with baked CodeDeploy agent can become outdated and cause launch deployment failures; maintain agent updates. C is valid immutable deployment alternative but not least change in this scenario.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "status": "verified-d-agent-ami-maintenance-caveat",
+      "originalAnswers": [
+        "D"
+      ],
+      "verifiedAnswers": [
+        "D"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/codedeploy/latest/userguide/integrations-aws-auto-scaling.html",
+        "https://aws.amazon.com/codedeploy/faqs/"
+      ],
+      "externalQuestionLinks": [
+        "https://www.certsmania.com/pdf/revision-materials-effective-amazon-web-services-sap-c02-questions-answers-by-jagjit.pdf",
+        "https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341"
+      ],
+      "wrongOptionsReason": {
+        "A": "Custom EventBridge Lambda duplicates built-in CodeDeploy ASG lifecycle integration and increases maintenance.",
+        "B": "Suspending scaling and manually maintaining AMIs increases operational burden and deployment risk.",
+        "C": "Immutable AMI plus instance refresh is viable but a larger new pipeline than needed in 24 hours.",
+        "D": "Prebaked agent and CodeDeploy deployment group associated with ASG automatically handle new instances and revisions."
+      },
+      "duplicateAudit": {
+        "scope": "674",
+        "exactDuplicates": [],
+        "relatedIds": [
+          8,
+          72,
+          127,
+          133,
+          178,
+          223,
+          234,
+          242,
+          246,
+          501,
+          567,
+          632,
+          661
+        ],
+        "note": "Related candidates based on deployment technology mentions, not established duplicates."
+      },
+      "auditNote": "AWS warns prebaked CodeDeploy agent in custom AMI must be updated regularly; otherwise initial deployments may fail. Bootstrap-time agent installation is a supported alternative."
+    },
+    "answerStatus": "verified-d-agent-ami-maintenance-caveat"
   },
   {
     "id": 11,
