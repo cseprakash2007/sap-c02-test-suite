@@ -253,3 +253,14 @@ flowchart LR
 **Current AWS guidance / defect:** Since March 26, 2026, AWS WAF Anti-DDoS Managed Rule Group is the default HTTP flood protection solution, superseding legacy Shield Advanced L7 automatic mitigation. B remains the only viable offered choice but is not a fully specified modern recommendation. ExamTopics topic 1 Q159 and FreeCram topic 3 Q465 show exact variants; suggested C conflicts with AWS routing capabilities. No exact-stem duplicate among 674 questions.
 
 **References:** https://docs.aws.amazon.com/waf/latest/developerguide/ddos-automatic-app-layer-response.html ; https://docs.aws.amazon.com/waf/latest/developerguide/waf-anti-ddos.html ; https://www.examtopics.com/discussions/amazon/view/97671-exam-aws-certified-solutions-architect-professional-sap-c02/ ; https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-3-question-465-discussion-p1282174.html
+
+
+## Domain 3 single-answer 12/239 — Q35 (2026-11-04)
+
+**Correct C — Systems Manager State Manager.** 10,000 EC2 instances require latest antivirus SaaS agent version and predefined configuration. Create an idempotent SSM Command document to check/install/upgrade/reconfigure/start the vendor agent, and schedule a State Manager association daily using tag-based targeting. Ensure SSM Agent, IAM permissions, connectivity, installer availability; monitor association compliance and use rate controls.
+
+**Every option:** A custom scheduled Lambda and S3 instance inventory entails remote-login/orchestration overhead. B AWS Config + custom Lambda is more complex and is not the native guest-OS desired-state mechanism. C State Manager scheduled desired-state enforcement is the native choice. D Session Manager interactive access + EC2 user data/reboot is not reliable recurring compliance; reboot does not generally rerun user data.
+
+**Defects/outdated:** No service deprecation found. 'Consistently' is enforced on association runs rather than guaranteeing immediate real-time remediation; SSM document must explicitly check agent version, service and config. No exact normalized stem duplicates across all 674. Related keyword-topic IDs: 224. **External exact variants:** Searches for distinctive phrases did not locate independently verifiable full exact variants on multiple exam sites; do not claim external verification.
+
+**Official AWS references:** https://docs.aws.amazon.com/us_en/systems-manager/latest/userguide/systems-manager-state.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-about.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-state-manager-targets-and-rate-controls.html ; https://docs.aws.amazon.com/cli/latest/reference/ssm/create-association.html
