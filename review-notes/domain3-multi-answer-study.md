@@ -1895,3 +1895,29 @@ Corrected minimal **Account B identity policy**:
 Replace ACCOUNT_B_ID and bucket placeholder; additional KMS permissions may be required for SSE-KMS. Architecture: Account B IAM user → identity policy + Account A bucket resource policy → Account A S3 objects. Official: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-policy-language-overview.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/security_iam_service-with-iam.html . Existing external variants: ExamGuru, Cert-Ready, FreeCram; source JSON recovery remains uncertain.
 
 **Remaining open:** exact external variant confirmation for Q63; source reconstruction provenance for Q533; Q210/Q428/Q469 require rewritten question wording to become technically unambiguous. No automatic answer-key replacement performed for disputed historical keys.
+
+
+## Q63 — exact external variants resolved; corrected answer B+E (2026-11-03)
+
+**Historical source key:** A+E. **Corrected technically supported key:** B+E. The exact stem/options appear at ExamsVCE (key A+E) and ExamTopics Q444 (community includes B+E and disagreements). Official AWS documentation takes precedence over exam dumps.
+
+- **A WRONG as written:** Ordinary RDS for MySQL read replicas have distinct DB instance endpoints; a single built-in reader endpoint is an Aurora cluster capability. Although replicas can offload reads, the proposed endpoint does not exist in this deployment.
+- **B CORRECT:** Change ALB target group health check from DB-dependent catalog page to lightweight static HTTP health endpoint; add separate Route 53 full-stack catalog check and CloudWatch alarm. Stops unnecessary Auto Scaling replacement churn when the database is slow.
+- **C WRONG:** ALB target group health checks use HTTP/HTTPS, not TCP; TCP checks are associated with NLB.
+- **D WRONG:** CloudWatch cannot automatically recover an overloaded RDS instance using the proposed high-load recover action.
+- **E CORRECT (conditional):** ElastiCache caches repeatedly requested catalog reads and reduces DB load; configure suitable TTL and invalidation.
+
+```mermaid
+flowchart TD
+  User[Users] --> ALB[ALB]
+  ALB --> EC2[EC2 web tier]
+  ALB -->|HTTP /health| Health[Static health response]
+  EC2 --> Cache[ElastiCache]
+  Cache --> DB[RDS MySQL Multi-AZ]
+  R53[Route 53 full-stack product check] --> EC2
+  R53 --> Alarm[CloudWatch notification]
+```
+
+**Official AWS:** https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.EndpointAndPort.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html
+
+**Exact external variants:** https://www.examsvce.com/sap-c02/a-public-retail-web-application-uses-an-question-answer.html (A+E); https://www.examtopics.com/discussions/amazon/view/136548-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-444-discussion/ (community B+E and dissent). Original source answer preserved in question.review.sourceAnswers; dataset answers updated B+E.
