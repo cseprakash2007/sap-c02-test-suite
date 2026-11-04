@@ -3217,17 +3217,17 @@
       }
     ],
     "answers": [
-      "A",
+      "B",
       "E"
     ],
     "answerCount": 2,
-    "explanation": "Historical A,E is NOT independently verified. E ElastiCache can reduce repeated read traffic to MySQL, but A asserts a single reader endpoint for ordinary RDS MySQL read replicas; RDS MySQL replicas have individual endpoints, unlike Aurora's managed reader endpoint. Furthermore, the scenario emphasizes Auto Scaling churn because an ALB health check calls a database-dependent product page. B is the strongest remediation: simple web-tier HTTP health check plus independent Route 53 full-stack check and CloudWatch alarm. E is a reasonable second choice if queries are cacheable. The most defensible offered pair is B,E, but preserve historical A,E pending variant comparison.",
+    "explanation": "Corrected technical answer B+E: B decouples ALB instance health from DB-dependent product page and uses separate Route53 full-stack health checks plus CloudWatch alarms; E caches repeated DB reads to relieve RDS load. Original source A+E is technically defective because ordinary RDS MySQL read replicas have individual endpoints, not a single Aurora-style reader endpoint. Exact external sources conflict: ExamsVCE A+E; ExamTopics Q444 community discusses B+E. AWS docs take precedence.",
     "wrongOptionsExplanation": "A: Standard RDS MySQL read replicas do not supply a single managed reader endpoint; Aurora does. B: correct web health vs end-to-end monitoring separation. C: ALB target group health checks do not support TCP (only HTTP/HTTPS), despite similar functionality in NLB. D: CloudWatch alarm action cannot directly recover an overloaded RDS instance as described. E: ElastiCache can relieve cacheable database reads, with cache-invalidation requirements.",
     "plainWords": "A database slowdown makes the product-page health check fail, so Auto Scaling keeps replacing healthy web servers. Check the web server using a lightweight page, monitor the complete product path separately, and cache repeated reads.",
     "keyPoints": "ALB HTTP/HTTPS health checks; don't couple instance health to a slow database. Route 53 health check + CloudWatch alarm for end-to-end functionality. RDS MySQL replicas have distinct endpoints; Aurora offers a managed reader endpoint. ElastiCache helps repeated cacheable reads.",
-    "sourceWarning": "DEFECTIVE SOURCE ANSWER: stored A,E includes A's non-existent standard RDS MySQL single reader endpoint and ignores B's crucial health-check decoupling. Best technically supported B,E, but no independent exact variant confirmation. C's ALB TCP check is invalid. OCR errors: 'toad', 'Ama7on', 'CtoudWatch', 'Elastic ache'. Re-review 2026-11-03: preserve A+E as source key pending exact external variant; B+E recommended technical answer.",
+    "sourceWarning": "DEFECTIVE SOURCE ANSWER: stored A,E includes A's non-existent standard RDS MySQL single reader endpoint and ignores B's crucial health-check decoupling. Best technically supported B,E, but no independent exact variant confirmation. C's ALB TCP check is invalid. OCR errors: 'toad', 'Ama7on', 'CtoudWatch', 'Elastic ache'. Re-review 2026-11-03: preserve A+E as source key pending exact external variant; B+E recommended technical answer. Exact external match found 2026-11-03: ExamsVCE source A+E conflicts with ExamTopics community B+E and AWS RDS/ALB docs. Technical answer updated B+E; historical A+E retained in review.sourceAnswers.",
     "review": {
-      "status": "technical-correction-B-E-external-exact-variant-unconfirmed",
+      "status": "verified-technical-b-e-exact-external-variants-conflict",
       "reviewedAt": "2026-11-03",
       "historicalAnswers": [
         "A",
@@ -3240,9 +3240,12 @@
       "sources": [
         "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html",
         "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html",
-        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html"
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.EndpointAndPort.html",
+        "https://www.examsvce.com/sap-c02/a-public-retail-web-application-uses-an-question-answer.html",
+        "https://www.examtopics.com/discussions/amazon/view/136548-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-444-discussion/"
       ],
-      "note": "A cannot work as written: ordinary RDS MySQL replicas have distinct endpoints; B separates lightweight ALB HTTP health checks from Route53 application monitoring; E caches database reads. Exact external source matching not independently confirmed in this pass.",
+      "note": "Exact external match now located. ExamsVCE keys A+E; ExamTopics Q444 community includes B+E and conflicting views. Official AWS: standard RDS instance endpoint unique per DB instance, Aurora has managed reader endpoint; ALB supports HTTP/HTTPS health checks. Therefore corrected technical key B+E, preserve A+E in sourceAnswers.",
       "auditStatus": "disputed-source-key-aws-docs-confirm-B-E",
       "awsDocumentationLinks": [
         "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html",
@@ -3267,9 +3270,33 @@
       "sourceAnswers": [
         "A",
         "E"
+      ],
+      "verifiedAnswers": [
+        "B",
+        "E"
+      ],
+      "externalVariantFindings": [
+        {
+          "site": "ExamsVCE",
+          "url": "https://www.examsvce.com/sap-c02/a-public-retail-web-application-uses-an-question-answer.html",
+          "key": [
+            "A",
+            "E"
+          ]
+        },
+        {
+          "site": "ExamTopics Q444",
+          "url": "https://www.examtopics.com/discussions/amazon/view/136548-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-444-discussion/",
+          "communityAnswers": [
+            "B",
+            "E",
+            "A+B",
+            "A+E"
+          ]
+        }
       ]
     },
-    "answerStatus": "disputed-source-key-recommended-b-e-external-pending"
+    "answerStatus": "verified-technical-b-e-conflicting-external-source-a-e"
   },
   {
     "id": 64,
