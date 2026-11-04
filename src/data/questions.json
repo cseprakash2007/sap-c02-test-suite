@@ -29,9 +29,43 @@
     "wrongOptionsExplanation": "A. SSE-C makes the client send the key with every request. That adds work to every application and key management is entirely\nyours, the opposite of low overhead. C. CloudHSM adds a dedicated HSM cluster to run and pay for. It would increase cost and\noperations, not reduce them. D. Intelligent-Tiering and Deep Archive change storage cost, not KMS request cost. The data is accessed\nfrequently, so archiving it makes no sense.",
     "plainWords": "Millions of frequently read objects use SSE-KMS, and every read or write makes a KMS API call that you pay for. You want to cut that\nbill with the least work.",
     "keyPoints": "• KMS charges per request; S3 with SSE-KMS makes many requests. • If you must keep SSE-KMS, enabling S3 Bucket Keys reduces\nKMS calls by up to about 99 percent. If you do not need KMS control, SSE-S3 is the simplest fix.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "sourceWarning": "Exact external variants key B, but their explanation mistakenly invokes S3 Bucket Keys absent from option B. B requires bucket migration and change from SSE-KMS to SSE-S3; if KMS key control must remain, S3 Bucket Keys on existing bucket reduce KMS costs up to 99% with less disruption. New 2026 UpdateObjectEncryption capability may enable applying Bucket Keys to existing objects without copying. Verify application bucket references, bucket policies and compliance before migration.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "status": "verified-b-external-explanation-defect-modern-bucket-key-alternative",
+      "originalAnswers": [
+        "B"
+      ],
+      "verifiedAnswers": [
+        "B"
+      ],
+      "awsDocumentationLinks": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/configuring-bucket-key.html",
+        "https://aws.amazon.com/blogs/storage/updating-encryption-on-existing-amazon-s3-objects-with-s3-batch-operations/"
+      ],
+      "externalQuestionLinks": [
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-11-04.q183/a-company-has-millions-of-objects-in-an-amazon-s3-bucket-the-objects-are-in-the-s3-standard-storage",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2025-02-24.q513.html?p=27"
+      ],
+      "wrongOptionsReason": {
+        "A": "SSE-C requires applications to supply and manage keys for each object operation.",
+        "B": "SSE-S3 eliminates KMS API calls for migrated objects; Batch Operations copies objects at scale. Application and security changes required.",
+        "C": "CloudHSM adds operational overhead and is not a directly supported native S3 encryption key source.",
+        "D": "Intelligent-Tiering does not solve KMS request costs; archiving frequently accessed objects is unsuitable."
+      },
+      "duplicateAudit": {
+        "scope": "674",
+        "exactDuplicates": [],
+        "relatedIds": [
+          32,
+          83
+        ],
+        "note": "Related S3 cost questions focus on lifecycle/multipart rather than KMS request charges."
+      },
+      "auditNote": "Historical B verified against two exact exam variants and AWS docs; external explanations misleadingly cite S3 Bucket Keys, which are not in any choice."
+    },
+    "answerStatus": "verified-b-external-explanation-defect-modern-bucket-key-alternative"
   },
   {
     "id": 2,
