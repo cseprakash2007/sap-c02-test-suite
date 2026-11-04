@@ -264,3 +264,16 @@ flowchart LR
 **Defects/outdated:** No service deprecation found. 'Consistently' is enforced on association runs rather than guaranteeing immediate real-time remediation; SSM document must explicitly check agent version, service and config. No exact normalized stem duplicates across all 674. Related keyword-topic IDs: 224. **External exact variants:** Searches for distinctive phrases did not locate independently verifiable full exact variants on multiple exam sites; do not claim external verification.
 
 **Official AWS references:** https://docs.aws.amazon.com/us_en/systems-manager/latest/userguide/systems-manager-state.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/state-manager-about.html ; https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-state-manager-targets-and-rate-controls.html ; https://docs.aws.amazon.com/cli/latest/reference/ssm/create-association.html
+
+
+## Domain 3 single-answer 13/239 — Q37 (2026-11-04)
+
+**Answer D — verified.** Six US partners post daily figures through a Regional API Gateway REST API; botnet sends ~1,000 requests/sec from 500 worldwide IPs. WAFv2 Regional web ACL on API stage: allow known stable partner public IP ranges, default-block unknown sources. API Gateway usage plan: per-key throttling, quota and API keys (prefer distinct key per partner); associate stage and set POST `apiKeyRequired=true`.
+
+**Options:** A invalid: CloudFront OAI is for S3 origins, not API Gateway; WAF rate-based rules do not enforce daily quotas. B unnecessarily adds CloudFront; shared origin custom API key is not partner authentication, and daily WAF quota is wrong. C resource policy cannot enforce request-rate limits. D correct native WAF + usage plan.
+
+**Current AWS caution:** API keys are not authentication/authorization; use IAM/Lambda authorizers as appropriate. Usage-plan throttles/quotas are best-effort, not guaranteed cost ceilings. Partner IP allowlist requires stable public egress addresses. Original text contains typos: `1.000`, `lo`, `thai`, `fiverequests`, `distnbution`. D omits explicit POST API-key requirement and stage association.
+
+**Exact external variants:** [ExamsVCE](https://www.examsvce.com/sap-c02/a-company-is-creating-a-rest-api-question-answer.html) (D); [CertsMania SAP-C02 PDF Q1](https://www.certsmania.com/pdf/practice-session-solution-download-full-version-sap-c02-exam-by-enrique.pdf) (D); Scribd SAP-C02 Q251 matches stem. **Duplicates:** no exact normalized stem duplicate among all 674. Related candidates: 34, 39, 47, 57, 59, 198, 219, 273, 284, 348, 356, 385, 392, 552, 641, 655, 662.
+
+**Official AWS:** https://docs.aws.amazon.com/en_en/apigateway/latest/developerguide/apigateway-control-access-aws-waf.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-setup-api-keys.html
