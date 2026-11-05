@@ -753,3 +753,20 @@ flowchart LR
 **Defects/currentness:** Original options have transcription/punctuation errors; keep verbatim in dataset. Count is non-terminating and does not force a request to be allowed if another rule/default action blocks. AWS may use term 'protection pack (web ACL)' in current docs; advice remains current.
 
 **674 duplicate check:** normalized exact duplicates []; related WAF questions [34,165,283,356,465,631,658].
+
+
+## Q222 — Domain 3 single-answer 75/239 — S3 EventBridge Fargate survey processing (2026-11-05)
+
+**Verified A.** Original question/options preserved. Infrequent uploads take up to 25 minutes to process. S3 Object Created -> EventBridge rule -> ECS RunTask Fargate. Pass bucket/key to container; run only on upload; eliminate always-on EC2 polling.
+
+**Architecture:** Field operator -> S3 -> EventBridge Object Created -> ECS RunTask -> Fargate container [bucket/key] -> 25-minute processing -> exit. Include IAM ecs:RunTask/iam:PassRole, awsvpc networking, task logging, retries/DLQ and idempotency.
+
+**Every option:** A correct: event-driven serverless container. B wrong: standard Lambda 15-minute maximum; Step Functions Task timeout 30 minutes does not override Lambda. C wrong: EC2 capacity provider requires instance management, Glue crawler is for metadata catalog. D wrong: standard Lambda 25-minute execution unsupported; HTTP polling/fan-out unnecessary.
+
+**Official AWS:** https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventBridge.html ; https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html ; https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-events-iam-roles.html ; https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html ; https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html
+
+**Exact external variants:** https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf (Q38, identical options, A); https://www.examcollection.us/exam/SAP-C02-question-answer-3.html (identical options, A); https://www.certstopics.com/questions/aws-certified-professional-sap-c02-full-course-free.html (matching full question/options).
+
+**Currentness:** No material defect. Newer Lambda Managed Instances allow up to 90-minute async invocations, but B/D do not specify them; standard Lambda remains 15 minutes. EventBridge delivery may duplicate, so make processing idempotent.
+
+**674 duplicate audit:** exact normalized duplicates []; related [16,52,80,98,101,109,186,214,293,295,342,348,448,474,539,585,619,650].
