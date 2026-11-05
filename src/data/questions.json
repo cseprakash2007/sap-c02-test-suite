@@ -5172,13 +5172,13 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "AWS AppFabric connects to SaaS applications, ingests their audit logs, normalizes them and delivers them to S3. Amazon Athena\nthen queries the data to find users who are not using their licenses.",
-    "wrongOptionsExplanation": "A. License Manager manages software licenses for AWS and on-prem workloads, not SaaS audit logs. B. Custom Lambda collectors\nand EMR analysis are a lot of code and cluster work. D. App Runner runs web apps. It is not a log ingestion service.",
-    "plainWords": "Analyze SaaS applications to identify unused licenses, with the least operational work.",
-    "keyPoints": "• SaaS audit log ingestion = AWS AppFabric; ad hoc analysis = Athena.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
+    "explanation": "C. AWS AppFabric connects to supported SaaS applications and ingests normalized audit logs into Amazon S3; Amazon Athena runs serverless SQL queries over logs. AWS AppFabric FAQ explicitly documents AppFabric -> S3 -> Athena. License usage inference requires cross-checking license assignments and log coverage.",
+    "wrongOptionsExplanation": "A: AWS License Manager automated discovery is not a SaaS audit-log ingestion service. B: Lambda-based per-provider log collectors and EMR require extra code and infrastructure operations. D: App Runner is a managed application hosting service, not a SaaS audit-log aggregator; EMR is unnecessary for ad hoc S3 log analysis.",
+    "plainWords": "Collect activity logs from SaaS apps with a managed integration, store them in S3, and use Athena to find inactive accounts that might hold reclaimable licenses.",
+    "keyPoints": "AWS AppFabric -> Amazon S3 -> Amazon Athena. AppFabric supports normalized OCSF SaaS audit logs in JSON/Parquet. Athena is serverless SQL; EMR is excessive. Verify license assignments separately: missing audit activity alone is not proof of unused licenses. Official: https://aws.amazon.com/appfabric/faqs/ ; https://docs.aws.amazon.com/appfabric/",
+    "sourceWarning": "Exact external copies found: SAP-C02 PDF Question 6 https://cdnc.heyzine.com/files/uploaded/v3/0e2ddf4c8489bd5762075a3d0f0a9ee2193fc36d.pdf and CertEnsure Question 191 https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html . Both match full question/options and key C. No confirmed service retirement from current AWS documentation. Check supported SaaS providers, audit-log completeness and regional availability. Exact normalized-stem duplicates across 674: []. Related SaaS/AppFabric IDs: 232.",
     "review": null,
-    "answerStatus": "source-key-unverified"
+    "answerStatus": "aws-doc-verified-external-question-matched"
   },
   {
     "id": 86,
