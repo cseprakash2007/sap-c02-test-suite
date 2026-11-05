@@ -5830,17 +5830,17 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
+    "explanation": "B. AWS Compute Savings Plans cover eligible Amazon EC2, AWS Fargate and AWS Lambda usage, with flexibility across EC2 instance family, size and Region. AWS management-account Savings Plans recommendations consider eligible usage across all accounts with sharing enabled, unlike isolated per-account EC2 RI or EC2 Instance Savings Plans purchases. Review stable hourly baseline before committing for 3 years.",
+    "wrongOptionsExplanation": "A: EC2 Reserved Instances cover EC2 only and match instance configurations, missing Fargate/Lambda. C: Per-member EC2 RIs do not cover Fargate/Lambda and can be underutilized with fluctuating account demand. D: EC2 Instance Savings Plans apply only to EC2 within a specified instance family/Region, not Fargate/Lambda; isolated account targeting misses consolidated usage benefits.",
+    "plainWords": "For changing compute demand across many AWS accounts using EC2, Fargate and Lambda, use organization-wide Compute Savings Plans based on management-account recommendations and a conservative hourly commitment.",
+    "keyPoints": "Compute Savings Plans = EC2 + Fargate + Lambda, 1 or 3 years, up to 66% off On-Demand. EC2 Instance Savings Plans = EC2 only, one instance family and Region, up to 72%. AWS Organizations management-account recommendations account for sharing-enabled member usage. Recommendations use 7/30/60 day lookback, not six-month configurable lookback. Historical average can overcommit if demand fluctuates; use stable baseline, review sharing and seasonality.",
+    "sourceWarning": "Exact external copies: FreeCram 2026 question 227/264 (reordered choices, C maps to dataset B) https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-runs-many-workloads-on-aws-and-uses-aws-organizations-to-manage-its-accounts-the-workloads ; CertBull PDF Q70 https://www.certbull.com/application/public/files/8oAaH5cR5eKw9KEeqSxknLeTetFIFto7T7hBXhai.pdf ; FreeCram 2025 PDF Q64 https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf . Defects: punctuation 'Amazon EC2. AWS Fargate. and AWS Lambda.' and missing period after '3 years'. The six-month usage average is not an available AWS recommendation lookback period; 7/30/60 days are current. 'MOST cost savings' cannot be guaranteed without usage and pricing; B is best among listed for broad service coverage. Exact normalized duplicates []; related savings/RI question IDs 399, 423, 627, 660, 668.",
     "review": {
       "status": "Supported",
       "note": "Compute Savings Plans cover EC2, Fargate, and Lambda. Savings depend on a stable usage baseline.",
       "reference": "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html"
     },
-    "answerStatus": "source-key-unverified"
+    "answerStatus": "aws-doc-verified-multiple-exact-external-variants"
   },
   {
     "id": 102,
