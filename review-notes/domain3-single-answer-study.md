@@ -636,3 +636,20 @@ flowchart LR
 **Caveats/defects:** 'operational at all times' is unattainable with asynchronous RDS MySQL read-replica promotion; failover has minutes of RTO, possible nonzero RPO and endpoint switch. AWS recommends monitoring ReplicaLag; promotion reboots replica. D typo 'cross- Region and read replica' -> 'cross-Region read replica'; A backup promotion is invalid; B/C confuse DynamoDB global tables with RDS. Current AWS Application Recovery Controller can orchestrate RDS Promote Read Replica steps, but does not eliminate RTO. Aurora Global Database can offer tighter multi-Region recovery if changing DB platform is permitted; not among choices.
 
 **674 audit:** exact normalized duplicates []; related read-replica/DR IDs 15, 27, 58, 63, 167, 287, 322, 341, 364, 374, 417, 424, 481, 485, 555, 570, 614.
+
+
+## Q107 — Domain 3 single-answer 35/239 — Lambda static public IPv4 egress (2026-11-04)
+
+**Verified answer A.** Original stem and all options retained. Single-answer; independently checked current AWS documentation and three exact external exam variants.
+
+**Architecture:** VPC-attached Lambda (private subnet) -> private route 0.0.0.0/0 -> public NAT gateway (one Elastic IP, public subnet) -> internet gateway -> external API (allowlists EIP). Return traffic follows NAT mapping.
+
+**Options:** A correct: NAT gateway with Elastic IP yields stable outbound public IPv4. B incorrect: egress-only IGW is IPv6, cannot attach EIP. C incorrect: IGW cannot have EIP; Lambda ENI does not get public IPv4. D incorrect: public route alone does not give Lambda static IPv4 or outbound internet.
+
+**AWS official:** https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc-internet.html ; https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html ; https://www.repost.aws/knowledge-center/lambda-static-ip ; https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/generate-a-static-outbound-ip-address-using-a-lambda-function-amazon-vpc-and-a-serverless-architecture.html
+
+**Exact external variants:** https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/5 (Q47, identical options); https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-04-22.q355.html?p=10 (Q45, identical options); https://www.freecram.net/question/Amazon.SAP-C02.v2023-11-04.q183/a-company-is-building-a-serverless-application-that-runs-on-an-aws-lambda-function-that-is-attached-to (Q163, identical options). External variants are secondary to AWS docs.
+
+**Caveat:** A omits private subnet route and public IGW route details. One NAT gateway/EIP satisfies one-address requirement but introduces single-AZ failure exposure; NAT per AZ normally requires multiple EIPs and allowlisting both. Avoid false claim that an IGW can be assigned EIP.
+
+**674 audit:** exact normalized duplicates []; related Lambda/NAT/egress questions [175,318].
