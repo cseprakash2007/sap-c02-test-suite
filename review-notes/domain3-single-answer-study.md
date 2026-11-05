@@ -513,3 +513,20 @@ flowchart LR
 **Official:** https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-s3-bucket.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-cloudformation-customresource.html ; https://www.repost.aws/knowledge-center/cloudformation-s3-custom-resources
 
 **674 audit:** exact duplicates []; related CloudFormation/S3 IDs 72, 234, 333, 371, 580. Shared service terms alone do not establish semantic duplicates.
+
+
+## Q85 — Domain 3 single-answer 28/239 — SaaS license utilization (2026-11-04)
+
+**Verified answer C; original question/options unchanged.** AWS AppFabric ingests and normalizes supported SaaS audit logs into S3; Athena analyzes with serverless SQL. AppFabric FAQ explicitly documents S3/Athena integration and OCSF normalized JSON/Parquet logs.
+
+**Options:** A License Manager does not collect arbitrary SaaS audit logs; B Lambda collectors plus EMR require custom integrations and processing overhead; C managed ingestion plus Athena is least overhead; D App Runner hosts applications, not SaaS audit-log ingestion, and EMR is unnecessary.
+
+**Diagram:** Slack/Zoom/other supported SaaS -> AWS AppFabric normalized OCSF audit logs -> Amazon S3 -> Amazon Athena SQL -> potential inactive-license report; cross-check SaaS license assignments.
+
+**External exact variants:** https://cdnc.heyzine.com/files/uploaded/v3/0e2ddf4c8489bd5762075a3d0f0a9ee2193fc36d.pdf (Question 6, full stem/options, C); https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Question 191, full stem/options, C). Secondary exam keys do not supersede AWS documentation.
+
+**AWS official:** https://aws.amazon.com/appfabric/faqs/ ; https://docs.aws.amazon.com/appfabric/ ; https://docs.aws.amazon.com/athena/latest/ug/what-is.html
+
+**Caveats:** SaaS application must be supported and authorized; audit log coverage is not equivalent to license assignment, and absence of activity does not prove a license is unused. Check provider and regional support. No confirmed AWS AppFabric discontinuation from current official documentation.
+
+**674-question audit:** exact normalized stem duplicate IDs []; related SaaS/AppFabric question IDs 232.
