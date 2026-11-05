@@ -4287,13 +4287,42 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "AWS Config records configuration changes and has managed rules for security groups (for example, restricted common ports). Turn it\non, add the rule, and send noncompliance notifications to SNS. No custom code is required.",
-    "wrongOptionsExplanation": "A. SCPs prevent actions, they do not track or alert, and they need Organizations. B. CloudTrail records API calls, but you must write\nthe logic to judge what is noncompliant, which takes longer to build. C. SCPs do not send alerts.",
-    "plainWords": "Track changes to EC2 security groups and alert on noncompliant ones, as fast as possible.",
-    "keyPoints": "• Track configuration changes and compliance = AWS Config. • CloudTrail = who called which API. Config = what the resource looks\nlike and whether it complies.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified D: AWS Config records AWS::EC2::SecurityGroup configuration changes, evaluates managed rules for noncompliance, and publishes configuration/compliance notifications to SNS. Optionally route Config Rules Compliance Change via EventBridge to SNS for targeted alerts. CloudTrail helps identify the API caller but does not natively determine policy compliance.",
+    "wrongOptionsExplanation": "A: Organizations SCPs enforce maximum permissions but do not audit configuration drift or send compliance alerts. B: CloudTrail logs API activity, and EventBridge (formerly CloudWatch Events) can alert on specific API calls, but noncompliance evaluation requires added policy logic; not fastest. C: SCPs do not themselves generate alerts, and the question's account-level SCP wording is imprecise. D: Config managed rules plus SNS directly meets requirements.",
+    "plainWords": "Use AWS Config to detect when an engineer changes a security group into a noncompliant state, and SNS to alert the team. CloudTrail answers who performed the change.",
+    "keyPoints": "AWS Config = resource history + compliance rules. CloudTrail = API audit/actor. SNS = notifications. EventBridge can filter Config Rules Compliance Change events. Docs: https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_use-managed-rules.html ; https://docs.aws.amazon.com/config/latest/developerguide/notifications-for-AWS-Config.html ; https://docs.aws.amazon.com/config/latest/developerguide/monitor-config-with-cloudwatchevents.html",
+    "sourceWarning": "B typo 'CtoudWatch'; D lacks sentence punctuation. B also uses legacy 'CloudWatch rules' terminology (now EventBridge). Config SNS direct delivery may include other configuration notifications, so use EventBridge filtering for only NON_COMPLIANT alerts. External exact variants conflict: FreePDFDumps Q70 keys D, Scribd SAP-C02 Q219 keys B but its displayed community vote overwhelmingly favors D. Do not conflate CloudTrail caller identity with Config compliance history.",
+    "review": {
+      "verifiedAt": "2026-11-04",
+      "answer": "D",
+      "officialSources": [
+        "https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_use-managed-rules.html",
+        "https://docs.aws.amazon.com/config/latest/developerguide/notifications-for-AWS-Config.html",
+        "https://docs.aws.amazon.com/config/latest/developerguide/monitor-config-with-cloudwatchevents.html"
+      ],
+      "externalVariants": [
+        {
+          "url": "https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=15",
+          "answer": "D"
+        },
+        {
+          "url": "https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341",
+          "answer": "B, conflicting; community vote D"
+        }
+      ],
+      "exactDuplicates": [],
+      "relatedCandidates": [
+        102,
+        497,
+        582,
+        635,
+        55,
+        106,
+        125,
+        132
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 68,
