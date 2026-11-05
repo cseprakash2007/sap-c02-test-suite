@@ -4888,13 +4888,13 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "Normalize the URLs at the edge. A Lambda@Edge function on the viewer request event can sort the query string parameters and\nlowercase them, so equivalent requests produce the same cache key.",
-    "wrongOptionsExplanation": "B. Ignoring query strings entirely would serve the wrong content when parameters change the response. C. A reverse proxy behind\nthe load balancer is after the cache, so it does not improve the cache hit ratio, and it adds infrastructure. D. CloudFront has no\n\"case-insensitive query string\" setting.",
-    "plainWords": "The CloudFront cache hit ratio is falling because the same URLs arrive with query strings in different orders and letter cases, so each\nlooks like a different object.",
-    "keyPoints": "• Poor cache hit ratio from inconsistent URLs = normalize the cache key (Lambda@Edge or CloudFront Functions at viewer request).\nHEADS-UP ON THIS QUESTION\n• Today a CloudFront Function can do this cheaper and faster than Lambda@Edge. The idea is the same.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
+    "explanation": "A — Correct. CloudFront caches separate objects for query strings that differ by order or case. A viewer-request Lambda@Edge function can alphabetize query parameters and normalize case before cache-key lookup. AWS publishes this exact Lambda@Edge normalization example. Only lowercase values when application semantics permit; preserve case-sensitive IDs, signatures, and tokens.",
+    "wrongOptionsExplanation": "B — Incorrect as a general solution: omitting query strings from the cache key can cause incorrect responses when query parameters change content; appropriate only when the origin response is invariant to those parameters. C — Incorrect: reverse proxy behind the load balancer runs after CloudFront cache lookup and cannot normalize the viewer cache key; lowercasing whole URLs may break case-sensitive paths. D — Incorrect: CloudFront cache policies offer none/all/allowlist/all-except query parameter inclusion, not a case-insensitive matching switch.",
+    "plainWords": "CloudFront thinks equivalent requests are different when query parameters arrive in different orders or letter cases. Normalize safe query parameters before CloudFront checks its cache.",
+    "keyPoints": "Viewer-request Lambda@Edge (A) is the exam answer; AWS official Lambda@Edge examples explicitly normalize query strings. CloudFront Functions viewer-request is a modern lightweight alternative. Only normalize case when the origin considers values equivalent. Cache policies should include only parameters that affect responses. Sources: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/QueryStringParameters.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/understanding-the-cache-key.html ; exact external: https://www.examsvce.com/sap-c02/a-company-has-a-complex-web-application-question-answer.html",
+    "sourceWarning": "Original contains punctuation and typo 'lo' for 'to'. External exact-match variant confirmed on ExamsVCE only; a second independent exact variant was not located. Lowercasing every value is unsafe for case-sensitive values, signed tokens and identifiers. CloudFront Functions is now an alternative; no native case-insensitive query-string processing setting. Full-stem exact duplicates across 674: 0.",
     "review": null,
-    "answerStatus": "source-key-unverified"
+    "answerStatus": "aws-doc-verified-external-question-matched"
   },
   {
     "id": 79,
