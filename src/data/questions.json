@@ -5694,13 +5694,13 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "FSx for Windows lets you increase storage capacity online with the update-file-system command, which restores service. Then\nmonitor free space with CloudWatch (FreeStorageCapacity) and use EventBridge with a Lambda to raise capacity automatically\nbefore it fills again.",
-    "wrongOptionsExplanation": "A. FSx for Lustre is not a Windows SMB profile store. C. Monitoring alone, with no action to fix the full file system, does not restore\naccess now. D. Splitting users across file systems by hand is manual and clumsy.",
-    "plainWords": "WorkSpaces users cannot start sessions because the FSx for Windows profile share (10 TB) is full. Restore access and prevent a\nrepeat.",
-    "keyPoints": "• FSx for Windows storage can only grow. Automate growth with CloudWatch + EventBridge + Lambda.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
+    "explanation": "B. FSx for Windows File Server supports online storage capacity increases using AWS CLI update-file-system --file-system-id and --storage-capacity. Use CloudWatch FreeStorageCapacity metric and alarm to trigger automatic Lambda scaling; EventBridge can route CloudWatch alarm state changes. AWS provides an official CloudFormation auto-scaling implementation using CloudWatch alarm -> SNS -> Lambda, rather than EventBridge. B uniquely addresses immediate outage and prevention.",
+    "wrongOptionsExplanation": "A: FSx for Lustre is not a compatible Windows SMB/Active Directory profile share. C: Step Functions could orchestrate an API call, but the option does not explicitly increase storage immediately and is underspecified on trigger; B is more complete. D: Manual profile deletion, second Windows FSx system, and redirection add migration complexity and do not automatically prevent future capacity exhaustion.",
+    "plainWords": "Windows profile storage is full, preventing WorkSpaces sign-ins. Expand the existing FSx Windows file system now, monitor free capacity and automatically expand before it fills again.",
+    "keyPoints": "AWS FSx for Windows: update-file-system increases storage >=10%, maximum 65,536 GiB; cannot decrease. Requires >=16 MBps throughput, and no new scaling request until >=6 hours or prior optimization finishes, whichever later. CloudWatch AWS/FSx FreeStorageCapacity; AWS recommends >=20% free. Official AWS auto-scaling template uses CloudWatch alarm -> SNS -> Lambda; EventBridge routing is feasible but is not the documented reference path.",
+    "sourceWarning": "Original typo 'AmazonWorkspaces' (missing space) and 'Amazon Workspaces' vs product name Amazon WorkSpaces. Option B says 'Implement an Amazon CloudWatch metric' although FreeStorageCapacity is already published by AWS; create a CloudWatch alarm instead. Official reference uses SNS -> Lambda, not EventBridge -> Lambda, though EventBridge can route alarm state changes. Two exact independent copies: https://www.certsmania.com/pdf/revision-materials-effective-amazon-web-services-sap-c02-questions-answers-by-jagjit.pdf Q2 B; https://note.com/calm_dahlia6406/n/n59aa4a1a941c?hl=en Q51 B (translated exact stem and options). Exact normalized duplicates: []; related question IDs: 102, 131, 282, 300, 402, 532.",
     "review": null,
-    "answerStatus": "source-key-unverified"
+    "answerStatus": "aws-doc-verified-multiple-exact-external-variants"
   },
   {
     "id": 98,
