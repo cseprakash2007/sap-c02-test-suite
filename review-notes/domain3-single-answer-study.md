@@ -322,3 +322,20 @@ flowchart LR
 **Exact external variants:** [ExamTopics topic 1 Q866](https://www.examtopics.com/discussions/amazon/view/74192-exam-aws-certified-solutions-architect-professional-topic-1-question-866-discussion/) (community favors D, discussion includes conflicting comments); [Pupuweb Q114](https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/2/) (D); [Scribd SAP-C02 Q307](https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341) (D). Reordered variants also choose Concurrency Scaling. **Duplicate check:** no exact normalized stem across 674; related-topic Q602.
 
 **AWS references:** https://docs.aws.amazon.com/redshift/latest/dg/concurrency-scaling.html ; https://docs.aws.amazon.com/redshift/latest/mgmt/resizing-cluster.html ; https://aws.amazon.com/redshift/features/concurrency-scaling/
+
+
+## Domain 3 single-answer 17/239 — Q47 (2026-11-04)
+
+**Answer C — verified.** Public ALB behind CloudFront can be reached directly. Configure a random secret `OriginCustomHeaders` value in CloudFront, add ALB HTTPS listener rule with HTTP-header match -> forward to EC2 target group, and default listener rule -> fixed 403. AWS directly documents this solution.
+
+**Options:** A ALB security group cannot restrict to one public CloudFront distribution; managed origin-facing prefix list permits any distribution. B CloudFront-attached WAF cannot see requests that bypass CloudFront. C secret origin header with ALB enforcement directly satisfies requirement. D OAC does not authorize public ALB custom origins.
+
+**Architecture:** Client -> CloudFront -> HTTPS + secret custom header -> ALB header match -> EC2 Auto Scaling group. Direct client -> ALB (missing header) -> 403.
+
+**Nuances:** Header secret must be kept private and rotated; HTTPS protects transit. A leaked header can be replayed, so combine CloudFront managed prefix list on ALB security group and/or use CloudFront VPC origins with private ALB and AWS service-managed SG. Distinguish Q43 (least effort: managed prefix list) from Q47 (ensure specific CloudFront distribution: custom header). AWS WAF on ALB *could* enforce header but WAF on CloudFront cannot see bypass.
+
+**External verification:** [CertEnsure Q46](https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html) is one exact full stem/options variant and keys C. No second independent exact variant was established despite searching; do not claim otherwise.
+
+**Duplicate audit:** 674 questions scanned, normalized exact stem matches 0; related candidates 43, 48, 57, 98, 204, 206, 284, 290, 294, 346, 356, 446, 469, 489, 494, 499, 521, 555, 565, 571, 587, 621, 631, 641, 642, 649, 656. Q43 is closely related but asks a different access restriction and least effort.
+
+**Official AWS docs:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/add-origin-custom-headers.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html
