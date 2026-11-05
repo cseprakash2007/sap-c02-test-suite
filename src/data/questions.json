@@ -3136,13 +3136,71 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "Have CloudFront add a secret custom header (a random value) on every origin request, and configure the ALB listener rule (or WAF)\nto forward only requests that carry that header. Direct requests do not have the secret, so they are rejected.",
-    "wrongOptionsExplanation": "A. There is no single \"CloudFront distribution origin\" you can name in a security group, only shared CloudFront address ranges. B. A\nWAF on CloudFront only sees requests that already came through CloudFront, so it cannot stop requests that bypass it. D. Origin\nAccess Control works for S3 and similar origins, not for an ALB.",
-    "plainWords": "The ALB is a public custom origin for CloudFront, but people can hit the ALB directly. All traffic must come through CloudFront.",
-    "keyPoints": "• Make CloudFront the only way in to an ALB = secret custom header validated at the ALB (plus the prefix list). • OAC/OAI are for S3\norigins.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "C. Configure CloudFront origin custom headers with an unpredictable shared secret and ALB HTTPS listener rules that forward only requests with the correct header; default rule returns HTTP 403. This directly prevents ordinary bypass requests to the public ALB and is AWS's documented solution. Keep the header secret, rotate it, and use HTTPS.",
+    "wrongOptionsExplanation": "A. A standard public CloudFront distribution does not expose a distribution-specific source security group. CloudFront managed origin-facing prefix list admits all CloudFront distributions, so it cannot by itself ensure traffic passes through this distribution. B. WAF attached to CloudFront cannot see direct-to-ALB requests. An ALB-attached WAF could enforce the shared header, but that is not the proposed option. D. CloudFront OAC is not an ALB public custom-origin access-control mechanism; it supports specific origins such as S3 and Lambda function URLs, not this ALB configuration.",
+    "plainWords": "A public ALB can be accessed directly, bypassing CloudFront. Add a secret header in CloudFront origin requests and reject requests at the ALB unless the secret header matches.",
+    "keyPoints": "CloudFront custom origin header + ALB listener HTTP-header condition + default 403 blocks ordinary direct ALB bypass. Use HTTPS, protect/rotate secret; optional CloudFront managed prefix list on ALB SG for defense in depth. CloudFront-side WAF does not inspect bypass traffic. Modern alternative: CloudFront VPC origins with internal ALB and CloudFront-VPCOrigins-Service-SG, not the OAC described in D.",
+    "sourceWarning": "Only one independently confirmed exact full-question external variant (CertEnsure Q46, C); a second exact independent publication could not be verified. Header validation is not cryptographic proof of CloudFront provenance: leaked secret can be replayed directly; combine prefix list/HTTPS/rotation or private VPC origin for stronger security. Option A ambiguous wording 'CloudFront distribution’s origin' but a public CloudFront distribution cannot be identified uniquely by a security group. CloudFront VPC origins now allow internal ALBs, unlike older assumptions. No exact normalized duplicate across 674; Q43 is a closely related earlier question, differing in strictness: Q43 asks least effort (prefix list) whereas Q47 requires traffic via the specific distribution (secret header).",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "verified-C-aws-docs-one-exact-external-variant",
+      "originalAnswers": [
+        "C"
+      ],
+      "verifiedAnswers": [
+        "C"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/add-origin-custom-headers.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html"
+      ],
+      "externalSiteAnswers": [
+        {
+          "site": "CertEnsure Q46",
+          "answer": "C",
+          "match": "exact full stem and options"
+        }
+      ],
+      "crossVerificationStatus": "aws-docs-verified-one-independent-exact-variant-second-not-established",
+      "duplicateAudit": {
+        "scope": 674,
+        "exactDuplicates": [],
+        "relatedIds": [
+          43,
+          48,
+          57,
+          98,
+          204,
+          206,
+          284,
+          290,
+          294,
+          346,
+          356,
+          446,
+          469,
+          489,
+          494,
+          499,
+          521,
+          555,
+          565,
+          571,
+          587,
+          621,
+          631,
+          641,
+          642,
+          649,
+          656
+        ],
+        "importantSimilarity": "Q43: CloudFront origin-facing prefix list for least-effort restriction; Q47: specific distribution enforcement by secret header."
+      },
+      "auditNote": "ALB listener forwards on secret origin header and otherwise 403; keep header secret, HTTPS, rotation; add CloudFront prefix list for defense in depth. VPC origins modern alternative."
+    },
+    "answerStatus": "aws-docs-verified-one-exact-external-variant"
   },
   {
     "id": 48,
