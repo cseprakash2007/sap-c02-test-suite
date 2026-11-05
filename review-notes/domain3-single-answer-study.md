@@ -583,3 +583,22 @@ flowchart LR
 **Defects:** `AmazonWorkspaces` typo and inconsistent product casing. B incorrectly suggests creating a CloudWatch metric; FSx publishes `FreeStorageCapacity` natively, so create a CloudWatch alarm. Official AWS automation uses SNS-Lambda rather than EventBridge-Lambda; EventBridge is feasible. C is underspecified, not technically impossible.
 
 **674 audit:** exact normalized duplicates []; related FSx/WorkSpaces IDs 102, 131, 282, 300, 402, 532.
+
+
+## Q98 — Domain 3 single-answer 32/239 — Fargate image delivery latency (2026-11-04)
+
+**Verified answer A against current AWS CloudFront docs and one exact external exam variant.** Original question/options unchanged. No second independent exact external variant confirmed.
+
+**Why:** Fargate autoscaling creates per-task ephemeral caches, causing repeat image resizing and cold misses. Pre-resize predefined image variants into S3; use CloudFront path behavior `/images/*` -> S3 and default `*` -> ALB -> ECS Fargate. CloudFront edge caches reduce image latency and backend CPU while minimizing managed infrastructure operations.
+
+**Diagram:** Viewers -> CloudFront edge cache -> [image behavior -> S3 pre-resized objects] OR [default behavior -> ALB -> Fargate ECS service].
+
+**Options:** A correct; B Memcached shares cache but adds application and cache-cluster overhead, without edge distribution; C Aurora plus S3 introduces unnecessary metadata DB; D HTTP API stage caching is not supported (REST API caching only) and API Gateway is not the preferred image CDN.
+
+**Official AWS:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesCacheBehavior.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/HowCloudFrontWorks.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-cloudfront-walkthrough.html ; https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html ; https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/
+
+**Exact external:** https://www.certstopics.com/questions/aws-certified-professional-sap-c02-exam-dumps.html Question 44, full matching stem/options, A. No independently confirmed second exact external variant.
+
+**Caveats:** Pre-generating every image size requires a pipeline and storage; this is viable because the scenario states predefined sizes. For unpredictable image sizes use on-demand CloudFront/Lambda resizing. Use S3 origin access control, appropriate TTLs and cache keys, versioned object names, and invalidation strategy. No outdated services identified.
+
+**674 audit:** exact normalized duplicates []; related CloudFront/image/Fargate IDs 15, 16, 43, 47, 52, 57, 78, 101, 103, 109, 148, 158, 159, 165, 186, 188, 206, 214, 233, 246, 280, 283, 284, 293, 295, 312, 317, 328, 342, 348, 356, 428, 461, 464, 469, 474, 494, 585, 592, 596, 604, 612, 621, 649, 650.
