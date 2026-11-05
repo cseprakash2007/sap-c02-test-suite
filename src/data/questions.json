@@ -3558,13 +3558,27 @@
       "C"
     ],
     "answerCount": 1,
-    "explanation": "Change the existing environment's capacity settings to a load-balanced, auto scaling environment across multiple AZs and add a\nscale-out trigger on average CPU utilization. Beanstalk handles the load balancer and scaling for you, and you keep the same\napplication.",
-    "wrongOptionsExplanation": "A. Creating a brand-new application is unnecessary extra work. B. Traffic splitting is a deployment policy for releases, not a way to\nscale for CPU. D. Rebuilding the environment is more disruptive, and \"sum\" CPU is the wrong statistic. Average is correct for scaling.",
+    "explanation": "Verified C with AWS Elastic Beanstalk official docs: edit existing environment Configuration > Capacity > Environment type Load balanced, configure min/max EC2 instances and AZs, and set CPUUtilization Average scaling trigger above 85% for 5 minutes. Reusing environment minimizes overhead.",
+    "wrongOptionsExplanation": "A creates an unnecessary new Beanstalk application and uses maximum CPU, which can scale from one hot instance; B traffic splitting is a deployment strategy, not conditional CPU autoscaling; D rebuilding causes needless disruption and Sum CPU utilization is inappropriate for a percentage-based average load threshold.",
     "plainWords": "A Java app in a single-instance Elastic Beanstalk environment runs at over 85 percent CPU. Fix it before production with the least\nwork.",
-    "keyPoints": "• Single-instance Beanstalk to scalable = change environment type to load-balanced and set Auto Scaling triggers.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "keyPoints": "Answer C. Change existing single-instance Elastic Beanstalk environment to LoadBalanced; configure Auto Scaling MinSize/MaxSize, AZs, CPUUtilization Average trigger. AWS: https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features-managing-env-types.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-cfg-autoscaling-triggers.html",
+    "sourceWarning": "Original B is grammatically defective ('in the average'); D is corrupted ('option Select an Availability Zones'). C says select all AZs, but production needs at least two suitably configured AZs, not necessarily all. 85% is an exam-provided threshold, not a universal AWS recommendation. Exact matching external exam variants could not be independently confirmed in this review; do not claim multiple matches.",
+    "review": {
+      "verifiedAt": "2026-11-04",
+      "answer": "C",
+      "officialSources": [
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features-managing-env-types.html",
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-cfg-autoscaling-triggers.html",
+        "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html"
+      ],
+      "externalVariantsStatus": "No independently confirmed exact full-stem/options variants found",
+      "exactDuplicates": [],
+      "similarCandidates": [
+        514,
+        635
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 56,
