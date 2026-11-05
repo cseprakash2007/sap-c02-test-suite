@@ -11439,13 +11439,40 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A. AWS recommends testing AWS WAF rules with Count action before enabling Block. Count is non-terminating, produces matched-request logs, samples, and CloudWatch metrics, allowing false-positive analysis and rule tuning without directly blocking matched legitimate requests. Move tuned rules incrementally to Block and monitor.",
+    "wrongOptionsExplanation": {
+      "A": "Correct: Count, log, investigate false positives, tune, gradually enforce Block.",
+      "B": "Rate-based rules alone are insufficient; a high threshold can still block legitimate spikes, and no safe test period is specified.",
+      "C": "Immediate Block before tuning can disrupt legitimate requests, even with AWS managed rules; use Count overrides first.",
+      "D": "Allow is terminating and does not provide the same observe-without-terminating behavior as Count; restricting to custom rules is unnecessary."
+    },
+    "plainWords": "Start WAF rules in Count mode to see what they would match, fix false positives, and only then turn on Block.",
+    "keyPoints": [
+      "AWS WAF Count is non-terminating; Allow and Block are terminating",
+      "Count records matches in logs, CloudWatch metrics and sampled requests",
+      "Test in staging then Count mode in production before enforcement",
+      "Analyze false positives and create narrowly scoped exceptions",
+      "Transition rules incrementally to Block, monitor and maintain rollback",
+      "Count does not override other WAF rules or guarantee final Allow"
+    ],
+    "sourceWarning": "Original option text has transcription errors (punctuation, 'o\\'', 'tor'). AWS WAF documentation now sometimes calls web ACLs 'protection packs' but web ACL term remains valid. Count mode itself does not ensure Allow if later WAF rules Block. No substantive outdated recommendation.",
+    "review": {
+      "verifiedAnswer": [
+        "A"
+      ],
+      "verifiedAt": "2026-11-05",
+      "notes": "Verified official AWS WAF Count testing/tuning and re:Post; two exact independent variants FreeCram Q99/142 and Pupuweb Q178 both A. Normalized exact duplicates []; related IDs [34,165,283,356,465,631,658].",
+      "sources": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-testing-prep.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-testing-activities.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-action.html",
+        "https://repost.aws/knowledge-center/waf-analyze-count-action-rules",
+        "https://repost.aws/knowledge-center/waf-managed-rules-count-to-block",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-12-13.q142/a-company-has-developed-a-web-application-the-company-is-hosting-the-application-on-a-group-of-amazon",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/8/"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 220,
