@@ -292,3 +292,18 @@ flowchart LR
 **Exact external variants:** [Exam-Files Q4 longer variant](https://learn.exam-files.com/amazon/sap-c02/AWS%20Certified%20Solutions%20Architect%20-%20Professional.SAP-C02.VCEplus.2024-11-07.159q.vcex) (B); [CertsMania Q56](https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf) (exact short stem/options); [FreePDFDumps Q67](https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=15) (exact short stem/options). **Duplicate audit:** no exact normalized stem match across 674; related topic IDs 2, 27, 49, 158, 160, 203, 230, 233, 287, 297, 312, 326, 338, 420, 429, 431, 552, 570, 609, 662.
 
 **Official docs:** https://docs.aws.amazon.com/lambda/latest/dg/services-rds.html ; https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html ; https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html
+
+
+## Domain 3 single-answer 15/239 — Q43 (2026-11-04)
+
+**Answer B — verified.** Existing CloudFront -> internet-facing ALB -> ECS site allows direct ALB access. Replace ALB security-group broad HTTPS ingress with AWS-managed `com.amazonaws.global.cloudfront.origin-facing` prefix list (IPv6 counterpart where relevant); AWS updates the ranges automatically. This is least effort among listed options.
+
+**Options:** A standard CloudFront distribution cannot be attached to a user-created VPC security group. B managed prefix list is correct. C an ELB interface VPC endpoint is not CloudFront VPC origins and changing ALB to internal alone breaks the existing public-origin path. D manual ip-ranges.json updates require more operational work.
+
+**Architecture:** Viewer -> CloudFront -> ALB SG (CloudFront origin-facing prefix list) -> public ALB -> ECS. Direct non-CloudFront client -> ALB SG -> blocked.
+
+**Current AWS nuance/defect:** Prefix list allows *any* CloudFront distribution, not specifically this distribution; for stronger protection use a secret custom origin header validated at ALB or use CloudFront VPC origins with a private ALB (newer architecture). CloudFront VPC origins service-managed security group is not the user-created SG described by A. Prefix list has SG rule quota weight 55; consider IPv6. Original typos: `wanted` likely `moved`, `However.`, `internal_`, `IPS`.
+
+**External exact variants:** [FreeCram Q108](https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-recently-wanted-a-web-application-from-an-on-premises-data-center-to-the-aws-cloud-the-web), [CertPrep Q5](https://www.certprep.io/amazon/sap-c02/questions), [CertsMania p51](https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf), all B. **Duplicate audit:** exact normalized stem matches 0; related candidate IDs 47, 48, 57, 98, 204, 206, 284, 290, 294, 346, 356, 446, 469, 489, 494, 499, 521, 555, 565, 571, 587, 621, 631, 641, 642, 649, 656.
+
+**Official docs:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/LocationsOfEdgeServers.html ; https://docs.aws.amazon.com/vpc/latest/userguide/working-with-aws-managed-prefix-lists.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html
