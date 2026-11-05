@@ -704,3 +704,20 @@ flowchart LR
 **Caveats/currentness:** Current AWS offers Database Savings Plans for eligible Aurora usage; not among choices. DB RI assumes eligible provisioned instance, not all Aurora Serverless. One-year predictability doesn't establish numeric optimal commitment without hourly usage and pricing; compute Savings Plan should be sized to stable hourly baseline. Sharing must remain enabled. Question is not wholly outdated; the option set omits newer database commitment option.
 
 **674 audit:** exact normalized duplicates []; related IDs [16,101,103,295,342,512,547,568,627,668].
+
+
+## Q215 — Domain 3 single-answer 72/239 — Monolithic REST API, Route 53 multivalue and scaling (2026-11-05)
+
+**Answer status: DISPUTED/DEFECTIVE.** Preserve original source key D, but do not treat as independently verified. The requirement is to handle large varying traffic with least operational overhead. D replaces multivalue DNS with an ALB, routes via Route 53 alias, and moves EC2 targets to private subnets, but does not add EC2 capacity. ALB distributes traffic; it does not automatically launch backend instances. A (API Gateway + Lambda) supports managed scaling but requires significant monolith decomposition; therefore defensible on low ongoing operations, not low migration effort. The strongest practical incremental solution is ALB + EC2 Auto Scaling group, which is not offered.
+
+**Architecture (recommended, absent from choices):** Mobile clients -> Route 53 alias -> public ALB -> target group -> EC2 instances in private subnets managed by EC2 Auto Scaling group (dynamic scaling + health checks).
+
+**All options:** A: scalable managed Lambda/API Gateway, but substantial refactoring, concurrency limits. B: EKS on EC2 and ingress adds operational complexity, no autoscaler specified. C: ASG adds capacity, but Lambda-driven DNS record updates are fragile with TTL and unnecessary when ALB integrates directly with ASG. D: source-key, ALB request balancing and healthy targets, but cannot handle total demand above fixed fleet capacity; no ASG.
+
+**AWS official:** https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-multivalue.html ; https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-to-elb-load-balancer.html ; https://docs.aws.amazon.com/en_en/autoscaling/ec2/userguide/autoscaling-load-balancer.html ; https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html
+
+**Exact external variants and conflicting keys:** https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/4 (identical options, D); https://nerdexam.com/exams/sap-c02/questions/300 (identical options, A); https://www.examtopics.com/discussions/amazon/view/91462-exam-aws-certified-solutions-architect-professional-sap-c02/ (identical question; comments debate A/C/D); https://www.p2pexams.com/free-questions/amazon-sap-c02-dumps-by-peterson-19-12-2022-6qa-dumpssheet.pdf (Q6, exact question/options). AWS docs are authoritative over exam keys.
+
+**Defects/outdated:** Main defect is absent ALB + ASG choice; D conflates load distribution with elastic capacity. Route 53 multivalue is not an ELB replacement. A may require substantial application changes, so no unambiguously best choice. Not an obsolete AWS feature issue, rather ambiguous/incomplete options.
+
+**674 duplicate audit:** exact normalized duplicates []; related IDs [10,18,21,27,34,39,40,43,47,48,57,58,59,60,63,64,72,76,86,98,112,127,130,135,148,155,160,182,184,200,206,209,219,231,235,248,250,279,284,285,290,303,328,330,332,341,348,351,355,356,411,416,424,433,435,440,447,449,454,460,467,469,474,477,481,485,489,494,497,499,501,523,528,531,536,555,564,567,569,571,574,585,587,594,599,605,621,624,625,631,641,649,651,652,653,655,656,670,674].
