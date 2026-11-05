@@ -2878,13 +2878,28 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "AWS publishes a managed prefix list of CloudFront origin-facing IP ranges. Reference it in the ALB security group inbound rule and\nAWS keeps the list up to date automatically, so you do no manual IP maintenance.",
-    "wrongOptionsExplanation": "A. CloudFront is not attached to security groups, so there is no CloudFront security group. C. Making the ALB internal would cut off\nCloudFront, which needs a reachable origin (unless you use CloudFront VPC origins). D. Parsing ip-ranges.json by hand means\nconstant updates.",
-    "plainWords": "Users can reach the app through both CloudFront and the ALB endpoint. Only CloudFront must be allowed, with the least effort.",
-    "keyPoints": "• Lock an ALB to CloudFront = CloudFront managed prefix list in the ALB security group. • For stronger protection add a secret\ncustom header check, because the prefix list admits any CloudFront distribution.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B. Restrict the internet-facing ALB security group's inbound HTTPS rule to AWS-managed CloudFront origin-facing prefix list com.amazonaws.global.cloudfront.origin-facing (and IPv6 list if appropriate), removing other broad ingress rules. AWS automatically maintains the list. This is the least-effort option for the existing public ALB origin.",
+    "wrongOptionsExplanation": "A. A standard public CloudFront distribution is not assigned a customer-created VPC security group; VPC origins have a different AWS-managed security group model. C. An Elastic Load Balancing VPC interface endpoint does not provide CloudFront access to an internal ALB. CloudFront VPC origins are a separate, newer supported architecture, but the option does not configure them. D. Manually synchronizing IP ranges from ip-ranges.json can work but requires custom maintenance and is less operationally efficient than the managed prefix list.",
+    "plainWords": "A website is reachable both through CloudFront and directly through its public ALB. Allow ALB inbound connections only from CloudFront's AWS-maintained origin-facing IP ranges to block ordinary direct internet access.",
+    "keyPoints": "CloudFront managed prefix list: com.amazonaws.global.cloudfront.origin-facing (IPv4), com.amazonaws.global.ipv6.cloudfront.origin-facing (IPv6). ALB security-group inbound source = prefix list; remove 0.0.0.0/0 and ::/0. List is AWS maintained, SG quota weight 55. Important: permits origin traffic from ANY CloudFront distribution; add custom secret header plus ALB listener/WAF check for own-distribution enforcement. Modern alternative: CloudFront VPC origins supports private ALBs with service-managed SG.",
+    "sourceWarning": "Exact external variants: FreeCram Q108, CertPrep Q5, CertsMania p51 all B. Source stem typo 'wanted' should likely be 'moved'; 'However.' punctuation; option C 'internal_' typo; D 'IPS'. Key B is best among choices but does not guarantee ONLY the company's CloudFront distribution because prefix list permits all CloudFront origin-facing IPs. Newer CloudFront VPC origins can use private ALB, unlike old generalization that CloudFront always requires a public ALB. IPv6 list and prefix-list security group quota weight 55 are implementation considerations. No exact normalized duplicate in 674.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "aws-docs-and-three-exact-external-variants-verified",
+      "originalAnswers": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/LocationsOfEdgeServers.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/working-with-aws-managed-prefix-lists.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-recently-wanted-a-web-application-from-an-on-premises-data-center-to-the-aws-cloud-the-web",
+        "https://www.certprep.io/amazon/sap-c02/questions",
+        "https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf"
+      ],
+      "auditNote": "Q43 Domain3 single 15/239. Answer B. Prefix list filters to all CloudFront, not exclusively own distribution; custom header or private VPC origin stronger. Exact normalized duplicates 0; related candidates 47, 48, 57, 98, 204, 206, 284, 290, 294, 346, 356, 446, 469, 489, 494, 499, 521, 555, 565, 571, 587, 621, 631, 641, 642, 649, 656. Modern VPC origins supersede absolute assertion internal ALB cannot be CloudFront origin."
+    },
+    "answerStatus": "aws-docs-and-external-verified"
   },
   {
     "id": 44,
