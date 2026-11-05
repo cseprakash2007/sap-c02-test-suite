@@ -11147,13 +11147,39 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is the best available answer: 1-year reserved DB instance for predictable continuously running production Aurora provisioned instance, plus 1-year Compute Savings Plan for Fargate compute. Organization management account can share eligible RI and Savings Plan benefits with linked accounts when discount sharing is enabled. Size hourly compute commitment to stable baseline.",
+    "wrongOptionsExplanation": {
+      "A": "EC2 Instance Savings Plans do not cover AWS Fargate; also blanket DB RIs for intermittent dev/test risk underutilization.",
+      "C": "Three-year commitments extend beyond one-year demand forecast and reserve intermittent development/test databases, risking waste; though Compute Savings Plan does cover Fargate.",
+      "D": "EC2 Instance Savings Plans do not cover Fargate; three-year commitment is unjustified by one-year forecast."
+    },
+    "plainWords": "Buy a one-year database discount for always-on production and a one-year Compute Savings Plan for stable Fargate consumption, shared centrally across accounts.",
+    "keyPoints": [
+      "Compute Savings Plans apply to AWS Fargate; EC2 Instance Savings Plans do not",
+      "Aurora provisioned DB instances can receive reserved DB instance billing discounts",
+      "AWS Organizations consolidated billing can share RI and Savings Plan discounts when enabled",
+      "Avoid long commitments beyond demand forecast and unused coverage on intermittent workloads",
+      "Size Compute Savings Plan to continuous hourly baseline; don't automatically cover all peak compute",
+      "Database Savings Plans now exist as another modern alternative not listed in question"
+    ],
+    "sourceWarning": "Question assumes one-year production demand and provisioned Aurora; no pricing, database deployment type or compute hourly baseline given, so 'most cost-effective' cannot be mathematically guaranteed. AWS now offers Database Savings Plans for eligible Aurora usage (not among choices). RIs do not apply to all Aurora Serverless configurations. One-year compute commitment should be sized to baseline, not entire aggregate demand.",
+    "review": {
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-05",
+      "notes": "AWS documentation confirms B. Exact stem/options external variants: CertEnsure Q131 and DumpsPedia; PrepAwayExam Q3 has same stem but reordered options. Normalized exact duplicates []; related [16,101,103,295,342,512,547,568,627,668].",
+      "sources": [
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html",
+        "https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html",
+        "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_WorkingWithReservedDBInstances.html",
+        "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ri-behavior.html",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html",
+        "https://www.prepawayexam.com/Amazon/AWS-Certified-Solutions-Architect/SAP-C02.aws-certified-solutions-architect-professional-sap-c02.15063.ete.file.html"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 215,
