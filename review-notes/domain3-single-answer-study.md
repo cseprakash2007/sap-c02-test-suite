@@ -356,3 +356,20 @@ flowchart LR
 **Duplicate audit:** 674 questions checked, exact normalized duplicates 0; related candidate IDs 109, 474.
 
 **Official docs:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/monitoring-fargate-usage.html ; https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Quotas-Visualize-Alarms.html ; https://docs.aws.amazon.com/general/latest/gr/ecs-service.html
+
+
+## Domain 3 single-answer 19/239 — Q53 (2026-11-04)
+
+**Verified answer: A.** Add two zonal public NAT gateways (one per remaining AZ), and use a distinct private subnet route table in each AZ pointing `0.0.0.0/0` to that AZ's NAT gateway. Public subnet routes target the VPC's single internet gateway. AWS explicitly recommends zone-independent NAT routing.
+
+**Options:** A correct; B incorrectly routes public subnets through NAT rather than configuring private subnet egress; C cannot attach three internet gateways to one VPC, and private-only instances cannot use an IGW directly; D same invalid IGW premise and leaves private subnet egress unresolved.
+
+**Architecture:** Internet <-> single VPC IGW <-> public subnet NAT-A/NAT-B/NAT-C <-> AZ-local private subnet EC2 A/B/C. Each private subnet has its own default route to its zonal NAT gateway.
+
+**Duplicate audit:** All 674 dataset stems compared; zero normalized exact duplicates. **Q5 is a near-duplicate**: shortened same scenario and answer, and should be cross-referenced rather than counted as independent knowledge. Other broad vocabulary similarities do not establish duplicate scenarios.
+
+**Current service nuance:** AWS now also documents **regional NAT gateways** for automatic multi-AZ expansion. The question's A remains best among listed options, but its zonal-only framing is not the full current solution space. Public NAT is needed for internet-bound IPv4 egress. Costs: multiple zonal NAT gateway-hours; AZ-local routing avoids cross-AZ NAT data transfer.
+
+**Exact external variants:** [ExamCollection SAP-C02 question #55](https://www.examcollection.us/exam/SAP-C02-question-answer-4.html) repeats full question and four choices, answer A; [P2PExams Pena PDF question 3](https://www.p2pexams.com/free-questions/explore-amazon-sap-c02-questions-by-pena.pdf) repeats stem and option A, independently corroborating the scenario. Exam-site keys are secondary evidence; AWS docs are authoritative.
+
+**AWS documentation:** https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html ; https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-scenarios.html ; https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html
