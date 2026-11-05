@@ -5024,13 +5024,13 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "CloudFormation cannot delete a bucket that is not empty. Add a Lambda-backed custom resource that empties the bucket when the\nstack is deleted, and use DependsOn so it runs before the bucket deletion. No architecture changes are needed.",
-    "wrongOptionsExplanation": "B. Delete is already the default, and it does not empty the bucket. C. Snapshot is not a valid policy for S3 and would not empty it\neither. D. Switching to EFS is a major architecture change.",
-    "plainWords": "Deleting an old stack failed because the S3 bucket still contains objects.",
-    "keyPoints": "• Non-empty S3 bucket blocks stack delete = custom resource that empties it.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
+    "explanation": "A. CloudFormation can delete an S3 bucket only when empty. A Lambda-backed custom resource handles Delete requests and removes objects, including versions/delete markers when applicable. DependsOn from the custom resource to the bucket causes the custom resource to be deleted first. AWS CloudFormation and AWS re:Post confirm.",
+    "wrongOptionsExplanation": "B: DeletionPolicy Delete is the default and cannot empty the bucket. C: S3 does not support Snapshot deletion policy. D: EFS requires a major redesign and does not fix the existing bucket.",
+    "plainWords": "The old stack cannot delete an S3 bucket while temporary files remain. Clean it up using a Lambda-backed custom resource on stack deletion.",
+    "keyPoints": "Custom resource DependsOn bucket -> cleanup before bucket deletion. Handle object versions, delete markers, IAM, response signaling, and concurrent writers. 24-hour lifecycle does not guarantee empty bucket when stack deleted. AWS docs: https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-s3-bucket.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html ; https://www.repost.aws/knowledge-center/cloudformation-s3-custom-resources",
+    "sourceWarning": "Exact variants A: ExamCollection #121, Certstopics #67, FreePDFDumps #20, ExamTopics #498. Similar financial-services 45-minute variant incorrectly keyed Delete on ExamCollection #18 and DumpsTech #97; AWS docs contradict that answer. Exact duplicate IDs []; related CloudFormation/S3 IDs 72, 234, 333, 371, 580. Existing DELETE_FAILED stack may need manual bucket cleanup and deletion retry.",
     "review": null,
-    "answerStatus": "source-key-unverified"
+    "answerStatus": "aws-doc-verified-external-question-matched"
   },
   {
     "id": 83,
