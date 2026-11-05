@@ -530,3 +530,20 @@ flowchart LR
 **Caveats:** SaaS application must be supported and authorized; audit log coverage is not equivalent to license assignment, and absence of activity does not prove a license is unused. Check provider and regional support. No confirmed AWS AppFabric discontinuation from current official documentation.
 
 **674-question audit:** exact normalized stem duplicate IDs []; related SaaS/AppFabric question IDs 232.
+
+
+## Q88 — Domain 3 single-answer 29/239 — EMR Spot versus On-Demand (2026-11-04)
+
+**Dataset key A retained, but FLAGGED AMBIGUOUS / EXTERNAL ANSWER CONFLICT.** Exact original stem and options preserved. Official AWS EMR Spot guidelines distinguish: cost-driven transient, partial loss acceptable => all Spot (A); data-critical, partial loss unacceptable => On-Demand primary/core plus Spot task (B). The stem calls jobs business-critical yet only relaxes completion time; it does not establish restartability or tolerable loss of partial processing. EMRFS S3 durable data does not imply all intermediate HDFS/shuffle data survives interruption. No unqualified single answer can be independently established.
+
+**Options:** A lowest Spot compute cost conditional on restartable workload; B safer for critical partial-state preservation, terminates all resources, and can be correct under stricter reliability assumptions; C all On-Demand less economical; D leaves primary/core running idle. Savings Plans introduce usage commitment and are not guaranteed cheapest without workload economics.
+
+**Architecture:** 1 AM schedule -> transient EMR instance fleets [primary Spot, core Spot, task Spot] -> S3 EMRFS durable input/output -> terminate entire cluster after job. On interruption, restart/recover job. Safer alternative: primary/core On-Demand, task Spot.
+
+**Exact external variants conflicting:** https://www.freecram.net/question/Amazon.SAP-C02.v2023-12-13.q142/a-solutions-architect-needs-to-review-the-design-of-an-amazon-emr-cluster-that-is-using-the-emr-file (same option letters, A); https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-solutions-architect-needs-to-review-the-design-of-an-amazon-emr-cluster-that-is-using-the-emr-file (shuffled options, B corresponds to dataset B); https://www.passleadervce.com/AWS-Certified-Solutions-Architect/reliable-SAP-C02-exam-learning-guide.html (Q4 matching scenario/options); https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/10/ (Q93 matching scenario). Do not treat exam site keys as authoritative.
+
+**Official:** https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-instances-guidelines.html ; https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-instance-fleet.html ; https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-master-core-task-nodes.html
+
+**Defects:** 'tor' should be 'for', '1 ;00 AM' should be '1:00 AM', 'Spool Instances' should be 'Spot Instances'. Wording fails to specify whether loss of partial HDFS/shuffle state and job restart are acceptable. Modern Spot instance fleets recommend price-capacity-optimized allocation.
+
+**674 audit:** exact normalized duplicates []; related EMR IDs 65, 484, 524.
