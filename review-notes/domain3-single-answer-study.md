@@ -721,3 +721,18 @@ flowchart LR
 **Defects/outdated:** Main defect is absent ALB + ASG choice; D conflates load distribution with elastic capacity. Route 53 multivalue is not an ELB replacement. A may require substantial application changes, so no unambiguously best choice. Not an obsolete AWS feature issue, rather ambiguous/incomplete options.
 
 **674 duplicate audit:** exact normalized duplicates []; related IDs [10,18,21,27,34,39,40,43,47,48,57,58,59,60,63,64,72,76,86,98,112,127,130,135,148,155,160,182,184,200,206,209,219,231,235,248,250,279,284,285,290,303,328,330,332,341,348,351,355,356,411,416,424,433,435,440,447,449,454,460,467,469,474,477,481,485,489,494,497,499,501,523,528,531,536,555,564,567,569,571,574,585,587,594,599,605,621,624,625,631,641,649,651,652,653,655,656,670,674].
+
+
+## Q216 — Domain 3 single-answer 73/239 — EC2 running-hours usage vs cost anomalies (2026-11-05)
+
+**Status DISPUTED/DEFECTIVE. Source key B retained, not verified.** AWS Cost Anomaly Detection identifies unexpected SPEND against machine-learning expected costs; percentage anomaly threshold is cost impact / expected spend, not EC2 instance-hours >110% of trailing 30-day average. A (daily AWS Budgets usage budget with EC2 running-hour usage type and threshold computed from Cost Explorer) is closest to literal usage requirement but fails automatic rolling-baseline recalculation unless updated periodically. AWS Budgets now supports auto-adjusting usage budgets based on historical usage; precise comparison still requires validating chosen period and multiplier. None of the four options explicitly implements a true rolling 30-day daily average.
+
+**Architecture:** Organizations accounts -> Cost Explorer EC2 running hours (last 30 days) -> scheduled baseline calculation (mean daily hours * 1.10) -> update daily AWS Budgets usage threshold -> Budgets email/SNS alert -> architecture team. Scheduled calculation is missing from original options.
+
+**Options:** A closest: direct usage-hours budget, daily, threshold 110% of last-30-day mean, but static without automation. B source-key but WRONG for literal usage metric: monitors unexpected costs rather than running hours; no fixed 30-day mean. C wrong: Trusted Advisor cost recommendations cannot express this alert. D wrong: Detective investigates security, not EC2 billing usage.
+
+**Official AWS:** https://docs.aws.amazon.com/cost-management/latest/userguide/manage-ad.html ; https://docs.aws.amazon.com/cost-management/latest/userguide/getting-started-ad.html ; https://docs.aws.amazon.com/cost-management/latest/userguide/budget-methods.html ; https://docs.aws.amazon.com/cost-management/latest/userguide/create-usage-budget.html ; https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_Budget.html
+
+**Multiple exact external variants:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-aws-accounts-that-are-in-an-organization-in-aws-organizations-the-company-wants-to-track (Q114, B); https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q69, B, options split/reordered); https://www.p2pexams.com/free-questions/amazon-sap-c02-actualtestdumps-actual-questions-by-jacobson-29-01-2024-10qa.pdf (exact, B); https://www.itcertmagic.com/articles/view-all-sap-c02-actual-exam-questions-answers-and-explanations-for-free-oct-2024-q49-q67/ (Q62, reordered C maps to original B). External mirrors repeat a flawed interpretation that cost anomalies directly measure EC2 hours.
+
+**674 duplicate audit:** exact normalized duplicates []; broad related cost/budget question IDs [25,51,101,126,167,192,197,227,265,295,325,364,378,393,433,442,473,483,547,591,598,645,666].
