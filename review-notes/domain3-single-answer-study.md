@@ -670,3 +670,20 @@ flowchart LR
 **Defects/currentness:** Stem says maximum number of ECS tasks; AWS Fargate currently monitors concurrent vCPU-based quota (separate On-Demand/Spot), not a universal count of tasks. Separate task launch-rate quotas exist. Option B is correct for Fargate vCPU quota but does not literally calculate running-task-count percentage. Option B uses >80, not >=80, so at exactly 80% it would not trigger. Option A malformed expression wording. Preserve original options; flag caveats for study.
 
 **674 duplicate audit:** exact normalized duplicates []; related [16,52,101,214,342,348,474,650].
+
+
+## Q110 — Domain 3 single-answer 37/239 — ElastiCache Redis TLS and AUTH (2026-11-04)
+
+**Keyed B, conditional / defective question.** Original stem/options retained. AWS permits enabling in-transit TLS on existing Redis OSS 7+ / Valkey 7.2+ replication groups; older clusters need upgrade or replacement. B is intended for supported existing clusters, but A also meets the literal requirements by provisioning a new TLS+AUTH cluster. Version and operational constraints are absent, so there is no unconditionally unique answer.
+
+**Architecture:** Application -> Secrets Manager (AUTH token) -> TLS encrypted connection -> ElastiCache Redis OSS 7+ replication group (TLS required, AUTH required, at-rest encryption retained). Migration: TLS preferred -> update clients -> TLS required; AUTH ROTATE -> update clients -> AUTH SET.
+
+**Every option:** A valid alternative: new cluster TLS+AUTH, SSM SecureString token; migration required. B intended and supported on modern versions: existing replication group + TLS + AUTH and Secrets Manager. C incorrect: TLS server certificate does not implement client AUTH; ElastiCache does not support mTLS. D incorrect: same certificate-auth confusion, plus existing-cluster TLS change version constraint.
+
+**AWS:** https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/in-transit-encryption.html ; https://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_ModifyReplicationGroup.html ; https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/auth.html ; https://www.repost.aws/knowledge-center/elasticache-connection-test
+
+**Multiple exact external variants:** https://www.examtopics.com/discussions/amazon/view/97689-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-163-discussion/ (Q163, mixed A/B votes, older explanations obsolete); https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2024-12-04.q106.html?p=16 (Q72, B); https://www.freecram.com/discussions/Amazon/exam-aws-solutions-architect-professional-topic-1-question-187-discussion-p1353534.html (Q187, exact stem/options). Mirror keys not authoritative.
+
+**Defects/outdated:** No Redis engine version; no requirement to keep existing cluster; A and B can both meet stated security outcome. Claims that in-place TLS enablement is always impossible are outdated (Redis OSS 7+ supported). Redis AUTH now superseded by RBAC in modern deployments. Preserve original text including 'asencrypted' typo.
+
+**674 audit:** exact normalized duplicates []; related IDs [22,203,204,489,622].
