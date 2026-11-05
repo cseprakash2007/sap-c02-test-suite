@@ -11266,13 +11266,39 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Source key B appears on multiple exact external exam variants, but is technically incorrect for the literal requirement: AWS Cost Anomaly Detection monitors unexpected COST/spend relative to ML expected cost, not EC2 running-hour usage >110% of a fixed last-30-day usage average. A is the closest choice because AWS Budgets supports EC2 running-hour usage budgets with DAILY period and a threshold derived from Cost Explorer; however a static budget does not automatically update a rolling 30-day baseline. AWS Budgets now offers auto-adjusting usage budgets based on history, but precise 110% of previous 30 daily periods is not established by this choice. Mark disputed.",
+    "wrongOptionsExplanation": {
+      "A": "Closest technically: AWS Budgets supports daily usage budgets and EC2 usage-type filtering. Threshold can be manually set to 110% of historical daily average, but no automatic rolling recalculation is specified.",
+      "B": "Source key, but Cost Anomaly Detection tracks spending anomalies relative to ML expected spend, not EC2 running-hour counts vs exact trailing 30-day average; percentage thresholds represent spend impact.",
+      "C": "Trusted Advisor cost optimization checks do not offer a custom EC2 running-hours versus 30-day average daily alarm.",
+      "D": "Amazon Detective is a security investigation service, not a billing/EC2 usage monitoring service."
+    },
+    "plainWords": "For EC2 running hours, use a daily usage budget. Cost Anomaly Detection alerts on unexpected money spent, not the exact number of EC2 hours.",
+    "keyPoints": [
+      "AWS Budgets supports DAILY USAGE budgets and service usage-type filters",
+      "Cost Anomaly Detection evaluates cost/spend anomaly impact, not a literal 30-day EC2 hours mean",
+      "10% anomaly threshold in Cost Anomaly Detection means percentage of expected spend",
+      "True rolling 30-day daily average needs an automatically refreshed usage threshold",
+      "AWS Budgets supports auto-adjusting budgets based on historical usage, but exact 110% requirement must be checked",
+      "External exam keys B conflict with current AWS semantics"
+    ],
+    "sourceWarning": "DEFECTIVE/DISPUTED: Source key B is not technically correct for EC2 usage-hours 10% above prior 30-day average; AWS Cost Anomaly Detection analyzes spend and ML expected spend. A is closest but static manual historical threshold is not a rolling 30-day average. No choice explicitly implements automatic rolling comparison. Preserve B as original key and mark disputed, do not label verified.",
+    "review": {
+      "verifiedAnswer": [],
+      "verifiedAt": "2026-11-05",
+      "notes": "AWS docs contradict source key B for literal usage-hours metric. External exact variants FreeCram 2026 Q114, CertEnsure Q69, P2PExams Jacobson and ITCertMagic Q62 mark B (some reordered). Exact normalized duplicates []; related IDs [25,51,101,126,167,192,197,227,265,295,325,364,378,393,433,442,473,483,547,591,598,645,666].",
+      "sources": [
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/manage-ad.html",
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/getting-started-ad.html",
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/budget-methods.html",
+        "https://docs.aws.amazon.com/cost-management/latest/userguide/create-usage-budget.html",
+        "https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_Budget.html",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-aws-accounts-that-are-in-an-organization-in-aws-organizations-the-company-wants-to-track",
+        "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+        "https://www.p2pexams.com/free-questions/amazon-sap-c02-actualtestdumps-actual-questions-by-jacobson-29-01-2024-10qa.pdf"
+      ]
+    },
+    "answerStatus": "disputed"
   },
   {
     "id": 217,
