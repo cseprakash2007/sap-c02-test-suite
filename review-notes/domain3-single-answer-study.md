@@ -424,3 +424,20 @@ flowchart LR
 **Defects/current nuances:** B misspells CloudWatch as CtoudWatch and calls EventBridge rules 'CloudWatch rules' (old terminology). D lacks punctuation. AWS Config SNS delivery can include configuration and other notifications; EventBridge filtering is recommended for targeted noncompliant alerts. Ensure the recorder includes security groups and a rule exists; AWS Config alone does not know the company's compliance standard.
 
 **Official references:** https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_use-managed-rules.html ; https://docs.aws.amazon.com/config/latest/developerguide/notifications-for-AWS-Config.html ; https://docs.aws.amazon.com/config/latest/developerguide/monitor-config-with-cloudwatchevents.html
+
+
+## Domain 3 single-answer 23/239 — Q68 (2026-11-04)
+
+**Answer A — verified against AWS CloudFormation documentation and multiple matching exam variants.** Set `DeletionPolicy: Retain` on `AWS::RDS::DBInstance`/`AWS::RDS::DBCluster` and `AWS::EC2::Volume` to preserve the actual resources and data when a CloudFormation stack is deleted.
+
+**Options:** A correct; B stack policy protects against update actions, not whole-stack deletion; C IAM tag-based deny is indirect, can interfere with legitimate CloudFormation operations and does not implement retention; D AWS Config detects compliance issues, not preventative stack-delete retention.
+
+**Architecture:** Production CloudFormation stack -> DeleteStack -> per-resource `DeletionPolicy: Retain` -> RDS DB and EBS volume remain in AWS after stack reaches DELETE_COMPLETE; retained resources are outside stack management. For update replacements, add `UpdateReplacePolicy: Retain`; for prevention of stack deletion, enable termination protection.
+
+**External exam matches:** [CertEnsure SAP-C02](https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html), [Certstopics Q8](https://www.certstopics.com/questions/amazon-web-services-sap-c02-online-access.html), and [Pupuweb Q197](https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/10/) all match the scenario/options and key A. [Older practice PDF](https://itpracticetest.online/wp-content/uploads/AWS-Certified-Solutions-Architect-Professional-SOP-C01-Exam-1-Answers.pdf) incorrectly keys D (AWS Config); reject against primary AWS documentation.
+
+**Duplicate audit:** All 674 stems compared: 0 exact normalized duplicates. **Q277 is a strong semantic near-duplicate** of Q68 with nearly identical scenario and choices, same correct answer A; cross-reference for study rather than treating as distinct content.
+
+**Defects and current nuances:** Q68 says `Cloud Formation` and `1AM` instead of CloudFormation/IAM; Q277 contains corrupt `awsrcloudformation` tag. Some RDS DBCluster and standalone DBInstance configurations default to `Snapshot`, which preserves backup but deletes live resource. Retained resources continue to incur charges and no longer belong to the deleted stack. `DeletionPolicy` does not preserve old resources on replacement updates; use `UpdateReplacePolicy` separately.
+
+**Official AWS docs:** https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-updatereplacepolicy.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-resources.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-protect-stacks.html
