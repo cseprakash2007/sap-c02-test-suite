@@ -5728,13 +5728,13 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "Store pre-sized images in S3 and serve them through CloudFront. The edge cache absorbs most requests, containers no longer resize\non the fly, and latency drops for every viewer. A cache behavior routes image paths to S3 and everything else to the ALB.",
-    "wrongOptionsExplanation": "B. ElastiCache works, but you must change and operate the application and cluster, and images are large for an in-memory cache. C.\nAurora to hold a cache key adds a database for no benefit. D. API Gateway caching in front of containers is not designed for large\nimage delivery and replaces the ALB for no reason.",
-    "plainWords": "Resized images are cached inside Fargate containers, so scaling spreads cache misses and latency is high. Reduce latency with\nminimal operations.",
-    "keyPoints": "• Static or cacheable assets = CloudFront + S3.\nHEADS-UP ON THIS QUESTION\n• Pre-generating every image size takes up-front work. A related option is CloudFront with an on-demand resize function.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
+    "explanation": "A. CloudFront distribution with S3 origin for pre-generated resized images and ALB default origin for dynamic requests removes resizing and per-container cache misses from image delivery. CloudFront caches popular images at edge locations, reducing latency and load. AWS CloudFront docs support multiple origins, path-based cache behaviors and S3 edge caching. Exact external Certstopics Q44 keys A.",
+    "wrongOptionsExplanation": "B: Memcached can share resized image cache across Fargate tasks but requires application changes, cluster maintenance and cache invalidation and is not edge delivery. C: Aurora plus S3 introduces unnecessary relational metadata lookup and code changes. D: API Gateway HTTP API does not support REST API stage response caching, and would not substitute for CloudFront image delivery.",
+    "plainWords": "Fargate tasks keep separate local resized-image caches; scaling adds cold cache misses. Pre-resize images into S3 and deliver them with CloudFront, keeping ALB/ECS for dynamic traffic.",
+    "keyPoints": "CloudFront behaviors: /images/* -> S3 pre-sized image origin; default * -> ALB -> ECS Fargate. CloudFront edge caches reduce repeat origin requests. Secure S3 with origin access control and choose correct TTL, versioned paths and image size keys. HTTP API does not support API Gateway stage caching (REST API feature). For arbitrary image dimensions, on-demand resizing via Lambda/CloudFront is a modern alternative not offered in the options.",
+    "sourceWarning": "One exact external variant verified: https://www.certstopics.com/questions/aws-certified-professional-sap-c02-exam-dumps.html Q44 (A). A second independent exact variant was not confirmed, so do not claim multiple exact confirmations. Option A assumes predefined finite sizes and preprocessing pipeline; the question omits pre-generation workflow and image update/invalidation details. No deprecated AWS services. Exact normalized duplicates: []; related CloudFront/image/Fargate question IDs: 15, 16, 43, 47, 52, 57, 78, 101, 103, 109, 148, 158, 159, 165, 186, 188, 206, 214, 233, 246, 280, 283, 284, 293, 295, 312, 317, 328, 342, 348, 356, 428, 461, 464, 469, 474, 494, 585, 592, 596, 604, 612, 621, 649, 650.",
     "review": null,
-    "answerStatus": "source-key-unverified"
+    "answerStatus": "aws-doc-verified-one-exact-external-variant"
   },
   {
     "id": 99,
