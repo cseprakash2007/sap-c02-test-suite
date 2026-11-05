@@ -3081,16 +3081,34 @@
       }
     ],
     "answers": [
-      "C"
+      "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "A. Standing up an EMR cluster and moving the processing there is a redesign, not a fix for bursts. B. A classic resize is slow and puts\nthe cluster in read-only mode, breaking the write requirement. C. An elastic resize still briefly interrupts the cluster and needs custom\nLambda code. It also does not scale back down by itself.",
-    "plainWords": "A Redshift cluster has short bursts of heavy read queries from an audit report. The cluster must stay available for reads and writes at\nall times, at the lowest cost. Why my answer (D) works Concurrency Scaling automatically adds extra transient cluster capacity when\nmany queries queue, then removes it. The main cluster stays online for reads and writes, there is no custom code to run, and AWS\ngives free usage credits that often cover the burst.",
-    "keyPoints": "• Bursty concurrent queries on Redshift = Concurrency Scaling. • Resizing means downtime or complexity. Concurrency Scaling does\nnot.\nHEADS-UP ON THIS QUESTION\n• The bank key says C (elastic resize). That conflicts with \"must serve reads and writes at all times\". Concurrency Scaling (D) is the\ntextbook answer for bursty read demand.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "D. Redshift Concurrency Scaling automatically adds temporary query-processing capacity for eligible queued workloads, without resizing or interrupting the main cluster's read/write service. Capacity is removed when demand subsides, and earned free concurrency-scaling credits can make short bursts cost-effective. Configure eligible WLM queues to use concurrency scaling (auto). Note that eligibility depends on node type, query characteristics and queueing; CPU-intensive single-query speedups are not guaranteed.",
+    "wrongOptionsExplanation": "A. EMR is a separate analytics architecture and migrating queries introduces effort and cost. B. Classic resize is slower and can interrupt availability, contrary to the always-available requirement. C. Elastic resize is faster but temporarily interrupts the cluster and can drop queries; it requires custom CPU-based Lambda orchestration and separate scale-down logic. D. Concurrency Scaling is the native automatic, pay-for-use approach for eligible queued burst queries.",
+    "plainWords": "Redshift reserved-node cluster faces temporary bursts of heavy audit reporting but must keep serving normal reads and writes. Turn on Concurrency Scaling for eligible query queues instead of resizing the main cluster.",
+    "keyPoints": "Bursty concurrent Redshift queries + always-on read/write + cost effective => Concurrency Scaling (WLM auto). Elastic resize changes cluster nodes and briefly interrupts service. Classic resize slower. Concurrency Scaling free credits accrue up to one hour/day per active cluster, subject to terms; eligible queries only. High CPU alone does not guarantee Concurrency Scaling helps: queueing and eligibility matter.",
+    "sourceWarning": "CORRECTED original bank key C -> D based on AWS docs and multiple exact external variants. ExamTopics topic1 Q866 user consensus D (some conflicting comments); Pupuweb SAP-C02 Q114 exact options D; Scribd SAP-C02 Q307 exact options D; other sites reorder choices and select Concurrency Scaling. Caveat: query states CPU-intensive complex reads, but concurrency scaling is triggered by eligible queueing, not a CPU 80% threshold; may not accelerate a single unqueued query. Current AWS classic resize to RA3/RG may allow reads/writes for most of migration but initial restart still interrupts service; elastic resize has short unavailability. Reserved nodes alone do not prove Concurrency Scaling eligibility; node type/query support needed. No exact normalized duplicate across 674.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "corrected-key-C-to-D-aws-docs-and-external-exact-variants",
+      "originalAnswers": [
+        "C"
+      ],
+      "verifiedAnswers": [
+        "D"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/redshift/latest/dg/concurrency-scaling.html",
+        "https://docs.aws.amazon.com/redshift/latest/mgmt/resizing-cluster.html",
+        "https://aws.amazon.com/redshift/features/concurrency-scaling/",
+        "https://www.examtopics.com/discussions/amazon/view/74192-exam-aws-certified-solutions-architect-professional-topic-1-question-866-discussion/",
+        "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/2/",
+        "https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341"
+      ],
+      "auditNote": "Domain 3 single-answer 16/239 Q46: source key C incorrect; D correct. Exact normalized duplicate count 0, related Q602. Elastic resize causes brief interruption, not guaranteed continuous writes. Concurrency scaling is queue/eligibility-driven; CPU-intensive query alone may not qualify. Official AWS docs and multiple external exact variants support D."
+    },
+    "answerStatus": "corrected-aws-docs-and-multiple-exact-variants-verified"
   },
   {
     "id": 47,
