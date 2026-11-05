@@ -4571,13 +4571,41 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "Automate testing in CodeBuild in a test environment, use CloudFormation change sets to preview exactly what a template change will\ndo before applying it, and use CodeDeploy blue/green deployments so a bad release can be rolled back quickly.",
-    "wrongOptionsExplanation": "A. Manual test plans and error reporting scripts keep the process slow and human-driven. C. Template linting and manual tests catch\nsyntax errors but not the effects of changes in production. D. Blue/green is good, but manual operator login and manual testing\ndefeats the goal of automation.",
-    "plainWords": "CloudFormation template changes keep causing downtime in a CodePipeline-based EC2 deployment.",
-    "keyPoints": "• Preview infrastructure changes = CloudFormation change sets. • Safe application rollout = blue/green with automatic rollback.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified B: AWS CodeBuild automates preproduction tests; CloudFormation change sets preview resource changes and replacements before execution; AWS CodeDeploy EC2 blue/green provisions a replacement fleet, validates it, then shifts load-balancer traffic and supports rollback. AWS docs explicitly support each part.",
+    "wrongOptionsExplanation": "A: error detection and manual tests lack change-set impact review and blue/green rollback. B: correct complete automated risk-reduction strategy. C: IDE/CLI template validation and manual testing cannot establish runtime safety or provide traffic switching and rollback. D: CodeDeploy blue/green helps, but manual instance logins and no automated test/change-set review are inferior.",
+    "plainWords": "Protect production from bad CloudFormation and app updates: automate tests, inspect infrastructure changes before applying, and deploy to a new EC2 fleet with reversible traffic cutover.",
+    "keyPoints": "CodePipeline orchestrates; CodeBuild tests; CloudFormation change sets preview impact; CodeDeploy EC2 blue/green deploys replacement fleet and reroutes ELB traffic. AWS: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html ; https://docs.aws.amazon.com/codedeploy/latest/userguide/welcome.html ; https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments-rollback-and-redeploy.html",
+    "sourceWarning": "AWS docs: CloudFormation change sets do NOT guarantee successful updates; CodeDeploy rollback for EC2 apps is distinct from CloudFormation infrastructure rollback. The CloudFormation AWS::CodeDeployBlueGreen transform/hook supports ECS, NOT EC2; for EC2 configure a separate CodeDeploy blue/green deployment. External exam sites may misclassify this question under Domain 4; preserve dataset Domain 3. No exact normalized duplicates across 674.",
+    "review": {
+      "verifiedAt": "2026-11-04",
+      "answer": "B",
+      "officialSources": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html",
+        "https://docs.aws.amazon.com/codedeploy/latest/userguide/welcome.html",
+        "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments-rollback-and-redeploy.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/continuous-delivery-codepipeline-basic-walkthrough.html"
+      ],
+      "externalExactVariants": [
+        {
+          "url": "https://certempire.com/exam/sap-c02-exam-questions/question/17/",
+          "answer": "B"
+        },
+        {
+          "url": "https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-is-using-aws-codepipeline-for-the-ci-cd-of-an-application-to-an-amazon-ec2-auto-scaling-group",
+          "answer": "B"
+        },
+        {
+          "url": "https://myportal.utt.edu.tt/ICS/icsfs/SAP-C02_Dumps_Questions_with_Answers.pdf?target=6ac21115-ca5a-4235-9ef3-3cbdb83aced6",
+          "answer": "B"
+        }
+      ],
+      "exactDuplicates": [],
+      "similarCandidates": [
+        670,
+        341
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 73,
