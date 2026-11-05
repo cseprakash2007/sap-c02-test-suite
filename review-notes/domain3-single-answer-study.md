@@ -547,3 +547,20 @@ flowchart LR
 **Defects:** 'tor' should be 'for', '1 ;00 AM' should be '1:00 AM', 'Spool Instances' should be 'Spot Instances'. Wording fails to specify whether loss of partial HDFS/shuffle state and job restart are acceptable. Modern Spot instance fleets recommend price-capacity-optimized allocation.
 
 **674 audit:** exact normalized duplicates []; related EMR IDs 65, 484, 524.
+
+
+## Q90 — Domain 3 single-answer 30/239 — NAT gateway ACCEPT flow logs (2026-11-04)
+
+**Answer audit: CONFLICT / AMBIGUOUS.** Original key D retained pending resolution. AWS official re:Post explicitly recommends CloudWatch Logs Insights `filter (dstAddr like '203.0' and srcAddr like '198.51.100.2') | stats sum(bytes) as bytesTransferred by srcAddr,dstAddr` (dataset B) to check whether unsolicited inbound traffic is seen only at NAT ENI. The D query (srcAddr VPC, dstAddr public) is a complementary check for an earlier outbound connection, but cannot by itself establish whether inbound traffic is solicited. AWS recommends checking both directions, source/destination ports, timestamps and TCP flags. NAT gateway does not accept unsolicited internet-initiated connections even when flow log says ACCEPT.
+
+**Options:** A CloudTrail wrong service despite inbound filter; B AWS-documented inbound filter in CloudWatch; C CloudTrail wrong service and outbound-only filter; D CloudWatch correct and outbound filter relevant to detecting return traffic, but not sufficient alone. One-way aggregate is insufficient for certainty.
+
+**Architecture:** EC2 private instance (203.0.x.x) -> NAT gateway -> internet 198.51.100.2; return packets -> NAT gateway -> EC2 only for established mapping. Unsolicited internet packets -> NAT gateway drops. NAT ENI and EC2 ENI flow logs -> CloudWatch Logs Insights -> compare both directions and TCP flags.
+
+**Exact external variants:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-08-19.q305/a-company-has-vpc-flow-logs-enabled-for-its-nat-gateway-the-company-is-seeing-action-accept-for-inbound (identical A-D, key D); https://www.examtopics.com/discussions/amazon/view/79730-exam-aws-certified-solutions-architect-professional-topic-1-question-942-discussion/ (same full stem and choices, ExamTopics Q942); https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf (same stem and choices, question 63). These are not independent technical authority.
+
+**Official AWS:** https://repost.aws/knowledge-center/vpc-analyze-inbound-traffic-nat-gateway ; https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-records-examples.html ; https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html ; https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
+
+**Defects:** Question claims '203.0' as private VPC prefix but it is not an RFC1918 private address range. Flow logs can be published to S3/Firehose as well as CloudWatch, though answer options assume CloudWatch log groups. ACCEPT does not establish NAT forwarded unsolicited traffic. D and B answer different parts of the investigation, so single-answer framing is defective.
+
+**674 audit:** exact normalized-stem duplicates []; related NAT/flow-log question IDs 5, 18, 20, 21, 24, 53, 108, 112, 195, 209, 309, 316, 318, 378, 410, 481, 496, 591.
