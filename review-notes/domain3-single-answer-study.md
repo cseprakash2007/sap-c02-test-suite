@@ -373,3 +373,20 @@ flowchart LR
 **Exact external variants:** [ExamCollection SAP-C02 question #55](https://www.examcollection.us/exam/SAP-C02-question-answer-4.html) repeats full question and four choices, answer A; [P2PExams Pena PDF question 3](https://www.p2pexams.com/free-questions/explore-amazon-sap-c02-questions-by-pena.pdf) repeats stem and option A, independently corroborating the scenario. Exam-site keys are secondary evidence; AWS docs are authoritative.
 
 **AWS documentation:** https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html ; https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-scenarios.html ; https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html
+
+
+## Domain 3 single-answer 20/239 — Q55 (2026-11-04)
+
+**Answer C — independently verified with AWS documentation.** Modify existing Elastic Beanstalk Java single-instance environment into LoadBalanced; configure Auto Scaling min/max and at least two AZs, and a CPUUtilization Average threshold above 85% for 5 minutes. This is lower operational overhead than recreating application/environment.
+
+**Option analysis:** A unnecessarily creates a new Beanstalk application and uses Maximum CPU rather than Average; B traffic splitting deploys application versions and cannot conditionally split across environments based on CPU; C is the documented in-place configuration change; D rebuilding is disruptive and Sum CPU is not appropriate for the stated percentage threshold.
+
+**Architecture:** Users -> ALB -> Auto Scaling Group -> Java EC2 instances distributed across AZs. CloudWatch CPUUtilization Average >85% for 5 minutes -> scale-out policy -> additional EC2 instances.
+
+**Duplicate audit:** 674 stems compared; no exact normalized duplicates. Related generic scaling topics include Q514 and Q635, but no established near-duplicate of the same Elastic Beanstalk scenario.
+
+**Defects/current nuances:** Option B grammar is broken ('in the average'); D is visibly corrupted ('option Select an Availability Zones'). 'All AZs' is not necessary for production; AWS recommends at least two suitable AZs. 85% is a scenario threshold, not a default recommendation. Environment updates can replace instances or interrupt service; plan production changes carefully.
+
+**External variants:** Searches for distinctive full-stem and option phrases did not establish two independent exact matching external exam variants. Do not imply exact external verification. AWS official documentation is the basis for answer verification.
+
+**Official AWS references:** https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features-managing-env-types.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-cfg-autoscaling-triggers.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html
