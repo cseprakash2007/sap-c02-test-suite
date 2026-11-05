@@ -4759,13 +4759,40 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "IAM Access Analyzer (external access analyzer) generates findings when a bucket is accessible publicly or from outside the account.\nAn EventBridge rule filtered on the finding with isPublic = true sends only those events to the SNS topic.",
-    "wrongOptionsExplanation": "A. S3 event notifications have no isPublic event type. C. A PutBucketPolicy rule fires on every bucket policy change, not just those\nthat make a bucket public. D. The Config rule named does not detect public buckets (it checks that CloudTrail data events are\nenabled).",
-    "plainWords": "Notify the security team only when an S3 bucket becomes publicly exposed.",
-    "keyPoints": "• Detect resources shared publicly or externally = IAM Access Analyzer (EventBridge + SNS to alert). • Block Public Access is the\npreventive control.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified B against IAM Access Analyzer and EventBridge AWS docs: enable an account-scoped external access analyzer in each applicable Region, EventBridge pattern source aws.access-analyzer and detail-type Access Analyzer Finding, filter detail.isPublic=true, detail.resourceType=AWS::S3::Bucket, detail.status=ACTIVE and detail.isDeleted=false, and route to SNS topic. This detects policy-granted public exposure rather than mere API activity.",
+    "wrongOptionsExplanation": "A: S3 event notifications have no isPublic event type. B: correct, finding-based detection with filtering. C: CloudTrail PutBucketPolicy logs policy changes regardless of actual exposure, misses ACL/access point/public access setting changes. D: AWS Config cloudtrail-s3-dataevents-enabled validates CloudTrail logging, not S3 public access; Config Rules Re-evaluation Status is not the appropriate finding event.",
+    "plainWords": "Alert only when S3 permissions expose a bucket publicly: IAM Access Analyzer external-access findings -> filtered EventBridge rule -> existing SNS email topic.",
+    "keyPoints": "EventBridge pattern: source aws.access-analyzer; detail-type Access Analyzer Finding; detail.isPublic true; detail.resourceType AWS::S3::Bucket; detail.status ACTIVE; detail.isDeleted false. Use account-scoped external analyzer per Region. AWS docs https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-eventbridge.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-analyzer.html",
+    "sourceWarning": "The option B filter 'isPublic: true' alone is insufficient for ONLY S3 new public exposure alerts: also filter resourceType AWS::S3::Bucket, status ACTIVE, isDeleted false, and if strictly only transitions, deduplicate/update by finding id and status. Access Analyzer findings are eventually consistent, not immediate; AWS says policy analysis generally within ~30 minutes and periodic fallback may take longer. Account-scoped analyzer per Region. Existing public buckets may produce initial findings. EventBridge delivery best effort.",
+    "review": {
+      "verifiedAt": "2026-11-04",
+      "answer": "B",
+      "officialSources": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-eventbridge.html",
+        "https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-access-analyzer.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-analyzer.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-resources.html"
+      ],
+      "externalExactVariants": [
+        {
+          "url": "https://www.testmayor.com/SAP-C02-Practice-Test/13",
+          "key": "B",
+          "number": "156"
+        },
+        {
+          "url": "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-7/8/",
+          "key": "B",
+          "number": "680"
+        },
+        {
+          "url": "https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=26",
+          "key": "B"
+        }
+      ],
+      "exactDuplicates": [],
+      "nearDuplicates": []
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 76,
