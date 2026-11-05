@@ -4350,13 +4350,44 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "Add a DeletionPolicy of Retain (or Snapshot for RDS and EBS) to those resources in the template. When the stack is deleted,\nCloudFormation keeps the resource or takes a final snapshot first.",
-    "wrongOptionsExplanation": "B. A stack policy only guards against updates, not stack deletion. C. IAM deny rules on resources tagged with the stack name would\nalso block CloudFormation's own legitimate management and are clumsy. D. Config rules detect problems but cannot prevent\ndeletion.",
-    "plainWords": "Stop RDS databases and EBS volumes from being deleted when a production stack is deleted.",
-    "keyPoints": "• DeletionPolicy: Retain or Snapshot protects data on stack deletion. • Stack policies protect resources during stack updates only.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified A against AWS CloudFormation DeletionPolicy documentation. DeletionPolicy: Retain on AWS::RDS::DBInstance / DBCluster and AWS::EC2::Volume retains physical resources on stack deletion. Stack policy protects only stack updates; termination protection blocks entire stack deletion; UpdateReplacePolicy: Retain separately protects against replacement updates.",
+    "wrongOptionsExplanation": "A correct: resource-level Retain preserves physical RDS/EBS resources after stack deletion. B incorrect: stack policies govern update operations, not deletion of whole stack. C incorrect: IAM may deny selected delete API actions but tag-based deny is not reliable resource-retention behavior and may interfere with CloudFormation; typo 1AM. D incorrect: AWS Config assesses/report compliance; rules do not prevent deletion.",
+    "plainWords": "Deleting a CloudFormation stack must not delete the production RDS database or EBS volume. Add DeletionPolicy: Retain to each resource.",
+    "keyPoints": "DeletionPolicy: Retain keeps physical resources on stack delete. Snapshot preserves backup, not live resource. UpdateReplacePolicy: Retain protects replacements. Stack policy protects stack updates; termination protection prevents whole-stack deletion. AWS docs https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-updatereplacepolicy.html",
+    "sourceWarning": "Strong semantic near-duplicate Q277 (same scenario and options, expanded original stem). Q68 contains Cloud Formation spelling and '1AM' typo; Q277 has malformed 'awsrcloudformation' tag. RDS DBCluster and standalone DBInstance default to Snapshot in certain configurations; Snapshot does not retain live database. DeletionPolicy alone does not protect replacement updates; add UpdateReplacePolicy. One older practice PDF incorrectly keys Config (D), contradicted by AWS docs.",
+    "review": {
+      "verifiedAt": "2026-11-04",
+      "answer": "A",
+      "officialSources": [
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-updatereplacepolicy.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-resources.html",
+        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-protect-stacks.html"
+      ],
+      "externalVariants": [
+        {
+          "url": "https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html",
+          "key": "A"
+        },
+        {
+          "url": "https://www.certstopics.com/questions/amazon-web-services-sap-c02-online-access.html",
+          "key": "A"
+        },
+        {
+          "url": "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/10/",
+          "key": "A"
+        },
+        {
+          "url": "https://itpracticetest.online/wp-content/uploads/AWS-Certified-Solutions-Architect-Professional-SOP-C01-Exam-1-Answers.pdf",
+          "key": "D (incorrect)"
+        }
+      ],
+      "exactDuplicates": [],
+      "nearDuplicates": [
+        277
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 69,
