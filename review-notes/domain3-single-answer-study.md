@@ -736,3 +736,20 @@ flowchart LR
 **Multiple exact external variants:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-has-aws-accounts-that-are-in-an-organization-in-aws-organizations-the-company-wants-to-track (Q114, B); https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q69, B, options split/reordered); https://www.p2pexams.com/free-questions/amazon-sap-c02-actualtestdumps-actual-questions-by-jacobson-29-01-2024-10qa.pdf (exact, B); https://www.itcertmagic.com/articles/view-all-sap-c02-actual-exam-questions-answers-and-explanations-for-free-oct-2024-q49-q67/ (Q62, reordered C maps to original B). External mirrors repeat a flawed interpretation that cost anomalies directly measure EC2 hours.
 
 **674 duplicate audit:** exact normalized duplicates []; broad related cost/budget question IDs [25,51,101,126,167,192,197,227,265,295,325,364,378,393,433,442,473,483,547,591,598,645,666].
+
+
+## Q219 — Domain 3 single-answer 74/239 — AWS WAF Count-to-Block rollout (2026-11-05)
+
+**Verified A.** Original question and options retained verbatim. Before enabling blocking, set new AWS WAF web ACL rules to Count, enable logging and CloudWatch metrics, inspect matches and false positives, tune exclusions, then progressively transition to Block.
+
+**Architecture:** Internet users -> AWS WAF web ACL (Count, non-terminating) -> ALB -> EC2. WAF Count matches -> WAF logs / sampled requests / CloudWatch -> false-positive analysis -> tune rules -> staged Block with monitoring and rollback. Note other WAF rules or default action can still block a request even if a particular rule Count-matches it.
+
+**Every option:** A correct: observe and tune before enforcing. B wrong: only rate-based rules are inadequate and may block legitimate traffic during surges. C wrong: immediately Block with managed rules risks false positives; start Count. D wrong: Allow is terminating, so not equivalent to Count; restricting to custom groups is unnecessary.
+
+**Official AWS:** https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-testing-prep.html ; https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-testing-activities.html ; https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-action.html ; https://repost.aws/knowledge-center/waf-analyze-count-action-rules ; https://repost.aws/knowledge-center/waf-managed-rules-count-to-block
+
+**Multiple exact external variants:** https://www.freecram.net/question/Amazon.SAP-C02.v2023-12-13.q142/a-company-has-developed-a-web-application-the-company-is-hosting-the-application-on-a-group-of-amazon (question 99/142, exact options, A); https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/8/ (question 178, exact options, A).
+
+**Defects/currentness:** Original options have transcription/punctuation errors; keep verbatim in dataset. Count is non-terminating and does not force a request to be allowed if another rule/default action blocks. AWS may use term 'protection pack (web ACL)' in current docs; advice remains current.
+
+**674 duplicate check:** normalized exact duplicates []; related WAF questions [34,165,283,356,465,631,658].
