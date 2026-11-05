@@ -339,3 +339,20 @@ flowchart LR
 **Duplicate audit:** 674 questions scanned, normalized exact stem matches 0; related candidates 43, 48, 57, 98, 204, 206, 284, 290, 294, 346, 356, 446, 469, 489, 494, 499, 521, 555, 565, 571, 587, 621, 631, 641, 642, 649, 656. Q43 is closely related but asks a different access restriction and least effort.
 
 **Official AWS docs:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/add-origin-custom-headers.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html
+
+
+## Domain 3 single-answer 18/239 — Q52 (2026-11-04)
+
+**Answer B — verified against AWS documentation and matching expanded exam variants.** ECS Fargate capacity quota alert: use Fargate `AWS/Usage` `ResourceCount` metric, CloudWatch metric math `m1/SERVICE_QUOTA(m1)*100`, alarm threshold 80%, SNS notification. Fargate metric dimensions include `Service=Fargate`, `Type=Resource`, `Resource=vCPU`, `Class=Standard/OnDemand` or `Standard/Spot`.
+
+**Options:** A SampleCount statistic does not indicate quota consumption; B native AWS/Usage plus CloudWatch/SNS is correct; C Lambda polling plus SES is unnecessary custom implementation; D AWS Config is for configuration compliance, not live quota consumption.
+
+**Architecture:** ECS Fargate workload -> AWS/Usage ResourceCount -> CloudWatch alarm (quota percentage >=80) -> SNS -> development team.
+
+**Defects/current nuance:** Original shortened stem has missing spaces `usingAWS`, `Fargateinstead`, `themaximum`, `tasksallowed`, `reaches80%`. The generic 'maximum number of ECS tasks' is outdated/imprecise: current Fargate usage metric is concurrent vCPUs, with separate On-Demand/Spot and task launch-rate quotas. Select actual Region's applied quota. Preserve original stem/options while noting wording issue.
+
+**External scenario/option matches:** [PrepBolt SAP-C02](https://prepbolt.com/paths/amazon/questions/sap-c02) has expanded 100-service scenario and the same options, B. [FreeCram topic 1 Q229](https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-1-question-229-discussion-p1257156.html) has expanded same scenario with option C equivalent to dataset B. [FreeCram PDF Q85](https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf) has expanded same scenario with option B equivalent to dataset B. These are matching expanded variants, NOT exact verbatim matches to shortened dataset stem.
+
+**Duplicate audit:** 674 questions checked, exact normalized duplicates 0; related candidate IDs 109, 474.
+
+**Official docs:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/monitoring-fargate-usage.html ; https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Quotas-Visualize-Alarms.html ; https://docs.aws.amazon.com/general/latest/gr/ecs-service.html
