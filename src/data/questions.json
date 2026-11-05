@@ -6141,13 +6141,37 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A. Route VPC-attached Lambda outbound IPv4 from private subnet(s) through a public NAT gateway with an Elastic IP, whose address the external provider can allowlist. Private route 0.0.0.0/0 -> NAT; public route 0.0.0.0/0 -> internet gateway. AWS Lambda VPC internet access and AWS re:Post static-IP guidance confirm.",
+    "wrongOptionsExplanation": {
+      "B": "Egress-only internet gateway is for IPv6, cannot associate an Elastic IP and cannot provide static public IPv4 egress.",
+      "C": "Internet gateway does not accept an Elastic IP association; Lambda VPC ENIs have private IPv4 addresses.",
+      "D": "A public subnet route to an internet gateway is necessary but insufficient; Lambda in a public subnet still does not obtain a public IPv4 address or fixed source IP."
+    },
+    "plainWords": "External API accepts one allowlisted public IPv4. Give Lambda a private subnet route through a public NAT gateway with one Elastic IP.",
+    "keyPoints": [
+      "Lambda VPC ENIs have private IPs; public subnet placement alone does not grant internet access",
+      "Public NAT gateway + Elastic IP yields static public IPv4 egress",
+      "Private subnet 0.0.0.0/0 -> NAT; public subnet 0.0.0.0/0 -> IGW",
+      "Egress-only internet gateway is IPv6 only",
+      "Single NAT/EIP creates AZ failure exposure; multi-AZ NAT usually means multiple allowlisted EIPs"
+    ],
+    "sourceWarning": "Answer A is valid, but 'configure VPC to use NAT gateway' omits explicit private/public subnet route-table and IGW setup. Single public NAT/EIP meets one-IP constraint but is a single-AZ failure point; AWS HA guidance suggests NAT per AZ, requiring multiple EIPs/allowlist entries or a designed failover approach. External exam mirrors may have reordered options or unreliable keys; AWS documentation is authoritative.",
+    "review": {
+      "verifiedAnswer": [
+        "A"
+      ],
+      "verifiedAt": "2026-11-04",
+      "notes": "Official AWS docs + exact external variants independently checked; no exact duplicate stems. Related IDs: 175, 318.",
+      "sources": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc-internet.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html",
+        "https://www.repost.aws/knowledge-center/lambda-static-ip",
+        "https://www.secexams.com/exams/Amazon/aws-certified-solutions-architect-professional-sap-c02/view/5",
+        "https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-04-22.q355.html?p=10",
+        "https://www.freecram.net/question/Amazon.SAP-C02.v2023-11-04.q183/a-company-is-building-a-serverless-application-that-runs-on-an-aws-lambda-function-that-is-attached-to"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 108,
