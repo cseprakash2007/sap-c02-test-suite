@@ -6291,13 +6291,39 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B is the intended keyed answer IF the existing ElastiCache Redis OSS replication group runs version 7+ (or Valkey 7.2+), permitting in-place TLS enablement. Configure TransitEncryptionEnabled=true and mode preferred, migrate clients, then required; enable AUTH token using ROTATE then SET and retrieve securely from Secrets Manager. However A also satisfies the literal requirements by creating a replacement TLS/AUTH cluster; stem omits version and replacement constraints, making unique answer ambiguous.",
+    "wrongOptionsExplanation": {
+      "A": "Technically valid alternative: create a new TLS-enabled cluster with AUTH and store token in SSM Parameter Store SecureString. More migration work; necessary if existing cluster cannot be upgraded/modified. Cannot dismiss as wrong without an explicit keep-existing constraint.",
+      "C": "Client-supplied SSL certificate is not Redis AUTH; ElastiCache does not support mTLS client authentication. New TLS cluster alone does not enforce user authentication.",
+      "D": "Same incorrect SSL certificate authentication premise; storing certificate in SSM advanced parameter does not implement Redis AUTH, and existing TLS modification is engine-version dependent."
+    },
+    "plainWords": "Protect Redis traffic with TLS and require a Redis AUTH password. Modern Redis OSS 7+ supports updating an existing ElastiCache cluster, but older versions may require upgrade or replacement.",
+    "keyPoints": [
+      "TLS in-transit encryption protects data in flight; encryption at rest is separate",
+      "Redis OSS 7+ / Valkey 7.2+ replication groups support enabling TLS on existing clusters",
+      "TransitEncryptionMode preferred then required for staged TLS migration",
+      "AUTH token ROTATE then SET to enforce password authentication",
+      "AWS Secrets Manager or SSM Parameter Store SecureString can store AUTH tokens",
+      "ElastiCache does not support mutual TLS client certificate authentication",
+      "RBAC supersedes AUTH for modern access control"
+    ],
+    "sourceWarning": "DEFECTIVE / VERSION-DEPENDENT: Stem omits Redis engine version and any requirement to preserve existing cluster. B works only on Redis OSS 7+ (or Valkey 7.2+) supported replication groups; A also technically satisfies all stated requirements by creating a new cluster, though it entails migration. Older exam discussions incorrectly claim TLS can never be enabled on existing clusters; AWS introduced in-place TLS modification for Redis 7+ in Dec 2022. External answer keys/community disagree (some A, some B, some C). Original punctuation/typos preserved.",
+    "review": {
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-04",
+      "notes": "Conditional keyed B; A also valid given missing version/operational constraint. Current AWS docs supersede outdated mirror explanations. Exact duplicates []; related [22,203,204,489,622]",
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/in-transit-encryption.html",
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_ModifyReplicationGroup.html",
+        "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/auth.html",
+        "https://www.examtopics.com/discussions/amazon/view/97689-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-163-discussion/",
+        "https://www.exam-tests.com/SAP-C02-exam/Amazon.SAP-C02.v2024-12-04.q106.html?p=16",
+        "https://www.freecram.com/discussions/Amazon/exam-aws-solutions-architect-professional-topic-1-question-187-discussion-p1353534.html"
+      ]
+    },
+    "answerStatus": "verified-with-caveat"
   },
   {
     "id": 111,
