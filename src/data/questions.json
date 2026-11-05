@@ -3398,13 +3398,56 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "Service Quotas publishes usage metrics to the CloudWatch AWS/Usage namespace for many services. Create a CloudWatch alarm\nthat triggers at 80 percent of the quota and send it to an SNS topic. It is native, serverless and needs no custom code.",
-    "wrongOptionsExplanation": "A. Sample Count is a statistic of a metric, not a quota usage measure. C. A Lambda that polls and sends email through SES is custom\ncode to build and maintain. D. AWS Config tracks resource configuration compliance, not service quota utilization.",
-    "plainWords": "Notify the team when ECS Fargate usage reaches 80 percent of the account quota.",
-    "keyPoints": "• Quota usage alarm = Service Quotas + CloudWatch AWS/Usage metric + SNS.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B. AWS Fargate publishes AWS/Usage ResourceCount metrics tied to Service Quotas; use the applicable metric and SERVICE_QUOTA(metric) in CloudWatch metric math, alarm at 80% of the applied quota, and notify the team via SNS. No custom polling required. Current Fargate AWS/Usage metrics track concurrent vCPU resources (On-Demand/Spot), not a single account-wide maximum number of tasks.",
+    "wrongOptionsExplanation": "A. SampleCount counts datapoints, not task quota usage; ECS service-level metrics cannot be naively divided by a regional account quota. C. Lambda polling and SES alerts require custom code and are unnecessary when native usage metrics exist; the option also ambiguously compares a task count to 80 rather than 80% of quota. D. AWS Config evaluates resource configurations, not dynamic quota utilization; SES alone does not monitor quotas.",
+    "plainWords": "Warn the team before Fargate reaches an account/Region capacity quota. Use the AWS/Usage metric, calculate usage as a percentage of the applied Service Quota, alarm at 80%, and notify through SNS.",
+    "keyPoints": "Fargate AWS/Usage metric ResourceCount; dimensions Service=Fargate, Type=Resource, Resource=vCPU, Class=Standard/OnDemand or Standard/Spot. CloudWatch metric math m1/SERVICE_QUOTA(m1)*100, alarm at 80, SNS action. Fargate quota is now vCPU usage plus launch-rate limits, not one generic maximum task-count quota. Use correct per-Region applied quota.",
+    "sourceWarning": "The dataset question is a shortened/rephrased version of longer exact-scenario variants: PrepBolt SAP-C02 lists matching four choices with B, FreeCram Topic 1 Q229 has same scenario with reordered options C, and FreeCram 2025 PDF Q85 has reordered options B. It is not an exact verbatim stem match because the dataset omits 100 services/EC2 history and contains missing spaces ('usingAWS', 'Fargateinstead', 'themaximum', 'tasksallowed', 'reaches80%'). Technical currency: AWS Fargate AWS/Usage ResourceCount tracks vCPU rather than task count; launch-rate quotas separate. Answer B is best available, but wording needs modernization. No exact normalized duplicate across 674.",
+    "review": {
+      "reviewedAt": "2026-11-04",
+      "auditStatus": "verified-B-aws-docs-multiple-expanded-scenario-variants",
+      "originalAnswers": [
+        "B"
+      ],
+      "verifiedAnswers": [
+        "B"
+      ],
+      "references": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/monitoring-fargate-usage.html",
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Quotas-Visualize-Alarms.html",
+        "https://docs.aws.amazon.com/general/latest/gr/ecs-service.html",
+        "https://prepbolt.com/paths/amazon/questions/sap-c02",
+        "https://www.freecram.com/discussions/Amazon/exam-sap-c02-topic-1-question-229-discussion-p1257156.html",
+        "https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf"
+      ],
+      "externalSiteAnswers": [
+        {
+          "site": "PrepBolt SAP-C02",
+          "answer": "B",
+          "match": "expanded same scenario, matching options"
+        },
+        {
+          "site": "FreeCram topic 1 Q229",
+          "answer": "C",
+          "match": "expanded same scenario, reordered options; maps to dataset B"
+        },
+        {
+          "site": "FreeCram PDF Q85",
+          "answer": "B",
+          "match": "expanded same scenario, reordered options; maps to dataset B"
+        }
+      ],
+      "duplicateAudit": {
+        "scope": 674,
+        "exactDuplicates": [],
+        "relatedIds": [
+          109,
+          474
+        ]
+      },
+      "auditNote": "Current Fargate quota usage AWS/Usage ResourceCount vCPU not total task count; alarms 80% via SERVICE_QUOTA and SNS. No verbatim exact stem independently located; multiple expanded matching variants."
+    },
+    "answerStatus": "aws-docs-verified-multiple-matching-expanded-variants"
   },
   {
     "id": 53,
