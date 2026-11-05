@@ -5274,13 +5274,13 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "The data is in S3 through EMRFS, and the job is not time critical, so the cheapest design runs all nodes on Spot Instances in an\ninstance fleet (diversified types) and terminates the whole cluster after the job. You pay only for the hours used and at Spot prices.",
-    "wrongOptionsExplanation": "B. Keeping primary and core on On-Demand and buying Savings Plans costs more than Spot for a flexible job. C. All On-Demand is the\nmost expensive choice. D. Leaving primary and core nodes running after the job wastes money.",
-    "plainWords": "An EMR cluster using EMRFS (data in S3) runs 6 hours nightly. Completion time is flexible, so minimize compute cost.",
-    "keyPoints": "• Flexible, restartable batch on S3 data = Spot + transient clusters. • EMRFS keeps data in S3, so losing nodes does not lose data.\nHEADS-UP ON THIS QUESTION\n• Using Spot for primary and core nodes risks the cluster failing mid-run. That is acceptable here because the job is restartable and\ntime is flexible.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
+    "explanation": "A is defensible only for restartable cost-driven transient clusters where Spot interruptions and loss of partial work are acceptable. AWS explicitly lists Spot primary/core/task for cost-driven workloads. However, the stem says tasks are critical to business needs without stating that failed runs can restart; AWS recommends B (On-Demand primary/core + Spot task, terminate cluster) when partial data loss is unacceptable. Exact external variants disagree (FreeCram 2023 keys A; FreeCram 2025 and Pupuweb key B). Therefore this is a genuinely ambiguous item, not an unqualified A.",
+    "wrongOptionsExplanation": "B: More resilient alternative and the best answer if 'critical' means intermediate data loss cannot be tolerated; may be correct in some exact variants. C: all On-Demand, even with termination and Savings Plans, misses Spot savings. D: leaves On-Demand primary/core running idle and wastes money.",
+    "plainWords": "A six-hour EMR job runs once daily, yet its cluster stays on all day. Terminate after completion and use Spot capacity where interruptions can be tolerated. The disputed point is whether primary/core nodes can safely be Spot.",
+    "keyPoints": "AWS EMR Spot guidance: cost-driven + partial work loss acceptable => all Spot (A); data-critical + partial work loss unacceptable => On-Demand primary/core and Spot task (B). EMRFS on S3 protects persisted S3 objects, NOT HDFS/shuffle/intermediate state. Use instance fleets with price-capacity-optimized strategy and termination after job. Savings Plans are commitment-based and do not automatically minimize total costs.",
+    "sourceWarning": "DEFECT: original typos 'tor', '1 ;00 AM', 'Spool Instances' (Spot). Ambiguous requirement 'critical to business needs' versus flexible completion; restartability and loss tolerance unspecified. Exact external variants conflict: https://www.freecram.net/question/Amazon.SAP-C02.v2023-12-13.q142/a-solutions-architect-needs-to-review-the-design-of-an-amazon-emr-cluster-that-is-using-the-emr-file keys A; https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-solutions-architect-needs-to-review-the-design-of-an-amazon-emr-cluster-that-is-using-the-emr-file keys B in shuffled options (dataset B); https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-1/10/ also lists same scenario. AWS https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-instances-guidelines.html explicitly differentiates cost-driven vs data-critical. Exact normalized duplicates []; related EMR questions 65, 484, 524.",
     "review": null,
-    "answerStatus": "source-key-unverified"
+    "answerStatus": "aws-doc-verified-external-conflict"
   },
   {
     "id": 89,
