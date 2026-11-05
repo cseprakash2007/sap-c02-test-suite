@@ -475,3 +475,22 @@ flowchart LR
 **Caveats:** As written, B's `isPublic: true` filter alone is not sufficient for the literal 'only when an S3 bucket becomes publicly exposed': filter S3 resourceType, ACTIVE and not-deleted; if only new transitions are desired, deduplicate on finding ID/status or add a stateful filter. Analyzer may emit initial findings for pre-existing exposure and later finding updates. External-access analysis is eventually consistent, not instantaneous; enable analyzer in each relevant Region. EventBridge service event delivery is best effort. S3 Block Public Access is the preventative complement.
 
 **Official docs:** https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-eventbridge.html ; https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-access-analyzer.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-analyzer.html ; https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-resources.html
+
+
+## Q78 — Domain 3 single-answer 26/239 — CloudFront query normalization (2026-11-04)
+
+**Original answer:** A; **verified answer:** A. Original question and all options retained in `src/data/questions.json`.
+
+**Why:** CloudFront considers query parameter order and case in its cache key. Viewer-request Lambda@Edge sorts parameters and lowercases safe names/values before cache lookup. AWS provides an explicit Lambda@Edge sample for this exact task. Modern alternative: viewer-request CloudFront Functions can also rewrite query strings.
+
+**Option audit:** A correct for semantically case-insensitive parameters; B risks incorrect cache responses if query strings affect origin content; C operates behind the load balancer after edge cache lookup; D is not an available CloudFront cache-policy switch.
+
+**Diagram:** Viewer requests with different order/case -> CloudFront viewer-request Lambda@Edge normalize -> consistent cache key -> CloudFront edge cache (hit) -> origin only on miss.
+
+**Defects/caveats:** Source typo `lo` for `to` and missing punctuation. Do not lowercase case-sensitive values, signed tokens or IDs; preserve repeated parameters and encoding. Include only response-relevant parameters in cache key. No deprecated AWS service identified.
+
+**Exact external match:** https://www.examsvce.com/sap-c02/a-company-has-a-complex-web-application-question-answer.html (exact stem/options, answer A). Second independent exact external match not confirmed; do not claim multiple verified variants.
+
+**Official documentation:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/QueryStringParameters.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/understanding-the-cache-key.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/functions-event-structure.html
+
+**Duplicate audit:** All 674 stems compared case/punctuation-normalized; exact duplicate IDs: []. CloudFront-related questions share service vocabulary but no exact duplicate scenario established.
