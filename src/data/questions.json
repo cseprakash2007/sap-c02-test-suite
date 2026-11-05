@@ -6045,17 +6045,17 @@
       "D"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
+    "explanation": "D. RDS for MySQL supports cross-Region read replicas. On a primary Region failure, promote a pre-existing cross-Region read replica to a standalone writable DB instance, redirect application writes to its endpoint, then create a replacement replica in another Region. This is the exact failure-recovery sequence in AWS RDS documentation. Replication is asynchronous, so there can be lag/data loss and promotion/reconnection downtime; it is the best of the four offered answers, not zero-downtime continuous availability.",
+    "wrongOptionsExplanation": "A: Automated backups must be restored to create a new DB instance, not 'promoted' directly, and restore RTO is typically longer than promoting a warm replica. B: 'Global tables' are an Amazon DynamoDB feature, not RDS for MySQL; copying read replicas between Regions with Lambda is not how RDS cross-Region replication/failover works. C: Same invalid RDS 'global tables' concept; also combines automated backups with undefined read replicas and Lambda copy rather than promoting an existing cross-Region replica.",
+    "plainWords": "Keep an RDS MySQL read replica in another Region. If the primary Region fails, promote the replica to a writable standalone DB, switch the app to it, and create a new replica for disaster recovery.",
+    "keyPoints": "RDS MySQL cross-Region read replicas replicate asynchronously, are read-only until promotion, and require manual or orchestrated promotion and endpoint change. AWS documented DR sequence: promote -> redirect traffic -> create replacement replica. Promotion reboots and takes minutes or longer; monitor ReplicaLag. Multi-AZ is automatic within one Region, not cross-Region DR. DynamoDB global tables do not apply to RDS MySQL. For tighter RTO/RPO, evaluate Aurora Global Database migration or other architecture, but not a listed option.",
+    "sourceWarning": "Exact external variants agree D: https://www.freepdfdumps.com/Amazon.SAP-C02.v2023-09-29.q103.html?p=18 (Q81), https://www.actual4test.com/discussions/Amazon/exam-aws-solutions-architect-professional-topic-1-question-21-discussion-p1003723.html (Q21), https://www.freecram.net/question/Amazon.SAP-C02.v2023-09-16.q205/a-retail-company-is-hosting-an-ecommerce-website-on-aws-across-multiple-aws-regions-the-company-wants (Q56). Original D wording 'cross- Region and read replica' is garbled; should be 'cross-Region read replica'. A incorrectly says promote an automated backup; restore is correct term. B/C conflate DynamoDB global tables with RDS. 'Operational at all times' and 'HIGHEST availability' overpromise: asynchronous replication and promotion require nonzero RTO and possibly nonzero RPO. Exact normalized duplicates []; related IDs 15, 27, 58, 63, 167, 287, 322, 341, 364, 374, 417, 424, 481, 485, 555, 570, 614.",
     "review": {
       "status": "Supported",
       "note": "RDS MySQL cross-Region read replicas can be promoted; replication is asynchronous and promotion takes time.",
       "reference": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html"
     },
-    "answerStatus": "source-key-unverified"
+    "answerStatus": "aws-doc-verified-multiple-exact-external-variants"
   },
   {
     "id": 106,
