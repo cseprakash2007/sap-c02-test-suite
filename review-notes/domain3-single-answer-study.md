@@ -307,3 +307,18 @@ flowchart LR
 **External exact variants:** [FreeCram Q108](https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-recently-wanted-a-web-application-from-an-on-premises-data-center-to-the-aws-cloud-the-web), [CertPrep Q5](https://www.certprep.io/amazon/sap-c02/questions), [CertsMania p51](https://www.certsmania.com/pdf/amazon-web-services-selected-sap-c02-practice-simulations-questions-answers-by-amit.pdf), all B. **Duplicate audit:** exact normalized stem matches 0; related candidate IDs 47, 48, 57, 98, 204, 206, 284, 290, 294, 346, 356, 446, 469, 489, 494, 499, 521, 555, 565, 571, 587, 621, 631, 641, 642, 649, 656.
 
 **Official docs:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/LocationsOfEdgeServers.html ; https://docs.aws.amazon.com/vpc/latest/userguide/working-with-aws-managed-prefix-lists.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html
+
+
+## Domain 3 single-answer 16/239 — Q46 (2026-11-04)
+
+**CORRECTED C -> D: Amazon Redshift Concurrency Scaling.** Reserved-node Redshift cluster sees bursts of CPU-intensive audit read queries, but main cluster must remain available for read/write. Enable Concurrency Scaling (`auto`) on eligible WLM queues; queued eligible queries run on temporary capacity, removed when no longer needed. Earned free credits can cover intermittent bursts. The original bank's C (Lambda-triggered elastic resize) violates strict uninterrupted availability and adds custom automation; AWS documents brief cluster unavailability and potential dropped queries during resize.
+
+**Every option:** A EMR requires separate architecture/data movement; B classic resize is slower and interrupts service; C elastic resize is faster but briefly unavailable and custom Lambda threshold is not native burst handling; D concurrency scaling automatically handles eligible queued queries while main cluster remains online.
+
+**Architecture:** BI/business read/write -> main Redshift cluster; audit query queue (WLM Concurrency Scaling auto) -> temporary concurrency-scaling cluster; return to baseline when backlog clears.
+
+**Nuances:** Concurrency Scaling does not automatically speed a single CPU-bound query without queueing, and eligibility depends on query type, node type, WLM settings, and supported features. Classic resize to RG/RA3 now permits reads/writes during much of background migration but still has a short restart; do not overgeneralize classic resize as always read-only. Reserved-node status does not guarantee query eligibility.
+
+**Exact external variants:** [ExamTopics topic 1 Q866](https://www.examtopics.com/discussions/amazon/view/74192-exam-aws-certified-solutions-architect-professional-topic-1-question-866-discussion/) (community favors D, discussion includes conflicting comments); [Pupuweb Q114](https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-2/2/) (D); [Scribd SAP-C02 Q307](https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341) (D). Reordered variants also choose Concurrency Scaling. **Duplicate check:** no exact normalized stem across 674; related-topic Q602.
+
+**AWS references:** https://docs.aws.amazon.com/redshift/latest/dg/concurrency-scaling.html ; https://docs.aws.amazon.com/redshift/latest/mgmt/resizing-cluster.html ; https://aws.amazon.com/redshift/features/concurrency-scaling/
