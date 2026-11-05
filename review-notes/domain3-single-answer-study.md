@@ -653,3 +653,20 @@ flowchart LR
 **Caveat:** A omits private subnet route and public IGW route details. One NAT gateway/EIP satisfies one-address requirement but introduces single-AZ failure exposure; NAT per AZ normally requires multiple EIPs and allowlisting both. Avoid false claim that an IGW can be assigned EIP.
 
 **674 audit:** exact normalized duplicates []; related Lambda/NAT/egress questions [175,318].
+
+
+## Q109 — Domain 3 single-answer 36/239 — Fargate usage quota alarm (2026-11-04)
+
+**Verified B**, retaining original stem and options. Current AWS Fargate publishes AWS/Usage ResourceCount with Resource=vCPU and Class=Standard/OnDemand or Standard/Spot; metric math 100*m1/SERVICE_QUOTA(m1) expresses consumption as percent of applied quota. CloudWatch alarm -> SNS developer notification.
+
+**Architecture:** ECS services on Fargate -> AWS/Usage ResourceCount (vCPU) -> CloudWatch SERVICE_QUOTA(m1) metric math -> alarm at >=80% -> SNS -> developers.
+
+**Every option:** A wrong: SampleCount counts metric observations, not resource consumption; service-level samples cannot replace quota usage. B correct for monitored vCPU quota: AWS/Usage + SERVICE_QUOTA + SNS. C wrong: 80 tasks is not 80% of quota; unnecessary custom Lambda polling/SES. D wrong: Config checks resource compliance rather than quota utilization; compares wrong quantities.
+
+**AWS documentation:** https://docs.aws.amazon.com/AmazonECS/latest/developerguide/monitoring-fargate-usage.html ; https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Quotas-Visualize-Alarms.html ; https://docs.aws.amazon.com/general/latest/gr/ecs-service.html ; https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-quotas.html
+
+**Exact external variants:** https://www.examtopics.com/discussions/amazon/view/143206-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-519-discussion/ (Q519, exact stem and choices, B); https://www.p2pexams.com/free-questions/free-amazon-sap-c02-exam-questions-by-vargas.pdf (Vargas Q1, exact stem and choices, B). Both are exam-content mirrors; official AWS documentation independently controls technical correctness.
+
+**Defects/currentness:** Stem says maximum number of ECS tasks; AWS Fargate currently monitors concurrent vCPU-based quota (separate On-Demand/Spot), not a universal count of tasks. Separate task launch-rate quotas exist. Option B is correct for Fargate vCPU quota but does not literally calculate running-task-count percentage. Option B uses >80, not >=80, so at exactly 80% it would not trigger. Option A malformed expression wording. Preserve original options; flag caveats for study.
+
+**674 duplicate audit:** exact normalized duplicates []; related [16,52,101,214,342,348,474,650].
