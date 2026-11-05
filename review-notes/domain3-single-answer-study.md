@@ -687,3 +687,20 @@ flowchart LR
 **Defects/outdated:** No Redis engine version; no requirement to keep existing cluster; A and B can both meet stated security outcome. Claims that in-place TLS enablement is always impossible are outdated (Redis OSS 7+ supported). Redis AUTH now superseded by RBAC in modern deployments. Preserve original text including 'asencrypted' typo.
 
 **674 audit:** exact normalized duplicates []; related IDs [22,203,204,489,622].
+
+
+## Q214 — Domain 3 single-answer 71/239 — Fargate Compute Savings Plan + Aurora reserved DB instance (2026-11-05)
+
+**Verified B.** Original question and four options preserved. Production operates continuously and is predictable for one year; development/testing stop nights and weekends. Buy one-year reserved DB instance discount for production Aurora (assuming provisioned DB instance), and one-year Compute Savings Plan sized to stable Fargate compute baseline in management account with sharing enabled.
+
+**Architecture:** AWS Organizations management account (1-year Aurora DB RI + 1-year Compute Savings Plan) -> consolidated billing benefit across dev account [ECS Fargate + Aurora, intermittent], test account [ECS Fargate + Aurora, intermittent], prod account [ECS Fargate + Aurora, continuous].
+
+**Options:** A wrong: EC2 Instance Savings Plans do not cover Fargate; blanket RIs for intermittent DBs risk unused commitments. B correct: Compute Savings Plans cover Fargate, 1-year production Aurora RI aligns forecast, consolidated discount sharing. C wrong: 3-year term beyond forecast and all-account DB commitments risk waste. D wrong: EC2 Instance Savings Plan doesn't cover Fargate and 3-year commitment beyond forecast.
+
+**Official AWS:** https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html ; https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html ; https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_WorkingWithReservedDBInstances.html ; https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ri-behavior.html ; https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-applying.html
+
+**Exact external variants:** https://www.certensure.com/amazon-web-services/sap-c02-cert-practice-test.html (Q131, exact stem and choices, B); https://www.dumpspedia.com/sap-c02-aws-certified-solutions-architect-professional-dumps.html (same stem/options, answer gated); https://www.prepawayexam.com/Amazon/AWS-Certified-Solutions-Architect/SAP-C02.aws-certified-solutions-architect-professional-sap-c02.15063.ete.file.html (Q3, same stem with reordered options). AWS docs are authoritative.
+
+**Caveats/currentness:** Current AWS offers Database Savings Plans for eligible Aurora usage; not among choices. DB RI assumes eligible provisioned instance, not all Aurora Serverless. One-year predictability doesn't establish numeric optimal commitment without hourly usage and pricing; compute Savings Plan should be sized to stable hourly baseline. Sharing must remain enabled. Question is not wholly outdated; the option set omits newer database commitment option.
+
+**674 audit:** exact normalized duplicates []; related IDs [16,101,103,295,342,512,547,568,627,668].
