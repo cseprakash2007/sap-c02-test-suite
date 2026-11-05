@@ -564,3 +564,22 @@ flowchart LR
 **Defects:** Question claims '203.0' as private VPC prefix but it is not an RFC1918 private address range. Flow logs can be published to S3/Firehose as well as CloudWatch, though answer options assume CloudWatch log groups. ACCEPT does not establish NAT forwarded unsolicited traffic. D and B answer different parts of the investigation, so single-answer framing is defective.
 
 **674 audit:** exact normalized-stem duplicates []; related NAT/flow-log question IDs 5, 18, 20, 21, 24, 53, 108, 112, 195, 209, 309, 316, 318, 378, 410, 481, 496, 591.
+
+
+## Q97 — Domain 3 single-answer 31/239 — FSx for Windows WorkSpaces profile capacity (2026-11-04)
+
+**Verified B** against current AWS documentation and two independent exact external variants. Original full stem/options remain in questions.json.
+
+**Architecture:** Amazon WorkSpaces Windows user profiles -> FSx for Windows SMB profile share (10 TB full) -> immediately AWS CLI `aws fsx update-file-system --file-system-id fs-... --storage-capacity <new GiB>` -> AWS/FSx FreeStorageCapacity CloudWatch alarm -> EventBridge alarm state-change event -> Lambda UpdateFileSystem -> increase capacity before next outage. AWS official published auto-scaling solution uses CloudWatch alarm -> SNS -> Lambda instead of EventBridge, also valid.
+
+**Options:** A Lustre is not a Windows SMB profile share; B directly expands existing file system and automates prevention; C Step Functions can orchestrate but omits explicit immediate remediation/trigger and is less specific; D manual profile cleanup and split introduces complexity without automated prevention.
+
+**Official sources:** https://docs.aws.amazon.com/fsx/latest/WindowsGuide/increase-storage-capacity.html ; https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-storage-configuration.html ; https://docs.aws.amazon.com/fsx/latest/WindowsGuide/automate-storage-capacity-increase.html ; https://docs.aws.amazon.com/fsx/latest/WindowsGuide/monitoring-cloudwatch.html
+
+**Limits/caveats:** Minimum 10% growth, max 65,536 GiB, 16 MBps minimum throughput; growth only, not shrink; another storage increase only after >=6h and optimization completion, whichever later; monitor at least 20% free. For 10 TiB file system minimum target is 11 TiB (11,264 GiB), assuming 10 TiB = 10,240 GiB. Scaling is asynchronous; do not promise instant login recovery. Alarm should fire before capacity reaches zero. Lambda must check in-progress operations and IAM permissions.
+
+**Exact external variants:** https://www.certsmania.com/pdf/revision-materials-effective-amazon-web-services-sap-c02-questions-answers-by-jagjit.pdf (Q2, B, exact English stem/options); https://note.com/calm_dahlia6406/n/n59aa4a1a941c?hl=en (Q51, same question/options translated, B). Exact English and translated variants distinguish confidence levels.
+
+**Defects:** `AmazonWorkspaces` typo and inconsistent product casing. B incorrectly suggests creating a CloudWatch metric; FSx publishes `FreeStorageCapacity` natively, so create a CloudWatch alarm. Official AWS automation uses SNS-Lambda rather than EventBridge-Lambda; EventBridge is feasible. C is underspecified, not technically impossible.
+
+**674 audit:** exact normalized duplicates []; related FSx/WorkSpaces IDs 102, 131, 282, 300, 402, 532.
