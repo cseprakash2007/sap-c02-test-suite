@@ -619,3 +619,20 @@ flowchart LR
 **Defects/caveats:** Dataset punctuation errors around EC2/Fargate/Lambda and missing punctuation after 3 years. Six-month historical average is not an AWS Savings Plans recommendation lookback option: current 7/30/60 days. AWS recommendations are historical, not forecasts; three-year commitment can be underutilized if demand falls. Savings Plans sharing must be enabled for organization-level benefit. EC2 Instance Savings Plans can have higher percentage discount on EC2 but do not cover all three services. Answer B is best among offered choices, not mathematical guarantee of absolute maximum savings.
 
 **674 audit:** exact normalized duplicates []; related Savings Plans/RI question IDs 399, 423, 627, 660, 668.
+
+
+## Q105 — Domain 3 single-answer 34/239 — RDS MySQL cross-Region disaster recovery (2026-11-04)
+
+**Verified answer D** against AWS RDS documentation and three exact external exam variants. Original stem/options retained.
+
+**Architecture diagram:** Region A ecommerce app -> RDS MySQL primary (read/write) --async cross-Region replication--> Region B RDS MySQL read replica (read only). Region A outage -> promote Region B replica (RDS PromoteReadReplica) -> redirect application database endpoint -> Region B promoted writable DB -> create replacement read replica in healthy Region. Optional in-Region Multi-AZ for AZ-level HA.
+
+**Every option:** A wrong: automated backup must be RESTORED into a DB instance, cannot be promoted; slower recovery. B wrong: DynamoDB global tables do not exist for RDS MySQL; Lambda copy of replicas not a valid replication architecture. C wrong: same global tables conflation plus inconsistent backup/replica copying. D correct: AWS explicitly prescribes promote read replica -> redirect traffic -> create replacement replica for failure recovery.
+
+**Official AWS:** https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.Promote.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.XRgn.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-database-disaster-recovery/choosing-database.html ; https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/disaster-recovery-resiliency.html
+
+**Exact external variants:** https://www.freepdfdumps.com/Amazon.SAP-C02.v2023-09-29.q103.html?p=18 (Q81, identical options, D); https://www.actual4test.com/discussions/Amazon/exam-aws-solutions-architect-professional-topic-1-question-21-discussion-p1003723.html (Q21, identical, D); https://www.freecram.net/question/Amazon.SAP-C02.v2023-09-16.q205/a-retail-company-is-hosting-an-ecommerce-website-on-aws-across-multiple-aws-regions-the-company-wants (Q56, identical, D). External variants corroborate but AWS docs are authoritative.
+
+**Caveats/defects:** 'operational at all times' is unattainable with asynchronous RDS MySQL read-replica promotion; failover has minutes of RTO, possible nonzero RPO and endpoint switch. AWS recommends monitoring ReplicaLag; promotion reboots replica. D typo 'cross- Region and read replica' -> 'cross-Region read replica'; A backup promotion is invalid; B/C confuse DynamoDB global tables with RDS. Current AWS Application Recovery Controller can orchestrate RDS Promote Read Replica steps, but does not eliminate RTO. Aurora Global Database can offer tighter multi-Region recovery if changing DB platform is permitted; not among choices.
+
+**674 audit:** exact normalized duplicates []; related read-replica/DR IDs 15, 27, 58, 63, 167, 287, 322, 341, 364, 374, 417, 424, 481, 485, 555, 570, 614.
