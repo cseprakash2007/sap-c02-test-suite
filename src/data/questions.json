@@ -11616,13 +11616,43 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "A: S3 Object Created notifications go to EventBridge, which invokes ECS RunTask on AWS Fargate with the S3 key passed as task input/overrides. A task runs the up-to-25-minute processing only when uploads occur, avoiding polling and EC2 management. Standard Lambda is limited to 15 minutes; Step Functions timeout does not override that limit.",
+    "wrongOptionsExplanation": {
+      "A": "Correct. Event-driven Fargate RunTask directly from S3 via EventBridge, without always-on servers.",
+      "B": "Standard Lambda execution timeout is 15 minutes; Step Functions TimeoutSeconds of 30 minutes cannot increase the Lambda maximum.",
+      "C": "ECS EC2 capacity requires maintaining EC2 compute, and Glue crawlers catalog data rather than triggering arbitrary ECS processing.",
+      "D": "Standard Lambda cannot execute a 25-minute job; HTTP polling/fan-out adds unnecessary complexity."
+    },
+    "plainWords": "When a survey file lands in S3, launch a Fargate container to process it and then shut down. Don't keep EC2 servers polling.",
+    "keyPoints": [
+      "S3 Object Created -> EventBridge -> ECS RunTask",
+      "Fargate supports 25-minute batch tasks without managing EC2",
+      "Pass S3 bucket and key via EventBridge input transformer/task overrides",
+      "Standard Lambda maximum invocation 15 minutes",
+      "Step Functions Task timeout cannot extend Lambda execution limit",
+      "Glue crawler catalogs data, not general event-driven ECS processing",
+      "Production: idempotency, retry/DLQ, task-launch failure monitoring",
+      "Lambda Managed Instances has newer 90-minute async option, not specified in exam choices"
+    ],
+    "sourceWarning": "No major defect in answer A. Newer Lambda Managed Instances can run async functions up to 90 minutes, but options B/D do not specify Managed Instances. EventBridge->ECS requires IAM permissions, networking and input mapping. Handle duplicate events and retries.",
+    "review": {
+      "verifiedAnswer": [
+        "A"
+      ],
+      "verifiedAt": "2026-11-05",
+      "notes": "Official AWS docs confirm. Exact variants CertsMania Q38 and ExamCollection SAP-C02 page 3 answer A; CertsTopics matches. Exact duplicates []; related [16,52,80,98,101,109,186,214,293,295,342,348,448,474,539,585,619,650]",
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventBridge.html",
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html",
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-events-iam-roles.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html",
+        "https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html",
+        "https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf",
+        "https://www.examcollection.us/exam/SAP-C02-question-answer-3.html",
+        "https://www.certstopics.com/questions/aws-certified-professional-sap-c02-full-course-free.html"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 223,
