@@ -6233,13 +6233,37 @@
       "B"
     ],
     "answerCount": 1,
-    "explanation": "",
-    "wrongOptionsExplanation": "",
-    "plainWords": "",
-    "keyPoints": "",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "B. AWS Fargate publishes ResourceCount usage metrics under AWS/Usage, with Fargate vCPU dimensions for On-Demand/Spot. CloudWatch metric math m1/SERVICE_QUOTA(m1)*100 calculates applied-quota utilization, with a CloudWatch alarm and SNS notification at the 80% threshold. See AWS Fargate usage metrics and CloudWatch quotas/alarms docs.",
+    "wrongOptionsExplanation": {
+      "A": "SampleCount is the count of observations, not account-wide quota consumption. Per-service samples cannot substitute for AWS/Usage ResourceCount.",
+      "C": "Absolute >80 running tasks is not 80% of an applied quota; custom Lambda polling and SES add needless maintenance.",
+      "D": "AWS Config evaluates configuration compliance, not continuous usage-to-quota ratios. The option also compares a quota value to 80 instead of consumption percentage."
+    },
+    "plainWords": "Measure how much Fargate capacity is in use, divide by the AWS quota, and alert the team via SNS once the percentage reaches 80.",
+    "keyPoints": [
+      "AWS/Usage ResourceCount for Fargate vCPU usage",
+      "SERVICE_QUOTA(m1) retrieves applied quota for the supported metric",
+      "100*m1/SERVICE_QUOTA(m1) computes percent utilization",
+      "CloudWatch alarm -> SNS -> developers",
+      "Current Fargate concurrent capacity quotas are vCPU-based, not a universal running-task count",
+      "Use >=80 threshold to alert at exactly 80%; option B says >80"
+    ],
+    "sourceWarning": "Outdated premise: running Fargate capacity quota is measured in vCPUs (On-Demand and Spot separately), not a universal maximum running ECS task count. Some task launch-rate quotas are separate. B is best answer for supported Fargate vCPU quota, not a literal running-task-count limit. Option B's >80 threshold triggers only above 80, not exactly at 80. A contains malformed SERVICE_QUOTA wording. Original wording retained.",
+    "review": {
+      "verifiedAnswer": [
+        "B"
+      ],
+      "verifiedAt": "2026-11-04",
+      "notes": "Verified official AWS docs and exact independent exam mirrors ExamTopics Q519 and P2PExams Vargas Q1. Exact normalized duplicate stems: []; related IDs [16,52,101,214,342,348,474,650].",
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/monitoring-fargate-usage.html",
+        "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Quotas-Visualize-Alarms.html",
+        "https://docs.aws.amazon.com/general/latest/gr/ecs-service.html",
+        "https://www.examtopics.com/discussions/amazon/view/143206-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-519-discussion/",
+        "https://www.p2pexams.com/free-questions/free-amazon-sap-c02-exam-questions-by-vargas.pdf"
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 110,
