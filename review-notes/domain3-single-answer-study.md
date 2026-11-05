@@ -770,3 +770,18 @@ flowchart LR
 **Currentness:** No material defect. Newer Lambda Managed Instances allow up to 90-minute async invocations, but B/D do not specify them; standard Lambda remains 15 minutes. EventBridge delivery may duplicate, so make processing idempotent.
 
 **674 duplicate audit:** exact normalized duplicates []; related [16,52,80,98,101,109,186,214,293,295,342,348,448,474,539,585,619,650].
+
+
+## Q222 — Domain 3 single-answer 75/239 — Event-driven S3 survey processing (re-audit 2026-11-05)
+
+**Verified A; already previously verified in dataset.** Infrequent S3 uploads and 25-minute processing favor S3 Object Created -> EventBridge rule -> ECS RunTask on AWS Fargate -> container reads S3 key -> task exits. This removes EC2 polling and ongoing EC2 management.
+
+**Option analysis:** A correct, EventBridge invokes ECS Fargate task and supports event-to-task override mapping. B wrong, standard Lambda maximum 15 minutes and Step Functions Task timeout cannot override Lambda's execution limit. C wrong, ECS EC2 capacity providers require EC2 management and Glue crawlers catalog schemas rather than invoke arbitrary processing. D wrong, generic Lambda cannot handle 25-minute execution and HTTP polling/fan-out adds unnecessary complexity.
+
+**Diagram:** Field device -> S3 (Object Created) -> EventBridge -> ECS RunTask Fargate -> survey container (up to 25 min) -> stop. Ensure EventBridge IAM role, task networking, bucket/key input mapping, retries and idempotency.
+
+**Current AWS caveat:** Lambda Managed Instances supports eligible async/event-source invocations up to 90 minutes; B and D do not specify this mode and remain wrong as written. Official docs: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html ; https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html ; https://docs.aws.amazon.com/lambda/latest/dg/lambda-managed-instances-best-practices.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventBridge.html .
+
+**Exact external variants:** https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-5.html (Q70); https://www.scribd.com/document/946282982/SAP-C02-Updated-Questions-AWS-Certified-Solutions-Architect-Professional (Q32); https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf (Q38); https://www.examcollection.us/exam/SAP-C02-question-answer-3.html .
+
+**674-question audit:** normalized exact duplicates []; broad related questions [18,29,32,52,83,94,109,112,133,149,158,163,165,170,188,210,233,246,260,281,293,297,305,312,317,322,323,338,348,349,378,408,413,428,434,460,474,486,495,515,533,539,549,554,561,563,576,580,586,597,603,619,632,633,648,654,657]. No material defect; new Lambda exception flagged.
