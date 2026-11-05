@@ -458,3 +458,20 @@ flowchart LR
 **Important modern caveats:** Change sets preview intended resource changes but do not guarantee successful deployment. EC2 CodeDeploy blue/green uses EC2 replacement fleets and load balancer rerouting; CloudFormation `AWS::CodeDeployBlueGreen` transform is for ECS only, not EC2. CodeDeploy rollback restores application revision/traffic and is not a guarantee that every CloudFormation infrastructure change is reverted. Add CloudWatch alarms, health checks and pre/post-traffic validation.
 
 **AWS docs:** https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html ; https://docs.aws.amazon.com/codedeploy/latest/userguide/welcome.html ; https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments-rollback-and-redeploy.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/continuous-delivery-codepipeline-basic-walkthrough.html
+
+
+## Domain 3 single-answer 25/239 — Q75 (2026-11-04)
+
+**Answer B — independently verified against AWS docs and exact external variants.** Configure IAM Access Analyzer account-scoped external-access analyzer per applicable Region, use EventBridge `Access Analyzer Finding` event with `detail.isPublic: true` and S3 resource-type filtering, route to existing SNS topic.
+
+**Original options:** A invalid S3 `isPublic` notification event. B correct architecture. C CloudTrail `PutBucketPolicy` is an API action, not a public-exposure finding, and misses other exposure mechanisms. D `cloudtrail-s3-dataevents-enabled` AWS Config rule checks CloudTrail data-event logging, not bucket exposure.
+
+**Architecture:** S3 policy/ACL/access point change -> IAM Access Analyzer external access finding -> EventBridge pattern (`source: aws.access-analyzer`, `detail-type: Access Analyzer Finding`, `detail.isPublic: true`, `detail.resourceType: AWS::S3::Bucket`, `detail.status: ACTIVE`, `detail.isDeleted: false`) -> SNS -> subscribed security email.
+
+**Exact external variants:** [TestMayor Q156](https://www.testmayor.com/SAP-C02-Practice-Test/13), [Pupuweb Q680](https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-7/8/), [FreePDFDumps](https://www.freepdfdumps.com/Amazon.SAP-C02.v2024-09-24.q208.html?p=26) reproduce original question and options, key B. Exam-site keys are secondary to AWS documentation.
+
+**Duplicates:** All 674 stems compared case/punctuation-normalized: zero exact duplicates, no confirmed semantic near-duplicate of the full scenario. Other S3/IAM/notification questions overlap broadly but not substantively.
+
+**Caveats:** As written, B's `isPublic: true` filter alone is not sufficient for the literal 'only when an S3 bucket becomes publicly exposed': filter S3 resourceType, ACTIVE and not-deleted; if only new transitions are desired, deduplicate on finding ID/status or add a stateful filter. Analyzer may emit initial findings for pre-existing exposure and later finding updates. External-access analysis is eventually consistent, not instantaneous; enable analyzer in each relevant Region. EventBridge service event delivery is best effort. S3 Block Public Access is the preventative complement.
+
+**Official docs:** https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-eventbridge.html ; https://docs.aws.amazon.com/eventbridge/latest/ref/events-ref-access-analyzer.html ; https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-analyzer.html ; https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-resources.html
