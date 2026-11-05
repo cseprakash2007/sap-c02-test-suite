@@ -11634,13 +11634,13 @@
       "Production: idempotency, retry/DLQ, task-launch failure monitoring",
       "Lambda Managed Instances has newer 90-minute async option, not specified in exam choices"
     ],
-    "sourceWarning": "No major defect in answer A. Newer Lambda Managed Instances can run async functions up to 90 minutes, but options B/D do not specify Managed Instances. EventBridge->ECS requires IAM permissions, networking and input mapping. Handle duplicate events and retries.",
+    "sourceWarning": "Answer A verified. Modern exception: AWS Lambda Managed Instances can support asynchronous or eligible event-source invocations up to 90 minutes; choices B/D specify generic Lambda without Managed Instances, so their 25-minute processing is not supported as written. Standard Lambda 15-minute limit remains. EventBridge-to-ECS needs appropriate IAM role, VPC networking and event-to-task input mapping; S3 event delivery can be duplicated.",
     "review": {
       "verifiedAnswer": [
         "A"
       ],
       "verifiedAt": "2026-11-05",
-      "notes": "Official AWS docs confirm. Exact variants CertsMania Q38 and ExamCollection SAP-C02 page 3 answer A; CertsTopics matches. Exact duplicates []; related [16,52,80,98,101,109,186,214,293,295,342,348,448,474,539,585,619,650]",
+      "notes": "Re-audited in Domain 3 single-answer sequence position 75/239; original content and options preserved. Exact variants: Scribd SAP-C02 Updated Questions Q32, DumpsTech SAP-C02 practice 5 Q70, plus prior CertsMania Q38 and ExamCollection page 3. Current AWS docs confirm EventBridge ECS task target and 15-minute standard Lambda limit, with 90-minute Managed Instances exception. Exact duplicates []; related [18,29,32,52,83,94,109,112,133,149,158,163,165,170,188,210,233,246,260,281,293,297,305,312,317,322,323,338,348,349,378,408,413,428,434,460,474,486,495,515,533,539,549,554,561,563,576,580,586,597,603,619,632,633,648,654,657].",
       "sources": [
         "https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventBridge.html",
         "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html",
@@ -11649,7 +11649,12 @@
         "https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html",
         "https://www.certsmania.com/pdf/amazon-web-servicesquestion-answer-preparation-changed-sap-c02-questions-by-frederic.pdf",
         "https://www.examcollection.us/exam/SAP-C02-question-answer-3.html",
-        "https://www.certstopics.com/questions/aws-certified-professional-sap-c02-full-course-free.html"
+        "https://www.certstopics.com/questions/aws-certified-professional-sap-c02-full-course-free.html",
+        "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/lambda-managed-instances-best-practices.html",
+        "https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-5.html",
+        "https://www.scribd.com/document/946282982/SAP-C02-Updated-Questions-AWS-Certified-Solutions-Architect-Professional"
       ]
     },
     "answerStatus": "verified"
