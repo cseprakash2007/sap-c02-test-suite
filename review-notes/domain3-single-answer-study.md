@@ -494,3 +494,22 @@ flowchart LR
 **Official documentation:** https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/QueryStringParameters.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/understanding-the-cache-key.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/functions-event-structure.html
 
 **Duplicate audit:** All 674 stems compared case/punctuation-normalized; exact duplicate IDs: []. CloudFront-related questions share service vocabulary but no exact duplicate scenario established.
+
+
+## Q82 — Domain 3 single-answer 27/239 — CloudFormation S3 bucket deletion (2026-11-04)
+
+**Verified A.** Source original question/options retained in questions.json.
+
+**Why:** CloudFormation cannot delete a nonempty S3 bucket. Lambda-backed custom resource on Delete empties bucket before S3 bucket deletion. DependsOn from custom resource to bucket ensures reverse deletion ordering. Remove object versions and delete markers when applicable; stop writers, supply IAM permissions, send CloudFormation custom resource response. Already DELETE_FAILED stacks may need manual empty-and-retry.
+
+**Options:** A correct; B DeletionPolicy Delete is already default and does not empty S3; C S3 does not support Snapshot; D EFS migration is major unnecessary redesign.
+
+**Diagram:** Stack Delete -> custom resource Delete -> cleanup Lambda -> S3 empty -> S3 bucket delete -> DELETE_COMPLETE.
+
+**Exact variants:** https://www.examcollection.us/exam/SAP-C02-question-answer-9.html (#121, A); https://www.certstopics.com/questions/selected-sap-c02-aws-certified-professional-questions-answers.html (#67); https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=5 (#20, A); https://www.examtopics.com/discussions/amazon/view/142996-exam-aws-certified-solutions-architect-professional-sap-c02-topic-1-question-498-discussion/ (A).
+
+**Conflicting near variant:** https://www.examcollection.us/exam/SAP-C02-question-answer-2.html (#18) and https://www.dumpstech.com/free-amazon-web-services/sap-c02-practice-7.html (#97) key DeletionPolicy Delete for near-identical financial-services case; this is incorrect by AWS documentation.
+
+**Official:** https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-s3-bucket.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-cloudformation-customresource.html ; https://www.repost.aws/knowledge-center/cloudformation-s3-custom-resources
+
+**674 audit:** exact duplicates []; related CloudFormation/S3 IDs 72, 234, 333, 371, 580. Shared service terms alone do not establish semantic duplicates.
