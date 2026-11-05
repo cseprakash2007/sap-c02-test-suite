@@ -3475,13 +3475,28 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "NAT gateways are tied to one AZ. Create one in each AZ and route each private subnet to the NAT gateway in its own AZ. An AZ\noutage then only affects that AZ.",
-    "wrongOptionsExplanation": "B. Public subnets route to the internet gateway, not through NAT, so changing their routes does not help. C. A VPC has just one\ninternet gateway and private subnets cannot use it directly. D. Same problem: you cannot add multiple internet gateways.",
-    "plainWords": "Same scenario as Question 5: one NAT gateway serves private subnets in three AZs.",
-    "keyPoints": "• One NAT gateway per AZ and route each private subnet to its local one.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified answer A: For zonal public NAT gateways, add a NAT gateway in each AZ public subnet and route each AZ private subnet's IPv4 default route to its local NAT gateway. A single zonal NAT creates a cross-AZ dependency. AWS also now documents regional NAT gateways, a modern alternative not offered in the choices.",
+    "wrongOptionsExplanation": "B: public subnet default routes must target the internet gateway, not NAT; private routes need the zonal NAT. C: only one internet gateway may attach to a VPC; direct IGW routing does not give private-only instances internet access. D: same impossible additional IGWs and no solution to private subnet NAT dependency.",
+    "plainWords": "Three AZs should not depend on one zonal NAT gateway. Use one public NAT gateway per AZ, with each private subnet routing to its own NAT. Newer regional NAT gateway is a separate modern option.",
+    "keyPoints": "Answer A. Public subnet 0.0.0.0/0 -> IGW; private subnet 0.0.0.0/0 -> NAT in same AZ. Exact external variants: ExamCollection SAP-C02 #55 and P2PExams Pena PDF Q3. Near-duplicate Q5 in this 674-question dataset. AWS docs: https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html ; https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html",
+    "sourceWarning": "Near-duplicate Q5 is a shortened paraphrase of Q53. The question assumes zonal NAT gateways; AWS now offers regional NAT gateways, so do not present zonal NAT as the only modern high-availability design.",
+    "review": {
+      "verifiedAt": "2026-11-04",
+      "answer": "A",
+      "officialSources": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html"
+      ],
+      "externalVariants": [
+        "https://www.examcollection.us/exam/SAP-C02-question-answer-4.html",
+        "https://www.p2pexams.com/free-questions/explore-amazon-sap-c02-questions-by-pena.pdf"
+      ],
+      "nearDuplicates": [
+        5
+      ],
+      "exactDuplicates": []
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 54,
