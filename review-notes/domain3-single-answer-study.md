@@ -390,3 +390,20 @@ flowchart LR
 **External variants:** Searches for distinctive full-stem and option phrases did not establish two independent exact matching external exam variants. Do not imply exact external verification. AWS official documentation is the basis for answer verification.
 
 **Official AWS references:** https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features-managing-env-types.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-cfg-autoscaling-triggers.html ; https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html
+
+
+## Domain 3 single-answer 21/239 — Q57 (2026-11-04)
+
+**Answer A — verified with primary AWS sources.** CloudFront adds a secret custom origin header; ALB-associated AWS WAF checks it and blocks missing/wrong values; AWS Secrets Manager + Lambda rotation coordinates updates to CloudFront and WAF. AWS published precisely this architecture and an implementation sample.
+
+**Option analysis:** A correct; B moving public ALB to private subnets without configuring CloudFront VPC origins breaks reachability, and CloudFront IP ranges do not identify a specific distribution; C Parameter Store does not supply the claimed automatic rotation and ALB must be explicitly configured for header match; D Shield Advanced cannot attach the proposed security group policy to ALB.
+
+**Diagram:** Clients -> CloudFront (inject secret header) -> ALB AWS WAF (allow header match, otherwise block 403) -> ALB -> EC2 Auto Scaling group in private subnets, across 3 AZs. Secrets Manager -> Lambda rotation -> update WAF and CloudFront custom header.
+
+**External exact variants and conflicting answer keys:** [FreeCram 2026 Q177](https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-medical-company-is-running-a-rest-api-on-a-set-of-amazon-ec2-instances-the-ec2-instances-run-in-an) and [SalesforceExamDumps Q11](https://www.salesforcexamdumps.com/sap-c02-practice-questions/1.html) reproduce the exact options and key **A**. [FreeCram 2025 Q27](https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-medical-company-is-running-a-rest-api-on-a-set-of-amazon-ec2-instances-the-ec2-instances-run-in-an) keys **D**, while [Pupuweb Q769](https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-8/7/) keys the equivalent Shield Advanced option (reordered A), incorrectly. Some incorrect variants include an unrelated EC2 Auto Scaling process explanation. Reject those answer keys using AWS's documented implementation.
+
+**Duplicate audit:** 674 stems compared; zero exact normalized duplicates. **Q47** is conceptually very close (CloudFront secret header and ALB enforcement), but Q57 specifically uses WAF and rotating Secrets Manager secret. Q43 is another related CloudFront/ALB restriction question.
+
+**Current nuance:** CloudFront VPC origins now support internal ALBs in private subnets, a modern option not actually implemented by B. Enforce HTTPS, consider managed CloudFront prefix list on ALB SG, rotate secret with safe overlap, and ensure WAF default/rule action actually blocks missing headers.
+
+**Official references:** https://aws.amazon.com/blogs/security/how-to-enhance-amazon-cloudfront-origin-security-with-aws-waf-and-aws-secrets-manager/ ; https://github.com/aws-samples/amazon-cloudfront-waf-secretsmanager ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html
