@@ -602,3 +602,20 @@ flowchart LR
 **Caveats:** Pre-generating every image size requires a pipeline and storage; this is viable because the scenario states predefined sizes. For unpredictable image sizes use on-demand CloudFront/Lambda resizing. Use S3 origin access control, appropriate TTLs and cache keys, versioned object names, and invalidation strategy. No outdated services identified.
 
 **674 audit:** exact normalized duplicates []; related CloudFront/image/Fargate IDs 15, 16, 43, 47, 52, 57, 78, 101, 103, 109, 148, 158, 159, 165, 186, 188, 206, 214, 233, 246, 280, 283, 284, 293, 295, 312, 317, 328, 342, 348, 356, 428, 461, 464, 469, 474, 494, 585, 592, 596, 604, 612, 621, 649, 650.
+
+
+## Q101 — Domain 3 single-answer 33/239 — organization-wide Compute Savings Plans (2026-11-04)
+
+**Verified B.** Original question and choices retained in questions.json. Compute Savings Plans cover EC2, Fargate and Lambda and management-account recommendations optimize eligible sharing-enabled usage across an AWS Organization.
+
+**Diagram:** AWS Organizations management account -> Savings Plans recommendations (sharing-enabled linked accounts) -> 3-year hourly Compute Savings Plan -> eligible EC2/Fargate/Lambda usage across accounts. Coverage is applied according to discount-sharing settings.
+
+**Options:** A EC2 Reserved Instances cover EC2 only and are less flexible; B correct broad eligible compute coverage and consolidated recommendation; C per-account EC2 RI misses Fargate/Lambda and cross-account smoothing; D EC2 Instance Savings Plans cover EC2 only in a chosen family/Region, not Fargate/Lambda.
+
+**AWS official:** https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html ; https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-rec-calculations.html ; https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-ris.html ; https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html ; https://docs.aws.amazon.com/prescriptive-guidance/latest/optimize-costs-microsoft-workloads/savings-plans.html
+
+**Exact external variants:** https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-company-runs-many-workloads-on-aws-and-uses-aws-organizations-to-manage-its-accounts-the-workloads (Q227/264, shuffled correct C maps to dataset B); https://www.certbull.com/application/public/files/8oAaH5cR5eKw9KEeqSxknLeTetFIFto7T7hBXhai.pdf (Q70 same stem/options); https://www.freecram.net/Amazon.SAP-C02.v2025-04-03.q227.pdf (Q64 same stem/options). External exam copies are secondary; AWS docs independently support B.
+
+**Defects/caveats:** Dataset punctuation errors around EC2/Fargate/Lambda and missing punctuation after 3 years. Six-month historical average is not an AWS Savings Plans recommendation lookback option: current 7/30/60 days. AWS recommendations are historical, not forecasts; three-year commitment can be underutilized if demand falls. Savings Plans sharing must be enabled for organization-level benefit. EC2 Instance Savings Plans can have higher percentage discount on EC2 but do not cover all three services. Answer B is best among offered choices, not mathematical guarantee of absolute maximum savings.
+
+**674 audit:** exact normalized duplicates []; related Savings Plans/RI question IDs 399, 423, 627, 660, 668.
