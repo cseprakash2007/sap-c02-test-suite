@@ -407,3 +407,20 @@ flowchart LR
 **Current nuance:** CloudFront VPC origins now support internal ALBs in private subnets, a modern option not actually implemented by B. Enforce HTTPS, consider managed CloudFront prefix list on ALB SG, rotate secret with safe overlap, and ensure WAF default/rule action actually blocks missing headers.
 
 **Official references:** https://aws.amazon.com/blogs/security/how-to-enhance-amazon-cloudfront-origin-security-with-aws-waf-and-aws-secrets-manager/ ; https://github.com/aws-samples/amazon-cloudfront-waf-secretsmanager ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html
+
+
+## Domain 3 single-answer 22/239 — Q67 (2026-11-04)
+
+**Answer D — verified against current AWS documentation.** Enable AWS Config recorder for `AWS::EC2::SecurityGroup`, configure applicable managed compliance rules, and send compliance-change notifications to SNS. For only NON_COMPLIANT notifications, route Config Rules Compliance Change via EventBridge to SNS. Config records resource configuration history; CloudTrail records the API caller.
+
+**Options:** A Organizations SCPs restrict API permissions, not compliance change tracking/alerts. B CloudTrail captures security group API calls, but determining whether a resulting rule is noncompliant requires extra logic; legacy CloudWatch Events are now EventBridge. C SCPs do not generate compliance alerts. D is the direct managed service solution.
+
+**Architecture:** Engineers -> EC2 security group configuration -> AWS Config recorder -> managed rule evaluation -> compliance change -> SNS (optionally EventBridge filter) -> subscribed security team. CloudTrail can be correlated to identify the actor.
+
+**Exact external variants:** [FreePDFDumps SAP-C02 Q70](https://www.freepdfdumps.com/Amazon.SAP-C02.v2025-06-02.q210.html?p=15) reproduces original including 'CtoudWatch' typo and keys D. [Scribd SAP-C02 Q219](https://www.scribd.com/document/921182718/SAP-C02-CSL-09-26-341) reproduces scenario/options but incorrectly prints B as answer, while displaying 93% community vote for D. Official AWS documentation resolves disagreement in favor of D.
+
+**Duplicate audit:** 674 stems compared with punctuation/case normalized; no exact duplicate. Broad security/configuration overlap with other questions is not sufficient to declare a near-duplicate.
+
+**Defects/current nuances:** B misspells CloudWatch as CtoudWatch and calls EventBridge rules 'CloudWatch rules' (old terminology). D lacks punctuation. AWS Config SNS delivery can include configuration and other notifications; EventBridge filtering is recommended for targeted noncompliant alerts. Ensure the recorder includes security groups and a rule exists; AWS Config alone does not know the company's compliance standard.
+
+**Official references:** https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_use-managed-rules.html ; https://docs.aws.amazon.com/config/latest/developerguide/notifications-for-AWS-Config.html ; https://docs.aws.amazon.com/config/latest/developerguide/monitor-config-with-cloudwatchevents.html
