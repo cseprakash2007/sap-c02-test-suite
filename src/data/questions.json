@@ -3680,13 +3680,44 @@
       "A"
     ],
     "answerCount": 1,
-    "explanation": "Store a random string in Secrets Manager and use a Lambda function to rotate it automatically. Configure CloudFront to inject it as a\ncustom origin header, and attach a WAF rule to the ALB that only allows requests with the correct header value. Rotating the secret\nkeeps it safe if it leaks.",
-    "wrongOptionsExplanation": "B. CloudFront IPs change and are shared by every CloudFront customer, and moving the ALB to private subnets would stop\nCloudFront from reaching it. C. Systems Manager Parameter Store does not provide automatic rotation. D. Shield Advanced does not\nmanage security group policies to restrict origin access in this way.",
-    "plainWords": "CloudFront fronts a public ALB. Strengthen origin security so only CloudFront can reach it.",
-    "keyPoints": "• Origin lock-down = secret header checked at the ALB (rotate it with Secrets Manager). • Parameter Store has no built-in rotation.\nSecrets Manager does.\nHEADS-UP ON THIS QUESTION\n• Newer option: CloudFront VPC origins let CloudFront reach an internal ALB in a private subnet, which removes the public exposure\ncompletely.\nReference: AWS documentation — https://docs.aws.amazon.com/",
-    "sourceWarning": "",
-    "review": null,
-    "answerStatus": "source-key-unverified"
+    "explanation": "Verified A against AWS Security Blog and AWS sample: CloudFront injects an origin custom header secret, ALB-associated AWS WAF blocks requests lacking matching header, and Secrets Manager plus Lambda rotates the secret while updating CloudFront/WAF. Configure block-by-default or inverse-match rule. Use HTTPS for origin.",
+    "wrongOptionsExplanation": "B: a private ALB cannot simply serve as a standard public custom origin; CloudFront VPC origins require explicit setup, and CloudFront IP ranges are shared. C: Parameter Store has no native automatic secret rotation and ALB header rule does not inherently pull parameter values. D: AWS Shield Advanced does not support the proposed security-group-policy attachment workflow; it protects against DDoS, not per-distribution header verification.",
+    "plainWords": "Prevent direct calls to a public ALB behind CloudFront: inject a secret header at CloudFront, validate it at the ALB WAF, and rotate it.",
+    "keyPoints": "A. AWS published exact solution: https://aws.amazon.com/blogs/security/how-to-enhance-amazon-cloudfront-origin-security-with-aws-waf-and-aws-secrets-manager/ ; https://github.com/aws-samples/amazon-cloudfront-waf-secretsmanager ; https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html",
+    "sourceWarning": "Multiple exact exam variants have contradictory or plainly erroneous keys: FreeCram 2025-07-25 and Pupuweb Q769 key Shield Advanced (dataset D) with unrelated EC2 Auto Scaling explanations; FreeCram 2026-03-31 and SalesforceExamDumps key A. Trust AWS primary documentation. Modern alternative: CloudFront VPC origins with private ALB, not described in option B. Header alone is bearer secret; rotate safely, enforce HTTPS and consider CloudFront managed prefix list.",
+    "review": {
+      "verifiedAt": "2026-11-04",
+      "answer": "A",
+      "officialSources": [
+        "https://aws.amazon.com/blogs/security/how-to-enhance-amazon-cloudfront-origin-security-with-aws-waf-and-aws-secrets-manager/",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-vpc-origins.html"
+      ],
+      "exactExternalVariants": [
+        {
+          "url": "https://www.freecram.net/question/Amazon.SAP-C02.v2026-03-31.q264/a-medical-company-is-running-a-rest-api-on-a-set-of-amazon-ec2-instances-the-ec2-instances-run-in-an",
+          "key": "A"
+        },
+        {
+          "url": "https://www.salesforcexamdumps.com/sap-c02-practice-questions/1.html",
+          "key": "A"
+        },
+        {
+          "url": "https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-medical-company-is-running-a-rest-api-on-a-set-of-amazon-ec2-instances-the-ec2-instances-run-in-an",
+          "key": "D (incorrect)"
+        },
+        {
+          "url": "https://pupuweb.com/aws-certified-solutions-architect-professional-sap-c02-actual-exam-question-answer-dumps-8/7/",
+          "key": "Shield Advanced (incorrect; shuffled order)"
+        }
+      ],
+      "exactDuplicates": [],
+      "related": [
+        47,
+        43
+      ]
+    },
+    "answerStatus": "verified"
   },
   {
     "id": 58,
