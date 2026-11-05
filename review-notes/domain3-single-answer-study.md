@@ -441,3 +441,20 @@ flowchart LR
 **Defects and current nuances:** Q68 says `Cloud Formation` and `1AM` instead of CloudFormation/IAM; Q277 contains corrupt `awsrcloudformation` tag. Some RDS DBCluster and standalone DBInstance configurations default to `Snapshot`, which preserves backup but deletes live resource. Retained resources continue to incur charges and no longer belong to the deleted stack. `DeletionPolicy` does not preserve old resources on replacement updates; use `UpdateReplacePolicy` separately.
 
 **Official AWS docs:** https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-updatereplacepolicy.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-resources.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-protect-stacks.html
+
+
+## Domain 3 single-answer 24/239 — Q72 (2026-11-04)
+
+**Answer B — verified.** CodePipeline orchestration + CodeBuild automated tests in test environment + CloudFormation change-set review + CodeDeploy EC2 blue/green deployment with rollback is the strongest downtime-risk mitigation among options.
+
+**Option explanations:** A manually checks test plans and detects errors only after deployment; B combines automated testing, preview of infrastructure replacements, and safe application cutover; C syntax validation and manual testing lack the same rollout/rollback protection; D blue/green is useful but manual SSH tests are inferior and it omits change sets and automated testing.
+
+**Architecture:** CodePipeline -> CodeBuild automated test environment -> CloudFormation create/review/execute change set -> CodeDeploy EC2 blue/green -> old (blue) ASG and new (green) ASG behind ALB -> shift traffic after tests; revert to original fleet when rollback conditions fire.
+
+**Exact external variants:** [CertEmpire SAP-C02 Q17](https://certempire.com/exam/sap-c02-exam-questions/question/17/), [FreeCram 2025 Q327](https://www.freecram.net/question/Amazon.SAP-C02.v2025-07-25.q355/a-company-is-using-aws-codepipeline-for-the-ci-cd-of-an-application-to-an-amazon-ec2-auto-scaling-group), and [DumpsCollection demo PDF Q5](https://myportal.utt.edu.tt/ICS/icsfs/SAP-C02_Dumps_Questions_with_Answers.pdf?target=6ac21115-ca5a-4235-9ef3-3cbdb83aced6) reproduce full stem/options and key B.
+
+**Duplicates:** All 674 dataset stems compared after normalization; zero exact duplicates. Q670 and Q341 have general EC2 ASG/deployment topic overlap but are not confirmed near-duplicates. Some external sites categorize this as Domain 4, whereas dataset labels it Domain 3; no silent recategorization.
+
+**Important modern caveats:** Change sets preview intended resource changes but do not guarantee successful deployment. EC2 CodeDeploy blue/green uses EC2 replacement fleets and load balancer rerouting; CloudFormation `AWS::CodeDeployBlueGreen` transform is for ECS only, not EC2. CodeDeploy rollback restores application revision/traffic and is not a guarantee that every CloudFormation infrastructure change is reverted. Add CloudWatch alarms, health checks and pre/post-traffic validation.
+
+**AWS docs:** https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html ; https://docs.aws.amazon.com/codedeploy/latest/userguide/welcome.html ; https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments-rollback-and-redeploy.html ; https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/continuous-delivery-codepipeline-basic-walkthrough.html
